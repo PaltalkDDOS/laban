@@ -500,7 +500,7 @@
         <div class="form-row">
             <div class="form-group" style="flex: 1.2;">
                 <label>Họ tên chủ mệnh:</label>
-                <input type="text" id="userName" value="Người Tầm Phương" style="color: #aaa;"
+                <input type="text" id="userName" value="Người Tầm Phương" 
                        onfocus="if(this.value==='Người Tầm Phương') { this.value=''; this.style.color='#fff'; }" 
                        onblur="if(this.value.trim()==='') { this.value='Người Tầm Phương'; this.style.color='#aaa'; }" 
                        oninput="recalculateFate()">
@@ -517,7 +517,7 @@
         <div class="form-row">
             <div class="form-group">
                 <label>Ngày tháng năm sinh (Dương lịch):</label>
-                <input type="text" id="birthDate" value="" placeholder="DD/MM/YYYY" inputmode="numeric" oninput="formatDate(this); recalculateFate()">
+                <input type="date" id="birthDate" value="1990-01-01" onchange="recalculateFate()">
             </div>
         </div>
 
@@ -588,15 +588,6 @@
         <div class="detail-content" id="detail-box">Đang khởi tạo mật pháp dữ liệu...</div>
     </div>
 
-    <div id="customAlertModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;">
-        <div style="background: #1a1510; border: 2px solid var(--orange-bright); width: 88%; max-width: 360px; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 0 20px rgba(255, 102, 0, 0.4); transform: scale(0.8); transition: transform 0.3s ease;" id="customAlertBox">
-            <div style="font-size: 2.5rem; color: var(--orange-bright); margin-bottom: 10px;">⚠️</div>
-            <h3 style="color: var(--gold); margin: 0 0 10px 0; text-transform: uppercase; font-size: 1rem; letter-spacing: 1px;">Mật Pháp Cảnh Báo</h3>
-            <p id="customAlertMessage" style="color: #e0e0e0; font-size: 0.85rem; line-height: 1.5; margin: 0 0 20px 0;"></p>
-            <button onclick="closeCustomAlert()" style="background: linear-gradient(180deg, var(--orange-bright), #cc5200); color: #fff; border: none; padding: 8px 24px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);">Xác Nhận</button>
-        </div>
-    </div>
-
     <script>
         const compass = document.getElementById('compass');
         const needle = document.getElementById('needle');
@@ -637,14 +628,14 @@
         };
 
         const cungPhầnTrăm = {
-            'Sinh Khí': { cát: true, ý_nghĩa: 'Đại Cát, chủ về vượng tài lộc, thăng tiến sự nghiệp.' },
-            'Thiên Y': { cát: true, ý_nghĩa: 'Trung Cát, tốt cho sức khỏe, tiêu trừ bệnh tật, gia đạo bình an.' },
-            'Diên Niên': { cát: true, ý_nghĩa: 'Cát tinh, chủ về hòa thuận gia đình, ngoại giao và tình duyên bền vững.' },
-            'Phục Vị': { cát: true, ý_nghĩa: 'Tiểu Cát, vững vàng tâm tính, mang lại may mắn trong thi cử, công việc.' },
-            'Tuyệt Mệnh': { cát: false, ý_nghĩa: 'Đại Hung, tổn hại sức khỏe, tai ương, phá sản, bệnh tật hiểm nghèo.' },
-            'Ngũ Quỷ': { cát: false, ý_nghĩa: 'Hung tinh, thị phi quấy phá, mất mát tài sản, tai nạn lửa củi.' },
-            'Lục Sát': { cát: false, ý_nghĩa: 'Hung tinh, tranh chấp pháp lý, trục trặc tình cảm, gia đạo bất hòa.' },
-            'Họa Hại': { cát: false, ý_nghĩa: 'Tiểu Hung, mệt mỏi, trắc trở bởi chuyện tiểu nhân quấy phá vụn vặt.' }
+            'Sinh Khí': { cát: true, ý_nghĩa: 'Cung Đại Cát: Chủ về vượng khí, thu hút tài lộc, giúp công danh sự nghiệp thăng tiến không ngừng.' },
+            'Thiên Y': { cát: true, ý_nghĩa: 'Cung Trung Cát: Được lộc trời cho về sức khỏe, tiêu trừ bệnh tật, gia đạo bình an, trường thọ.' },
+            'Diên Niên': { cát: true, ý_nghĩa: 'Cung Cát Tinh: Chủ về sự hòa thuận, củng cố các mối quan hệ ngoại giao, gia đình êm ấm, tình duyên bền vững.' },
+            'Phục Vị': { cát: true, ý_nghĩa: 'Cung Tiểu Cát: Giúp vững vàng tâm trí, củng cố sức mạnh bản thân, mang lại may mắn trong học hành, thi cử.' },
+            'Tuyệt Mệnh': { cát: false, ý_nghĩa: 'Cung Đại Hung: Cực kỳ nguy hiểm, mang sát khí mạnh, dễ gây tổn hại sức khỏe, bệnh tật hiểm nghèo hoặc phá sản.' },
+            'Ngũ Quỷ': { cát: false, ý_nghĩa: 'Cung Hung Tinh: Mang đến tai họa bất ngờ, thị phi quấy phá, dễ dính líu pháp lý hoặc hao tài tốn của.' },
+            'Lục Sát': { cát: false, ý_nghĩa: 'Cung Hung Tinh: Sinh ra sát khí, gây mâu thuẫn gia đạo, trục trặc tình cảm, dễ vướng vào tranh chấp, kiện tụng.' },
+            'Họa Hại': { cát: false, ý_nghĩa: 'Cung Tiểu Hung: Thường mang lại rủi ro vụn vặt, mệt mỏi, trắc trở bởi chuyện tiểu nhân quấy phá, hao mòn tài lộc.' }
         };
 
         const phươngVịThiếtLập = {
@@ -678,58 +669,6 @@
             });
         }
 
-        // HÀM HIỂN THỊ THÔNG BÁO TÙY CHỈNH
-        function showCustomAlert(message) {
-            const modal = document.getElementById('customAlertModal');
-            const box = document.getElementById('customAlertBox');
-            document.getElementById('customAlertMessage').innerText = message;
-            modal.style.opacity = "1";
-            modal.style.pointerEvents = "auto";
-            box.style.transform = "scale(1)";
-        }
-
-        // HÀM ĐÓNG THÔNG BÁO TÙY CHỈNH
-        function closeCustomAlert() {
-            const modal = document.getElementById('customAlertModal');
-            const box = document.getElementById('customAlertBox');
-            modal.style.opacity = "0";
-            modal.style.pointerEvents = "none";
-            box.style.transform = "scale(0.8)";
-        }
-
-        // HÀM ĐỊNH DẠNG VÀ KIỂM TRA NGÀY THÁNG KHI NHẬP
-        function formatDate(input) {
-            let val = input.value.replace(/\D/g, ''); 
-            
-            // 1. Kiểm tra Ngày
-            if (val.length >= 2) {
-                let day = parseInt(val.slice(0, 2), 10);
-                if (day > 31 || day === 0) {
-                    showCustomAlert("Ngày không hợp lệ! Vui lòng nhập số ngày từ 01 đến 31.");
-                    input.value = "";
-                    recalculateFate();
-                    return;
-                }
-            }
-
-            if (val.length > 2) val = val.slice(0, 2) + '/' + val.slice(2);
-
-            // 2. Kiểm tra Tháng
-            if (val.length >= 5) {
-                let cleanDigits = val.replace(/\D/g, '');
-                let month = parseInt(cleanDigits.slice(2, 4), 10);
-                if (month > 12 || month === 0) {
-                    showCustomAlert("Tháng không hợp lệ! Vui lòng chỉ nhập từ 01 đến 12.");
-                    input.value = val.slice(0, 3); // Giữ lại "DD/"
-                    recalculateFate();
-                    return;
-                }
-            }
-            
-            if (val.length > 5) val = val.slice(0, 5) + '/' + val.slice(5, 9);
-            input.value = val;
-        }
-
         function tínhCungPhi(năm, giớiTính) {
             let sốDư = năm % 9;
             if (sốDư === 0) sốDư = 9;
@@ -744,61 +683,26 @@
             }
         }
 
-        // HÀM TÍNH TOÁN BÁT TRẠCH CHÍNH KHÔNG BỊ LỖI KHI XÓA TRỐNG
         function recalculateFate() {
-            const nameInput = document.getElementById('userName');
-            let name = nameInput.value;
-            if (!name || name.trim() === "" || name === "Người Tầm Phương") {
-                name = "Chủ mệnh";
-            } else {
-                name = name.trim();
-            }
-
+            const name = document.getElementById('userName').value || "Chủ mệnh";
             const gender = document.getElementById('gender').value;
-            const dateInput = document.getElementById('birthDate');
-            const dateVal = dateInput.value;
+            const dateVal = document.getElementById('birthDate').value;
             
-            // Xử lý khi ngày tháng bị xóa trống hoặc chưa nhập đủ
-            if (!dateVal || dateVal.length < 10) {
-                fateTxt.innerText = `${name}: Chế độ đo hướng độc lập (Chưa nhập đủ ngày sinh)`;
-                directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập đủ ngày sinh dạng (DD/MM/YYYY) để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
+            if (!dateVal) {
+                fateTxt.innerText = `${name}: Chế độ đo hướng độc lập (Chưa nhập năm sinh)`;
+                directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập ngày sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
                 listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
                 updateCompassUI(currentHeading);
                 return;
             }
 
-            // Phân tích ngày tháng năm
-            const parts = dateVal.split('/');
-            const day = parseInt(parts[0], 10);
-            const month = parseInt(parts[1], 10);
-            const year = parseInt(parts[2], 10);
-            const currentYear = new Date().getFullYear();
-
-            // Kiểm tra Năm
-            if (year < 1900 || year > currentYear) {
-                showCustomAlert(`Năm sinh (${year}) không hợp lệ! Mật pháp quy định từ năm 1900 đến năm hiện tại ${currentYear}.`);
-                dateInput.value = dateVal.slice(0, 6); // Quay lại nhập năm
-                recalculateFate();
-                return;
-            }
-
-            // Kiểm tra số ngày tối đa của tháng thực tế (VD: tháng 2 nhuận)
-            const daysInMonth = new Date(year, month, 0).getDate();
-            if (day > daysInMonth) {
-                if (month === 2) {
-                    showCustomAlert(`Tháng 2 năm ${year} chỉ có tối đa ${daysInMonth} ngày. Bạn nhập ngày ${day} là không chính xác!`);
-                } else {
-                    showCustomAlert(`Tháng ${month} chỉ có tối đa ${daysInMonth} ngày. Vui lòng kiểm tra lại!`);
-                }
-                dateInput.value = dateVal.slice(0, 3); // Quay lại sửa ngày hoặc tháng
-                recalculateFate();
-                return;
-            }
-
-            let nămTínhThủy = year;
-            // Tính toán lùi năm nếu sinh trước ngày Lập Xuân (mùng 4 tháng 2)
-            if (month === 1 || (month === 2 && day < 4)) { 
-                nămTínhThủy -= 1; 
+            let nămTínhThủy = 1990;
+            const d = new Date(dateVal);
+            if (!isNaN(d.getTime())) {
+                nămTínhThủy = d.getFullYear();
+                let tháng = d.getMonth() + 1;
+                let ngày = d.getDate();
+                if (tháng === 1 || (tháng === 2 && ngày < 4)) { nămTínhThủy -= 1; }
             }
             
             chủMệnh = tínhCungPhi(nămTínhThủy, gender);
@@ -910,8 +814,7 @@
             let sơnHiệnTại = tìmSơnHướng(currentHeading);
             degreeTxt.innerText = `${currentHeading}° - Phương ${currentCung} - Sơn ${sơnHiệnTại}`;
 
-            const dateVal = document.getElementById('birthDate').value;
-            if (!dateVal || dateVal.length < 10) {
+            if (!document.getElementById('birthDate').value) {
                 elementBox.innerHTML = `<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${phươngVịThiếtLập[currentCode].ngũHành}</span>`;
                 judgmentBox.innerText = "ĐO HƯỚNG CHÍNH XÁC";
                 judgmentBox.className = "judgment-badge";
@@ -933,6 +836,8 @@
             const thôngTinCung = cungPhầnTrăm[cungTrạch];
             const mụcĐích = document.getElementById('purpose').value;
 
+            judgmentBox.removeAttribute("style");
+
             if (!mụcĐích) {
                 judgmentBox.innerText = `Cung vị: ${cungTrạch}`;
                 judgmentBox.className = thôngTinCung.cát ? "judgment-badge bg-good" : "judgment-badge bg-bad";
@@ -945,10 +850,10 @@
                 judgmentBox.innerText = `Hướng ${tênThiếtBị}: ${cungTrạch}`;
                 if (thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
-                    detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG CÁT PHÙ HỢP:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Cực kỳ lý tưởng để bố trí vị trí nhìn về góc tọa độ ${currentHeading}° này.`;
+                    detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG CÁT (${cungTrạch.toUpperCase()}) - PHÙ HỢP:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Phương vị này cực kỳ lý tưởng để bố trí vị trí nhìn về (hướng) góc tọa độ ${currentHeading}°. Nhờ đón được cát khí, gia đạo sẽ nhận được nhiều phúc phần, tài lộc và bình an.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    detailBox.innerHTML = `<span class="warn-text">◆ HƯỚNG HUNG NÊN TRÁNH:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Không đặt mặt hướng của ${tênThiếtBị} nhìn về phương vị này tránh tổn hao nguyên khí.`;
+                    detailBox.innerHTML = `<span class="warn-text">◆ HƯỚNG HUNG (${cungTrạch.toUpperCase()}) - NÊN TRÁNH:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Tuyệt đối không đặt mặt hướng của ${tênThiếtBị} nhìn về phương vị này. Phạm phải hung tinh sẽ gây ra tổn hao nguyên khí, mang lại rủi ro và trắc trở cho gia đạo.`;
                 }
             } 
             else {
@@ -956,10 +861,10 @@
                 judgmentBox.innerText = `Tọa ${tênThiếtBị}: ${cungTrạch}`;
                 if (!thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
-                    detailBox.innerHTML = `<span class="good-text">◆ TỌA HUNG ĐẮC CÁCH (RẤT TỐT):</span><br>Vị trí này thuộc hung vị lý tưởng <span class="warn-text">(${cungTrạch})</span>.<br><br>Nguyên lý: Thiết bị xả uế hoặc đun nấu đặt đè trên tọa độ hung tinh này sẽ thiêu rụi, cuốn trôi vận xui rủi hung hại ra khỏi gia trạch.`;
+                    detailBox.innerHTML = `<span class="good-text">◆ TỌA HUNG ĐẮC CÁCH (${cungTrạch.toUpperCase()}) - RẤT TỐT:</span><br>Vị trí này thuộc hung vị lý tưởng <span class="warn-text">(${cungTrạch})</span>.<br><br>Nguyên lý Phong Thủy: Thiết bị xả uế hoặc sinh hỏa đun nấu đặt đè trên tọa độ hung tinh này sẽ "Lấy Độc Trị Độc", thiêu rụi và cuốn trôi vận xui rủi, hung hại ra khỏi gia trạch. Đạt chuẩn Tọa Hung Hóa Sát.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    detailBox.innerHTML = `<span class="warn-text">◆ TỌA CÁT PHẠM SÁT (XẤU PHẠM ĐẠI KỴ):</span><br>Bạn đang đặt thiết bị đè trực tiếp lên cung tốt lành <span class="good-text">(${cungTrạch})</span>.<br><br>Tránh tuyệt đối đặt bồn cầu hoặc bếp lửa tại đây để không thiêu rụi phước báu tài lộc gia đình.`;
+                    detailBox.innerHTML = `<span class="warn-text">◆ TỌA CÁT PHẠM SÁT (${cungTrạch.toUpperCase()}) - ĐẠI KỴ:</span><br>Bạn đang đặt thiết bị đè trực tiếp lên cung tốt lành <span class="good-text">(${cungTrạch})</span>.<br><br>Lưu ý nghiêm trọng: Tránh tuyệt đối đặt bồn cầu hoặc bếp lửa tại đây để không thiêu rụi hay cuốn trôi phước báu, sức khỏe và tài lộc của gia đình. Cần tìm phương vị khác.`;
                 }
             }
         }
@@ -980,8 +885,8 @@
             const gender = document.getElementById('gender').value;
             const birthDate = document.getElementById('birthDate').value;
 
-            if(!name || name === "Người Tầm Phương") { showCustomAlert("Vui lòng nhập họ tên thật của thành viên gia đình!"); return; }
-            if(!birthDate || birthDate.length < 10) { showCustomAlert("Vui lòng nhập đúng định dạng ngày tháng năm sinh (DD/MM/YYYY)!"); return; }
+            if(!name || name === "Người Tầm Phương") { alert("Vui lòng nhập họ tên thật của thành viên gia đình!"); return; }
+            if(!birthDate) { alert("Vui lòng chọn ngày tháng năm sinh!"); return; }
 
             let data = JSON.parse(localStorage.getItem('fengshui_members')) || [];
             data = data.filter(m => m.name !== name);
@@ -1068,6 +973,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            render24SocialRing = render24SonRing;
             render24SonRing();
             loadSavedMembers();
             recalculateFate(); 
@@ -1085,7 +991,7 @@
                         window.addEventListener('deviceorientation', handleOrientation);
                         permBtn.style.display = 'none';
                     } else {
-                        showCustomAlert("Cảm biến chưa được cấp quyền truy cập!");
+                        alert("Cảm biến chưa được cấp quyền truy cập!");
                     }
                 }).catch(console.error);
         }
