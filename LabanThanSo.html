@@ -87,7 +87,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            min-width: 0; /* Chống tràn vỡ khung trên thiết bị nhỏ */
+            min-width: 0;
         }
 
         .form-group label {
@@ -112,11 +112,15 @@
             width: 100%;
         }
 
-        /* Đồng bộ hóa giao diện ô nhập ngày tháng năm thủ công */
         .date-input-container {
             display: flex;
             gap: 6px;
             width: 100%;
+        }
+        
+        .date-input-container input {
+            flex: 1;
+            min-width: 0;
         }
 
         .btn-action-row {
@@ -161,10 +165,6 @@
             transform: scale(0.95);
         }
 
-        .btn-reset.executing {
-            animation: pulse-execute-effect 0.4s ease-in-out;
-        }
-
         @keyframes pulse-execute-effect {
             0% { transform: scale(1); opacity: 0.9; }
             50% { transform: scale(0.92); opacity: 0.6; box-shadow: 0 0 15px rgba(255, 102, 0, 0.8); }
@@ -206,7 +206,6 @@
         .saved-chip:hover { border-color: var(--gold); }
         .saved-chip .del-btn { color: var(--red); font-weight: bold; margin-left: 4px; }
 
-        /* KHUNG LA BÀN */
         .compass-container {
             position: relative;
             width: 320px;
@@ -265,7 +264,6 @@
             letter-spacing: 2px;
         }
 
-        /* KIM THỰC TẾ (NẰM TRÊN CÙNG) */
         .center-needle {
             position: absolute;
             width: 8px;
@@ -276,7 +274,6 @@
             pointer-events: none;
         }
 
-        /* KIM ẢO MỜ ĐỊNH HƯỚNG */
         .ghost-needle {
             position: absolute;
             width: 6px;
@@ -493,15 +490,16 @@
             background: #080808;
             border-left: 3px solid var(--gold);
             padding: 10px;
-            font-size: 0.8rem;
-            line-height: 1.5;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #ffffff;
         }
 
-        .warn-text { color: var(--red); font-weight: bold; }
-        .good-text { color: var(--green); font-weight: bold; }
+        /* Biến đổi các nhóm chữ cảnh báo sang định dạng chữ trắng toàn diện dễ đọc theo yêu cầu */
+        .warn-text { color: #ffffff; font-weight: normal; }
+        .good-text { color: #ffffff; font-weight: normal; }
         .gold-text { color: var(--gold); font-weight: bold; }
 
-        /* GIAO DIỆN HỘP THOẠI DARK MODE TÙY BIẾN */
         .custom-alert-overlay {
             position: fixed;
             top: 0;
@@ -748,7 +746,6 @@
         let currentHeading = 0;
         let targetAngle = null;
 
-        // Hàm hiển thị thông báo Dark Mode thay thế alert mặc định
         function showCustomAlert(msg) {
             document.getElementById('customAlertMsg').innerText = msg;
             document.getElementById('customAlert').classList.add('active');
@@ -758,14 +755,10 @@
             document.getElementById('customAlert').classList.remove('active');
         }
 
-        // Xử lý logic nhập ô ngày tháng năm thủ công & Auto-jump tab
         function handleDateInput(currentInput, nextInputId) {
-            // Chỉ cho phép nhập số
             currentInput.value = currentInput.value.replace(/[^0-9]/g, '');
-            
             let val = parseInt(currentInput.value);
             
-            // Kiểm tra tính hợp lệ tức thời từng ô
             if (currentInput.id === 'birthDay' && val > 31) {
                 showCustomAlert("Ngày trong tháng không thể vượt quá mốc 31 ngày!");
                 currentInput.value = "31";
@@ -775,11 +768,9 @@
                 currentInput.value = "12";
             }
 
-            // Tự động nhảy sang ô kế tiếp khi nhập đủ số ký tự tối đa
             if (currentInput.value.length >= currentInput.maxLength && nextInputId) {
                 document.getElementById(nextInputId).focus();
             }
-            
             recalculateFate();
         }
 
@@ -809,7 +800,6 @@
             }
         }
 
-        // Thuật toán kiểm tra toàn vẹn ngày tháng năm nhuận/thường đầy đủ
         function validateFullDate(day, month, year) {
             if (month < 1 || month > 12) return false;
             let listDaysInMonth = [31, (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -827,7 +817,7 @@
             const yearStr = document.getElementById('birthYear').value;
 
             if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
-                fateTxt.innerText = `${name}: Đo hướng tự do cơ bản (Chưa hoàn thiện đầy đủ Ngày - Tháng - Năm)`;
+                fateTxt.innerText = `${name}: Đo hướng tự do cơ bản (Chưa nhập đủ Ngày - Tháng - Năm sinh)`;
                 directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập đủ 3 ô Ngày, Tháng, Năm sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
                 listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
                 updateCompassUI(currentHeading);
@@ -839,12 +829,11 @@
             let y = parseInt(yearStr);
 
             if (!validateFullDate(d, m, y)) {
-                fateTxt.innerText = `${name}: Lỗi cấu trúc thời gian (Vui lòng kiểm tra lại số ngày trong tháng hoặc năm nhuận)`;
+                fateTxt.innerText = `${name}: Lỗi cấu trúc thời gian (Kiểm tra lại số ngày hoặc năm nhuận)`;
                 return;
             }
 
             let nămTínhThủy = y;
-            // Tính toán tiết khí lập xuân phong thủy (ước lượng ngày 4 tháng 2)
             if (m === 1 || (m === 2 && d < 4)) { 
                 nămTínhThủy -= 1; 
             }
@@ -858,7 +847,6 @@
 
         function generateDirectionsList() {
             const mụcĐích = document.getElementById('purpose').value;
-            
             if (!mụcĐích) {
                 directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Chọn mục đích dương trạch (Nhà, bếp, thờ...) để xem danh sách gợi ý tương ứng</div>";
                 listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
@@ -898,13 +886,13 @@
             listDirections.forEach(item => {
                 const badgeClass = item.hopPhongThuy ? 'good' : 'bad';
                 const statusText = item.hopPhongThuy ? '🟢 PHÙ HỢP TỐT' : '❌ KHÔNG PHÙ HỢP';
-                const textColorStyle = item.hopPhongThuy ? 'color: var(--green); font-weight: bold;' : 'color: var(--red); font-weight: bold;';
+                const textColorStyle = item.hopPhongThuy ? 'color: #30d158; font-weight: bold;' : 'color: #ff3b30; font-weight: bold;';
                 
                 const div = document.createElement('div');
                 div.className = `direction-item ${badgeClass}`;
                 div.innerHTML = `
                     <div class="item-info">
-                        <span class="item-name">${item.name} ➔ <span style="${textColorStyle}">${item.cungTrạch}</span></span>
+                        <span class="item-name" style="color:#fff;">${item.name} ➔ <span style="${textColorStyle}">${item.cungTrạch}</span></span>
                         <span class="item-cung" style="${textColorStyle}">${statusText}</span>
                     </div>
                     <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})">Xoay thử</button>
@@ -916,11 +904,10 @@
         function triggerGhostNeedle(angle) {
             targetAngle = angle;
             ghostNeedle.style.opacity = "1";
-            
             updateCompassUI(currentHeading);
             
             let sơnThử = tìmSơnHướng(angle);
-            detailBox.innerHTML = `<span class="gold-text">◆ ĐANG BẬT KIM VÀNG XOAY THỬ:</span><br>Kim ảo màu vàng đang chỉ mốc <span class="gold-text">${angle}°</span> (Sơn <span class="good-text">${sơnThử}</span>) nằm mờ phía dưới.<br>Hãy xoay thiết bị hoặc vuốt la bàn bằng tay sao cho <span class="warn-text">Kim Đỏ thật sự trùng khớp lên vị trí Kim Vàng mờ</span> để đón chuẩn hướng phương vị.`;
+            detailBox.innerHTML = `<span class="gold-text">◆ ĐANG BẬT KIM VÀNG XOAY THỬ:</span><br>Kim ảo màu vàng đang chỉ mốc <span class="gold-text">${angle}°</span> (Sơn <strong>${sơnThử}</strong>) nằm mờ phía dưới.<br>Hãy xoay thiết bị hoặc vuốt la bàn bằng tay sao cho Kim Đỏ thật sự trùng khớp lên vị trí Kim Vàng mờ để đón chuẩn hướng phương vị.`;
         }
 
         function tìmSơnHướng(heading) {
@@ -935,48 +922,115 @@
             return sơnTìmThấy;
         }
 
-        // HỆ THỐNG TRÍ TUỆ NHÂN TẠO MẬT PHÁP HÓA GIẢI ĐỘNG (Dựa theo Cung Sát x Mục Đích x Ngũ Hành)
-        function sinhMatPhapHoaGiai(mucDich, cungSat, hanhChu, phuongHuong) {
-            let thuyetMinhViTri = {
-                'house': `Nhà cửa/Cửa chính hướng về phương ${phuongHuong} dính sát tinh ${cungSat}, khiến tà khí trực diện xâm nhập đại môn, làm suy bại tài vận và sức khỏe gia đạo.`,
-                'altar': `Bàn thờ linh thiêng nhưng nhìn về hướng ${phuongHuong} gặp ${cungSat}, làm đứt gãy mạch năng lượng tâm linh hộ trì, khiến gia chủ dễ bất an, hao tổn âm đức.`,
-                'bed': `Đầu giường ngủ quay về ${phuongHuong} phạm ${cungSat}, khiến giấc ngủ nhiễm tà khí, gây đau đầu, bất hòa vợ chồng và suy giảm sinh lực nghiêm trọng.`,
-                'workspace': `Bàn làm việc hướng về ${phuongHuong} gặp ${cungSat}, sinh ra sự trì trệ trong tư duy, tiểu nhân quấy phá hành hạ, sự nghiệp tắc nghẽn không thể thăng tiến.`,
-                'kitchen': `Bếp lửa đun nấu đang đặt sai nguyên tắc (đặt tại Cát vị ${cungSat}), thiêu rụi hoàn toàn vượng khí, sinh khí tốt lành của phương này, biến tốt thành hung đại kỵ.`,
-                'toilet': `Nhà vệ sinh đặt đè lên vị trí cát tinh ${cungSat}, uế khí nhấn chìm phúc đức, cuốn trôi toàn bộ tài lộc và cơ hội may mắn của toàn gia đình.`
-            }[mucDich];
+        // THUẬT TOÁN NÂNG CẤP: MẬT PHÁP HÓA GIẢI LIÊN HOÀN (ĐỐI CHIẾU HUNG TINH × PHƯƠNG VỊ × MỆNH CHỦ)
+        function sinhMatPhapHoaGiai(mucDich, cungSat, hanhChu, phuongHuong, code) {
+            let hanhHungTinh = "";
+            if (cungSat === 'Tuyệt Mệnh') hanhHungTinh = 'Kim';
+            else if (cungSat === 'Ngũ Quỷ') hanhHungTinh = 'Hỏa';
+            else if (cungSat === 'Lục Sát') hanhHungTinh = 'Thủy';
+            else if (cungSat === 'Họa Hại') hanhHungTinh = 'Thổ';
+            else return ""; 
 
-            let phuongAnVatPham = "";
-            let tieuDeHoaGiai = "MẬT PHÁP HÓA GIẢI";
-            
-            // Thuật toán thông minh nâng cao, riêng biệt theo từng mục đích + ngũ hành
-            if (mucDich === 'house' || mucDich === 'altar' || mucDich === 'workspace') {
-                if (hanhChu === 'Thủy') {
-                    phuongAnVatPham = "Treo gương bát quái gỗ đào kết hợp đặt 1 cặp Kỳ lân bằng đồng hoặc Tháp văn xương bằng thạch anh trắng tại lối vào/bàn làm việc để Kim sinh Thủy trấn sát, chuyển nguy thành an.";
+            let hanhPhuongVi = phươngVịThiếtLập[code].ngũHành;
+            let phuongPhapBaoQuoc = "";
+            let vatPhamToiThuong = "";
+
+            if (cungSat === 'Tuyệt Mệnh') { // Kim Sát
+                if (hanhChu === 'Mộc') {
+                    phuongPhapBaoQuoc = `Tuyệt Mệnh sát thuộc Kim trực tiếp khắc hại bản mệnh Mộc của gia chủ, lại tọa lạc ở phương vị ${phuongHuong} (${hanhPhuongVi}). Đây là thế trận cực hung "Quỷ Sai Lộ Xương", tàn phá nghiêm trọng cả sức khỏe lẫn tài lộc.`;
+                    vatPhamToiThuong = "Sử dụng vật phẩm hành <strong>Thủy</strong> cao cấp như <strong>Hồ Lô Thủy Tinh Xanh Lam</strong> hoặc <strong>Bình Nước An Nhẫn Phong Thủy</strong> đặt tại phương vị này. Thủy đóng vai trò cầu nối chuyển hóa liên hoàn (Kim sát sinh Thủy - Thủy tương sinh bồi đắp Mộc mệnh), vừa hóa giải triệt để tính hung ác của Tuyệt Mệnh Kim, vừa quay lại nuôi dưỡng bản thể chủ mệnh phát triển viên mãn.";
                 } else if (hanhChu === 'Hỏa') {
-                    phuongAnVatPham = "Sử dụng các vật phẩm chế từ Mộc như Tỳ hưu Ngọc xanh hoặc đặt chậu cây xanh phong thủy vượng khí để Mộc sinh Hỏa gia trì, tiêu trừ triệt để hung sát.";
-                } else if (hanhChu === 'Mộc') {
-                    phuongAnVatPham = "Đặt Hồ lô thủy tinh chiêu tài hoặc bình nước an nhẫn tại góc phương vị này để dùng Thủy dưỡng Mộc, hóa giải uế khí bủa vây từ sát tinh.";
+                    phuongPhapBaoQuoc = `Tuyệt Mệnh Kim sát gặp Cung Mệnh Hỏa của gia chủ. Mặc dù Hỏa mệnh có thể khắc chế được Kim sát, nhưng bản thể gia chủ sẽ bị hao tổn nguyên khí và kiệt quệ sinh lực rất nặng khi phải gồng gánh chống chọi lâu dài với Sát tinh tại phương vị này.`;
+                    vatPhamToiThuong = "Bố trí linh vật thuộc hành <strong>Mộc</strong> tinh khiết như <strong>Hồ Lô Gỗ Đào Lâu Năm Kinh Chú</strong> hoặc <strong>Gậy Như Ý Gỗ Sưa</strong>. Mộc đóng vai trò chất xúc tác làm dịu sự xung đột mạch khí giữa phương vị và bản mệnh, đồng thời gia tăng Hỏa lực chính khí nội tại giúp gia chủ thiêu rụi triệt để tà khí Tuyệt Mệnh.";
+                } else if (hanhChu === 'Thổ') {
+                    phuongPhapBaoQuoc = `Tuyệt Mệnh Kim sát hút cạn sinh khí từ Cung Mệnh Thổ của gia chủ (Thổ phải sinh xuất nuôi Kim hung tinh), khiến gia đạo lâm vào thế hao tài tốn của, sức khỏe suy kiệt lâm bệnh hiểm nghèo.`;
+                    vatPhamToiThuong = "Đặt một <strong>Cặp Tỳ Hưu bằng Đá Thạch Anh Đỏ hoặc Hồng</strong> (thuộc hành Hỏa) tại vị trí này. Năng lượng Hỏa thần từ đá tự nhiên sẽ trực tiếp thiêu đốt, áp chế và tiêu diệt Tuyệt Mệnh Kim sát, đồng thời Hỏa sinh Thổ bồi hoàn lại năng lượng gốc bệ vững cho bản mệnh gia chủ.";
                 } else if (hanhChu === 'Kim') {
-                    phuongAnVatPham = "Bố trí quả cầu thạch anh vàng hoặc dán phù chú Thổ trấn trạch tại vị trí đại diện để Thổ sinh Kim giữ vững thần minh, đè bẹp sát khí của tinh tú xấu.";
+                    phuongPhapBaoQuoc = `Tuyệt Mệnh Kim sát đồng hành cùng bản mệnh Kim tạo nên thế trận "Tỷ Kiếp Trợ Sát", làm sát khí hệ Kim kết tụ lại dồn dập, đẩy mạnh họa phá sản và tai nạn bất ngờ lên mức cực đại.`;
+                    vatPhamToiThuong = "Bài trí <strong>Quả Cầu Thạch Anh Đen</strong> hoặc <strong>Đĩa Thất Tinh Thạch Anh Khói</strong> (thuộc hành Thủy) để tiết hao, rút cạn năng lượng dư thừa của Tuyệt Mệnh Kim sát một cách êm dịu nhất mà không làm tổn hại hay xung đột đến bản mệnh Kim của gia chủ.";
+                } else { // Thủy
+                    phuongPhapBaoQuoc = `Gia chủ mệnh Thủy được Tuyệt Mệnh Kim sinh xuất, nhìn qua ngỡ là tốt nhưng thực tế đây là dòng Thủy nhiễm tạp chất sát khí nặng nề, gây rối loạn tâm trí, u uất và dính líu pháp lý.`;
+                    vatPhamToiThuong = "Bố trí một <strong>Tháp Văn Xương Đá Thạch Anh Xanh Lục</strong> hoặc các chậu <strong>Cây Xanh Thủy Sinh Vượng Khí</strong> (thuộc hành Mộc) để hút sạch dòng nước lũ chứa sát khí, lọc sạch uế khí, biến nguy thành cơ an lành.";
+                }
+            }
+            else if (cungSat === 'Ngũ Quỷ') { // Hỏa Sát
+                if (hanhChu === 'Kim') {
+                    phuongPhapBaoQuoc = `Ngũ Quỷ Hỏa tinh thiêu đốt trực diên Cung Mệnh Kim của gia chủ, tạo thế trận "Lửa Thiêu Cốt Tủy", sinh ra tai họa hoạn nạn ập đến bất ngờ, thị phi quấy phá khốc liệt và hao tán tài sản thần tốc.`;
+                    vatPhamToiThuong = "Đặt một <strong>Đĩa Thất Tinh Thạch Anh Vàng</strong> hoặc <strong>Tượng Tỳ Hưu Ngọc Hoàng Long Nguyên Khối</strong> (thuộc hành Thổ). Thổ đóng vai trò lá chắn tối thượng hút hết hỏa khí hung tàn của Ngũ Quỷ (Hỏa sinh Thổ làm suy yếu sát tinh), sau đó Thổ lại quay sang tương sinh chuyển hóa bồi bổ năng lượng cường đại cho mệnh Kim của chủ nhà.";
+                } else if (hanhChu === 'Mộc') {
+                    phuongPhapBaoQuoc = `Ngũ Quỷ Hỏa tinh rút cạn tinh huyết năng lượng của Cung Mệnh Mộc (Mộc phải sinh xuất cho Hỏa sát), khiến gia chủ hao mòn trí lực, kinh doanh thua lỗ, gia đạo lục đục không yên.`;
+                    vatPhamToiThuong = "Treo <strong>Chuông Gió Đồng Pháp Khí 6 Thanh</strong> kết hợp đặt <strong>Tháp Văn Xương Bằng Đồng Nguyên Khối</strong> (thuộc hành Kim). Kim lực mạnh mẽ sẽ chặt đứt mạch liên kết tà tính của Hỏa tinh tại phương vị này, giải phóng bản mệnh Mộc khỏi thế kiệt quệ.";
+                } else if (hanhChu === 'Thủy') {
+                    phuongPhapBaoQuoc = `Cung Mệnh Thủy xung đột trực diện kịch liệt với Ngũ Quỷ Hỏa tinh, hình thành cục diện đại kỵ "Thủy Hỏa Vị Tế", làm dòng khí trong nhà đảo điên, vợ chồng ly tán, tinh thần bất an.`;
+                    vatPhamToiThuong = "Sử dụng vật phẩm chứa linh khí Mộc cao như <strong>Hồ Lô Gỗ Đào Tự Nhiên Thần Chú</strong> hoặc <strong>Tranh Trúc Chỉ Phong Thủy</strong> tại phương vị này để chuyển hóa tương khắc thành thế sinh sát thuần khiết: Thủy sinh Mộc - Mộc sinh Hỏa (thuần hóa thuần thục ác tính Ngũ Quỷ thành ngọn lửa sinh hoạt lành tính).";
+                } else if (hanhChu === 'Hỏa') {
+                    phuongPhapBaoQuoc = `Ngũ Quỷ Hỏa kết hợp với bản mệnh Hỏa tạo thành ngọn lửa hung tàn thiêu rụi toàn bộ hậu vận, khiến tính khí thành viên gia đình nóng nảy thất thường, dễ vướng vào tranh chấp luật pháp bĩ cực.`;
+                    vatPhamToiThuong = "Bố trí một <strong>Lu Nước Phong Thủy Tuần Hoàn Màu Đen</strong> hoặc đặt <strong>Quả Cầu Thạch Anh Tím trên Đế Thạch Anh Thô</strong> (thuộc hành Thổ) giúp hấp thụ toàn bộ nhiệt lượng tiêu cực dư thừa, bình ổn hoàn toàn trật tự năng lượng.";
                 } else { // Thổ
-                    phuongAnVatPham = "Sử dụng hệ thống đèn chiếu sáng hành Hỏa màu ấm rực rỡ, kết hợp bài trí Thạch anh hồng hoặc thiềm thừ đá đỏ để Hỏa sinh Thổ gia cố năng lượng chính bệ vững.";
+                    phuongPhapBaoQuoc = `Mệnh Thổ vô tình hấp thụ năng lượng Hỏa từ Ngũ Quỷ tinh. Dù là mối quan hệ sinh nhưng do nạp phải dòng khí độc hại của sát tinh, gia chủ dễ rơi vào trạng thái trì trệ, suy nghĩ tiêu cực, chịu nhiều u uất.`;
+                    vatPhamToiThuong = "Sử dụng <strong>Gương Bát Quái Gỗ Đào</strong> ở cửa hoặc đặt <strong>Cặp Kỳ Lân Bằng Đồng</strong> (thuộc hành Kim) tại phương vị này nhằm tiết giảm triệt để Thổ khí đã bị nhiễm độc tà khí, trả lại sự thanh tịnh cho dương trạch.";
                 }
-            } else if (mucDich === 'bed') {
-                if (hanhChu === 'Thủy' || hanhChu === 'Mộc') {
-                    phuongAnVatPham = "Đặt 1 chiếc Hồ lô gỗ đào tự nhiên đầu giường để hút sạch bệnh khí, tà khí của cung sát, đồng thời đặt dải đồng xu ngũ đế dưới đệm để gia trì.";
-                } else {
-                    phuongAnVatPham = "Treo một dải ngọc cẩm thạch hoặc hồ lô đá thạch anh tự nhiên ngay phía trên táp đầu giường giúp cân bằng sóng não, ngăn chặn triệt để hung khí quấy nhiễu giấc ngủ.";
+            }
+            else if (cungSat === 'Lục Sát') { // Thủy Sát
+                if (hanhChu === 'Hỏa') {
+                    phuongPhapBaoQuoc = `Lục Sát Thủy tinh dập tắt hoàn toàn sinh hỏa Cung Mệnh của gia chủ, sinh ra thế trận "Hàn Băng Thấm Cốt", gây chứng đau đầu kinh niên, mâu thuẫn nội bộ gia đình gay gắt và cắt đứt mạch tình duyên nhân duyên tốt đẹp.`;
+                    vatPhamToiThuong = "Bố trí các chậu cây lớn như <strong>Cây Phát Tài Núi</strong> hoặc bài trí <strong>Vật Phẩm Gỗ Trầm Hương Cao Cấp</strong> (thuộc hành Mộc) tại góc này. Mộc lực sẽ như một chiếc máy bơm hút cạn dòng nước độc Lục Sát Thủy tinh, sau đó chuyển hóa sinh khí Mộc sinh Hỏa tiếp ứng bồi bổ trực tiếp cho bản mệnh gia chủ.";
+                } else if (hanhChu === 'Kim') {
+                    phuongPhapBaoQuoc = `Cung Mệnh Kim bị Lục Sát Thủy bào mòn rò rỉ khí lực nghiêm trọng, khiến tiền tài trong nhà thất thoát không rõ nguyên nhân, đầu tư thua lỗ trắng tay.`;
+                    vatPhamToiThuong = "Sử dụng <strong>Ấn Rồng Thạch Anh Vàng</strong> hoặc đặt <strong>Khối Đá Thạch Anh Vàng Tự Nhiên</strong> (thuộc hành Thổ) để đắp đê chắn sóng, trấn át hoàn toàn sự rò rỉ năng lượng của mạch Kim qua dòng Thủy sát.";
+                } else if (hanhChu === 'Thổ') {
+                    phuongPhapBaoQuoc = `Mệnh Thổ của gia chủ phải vắt kiệt sức lực để ngăn chặn Lục Sát Thủy tinh quấy phá phương vị, dẫn tới bản thể bị kiệt quệ, sự nghiệp gặp bế tắc và tiểu nhân hãm hại sau lưng.`;
+                    vatPhamToiThuong = "Treo một thanh <strong>Kiếm Gỗ Đào Pháp Khí Thất Tinh</strong> hoặc bài trí <strong>Tượng Tỳ Hưu bằng Gỗ Đào quý</strong> (thuộc hành Mộc). Mộc sẽ đứng ra thu nạp mạch khí Thủy của Lục Sát, nới lỏng thế bóp nghẹt áp lực lên Thổ mệnh gia chủ.";
+                } else if (hanhChu === 'Mộc') {
+                    phuongPhapBaoQuoc = `Mệnh Mộc được Thủy tương sinh, nhưng Lục Sát Thủy lại mang âm khí quá nặng, tựa như dòng nước ngập úng làm thối rữa rễ cây, gây ra những tai tiếng thị phi thị phi từ trên trời rơi xuống.`;
+                    vatPhamToiThuong = "Thiết lập hệ thống <strong>Đèn Chiếu Sáng Quang Phổ Ấm Cường Độ Cao</strong> (thuộc hành Hỏa) kết hợp các <strong>Thảm Trải Màu Đỏ/Hồng</strong> tại phương vị này nhằm dùng dương hỏa thiêu đốt, sấy khô tính chất âm hàn, lạnh lẽo hung hiểm của Thủy sát.";
+                } else { // Thủy
+                    phuongPhapBaoQuoc = `Lục Sát Thủy tinh hòa cùng Cung Mệnh Thủy tạo thành thế lũ quét cuốn trôi hoàn toàn gia sản, của cải tích lũy và phá vỡ sự bình yên vốn có.`;
+                    vatPhamToiThuong = "Bố trí <strong>Tháp Cây Xanh Vạn Niên Thanh Thủy Sinh</strong> hoặc đặt <strong>Cặp Tỳ Hưu bằng Gỗ Đào Kinh Chú</strong> (thuộc hành Mộc) để làm vật trung gian hút bớt hung tính dữ dội của dòng nước lũ phong thủy này.";
                 }
-            } else { // kitchen hoặc toilet
-                if (mucDich === 'kitchen') {
-                    phuongAnVatPham = "Đông phương học cứu giải: Đặt một hũ muối phong thủy hoặc dán đồng tiền hoa mai ngay dưới chân bếp nấu để hút giữ, bình ổn hỏa khí dư thừa thiêu rụi phúc đức.";
-                } else {
-                    phuongAnVatPham = "Đặt chậu cây xanh phát tài núi lớn hoặc dùng thạch anh thô nguyên khối đặt trong nhà vệ sinh để hấp thụ toàn bộ thủy uế tiêu cực, kích hoạt lại mạch cát vị bị đè nén.";
+            }
+            else { // Họa Hại Thổ Sát
+                if (hanhChu === 'Thủy') {
+                    phuongPhapBaoQuoc = `Họa Hại Thổ sát vùi lấp hoàn toàn mạch tài lộc và Cung Mệnh Thủy của gia chủ, bóp nghẹt các cơ hội thăng tiến, khiến cuộc sống ngập tràn rủi ro vụn vặt bực dọc.`;
+                    vatPhamToiThuong = "Treo một chiếc <strong>Chuông Gió Bằng Đồng Kim Loại Cực Nhạy</strong> kết hợp đặt <strong>Cặp Kỳ Lân Bằng Đồng Nguyên Khối Trấn Trạch</strong> (thuộc hành Kim). Kim lực sẽ đứng ra hút kiệt Thổ khí tích tụ của Họa Hại tinh, giải phóng hoàn toàn cho mạch Thủy bản mệnh của chủ nhà lưu thông hanh thông.";
+                } else if (hanhChu === 'Mộc') {
+                    phuongPhapBaoQuoc = `Cung Mệnh Mộc phải vắt kiệt sức để khắc chế khối Thổ sát của Họa Hại tinh, làm tinh thần mệt mỏi, suy nhược thần kinh và công việc bị trì trệ bế tắc triền miên.`;
+                    vatPhamToiThuong = "Bố trí <strong>Quả Cầu Thạch Anh Trắng Tự Nhiên</strong> hoặc đặt <strong>Hồ Lô Bằng Đồng Đúc</strong> (thuộc hành Kim). Thiết lập thế trận cân bằng dòng khí ngũ hành mới, cởi trói hoàn toàn áp lực đè nặng lên bản mệnh Mộc.";
+                } else if (hanhChu === 'Hỏa') {
+                    phuongPhapBaoQuoc = `Cung Mệnh Hỏa sinh xuất cho Họa Hại Thổ sát, vô tình tiếp thêm năng lượng khiến Hung tinh ngày một bành trướng dữ dội, quay lại quấy nhiễu tàn phá gia đạo nặng nề.`;
+                    vatPhamToiThuong = "Bố trí một <strong>Bình Nước An Nhẫn Phong Thủy Đại Gia Trì</strong> hoặc bài trí các linh vật mang sắc <strong>Đen hoặc Xanh Dương</strong> (thuộc hành Thủy) nhằm phong tỏa hoàn toàn gốc rễ Hỏa sinh Thổ tiêu cực, dập tắt sự phát tán của Hung tinh.";
+                } else if (hanhChu === 'Kim') {
+                    phuongPhapBaoQuoc = `Mệnh Kim nhận sự tương sinh từ Thổ sát, nhưng đây là dòng sinh độc hại, mang theo rủi ro, ốm đau vụn vặt bám đuổi dai dẳng.`;
+                    vatPhamToiThuong = "Bài trí <strong>Chậu Cây Thạch Anh Tóc Xanh</strong> hoặc dán <strong>Phù Chú Mộc Trấn Trạch</strong> (thuộc hành Mộc) tại góc này nhằm phá vỡ cấu trúc tích tụ đất đá cứng nhắc của Thổ sát, triệt tiêu hung tính từ gốc rễ.";
+                } else { // Thổ
+                    phuongPhapBaoQuoc = `Họa Hại Thổ sát đồng hành cùng Cung Mệnh Thổ tạo nên cục diện "Bãi Đất Hoang Trì Trệ", làm mất đi toàn bộ động lực phát triển, cuộc sống rơi vào vòng lặp bế tắc vô định.`;
+                    vatPhamToiThuong = "Sử dụng <strong>Kiếm Thất Tinh Bằng Đồng</strong> hoặc bài trí <strong>Tháp Văn Xương Bằng Đồng Gỗ Đại Pháp Cụ 9 Tầng</strong> (thuộc hành Kim) nhằm đục phá, đập tan khối Thổ khí đang ứ đọng bĩ cực.";
                 }
             }
 
-            return `<br><br><span class="warn-text">⚠️ ${tieuDeHoaGiai} CHO ${mucDich.toUpperCase()} - HƯỚNG ${phuongHuong}:</span><br><span style="color: #ff3b30; font-weight: bold;">[Sai Lệch]: ${thuyetMinhViTri}</span><br><br><span style="color: #30d158; font-weight: bold;">[Giải Pháp Tâm Linh]: ${phuongAnVatPham}</span>`;
+            let tenMucDichChuan = {
+                'house': "HƯỚNG NHÀ / CỬA CHÍNH", 'altar': "HƯỚNG BÀN THỜ TÂM LINH",
+                'bed': "HƯỚNG ĐẦU GIƯỜNG NGỦ", 'workspace': "HƯỚNG BÀN LÀM VIỆC",
+                'kitchen': "TỌA VỊ ĐẶT BẾP NẤU", 'toilet': "TỌA VỊ ĐẶT NHÀ VỆ SINH (WC)"
+            }[mucDich] || "PHƯƠNG VỊ PHONG THỦY";
+
+            let thuyetMinhViTri = "";
+            if (['house', 'altar', 'bed', 'workspace'].includes(mucDich)) {
+                thuyetMinhViTri = `Thiết lập nhìn về phương vị bị phạm đại kỵ Sát tinh <strong>${cungSat}</strong>. ${phuongPhapBaoQuoc}`;
+            } else if (mucDich === 'kitchen') {
+                thuyetMinhViTri = `Bếp nấu đang đặt đè sai lên cung tốt, thiêu rụi phước báu. Đồng thời nếu rơi vào thế hung tinh bị kích động nghịch chiều: ${phuongPhapBaoQuoc}`;
+            } else {
+                thuyetMinhViTri = `Khu vực xả uế đặt đè lên cát tinh làm tổn hại tài lộc. Chiếu theo mật pháp đối sánh: ${phuongPhapBaoQuoc}`;
+            }
+
+            return `
+                <br><br>
+                <span style="font-weight: bold; font-size: 0.9rem; display: inline-block; margin-bottom: 6px; color: #fff;">
+                    ◆ MẬT PHÁP ĐẠI THUẬT HÓA GIẢI LIÊN HOÀN (HUNG TINH × PHƯƠNG VỊ × MỆNH CHỦ):
+                </span><br>
+                <span style="color: #fff;"><strong>[Phân Tích Bản Chất]:</strong> ${thuyetMinhViTri}</span><br><br>
+                <span style="color: #fff;"><strong>[Mật Pháp Vật Phẩm Tối Thượng]:</strong> ${vatPhamToiThuong}</span>
+            `;
         }
 
         function updateCompassUI(heading) {
@@ -1010,6 +1064,7 @@
                 elementBox.innerHTML = `<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${phươngVịThiếtLập[currentCode].ngũHành}</span>`;
                 judgmentBox.innerText = "ĐO HƯỚNG CHÍNH XÁC";
                 judgmentBox.className = "judgment-badge";
+                judgmentBox.removeAttribute("style");
                 judgmentBox.style.backgroundColor = "#222";
                 judgmentBox.style.color = "var(--gold)";
                 judgmentBox.style.border = "1px solid var(--gold)";
@@ -1034,26 +1089,24 @@
                 judgmentBox.innerText = `Cung vị: ${cungTrạch}`;
                 judgmentBox.className = thôngTinCung.cát ? "judgment-badge bg-good" : "judgment-badge bg-bad";
                 
-                let phanGiaiCoBan = `Góc xoay <span class="gold-text">${currentHeading}°</span> đối chiếu mệnh cung ${chủMệnh} gặp cung tinh <span class="${thôngTinCung.cát ? 'good-text' : 'warn-text'}">${cungTrạch}</span>.<br>${thôngTinCung.ý_nghĩa}`;
+                let phanGiaiCoBan = `Góc xoay <span class="gold-text">${currentHeading}°</span> đối chiếu mệnh cung <strong>${chủMệnh}</strong> gặp cung tinh <strong>${cungTrạch}</strong>.<br>${thôngTinCung.ý_nghĩa}`;
                 if (!thôngTinCung.cát) {
-                    phanGiaiCoBan += sinhMatPhapHoaGiai('house', cungTrạch, hànhMệnhChủ, currentCung);
+                    phanGiaiCoBan += sinhMatPhapHoaGiai('house', cungTrạch, hànhMệnhChủ, currentCung, currentCode);
                 }
                 detailBox.innerHTML = phanGiaiCoBan;
                 return;
             }
 
             if (['house', 'altar', 'bed', 'workspace'].includes(mụcĐích)) {
-                let tênThiếtBị = { 'altar': "BÀN THỜ", 'bed': "GIƯỜNG NGỦ", 'workspace': "BÀN LÀM VIỆC", 'house': "NHÀ CỬA" }[mụcĐích];
+                let tênThiếtBị = { 'altar': "BÀN THỜ", 'bed': "GIƯỜNG NGỦ", 'workspace': "BÀN L LÀM VIỆC", 'house': "NHÀ CỬA" }[mụcĐích];
                 judgmentBox.innerText = `Hướng ${tênThiếtBị}: ${cungTrạch}`;
                 if (thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
-                    detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG CÁT (${cungTrạch.toUpperCase()}) - PHÙ HỢP:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Phương vị này cực kỳ lý tưởng để bố trí vị trí nhìn về (hướng) góc tọa độ ${currentHeading}°. Nhờ đón được cát khí, gia đạo sẽ nhận được nhiều phúc phần, tài lộc và bình an.`;
+                    detailBox.innerHTML = `<strong>◆ HƯỚNG CÁT (${cungTrạch.toUpperCase()}) - PHÙ HỢP:</strong><br>${thôngTinCung.ý_nghĩa}<br><br>Phương vị này cực kỳ lý tưởng để bố trí vị trí nhìn về (hướng) góc tọa độ ${currentHeading}°. Nhờ đón được cát khí, gia đạo sẽ nhận được nhiều phúc phần, tài lộc và bình an.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    let noiDungDetail = `<span class="warn-text">◆ HƯỚNG HUNG (${cungTrạch.toUpperCase()}) - NÊN TRÁNH:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Tuyệt đối không đặt mặt hướng của ${tênThiếtBị} nhìn về phương vị này. Phạm phải hung tinh sẽ gây ra tổn hao nguyên khí, mang lại rủi ro và trắc trở cho gia đạo.`;
-                    
-                    // Kích hoạt mật pháp hóa giải động
-                    noiDungDetail += sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung);
+                    let noiDungDetail = `<strong>◆ HƯỚNG HUNG (${cungTrạch.toUpperCase()}) - NÊN TRÁNH:</strong><br>${thôngTinCung.ý_nghĩa}<br><br>Tuyệt đối không đặt mặt hướng của ${tênThiếtBị} nhìn về phương vị này. Phạm phải hung tinh sẽ gây ra tổn hao nguyên khí, mang lại rủi ro và trắc trở cho gia đạo.`;
+                    noiDungDetail += sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung, currentCode);
                     detailBox.innerHTML = noiDungDetail;
                 }
             } 
@@ -1062,13 +1115,11 @@
                 judgmentBox.innerText = `Tọa ${tênThiếtBị}: ${cungTrạch}`;
                 if (!thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
-                    detailBox.innerHTML = `<span class="good-text">◆ TỌA HUNG ĐẮC CÁCH (${cungTrạch.toUpperCase()}) - RẤT TỐT:</span><br>Vị trí này thuộc hung vị lý tưởng <span class="warn-text">(${cungTrạch})</span>.<br><br>Nguyên lý Phong Thủy: Thiết bị xả uế hoặc sinh hỏa đun nấu đặt đè trên tọa độ hung tinh này sẽ "Lấy Độc Trị Độc", thiêu rụi và cuốn trôi vận xui rủi, hung hại ra khỏi gia trạch. Đạt chuẩn Tọa Hung Hóa Sát.`;
+                    detailBox.innerHTML = `<strong>◆ TỌA HUNG ĐẮC CÁCH (${cungTrạch.toUpperCase()}) - RẤT TỐT:</strong><br>Vị trí này thuộc hung vị lý tưởng <strong>(${cungTrạch})</strong>.<br><br>Nguyên lý Phong Thủy: Thiết bị xả uế hoặc sinh hỏa đun nấu đặt đè trên tọa độ hung tinh này sẽ "Lấy Độc Trị Độc", thiêu rụi và cuốn trôi vận xui rủi, hung hại ra khỏi gia trạch. Đạt chuẩn Tọa Hung Hóa Sát.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    let noiDungDetail = `<span class="warn-text">◆ TỌA CÁT PHẠM SÁT (${cungTrạch.toUpperCase()}) - ĐẠI KỴ:</span><br>Bạn đang đặt thiết bị đè trực tiếp lên cung tốt lành <span class="good-text">(${cungTrạch})</span>.<br><br>Lưu ý nghiêm trọng: Tránh tuyệt đối đặt bồn cầu hoặc bếp lửa tại đây để không thiêu rụi hay cuốn trôi phước báu, sức khỏe và tài lộc của gia đình. Cần tìm phương vị khác.`;
-                    
-                    // Kích hoạt mật pháp hóa giải động khi đặt sai tọa
-                    noiDungDetail += sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung);
+                    let noiDungDetail = `<strong>◆ TỌA CÁT PHẠM SÁT (${cungTrạch.toUpperCase()}) - ĐẠI KỴ:</strong><br>Bạn đang đặt thiết bị đè trực tiếp lên cung tốt lành <strong>(${cungTrạch})</strong>.<br><br>Lưu ý nghiêm trọng: Tránh tuyệt đối đặt bồn cầu hoặc bếp lửa tại đây để không thiêu rụi hay cuốn trôi phước báu, sức khỏe và tài lộc của gia đình. Cần tìm phương vị khác.`;
+                    noiDungDetail += sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung, currentCode);
                     detailBox.innerHTML = noiDungDetail;
                 }
             }
@@ -1133,8 +1184,8 @@
             recalculateFate();
         }
 
-        function deleteMember(e, name) {
-            e.stopImmediatePropagation();
+        function deleteMember(event, name) {
+            event.stopPropagation();
             let data = JSON.parse(localStorage.getItem('fengshui_members')) || [];
             data = data.filter(m => m.name !== name);
             localStorage.setItem('fengshui_members', JSON.stringify(data));
@@ -1142,50 +1193,54 @@
         }
 
         function clearAllData() {
-            if (confirm("Bạn có chắc muốn làm mới toàn bộ dữ liệu?")) {
-                localStorage.removeItem('fengshui_members');
-                document.getElementById('userName').value = "Người Tầm Phương";
-                document.getElementById('userName').style.color = '#aaa';
-                document.getElementById('gender').value = "male";
-                document.getElementById('birthDay').value = "";
-                document.getElementById('birthMonth').value = "";
-                document.getElementById('birthYear').value = "";
-                document.getElementById('purpose').value = "";
-                loadSavedMembers();
-                recalculateFate();
-            }
-        }
+            const btn = document.getElementById('btnReset');
+            btn.classList.add('executing');
+            setTimeout(() => btn.classList.remove('executing'), 400);
 
-        // Khởi tạo
-        function initApp() {
-            render24SonRing();
-            loadSavedMembers();
-            recalculateFate();
+            document.getElementById('userName').value = 'Người Tầm Phương';
+            document.getElementById('userName').style.color = '#aaa';
+            document.getElementById('gender').value = 'male';
+            document.getElementById('birthDay').value = '';
+            document.getElementById('birthMonth').value = '';
+            document.getElementById('birthYear').value = '';
+            document.getElementById('purpose').value = '';
             
-            // Sensor
-            if (window.DeviceOrientationEvent) {
-                window.addEventListener('deviceorientation', handleOrientation);
-                permBtn.style.display = 'block';
-            }
+            targetAngle = null;
+            ghostNeedle.style.opacity = "0";
+            
+            recalculateFate();
         }
 
         function requestPermission() {
-            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
                 DeviceOrientationEvent.requestPermission()
                     .then(permissionState => {
                         if (permissionState === 'granted') {
-                            window.addEventListener('deviceorientation', handleOrientation);
+                            window.addEventListener('deviceorientation', handleOrientation, true);
                             permBtn.style.display = 'none';
+                        } else {
+                            showCustomAlert("Quyền truy cập cảm biến bị từ chối. Bạn vẫn có thể xoay la bàn thủ công bằng thanh gạt kéo.");
                         }
                     })
                     .catch(console.error);
             } else {
+                window.addEventListener('deviceorientation', handleOrientation, true);
+                showCustomAlert("Cảm biến hướng đã được kích hoạt tự động (nếu thiết bị có hỗ trợ phần cứng).");
                 permBtn.style.display = 'none';
             }
         }
 
-        // Khởi chạy ứng dụng
-        window.onload = initApp;
+        window.onload = function() {
+            render24SonRing();
+            loadSavedMembers();
+            recalculateFate();
+
+            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                permBtn.style.display = 'block';
+            } else {
+                window.addEventListener('deviceorientation', handleOrientation, true);
+            }
+        };
     </script>
 </body>
 </html>
