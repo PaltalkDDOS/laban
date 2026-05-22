@@ -73,7 +73,7 @@
             border-radius: 8px;
             margin-top: 12px;
             position: relative;
-            z-index: 10;
+ z-index: 10;
         }
 
         .form-row {
@@ -104,6 +104,11 @@
             font-size: 0.85rem;
             outline: none;
             height: 38px;
+            text-align: center;
+        }
+
+        .form-group input[type="text"] {
+            text-align: left;
         }
 
         .btn-action-row {
@@ -515,9 +520,17 @@
         </div>
 
         <div class="form-row">
-            <div class="form-group">
-                <label>Ngày tháng năm sinh (Dương lịch):</label>
-                <input type="date" id="birthDate" value="1990-01-01" onchange="recalculateFate()">
+            <div class="form-group" style="flex: 1;">
+                <label>Ngày sinh (Dương):</label>
+                <input type="number" id="birthDay" value="1" min="1" max="31" placeholder="DD" oninput="recalculateFate()">
+            </div>
+            <div class="form-group" style="flex: 1;">
+                <label>Tháng sinh:</label>
+                <input type="number" id="birthMonth" value="1" min="1" max="12" placeholder="MM" oninput="recalculateFate()">
+            </div>
+            <div class="form-group" style="flex: 1.5;">
+                <label>Năm sinh:</label>
+                <input type="number" id="birthYear" value="1990" min="1900" max="2100" placeholder="YYYY" oninput="recalculateFate()">
             </div>
         </div>
 
@@ -686,24 +699,24 @@
         function recalculateFate() {
             const name = document.getElementById('userName').value || "Chủ mệnh";
             const gender = document.getElementById('gender').value;
-            const dateVal = document.getElementById('birthDate').value;
+            const dayVal = document.getElementById('birthDay').value;
+            const monthVal = document.getElementById('birthMonth').value;
+            const yearVal = document.getElementById('birthYear').value;
             
-            if (!dateVal) {
-                fateTxt.innerText = `${name}: Chế độ đo hướng độc lập (Chưa nhập năm sinh)`;
-                directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập ngày sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
+            if (!dayVal || !monthVal || !yearVal) {
+                fateTxt.innerText = `${name}: Chế độ đo hướng độc lập (Chưa nhập đủ năm sinh)`;
+                directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập đầy đủ ngày sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
                 listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
                 updateCompassUI(currentHeading);
                 return;
             }
 
-            let nămTínhThủy = 1990;
-            const d = new Date(dateVal);
-            if (!isNaN(d.getTime())) {
-                nămTínhThủy = d.getFullYear();
-                let tháng = d.getMonth() + 1;
-                let ngày = d.getDate();
-                if (tháng === 1 || (tháng === 2 && ngày < 4)) { nămTínhThủy -= 1; }
-            }
+            let day = parseInt(dayVal);
+            let month = parseInt(monthVal);
+            let year = parseInt(yearVal);
+
+            let nămTínhThủy = year;
+            if (month === 1 || (month === 2 && day < 4)) { nămTínhThủy -= 1; }
             
             chủMệnh = tínhCungPhi(nămTínhThủy, gender);
             fateTxt.innerText = `${name}: Cung ${chủMệnh} (${bátTrạchMap[chủMệnh].group}) - Bản Mệnh Ngũ Hành: ${bátTrạchMap[chủMệnh].element}`;
@@ -814,7 +827,11 @@
             let sơnHiệnTại = tìmSơnHướng(currentHeading);
             degreeTxt.innerText = `${currentHeading}° - Phương ${currentCung} - Sơn ${sơnHiệnTại}`;
 
-            if (!document.getElementById('birthDate').value) {
+            const dayVal = document.getElementById('birthDay').value;
+            const monthVal = document.getElementById('birthMonth').value;
+            const yearVal = document.getElementById('birthYear').value;
+
+            if (!dayVal || !monthVal || !yearVal) {
                 elementBox.innerHTML = `<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${phươngVịThiếtLập[currentCode].ngũHành}</span>`;
                 judgmentBox.innerText = "ĐO HƯỚNG CHÍNH XÁC";
                 judgmentBox.className = "judgment-badge";
@@ -841,7 +858,12 @@
             if (!mụcĐích) {
                 judgmentBox.innerText = `Cung vị: ${cungTrạch}`;
                 judgmentBox.className = thôngTinCung.cát ? "judgment-badge bg-good" : "judgment-badge bg-bad";
-                detailBox.innerHTML = `Góc xoay <span class="gold-text">${currentHeading}°</span> đối chiếu mệnh cung ${chủMệnh} gặp cung tinh <span class="${thôngTinCung.cát ? 'good-text' : 'warn-text'}">${cungTrạch}</span>.<br>${thôngTinCung.ý_nghĩa}`;
+                
+                let hgChung = "";
+                if (!thôngTinCung.cát) {
+                    hgChung = `<br><br><span class="gold-text"><b>☯ MẬT PHÁP HÓA GIẢI HUNG PHƯƠNG VỊ CHUNG:</b></span><br>• Góc xoay đang vấp phải cung sát tinh hại mệnh <span class="warn-text">${cungTrạch}</span>. Nếu vị trí thực địa tại góc này là hướng nhà chính hoặc giường ngủ, gia chủ nên treo một chiếc <b>Gương Bát Quái Lồi bằng đồng</b> ở cửa sổ/cửa chính hoặc bài trí <b>Hồ Lô Thạch Anh</b> để thanh tẩy uế khí và khúc xạ từ trường hung ác.`;
+                }
+                detailBox.innerHTML = `Góc xoay <span class="gold-text">${currentHeading}°</span> đối chiếu mệnh cung ${chủMệnh} gặp cung tinh <span class="${thôngTinCung.cát ? 'good-text' : 'warn-text'}">${cungTrạch}</span>.<br>${thôngTinCung.ý_nghĩa}${hgChung}`;
                 return;
             }
 
@@ -853,7 +875,27 @@
                     detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG CÁT (${cungTrạch.toUpperCase()}) - PHÙ HỢP:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Phương vị này cực kỳ lý tưởng để bố trí vị trí nhìn về (hướng) góc tọa độ ${currentHeading}°. Nhờ đón được cát khí, gia đạo sẽ nhận được nhiều phúc phần, tài lộc và bình an.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    detailBox.innerHTML = `<span class="warn-text">◆ HƯỚNG HUNG (${cungTrạch.toUpperCase()}) - NÊN TRÁNH:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Tuyệt đối không đặt mặt hướng của ${tênThiếtBị} nhìn về phương vị này. Phạm phải hung tinh sẽ gây ra tổn hao nguyên khí, mang lại rủi ro và trắc trở cho gia đạo.`;
+                    
+                    let mậtPháp = `<br><br><span class="gold-text"><b>☯ MẬT PHÁP VẬT PHẨM HÓA GIẢI THẾ SÁT HƯỚNG ${tênThiếtBị}:</b></span><br>`;
+                    if (mụcĐích === 'house') {
+                        if (cungTrạch === 'Tuyệt Mệnh') {
+                            mậtPháp += `• <b>Gương Bát Quái Lồi (Đồng/Gỗ đào):</b> Treo ngay chính giữa mí cửa ra vào chính để khúc xạ chấn sập toàn bộ luồng khí đại hung ác sát.<br>• <b>Linh vật Nghê Đồng / Tỳ Hưu:</b> Đặt một cặp Nghê đồng nguyên chất ở thềm cửa hướng nhìn ra phía ngoài để canh giữ tài lộc, ngăn tà khí xâm lấn.<br>• <b>Thảm hóa sát:</b> Trải một tấm thảm chân màu Vàng hoặc Nâu (hành Thổ) trước cửa chính để triệt tiêu năng lượng xấu Thủy hành của Tuyệt Mệnh.`;
+                        } else if (cungTrạch === 'Ngũ Quỷ') {
+                            mậtPháp += `• <b>Chuông gió Lục Đế Đồng (6 thanh):</b> Treo chuông tại góc hiên cửa chính để tán nhỏ và làm suy kiệt năng lượng hung hỏa của Ngũ Quỷ (Thổ sinh Kim làm hao hụt Hỏa khí).<br>• <b>Hồ lô hóa sát:</b> Đặt một bình Hồ Lô bằng đồng nguyên khối hoặc Thạch Anh Vàng ở cạnh cửa để thâu giữ âm uế và hóa giải thị phi pháp lý.`;
+                        } else if (cungTrạch === 'Lục Sát') {
+                            mậtPháp += `• <b>Bình Nước An Nhẫn:</b> Sử dụng một hũ nước muối bão hòa thả 6 đồng tiền xu cổ đặt kín đáo tại góc cửa chính giúp thanh lọc uế khí Lục Sát Thủy hành.<br>• <b>Mộc trận điều hòa:</b> Bố trí thêm chậu cây cảnh hành Mộc tươi tốt phối hợp cùng Gương Bát Quái Phẳng để ổn định từ trường gia trạch.`;
+                        } else if (cungTrạch === 'Họa Hại') {
+                            mậtPháp += `• <b>Tượng Long Quy bằng đồng:</b> Đặt một tượng rùa đầu rồng (Long Quy) nhìn thẳng ra hướng cửa lớn nhằm chặn họa tiểu nhân quấy phá, củng cố nền tảng tài lộc bền vững cho gia đạo.`;
+                        }
+                    } else if (mụcĐích === 'altar') {
+                        mậtPháp += `• <b>Cảnh báo nghiêm trọng:</b> Bàn thờ hướng Hung gây suy giảm phúc trạch rất nhanh, nếu có thể hãy chủ động dịch chuyển góc ban thờ.<br>• <b>Ngọc phao vương:</b> Bố trí hai bên ban thờ một đôi Tỳ Hưu bằng ngọc/đá nhỏ, đồng thời treo bình Hồ Lô Đồng ngay bên dưới gầm ban thờ để thâu tóm uế sát.<br>• <b>Thạch Anh Ngũ Sắc:</b> Sử dụng đĩa đá Thạch Anh ngũ sắc bày trên ban thờ nhằm bổ sung dương khí liên tục, tái tạo trường năng lượng linh thiêng an lành.`;
+                    } else if (mụcĐích === 'bed') {
+                        mậtPháp += `• <b>Hồ lô Gỗ Đào đầu giường:</b> Treo trực tiếp một chiếc Hồ Lô Gỗ Đào tự nhiên tại điểm đầu giường ngủ để thâu hút bệnh tật ác sát, chấm dứt các triệu chứng mất ngủ, ác mộng triền miên do hung khí quấy nhiễu khi ngủ.<br>• <b>Trấn đá thạch thô:</b> Đặt các khối đá Thạch Anh Trắng thô hoặc Thạch Anh Hồng dưới gầm giường để trung hòa từ trường tiêu cực từ lòng đất phóng lên.`;
+                    } else if (mụcĐích === 'workspace') {
+                        mậtPháp += `• <b>Quả cầu Thạch Anh Thanh Long:</b> Bày quả cầu đá Thạch Anh (màu sắc tương sinh mệnh hoặc màu trắng/vàng) tại góc trái bàn làm việc (phía Thanh Long) để tăng cường chính khí, chế ngự tiểu nhân đố kỵ và thông suốt trí tuệ.<br>• <b>Chuỗi xu Ngũ Đế tựa sơn:</b> Treo một chuỗi tiền cổ Ngũ Đế ngay sau mặt lưng tựa ghế ngồi để làm điểm tựa Huyền Vũ kiên cố nâng đỡ công danh.`;
+                    }
+                    
+                    detailBox.innerHTML = `<span class="warn-text">◆ HƯỚNG HUNG (${cungTrạch.toUpperCase()}) - NÊN TRÁNH:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Tuyệt đối không đặt mặt hướng của ${tênThiếtBị} nhìn về phương vị này. Phạm phải hung tinh sẽ gây ra tổn hao nguyên khí, mang lại rủi ro và trắc trở cho gia đạo.${mậtPháp}`;
                 }
             } 
             else {
@@ -864,7 +906,15 @@
                     detailBox.innerHTML = `<span class="good-text">◆ TỌA HUNG ĐẮC CÁCH (${cungTrạch.toUpperCase()}) - RẤT TỐT:</span><br>Vị trí này thuộc hung vị lý tưởng <span class="warn-text">(${cungTrạch})</span>.<br><br>Nguyên lý Phong Thủy: Thiết bị xả uế hoặc sinh hỏa đun nấu đặt đè trên tọa độ hung tinh này sẽ "Lấy Độc Trị Độc", thiêu rụi và cuốn trôi vận xui rủi, hung hại ra khỏi gia trạch. Đạt chuẩn Tọa Hung Hóa Sát.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    detailBox.innerHTML = `<span class="warn-text">◆ TỌA CÁT PHẠM SÁT (${cungTrạch.toUpperCase()}) - ĐẠI KỴ:</span><br>Bạn đang đặt thiết bị đè trực tiếp lên cung tốt lành <span class="good-text">(${cungTrạch})</span>.<br><br>Lưu ý nghiêm trọng: Tránh tuyệt đối đặt bồn cầu hoặc bếp lửa tại đây để không thiêu rụi hay cuốn trôi phước báu, sức khỏe và tài lộc của gia đình. Cần tìm phương vị khác.`;
+                    
+                    let mậtPhápTọa = `<br><br><span class="warn-text"><b>☯ MẬT PHÁP HÓA GIẢI THẾ SÁT "TỌA CÁT PHẠM SÁT" CHO ${tênThiếtBị}:</b></span><br>`;
+                    if (mụcĐích === 'kitchen') {
+                        mậtPhápTọa += `• <b>Bảo lưu sinh khí:</b> Việc hỏa thiêu cung vị Cát tốt lành sẽ làm thiêu rụi tài lộc phước đức nội trạch. Hãy bài trí một đĩa Thạch Anh Vàng thô hoặc chuỗi tiền cổ Lục Đế bên dưới gầm tủ bếp nấu để tụ khí giữ lại dòng năng lượng lành không bị lửa thiêu cháy sạch.<br>• <b>Hũ muối điều khí:</b> Đặt một vài chén muối hạt khô sạch quanh chân bếp để hút bớt hỏa sát ác tính xâm lấn cung tốt.`;
+                    } else if (mụcĐích === 'toilet') {
+                        mậtPhápTọa += `• <b>Chặn dòng chảy thoát tài phước:</b> Nước thải từ WC đặt trên cung Cát sẽ cuốn trôi sạch sẽ may mắn, sức khỏe gia đình. Hãy treo ngay bình Hồ Lô Gỗ Đào ở cửa phòng vệ sinh hướng mặt ra ngoài để khóa chặt uế uất khí.<br>• <b>Trận pháp cây xanh mượn lực Mộc:</b> Đặt một chậu cây xanh tán rộng phát triển mạnh ưa ẩm (như Trầu bà, Lưỡi hổ) kết hợp bát nước muối thô thạch anh trắng bên trong WC để chuyển hóa bớt dòng chảy tiêu cực, bảo vệ phúc trạch.`;
+                    }
+
+                    detailBox.innerHTML = `<span class="warn-text">◆ TỌA CÁT PHẠM SÁT (${cungTrạch.toUpperCase()}) - ĐẠI KỴ:</span><br>Bạn đang đặt thiết bị đè trực tiếp lên cung tốt lành <span class="good-text">(${cungTrạch})</span>.<br><br>Lưu ý nghiêm trọng: Tránh tuyệt đối đặt bồn cầu hoặc bếp lửa tại đây để không thiêu rụi hay cuốn trôi phước báu, sức khỏe và tài lộc của gia đình. Cần tìm phương vị khác.${mậtPhápTọa}`;
                 }
             }
         }
@@ -883,13 +933,16 @@
         function saveCurrentMember() {
             const name = document.getElementById('userName').value.trim();
             const gender = document.getElementById('gender').value;
-            const birthDate = document.getElementById('birthDate').value;
+            const day = document.getElementById('birthDay').value;
+            const month = document.getElementById('birthMonth').value;
+            const year = document.getElementById('birthYear').value;
 
             if(!name || name === "Người Tầm Phương") { alert("Vui lòng nhập họ tên thật của thành viên gia đình!"); return; }
-            if(!birthDate) { alert("Vui lòng chọn ngày tháng năm sinh!"); return; }
+            if(!day || !month || !year) { alert("Vui lòng nhập đầy đủ ngày tháng năm sinh!"); return; }
 
             let data = JSON.parse(localStorage.getItem('fengshui_members')) || [];
             data = data.filter(m => m.name !== name);
+            const birthDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
             data.push({ name, gender, birthDate });
             localStorage.setItem('fengshui_members', JSON.stringify(data));
             
@@ -920,7 +973,13 @@
             document.getElementById('userName').value = name;
             document.getElementById('userName').style.color = '#fff';
             document.getElementById('gender').value = gender;
-            document.getElementById('birthDate').value = birthDate;
+            
+            const parts = birthDate.split('-');
+            if(parts.length === 3) {
+                document.getElementById('birthYear').value = parts[0];
+                document.getElementById('birthMonth').value = parseInt(parts[1]);
+                document.getElementById('birthDay').value = parseInt(parts[2]);
+            }
             recalculateFate();
         }
 
@@ -943,7 +1002,9 @@
                 nameInput.value = "Người Tầm Phương";
                 nameInput.style.color = "#aaa";
 
-                document.getElementById('birthDate').value = "";
+                document.getElementById('birthDay').value = "1";
+                document.getElementById('birthMonth').value = "1";
+                document.getElementById('birthYear').value = "1990";
                 document.getElementById('purpose').value = "";
                 document.getElementById('gender').value = "male";
 
@@ -1001,20 +1062,17 @@
             const crText = "© BẢN QUYỀN HỆ THỐNG THUỘC VỀ THÁI THÔNG";
             console.log("%c" + crText, "color: #dfb76c; font-size: 16px; font-weight: bold; background: #161616; padding: 12px; border: 2px solid #dfb76c; border-radius: 8px;");
             
-            // Chống chuột phải cơ bản ở ngoài khu vực input
             document.addEventListener('contextmenu', function(e) {
                 if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT') {
                     e.preventDefault();
                 }
             }, false);
 
-            // Gắn thông báo bản quyền khi copy nội dung
             document.addEventListener('copy', function(e) {
                 e.clipboardData.setData('text/plain', 'Nội dung được bảo vệ. ' + crText);
                 e.preventDefault();
             });
 
-            // Watermark chìm bảo vệ code (hiển thị mờ sau nền body)
             const stealthWatermark = document.createElement('div');
             stealthWatermark.innerHTML = "THÁI THÔNG PHONG THỦY";
             stealthWatermark.style.cssText = "position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 12vw; color: rgba(255, 255, 255, 0.02); z-index: 0; pointer-events: none; font-weight: 900; user-select: none; white-space: nowrap; text-align: center;";
