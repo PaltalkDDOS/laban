@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đại Thuật La Kinh Phong Thủy Tối Thượng</title>
+    <style>
+        :root {
+            --gold: #dfb76c;
+            --dark: #070707;
+            --panel: #121212;
+            --text: #e0e0e0;
+            --red: #ff3b30;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark);
+            color: var(--text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding: 15px;
+            border-bottom: 2px solid var(--gold);
+            width: 100%;
+            background: linear-gradient(180deg, #1f1a10 0%, var(--dark) 100%);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .header h1 {
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* KHUNG LA BÀN TIÊU CHUẨN VẬT LÝ */
+        .compass-container {
+            position: relative;
+            width: 340px;
+            height: 340px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Sợi chỉ đỏ Thiên Tâm cố định dọc máy để ngắm hướng nhà */
+        .cross-line-v {
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: var(--red);
+            z-index: 4;
+            pointer-events: none;
+        }
+        .cross-line-h {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 59, 48, 0.2);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Mặt La Kinh phân tầng - Sẽ xoay dựa theo từ trường thật */
+        .compass-dial {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 6px double var(--gold);
+            border-radius: 50%;
+            background: radial-gradient(circle, #222 0%, #050505 70%, #111 100%);
+            box-shadow: 0 0 30px rgba(223, 183, 108, 0.15);
+            transform: rotate(0deg);
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+            z-index: 1;
+        }
+
+        /* Kim chỉ Nam-Bắc (Kim từ tính nằm trong mặt kính) */
+        .center-needle {
+            position: absolute;
+            width: 14px;
+            height: 90%;
+            background: linear-gradient(to bottom, var(--red) 50%, #ccc 50%);
+            clip-path: polygon(50% 0%, 100% 15%, 60% 15%, 60% 85%, 100% 85%, 50% 100%, 0% 85%, 40% 85%, 40% 15%, 0% 15%);
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .center-pin {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: var(--gold);
+            border-radius: 50%;
+            z-index: 5;
+            box-shadow: 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        /* Nhãn hướng trên mặt la bàn */
+        .direction-label {
+            position: absolute;
+            font-weight: bold;
+            font-size: 0.85rem;
+            text-align: center;
+            width: 60px;
+            transform-origin: center center;
+        }
+        
+        /* Định vị chuẩn Bát Quái (Bắc ở trên, Nam ở dưới làm gốc) */
+        .lbl-kham { color: var(--red); top: 15px; left: 140px; } 
+        .lbl-ly { color: var(--gold); bottom: 15px; left: 140px; transform: rotate(180deg); } 
+        .lbl-chan { color: var(--gold); right: 10px; top: 160px; transform: rotate(90deg); } 
+        .lbl-doai { color: var(--gold); left: 10px; top: 160px; transform: rotate(-90deg); } 
+        
+        .lbl-can { color: var(--gold); top: 55px; right: 55px; transform: rotate(45deg); } 
+        .lbl-ton { color: var(--gold); bottom: 55px; right: 55px; transform: rotate(135deg); } 
+        .lbl-khon { color: var(--gold); bottom: 55px; left: 55px; transform: rotate(-135deg); } 
+        .lbl-can2 { color: var(--gold); top: 55px; left: 55px; transform: rotate(-45deg); }
+
+        .status-panel {
+            width: 90%;
+            max-width: 450px;
+            background: var(--panel);
+            border: 1px solid var(--gold);
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        .degree-display {
+            font-size: 1.4rem;
+            color: var(--gold);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(223, 183, 108, 0.3);
+        }
+
+        .son-huong-display {
+            font-size: 0.95rem;
+            color: #ccc;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .control-box {
+            width: 90%;
+            max-width: 450px;
+            background: #1a1510;
+            border: 1px solid #443322;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        .control-box label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--gold);
+            margin-bottom: 6px;
+            text-align: center;
+        }
+        .slider {
+            width: 100%;
+            accent-color: var(--gold);
+        }
+
+        #permission-btn {
+            display: none; /* Mặc định ẩn, chỉ hiện trên iOS */
+            background: var(--red);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 15px;
+            box-shadow: 0 0 15px rgba(255, 59, 48, 0.4);
+        }
+
+        .explanation-panel {
+            width: 90%;
+            max-width: 450px;
+            background: var(--panel);
+            border: 1px solid #252525;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 30px;
+            box-sizing: border-box;
+        }
+
+        .panel-title {
+            color: var(--gold);
+            font-size: 0.95rem;
+            margin: 0 0 12px 0;
+            border-bottom: 1px solid #252525;
+            padding-bottom: 8px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .detail-content {
+            background: #080808;
+            border-left: 3px solid var(--gold);
+            padding: 12px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            min-height: 120px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .warn-text { color: #ff3b30; font-weight: bold; }
+        .good-text { color: #30d158; font-weight: bold; }
+        .gold-text { color: var(--gold); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>ĐẠI THUẬT LA KINH PHONG THỦY</h1>
+    </div>
+
+    <div class="compass-container">
+        <div class="cross-line-v"></div>
+        <div class="cross-line-h"></div>
+        <div class="center-pin"></div>
+        <div class="center-needle" id="needle"></div>
+        
+        <div class="compass-dial" id="compass">
+            <div class="direction-label lbl-kham">BẮC<br>▲<br>KHẢM</div>
+            <div class="direction-label lbl-can">Đ.BẮC<br>CẤN</div>
+            <div class="direction-label lbl-chan">ĐÔNG<br>CHẤN</div>
+            <div class="direction-label lbl-ton">Đ.NAM<br>TỐN</div>
+            <div class="direction-label lbl-ly">NAM<br>LY</div>
+            <div class="direction-label lbl-khon">T.NAM<br>KHÔN</div>
+            <div class="direction-label lbl-doai">TÂY<br>ĐOÀI</div>
+            <div class="direction-label lbl-can2">T.BẮC<br>CÀN</div>
+        </div>
+    </div>
+
+    <button id="permission-btn" onclick="requestPermission()">KÍCH HOẠT SENSOR IPHONE</button>
+
+    <div class="status-panel">
+        <div class="degree-display" id="degree-txt">0° - CUNG KHẢM (BẮC)</div>
+        <div class="son-huong-display" id="son-huong-txt">Sơn Hướng: Tý (Chính Bắc)</div>
+    </div>
+
+    <div class="control-box">
+        <label>Thanh gạt xoay thử nghiệm trên PC (0° - 360°):</label>
+        <input type="range" min="0" max="360" value="0" class="slider" id="compassSlider" oninput="manualRotate(this.value)">
+    </div>
+
+    <div class="explanation-panel">
+        <p class="panel-title">Mật pháp Long Mạch Hiện Thời</p>
+        <div class="detail-content" id="detail-box">
+            Đặt điện thoại nằm ngửa thật phẳng. Xoay đỉnh máy về hướng cần đo để la bàn tự động tầm long định mạch.
+        </div>
+    </div>
+
+    <script>
+        const compass = document.getElementById('compass');
+        const needle = document.getElementById('needle');
+        const degreeTxt = document.getElementById('degree-txt');
+        const sonHuongTxt = document.getElementById('son-huong-txt');
+        const compassSlider = document.getElementById('compassSlider');
+        const permBtn = document.getElementById('permission-btn');
+
+        const dataDetails = {
+            'N': `<strong>PHƯƠNG CHÍNH BẮC (Cung Khảm - Thuộc Thủy)</strong><br><br>• <span class="good-text">TẦM LONG:</span> Sự nghiệp, tiền tài xa xứ. Khí mạch phương này cần tĩnh.<br>• <span class="warn-text">SÁT KHÍ:</span> Kỵ nhà vệ sinh bẩn, đống rác $\rightarrow$ Tổn hại tâm bệnh, rò rỉ dòng tiền.<br>• <span class="gold-text">CẢI VẬN:</span> Đặt Tháp Văn Xương bằng đồng hoặc bể cá sạch để kích hoạt Thủy sinh tài.`,
+            'NE': `<strong>PHƯƠNG ĐÔNG BẮC (Cung Cấn - Thuộc Thổ)</strong><br><br>• <span class="good-text">TẦM LONG:</span> Học vấn, tư duy đại cục và sự ổn định điền sản.<br>• <span class="warn-text">SÁT KHÍ:</span> Khuyết góc hoặc góc nhọn chĩa vào $\rightarrow$ Quyết định sai lầm, dễ gánh nợ thay.<br>• <span class="gold-text">CẢI VẬN:</span> Dùng quả cầu Thạch Anh vàng để trấn mạch Thổ ổn định.`,
+            'E': `<strong>PHƯƠNG CHÍNH ĐÔNG (Cung Chấn - Thuộc Mộc)</strong><br><br>• <span class="good-text">TẦM LONG:</span> Sức khỏe, sinh lực và vị trí của người Trưởng nam.<br>• <span class="warn-text">SÁT KHÍ:</span> Có sắt thép rỉ sét, dao kéo sắc nhọn $\rightarrow$ Kim khắc Mộc, dễ gặp tai nạn bất ngờ.<br>• <span class="gold-text">CẢI VẬN:</span> Đặt 3-4 chậu cây xanh tươi tốt để nuôi dưỡng sinh khí.`,
+            'SE': `<strong>PHƯƠNG ĐÔNG NAM (Cung Tốn - Thuộc Mộc)</strong><br><br>• <span class="good-text">TẦM LONG:</span> <span class="gold-text">CUNG TÀI BẠCH TOÀN DIỆN</span>, chủ quản tích lũy tài sản.<br>• <span class="warn-text">SÁT KHÍ:</span> Phương này ẩm mốc, u tối $\rightarrow$ Tiền bạc tán sạch, đối tác lừa lọc.<br>• <span class="gold-text">CẢI VẬN:</span> Đặt hũ tài lộc hoặc Tỳ Hưu tại đây để khóa chặt luồng tiền.`,
+            'S': `<strong>PHƯƠNG CHÍNH NAM (Cung Ly - Thuộc Hỏa)</strong><br><br>• <span class="good-text">TẦM LONG:</span> Đỉnh cao danh vọng, địa vị và sự thông tuệ.<br>• <span class="warn-text">SÁT KHÍ:</span> Bị Thủy xung khắc (bể nước thải, rò rỉ nước hôi) $\rightarrow$ Mang tiếng thị phi, tiểu nhân đâm sau lưng.<br>• <span class="gold-text">CẢI VẬN:</span> Thắp đèn sáng ấm hoặc treo tranh Mã Đáo Thành Công.`,
+            'SW': `<strong>PHƯƠNG TÂY NAM (Cung Khôn - Thuộc Thổ)</strong><br><br>• <span class="good-text">TẦM LONG:</span> Nhân duyên, cung Phu Thê và người phụ nữ trong nhà.<br>• <span class="warn-text">SÁT KHÍ:</span> Tường nứt nẻ, ống nước bẩn chảy qua $\rightarrow$ Gia đạo lục đục, tình cảm rạn nứt.<br>• <span class="gold-text">CẢI VẬN:</span> Đặt cặp bình gốm sứ hoặc đôi uyên ương thạch anh hồng.`,
+            'W': `<strong>PHƯƠNG CHÍNH TÂY (Cung Đoài - Thuộc Kim)</strong><br><br>• <span class="good-text">TẦM LONG:</span> Cung Tử Tức (con cái) và năng lực giao tiếp thực chiến.<br>• <span class="warn-text">SÁT KHÍ:</span> Đặt bếp rực lửa tại đây $\rightarrow$ Thế trận "Hỏa thiêu Thiên môn", hao tán trắng tay.<br>• <span class="gold-text">CẢI VẬN:</span> Treo chuông gió bằng đồng 6 thanh để điều hòa Kim khí.`,
+            'NW': `<strong>PHƯƠNG TÂY BẮC (Cung Càn - Thuộc Kim)</strong><br><br>• <span class="good-text">TẦM LONG:</span> <span class="gold-text">QUÝ NHÂN THẦN LỰC</span>, vị thế người trụ cột gia đình.<br>• <span class="warn-text">SÁT KHÍ:</span> Bị khuyết góc hoặc làm kho phế thải $\rightarrow$ Trụ cột mất chỗ dựa, mất nguồn trợ giúp.<br>• <span class="gold-text">CẢI VẬN:</span> Đặt tượng Thần Tài hoặc đặt một La bàn đồng tại phương này.`
+        };
+
+        function updateCompassUI(heading) {
+            let rounded = Math.round(heading);
+            
+            // CHUẨN VẬT LÝ: Mặt la bàn xoay ngược hướng máy để chữ hướng giữ nguyên vị trí địa lý thực
+            compass.style.transform = `rotate(${-rounded}deg)`;
+            // Kim chỉ nam xoay đồng bộ để đầu đỏ luôn hướng thẳng về hướng Bắc thật
+            needle.style.transform = `rotate(${-rounded}deg)`;
+            
+            compassSlider.value = rounded;
+
+            let currentCung = ""; let currentSon = ""; let code = "";
+
+            // Phân chia 8 hướng chuẩn xác theo vòng tròn 360 độ
+            if (rounded >= 338 || rounded < 23) { currentCung = "KHẢM (BẮC)"; currentSon = "Tý (Chính Bắc)"; code = "N"; }
+            else if (rounded >= 23 && rounded < 68) { currentCung = "CẤN (ĐÔNG BẮC)"; currentSon = "Cấn (Chính Đông Bắc)"; code = "NE"; }
+            else if (rounded >= 68 && rounded < 113) { currentCung = "CHẤN (ĐÔNG)"; currentSon = "Mão (Chính Đông)"; code = "E"; }
+            else if (rounded >= 113 && rounded < 158) { currentCung = "TỐN (ĐÔNG NAM)"; currentSon = "Tốn (Chính Đông Nam)"; code = "SE"; }
+            else if (rounded >= 158 && rounded < 203) { currentCung = "LY (NAM)"; currentSon = "Ngọ (Chính Nam)"; code = "S"; }
+            else if (rounded >= 203 && rounded < 248) { currentCung = "KHÔN (TÂY NAM)"; currentSon = "Khôn (Chính Tây Nam)"; code = "SW"; }
+            else if (rounded >= 248 && rounded < 293) { currentCung = "ĐOÀI (TÂY)"; currentSon = "Tân (Chính Tây)"; code = "W"; }
+            else if (rounded >= 293 && rounded < 338) { currentCung = "CÀN (TÂY BẮC)"; currentSon = "Càn (Chính Tây Bắc)"; code = "NW"; }
+
+            degreeTxt.innerText = `${rounded}° - CUNG ${currentCung}`;
+            sonHuongTxt.innerText = `Sơn Hướng hiện tại: ${currentSon}`;
+            document.getElementById('detail-box').innerHTML = dataDetails[code];
+        }
+
+        function handleOrientation(event) {
+            // Hỗ trợ webkitCompassHeading của iOS hoặc alpha chuẩn của Android
+            let heading = event.webkitCompassHeading || (event.alpha ? (360 - event.alpha) : null);
+            if (heading !== null) {
+                updateCompassUI(heading);
+            }
+        }
+
+        // Tự động kiểm tra hệ điều hành khi tải trang
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                // Đây là thiết bị iOS (iPhone/iPad) -> Bắt buộc hiện nút xin quyền
+                permBtn.style.display = 'block';
+            } else {
+                // Thiết bị Android hoặc PC -> Tự động kích hoạt luôn, không cần bấm nút
+                window.addEventListener('deviceorientation', handleOrientation);
+            }
+        });
+
+        function requestPermission() {
+            DeviceOrientationEvent.requestPermission()
+                .then(response => {
+                    if (response == 'granted') {
+                        window.addEventListener('deviceorientation', handleOrientation);
+                        permBtn.style.display = 'none';
+                    } else {
+                        alert("Quyền truy cập cảm biến bị từ chối! Hãy dùng thanh gạt tay bên dưới.");
+                    }
+                }).catch(console.error);
+        }
+
+        function manualRotate(value) {
+            updateCompassUI(value);
+        }
+    </script>
+</body>
+</html>
