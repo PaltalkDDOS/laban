@@ -12,6 +12,8 @@
             --text: #e0e0e0;
             --red: #ff3b30;
             --green: #30d158;
+            --blue: #0a84ff;
+            --gray: #8e8e93;
         }
 
         * {
@@ -24,7 +26,7 @@
             padding: 0;
             background-color: var(--dark);
             color: var(--text);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -49,10 +51,9 @@
             letter-spacing: 1px;
         }
 
-        /* KHU VỰC NHẬP THÔNG TIN - CHỐNG VỠ KHUNG MOBILE */
         .user-input-panel {
             width: 92%;
-            max-width: 420px;
+            max-width: 430px;
             background: #1a1510;
             border: 1px solid #443322;
             padding: 12px;
@@ -62,8 +63,8 @@
 
         .form-row {
             display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 8px;
+            margin-bottom: 8px;
         }
 
         .form-group {
@@ -83,48 +84,96 @@
             background: #2a2218;
             border: 1px solid var(--gold);
             color: #fff;
-            padding: 10px 8px;
+            padding: 8px;
             border-radius: 4px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             outline: none;
-            width: 100%;
-            height: 40px;
+            height: 38px;
         }
 
-        .checkbox-group {
+        .btn-action-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .btn-main {
+            flex: 1;
+            background: linear-gradient(180deg, #c5a059, #9a7b3e);
+            color: #000;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .btn-sec {
+            background: #222;
+            color: #ccc;
+            border: 1px solid #444;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        /* DANH SÁCH LƯU TRỮ */
+        .saved-list-panel {
+            width: 92%;
+            max-width: 430px;
+            background: #111;
+            margin-top: 8px;
+            border-radius: 6px;
+            padding: 6px;
+            border: 1px dashed #332211;
+        }
+
+        .saved-container {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .saved-chip {
+            background: #252018;
+            border: 1px solid #554433;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            color: #ddd;
+            cursor: pointer;
+            white-space: nowrap;
             display: flex;
             align-items: center;
             gap: 6px;
-            margin-bottom: 10px;
-            font-size: 0.8rem;
-            color: #ccc;
         }
+        .saved-chip:hover { border-color: var(--gold); }
+        .saved-chip .del-btn { color: var(--red); font-weight: bold; margin-left: 4px; }
 
-        .checkbox-group input {
-            width: 16px;
-            height: 16px;
-            accent-color: var(--gold);
-        }
-
-        /* KHUNG LA BÀN THÍCH ỨNG MỌI MÀN HÌNH ĐIỆN THOẠI */
+        /* KHUNG LA BÀN */
         .compass-container {
             position: relative;
-            width: 290px;
-            height: 290px;
-            max-width: 85vw;
-            max-height: 85vw;
+            width: 320px;
+            height: 320px;
+            max-width: 88vw;
+            max-height: 88vw;
             margin: 15px auto;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
 
         .cross-line-v {
             position: absolute;
-            width: 2px;
+            width: 1.5px;
             height: 100%;
             background: var(--red);
-            z-index: 4;
+            z-index: 10;
             pointer-events: none;
         }
 
@@ -141,82 +190,127 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            border: 5px double var(--gold);
+            border: 4px double var(--gold);
             border-radius: 50%;
-            background: radial-gradient(circle, #222 0%, #050505 70%, #111 100%);
+            background: radial-gradient(circle, #1a1a1a 0%, #050505 65%, #111 100%);
             box-shadow: 0 0 20px rgba(223, 183, 108, 0.2);
             z-index: 1;
             will-change: transform;
             transition: transform 0.2s ease-out;
         }
 
+        /* KIM THỰC TẾ & KIM THỬ HƯỚNG */
         .center-needle {
             position: absolute;
-            width: 10px;
-            height: 90%;
+            width: 8px;
+            height: 85%;
             background: linear-gradient(to bottom, var(--red) 50%, #ccc 50%);
             clip-path: polygon(50% 0%, 100% 15%, 60% 15%, 60% 85%, 100% 85%, 50% 100%, 0% 85%, 40% 85%, 40% 15%, 0% 15%);
-            z-index: 3;
+            z-index: 8;
             pointer-events: none;
+        }
+
+        .ghost-needle {
+            position: absolute;
+            width: 6px;
+            height: 80%;
+            background: linear-gradient(to bottom, var(--blue) 50%, rgba(10,132,255,0.2) 50%);
+            clip-path: polygon(50% 0%, 100% 15%, 60% 15%, 60% 85%, 100% 85%, 50% 100%, 0% 85%, 40% 85%, 40% 15%, 0% 15%);
+            z-index: 7;
+            pointer-events: none;
+            opacity: 0;
+            transition: transform 0.4s ease-out, opacity 0.3s;
         }
 
         .center-pin {
             position: absolute;
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             background: var(--gold);
             border-radius: 50%;
-            z-index: 5;
-            box-shadow: 0 0 8px rgba(0,0,0,0.8);
+            z-index: 12;
+            box-shadow: 0 0 5px rgba(0,0,0,0.8);
         }
 
+        /* NHÃN HƯỚNG & VÒNG 24 SƠN */
         .direction-label {
             position: absolute;
             font-weight: bold;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-align: center;
-            width: 50px;
-            height: 35px;
+            width: 44px;
+            height: 30px;
             line-height: 1.1;
         }
         
-        /* Cân chỉnh tọa độ nhãn la bàn đều tăm tắp */
-        .lbl-kham { color: var(--red); top: 8px; left: calc(50% - 25px); } 
-        .lbl-ly { color: var(--gold); bottom: 8px; left: calc(50% - 25px); transform: rotate(180deg); } 
-        .lbl-chan { color: var(--gold); right: 4px; top: calc(50% - 17px); transform: rotate(90deg); } 
-        .lbl-doai { color: var(--gold); left: 4px; top: calc(50% - 17px); transform: rotate(-90deg); } 
-        .lbl-can { color: var(--gold); top: 35px; right: 35px; transform: rotate(45deg); } 
-        .lbl-ton { color: var(--gold); bottom: 35px; right: 35px; transform: rotate(135deg); } 
-        .lbl-khon { color: var(--gold); bottom: 35px; left: 35px; transform: rotate(-135deg); } 
-        .lbl-can2 { color: var(--gold); top: 35px; left: 35px; transform: rotate(-45deg); }
+        .lbl-kham { color: var(--red); top: 12px; left: calc(50% - 22px); } 
+        .lbl-ly { color: var(--gold); bottom: 12px; left: calc(50% - 22px); transform: rotate(180deg); } 
+        .lbl-chan { color: var(--gold); right: 8px; top: calc(50% - 15px); transform: rotate(90deg); } 
+        .lbl-doai { color: var(--gold); left: 8px; top: calc(50% - 15px); transform: rotate(-90deg); } 
+        .lbl-can { color: var(--gold); top: 40px; right: 40px; transform: rotate(45deg); } 
+        .lbl-ton { color: var(--gold); bottom: 40px; right: 40px; transform: rotate(135deg); } 
+        .lbl-khon { color: var(--gold); bottom: 40px; left: 40px; transform: rotate(-135deg); } 
+        .lbl-can2 { color: var(--gold); top: 40px; left: 40px; transform: rotate(-45deg); }
 
-        /* BẢNG TRẠNG THÁI */
+        .son-ring-text {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .son-item {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 20px;
+            margin-left: -10px;
+            height: 50%;
+            transform-origin: bottom center;
+            font-size: 0.5rem;
+            color: #8a8a8f;
+            text-align: center;
+            padding-top: 45px;
+        }
+
+        /* BẢNG TRẠNG THÁI & NGŨ HÀNH */
         .status-panel {
             width: 92%;
-            max-width: 420px;
+            max-width: 430px;
             background: var(--panel);
             border: 1px solid var(--gold);
             padding: 12px;
             border-radius: 8px;
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .degree-display {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--gold);
             font-weight: bold;
         }
 
+        .element-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-top: 4px;
+            font-weight: bold;
+        }
+
         .fate-display {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #fff;
             background: #222;
             padding: 6px;
             margin: 6px 0;
             border-radius: 4px;
             border-left: 4px solid var(--gold);
-            font-weight: 500;
+            text-align: left;
         }
 
         .judgment-badge {
@@ -224,8 +318,8 @@
             padding: 4px 12px;
             border-radius: 15px;
             font-weight: bold;
-            font-size: 0.95rem;
-            margin-top: 4px;
+            font-size: 0.85rem;
+            margin-top: 2px;
             text-transform: uppercase;
         }
         .bg-good { background-color: rgba(48, 209, 88, 0.15); color: var(--green); border: 1px solid var(--green); }
@@ -233,13 +327,13 @@
 
         .control-box {
             width: 92%;
-            max-width: 420px;
+            max-width: 430px;
             background: #111;
-            padding: 8px;
+            padding: 6px;
             border-radius: 6px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
-        .slider { width: 100%; accent-color: var(--gold); height: 25px; }
+        .slider { width: 100%; accent-color: var(--gold); height: 20px; }
 
         #permission-btn {
             display: none;
@@ -253,14 +347,13 @@
             cursor: pointer;
             margin-bottom: 12px;
             width: 92%;
-            max-width: 420px;
-            box-shadow: 0 0 10px rgba(255, 59, 48, 0.3);
+            max-width: 430px;
         }
 
-        /* DANH SÁCH HƯỚNG TỰ ĐỘNG - GỢI Ý ĐIỀU HƯỚNG NHANH */
+        /* DANH SÁCH HƯỚNG GỢI Ý */
         .directions-list-panel {
             width: 92%;
-            max-width: 420px;
+            max-width: 430px;
             background: var(--panel);
             border: 1px solid #282828;
             border-radius: 8px;
@@ -270,7 +363,7 @@
 
         .list-title {
             color: var(--gold);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: bold;
             margin: 0 0 10px 0;
             text-transform: uppercase;
@@ -284,10 +377,10 @@
             justify-content: space-between;
             align-items: center;
             background: #0d0d0d;
-            padding: 8px 10px;
+            padding: 6px 10px;
             margin-bottom: 6px;
             border-radius: 4px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             border-left: 4px solid #333;
         }
 
@@ -300,7 +393,7 @@
             gap: 2px;
         }
         .item-name { font-weight: bold; color: #fff; }
-        .item-cung { font-size: 0.75rem; }
+        .item-cung { font-size: 0.7rem; }
 
         .btn-rotate {
             background: #2a2218;
@@ -312,14 +405,10 @@
             cursor: pointer;
             font-weight: bold;
         }
-        .btn-rotate:active {
-            background: var(--gold);
-            color: #000;
-        }
 
         .explanation-panel {
             width: 92%;
-            max-width: 420px;
+            max-width: 430px;
             background: var(--panel);
             border: 1px solid #252525;
             border-radius: 8px;
@@ -336,6 +425,7 @@
 
         .warn-text { color: var(--red); font-weight: bold; }
         .good-text { color: var(--green); font-weight: bold; }
+        .blue-text { color: var(--blue); font-weight: bold; }
     </style>
 </head>
 <body>
@@ -347,11 +437,11 @@
     <div class="user-input-panel">
         <div class="form-row">
             <div class="form-group" style="flex: 1.2;">
-                <label>Họ và Tên chủ mệnh:</label>
+                <label>Họ tên chủ mệnh:</label>
                 <input type="text" id="userName" value="Người Tầm Phương" oninput="recalculateFate()">
             </div>
             <div class="form-group" style="flex: 0.8;">
-                <label>Giới tính phối mệnh:</label>
+                <label>Giới tính:</label>
                 <select id="gender" onchange="recalculateFate()">
                     <option value="male">Nam Mạng</option>
                     <option value="female">Nữ Mạng</option>
@@ -360,31 +450,32 @@
         </div>
 
         <div class="form-row">
-            <div class="form-group" id="yearInputGroup">
-                <label>Năm sinh (Dương lịch):</label>
-                <input type="number" id="birthYear" value="1990" min="1930" max="2030" onchange="recalculateFate()">
-            </div>
-            <div class="form-group" id="dateInputGroup" style="display: none;">
-                <label>Ngày & Tháng sinh:</label>
+            <div class="form-group">
+                <label>Ngày tháng năm sinh (Dương lịch):</label>
                 <input type="date" id="birthDate" value="1990-01-01" onchange="recalculateFate()">
             </div>
         </div>
 
-        <div class="checkbox-group">
-            <input type="checkbox" id="useFullDate" onchange="toggleDateInput()">
-            <label for="useFullDate">Có đầy đủ ngày tháng sinh dương lịch</label>
-        </div>
-
-        <div class="form-group">
-            <label>Mục đích tầm phương vị:</label>
+        <div class="form-group" style="margin-bottom: 6px;">
+            <label>Mục đích tầm phương vị dương trạch:</label>
             <select id="purpose" onchange="recalculateFate()">
                 <option value="house">Xem hướng Nhà, Cửa Chính (Cần Hướng Cát)</option>
                 <option value="altar">Xem hướng đặt BÀN THỜ (Cần Hướng Cát)</option>
                 <option value="bed">Xem hướng đầu GIƯỜNG NGỦ (Cần Hướng Cát)</option>
+                <option value="workspace">Xem hướng đặt BÀN LÀM VIỆC (Cần Hướng Cát)</option>
                 <option value="kitchen">Xem vị trí đặt BẾP NẤU (Tọa Hung Hướng Cát)</option>
                 <option value="toilet">Xem vị trí nhà vệ sinh / WC (Tọa Hung giải uế)</option>
             </select>
         </div>
+
+        <div class="btn-action-row">
+            <button class="btn-main" onclick="saveCurrentMember()">Lưu Tuổi Gia Đình</button>
+            <button class="btn-sec" onclick="clearAllData()">Làm Mới Trang</button>
+        </div>
+    </div>
+
+    <div class="saved-list-panel" id="savedPanel" style="display: none;">
+        <div class="saved-container" id="savedContainer"></div>
     </div>
 
     <div class="compass-container">
@@ -392,6 +483,7 @@
         <div class="cross-line-h"></div>
         <div class="center-pin"></div>
         <div class="center-needle" id="needle"></div>
+        <div class="ghost-needle" id="ghostNeedle"></div>
         
         <div class="compass-dial" id="compass">
             <div class="direction-label lbl-kham">BẮC<br>▲<br>KHẢM</div>
@@ -402,6 +494,8 @@
             <div class="direction-label lbl-khon">T.NAM<br>KHÔN</div>
             <div class="direction-label lbl-doai">TÂY<br>ĐOÀI</div>
             <div class="direction-label lbl-can2">T.BẮC<br>CÀN</div>
+
+            <div class="son-ring-text" id="sonRing"></div>
         </div>
     </div>
 
@@ -409,6 +503,7 @@
 
     <div class="status-panel">
         <div class="degree-display" id="degree-txt">0° - CUNG KHẢM (BẮC)</div>
+        <div id="element-box"></div>
         <div class="fate-display" id="fate-txt">Mệnh chủ: ...</div>
         <div id="judgment-box" class="judgment-badge bg-good">...</div>
     </div>
@@ -419,20 +514,19 @@
 
     <div class="directions-list-panel">
         <p class="list-title" id="list-panel-title">Danh Sách Hướng Gợi Ý</p>
-        <div id="directions-container">
-            </div>
+        <div id="directions-container"></div>
     </div>
 
     <div class="explanation-panel">
-        <div class="detail-content" id="detail-box">
-            Đang khởi tạo mật pháp dữ liệu...
-        </div>
+        <div class="detail-content" id="detail-box">Đang khởi tạo mật pháp dữ liệu...</div>
     </div>
 
     <script>
         const compass = document.getElementById('compass');
         const needle = document.getElementById('needle');
+        const ghostNeedle = document.getElementById('ghostNeedle');
         const degreeTxt = document.getElementById('degree-txt');
+        const elementBox = document.getElementById('element-box');
         const fateTxt = document.getElementById('fate-txt');
         const judgmentBox = document.getElementById('judgment-box');
         const detailBox = document.getElementById('detail-box');
@@ -440,55 +534,78 @@
         const permBtn = document.getElementById('permission-btn');
         const directionsContainer = document.getElementById('directions-container');
         const listPanelTitle = document.getElementById('list-panel-title');
+        const sonRing = document.getElementById('sonRing');
+        const savedContainer = document.getElementById('savedContainer');
+        const savedPanel = document.getElementById('savedPanel');
+
+        // Khai báo 24 Sơn Hướng cấu trúc hình học chuẩn phong thủy từ gốc 0 độ (Phương Bắc)
+        const son24Data = [
+            { name: "Tý", start: 352.5, end: 7.5 }, { name: "Quý", start: 7.5, end: 22.5 }, { name: "Sửu", start: 22.5, end: 37.5 },
+            { name: "Cấn", start: 37.5, end: 52.5 }, { name: "Dần", start: 52.5, end: 67.5 }, { name: "Giáp", start: 67.5, end: 82.5 },
+            { name: "Mão", start: 82.5, end: 97.5 }, { name: "Ất", start: 97.5, end: 112.5 }, { name: "Thìn", start: 112.5, end: 127.5 },
+            { name: "Tốn", start: 127.5, end: 142.5 }, { name: "Tỵ", start: 142.5, end: 157.5 }, { name: "Bính", start: 157.5, end: 172.5 },
+            { name: "Ngọ", start: 172.5, end: 187.5 }, { name: "Đinh", start: 187.5, end: 202.5 }, { name: "Mùi", start: 202.5, end: 217.5 },
+            { name: "Khôn", start: 217.5, end: 232.5 }, { name: "Thân", start: 232.5, end: 247.5 }, { name: "Canh", start: 247.5, end: 262.5 },
+            { name: "Dậu", start: 262.5, end: 277.5 }, { name: "Tân", start: 277.5, end: 292.5 }, { name: "Tuất", start: 292.5, end: 307.5 },
+            { name: "Càn", start: 307.5, end: 322.5 }, { name: "Hợi", start: 322.5, end: 337.5 }, { name: "Nhâm", start: 337.5, end: 352.5 }
+        ];
 
         const bátTrạchMap = {
-            'Khảm': { 'N': 'Phục Vị', 'NE': 'Ngũ Quỷ', 'E': 'Thiên Y', 'SE': 'Sinh Khí', 'S': 'Diên Niên', 'SW': 'Tuyệt Mệnh', 'W': 'Họa Hại', 'NW': 'Lục Sát', 'group': 'Đông Tứ Mệnh' },
-            'Ly':   { 'N': 'Diên Niên', 'NE': 'Họa Hại', 'E': 'Sinh Khí', 'SE': 'Thiên Y', 'S': 'Phục Vị', 'SW': 'Lục Sát', 'W': 'Ngũ Quỷ', 'NW': 'Tuyệt Mệnh', 'group': 'Đông Tứ Mệnh' },
-            'Chấn': { 'N': 'Thiên Y', 'NE': 'Lục Sát', 'E': 'Phục Vị', 'SE': 'Diên Niên', 'S': 'Sinh Khí', 'SW': 'Họa Hại', 'W': 'Tuyệt Mệnh', 'NW': 'Ngũ Quỷ', 'group': 'Đông Tứ Mệnh' },
-            'Tốn':  { 'N': 'Sinh Khí', 'NE': 'Tuyệt Mệnh', 'E': 'Diên Niên', 'SE': 'Phục Vị', 'S': 'Thiên Y', 'SW': 'Ngũ Quỷ', 'W': 'Lục Sát', 'NW': 'Họa Hại', 'group': 'Đông Tứ Mệnh' },
-            'Càn':  { 'N': 'Lục Sát', 'NE': 'Thiên Y', 'E': 'Ngũ Quỷ', 'SE': 'Họa Hại', 'S': 'Tuyệt Mệnh', 'SW': 'Diên Niên', 'W': 'Sinh Khí', 'NW': 'Phục Vị', 'group': 'Tây Tứ Mệnh' },
-            'Khôn': { 'N': 'Tuyệt Mệnh', 'NE': 'Sinh Khí', 'E': 'Họa Hại', 'SE': 'Ngũ Quỷ', 'S': 'Lục Sát', 'SW': 'Phục Vị', 'W': 'Thiên Y', 'NW': 'Diên Niên', 'group': 'Tây Tứ Mệnh' },
-            'Đoài': { 'N': 'Họa Hại', 'NE': 'Diên Niên', 'E': 'Tuyệt Mệnh', 'SE': 'Lục Sát', 'S': 'Ngũ Quỷ', 'SW': 'Thiên Y', 'W': 'Phục Vị', 'NW': 'Sinh Khí', 'group': 'Tây Tứ Mệnh' },
-            'Cấn':  { 'N': 'Ngũ Quỷ', 'NE': 'Phục Vị', 'E': 'Lục Sát', 'SE': 'Họa Hại', 'S': 'Họa Hại', 'SW': 'Sinh Khí', 'W': 'Diên Niên', 'NW': 'Thiên Y', 'group': 'Tây Tứ Mệnh' }
+            'Khảm': { 'N': 'Phục Vị', 'NE': 'Ngũ Quỷ', 'E': 'Thiên Y', 'SE': 'Sinh Khí', 'S': 'Diên Niên', 'SW': 'Tuyệt Mệnh', 'W': 'Họa Hại', 'NW': 'Lục Sát', 'group': 'Đông Tứ Mệnh', 'element': 'Thủy' },
+            'Ly':   { 'N': 'Diên Niên', 'NE': 'Họa Hại', 'E': 'Sinh Khí', 'SE': 'Thiên Y', 'S': 'Phục Vị', 'SW': 'Lục Sát', 'W': 'Ngũ Quỷ', 'NW': 'Tuyệt Mệnh', 'group': 'Đông Tứ Mệnh', 'element': 'Hỏa' },
+            'Chấn': { 'N': 'Thiên Y', 'NE': 'Lục Sát', 'E': 'Phục Vị', 'SE': 'Diên Niên', 'S': 'Sinh Khí', 'SW': 'Họa Hại', 'W': 'Tuyệt Mệnh', 'NW': 'Ngũ Quỷ', 'group': 'Đông Tứ Mệnh', 'element': 'Mộc' },
+            'Tốn':  { 'N': 'Sinh Khí', 'NE': 'Tuyệt Mệnh', 'E': 'Diên Niên', 'SE': 'Phục Vị', 'S': 'Thiên Y', 'SW': 'Ngũ Quỷ', 'W': 'Lục Sát', 'NW': 'Họa Hại', 'group': 'Đông Tứ Mệnh', 'element': 'Mộc' },
+            'Càn':  { 'N': 'Lục Sát', 'NE': 'Thiên Y', 'E': 'Ngũ Quỷ', 'SE': 'Họa Hại', 'S': 'Tuyệt Mệnh', 'SW': 'Diên Niên', 'W': 'Sinh Khí', 'NW': 'Phục Vị', 'group': 'Tây Tứ Mệnh', 'element': 'Kim' },
+            'Khôn': { 'N': 'Tuyệt Mệnh', 'NE': 'Sinh Khí', 'E': 'Họa Hại', 'SE': 'Ngũ Quỷ', 'S': 'Lục Sát', 'SW': 'Phục Vị', 'W': 'Thiên Y', 'NW': 'Diên Niên', 'group': 'Tây Tứ Mệnh', 'element': 'Thổ' },
+            'Đoài': { 'N': 'Họa Hại', 'NE': 'Diên Niên', 'E': 'Tuyệt Mệnh', 'SE': 'Lục Sát', 'S': 'Ngũ Quỷ', 'SW': 'Thiên Y', 'W': 'Phục Vị', 'NW': 'Sinh Khí', 'group': 'Tây Tứ Mệnh', 'element': 'Kim' },
+            'Cấn':  { 'N': 'Ngũ Quỷ', 'NE': 'Phục Vị', 'E': 'Lục Sát', 'SE': 'Họa Hại', 'S': 'Tuyệt Mệnh', 'SW': 'Sinh Khí', 'W': 'Diên Niên', 'NW': 'Thiên Y', 'group': 'Tây Tứ Mệnh', 'element': 'Thổ' }
         };
 
         const cungPhầnTrăm = {
-            'Sinh Khí': { cát: true, góc: 135, ý_nghĩa: 'Đại Cát, chủ về vượng tài lộc, thăng tiến sự nghiệp.' },
-            'Thiên Y': { cát: true, góc: 90, ý_nghĩa: 'Trung Cát, tốt cho sức khỏe, tiêu trừ bệnh tật, gia đạo bình an.' },
-            'Diên Niên': { cát: true, góc: 180, ý_nghĩa: 'Cát tinh, chủ về hòa thuận gia đình, ngoại giao và tình duyên bền vững.' },
-            'Phục Vị': { cát: true, góc: 0, ý_nghĩa: 'Tiểu Cát, vững vàng tâm tính, mang lại may mắn trong thi cử, công việc.' },
-            'Tuyệt Mệnh': { cát: false, góc: 225, ý_nghĩa: 'Đại Hung, tổn hại sức khỏe, tai ương, phá sản.' },
-            'Ngũ Quỷ': { cát: false, góc: 45, ý_nghĩa: 'Hung tinh, thị phi quấy phá, hao hụt tiền của.' },
-            'Lục Sát': { cát: false, góc: 315, ý_nghĩa: 'Hung tinh, tranh chấp, trục trặc tình cảm, bất hòa.' },
-            'Họa Hại': { cát: false, góc: 270, ý_nghĩa: 'Tiểu Hung, mệt mỏi, trắc trở bởi chuyện vụn vặt.' }
+            'Sinh Khí': { cát: true, ý_nghĩa: 'Đại Cát, chủ về vượng tài lộc, thăng tiến sự nghiệp.' },
+            'Thiên Y': { cát: true, ý_nghĩa: 'Trung Cát, tốt cho sức khỏe, tiêu trừ bệnh tật, gia đạo bình an.' },
+            'Diên Niên': { cát: true, ý_nghĩa: 'Cát tinh, chủ về hòa thuận gia đình, ngoại giao và tình duyên bền vững.' },
+            'Phục Vị': { cát: true, ý_nghĩa: 'Tiểu Cát, vững vàng tâm tính, mang lại may mắn trong thi cử, công việc.' },
+            'Tuyệt Mệnh': { cát: false, ý_nghĩa: 'Đại Hung, tổn hại sức khỏe, tai ương, phá sản, bệnh tật hiểm nghèo.' },
+            'Ngũ Quỷ': { cát: false, ý_nghĩa: 'Hung tinh, thị phi quấy phá, mất mát tài sản, tai nạn lửa củi.' },
+            'Lục Sát': { cát: false, ý_nghĩa: 'Hung tinh, tranh chấp pháp lý, trục trặc tình cảm, gia đạo bất hòa.' },
+            'Họa Hại': { cát: false, ý_nghĩa: 'Tiểu Hung, mệt mỏi, trắc trở bởi chuyện tiểu nhân quấy phá vụn vặt.' }
+        };
+
+        const phươngVịThiếtLập = {
+            'N': { tên: "BẮC", ngũHành: "Thủy" }, 'NE': { tên: "ĐÔNG BẮC", ngũHành: "Thổ" },
+            'E': { tên: "ĐÔNG", ngũHành: "Mộc" }, 'SE': { tên: "ĐÔNG NAM", ngũHành: "Mộc" },
+            'S': { tên: "NAM", ngũHành: "Hỏa" }, 'SW': { tên: "TÂY NAM", ngũHành: "Thổ" },
+            'W': { tên: "TÂY", ngũHành: "Kim" }, 'NW': { tên: "TÂY BẮC", ngũHành: "Kim" }
         };
 
         const directionMeta = [
-            { code: 'N', name: 'BẮC (Khảm)', angle: 0 },
-            { code: 'NE', name: 'ĐÔNG BẮC (Cấn)', angle: 45 },
-            { code: 'E', name: 'ĐÔNG (Chấn)', angle: 90 },
-            { code: 'SE', name: 'ĐÔNG NAM (Tốn)', angle: 135 },
-            { code: 'S', name: 'NAM (Ly)', angle: 180 },
-            { code: 'SW', name: 'TÂY NAM (Khôn)', angle: 225 },
-            { code: 'W', name: 'TÂY (Đoài)', angle: 270 },
-            { code: 'NW', name: 'TÂY BẮC (Càn)', angle: 315 }
+            { code: 'N', name: 'BẮC (Khảm)', angle: 0 }, { code: 'NE', name: 'ĐÔNG BẮC (Cấn)', angle: 45 },
+            { code: 'E', name: 'ĐÔNG (Chấn)', angle: 90 }, { code: 'SE', name: 'ĐÔNG NAM (Tốn)', angle: 135 },
+            { code: 'S', name: 'NAM (Ly)', angle: 180 }, { code: 'SW', name: 'TÂY NAM (Khôn)', angle: 225 },
+            { code: 'W', name: 'TÂY (Đoài)', angle: 270 }, { code: 'NW', name: 'TÂY BẮC (Càn)', angle: 315 }
         ];
 
         let chủMệnh = 'Khảm'; 
         let currentCode = 'N';
         let currentHeading = 0;
 
-        function toggleDateInput() {
-            const isChecked = document.getElementById('useFullDate').checked;
-            document.getElementById('dateInputGroup').style.display = isChecked ? 'flex' : 'none';
-            document.getElementById('yearInputGroup').style.display = isChecked ? 'none' : 'flex';
-            recalculateFate();
+        // Vẽ 24 Sơn Hướng bao quanh mặt La Kinh hình học
+        function render24SonRing() {
+            sonRing.innerHTML = "";
+            son24Data.forEach((son, index) => {
+                const trungBìnhGóc = (index * 15);
+                const div = document.createElement('div');
+                div.className = 'son-item';
+                div.style.transform = `rotate(${trungBìnhGóc}deg)`;
+                div.innerText = son.name;
+                sonRing.appendChild(div);
+            });
         }
 
         function tínhCungPhi(năm, giớiTính) {
             let sốDư = năm % 9;
             if (sốDư === 0) sốDư = 9;
-            
             if (giớiTính === 'male') {
                 let kếtQuả = (11 - sốDư) % 9;
                 if (kếtQuả === 0) kếtQuả = 9;
@@ -503,66 +620,57 @@
         function recalculateFate() {
             const name = document.getElementById('userName').value || "Chủ mệnh";
             const gender = document.getElementById('gender').value;
-            const useFullDate = document.getElementById('useFullDate').checked;
+            const dateVal = document.getElementById('birthDate').value;
             let nămTínhThủy = 1990;
 
-            if (useFullDate) {
-                const dateVal = document.getElementById('birthDate').value;
-                const d = new Date(dateVal);
-                if (!isNaN(d.getTime())) {
-                    nămTínhThủy = d.getFullYear();
-                    let tháng = d.getMonth() + 1;
-                    let ngày = d.getDate();
-                    if (tháng === 1 || (tháng === 2 && ngày < 4)) { nămTínhThủy -= 1; }
-                }
-            } else {
-                nămTínhThủy = parseInt(document.getElementById('birthYear').value) || 1990;
+            const d = new Date(dateVal);
+            if (!isNaN(d.getTime())) {
+                nămTínhThủy = d.getFullYear();
+                let tháng = d.getMonth() + 1;
+                let ngày = d.getDate();
+                // Tính toán tiết khí lập xuân chuẩn xác để chuyển đổi cung mệnh năm cũ/mới
+                if (tháng === 1 || (tháng === 2 && ngày < 4)) { nămTínhThủy -= 1; }
             }
             
             chủMệnh = tínhCungPhi(nămTínhThủy, gender);
-            fateTxt.innerText = `${name}: Cung ${chủMệnh} (${bátTrạchMap[chủMệnh].group})`;
+            fateTxt.innerText = `${name}: Cung ${chủMệnh} (${bátTrạchMap[chủMệnh].group}) - Bản Mệnh Ngũ Hành: ${bátTrạchMap[chủMệnh].element}`;
             
             generateDirectionsList();
             updateCompassUI(currentHeading);
         }
 
-        // TỰ ĐỘNG ĐÁNH GIÁ VÀ XẾP THỨ TỰ ƯU TIÊN THEO MỤC ĐÍCH
         function generateDirectionsList() {
             const mụcĐích = document.getElementById('purpose').value;
             let listDirections = [];
 
-            // Quét trạng thái cát hung của cả 8 phương vị dựa trên cung mệnh chủ
             directionMeta.forEach(dir => {
                 const cungTrạch = bátTrạchMap[chủMệnh][dir.code];
                 const isCat = cungPhầnTrăm[cungTrạch].cát;
                 let hopPhongThuy = false;
 
-                // Xác định tính đúng đắn theo tiêu chuẩn Phong Thủy Phái Bát Trạch
-                if (mụcĐích === 'house' || mụcĐích === 'altar' || mụcĐích === 'bed') {
-                    hopPhongThuy = isCat; // Cần Hướng Cát tinh
+                if (['house', 'altar', 'bed', 'workspace'].includes(mụcĐích)) {
+                    hopPhongThuy = isCat; 
                 } else {
-                    hopPhongThuy = !isCat; // Bếp, WC cần Tọa Hung tinh
+                    hopPhongThuy = !isCat; 
                 }
 
                 listDirections.push({
-                    ...dir,
-                    cungTrạch: cungTrạch,
-                    isCat: isCat,
-                    hopPhongThuy: hopPhongThuy
+                    ...dir, cungTrạch: cungTrạch, isCat: isCat, hopPhongThuy: hopPhongThuy
                 });
             });
 
-            // Sắp xếp tự động: Đưa những hướng Phù hợp tốt nhất lên hàng đầu
             listDirections.sort((a, b) => b.hopPhongThuy - a.hopPhongThuy);
 
-            // Cập nhật Tiêu đề bảng danh sách hướng trực quan sinh động
-            if(mụcĐích === 'bed') listPanelTitle.innerText = "Ưu tiên Hướng Đầu Giường (Cần quay về Cát)";
-            else if(mụcĐích === 'house') listPanelTitle.innerText = "Ưu tiên Hướng Nhà / Cửa (Cần nhìn về Cát)";
-            else if(mụcĐích === 'altar') listPanelTitle.innerText = "Ưu tiên Hướng Bàn Thờ (Cần nhìn về Cát)";
-            else if(mụcĐích === 'kitchen') listPanelTitle.innerText = "Ưu tiên Tọa đặt Bếp nấu (Cần đè lên Hung)";
-            else if(mụcĐích === 'toilet') listPanelTitle.innerText = "Ưu tiên Tọa đặt nhà vệ sinh (Cần đè lên Hung)";
+            const cấuHìnhTiêuĐề = {
+                'bed': "Ưu tiên Hướng Đầu Giường (Cần quay về Cát vị)",
+                'house': "Ưu tiên Hướng Nhà / Cửa Chính (Cần nhìn về Cát vị)",
+                'altar': "Ưu tiên Hướng Mặt Bàn Thờ (Cần nhìn về Cát vị)",
+                'workspace': "Ưu tiên Hướng Mặt Bàn Làm Việc (Cần nhìn về Cát vị)",
+                'kitchen': "Ưu tiên Tọa vị đặt Bếp nấu (Cần đặt đè lên Hung vị)",
+                'toilet': "Ưu tiên Tọa vị đặt nhà vệ sinh (Cần đặt đè lên Hung vị)"
+            };
+            listPanelTitle.innerText = cấuHìnhTiêuĐề[mụcĐích];
 
-            // Render DOM ra màn hình thiết bị
             directionsContainer.innerHTML = "";
             listDirections.forEach(item => {
                 const badgeClass = item.hopPhongThuy ? 'good' : 'bad';
@@ -575,14 +683,32 @@
                         <span class="item-name">${item.name} ➔ ${item.cungTrạch}</span>
                         <span class="item-cung" style="color: ${item.hopPhongThuy ? 'var(--green)' : 'var(--red)'}">${statusText}</span>
                     </div>
-                    <button class="btn-rotate" onclick="autoRotateTo(${item.angle})">Xoay thử</button>
+                    <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})">Quay thử</button>
                 `;
                 directionsContainer.appendChild(div);
             });
         }
 
-        function autoRotateTo(angle) {
-            updateCompassUI(angle);
+        // Tạo hiệu ứng kim ảo (Kim xanh lam) chỉ hướng gợi ý, không đè lên kim thực tế
+        function triggerGhostNeedle(angle) {
+            ghostNeedle.style.opacity = "1";
+            ghostNeedle.style.transform = `rotate(${angle}deg)`;
+            
+            // Tìm tên sơn hướng thử nghiệm để cập nhật nhanh vào bảng thông tin cứu trợ người dùng
+            let sơnThử = tìmSơnHướng(angle);
+            detailBox.innerHTML = `<span class="blue-text">◆ ĐANG XEM THỬ PHƯƠNG VỊ GỢI Ý:</span><br>Góc nhìn thử nghiệm đạt <span class="blue-text">${angle}°</span> thuộc Sơn <span class="good-text">${sơnThử}</span>.<br>Di chuyển thiết bị hoặc trượt thanh điều hướng trùng khớp kim đỏ để cập nhật luận giải chi tiết đầy đủ.`;
+        }
+
+        function tìmSơnHướng(heading) {
+            let sơnTìmThấy = "Tý";
+            son24Data.forEach(son => {
+                if (son.start > son.end) {
+                    if (heading >= son.start || heading < son.end) sơnTìmThấy = son.name;
+                } else {
+                    if (heading >= son.start && heading < son.end) sơnTìmThấy = son.name;
+                }
+            });
+            return sơnTìmThấy;
         }
 
         function updateCompassUI(heading) {
@@ -601,21 +727,31 @@
             else if (currentHeading >= 248 && currentHeading < 293) { currentCung = "ĐOÀI (TÂY)"; currentCode = "W"; }
             else if (currentHeading >= 293 && currentHeading < 338) { currentCung = "CÀN (TÂY BẮC)"; currentCode = "NW"; }
 
-            degreeTxt.innerText = `${currentHeading}° - Phương ${currentCung}`;
+            // Xác định Sơn Hướng chính xác trong 24 Sơn
+            let sơnHiệnTại = tìmSơnHướng(currentHeading);
+
+            degreeTxt.innerText = `${currentHeading}° - Phương ${currentCung} - Sơn ${sơnHiệnTại}`;
+
+            const hànhPhươngVị = phươngVịThiếtLập[currentCode].ngũHành;
+            const hànhMệnhChủ = bátTrạchMap[chủMệnh].element;
+            elementBox.innerHTML = `
+                <span class="element-badge" style="background: #3a3a3c;">Phương vị: ${hànhPhươngVị}</span>
+                <span class="element-badge" style="background: #2c2c2e; color: var(--gold)">Mệnh: ${hànhMệnhChủ}</span>
+            `;
 
             const cungTrạch = bátTrạchMap[chủMệnh][currentCode];
             const thôngTinCung = cungPhầnTrăm[cungTrạch];
             const mụcĐích = document.getElementById('purpose').value;
 
-            if (mụcĐích === 'house' || mụcĐích === 'altar' || mụcĐích === 'bed') {
-                let tênThiếtBị = mụcĐích === 'altar' ? "BÀN THỜ" : (mụcĐích === 'bed' ? "GIƯỜNG NGỦ" : "NHÀ CỬA");
+            if (['house', 'altar', 'bed', 'workspace'].includes(mụcĐích)) {
+                let tênThiếtBị = { 'altar': "BÀN THỜ", 'bed': "GIƯỜNG NGỦ", 'workspace': "BÀN LÀM VIỆC", 'house': "NHÀ CỬA" }[mụcĐích];
                 judgmentBox.innerText = `Hướng ${tênThiếtBị}: ${cungTrạch}`;
                 if (thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
-                    detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG CÁT PHÙ HỢP:</span><br>${thôngTinCung. ý_nghĩa}<br><br>Có thể bố trí vị trí nhìn về góc ${currentHeading}°.`;
+                    detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG CÁT PHÙ HỢP:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Cực kỳ lý tưởng để bố trí vị trí nhìn về góc tọa độ ${currentHeading}° này.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    detailBox.innerHTML = `<span class="warn-text">◆ HƯỚNG HUNG NÊN TRÁNH:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Không nên đặt ${tênThiếtBị} nhìn về hướng này.`;
+                    detailBox.innerHTML = `<span class="warn-text">◆ HƯỚNG HUNG NÊN TRÁNH:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Không đặt mặt hướng của ${tênThiếtBị} nhìn về phương vị này tránh tổn hao nguyên khí.`;
                 }
             } 
             else {
@@ -623,20 +759,86 @@
                 judgmentBox.innerText = `Tọa ${tênThiếtBị}: ${cungTrạch}`;
                 if (!thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
-                    detailBox.innerHTML = `<span class="good-text">◆ TỌA HUNG ĐẮC CÁCH (TỐT):</span><br>Vị trí này thuộc cung hung vị <span class="warn-text">(${cungTrạch})</span>.<br><br>Đè nền thiết bị lên tọa độ này sẽ trấn áp, cuốn trôi vận xui rủi của cung hung ra ngoài.`;
+                    detailBox.innerHTML = `<span class="good-text">◆ TỌA HUNG ĐẮC CÁCH (RẤT TỐT):</span><br>Vị trí này thuộc hung vị lý tưởng <span class="warn-text">(${cungTrạch})</span>.<br><br>Nguyên lý: Thiết bị xả uế hoặc đun nấu đặt đè trên tọa độ hung tinh này sẽ thiêu rụi, cuốn trôi vận xui rủi hung hại ra khỏi gia trạch.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    detailBox.innerHTML = `<span class="warn-text">◆ TỌA CÁT PHẠM SÁT (XẤU):</span><br>Bạn đang đặt đè lên cung tốt lành <span class="good-text">(${cungTrạch})</span>.<br><br>Tránh đặt bồn cầu hoặc bếp đè lên hướng này để không thiêu rụi tài lộc phước đức.`;
+                    detailBox.innerHTML = `<span class="warn-text">◆ TỌA CÁT PHẠM SÁT (XẤU PHẠM ĐẠI KỴ):</span><br>Bạn đang đặt thiết bị đè trực tiếp lên cung tốt lành <span class="good-text">(${cungTrạch})</span>.<br><br>Tránh tuyệt đối đặt bồn cầu hoặc bếp lửa tại đây để không thiêu rụi phước báu tài lộc gia đình.`;
                 }
             }
         }
 
         function handleOrientation(event) {
             let heading = event.webkitCompassHeading || (event.alpha ? (360 - event.alpha) : null);
-            if (heading !== null) { updateCompassUI(heading); }
+            if (heading !== null) { 
+                ghostNeedle.style.opacity = "0"; // Ẩn kim ảo khi thiết bị thực tế di chuyển sinh động
+                updateCompassUI(heading); 
+            }
+        }
+
+        function manualRotate(value) { 
+            ghostNeedle.style.opacity = "0"; 
+            updateCompassUI(value); 
+        }
+
+        // HỆ THỐNG QUẢN LÝ BỘ NHỚ LOCALSTORAGE GIA ĐÌNH
+        function saveCurrentMember() {
+            const name = document.getElementById('userName').value.trim();
+            const gender = document.getElementById('gender').value;
+            const birthDate = document.getElementById('birthDate').value;
+
+            if(!name) { alert("Vui lòng nhập tên thành viên!"); return; }
+
+            let data = JSON.parse(localStorage.getItem('fengshui_members')) || [];
+            // Kiểm tra trùng lặp trùng tên
+            data = data.filter(m => m.name !== name);
+            data.push({ name, gender, birthDate });
+            localStorage.setItem('fengshui_members', JSON.stringify(data));
+            
+            loadSavedMembers();
+        }
+
+        function loadSavedMembers() {
+            const data = JSON.parse(localStorage.getItem('fengshui_members')) || [];
+            if(data.length === 0) {
+                savedPanel.style.display = "none";
+                return;
+            }
+            savedPanel.style.display = "block";
+            savedContainer.innerHTML = "";
+            
+            data.forEach(m => {
+                const chip = document.createElement('div');
+                chip.className = 'saved-chip';
+                chip.innerHTML = `
+                    <span onclick="selectMember('${m.name}', '${m.gender}', '${m.birthDate}')">👤 ${m.name}</span>
+                    <span class="del-btn" onclick="deleteMember(event, '${m.name}')">×</span>
+                `;
+                savedContainer.appendChild(chip);
+            });
+        }
+
+        function selectMember(name, gender, birthDate) {
+            document.getElementById('userName').value = name;
+            document.getElementById('gender').value = gender;
+            document.getElementById('birthDate').value = birthDate;
+            recalculateFate();
+        }
+
+        function deleteMember(e, name) {
+            e.stopPropagation();
+            let data = JSON.parse(localStorage.getItem('fengshui_members')) || [];
+            data = data.filter(m => m.name !== name);
+            localStorage.setItem('fengshui_members', JSON.stringify(data));
+            loadSavedMembers();
+        }
+
+        function clearAllData() {
+            window.location.reload();
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            render24SonRing();
+            loadSavedMembers();
             recalculateFate(); 
             if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
                 permBtn.style.display = 'block';
@@ -652,12 +854,10 @@
                         window.addEventListener('deviceorientation', handleOrientation);
                         permBtn.style.display = 'none';
                     } else {
-                        alert("Quyền truy cập sensor bị từ chối!");
+                        alert("Cảm biến chưa được cấp quyền truy cập!");
                     }
                 }).catch(console.error);
         }
-
-        function manualRotate(value) { updateCompassUI(value); }
     </script>
 </body>
 </html>
