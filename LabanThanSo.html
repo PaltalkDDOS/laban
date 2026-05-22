@@ -80,7 +80,6 @@
             display: flex;
             gap: 8px;
             margin-bottom: 8px;
-            align-items: flex-end;
         }
 
         .form-group {
@@ -105,23 +104,6 @@
             font-size: 0.85rem;
             outline: none;
             height: 38px;
-            text-align: center;
-        }
-
-        .form-group input#userName {
-            text-align: left;
-        }
-
-        /* Khung nhập ngày sinh thủ công hàng ngang gán sát nhau */
-        .manual-date-container {
-            display: flex;
-            gap: 4px;
-            width: 100%;
-        }
-
-        .manual-date-container input {
-            flex: 1;
-            width: 100%;
         }
 
         .btn-action-row {
@@ -254,7 +236,7 @@
             box-shadow: 0 0 20px rgba(223, 183, 108, 0.2);
             z-index: 1;
             will-change: transform;
-            transition: transform 0.1s linear;
+            transition: transform 0.2s ease-out;
         }
 
         .compass-watermark {
@@ -270,7 +252,7 @@
             letter-spacing: 2px;
         }
 
-        /* KIM THỰC TẾ (CHỈ THẲNG LÊN TRÊN ĐỂ XOAY PHƯƠNG VỊ) */
+        /* KIM THỰC TẾ (NẰM TRÊN CÙNG) */
         .center-needle {
             position: absolute;
             width: 8px;
@@ -279,10 +261,9 @@
             clip-path: polygon(50% 0%, 100% 15%, 60% 15%, 60% 85%, 100% 85%, 50% 100%, 0% 85%, 40% 85%, 40% 15%, 0% 15%);
             z-index: 8;
             pointer-events: none;
-            transform: rotate(0deg);
         }
 
-        /* KIM ẢO MỜ ĐỊNH HƯỚNG TẦM PHƯƠNG KHẢO SÁT */
+        /* KIM ẢO MỜ ĐỊNH HƯỚNG */
         .ghost-needle {
             position: absolute;
             width: 6px;
@@ -292,7 +273,7 @@
             z-index: 6;
             pointer-events: none;
             opacity: 0;
-            transition: transform 0.2s ease-out, opacity 0.3s;
+            transition: opacity 0.3s;
         }
 
         .center-pin {
@@ -503,49 +484,6 @@
             line-height: 1.5;
         }
 
-        .cure-box {
-            margin-top: 10px;
-            padding: 10px;
-            background: #220b0b;
-            border: 1px solid var(--red);
-            border-radius: 4px;
-        }
-
-        .cure-title {
-            color: #ff453a;
-            font-weight: bold;
-            font-size: 0.85rem;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        /* Custom Alert Dialog CSS */
-        .custom-alert-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999; opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .custom-alert-overlay.show { opacity: 1; pointer-events: auto; }
-        .custom-alert-box {
-            background: #221410; border: 2px solid var(--orange-bright);
-            width: 85%; max-width: 320px; padding: 20px; border-radius: 10px;
-            text-align: center; box-shadow: 0 0 20px rgba(255,102,0,0.5);
-            transform: scale(0.8); transition: transform 0.3s ease;
-        }
-        .custom-alert-overlay.show .custom-alert-box { transform: scale(1); }
-        .custom-alert-msg { color: #fff; font-size: 0.95rem; font-weight: bold; margin-bottom: 15px; line-height: 1.4; }
-        .custom-alert-btn {
-            background: var(--orange-bright); color: #fff; border: none;
-            padding: 8px 24px; border-radius: 4px; font-weight: bold;
-            cursor: pointer; text-transform: uppercase; font-size: 0.8rem;
-        }
-        
         .warn-text { color: var(--red); font-weight: bold; }
         .good-text { color: var(--green); font-weight: bold; }
         .gold-text { color: var(--gold); font-weight: bold; }
@@ -578,12 +516,8 @@
 
         <div class="form-row">
             <div class="form-group">
-                <label>Sinh ngày / tháng / năm (Dương lịch):</label>
-                <div class="manual-date-container">
-                    <input type="number" id="birthDay" placeholder="Ngày" min="1" max="31" oninput="validateDayInput(this)">
-                    <input type="number" id="birthMonth" placeholder="Tháng" min="1" max="12" oninput="validateMonthInput(this)">
-                    <input type="number" id="birthYear" placeholder="Năm" min="1900" max="2026" oninput="validateYearInput(this)">
-                </div>
+                <label>Ngày tháng năm sinh (Dương lịch):</label>
+                <input type="date" id="birthDate" value="1990-01-01" onchange="recalculateFate()">
             </div>
         </div>
 
@@ -654,13 +588,6 @@
         <div class="detail-content" id="detail-box">Đang khởi tạo mật pháp dữ liệu...</div>
     </div>
 
-    <div class="custom-alert-overlay" id="customAlert">
-        <div class="custom-alert-box">
-            <div class="custom-alert-msg" id="customAlertMsg">Thông báo lỗi nhập liệu!</div>
-            <button class="custom-alert-btn" onclick="closeCustomAlert()">Xác Nhận</button>
-        </div>
-    </div>
-
     <script>
         const compass = document.getElementById('compass');
         const needle = document.getElementById('needle');
@@ -677,8 +604,6 @@
         const sonRing = document.getElementById('sonRing');
         const savedContainer = document.getElementById('savedContainer');
         const savedPanel = document.getElementById('savedPanel');
-        const customAlert = document.getElementById('customAlert');
-        const customAlertMsg = document.getElementById('customAlertMsg');
 
         const son24Data = [
             { name: "Tý", start: 352.5, end: 7.5 }, { name: "Quý", start: 7.5, end: 22.5 }, { name: "Sửu", start: 22.5, end: 37.5 },
@@ -707,45 +632,10 @@
             'Thiên Y': { cát: true, ý_nghĩa: 'Cung Trung Cát: Được lộc trời cho về sức khỏe, tiêu trừ bệnh tật, gia đạo bình an, trường thọ.' },
             'Diên Niên': { cát: true, ý_nghĩa: 'Cung Cát Tinh: Chủ về sự hòa thuận, củng cố các mối quan hệ ngoại giao, gia đình êm ấm, tình duyên bền vững.' },
             'Phục Vị': { cát: true, ý_nghĩa: 'Cung Tiểu Cát: Giúp vững vàng tâm trí, củng cố sức mạnh bản thân, mang lại may mắn trong học hành, thi cử.' },
-            'Tuyệt Mệnh': { cát: false, ý_nghĩa: 'Cung Đại Hung: Cực kỳ nguy hiểm, mang sát khí mạnh, dễ gây tổn hại sức khỏe, tai nạn, tổn thọ hoặc phá sản.' },
+            'Tuyệt Mệnh': { cát: false, ý_nghĩa: 'Cung Đại Hung: Cực kỳ nguy hiểm, mang sát khí mạnh, dễ gây tổn hại sức khỏe, bệnh tật hiểm nghèo hoặc phá sản.' },
             'Ngũ Quỷ': { cát: false, ý_nghĩa: 'Cung Hung Tinh: Mang đến tai họa bất ngờ, thị phi quấy phá, dễ dính líu pháp lý hoặc hao tài tốn của.' },
-            'Lục Sát': { cát: false, ý_nghĩa: 'Cung Hung Tinh: Sinh ra sát khí, gây mâu thuẫn gia đạo, trục trặc tình cảm, dễ vướng vào kiện tụng.' },
-            'Họa Hại': { cát: false, ý_nghĩa: 'Cung Tiểu Hung: Thường mang lại rủi ro vụn vặt, mệt mỏi, trắc trở bởi chuyện tiểu nhân quấy phá.' }
-        };
-
-        const mậtPhápHóaGiải = {
-            'Tuyệt Mệnh': {
-                'house': 'Treo Gương Bát Quái Gỗ Đào (Lồi) trước cửa chính để phản xạ sát khí hung bạo. Đặt cặp Kỳ Lân Đá hoặc Tỳ Hưu ở bậu cửa để trấn áp dòng năng lượng xấu độc xâm nhập.',
-                'altar': 'Bàn thờ hướng Tuyệt Mệnh cực kỳ nguy hiểm đến sức khỏe tổ tiên và gia đạo. Khẩn cấp bài trí thêm một tấm tranh phong thủy "Trấn Trạch Minh Minh" sau lưng, đặt 1 cặp bình ngọc thạch lựu màu xanh lá để hút sát khí.',
-                'bed': 'Đầu giường phạm Tuyệt Mệnh gây mất ngủ nghiêm trọng, tổn thọ. Đặt dưới gầm giường một chiếc đĩa đồng chứa chuỗi đồng xu Ngũ Đế, treo một Hồ Lô Ngọc Bích ngay đầu giường để lọc khí.',
-                'workspace': 'Làm ăn lụi bại, đối tác lừa gạt. Đặt trên bàn làm việc một tháp Văn Xương bằng đồng nguyên chất lớn hoặc một khối đá Thạch Anh Tím dạng tinh thể để đẩy lùi tà khí.',
-                'kitchen': 'Tọa vị Tuyệt Mệnh rất cát lợi. Lửa bếp thiêu rụi hung tinh Tuyệt Mệnh. Tuyệt đối không để bẩn thỉu. Không cần hóa giải thêm.',
-                'toilet': 'Nhà vệ sinh đặt tại Tuyệt Mệnh giúp cuốn trôi tai họa. Rất đắc cách, không cần thiết lập mật pháp hóa giải.'
-            },
-            'Ngũ Quỷ': {
-                'house': 'Treo chuông gió đồng 6 thanh (Lục đế) tại hiên nhà để phá tan tà âm, hóa giải âm mưu tiểu nhân. Đặt bình nước suối An Hải (Bình thủy bách giải) góc cửa.',
-                'altar': 'Phạm Ngũ Quỷ khiến gia đình hay cãi vã, tà khí quấy nhiễu tâm linh. Đặt thêm một lư hương bằng đồng thau nặng trên bàn thờ để trấn tâm khí, loại bỏ tạp niệm âm tà.',
-                'bed': 'Hay mơ thấy ác mộng, bóng đè. Treo một chiếc Hồ Lô Gỗ Đào tự nhiên có khắc bùa bình an ở đầu giường, đặt hũ muối phong thủy dưới chân giường để xua đuổi tà mị.',
-                'workspace': 'Thị phi bao vây, pháp lý rắc rối. Bài trí một linh vật Gà Trống bằng đồng hoặc tượng Hổ Phách hổ ngồi để cắn nuốt kẻ tiểu nhân quấy phá công việc.',
-                'kitchen': 'Bếp lửa đặt tại Ngũ Quỷ giúp hóa giải tai ương, thiêu sạch thị phi, biến thành đại cát. Cực tốt.',
-                'toilet': 'Nhà vệ sinh đè lên Ngũ Quỷ tiêu trừ hỏa tai, trộm cướp, dẹp tan tiểu nhân hãm hại. Đạt chuẩn phong thủy.'
-            },
-            'Lục Sát': {
-                'house': 'Gây rạn nứt tình cảm thành viên, kiện tụng. Treo một Gương Bát Quái phẳng bằng đồng và đặt một chậu cây xanh tốt hành Mộc (như Phát Tài) để hút bớt ác khí hành Thủy.',
-                'altar': 'Gia đạo bất an, vợ chồng ly tán. Treo rèm lụa màu vàng đất (Thổ) trước ban thờ để chặn dòng khí Thủy dâm sương của Lục Sát, đặt bình gốm sứ lớn.',
-                'bed': 'Trục trặc duyên phận, vợ chồng đồng sàng dị mộng. Đặt một đôi ngỗng thủy tinh hoặc đôi tỳ hưu đá thạch anh hồng ở bàn trang điểm cạnh giường để kích hoạt hòa hợp.',
-                'workspace': 'Mất tập trung, cấp dưới phản bội. Đặt một khối đá Thạch Anh Vàng (Citrine) dạng cầu tròn ngay trước tầm mắt để tăng tính quyết đoán, chặn đứng năng lượng mờ ám.',
-                'kitchen': 'Bếp đè Lục Sát là đại cát lợi, ngọn lửa hung hãn sẽ đun nóng và thiêu rụi hoàn toàn sát khí mâu thuẫn, giữ ấm tình cảm.',
-                'toilet': 'Xả uế đè Lục Sát giúp cuốn trôi các tranh chấp mâu thuẫn ra ngoài, gia đình êm ấm, thuận hòa.'
-            },
-            'Họa Hại': {
-                'house': 'Thường xuyên ốm vặt, mất tiền nhỏ liên tục. Treo một dải tiền cổ Ngũ Đế ở tay nắm cửa chính, kết hợp trồng một bụi cây xương rồng gai lớn phía bên ngoài để cản sát.',
-                'altar': 'Tài lộc tiêu hao dần mòn. Đặt dưới chân ban thờ 3 hũ muối - gạo - nước sạch thay mới vào ngày rằm hàng tháng để tích tụ sinh khí, bù đắp tài lộc hao hụt.',
-                'bed': 'Cơ thể mỏi mệt khi thức dậy. Treo chuỗi tiền xu đồng hoặc đặt một quả cầu thạch anh trắng cỡ vừa ở tab đầu giường để thanh lọc nguồn từ trường nhiễu loạn.',
-                'workspace': 'Dự án hay trễ hạn, tiểu nhân đố kỵ. Bố trí một tượng rùa đầu rồng (Long Quy) bằng đồng quay đầu ra ngoài để gánh chịu tai ương, tăng cường hậu thuẫn nâng đỡ nghiệp lực.',
-                'kitchen': 'Bếp nấu đè Họa Hại thiêu cháy rủi ro, vận hạn vụn vặt, mang lại cuộc sống yên bình cho gia đình.',
-                'toilet': 'Nhà vệ sinh đè Họa Hại giúp dẹp tan vận hạn lặt vặt, bảo toàn nguyên khí kinh tế dòng tiền ổn định.'
-            }
+            'Lục Sát': { cát: false, ý_nghĩa: 'Cung Hung Tinh: Sinh ra sát khí, gây mâu thuẫn gia đạo, trục trặc tình cảm, dễ vướng vào tranh chấp, kiện tụng.' },
+            'Họa Hại': { cát: false, ý_nghĩa: 'Cung Tiểu Hung: Thường mang lại rủi ro vụn vặt, mệt mỏi, trắc trở bởi chuyện tiểu nhân quấy phá, hao mòn tài lộc.' }
         };
 
         const phươngVịThiếtLập = {
@@ -766,55 +656,6 @@
         let currentCode = 'N';
         let currentHeading = 0;
         let targetAngle = null;
-
-        // Custom Alert functions để báo lỗi không đơ máy như alert gốc
-        function showAlert(msg) {
-            customAlertMsg.innerText = msg;
-            customAlert.classList.add('show');
-        }
-        function closeCustomAlert() {
-            customAlert.classList.remove('show');
-        }
-
-        // Tự động nhảy ô nhập liệu thủ công thông minh
-        function validateDayInput(el) {
-            let val = parseInt(el.value);
-            if (el.value.length >= 2) {
-                if (val < 1 || val > 31) {
-                    showAlert("❌ Ngày nhập vào sai quy luật (Chỉ được phép từ 1 đến 31). Hệ thống tự reset!");
-                    el.value = "";
-                    return;
-                }
-                document.getElementById('birthMonth').focus();
-            }
-            recalculateFate();
-        }
-
-        function validateMonthInput(el) {
-            let val = parseInt(el.value);
-            if (el.value.length >= 2) {
-                if (val < 1 || val > 12) {
-                    showAlert("❌ Tháng nhập vào không đúng quy luật (Chỉ từ tháng 1 đến tháng 12)!");
-                    el.value = "";
-                    return;
-                }
-                document.getElementById('birthYear').focus();
-            }
-            recalculateFate();
-        }
-
-        function validateYearInput(el) {
-            if (el.value.length >= 4) {
-                let val = parseInt(el.value);
-                if (val < 1900 || val > 2026) {
-                    showAlert("❌ Năm sinh không hợp lệ (Phải từ năm 1900 đến 2026)!");
-                    el.value = "";
-                    return;
-                }
-                el.blur();
-            }
-            recalculateFate();
-        }
 
         function render24SonRing() {
             sonRing.innerHTML = "";
@@ -842,45 +683,26 @@
             }
         }
 
-        function checkCompassAccuracy() {
-            // Hàm kiểm định độ sai lệch phần cứng kim la bàn thực tế
-            if (window.DeviceOrientationEvent) {
-                return "<br><span style='color:var(--green); font-weight:bold;'>✓ KIM LA BÀN ĐÃ ĐƯỢC CHUẨN HÓA KHÔNG SAI LỆCH VỚI TỪ TRƯỜNG TRÁI ĐẤT.</span>";
-            } else {
-                return "<br><span style='color:var(--orange-bright);'>⚠️ Không tìm thấy Sensor! Đang sử dụng giả lập con trượt chuẩn góc tuyệt đối.</span>";
-            }
-        }
-
         function recalculateFate() {
             const name = document.getElementById('userName').value || "Chủ mệnh";
             const gender = document.getElementById('gender').value;
-            const day = document.getElementById('birthDay').value;
-            const month = document.getElementById('birthMonth').value;
-            const year = document.getElementById('birthYear').value;
+            const dateVal = document.getElementById('birthDate').value;
             
-            if (!day || !month || !year || year.length < 4) {
-                fateTxt.innerText = `${name}: Đo hướng tự do nguyên bản (Chưa nhập đủ Ngày/Tháng/Năm)`;
-                directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập đầy đủ ngày sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
+            if (!dateVal) {
+                fateTxt.innerText = `${name}: Chế độ đo hướng độc lập (Chưa nhập năm sinh)`;
+                directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập ngày sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
                 listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
                 updateCompassUI(currentHeading);
                 return;
             }
 
-            let nămTínhThủy = parseInt(year);
-            let tháng = parseInt(month);
-            let ngày = parseInt(day);
-
-            // Kiểm tra ngày tối đa trong tháng
-            let maxDays = new Date(nămTínhThủy, tháng, 0).getDate();
-            if (ngày > maxDays) {
-                showAlert(`❌ Tháng ${tháng}/${nămTínhThủy} chỉ có tối đa ${maxDays} ngày! Bạn nhập quá quy luật.`);
-                document.getElementById('birthDay').value = "";
-                return;
-            }
-
-            // Tính tiết khí lập xuân phong thủy
-            if (tháng === 1 || (tháng === 2 && ngày < 4)) { 
-                nămTínhThủy -= 1; 
+            let nămTínhThủy = 1990;
+            const d = new Date(dateVal);
+            if (!isNaN(d.getTime())) {
+                nămTínhThủy = d.getFullYear();
+                let tháng = d.getMonth() + 1;
+                let ngày = d.getDate();
+                if (tháng === 1 || (tháng === 2 && ngày < 4)) { nămTínhThủy -= 1; }
             }
             
             chủMệnh = tínhCungPhi(nămTínhThủy, gender);
@@ -954,7 +776,7 @@
             updateCompassUI(currentHeading);
             
             let sơnThử = tìmSơnHướng(angle);
-            detailBox.innerHTML = `<span class="gold-text">◆ ĐANG BẬT KIM VÀNG XOAY THỬ:</span><br>Kim ảo màu vàng đang chỉ mốc <span class="gold-text">${angle}°</span> (Sơn <span class="good-text">${sơnThử}</span>) nằm mờ phía dưới.<br>Hãy xoay thiết bị hoặc vuốt la bàn bằng tay sao cho <span class="warn-text">Kim Đỏ trùng khớp hoàn toàn lên vị trí Kim Vàng mờ</span> để đón chuẩn hướng phương vị.`;
+            detailBox.innerHTML = `<span class="gold-text">◆ ĐANG BẬT KIM VÀNG XOAY THỬ:</span><br>Kim ảo màu vàng đang chỉ mốc <span class="gold-text">${angle}°</span> (Sơn <span class="good-text">${sơnThử}</span>) nằm mờ phía dưới.<br>Hãy xoay thiết bị hoặc vuốt la bàn bằng tay sao cho <span class="warn-text">Kim Đỏ thật sự trùng khớp lên vị trí Kim Vàng mờ</span> để đón chuẩn hướng phương vị.`;
         }
 
         function tìmSơnHướng(heading) {
@@ -971,8 +793,8 @@
 
         function updateCompassUI(heading) {
             currentHeading = Math.round(heading);
-            // La bàn xoay ngược lại với góc quay hướng để kim đỏ luôn cố định chỉ hướng thực tế trước mặt
             compass.style.transform = `rotate(${-currentHeading}deg)`;
+            needle.style.transform = `rotate(0deg)`;
             compassSlider.value = currentHeading;
 
             if (targetAngle !== null) {
@@ -990,16 +812,12 @@
             else if (currentHeading >= 293 && currentHeading < 338) { currentCung = "CÀN (TÂY BẮC)"; currentCode = "NW"; }
 
             let sơnHiệnTại = tìmSơnHướng(currentHeading);
-            let checkHardwareStr = checkCompassAccuracy();
-            degreeTxt.innerHTML = `${currentHeading}° - Phương ${currentCung} - Sơn ${sơnHiệnTại} ${checkHardwareStr}`;
+            degreeTxt.innerText = `${currentHeading}° - Phương ${currentCung} - Sơn ${sơnHiệnTại}`;
 
-            const hasDateInput = document.getElementById('birthDay').value && document.getElementById('birthMonth').value && document.getElementById('birthYear').value;
-
-            if (!hasDateInput) {
+            if (!document.getElementById('birthDate').value) {
                 elementBox.innerHTML = `<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${phươngVịThiếtLập[currentCode].ngũHành}</span>`;
                 judgmentBox.innerText = "ĐO HƯỚNG CHÍNH XÁC";
                 judgmentBox.className = "judgment-badge";
-                judgmentBox.removeAttribute("style");
                 judgmentBox.style.backgroundColor = "#222";
                 judgmentBox.style.color = "var(--gold)";
                 judgmentBox.style.border = "1px solid var(--gold)";
@@ -1020,72 +838,33 @@
 
             judgmentBox.removeAttribute("style");
 
-            let tenThietBiTiengViet = "DƯƠNG TRẠCH";
-            if(mụcĐích === 'house') tenThietBiTiengViet = "CỬA CHÍNH / NHÀ";
-            if(mụcĐích === 'altar') tenThietBiTiengViet = "BÀN THỜ";
-            if(mụcĐích === 'bed') tenThietBiTiengViet = "GIƯỜNG NGỦ";
-            if(mụcĐích === 'workspace') tenThietBiTiengViet = "BÀN LÀM VIỆC";
-            if(mụcĐích === 'kitchen') tenThietBiTiengViet = "BẾP NẤU";
-            if(mụcĐích === 'toilet') tenThietBiTiengViet = "NHÀ VỆ SINH (WC)";
-
             if (!mụcĐích) {
                 judgmentBox.innerText = `Cung vị: ${cungTrạch}`;
                 judgmentBox.className = thôngTinCung.cát ? "judgment-badge bg-good" : "judgment-badge bg-bad";
-                
-                let htmlDetail = `Góc xoay <span class="gold-text">${currentHeading}°</span> đối chiếu mệnh cung ${chủMệnh} gặp cung tinh <span class="${thôngTinCung.cát ? 'good-text' : 'warn-text'}">${cungTrạch}</span>.<br>${thôngTinCung. ý_nghĩa}`;
-                
-                // Hiển thị mật pháp hóa giải tự động nếu phạm Cung Hung ở chế độ tự do cơ bản
-                if (!thôngTinCung.cát && mậtPhápHóaGiải[cungTrạch] && mậtPhápHóaGiải[cungTrạch]['house']) {
-                    htmlDetail += `
-                        <div class="cure-box">
-                            <div class="cure-title">❖ MẬT PHÁP HÓA GIẢI CHỦ MÀU ĐỎ: PHẠM ${cungTrạch.toUpperCase()}</div>
-                            <span style="color: #ff453a; font-weight: bold;">[Cảnh cáo phạm thế sát ngôi nhà]:</span> ${mậtPhápHóaGiải[cungTrạch]['house']}
-                        </div>
-                    `;
-                }
-                detailBox.innerHTML = htmlDetail;
+                detailBox.innerHTML = `Góc xoay <span class="gold-text">${currentHeading}°</span> đối chiếu mệnh cung ${chủMệnh} gặp cung tinh <span class="${thôngTinCung.cát ? 'good-text' : 'warn-text'}">${cungTrạch}</span>.<br>${thôngTinCung.ý_nghĩa}`;
                 return;
             }
 
             if (['house', 'altar', 'bed', 'workspace'].includes(mụcĐích)) {
-                judgmentBox.innerText = `Hướng ${tenThietBiTiengViet}: ${cungTrạch}`;
+                let tênThiếtBị = { 'altar': "BÀN THỜ", 'bed': "GIƯỜNG NGỦ", 'workspace': "BÀN LÀM VIỆC", 'house': "NHÀ CỬA" }[mụcĐích];
+                judgmentBox.innerText = `Hướng ${tênThiếtBị}: ${cungTrạch}`;
                 if (thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
-                    detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG CÁT (${cungTrạch.toUpperCase()}) - PHÙ HỢP TỐT:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Phương vị cực kỳ lý tưởng để bố trí vị trí nhìn về (hướng) góc tọa độ ${currentHeading}°. Nhờ đón cát khí, gia đạo sẽ nhận được nhiều tài lộc và bình an viên mãn.`;
+                    detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG CÁT (${cungTrạch.toUpperCase()}) - PHÙ HỢP:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Phương vị này cực kỳ lý tưởng để bố trí vị trí nhìn về (hướng) góc tọa độ ${currentHeading}°. Nhờ đón được cát khí, gia đạo sẽ nhận được nhiều phúc phần, tài lộc và bình an.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    let htmlDetail = `<span class="warn-text">◆ HƯỚNG HUNG (${cungTrạch.toUpperCase()}) - NÊN TRÁNH TUYỆT ĐỐI:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Tuyệt đối không đặt mặt hướng của ${tenThietBiTiengViet} nhìn thẳng về phương vị này. Phạm hung tinh sẽ tổn hao nguyên khí, tai ách liên miên.`;
-                    
-                    // Cơ chế Hóa giải thông minh phối hợp cung hung đơn vị thiết bị cụ thể
-                    if (mậtPhápHóaGiải[cungTrạch] && mậtPhápHóaGiải[cungTrạch][mụcĐích]) {
-                        htmlDetail += `
-                            <div class="cure-box">
-                                <div class="cure-title">❖ MẬT PHÁP HÓA GIẢI CHỦ MÀU ĐỎ: CỨU SÁT ${tenThietBiTiengViet} PHẠM ${cungTrạch.toUpperCase()}</div>
-                                <span style="color: #ff453a; font-weight: bold;">[Bí truyền xử lý]:</span> ${mậtPhápHóaGiải[cungTrạch][mụcĐích]}
-                            </div>
-                        `;
-                    }
-                    detailBox.innerHTML = htmlDetail;
+                    detailBox.innerHTML = `<span class="warn-text">◆ HƯỚNG HUNG (${cungTrạch.toUpperCase()}) - NÊN TRÁNH:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Tuyệt đối không đặt mặt hướng của ${tênThiếtBị} nhìn về phương vị này. Phạm phải hung tinh sẽ gây ra tổn hao nguyên khí, mang lại rủi ro và trắc trở cho gia đạo.`;
                 }
             } 
             else {
-                judgmentBox.innerText = `Tọa ${tenThietBiTiengViet}: ${cungTrạch}`;
+                let tênThiếtBị = mụcĐích === 'kitchen' ? "BẾP NẤU" : "WC";
+                judgmentBox.innerText = `Tọa ${tênThiếtBị}: ${cungTrạch}`;
                 if (!thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
-                    detailBox.innerHTML = `<span class="good-text">◆ TỌA HUNG ĐẮC CÁCH (${cungTrạch.toUpperCase()}) - RẤT TỐT:</span><br>Vị trí thuộc hung vị lý tưởng <span class="warn-text">(${cungTrạch})</span>.<br><br>Nguyên lý Tiêu Sát: Thiết bị xả uế hoặc sinh hỏa đun nấu đặt đè trên tọa độ hung tinh này sẽ "Lấy Độc Trị Độc", thiêu rụi hoàn toàn vận xui rủi, tai vạ ra khỏi ngôi nhà. Đạt chuẩn Tọa Hung Hướng Cát.`;
+                    detailBox.innerHTML = `<span class="good-text">◆ TỌA HUNG ĐẮC CÁCH (${cungTrạch.toUpperCase()}) - RẤT TỐT:</span><br>Vị trí này thuộc hung vị lý tưởng <span class="warn-text">(${cungTrạch})</span>.<br><br>Nguyên lý Phong Thủy: Thiết bị xả uế hoặc sinh hỏa đun nấu đặt đè trên tọa độ hung tinh này sẽ "Lấy Độc Trị Độc", thiêu rụi và cuốn trôi vận xui rủi, hung hại ra khỏi gia trạch. Đạt chuẩn Tọa Hung Hóa Sát.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    let htmlDetail = `<span class="warn-text">◆ TỌA CÁT PHẠM SÁT (${cungTrạch.toUpperCase()}) - ĐẠI KỴ PHONG THỦY:</span><br>Bạn đang đặt thiết bị đè trực tiếp lên mạch khí tốt lành <span class="good-text">(${cungTrạch})</span>.<br><br>Lưu ý nghiêm trọng: Tránh đặt bồn cầu hoặc lửa bếp đè tại đây để không thiêu rụi hay cuốn trôi phước báu, sức khỏe của gia đình.`;
-                    
-                    if (mậtPhápHóaGiải[cungTrạch] && mậtPhápHóaGiải[cungTrạch][mụcĐích]) {
-                        htmlDetail += `
-                            <div class="cure-box">
-                                <div class="cure-title">❖ MẬT PHÁP HÓA GIẢI CHỦ MÀU ĐỎ: KHẮC PHỤC TỌA CÁT PHẠM SÁT CHO ${tenThietBiTiengViet}</div>
-                                <span style="color: #ff453a; font-weight: bold;">[Giải pháp bắt buộc nếu đã lỡ đặt]:</span> Do thiết bị đè làm tiêu hao cung tốt ${cungTrạch}, hãy đặt thêm một chậu thạch anh ngũ sắc lớn kế bên thiết bị để giữ mạch long thần khí, cân bằng năng lượng bị đốt cháy/cuốn trôi.
-                            </div>
-                        `;
-                    }
-                    detailBox.innerHTML = htmlDetail;
+                    detailBox.innerHTML = `<span class="warn-text">◆ TỌA CÁT PHẠM SÁT (${cungTrạch.toUpperCase()}) - ĐẠI KỴ:</span><br>Bạn đang đặt thiết bị đè trực tiếp lên cung tốt lành <span class="good-text">(${cungTrạch})</span>.<br><br>Lưu ý nghiêm trọng: Tránh tuyệt đối đặt bồn cầu hoặc bếp lửa tại đây để không thiêu rụi hay cuốn trôi phước báu, sức khỏe và tài lộc của gia đình. Cần tìm phương vị khác.`;
                 }
             }
         }
@@ -1104,16 +883,14 @@
         function saveCurrentMember() {
             const name = document.getElementById('userName').value.trim();
             const gender = document.getElementById('gender').value;
-            const day = document.getElementById('birthDay').value;
-            const month = document.getElementById('birthMonth').value;
-            const year = document.getElementById('birthYear').value;
+            const birthDate = document.getElementById('birthDate').value;
 
-            if(!name || name === "Người Tầm Phương") { showAlert("❌ Vui lòng điền họ tên thật của thành viên gia đình!"); return; }
-            if(!day || !month || !year) { showAlert("❌ Vui lòng điền đầy đủ Ngày, Tháng, Năm sinh dương lịch!"); return; }
+            if(!name || name === "Người Tầm Phương") { alert("Vui lòng nhập họ tên thật của thành viên gia đình!"); return; }
+            if(!birthDate) { alert("Vui lòng chọn ngày tháng năm sinh!"); return; }
 
             let data = JSON.parse(localStorage.getItem('fengshui_members')) || [];
             data = data.filter(m => m.name !== name);
-            data.push({ name, gender, birthDate: `${year}-${month.padStart(2,'0')}-${day.padStart(2,'0')}` });
+            data.push({ name, gender, birthDate });
             localStorage.setItem('fengshui_members', JSON.stringify(data));
             
             loadSavedMembers();
@@ -1143,13 +920,7 @@
             document.getElementById('userName').value = name;
             document.getElementById('userName').style.color = '#fff';
             document.getElementById('gender').value = gender;
-            
-            const parts = birthDate.split('-');
-            if(parts.length === 3) {
-                document.getElementById('birthYear').value = parseInt(parts[0]);
-                document.getElementById('birthMonth').value = parseInt(parts[1]);
-                document.getElementById('birthDay').value = parseInt(parts[2]);
-            }
+            document.getElementById('birthDate').value = birthDate;
             recalculateFate();
         }
 
@@ -1172,15 +943,14 @@
                 nameInput.value = "Người Tầm Phương";
                 nameInput.style.color = "#aaa";
 
-                document.getElementById('birthDay').value = "";
-                document.getElementById('birthMonth').value = "";
-                document.getElementById('birthYear').value = "";
+                document.getElementById('birthDate').value = "";
                 document.getElementById('purpose').value = "";
                 document.getElementById('gender').value = "male";
 
                 currentHeading = 0;
                 targetAngle = null;
                 compass.style.transform = `rotate(0deg)`;
+                needle.style.transform = `rotate(0deg)`;
                 ghostNeedle.style.transform = `rotate(0deg)`;
                 ghostNeedle.style.opacity = "0";
                 compassSlider.value = 0;
@@ -1191,7 +961,6 @@
                 
                 judgmentBox.innerText = "ĐO HƯỚNG CHÍNH XÁC";
                 judgmentBox.className = "judgment-badge";
-                judgmentBox.removeAttribute("style");
                 judgmentBox.style.backgroundColor = "#222";
                 judgmentBox.style.color = "var(--gold)";
                 judgmentBox.style.border = "1px solid var(--gold)";
@@ -1204,6 +973,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            render24SocialRing = render24SonRing;
             render24SonRing();
             loadSavedMembers();
             recalculateFate(); 
@@ -1221,7 +991,7 @@
                         window.addEventListener('deviceorientation', handleOrientation);
                         permBtn.style.display = 'none';
                     } else {
-                        showAlert("❌ Cảm biến la bàn chưa được thiết bị cấp quyền truy cập!");
+                        alert("Cảm biến chưa được cấp quyền truy cập!");
                     }
                 }).catch(console.error);
         }
@@ -1231,17 +1001,20 @@
             const crText = "© BẢN QUYỀN HỆ THỐNG THUỘC VỀ THÁI THÔNG";
             console.log("%c" + crText, "color: #dfb76c; font-size: 16px; font-weight: bold; background: #161616; padding: 12px; border: 2px solid #dfb76c; border-radius: 8px;");
             
+            // Chống chuột phải cơ bản ở ngoài khu vực input
             document.addEventListener('contextmenu', function(e) {
                 if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT') {
                     e.preventDefault();
                 }
             }, false);
 
+            // Gắn thông báo bản quyền khi copy nội dung
             document.addEventListener('copy', function(e) {
                 e.clipboardData.setData('text/plain', 'Nội dung được bảo vệ. ' + crText);
                 e.preventDefault();
             });
 
+            // Watermark chìm bảo vệ code (hiển thị mờ sau nền body)
             const stealthWatermark = document.createElement('div');
             stealthWatermark.innerHTML = "THÁI THÔNG PHONG THỦY";
             stealthWatermark.style.cssText = "position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 12vw; color: rgba(255, 255, 255, 0.02); z-index: 0; pointer-events: none; font-weight: 900; user-select: none; white-space: nowrap; text-align: center;";
