@@ -11,6 +11,7 @@
             --panel: #121212;
             --text: #e0e0e0;
             --red: #ff3b30;
+            --green: #30d158;
         }
 
         body {
@@ -43,18 +44,53 @@
             letter-spacing: 1px;
         }
 
+        /* KHU VỰC NHẬP THÔNG TIN CÁ NHÂN */
+        .user-input-panel {
+            width: 90%;
+            max-width: 450px;
+            background: #1a1510;
+            border: 1px solid #443322;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            box-sizing: border-box;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            font-size: 0.8rem;
+            color: var(--gold);
+            margin-bottom: 4px;
+        }
+        .form-group input, .form-group select {
+            background: #2a2218;
+            border: 1px solid var(--gold);
+            color: #fff;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
         /* KHUNG LA BÀN TIÊU CHUẨN VẬT LÝ */
         .compass-container {
             position: relative;
-            width: 340px;
-            height: 340px;
-            margin: 20px auto;
+            width: 320px;
+            height: 320px;
+            margin: 15px auto;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* Sợi chỉ đỏ Thiên Tâm cố định dọc máy để ngắm hướng nhà */
         .cross-line-v {
             position: absolute;
             width: 2px;
@@ -72,7 +108,6 @@
             pointer-events: none;
         }
 
-        /* Mặt La Kinh phân tầng - Sẽ xoay dựa theo từ trường thật */
         .compass-dial {
             position: absolute;
             width: 100%;
@@ -80,22 +115,22 @@
             border: 6px double var(--gold);
             border-radius: 50%;
             background: radial-gradient(circle, #222 0%, #050505 70%, #111 100%);
-            box-shadow: 0 0 30px rgba(223, 183, 108, 0.15);
+            box-shadow: 0 0 25px rgba(223, 183, 108, 0.15);
             transform: rotate(0deg);
             transition: transform 0.1s ease-out;
             will-change: transform;
             z-index: 1;
         }
 
-        /* Kim chỉ Nam-Bắc (Kim từ tính nằm trong mặt kính) */
         .center-needle {
             position: absolute;
-            width: 14px;
+            width: 12px;
             height: 90%;
             background: linear-gradient(to bottom, var(--red) 50%, #ccc 50%);
             clip-path: polygon(50% 0%, 100% 15%, 60% 15%, 60% 85%, 100% 85%, 50% 100%, 0% 85%, 40% 85%, 40% 15%, 0% 15%);
             z-index: 3;
             pointer-events: none;
+            transform: rotate(0deg);
         }
 
         .center-pin {
@@ -108,27 +143,26 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.8);
         }
 
-        /* Nhãn hướng trên mặt la bàn */
         .direction-label {
             position: absolute;
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-align: center;
             width: 60px;
             transform-origin: center center;
         }
         
-        /* Định vị chuẩn Bát Quái (Bắc ở trên, Nam ở dưới làm gốc) */
-        .lbl-kham { color: var(--red); top: 15px; left: 140px; } 
-        .lbl-ly { color: var(--gold); bottom: 15px; left: 140px; transform: rotate(180deg); } 
-        .lbl-chan { color: var(--gold); right: 10px; top: 160px; transform: rotate(90deg); } 
-        .lbl-doai { color: var(--gold); left: 10px; top: 160px; transform: rotate(-90deg); } 
+        .lbl-kham { color: var(--red); top: 15px; left: 130px; } 
+        .lbl-ly { color: var(--gold); bottom: 15px; left: 130px; transform: rotate(180deg); } 
+        .lbl-chan { color: var(--gold); right: 10px; top: 150px; transform: rotate(90deg); } 
+        .lbl-doai { color: var(--gold); left: 10px; top: 150px; transform: rotate(-90deg); } 
         
-        .lbl-can { color: var(--gold); top: 55px; right: 55px; transform: rotate(45deg); } 
-        .lbl-ton { color: var(--gold); bottom: 55px; right: 55px; transform: rotate(135deg); } 
-        .lbl-khon { color: var(--gold); bottom: 55px; left: 55px; transform: rotate(-135deg); } 
-        .lbl-can2 { color: var(--gold); top: 55px; left: 55px; transform: rotate(-45deg); }
+        .lbl-can { color: var(--gold); top: 50px; right: 50px; transform: rotate(45deg); } 
+        .lbl-ton { color: var(--gold); bottom: 50px; right: 50px; transform: rotate(135deg); } 
+        .lbl-khon { color: var(--gold); bottom: 50px; left: 50px; transform: rotate(-135deg); } 
+        .lbl-can2 { color: var(--gold); top: 50px; left: 50px; transform: rotate(-45deg); }
 
+        /* BẢNG TRẠNG THÁI HIỂN THỊ KẾT QUẢ CÁ NHÂN HÓA */
         .status-panel {
             width: 90%;
             max-width: 450px;
@@ -138,48 +172,52 @@
             border-radius: 6px;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             box-sizing: border-box;
         }
 
         .degree-display {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: var(--gold);
             font-weight: bold;
-            text-shadow: 0 0 10px rgba(223, 183, 108, 0.3);
         }
 
-        .son-huong-display {
+        .fate-display {
             font-size: 0.95rem;
-            color: #ccc;
-            margin-top: 4px;
-            font-weight: 500;
+            color: #fff;
+            background: #222;
+            padding: 6px;
+            margin: 6px 0;
+            border-radius: 4px;
+            border-left: 4px solid var(--gold);
         }
+
+        .judgment-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+        .bg-good { background-color: rgba(48, 209, 88, 0.2); color: var(--green); border: 1px solid var(--green); }
+        .bg-bad { background-color: rgba(255, 59, 48, 0.2); color: var(--red); border: 1px solid var(--red); }
 
         .control-box {
             width: 90%;
             max-width: 450px;
-            background: #1a1510;
-            border: 1px solid #443322;
-            padding: 12px;
+            background: #111;
+            border: 1px solid #222;
+            padding: 10px;
             border-radius: 6px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             box-sizing: border-box;
         }
-        .control-box label {
-            display: block;
-            font-size: 0.85rem;
-            color: var(--gold);
-            margin-bottom: 6px;
-            text-align: center;
-        }
-        .slider {
-            width: 100%;
-            accent-color: var(--gold);
-        }
+        .slider { width: 100%; accent-color: var(--gold); }
 
         #permission-btn {
-            display: none; /* Mặc định ẩn, chỉ hiện trên iOS */
+            display: none;
             background: var(--red);
             color: white;
             border: none;
@@ -188,6 +226,8 @@
             font-weight: bold;
             cursor: pointer;
             margin-bottom: 15px;
+            width: 90%;
+            max-width: 450px;
             box-shadow: 0 0 15px rgba(255, 59, 48, 0.4);
         }
 
@@ -204,13 +244,12 @@
 
         .panel-title {
             color: var(--gold);
-            font-size: 0.95rem;
-            margin: 0 0 12px 0;
+            font-size: 0.9rem;
+            margin: 0 0 10px 0;
             border-bottom: 1px solid #252525;
-            padding-bottom: 8px;
+            padding-bottom: 6px;
             text-align: center;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .detail-content {
@@ -219,19 +258,40 @@
             padding: 12px;
             font-size: 0.85rem;
             line-height: 1.6;
-            min-height: 120px;
-            border-radius: 0 4px 4px 0;
+            min-height: 100px;
         }
 
-        .warn-text { color: #ff3b30; font-weight: bold; }
-        .good-text { color: #30d158; font-weight: bold; }
-        .gold-text { color: var(--gold); font-weight: bold; }
+        .warn-text { color: var(--red); font-weight: bold; }
+        .good-text { color: var(--green); font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div class="header">
         <h1>ĐẠI THUẬT LA KINH PHONG THỦY</h1>
+    </div>
+
+    <div class="user-input-panel">
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Năm sinh (Dương lịch):</label>
+                <input type="number" id="birthYear" value="1990" min="1930" max="2026" onchange="recalculateFate()">
+            </div>
+            <div class="form-group">
+                <label>Giới tính phối mệnh:</label>
+                <select id="gender" onchange="recalculateFate()">
+                    <option value="male">Nam Mạng</option>
+                    <option value="female">Nữ Mạng</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Mục đích tầm phương vị:</label>
+            <select id="purpose" onchange="recalculateFate()">
+                <option value="house">Xem hướng Nhà, Cửa Chính, Bàn Thờ</option>
+                <option value="kitchen">Xem hướng đặt Bếp Nấu (Tọa Hung Hướng Cát)</option>
+            </select>
+        </div>
     </div>
 
     <div class="compass-container">
@@ -242,7 +302,7 @@
         
         <div class="compass-dial" id="compass">
             <div class="direction-label lbl-kham">BẮC<br>▲<br>KHẢM</div>
-            <div class="direction-label lbl-can">Đ.BẮC<br>CẤN</div>
+            <div class="direction-label lbl-can">Đ.Bắc<br>CẤN</div>
             <div class="direction-label lbl-chan">ĐÔNG<br>CHẤN</div>
             <div class="direction-label lbl-ton">Đ.NAM<br>TỐN</div>
             <div class="direction-label lbl-ly">NAM<br>LY</div>
@@ -252,22 +312,22 @@
         </div>
     </div>
 
-    <button id="permission-btn" onclick="requestPermission()">KÍCH HOẠT SENSOR IPHONE</button>
+    <button id="permission-btn" onclick="requestPermission()">KÍCH HOẠT SENSOR ĐIỆN THOẠI</button>
 
     <div class="status-panel">
         <div class="degree-display" id="degree-txt">0° - CUNG KHẢM (BẮC)</div>
-        <div class="son-huong-display" id="son-huong-txt">Sơn Hướng: Tý (Chính Bắc)</div>
+        <div class="fate-display" id="fate-txt">Mệnh chủ: Khảm Thủy (Đông Tứ Mệnh)</div>
+        <div id="judgment-box" class="judgment-badge bg-good">HƯỚNG TỐT: SINH KHÍ</div>
     </div>
 
     <div class="control-box">
-        <label>Thanh gạt xoay thử nghiệm trên PC (0° - 360°):</label>
         <input type="range" min="0" max="360" value="0" class="slider" id="compassSlider" oninput="manualRotate(this.value)">
     </div>
 
     <div class="explanation-panel">
-        <p class="panel-title">Mật pháp Long Mạch Hiện Thời</p>
+        <p class="panel-title">Luận Giải Cát Hung Bản Mệnh</p>
         <div class="detail-content" id="detail-box">
-            Đặt điện thoại nằm ngửa thật phẳng. Xoay đỉnh máy về hướng cần đo để la bàn tự động tầm long định mạch.
+            Đang tải dữ liệu mật pháp...
         </div>
     </div>
 
@@ -275,63 +335,123 @@
         const compass = document.getElementById('compass');
         const needle = document.getElementById('needle');
         const degreeTxt = document.getElementById('degree-txt');
-        const sonHuongTxt = document.getElementById('son-huong-txt');
+        const fateTxt = document.getElementById('fate-txt');
+        const judgmentBox = document.getElementById('judgment-box');
+        const detailBox = document.getElementById('detail-box');
         const compassSlider = document.getElementById('compassSlider');
         const permBtn = document.getElementById('permission-btn');
 
-        const dataDetails = {
-            'N': `<strong>PHƯƠNG CHÍNH BẮC (Cung Khảm - Thuộc Thủy)</strong><br><br>• <span class="good-text">TẦM LONG:</span> Sự nghiệp, tiền tài xa xứ. Khí mạch phương này cần tĩnh.<br>• <span class="warn-text">SÁT KHÍ:</span> Kỵ nhà vệ sinh bẩn, đống rác $\rightarrow$ Tổn hại tâm bệnh, rò rỉ dòng tiền.<br>• <span class="gold-text">CẢI VẬN:</span> Đặt Tháp Văn Xương bằng đồng hoặc bể cá sạch để kích hoạt Thủy sinh tài.`,
-            'NE': `<strong>PHƯƠNG ĐÔNG BẮC (Cung Cấn - Thuộc Thổ)</strong><br><br>• <span class="good-text">TẦM LONG:</span> Học vấn, tư duy đại cục và sự ổn định điền sản.<br>• <span class="warn-text">SÁT KHÍ:</span> Khuyết góc hoặc góc nhọn chĩa vào $\rightarrow$ Quyết định sai lầm, dễ gánh nợ thay.<br>• <span class="gold-text">CẢI VẬN:</span> Dùng quả cầu Thạch Anh vàng để trấn mạch Thổ ổn định.`,
-            'E': `<strong>PHƯƠNG CHÍNH ĐÔNG (Cung Chấn - Thuộc Mộc)</strong><br><br>• <span class="good-text">TẦM LONG:</span> Sức khỏe, sinh lực và vị trí của người Trưởng nam.<br>• <span class="warn-text">SÁT KHÍ:</span> Có sắt thép rỉ sét, dao kéo sắc nhọn $\rightarrow$ Kim khắc Mộc, dễ gặp tai nạn bất ngờ.<br>• <span class="gold-text">CẢI VẬN:</span> Đặt 3-4 chậu cây xanh tươi tốt để nuôi dưỡng sinh khí.`,
-            'SE': `<strong>PHƯƠNG ĐÔNG NAM (Cung Tốn - Thuộc Mộc)</strong><br><br>• <span class="good-text">TẦM LONG:</span> <span class="gold-text">CUNG TÀI BẠCH TOÀN DIỆN</span>, chủ quản tích lũy tài sản.<br>• <span class="warn-text">SÁT KHÍ:</span> Phương này ẩm mốc, u tối $\rightarrow$ Tiền bạc tán sạch, đối tác lừa lọc.<br>• <span class="gold-text">CẢI VẬN:</span> Đặt hũ tài lộc hoặc Tỳ Hưu tại đây để khóa chặt luồng tiền.`,
-            'S': `<strong>PHƯƠNG CHÍNH NAM (Cung Ly - Thuộc Hỏa)</strong><br><br>• <span class="good-text">TẦM LONG:</span> Đỉnh cao danh vọng, địa vị và sự thông tuệ.<br>• <span class="warn-text">SÁT KHÍ:</span> Bị Thủy xung khắc (bể nước thải, rò rỉ nước hôi) $\rightarrow$ Mang tiếng thị phi, tiểu nhân đâm sau lưng.<br>• <span class="gold-text">CẢI VẬN:</span> Thắp đèn sáng ấm hoặc treo tranh Mã Đáo Thành Công.`,
-            'SW': `<strong>PHƯƠNG TÂY NAM (Cung Khôn - Thuộc Thổ)</strong><br><br>• <span class="good-text">TẦM LONG:</span> Nhân duyên, cung Phu Thê và người phụ nữ trong nhà.<br>• <span class="warn-text">SÁT KHÍ:</span> Tường nứt nẻ, ống nước bẩn chảy qua $\rightarrow$ Gia đạo lục đục, tình cảm rạn nứt.<br>• <span class="gold-text">CẢI VẬN:</span> Đặt cặp bình gốm sứ hoặc đôi uyên ương thạch anh hồng.`,
-            'W': `<strong>PHƯƠNG CHÍNH TÂY (Cung Đoài - Thuộc Kim)</strong><br><br>• <span class="good-text">TẦM LONG:</span> Cung Tử Tức (con cái) và năng lực giao tiếp thực chiến.<br>• <span class="warn-text">SÁT KHÍ:</span> Đặt bếp rực lửa tại đây $\rightarrow$ Thế trận "Hỏa thiêu Thiên môn", hao tán trắng tay.<br>• <span class="gold-text">CẢI VẬN:</span> Treo chuông gió bằng đồng 6 thanh để điều hòa Kim khí.`,
-            'NW': `<strong>PHƯƠNG TÂY BẮC (Cung Càn - Thuộc Kim)</strong><br><br>• <span class="good-text">TẦM LONG:</span> <span class="gold-text">QUÝ NHÂN THẦN LỰC</span>, vị thế người trụ cột gia đình.<br>• <span class="warn-text">SÁT KHÍ:</span> Bị khuyết góc hoặc làm kho phế thải $\rightarrow$ Trụ cột mất chỗ dựa, mất nguồn trợ giúp.<br>• <span class="gold-text">CẢI VẬN:</span> Đặt tượng Thần Tài hoặc đặt một La bàn đồng tại phương này.`
+        // Bản đồ sao 8 hướng dựa trên Quái Mệnh của Bát Trạch Minh Cảnh
+        const bátTrạchMap = {
+            'Khảm': { 'N': 'Phục Vị', 'NE': 'Ngũ Quỷ', 'E': 'Thiên Y', 'SE': 'Sinh Khí', 'S': 'Diên Niên', 'SW': 'Tuyệt Mệnh', 'W': 'Họa Hại', 'NW': 'Lục Sát', 'group': 'Đông Tứ Mệnh' },
+            'Ly':   { 'N': 'Diên Niên', 'NE': 'Họa Hại', 'E': 'Sinh Khí', 'SE': 'Thiên Y', 'S': 'Phục Vị', 'SW': 'Lục Sát', 'W': 'Ngũ Quỷ', 'NW': 'Tuyệt Mệnh', 'group': 'Đông Tứ Mệnh' },
+            'Chấn': { 'N': 'Thiên Y', 'NE': 'Lục Sát', 'E': 'Phục Vị', 'SE': 'Diên Niên', 'S': 'Sinh Khí', 'SW': 'Họa Hại', 'W': 'Tuyệt Mệnh', 'NW': 'Ngũ Quỷ', 'group': 'Đông Tứ Mệnh' },
+            'Tốn':  { 'N': 'Sinh Khí', 'NE': 'Tuyệt Mệnh', 'E': 'Diên Niên', 'SE': 'Phục Vị', 'S': 'Thiên Y', 'SW': 'Ngũ Quỷ', 'W': 'Lục Sát', 'NW': 'Họa Hại', 'group': 'Đông Tứ Mệnh' },
+            'Càn':  { 'N': 'Lục Sát', 'NE': 'Thiên Y', 'E': 'Ngũ Quỷ', 'SE': 'Họa Hại', 'S': 'Tuyệt Mệnh', 'SW': 'Diên Niên', 'W': 'Sinh Khí', 'NW': 'Phục Vị', 'group': 'Tây Tứ Mệnh' },
+            'Khôn': { 'N': 'Tuyệt Mệnh', 'NE': 'Sinh Khí', 'E': 'Họa Hại', 'SE': 'Ngũ Quỷ', 'S': 'Lục Sát', 'SW': 'Phục Vị', 'W': 'Thiên Y', 'NW': 'Diên Niên', 'group': 'Tây Tứ Mệnh' },
+            'Đoài': { 'N': 'Họa Hại', 'NE': 'Diên Niên', 'E': 'Tuyệt Mệnh', 'SE': 'Lục Sát', 'S': 'Ngũ Quỷ', 'SW': 'Thiên Y', 'W': 'Phục Vị', 'NW': 'Sinh Khí', 'group': 'Tây Tứ Mệnh' },
+            'Cấn':  { 'N': 'Ngũ Quỷ', 'NE': 'Phục Vị', 'E': 'Lục Sát', 'SE': 'Họa Hại', 'S': 'Họa Hại', 'SW': 'Sinh Khí', 'W': 'Diên Niên', 'NW': 'Thiên Y', 'group': 'Tây Tứ Mệnh' }
         };
 
-        function updateCompassUI(heading) {
-            let rounded = Math.round(heading);
+        const cungPhầnTrăm = {
+            'Sinh Khí': { cát: true, ý_nghĩa: 'Cung Đại Cát, chủ về tài lộc dồi dào, thăng tiến sự nghiệp, sinh khí bừng phát.' },
+            'Thiên Y': { cát: true, ý_nghĩa: 'Cung Trung Cát, chủ về sức khỏe trường thọ, có quý nhân phù trợ, gia đạo bình an.' },
+            'Diên Niên': { cát: true, ý_nghĩa: 'Cung Cát, chủ về củng cố các mối quan hệ, tình yêu bền vững, ngoại giao tốt.' },
+            'Phục Vị': { cát: true, ý_nghĩa: 'Cung Tiểu Cát, chủ về bình an tâm tính, vững vàng hoạn lộ, may mắn trong thi cử.' },
+            'Tuyệt Mệnh': { cát: false, ý_nghĩa: 'Cung Đại Hung, cực kỳ nguy hiểm. Chủ về hao tổn duyên thọ, phá sản, bệnh tật nặng.' },
+            'Ngũ Quỷ': { cát: false, ý_nghĩa: 'Cung Hung, chủ về tai họa, tổn hao tài sản, dễ bị tiểu nhân quấy phá, hỏa hoạn.' },
+            'Lục Sát': { cát: false, ý_nghĩa: 'Cung Hung, chủ về tranh chấp pháp lý, tai tiếng thị phi, tình duyên trục trặc.' },
+            'Họa Hại': { cát: false, ý_nghĩa: 'Cung Tiểu Hung, chủ về không may mắn, dễ bị kiệt quệ tinh thần vì chuyện vụn vặt.' }
+        };
+
+        let chủMệnh = 'Khảm'; 
+        let currentCode = 'N';
+        let currentHeading = 0;
+
+        // Thuật toán tính Cung Phi Bát Trạch chính xác từ năm sinh dương lịch
+        function tínhCungPhi(năm, giớiTính) {
+            let sốDư = năm % 9;
+            if (sốDư === 0) sốDư = 9;
             
-            // CHUẨN VẬT LÝ: Mặt la bàn xoay ngược hướng máy để chữ hướng giữ nguyên vị trí địa lý thực
-            compass.style.transform = `rotate(${-rounded}deg)`;
-            // Kim chỉ nam xoay đồng bộ để đầu đỏ luôn hướng thẳng về hướng Bắc thật
-            needle.style.transform = `rotate(${-rounded}deg)`;
-            
-            compassSlider.value = rounded;
-
-            let currentCung = ""; let currentSon = ""; let code = "";
-
-            // Phân chia 8 hướng chuẩn xác theo vòng tròn 360 độ
-            if (rounded >= 338 || rounded < 23) { currentCung = "KHẢM (BẮC)"; currentSon = "Tý (Chính Bắc)"; code = "N"; }
-            else if (rounded >= 23 && rounded < 68) { currentCung = "CẤN (ĐÔNG BẮC)"; currentSon = "Cấn (Chính Đông Bắc)"; code = "NE"; }
-            else if (rounded >= 68 && rounded < 113) { currentCung = "CHẤN (ĐÔNG)"; currentSon = "Mão (Chính Đông)"; code = "E"; }
-            else if (rounded >= 113 && rounded < 158) { currentCung = "TỐN (ĐÔNG NAM)"; currentSon = "Tốn (Chính Đông Nam)"; code = "SE"; }
-            else if (rounded >= 158 && rounded < 203) { currentCung = "LY (NAM)"; currentSon = "Ngọ (Chính Nam)"; code = "S"; }
-            else if (rounded >= 203 && rounded < 248) { currentCung = "KHÔN (TÂY NAM)"; currentSon = "Khôn (Chính Tây Nam)"; code = "SW"; }
-            else if (rounded >= 248 && rounded < 293) { currentCung = "ĐOÀI (TÂY)"; currentSon = "Tân (Chính Tây)"; code = "W"; }
-            else if (rounded >= 293 && rounded < 338) { currentCung = "CÀN (TÂY BẮC)"; currentSon = "Càn (Chính Tây Bắc)"; code = "NW"; }
-
-            degreeTxt.innerText = `${rounded}° - CUNG ${currentCung}`;
-            sonHuongTxt.innerText = `Sơn Hướng hiện tại: ${currentSon}`;
-            document.getElementById('detail-box').innerHTML = dataDetails[code];
-        }
-
-        function handleOrientation(event) {
-            // Hỗ trợ webkitCompassHeading của iOS hoặc alpha chuẩn của Android
-            let heading = event.webkitCompassHeading || (event.alpha ? (360 - event.alpha) : null);
-            if (heading !== null) {
-                updateCompassUI(heading);
+            if (giớiTính === 'male') {
+                let kếtQuả = (11 - sốDư) % 9;
+                if (kếtQuả === 0) kếtQuả = 9;
+                const mảngNam = {1:'Khảm', 2:'Khôn', 3:'Chấn', 4:'Tốn', 5:'Khôn', 6:'Càn', 7:'Đoài', 8:'Cấn', 9:'Ly'};
+                return mảngNam[kếtQuả];
+            } else {
+                let kếtQuả = (sốDư + 4) % 9;
+                if (kếtQuả === 0) kếtQuả = 9;
+                const mảngNữ = {1:'Tốn', 2:'Khôn', 3:'Chấn', 4:'Khôn', 5:'Cấn', 6:'Càn', 7:'Đoài', 8:'Cấn', 9:'Ly'};
+                return mảngNữ[kếtQuả];
             }
         }
 
-        // Tự động kiểm tra hệ điều hành khi tải trang
+        function recalculateFate() {
+            const year = parseInt(document.getElementById('birthYear').value) || 1990;
+            const gender = document.getElementById('gender').value;
+            chủMệnh = tínhCungPhi(year, gender);
+            
+            fateTxt.innerText = `Mệnh chủ: Cung ${chủMệnh} (${bátTrạchMap[chủMệnh].group})`;
+            updateCompassUI(currentHeading);
+        }
+
+        function updateCompassUI(heading) {
+            currentHeading = Math.round(heading);
+            compass.style.transform = `rotate(${-currentHeading}deg)`;
+            needle.style.transform = `rotate(0deg)`;
+            compassSlider.value = currentHeading;
+
+            let currentCung = ""; 
+            
+            if (currentHeading >= 338 || currentHeading < 23) { currentCung = "KHẢM (BẮC)"; currentCode = "N"; }
+            else if (currentHeading >= 23 && currentHeading < 68) { currentCung = "CẤN (ĐÔNG BẮC)"; currentCode = "NE"; }
+            else if (currentHeading >= 68 && currentHeading < 113) { currentCung = "CHẤN (ĐÔNG)"; currentCode = "E"; }
+            else if (currentHeading >= 113 && currentHeading < 158) { currentCung = "TỐN (ĐÔNG NAM)"; currentCode = "SE"; }
+            else if (currentHeading >= 158 && currentHeading < 203) { currentCung = "LY (NAM)"; currentCode = "S"; }
+            else if (currentHeading >= 203 && currentHeading < 248) { currentCung = "KHÔN (TÂY NAM)"; currentCode = "SW"; }
+            else if (currentHeading >= 248 && currentHeading < 293) { currentCung = "ĐOÀI (TÂY)"; currentCode = "W"; }
+            else if (currentHeading >= 293 && currentHeading < 338) { currentCung = "CÀN (TÂY BẮC)"; currentCode = "NW"; }
+
+            degreeTxt.innerText = `${currentHeading}° - Phương ${currentCung}`;
+
+            // Xử lý logic Cát Hung cá nhân hóa
+            const cungTrạch = bátTrạchMap[chủMệnh][currentCode];
+            const thôngTinCung = cungPhầnTrăm[cungTrạch];
+            const mụcĐích = document.getElementById('purpose').value;
+
+            if (mụcĐích === 'house') {
+                // Đối với nhà và cửa: Cần hướng CÁT
+                judgmentBox.innerText = `Phương vị: ${cungTrạch}`;
+                if (thôngTinCung.cát) {
+                    judgmentBox.className = "judgment-badge bg-good";
+                    detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG TỐT ĐỂ LÀM NHÀ/CỬA:</span><br>${thôngTinCung.ý_nghĩa}<br><br><em>Lời khuyên:</em> Nên mở cửa chính, đặt giường ngủ hoặc bàn thờ nhìn thẳng về phương góc này để đón cát khí.`;
+                } else {
+                    judgmentBox.className = "judgment-badge bg-bad";
+                    detailBox.innerHTML = `<span class="warn-text">◆ HƯỚNG XẤU ĐẠI KỴ:</span><br>${thôngTinCung.ý_nghĩa}<br><br><em>Lời khuyên:</em> Tránh mở cửa lớn tại đây. Nếu bất khả kháng, phải dùng gương bát quái hoặc các vật phẩm trấn trạch hóa giải.`;
+                }
+            } else {
+                // Đối với bếp: Quy tắc Bát Trạch là TỌA HUNG HƯỚNG CÁT (Bếp đặt trên cung xấu, mặt bếp nhìn về hướng tốt)
+                judgmentBox.innerText = `Vị trí đặt Bếp: ${cungTrạch}`;
+                if (!thôngTinCung.cát) {
+                    judgmentBox.className = "judgment-badge bg-good";
+                    detailBox.innerHTML = `<span class="good-text">◆ TỌA BẾP ĐẮC CÁCH (TỐT):</span><br>Phương góc này thuộc cung hung <span class="warn-text">(${cungTrạch})</span> đối với mệnh của bạn.<br><br><em>Mật pháp:</em> Đặt bếp nấu nằm đè lên cung này rất tốt, ngọn lửa của bếp sẽ thiêu rụi hoàn toàn điềm xấu và hung khí của cung ${cungTrạch}. Bạn chỉ cần xoay nút vặn bếp (hoặc mặt lưng người nấu) nhìn về một hướng tốt khác là hoàn hảo.`;
+                } else {
+                    judgmentBox.className = "judgment-badge bg-bad";
+                    detailBox.innerHTML = `<span class="warn-text">◆ SAI LẦM PHONG THỦY (XẤU):</span><br>Bạn đang định đặt bếp tọa trên cung cát <span class="good-text">(${cungTrạch})</span>.<br><br><em>Cảnh báo:</em> Bếp mang tính hỏa cực mạnh, đặt bếp tại đây sẽ vô tình thiêu cháy toàn bộ may mắn, tài lộc và phúc đức mà cung ${cungTrạch} mang lại cho tuổi của bạn. Hãy tìm góc hung khác để đặt bếp.`;
+                }
+            }
+        }
+
+        function handleOrientation(event) {
+            let heading = event.webkitCompassHeading || (event.alpha ? (360 - event.alpha) : null);
+            if (heading !== null) { updateCompassUI(heading); }
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
+            recalculateFate(); // Chạy khởi tạo tính mệnh tuổi trước
             if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-                // Đây là thiết bị iOS (iPhone/iPad) -> Bắt buộc hiện nút xin quyền
                 permBtn.style.display = 'block';
             } else {
-                // Thiết bị Android hoặc PC -> Tự động kích hoạt luôn, không cần bấm nút
                 window.addEventListener('deviceorientation', handleOrientation);
             }
         });
@@ -343,14 +463,12 @@
                         window.addEventListener('deviceorientation', handleOrientation);
                         permBtn.style.display = 'none';
                     } else {
-                        alert("Quyền truy cập cảm biến bị từ chối! Hãy dùng thanh gạt tay bên dưới.");
+                        alert("Quyền bị từ chối!");
                     }
                 }).catch(console.error);
         }
 
-        function manualRotate(value) {
-            updateCompassUI(value);
-        }
+        function manualRotate(value) { updateCompassUI(value); }
     </script>
 </body>
 </html>
