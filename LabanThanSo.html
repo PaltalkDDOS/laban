@@ -57,7 +57,7 @@
         }
         .form-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.2fr 0.8fr;
             gap: 10px;
             margin-bottom: 10px;
         }
@@ -274,8 +274,8 @@
     <div class="user-input-panel">
         <div class="form-grid">
             <div class="form-group">
-                <label>Năm sinh (Dương lịch):</label>
-                <input type="number" id="birthYear" value="1990" min="1930" max="2026" onchange="recalculateFate()">
+                <label>Ngày Tháng Năm sinh (Dương):</label>
+                <input type="date" id="birthDate" value="1990-01-01" onchange="recalculateFate()">
             </div>
             <div class="form-group">
                 <label>Giới tính phối mệnh:</label>
@@ -288,8 +288,11 @@
         <div class="form-group">
             <label>Mục đích tầm phương vị:</label>
             <select id="purpose" onchange="recalculateFate()">
-                <option value="house">Xem hướng Nhà, Cửa Chính, Bàn Thờ</option>
-                <option value="kitchen">Xem hướng đặt Bếp Nấu (Tọa Hung Hướng Cát)</option>
+                <option value="house">Xem hướng Nhà, Cửa Chính</option>
+                <option value="altar">Xem hướng đặt BÀN THỜ (Cần Hướng Cát)</option>
+                <option value="bed">Xem hướng đầu GIƯỜNG NGỦ (Cần Hướng Cát)</option>
+                <option value="kitchen">Xem vị trí đặt BẾP NẤU (Tọa Hung Hướng Cát)</option>
+                <option value="toilet">Xem vị trí nhà vệ sinh / WC (Tọa Hung giải uế)</option>
             </select>
         </div>
     </div>
@@ -316,8 +319,8 @@
 
     <div class="status-panel">
         <div class="degree-display" id="degree-txt">0° - CUNG KHẢM (BẮC)</div>
-        <div class="fate-display" id="fate-txt">Mệnh chủ: Khảm Thủy (Đông Tứ Mệnh)</div>
-        <div id="judgment-box" class="judgment-badge bg-good">HƯỚNG TỐT: SINH KHÍ</div>
+        <div class="fate-display" id="fate-txt">Mệnh chủ: ...</div>
+        <div id="judgment-box" class="judgment-badge bg-good">...</div>
     </div>
 
     <div class="control-box">
@@ -341,7 +344,6 @@
         const compassSlider = document.getElementById('compassSlider');
         const permBtn = document.getElementById('permission-btn');
 
-        // Bản đồ sao 8 hướng dựa trên Quái Mệnh của Bát Trạch Minh Cảnh
         const bátTrạchMap = {
             'Khảm': { 'N': 'Phục Vị', 'NE': 'Ngũ Quỷ', 'E': 'Thiên Y', 'SE': 'Sinh Khí', 'S': 'Diên Niên', 'SW': 'Tuyệt Mệnh', 'W': 'Họa Hại', 'NW': 'Lục Sát', 'group': 'Đông Tứ Mệnh' },
             'Ly':   { 'N': 'Diên Niên', 'NE': 'Họa Hại', 'E': 'Sinh Khí', 'SE': 'Thiên Y', 'S': 'Phục Vị', 'SW': 'Lục Sát', 'W': 'Ngũ Quỷ', 'NW': 'Tuyệt Mệnh', 'group': 'Đông Tứ Mệnh' },
@@ -356,7 +358,7 @@
         const cungPhầnTrăm = {
             'Sinh Khí': { cát: true, ý_nghĩa: 'Cung Đại Cát, chủ về tài lộc dồi dào, thăng tiến sự nghiệp, sinh khí bừng phát.' },
             'Thiên Y': { cát: true, ý_nghĩa: 'Cung Trung Cát, chủ về sức khỏe trường thọ, có quý nhân phù trợ, gia đạo bình an.' },
-            'Diên Niên': { cát: true, ý_nghĩa: 'Cung Cát, chủ về củng cố các mối quan hệ, tình yêu bền vững, ngoại giao tốt.' },
+            'Diên Niên': { cát: true, ý_nghĩa: 'Cung Cát, chủ về củng cố các mối quan hệ, tình yêu bền vũg, ngoại giao tốt.' },
             'Phục Vị': { cát: true, ý_nghĩa: 'Cung Tiểu Cát, chủ về bình an tâm tính, vững vàng hoạn lộ, may mắn trong thi cử.' },
             'Tuyệt Mệnh': { cát: false, ý_nghĩa: 'Cung Đại Hung, cực kỳ nguy hiểm. Chủ về hao tổn duyên thọ, phá sản, bệnh tật nặng.' },
             'Ngũ Quỷ': { cát: false, ý_nghĩa: 'Cung Hung, chủ về tai họa, tổn hao tài sản, dễ bị tiểu nhân quấy phá, hỏa hoạn.' },
@@ -368,8 +370,21 @@
         let currentCode = 'N';
         let currentHeading = 0;
 
-        // Thuật toán tính Cung Phi Bát Trạch chính xác từ năm sinh dương lịch
-        function tínhCungPhi(năm, giớiTính) {
+        // Thuật toán tính Cung Phi Bát Trạch kết hợp chuẩn Tiết Khí Lập Xuân
+        function tínhCungPhiTiếtKhí(dateString, giớiTính) {
+            const d = new Date(dateString);
+            if (isNaN(d.getTime())) return 'Khảm';
+            
+            let năm = d.getFullYear();
+            let tháng = d.getMonth() + 1;
+            let ngày = d.getDate();
+
+            // Nếu sinh trước ngày Lập xuân (thường rơi vào ngày 4 hoặc 5 tháng 2 dương lịch)
+            // thì năng lượng phong thủy tính theo năm trước đó.
+            if (tháng === 1 || (tháng === 2 && ngày < 4)) {
+                năm = năm - 1;
+            }
+
             let sốDư = năm % 9;
             if (sốDư === 0) sốDư = 9;
             
@@ -387,10 +402,10 @@
         }
 
         function recalculateFate() {
-            const year = parseInt(document.getElementById('birthYear').value) || 1990;
+            const dateVal = document.getElementById('birthDate').value;
             const gender = document.getElementById('gender').value;
-            chủMệnh = tínhCungPhi(year, gender);
             
+            chủMệnh = tínhCungPhiTiếtKhí(dateVal, gender);
             fateTxt.innerText = `Mệnh chủ: Cung ${chủMệnh} (${bátTrạchMap[chủMệnh].group})`;
             updateCompassUI(currentHeading);
         }
@@ -414,30 +429,43 @@
 
             degreeTxt.innerText = `${currentHeading}° - Phương ${currentCung}`;
 
-            // Xử lý logic Cát Hung cá nhân hóa
             const cungTrạch = bátTrạchMap[chủMệnh][currentCode];
             const thôngTinCung = cungPhầnTrăm[cungTrạch];
             const mụcĐích = document.getElementById('purpose').value;
 
-            if (mụcĐích === 'house') {
-                // Đối với nhà và cửa: Cần hướng CÁT
-                judgmentBox.innerText = `Phương vị: ${cungTrạch}`;
+            // XỬ LÝ LOGIC THEO TỪNG KHÔNG GIAN THỰC TẾ
+            if (mụcĐích === 'house' || mụcĐích === 'altar' || mụcĐích === 'bed') {
+                let tênThiếtBị = "NHÀ/CỬA";
+                if(mụcĐích === 'altar') tênThiếtBị = "BÀN THỜ";
+                if(mụcĐích === 'bed') tênThiếtBị = "GIƯỜNG NGỦ";
+
+                judgmentBox.innerText = `Hướng ${tênThiếtBị}: ${cungTrạch}`;
                 if (thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
-                    detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG TỐT ĐỂ LÀM NHÀ/CỬA:</span><br>${thôngTinCung.ý_nghĩa}<br><br><em>Lời khuyên:</em> Nên mở cửa chính, đặt giường ngủ hoặc bàn thờ nhìn thẳng về phương góc này để đón cát khí.`;
+                    detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG TỐT ĐỂ ĐẶT VỊ TRÍ:</span><br>${thôngTinCung.ý_nghĩa}<br><br><em>Lời khuyên:</em> Điện thoại (trục camera trên) đang hướng về phương góc tốt, nên đặt hướng mặt của ${tênThiếtBị} nhìn thẳng về tọa độ này.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    detailBox.innerHTML = `<span class="warn-text">◆ HƯỚNG XẤU ĐẠI KỴ:</span><br>${thôngTinCung.ý_nghĩa}<br><br><em>Lời khuyên:</em> Tránh mở cửa lớn tại đây. Nếu bất khả kháng, phải dùng gương bát quái hoặc các vật phẩm trấn trạch hóa giải.`;
+                    detailBox.innerHTML = `<span class="warn-text">◆ HƯỚNG XẤU ĐẠI KỴ:</span><br>${thôngTinCung.ý_nghĩa}<br><br><em>Lời khuyên:</em> Tuyệt đối tránh đặt hoặc quay mặt ${tênThiếtBị} về hướng này để bảo toàn gia đạo.`;
                 }
-            } else {
-                // Đối với bếp: Quy tắc Bát Trạch là TỌA HUNG HƯỚNG CÁT (Bếp đặt trên cung xấu, mặt bếp nhìn về hướng tốt)
-                judgmentBox.innerText = `Vị trí đặt Bếp: ${cungTrạch}`;
+            } 
+            else if (mụcĐích === 'kitchen') {
+                judgmentBox.innerText = `Tọa đặt Bếp: ${cungTrạch}`;
                 if (!thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
-                    detailBox.innerHTML = `<span class="good-text">◆ TỌA BẾP ĐẮC CÁCH (TỐT):</span><br>Phương góc này thuộc cung hung <span class="warn-text">(${cungTrạch})</span> đối với mệnh của bạn.<br><br><em>Mật pháp:</em> Đặt bếp nấu nằm đè lên cung này rất tốt, ngọn lửa của bếp sẽ thiêu rụi hoàn toàn điềm xấu và hung khí của cung ${cungTrạch}. Bạn chỉ cần xoay nút vặn bếp (hoặc mặt lưng người nấu) nhìn về một hướng tốt khác là hoàn hảo.`;
+                    detailBox.innerHTML = `<span class="good-text">◆ TỌA BẾP ĐẮC CÁCH (TỐT):</span><br>Phương góc này thuộc cung hung <span class="warn-text">(${cungTrạch})</span> đối với tuổi của bạn.<br><br><em>Mật pháp:</em> Đặt nền bếp nằm đè lên cung này rất tốt, hỏa khí của bếp nấu sẽ thiêu rụi toàn bộ vận hạn rủi ro của cung ${cungTrạch}. Mặt bếp chỉ cần hướng về cung cát khác.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    detailBox.innerHTML = `<span class="warn-text">◆ SAI LẦM PHONG THỦY (XẤU):</span><br>Bạn đang định đặt bếp tọa trên cung cát <span class="good-text">(${cungTrạch})</span>.<br><br><em>Cảnh báo:</em> Bếp mang tính hỏa cực mạnh, đặt bếp tại đây sẽ vô tình thiêu cháy toàn bộ may mắn, tài lộc và phúc đức mà cung ${cungTrạch} mang lại cho tuổi của bạn. Hãy tìm góc hung khác để đặt bếp.`;
+                    detailBox.innerHTML = `<span class="warn-text">◆ SAI LẦM PHONG THỦY (XẤU):</span><br>Bạn đang chỉ vào cung CÁT tốt lành <span class="good-text">(${cungTrạch})</span>.<br><br><em>Cảnh báo:</em> Tuyệt đối không đặt nền bếp nấu đè lên điểm này, lửa bếp sẽ thiêu đốt hết phước đức tài lộc của cung cát mang lại.`;
+                }
+            }
+            else if (mụcĐích === 'toilet') {
+                judgmentBox.innerText = `Tọa đặt WC: ${cungTrạch}`;
+                if (!thôngTinCung.cát) {
+                    judgmentBox.className = "judgment-badge bg-good";
+                    detailBox.innerHTML = `<span class="good-text">◆ TỌA WC ĐÚNG PHONG THỦY (TỐT):</span><br>Khu vực này thuộc cung hung uế <span class="warn-text">(${cungTrạch})</span>.<br><br><em>Mật pháp giải uế:</em> Đặt nhà vệ sinh đè lên cung hung này rất chuẩn, nước thải uế khí sẽ cuốn trôi toàn bộ tai ương xui xẻo của cung ${cungTrạch} ra khỏi ngôi nhà.`;
+                } else {
+                    judgmentBox.className = "judgment-badge bg-bad";
+                    detailBox.innerHTML = `<span class="warn-text">◆ WC PHẠM SÁT VỊ (XẤU):</span><br>Bạn đang hướng vào cung cát tinh <span class="good-text">(${cungTrạch})</span>.<br><br><em>Cảnh báo:</em> Đặt nhà vệ sinh đè lên cung tốt sẽ làm ô uế long mạch, xua tan phúc lộc, làm tổn hại lớn đến sức khỏe và của cải gia đạo.`;
                 }
             }
         }
@@ -448,7 +476,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            recalculateFate(); // Chạy khởi tạo tính mệnh tuổi trước
+            recalculateFate(); 
             if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
                 permBtn.style.display = 'block';
             } else {
