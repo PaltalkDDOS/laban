@@ -219,7 +219,7 @@
             box-shadow: 0 0 20px rgba(223, 183, 108, 0.2);
             z-index: 1;
             will-change: transform;
-            transition: transform 0.1s ease-out; /* Bỏ ease-out chậm để cảm biến nhạy nhất */
+            transition: transform 0.2s ease-out;
         }
 
         /* KIM THỰC TẾ (NẰM TRÊN CÙNG) */
@@ -233,12 +233,12 @@
             pointer-events: none;
         }
 
-        /* KIM ẢO MỜ ĐỊNH HƯỚNG (NẰM PHÍA DƯỚI KIM ĐỎ - MÀU VÀNG) */
+        /* KIM ẢO MỜ ĐỊNH HƯỚNG (NẰM PHÍA DƯỚI KIM ĐỎ - Z-INDEX THẤP HƠN) */
         .ghost-needle {
             position: absolute;
             width: 6px;
             height: 80%;
-            background: linear-gradient(to bottom, #ffcc00 50%, rgba(255, 204, 0, 0.25) 50%);
+            background: linear-gradient(to bottom, #ffcc00 50%, rgba(255, 204, 0, 0.3) 50%);
             clip-path: polygon(50% 0%, 100% 15%, 60% 15%, 60% 85%, 100% 85%, 50% 100%, 0% 85%, 40% 85%, 40% 15%, 0% 15%);
             z-index: 6;
             pointer-events: none;
@@ -405,7 +405,6 @@
             border-left: 4px solid #333;
         }
 
-        /* Phân biệt màu sắc rực rỡ Cát / Hung trong danh sách */
         .direction-item.good { border-left-color: var(--green); }
         .direction-item.bad { border-left-color: var(--red); }
 
@@ -427,10 +426,6 @@
             cursor: pointer;
             font-weight: bold;
         }
-        .btn-rotate:active {
-            background: var(--gold);
-            color: #000;
-        }
 
         .explanation-panel {
             width: 92%;
@@ -439,7 +434,6 @@
             border: 1px solid #252525;
             border-radius: 8px;
             padding: 12px;
-            margin-bottom: 15px;
         }
 
         .detail-content {
@@ -448,24 +442,6 @@
             padding: 10px;
             font-size: 0.8rem;
             line-height: 1.5;
-        }
-
-        /* CHỮ KÝ TÁC GIẢ - THÁI THÔNG */
-        .footer-copyright {
-            width: 92%;
-            max-width: 430px;
-            text-align: center;
-            padding: 10px;
-            font-size: 0.7rem;
-            color: #555;
-            border-top: 1px solid #222;
-            letter-spacing: 0.5px;
-            line-height: 1.4;
-        }
-        .footer-copyright .signature-highlight {
-            color: var(--gold);
-            font-weight: bold;
-            text-shadow: 0 0 4px rgba(223, 183, 108, 0.3);
         }
 
         .warn-text { color: var(--red); font-weight: bold; }
@@ -507,7 +483,7 @@
         <div class="form-group" style="margin-bottom: 6px;">
             <label>Mục đích tầm phương vị dương trạch:</label>
             <select id="purpose" onchange="recalculateFate()">
-                <option value="">-- Xem hướng tự do nguyên bản (Không áp bộ lọc) --</option>
+                <option value="">-- Xem hướng tự do nguyên bản (Không áp bộ lọc đồ đạc) --</option>
                 <option value="house">Xem hướng Nhà, Cửa Chính (Cần Hướng Cát)</option>
                 <option value="altar">Xem hướng đặt BÀN THỜ (Cần Hướng Cát)</option>
                 <option value="bed">Xem hướng đầu GIƯỜNG NGỦ (Cần Hướng Cát)</option>
@@ -518,7 +494,7 @@
         </div>
 
         <div class="btn-action-row">
-            <button class="btn-main" onclick="saveCurrentMember()">Lưu Tuổi</button>
+            <button class="btn-main" onclick="saveCurrentMember()">Lưu Tuổi Gia Đình</button>
             <button class="btn-reset" id="btnReset" onclick="clearAllData()">Làm Mới Trang</button>
         </div>
     </div>
@@ -570,15 +546,7 @@
         <div class="detail-content" id="detail-box">Đang khởi tạo mật pháp dữ liệu...</div>
     </div>
 
-    <div class="footer-copyright" id="footerSign">
-        Bản quyền thiết kế độc quyền thuộc sở hữu của: <span class="signature-highlight" id="lblAuthorName">Thái Thông</span><br>
-        Mã nguồn được bảo mật chống sao chép trái phép © 2026.
-    </div>
-
     <script>
-        // CHỮ KÝ BẢO MẬT (Để trống hoặc đổi sai sẽ khóa la bàn)
-        const TAC_GIA_DOC_QUYEN = "Thái Thông";
-
         const compass = document.getElementById('compass');
         const needle = document.getElementById('needle');
         const ghostNeedle = document.getElementById('ghostNeedle');
@@ -648,9 +616,6 @@
         let targetAngle = null;
 
         function render24SonRing() {
-            // Kiểm tra bảo mật
-            if(document.getElementById('lblAuthorName').innerText !== TAC_GIA_DOC_QUYEN) return;
-            
             sonRing.innerHTML = "";
             son24Data.forEach((son, index) => {
                 const trungBìnhGóc = (index * 15);
@@ -677,14 +642,12 @@
         }
 
         function recalculateFate() {
-            if(document.getElementById('lblAuthorName').innerText !== TAC_GIA_DOC_QUYEN) return;
-
             const name = document.getElementById('userName').value || "Chủ mệnh";
             const gender = document.getElementById('gender').value;
             const dateVal = document.getElementById('birthDate').value;
             
             if (!dateVal) {
-                fateTxt.innerText = `${name}: Chế độ đo hướng tự do (Chưa nhập năm sinh)`;
+                fateTxt.innerText = `${name}: Chế độ đo hướng độc lập (Chưa nhập năm sinh)`;
                 directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập ngày sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
                 listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
                 updateCompassUI(currentHeading);
@@ -701,7 +664,7 @@
             }
             
             chủMệnh = tínhCungPhi(nămTínhThủy, gender);
-            fateTxt.innerText = `${name}: Cung ${chủMệnh} (${bátTrạchMap[chủMệnh].group}) - Mệnh Ngũ Hành: ${bátTrạchMap[chủMệnh].element}`;
+            fateTxt.innerText = `${name}: Cung ${chủMệnh} (${bátTrạchMap[chủMệnh].group}) - Bản Mệnh Ngũ Hành: ${bátTrạchMap[chủMệnh].element}`;
             
             generateDirectionsList();
             updateCompassUI(currentHeading);
@@ -764,7 +727,6 @@
             });
         }
 
-        // HÀM BẬT KIM VÀNG ẢO
         function triggerGhostNeedle(angle) {
             targetAngle = angle;
             ghostNeedle.style.opacity = "1";
@@ -772,7 +734,7 @@
             updateCompassUI(currentHeading);
             
             let sơnThử = tìmSơnHướng(angle);
-            detailBox.innerHTML = `<span class="gold-text">◆ ĐANG BẬT KIM VÀNG XOAY THỬ:</span><br>Kim ảo màu vàng đang chỉ mốc <span class="gold-text">${angle}°</span> (Sơn <span class="good-text">${sơnThử}</span>) nằm mờ phía dưới.<br>Hãy xoay thiết bị hoặc vuốt thanh trượt sao cho <span class="warn-text">Kim Đỏ đè khớp lên vị trí Kim Vàng mờ</span> để lấy chuẩn hướng.`;
+            detailBox.innerHTML = `<span class="gold-text">◆ ĐANG BẬT KIM VÀNG XOAY THỬ:</span><br>Kim ảo màu vàng đang chỉ mốc <span class="gold-text">${angle}°</span> (Sơn <span class="good-text">${sơnThử}</span>) nằm mờ phía dưới.<br>Hãy xoay thiết bị hoặc vuốt la bàn bằng tay sao cho <span class="warn-text">Kim Đỏ thật sự trùng khớp lên vị trí Kim Vàng mờ</span> để đón chuẩn hướng phương vị.`;
         }
 
         function tìmSơnHướng(heading) {
@@ -787,21 +749,14 @@
             return sơnTìmThấy;
         }
 
-        // HÀM CẬP NHẬT ĐỘ XOAY CỦA CẢ 2 KIM
         function updateCompassUI(heading) {
-            if(document.getElementById('lblAuthorName').innerText !== TAC_GIA_DOC_QUYEN) return;
-
             currentHeading = Math.round(heading);
-            
-            // Xoay mặt la bàn, giữ kim đỏ đứng im chỉ thẳng lên
             compass.style.transform = `rotate(${-currentHeading}deg)`;
             needle.style.transform = `rotate(0deg)`;
             compassSlider.value = currentHeading;
 
-            // QUAN TRỌNG: Cập nhật vị trí kim vàng mờ sao cho nó di chuyển đúng với mặt la bàn
             if (targetAngle !== null) {
-                let offset = targetAngle - currentHeading;
-                ghostNeedle.style.transform = `rotate(${offset}deg)`;
+                ghostNeedle.style.transform = `rotate(${targetAngle - currentHeading}deg)`;
             }
 
             let currentCung = ""; 
@@ -824,10 +779,7 @@
                 judgmentBox.style.backgroundColor = "#222";
                 judgmentBox.style.color = "var(--gold)";
                 judgmentBox.style.border = "1px solid var(--gold)";
-                // Nếu đang dùng chức năng xoay thử thì không ghi đè câu hướng dẫn
-                if (targetAngle === null) {
-                    detailBox.innerHTML = `Hệ thống đang chạy ở chế độ la bàn cơ bản chuẩn xác cao.<br>Hướng hiện tại: góc <span class="gold-text">${currentHeading}°</span>, phương <b>${currentCung}</b>, thích hợp để đo đạc thực tế địa hình đất đai dương trạch.`;
-                }
+                detailBox.innerHTML = `Hệ thống đang chạy ở chế độ la bàn cơ bản chuẩn xác cao.<br>Hướng hiện tại: góc <span class="gold-text">${currentHeading}°</span>, phương <b>${currentCung}</b>, thích hợp để đo đạc thực tế địa hình đất đai dương trạch.`;
                 return;
             }
 
@@ -845,9 +797,7 @@
             if (!mụcĐích) {
                 judgmentBox.innerText = `Cung vị: ${cungTrạch}`;
                 judgmentBox.className = thôngTinCung.cát ? "judgment-badge bg-good" : "judgment-badge bg-bad";
-                if (targetAngle === null) {
-                    detailBox.innerHTML = `Góc xoay <span class="gold-text">${currentHeading}°</span> đối chiếu mệnh cung ${chủMệnh} gặp cung tinh <span class="${thôngTinCung.cát ? 'good-text' : 'warn-text'}">${cungTrạch}</span>.<br>${thôngTinCung.ý_nghĩa}`;
-                }
+                detailBox.innerHTML = `Góc xoay <span class="gold-text">${currentHeading}°</span> đối chiếu mệnh cung ${chủMệnh} gặp cung tinh <span class="${thôngTinCung.cát ? 'good-text' : 'warn-text'}">${cungTrạch}</span>.<br>${thôngTinCung.ý_nghĩa}`;
                 return;
             }
 
@@ -856,10 +806,10 @@
                 judgmentBox.innerText = `Hướng ${tênThiếtBị}: ${cungTrạch}`;
                 if (thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
-                    if (targetAngle === null) { detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG CÁT PHÙ HỢP:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Cực kỳ lý tưởng để bố trí vị trí nhìn về góc tọa độ ${currentHeading}° này.`; }
+                    detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG CÁT PHÙ HỢP:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Cực kỳ lý tưởng để bố trí vị trí nhìn về góc tọa độ ${currentHeading}° này.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    if (targetAngle === null) { detailBox.innerHTML = `<span class="warn-text">◆ HƯỚNG HUNG NÊN TRÁNH:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Không đặt mặt hướng của ${tênThiếtBị} nhìn về phương vị này tránh tổn hao nguyên khí.`; }
+                    detailBox.innerHTML = `<span class="warn-text">◆ HƯỚNG HUNG NÊN TRÁNH:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Không đặt mặt hướng của ${tênThiếtBị} nhìn về phương vị này tránh tổn hao nguyên khí.`;
                 }
             } 
             else {
@@ -867,15 +817,14 @@
                 judgmentBox.innerText = `Tọa ${tênThiếtBị}: ${cungTrạch}`;
                 if (!thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
-                    if (targetAngle === null) { detailBox.innerHTML = `<span class="good-text">◆ TỌA HUNG ĐẮC CÁCH (RẤT TỐT):</span><br>Vị trí này thuộc hung vị lý tưởng <span class="warn-text">(${cungTrạch})</span>.<br><br>Nguyên lý: Thiết bị xả uế hoặc đun nấu đặt đè trên tọa độ hung tinh này sẽ thiêu rụi, cuốn trôi vận xui rủi hung hại ra khỏi gia trạch.`; }
+                    detailBox.innerHTML = `<span class="good-text">◆ TỌA HUNG ĐẮC CÁCH (RẤT TỐT):</span><br>Vị trí này thuộc hung vị lý tưởng <span class="warn-text">(${cungTrạch})</span>.<br><br>Nguyên lý: Thiết bị xả uế hoặc đun nấu đặt đè trên tọa độ hung tinh này sẽ thiêu rụi, cuốn trôi vận xui rủi hung hại ra khỏi gia trạch.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    if (targetAngle === null) { detailBox.innerHTML = `<span class="warn-text">◆ TỌA CÁT PHẠM SÁT (XẤU PHẠM ĐẠI KỴ):</span><br>Bạn đang đặt thiết bị đè trực tiếp lên cung tốt lành <span class="good-text">(${cungTrạch})</span>.<br><br>Tránh tuyệt đối đặt bồn cầu hoặc bếp lửa tại đây để không thiêu rụi phước báu tài lộc gia đình.`; }
+                    detailBox.innerHTML = `<span class="warn-text">◆ TỌA CÁT PHẠM SÁT (XẤU PHẠM ĐẠI KỴ):</span><br>Bạn đang đặt thiết bị đè trực tiếp lên cung tốt lành <span class="good-text">(${cungTrạch})</span>.<br><br>Tránh tuyệt đối đặt bồn cầu hoặc bếp lửa tại đây để không thiêu rụi phước báu tài lộc gia đình.`;
                 }
             }
         }
 
-        // KHI CẢM BIẾN ĐIỆN THOẠI XOAY HOẶC THANH TRƯỢT KÉO, CẬP NHẬT GÓC LIÊN TỤC
         function handleOrientation(event) {
             let heading = event.webkitCompassHeading || (event.alpha ? (360 - event.alpha) : null);
             if (heading !== null) { 
@@ -892,7 +841,7 @@
             const gender = document.getElementById('gender').value;
             const birthDate = document.getElementById('birthDate').value;
 
-            if(!name || name === "Người Tầm Phương") { alert("Vui lòng nhập họ tên của thành viên gia đình!"); return; }
+            if(!name || name === "Người Tầm Phương") { alert("Vui lòng nhập họ tên thật của thành viên gia đình!"); return; }
             if(!birthDate) { alert("Vui lòng chọn ngày tháng năm sinh!"); return; }
 
             let data = JSON.parse(localStorage.getItem('fengshui_members')) || [];
@@ -939,7 +888,6 @@
             loadSavedMembers();
         }
 
-        // LÀM MỚI TRANG XÓA TOÀN BỘ VẾT XOAY THỬ
         function clearAllData() {
             const btnReset = document.getElementById('btnReset');
             btnReset.classList.add('executing');
@@ -956,11 +904,11 @@
                 document.getElementById('gender').value = "male";
 
                 currentHeading = 0;
-                targetAngle = null; // Xóa trạng thái đang xoay thử
+                targetAngle = null;
                 compass.style.transform = `rotate(0deg)`;
                 needle.style.transform = `rotate(0deg)`;
                 ghostNeedle.style.transform = `rotate(0deg)`;
-                ghostNeedle.style.opacity = "0"; // Ẩn kim ảo
+                ghostNeedle.style.opacity = "0";
                 compassSlider.value = 0;
 
                 degreeTxt.innerText = "0° - Phương KHẢM (BẮC) - Sơn Tý";
@@ -981,6 +929,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            render24SocialRing = render24SonRing;
             render24SonRing();
             loadSavedMembers();
             recalculateFate(); 
