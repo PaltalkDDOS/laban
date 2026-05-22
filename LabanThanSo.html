@@ -14,6 +14,7 @@
             --green: #30d158;
             --blue: #0a84ff;
             --gray: #8e8e93;
+            --orange-bright: #ff6600;
         }
 
         * {
@@ -110,17 +111,39 @@
             text-transform: uppercase;
         }
 
-        .btn-sec {
-            background: #222;
-            color: #ccc;
-            border: 1px solid #444;
+        .btn-reset {
+            background: linear-gradient(180deg, var(--orange-bright), #cc5200);
+            color: #fff;
+            border: 1px solid #ffaa66;
             padding: 8px 12px;
             border-radius: 4px;
             font-size: 0.8rem;
+            font-weight: bold;
             cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+        
+        .btn-reset:hover {
+            background: linear-gradient(180deg, #ff8833, var(--orange-bright));
+            box-shadow: 0 6px 14px rgba(255, 102, 0, 0.45);
         }
 
-        /* DANH SÁCH LƯU TRỮ */
+        .btn-reset:active {
+            transform: scale(0.95);
+        }
+
+        .btn-reset.executing {
+            animation: pulse-execute-effect 0.4s ease-in-out;
+        }
+
+        @keyframes pulse-execute-effect {
+            0% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(0.92); opacity: 0.6; box-shadow: 0 0 15px rgba(255, 102, 0, 0.8); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
         .saved-list-panel {
             width: 92%;
             max-width: 430px;
@@ -199,6 +222,7 @@
             transition: transform 0.2s ease-out;
         }
 
+        /* KIM THỰC TẾ (NẰM TRÊN CÙNG) */
         .center-needle {
             position: absolute;
             width: 8px;
@@ -209,17 +233,17 @@
             pointer-events: none;
         }
 
+        /* KIM ẢO MỜ ĐỊNH HƯỚNG (NẰM PHÍA DƯỚI KIM ĐỎ - Z-INDEX THẤP HƠN) */
         .ghost-needle {
             position: absolute;
             width: 6px;
             height: 80%;
-            background: linear-gradient(to bottom, var(--gold) 50%, rgba(223,183,108,0.3) 50%);
+            background: linear-gradient(to bottom, #ffcc00 50%, rgba(255, 204, 0, 0.3) 50%);
             clip-path: polygon(50% 0%, 100% 15%, 60% 15%, 60% 85%, 100% 85%, 50% 100%, 0% 85%, 40% 85%, 40% 15%, 0% 15%);
-            z-index: 7;
+            z-index: 6; /* Đặt dưới lớp kim đỏ (z-index: 8) để ẩn khéo léo phía dưới */
             pointer-events: none;
             opacity: 0;
             transition: transform 0.4s ease-out, opacity 0.3s;
-            box-shadow: 0 0 12px var(--gold);
         }
 
         .center-pin {
@@ -381,6 +405,7 @@
             border-left: 4px solid #333;
         }
 
+        /* KHÔI PHỤC MÀU ĐỎ/XANH RÕ RÀNG CHO DANH SÁCH GỢI Ý */
         .direction-item.good { border-left-color: var(--green); }
         .direction-item.bad { border-left-color: var(--red); }
 
@@ -422,7 +447,7 @@
 
         .warn-text { color: var(--red); font-weight: bold; }
         .good-text { color: var(--green); font-weight: bold; }
-        .blue-text { color: var(--blue); font-weight: bold; }
+        .gold-text { color: var(--gold); font-weight: bold; }
     </style>
 </head>
 <body>
@@ -435,7 +460,10 @@
         <div class="form-row">
             <div class="form-group" style="flex: 1.2;">
                 <label>Họ tên chủ mệnh:</label>
-                <input type="text" id="userName" value="Người Tầm Phương" oninput="recalculateFate()" onfocus="this.select()">
+                <input type="text" id="userName" value="Người Tầm Phương" 
+                       onfocus="if(this.value==='Người Tầm Phương') { this.value=''; this.style.color='#fff'; }" 
+                       onblur="if(this.value.trim()==='') { this.value='Người Tầm Phương'; this.style.color='#aaa'; }" 
+                       oninput="recalculateFate()">
             </div>
             <div class="form-group" style="flex: 0.8;">
                 <label>Giới tính:</label>
@@ -456,6 +484,7 @@
         <div class="form-group" style="margin-bottom: 6px;">
             <label>Mục đích tầm phương vị dương trạch:</label>
             <select id="purpose" onchange="recalculateFate()">
+                <option value="">-- Xem hướng tự do nguyên bản (Không áp bộ lọc đồ đạc) --</option>
                 <option value="house">Xem hướng Nhà, Cửa Chính (Cần Hướng Cát)</option>
                 <option value="altar">Xem hướng đặt BÀN THỜ (Cần Hướng Cát)</option>
                 <option value="bed">Xem hướng đầu GIƯỜNG NGỦ (Cần Hướng Cát)</option>
@@ -467,7 +496,7 @@
 
         <div class="btn-action-row">
             <button class="btn-main" onclick="saveCurrentMember()">Lưu Tuổi Gia Đình</button>
-            <button class="btn-sec" onclick="clearAllData()" title="Làm mới toàn bộ dữ liệu để xem hướng chính xác">LÀM MỚI TRANG</button>
+            <button class="btn-reset" id="btnReset" onclick="clearAllData()">Làm Mới Trang</button>
         </div>
     </div>
 
@@ -535,41 +564,6 @@
         const savedContainer = document.getElementById('savedContainer');
         const savedPanel = document.getElementById('savedPanel');
 
-        let storageAvailable = true;
-
-        // Kiểm tra localStorage có khả dụng không
-        function checkStorage() {
-            try {
-                localStorage.setItem('test', 'test');
-                localStorage.removeItem('test');
-                return true;
-            } catch (e) {
-                storageAvailable = false;
-                return false;
-            }
-        }
-
-        // Helper an toàn cho localStorage
-        function safeLocalStorageGet(key) {
-            if (!storageAvailable) return null;
-            try {
-                return localStorage.getItem(key);
-            } catch (e) {
-                return null;
-            }
-        }
-
-        function safeLocalStorageSet(key, value) {
-            if (!storageAvailable) return false;
-            try {
-                localStorage.setItem(key, value);
-                return true;
-            } catch (e) {
-                return false;
-            }
-        }
-
-        // Khai báo 24 Sơn Hướng
         const son24Data = [
             { name: "Tý", start: 352.5, end: 7.5 }, { name: "Quý", start: 7.5, end: 22.5 }, { name: "Sửu", start: 22.5, end: 37.5 },
             { name: "Cấn", start: 37.5, end: 52.5 }, { name: "Dần", start: 52.5, end: 67.5 }, { name: "Giáp", start: 67.5, end: 82.5 },
@@ -651,8 +645,16 @@
             const name = document.getElementById('userName').value || "Chủ mệnh";
             const gender = document.getElementById('gender').value;
             const dateVal = document.getElementById('birthDate').value;
-            let nămTínhThủy = 1990;
+            
+            if (!dateVal) {
+                fateTxt.innerText = `${name}: Chế độ đo hướng độc lập (Chưa nhập năm sinh)`;
+                directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập ngày sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
+                listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
+                updateCompassUI(currentHeading);
+                return;
+            }
 
+            let nămTínhThủy = 1990;
             const d = new Date(dateVal);
             if (!isNaN(d.getTime())) {
                 nămTínhThủy = d.getFullYear();
@@ -670,14 +672,28 @@
 
         function generateDirectionsList() {
             const mụcĐích = document.getElementById('purpose').value;
-            let listDirections = [];
+            
+            if (!mụcĐích) {
+                directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Chọn mục đích dương trạch (Nhà, bếp, thờ...) để xem danh sách gợi ý tương ứng</div>";
+                listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
+                return;
+            }
 
+            let listDirections = [];
             directionMeta.forEach(dir => {
                 const cungTrạch = bátTrạchMap[chủMệnh][dir.code];
                 const isCat = cungPhầnTrăm[cungTrạch].cát;
-                let hopPhongThuy = ['house', 'altar', 'bed', 'workspace'].includes(mụcĐích) ? isCat : !isCat;
+                let hopPhongThuy = false;
 
-                listDirections.push({ ...dir, cungTrạch: cungTrạch, isCat: isCat, hopPhongThuy: hopPhongThuy });
+                if (['house', 'altar', 'bed', 'workspace'].includes(mụcĐích)) {
+                    hopPhongThuy = isCat; 
+                } else {
+                    hopPhongThuy = !isCat; 
+                }
+
+                listDirections.push({
+                    ...dir, cungTrạch: cungTrạch, isCat: isCat, hopPhongThuy: hopPhongThuy
+                });
             });
 
             listDirections.sort((a, b) => b.hopPhongThuy - a.hopPhongThuy);
@@ -694,29 +710,31 @@
 
             directionsContainer.innerHTML = "";
             listDirections.forEach(item => {
+                // FIX: Khôi phục phân biệt màu XANH (Tốt) và ĐỎ (Xấu) rõ ràng trực quan
                 const badgeClass = item.hopPhongThuy ? 'good' : 'bad';
                 const statusText = item.hopPhongThuy ? '🟢 PHÙ HỢP TỐT' : '❌ KHÔNG PHÙ HỢP';
+                const textColorStyle = item.hopPhongThuy ? 'color: var(--green); font-weight: bold;' : 'color: var(--red); font-weight: bold;';
                 
                 const div = document.createElement('div');
                 div.className = `direction-item ${badgeClass}`;
                 div.innerHTML = `
                     <div class="item-info">
-                        <span class="item-name">${item.name} ➔ ${item.cungTrạch}</span>
-                        <span class="item-cung" style="color: ${item.hopPhongThuy ? 'var(--green)' : 'var(--red)'}">${statusText}</span>
+                        <span class="item-name">${item.name} ➔ <span style="${textColorStyle}">${item.cungTrạch}</span></span>
+                        <span class="item-cung" style="${textColorStyle}">${statusText}</span>
                     </div>
-                    <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})">Quay thử</button>
+                    <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})">Xoay thử</button>
                 `;
                 directionsContainer.appendChild(div);
             });
         }
 
+        // FIX LOGIC XOAY THỬ: Hiện kim vàng mờ nằm dưới lớp kim đỏ, kim đỏ đứng yên để người dùng tự mò trùng khớp
         function triggerGhostNeedle(angle) {
             ghostNeedle.style.opacity = "1";
             ghostNeedle.style.transform = `rotate(${angle}deg)`;
-            updateCompassUI(angle);
             
             let sơnThử = tìmSơnHướng(angle);
-            detailBox.innerHTML = `<span class="blue-text">◆ ĐANG XEM THỬ PHƯƠNG VỊ GỢI Ý:</span><br>Kim vàng chỉ <span class="blue-text">${angle}°</span> - Sơn <span class="good-text">${sơnThử}</span>.<br>Kim đỏ đã được đồng bộ.`;
+            detailBox.innerHTML = `<span class="gold-text">◆ ĐANG BẬT KIM VÀNG XOAY THỬ:</span><br>Kim ảo màu vàng đang chỉ mốc <span class="gold-text">${angle}°</span> (Sơn <span class="good-text">${sơnThử}</span>) nằm mờ phía dưới.<br>Hãy xoay thiết bị hoặc vuốt la bàn bằng tay sao cho <span class="warn-text">Kim Đỏ thật sự trùng khớp lên vị trí Kim Vàng mờ</span> để đón chuẩn hướng phương vị.`;
         }
 
         function tìmSơnHướng(heading) {
@@ -724,8 +742,8 @@
             son24Data.forEach(son => {
                 if (son.start > son.end) {
                     if (heading >= son.start || heading < son.end) sơnTìmThấy = son.name;
-                } else if (heading >= son.start && heading < son.end) {
-                    sơnTìmThấy = son.name;
+                } else {
+                    if (heading >= son.start && heading < son.end) sơnTìmThấy = son.name;
                 }
             });
             return sơnTìmThấy;
@@ -737,7 +755,7 @@
             needle.style.transform = `rotate(0deg)`;
             compassSlider.value = currentHeading;
 
-            let currentCung = "";
+            let currentCung = ""; 
             if (currentHeading >= 338 || currentHeading < 23) { currentCung = "KHẢM (BẮC)"; currentCode = "N"; }
             else if (currentHeading >= 23 && currentHeading < 68) { currentCung = "CẤN (ĐÔNG BẮC)"; currentCode = "NE"; }
             else if (currentHeading >= 68 && currentHeading < 113) { currentCung = "CHẤN (ĐÔNG)"; currentCode = "E"; }
@@ -750,6 +768,17 @@
             let sơnHiệnTại = tìmSơnHướng(currentHeading);
             degreeTxt.innerText = `${currentHeading}° - Phương ${currentCung} - Sơn ${sơnHiệnTại}`;
 
+            if (!document.getElementById('birthDate').value) {
+                幕lmentBox.innerHTML = `<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${phươngVịThiếtLập[currentCode].ngũHành}</span>`;
+                judgmentBox.innerText = "ĐO HƯỚNG CHÍNH XÁC";
+                judgmentBox.className = "judgment-badge";
+                judgmentBox.style.backgroundColor = "#222";
+                judgmentBox.style.color = "var(--gold)";
+                judgmentBox.style.border = "1px solid var(--gold)";
+                detailBox.innerHTML = `Hệ thống đang chạy ở chế độ la bàn cơ bản chuẩn xác cao.<br>Hướng hiện tại: góc <span class="gold-text">${currentHeading}°</span>, phương <b>${currentCung}</b>, thích hợp để đo đạc thực tế địa hình đất đai dương trạch.`;
+                return;
+            }
+
             const hànhPhươngVị = phươngVịThiếtLập[currentCode].ngũHành;
             const hànhMệnhChủ = bátTrạchMap[chủMệnh].element;
             elementBox.innerHTML = `
@@ -761,25 +790,34 @@
             const thôngTinCung = cungPhầnTrăm[cungTrạch];
             const mụcĐích = document.getElementById('purpose').value;
 
+            if (!mụcĐích) {
+                judgmentBox.innerText = `Cung vị: ${cungTrạch}`;
+                judgmentBox.className = thôngTinCung.cát ? "judgment-badge bg-good" : "judgment-badge bg-bad";
+                detailBox.innerHTML = `Góc xoay <span class="gold-text">${currentHeading}°</span> đối chiếu mệnh cung ${chủMệnh} gặp cung tinh <span class="${thôngTinCung.cát ? 'good-text' : 'warn-text'}">${cungTrạch}</span>.<br>${thôngTinCung.ý_nghĩa}`;
+                return;
+            }
+
             if (['house', 'altar', 'bed', 'workspace'].includes(mụcĐích)) {
                 let tênThiếtBị = { 'altar': "BÀN THỜ", 'bed': "GIƯỜNG NGỦ", 'workspace': "BÀN LÀM VIỆC", 'house': "NHÀ CỬA" }[mụcĐích];
                 judgmentBox.innerText = `Hướng ${tênThiếtBị}: ${cungTrạch}`;
+                // FIX: Hiển thị đúng màu XANH khi CÁT (TỐT) và ĐỎ khi HUNG (XẤU) cho bảng trạng thái chính
                 if (thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
-                    detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG CÁT PHÙ HỢP:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Cực kỳ lý tưởng để bố trí vị trí nhìn về góc ${currentHeading}°.`;
+                    detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG CÁT PHÙ HỢP:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Cực kỳ lý tưởng để bố trí vị trí nhìn về góc tọa độ ${currentHeading}° này.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    detailBox.innerHTML = `<span class="warn-text">◆ HƯỚNG HUNG NÊN TRÁNH:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Không nên đặt hướng ${tênThiếtBị} về phương vị này.`;
+                    detailBox.innerHTML = `<span class="warn-text">◆ HƯỚNG HUNG NÊN TRÁNH:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Không đặt mặt hướng của ${tênThiếtBị} nhìn về phương vị này tránh tổn hao nguyên khí.`;
                 }
-            } else {
+            } 
+            else {
                 let tênThiếtBị = mụcĐích === 'kitchen' ? "BẾP NẤU" : "WC";
                 judgmentBox.innerText = `Tọa ${tênThiếtBị}: ${cungTrạch}`;
                 if (!thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
-                    detailBox.innerHTML = `<span class="good-text">◆ TỌA HUNG ĐẮC CÁCH (RẤT TỐT):</span><br>Vị trí này thuộc hung vị lý tưởng.`;
+                    detailBox.innerHTML = `<span class="good-text">◆ TỌA HUNG ĐẮC CÁCH (RẤT TỐT):</span><br>Vị trí này thuộc hung vị lý tưởng <span class="warn-text">(${cungTrạch})</span>.<br><br>Nguyên lý: Thiết bị xả uế hoặc đun nấu đặt đè trên tọa độ hung tinh này sẽ thiêu rụi, cuốn trôi vận xui rủi hung hại ra khỏi gia trạch.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    detailBox.innerHTML = `<span class="warn-text">◆ TỌA CÁT PHẠM SÁT (XẤU):</span><br>Tránh đặt ${tênThiếtBị} tại đây.`;
+                    detailBox.innerHTML = `<span class="warn-text">◆ TỌA CÁT PHẠM SÁT (XẤU PHẠM ĐẠI KỴ):</span><br>Bạn đang đặt thiết bị đè trực tiếp lên cung tốt lành <span class="good-text">(${cungTrạch})</span>.<br><br>Tránh tuyệt đối đặt bồn cầu hoặc bếp lửa tại đây để không thiêu rụi phước báu tài lộc gia đình.`;
                 }
             }
         }
@@ -787,7 +825,8 @@
         function handleOrientation(event) {
             let heading = event.webkitCompassHeading || (event.alpha ? (360 - event.alpha) : null);
             if (heading !== null) { 
-                ghostNeedle.style.opacity = "0";
+                // Khi xoay thiết bị thực tế, kim ảo mờ tự động ẩn đi để nhường sân cho cảm biến
+                ghostNeedle.style.opacity = "0"; 
                 updateCompassUI(heading); 
             }
         }
@@ -798,31 +837,23 @@
         }
 
         function saveCurrentMember() {
-            if (!storageAvailable) {
-                alert("Chức năng lưu gia đình tạm thời không khả dụng do môi trường sandbox.");
-                return;
-            }
             const name = document.getElementById('userName').value.trim();
             const gender = document.getElementById('gender').value;
             const birthDate = document.getElementById('birthDate').value;
 
-            if(!name) { alert("Vui lòng nhập tên thành viên!"); return; }
+            if(!name || name === "Người Tầm Phương") { alert("Vui lòng nhập họ tên thật của thành viên gia đình!"); return; }
+            if(!birthDate) { alert("Vui lòng chọn ngày tháng năm sinh!"); return; }
 
-            let data = JSON.parse(safeLocalStorageGet('fengshui_members') || '[]');
+            let data = JSON.parse(localStorage.getItem('fengshui_members')) || [];
             data = data.filter(m => m.name !== name);
             data.push({ name, gender, birthDate });
-            safeLocalStorageSet('fengshui_members', JSON.stringify(data));
+            localStorage.setItem('fengshui_members', JSON.stringify(data));
             
             loadSavedMembers();
         }
 
         function loadSavedMembers() {
-            if (!storageAvailable) {
-                savedPanel.style.display = "none";
-                return;
-            }
-            const dataStr = safeLocalStorageGet('fengshui_members');
-            const data = dataStr ? JSON.parse(dataStr) : [];
+            const data = JSON.parse(localStorage.getItem('fengshui_members')) || [];
             if(data.length === 0) {
                 savedPanel.style.display = "none";
                 return;
@@ -843,6 +874,7 @@
 
         function selectMember(name, gender, birthDate) {
             document.getElementById('userName').value = name;
+            document.getElementById('userName').style.color = '#fff';
             document.getElementById('gender').value = gender;
             document.getElementById('birthDate').value = birthDate;
             recalculateFate();
@@ -850,21 +882,51 @@
 
         function deleteMember(e, name) {
             e.stopPropagation();
-            if (!storageAvailable) return;
-            let data = JSON.parse(safeLocalStorageGet('fengshui_members') || '[]');
+            let data = JSON.parse(localStorage.getItem('fengshui_members')) || [];
             data = data.filter(m => m.name !== name);
-            safeLocalStorageSet('fengshui_members', JSON.stringify(data));
+            localStorage.setItem('fengshui_members', JSON.stringify(data));
             loadSavedMembers();
         }
 
         function clearAllData() {
-            if (confirm("Làm mới trang sẽ xóa hết dữ liệu hiện tại. Bạn có chắc muốn tiếp tục?")) {
-                window.location.reload();
-            }
+            const btnReset = document.getElementById('btnReset');
+            btnReset.classList.add('executing');
+            
+            setTimeout(() => {
+                btnReset.classList.remove('executing');
+                
+                const nameInput = document.getElementById('userName');
+                nameInput.value = "Người Tầm Phương";
+                nameInput.style.color = "#aaa";
+
+                document.getElementById('birthDate').value = "";
+                document.getElementById('purpose').value = "";
+                document.getElementById('gender').value = "male";
+
+                currentHeading = 0;
+                compass.style.transform = `rotate(0deg)`;
+                needle.style.transform = `rotate(0deg)`;
+                ghostNeedle.style.opacity = "0";
+                compassSlider.value = 0;
+
+                degreeTxt.innerText = "0° - Phương KHẢM (BẮC) - Sơn Tý";
+                elementBox.innerHTML = "";
+                fateTxt.innerText = "Chế độ la bàn trống - Sẵn sàng xem hướng gốc chính xác";
+                
+                judgmentBox.innerText = "ĐO HƯỚNG CHÍNH XÁC";
+                judgmentBox.className = "judgment-badge";
+                judgmentBox.style.backgroundColor = "#222";
+                judgmentBox.style.color = "var(--gold)";
+                judgmentBox.style.border = "1px solid var(--gold)";
+                
+                detailBox.innerHTML = "Đã làm mới hệ thống sạch sẽ. La bàn đang hoạt động độc lập ở chế độ thô nguyên bản giúp đo đạc thực địa chuẩn xác nhất.";
+
+                directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập ngày sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
+                listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
+            }, 400);
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            checkStorage();
             render24SonRing();
             loadSavedMembers();
             recalculateFate(); 
