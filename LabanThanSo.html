@@ -673,7 +673,6 @@
     <script>
         // === CÁC HÀM ĐÃ ĐƯỢC TỐI ƯU ===
         let debounceTimer;
-		let isDateValid = false;
         function getNguHoangInfo(year) {
             const nguHoang = {
                 0: "Ngũ Hoàng tại Trung Cung (Rất hung - Tránh động thổ lớn)",
@@ -844,46 +843,40 @@
         }
 
 function recalculateFate() {
-        const name = document.getElementById('userName').value.trim() || "Chủ mệnh";
-        const gender = document.getElementById('gender').value;
-        const dayStr = document.getElementById('birthDay').value;
-        const monthStr = document.getElementById('birthMonth').value;
-        const yearStr = document.getElementById('birthYear').value;
+    const name = document.getElementById('userName').value || "Chủ mệnh";
+    const gender = document.getElementById('gender').value;
+    
+    const dayStr = document.getElementById('birthDay').value;
+    const monthStr = document.getElementById('birthMonth').value;
+    const yearStr = document.getElementById('birthYear').value;
 
-        // Chưa nhập đủ ngày tháng năm
-        if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
-            fateTxt.innerHTML = `${name}: <span style="color:#888;">Đo hướng tự do cơ bản (Chưa nhập ngày sinh)</span>`;
-            directionsContainer.innerHTML = `<div style="font-size:0.8rem;color:#8a8a8f;text-align:center;padding:12px;">Vui lòng nhập đủ Ngày - Tháng - Năm sinh để xem phân tích Cát/Hung</div>`;
-            listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
-            updateCompassUI(currentHeading);
-            return;
-        }
-
-        let d = parseInt(dayStr);
-        let m = parseInt(monthStr);
-        let y = parseInt(yearStr);
-
-        const validation = validateFullDate(d, m, y);
-
-        if (!validation.valid) {
-            fateTxt.innerText = `${name}: Lỗi ngày tháng năm sinh`;
-            return;
-        }
-
-        // Cảnh báo năm ngoài khoảng
-        if (validation.warning) {
-            fateTxt.innerHTML = `${name}: <span style="color:#ff9500;">Cung ${tínhCungPhi(y, m, d, gender)} (Năm ${y} ngoài khoảng tham khảo 1900-2050 - Chỉ mang tính tham khảo)</span>`;
-        } else {
-            chủMệnh = tínhCungPhi(y, m, d, gender);
-            const namAm = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
-            const nguHoangInfo = getNguHoangInfo(y);
-
-            fateTxt.innerText = `${name}: Cung ${chủMệnh} (${bátTrạchMap[chủMệnh].group}) - Bản Mệnh: ${bátTrạchMap[chủMệnh].element} | Năm Âm: ${namAm} | Ngũ Hoàng ${y}: ${nguHoangInfo}`;
-        }
-
-        generateDirectionsList();
+    if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
+        fateTxt.innerText = `${name}: Đo hướng tự do cơ bản (Chưa nhập đủ Ngày - Tháng - Năm sinh)`;
+        directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập đủ 3 ô Ngày, Tháng, Năm sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
+        listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
         updateCompassUI(currentHeading);
+        return;
     }
+
+    let d = parseInt(dayStr);
+    let m = parseInt(monthStr);
+    let y = parseInt(yearStr);
+
+    if (!validateFullDate(d, m, y)) {
+        fateTxt.innerText = `${name}: Lỗi cấu trúc thời gian (Kiểm tra lại số ngày hoặc năm nhuận)`;
+        return;
+    }
+
+    chủMệnh = tínhCungPhi(y, m, d, gender);
+    
+    const namAm = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
+    const nguHoangInfo = getNguHoangInfo(y);
+
+    fateTxt.innerText = `${name}: Cung ${chủMệnh} (${bátTrạchMap[chủMệnh].group}) - Bản Mệnh: ${bátTrạchMap[chủMệnh].element} | Năm Âm: ${namAm} | Ngũ Hoàng ${y}: ${nguHoangInfo}`;
+    
+    generateDirectionsList();
+    updateCompassUI(currentHeading);
+}
 
         function generateDirectionsList() {
             const mụcĐích = document.getElementById('purpose').value;
