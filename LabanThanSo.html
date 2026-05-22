@@ -112,16 +112,11 @@
             width: 100%;
         }
 
-        /* Đồng bộ hóa giao diện ô nhập ngày tháng năm thủ công chống vỡ khung */
+        /* Đồng bộ hóa giao diện ô nhập ngày tháng năm thủ công */
         .date-input-container {
             display: flex;
             gap: 6px;
             width: 100%;
-        }
-        
-        .date-input-container input {
-            flex: 1;
-            min-width: 0; /* Ép co giãn đàn hồi tốt trên thiết bị siêu nhỏ */
         }
 
         .btn-action-row {
@@ -765,9 +760,12 @@
 
         // Xử lý logic nhập ô ngày tháng năm thủ công & Auto-jump tab
         function handleDateInput(currentInput, nextInputId) {
+            // Chỉ cho phép nhập số
             currentInput.value = currentInput.value.replace(/[^0-9]/g, '');
+            
             let val = parseInt(currentInput.value);
             
+            // Kiểm tra tính hợp lệ tức thời từng ô
             if (currentInput.id === 'birthDay' && val > 31) {
                 showCustomAlert("Ngày trong tháng không thể vượt quá mốc 31 ngày!");
                 currentInput.value = "31";
@@ -777,9 +775,11 @@
                 currentInput.value = "12";
             }
 
+            // Tự động nhảy sang ô kế tiếp khi nhập đủ số ký tự tối đa
             if (currentInput.value.length >= currentInput.maxLength && nextInputId) {
                 document.getElementById(nextInputId).focus();
             }
+            
             recalculateFate();
         }
 
@@ -809,6 +809,7 @@
             }
         }
 
+        // Thuật toán kiểm tra toàn vẹn ngày tháng năm nhuận/thường đầy đủ
         function validateFullDate(day, month, year) {
             if (month < 1 || month > 12) return false;
             let listDaysInMonth = [31, (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -826,7 +827,7 @@
             const yearStr = document.getElementById('birthYear').value;
 
             if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
-                fateTxt.innerText = `${name}: Đo hướng tự do cơ bản (Chưa nhập đủ Ngày - Tháng - Năm sinh)`;
+                fateTxt.innerText = `${name}: Đo hướng tự do cơ bản (Chưa hoàn thiện đầy đủ Ngày - Tháng - Năm)`;
                 directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập đủ 3 ô Ngày, Tháng, Năm sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
                 listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
                 updateCompassUI(currentHeading);
@@ -838,11 +839,12 @@
             let y = parseInt(yearStr);
 
             if (!validateFullDate(d, m, y)) {
-                fateTxt.innerText = `${name}: Lỗi cấu trúc thời gian (Kiểm tra lại số ngày hoặc năm nhuận)`;
+                fateTxt.innerText = `${name}: Lỗi cấu trúc thời gian (Vui lòng kiểm tra lại số ngày trong tháng hoặc năm nhuận)`;
                 return;
             }
 
             let nămTínhThủy = y;
+            // Tính toán tiết khí lập xuân phong thủy (ước lượng ngày 4 tháng 2)
             if (m === 1 || (m === 2 && d < 4)) { 
                 nămTínhThủy -= 1; 
             }
@@ -856,6 +858,7 @@
 
         function generateDirectionsList() {
             const mụcĐích = document.getElementById('purpose').value;
+            
             if (!mụcĐích) {
                 directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Chọn mục đích dương trạch (Nhà, bếp, thờ...) để xem danh sách gợi ý tương ứng</div>";
                 listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
@@ -913,6 +916,7 @@
         function triggerGhostNeedle(angle) {
             targetAngle = angle;
             ghostNeedle.style.opacity = "1";
+            
             updateCompassUI(currentHeading);
             
             let sơnThử = tìmSơnHướng(angle);
@@ -933,26 +937,19 @@
 
         // HỆ THỐNG TRÍ TUỆ NHÂN TẠO MẬT PHÁP HÓA GIẢI ĐỘNG (Dựa theo Cung Sát x Mục Đích x Ngũ Hành)
         function sinhMatPhapHoaGiai(mucDich, cungSat, hanhChu, phuongHuong) {
-            let tenMucDichChuan = {
-                'house': "HƯỚNG NHÀ / CỬA CHÍNH",
-                'altar': "HƯỚNG BÀN THỜ TÂM LINH",
-                'bed': "HƯỚNG ĐẦU GIƯỜNG NGỦ",
-                'workspace': "HƯỚNG BÀN LÀM VIỆC",
-                'kitchen': "TỌA VỊ ĐẶT BẾP NẤU",
-                'toilet': "TỌA VỊ ĐẶT NHÀ VỆ SINH (WC)"
-            }[mucDich] || "PHƯƠNG VỊ PHONG THỦY";
-
             let thuyetMinhViTri = {
-                'house': `Cửa chính hướng về phương ${phuongHuong} dính sát tinh ${cungSat}, khiến tà khí trực diện xâm nhập đại môn, làm suy bại tài vận và làm lục đục gia đạo.`,
+                'house': `Nhà cửa/Cửa chính hướng về phương ${phuongHuong} dính sát tinh ${cungSat}, khiến tà khí trực diện xâm nhập đại môn, làm suy bại tài vận và sức khỏe gia đạo.`,
                 'altar': `Bàn thờ linh thiêng nhưng nhìn về hướng ${phuongHuong} gặp ${cungSat}, làm đứt gãy mạch năng lượng tâm linh hộ trì, khiến gia chủ dễ bất an, hao tổn âm đức.`,
-                'bed': `Đầu giường ngủ quay về hướng ${phuongHuong} phạm ${cungSat}, khiến giấc ngủ nhiễm tà khí, gây đau đầu, trằn trọc, bất hòa vợ chồng và suy giảm sinh lực.`,
-                'workspace': `Bàn làm việc hướng về phương ${phuongHuong} gặp ${cungSat}, sinh ra sự trì trệ trong tư duy, tiểu nhân quấy phá hành hạ, sự nghiệp tắc nghẽn không thể thăng tiến.`,
-                'kitchen': `Bếp lửa đun nấu đang đặt sai nguyên tắc (đặt đè lên Cát vị ${cungSat}), thiêu rụi hoàn toàn vượng khí, sinh khí tốt lành của phương này, biến tốt thành hung đại kỵ.`,
+                'bed': `Đầu giường ngủ quay về ${phuongHuong} phạm ${cungSat}, khiến giấc ngủ nhiễm tà khí, gây đau đầu, bất hòa vợ chồng và suy giảm sinh lực nghiêm trọng.`,
+                'workspace': `Bàn làm việc hướng về ${phuongHuong} gặp ${cungSat}, sinh ra sự trì trệ trong tư duy, tiểu nhân quấy phá hành hạ, sự nghiệp tắc nghẽn không thể thăng tiến.`,
+                'kitchen': `Bếp lửa đun nấu đang đặt sai nguyên tắc (đặt tại Cát vị ${cungSat}), thiêu rụi hoàn toàn vượng khí, sinh khí tốt lành của phương này, biến tốt thành hung đại kỵ.`,
                 'toilet': `Nhà vệ sinh đặt đè lên vị trí cát tinh ${cungSat}, uế khí nhấn chìm phúc đức, cuốn trôi toàn bộ tài lộc và cơ hội may mắn của toàn gia đình.`
             }[mucDich];
 
             let phuongAnVatPham = "";
+            let tieuDeHoaGiai = "MẬT PHÁP HÓA GIẢI";
             
+            // Thuật toán thông minh nâng cao, riêng biệt theo từng mục đích + ngũ hành
             if (mucDich === 'house' || mucDich === 'altar' || mucDich === 'workspace') {
                 if (hanhChu === 'Thủy') {
                     phuongAnVatPham = "Treo gương bát quái gỗ đào kết hợp đặt 1 cặp Kỳ lân bằng đồng hoặc Tháp văn xương bằng thạch anh trắng tại lối vào/bàn làm việc để Kim sinh Thủy trấn sát, chuyển nguy thành an.";
@@ -967,26 +964,19 @@
                 }
             } else if (mucDich === 'bed') {
                 if (hanhChu === 'Thủy' || hanhChu === 'Mộc') {
-                    phuongAnVatPham = "Đặt 1 chiếc Hồ lô gỗ đào tự nhiên đầu giường để hút sạch bệnh khí, tà khí của cung sát, đồng thời đặt dải đồng xu ngũ đế dưới đệm để gia trì hộ thân.";
+                    phuongAnVatPham = "Đặt 1 chiếc Hồ lô gỗ đào tự nhiên đầu giường để hút sạch bệnh khí, tà khí của cung sát, đồng thời đặt dải đồng xu ngũ đế dưới đệm để gia trì.";
                 } else {
                     phuongAnVatPham = "Treo một dải ngọc cẩm thạch hoặc hồ lô đá thạch anh tự nhiên ngay phía trên táp đầu giường giúp cân bằng sóng não, ngăn chặn triệt để hung khí quấy nhiễu giấc ngủ.";
                 }
-            } else { 
+            } else { // kitchen hoặc toilet
                 if (mucDich === 'kitchen') {
-                    phuongAnVatPham = "Đông phương học cứu giải: Đặt một hũ muối phong thủy hoặc dán đồng tiền hoa mai ngay dưới chân bếp nấu để hút giữ uế khí, bình ổn hỏa khí dư thừa thiêu rụi phúc đức.";
+                    phuongAnVatPham = "Đông phương học cứu giải: Đặt một hũ muối phong thủy hoặc dán đồng tiền hoa mai ngay dưới chân bếp nấu để hút giữ, bình ổn hỏa khí dư thừa thiêu rụi phúc đức.";
                 } else {
                     phuongAnVatPham = "Đặt chậu cây xanh phát tài núi lớn hoặc dùng thạch anh thô nguyên khối đặt trong nhà vệ sinh để hấp thụ toàn bộ thủy uế tiêu cực, kích hoạt lại mạch cát vị bị đè nén.";
                 }
             }
 
-            return `
-                <br><br>
-                <span class="warn-text" style="color: var(--red); font-size: 0.85rem; border-bottom: 1px solid var(--red); padding-bottom: 2px; display: inline-block; margin-bottom: 6px;">
-                    ⚠️ MẬT PHÁP HÓA GIẢI CHO [${tenMucDichChuan}]:
-                </span><br>
-                <span style="color: #ff3b30; font-weight: bold;">[Sai Lệch]: ${thuyetMinhViTri}</span><br><br>
-                <span style="color: #30d158; font-weight: bold;">[Giải Pháp Tâm Linh]: ${phuongAnVatPham}</span>
-            `;
+            return `<br><br><span class="warn-text">⚠️ ${tieuDeHoaGiai} CHO ${mucDich.toUpperCase()} - HƯỚNG ${phuongHuong}:</span><br><span style="color: #ff3b30; font-weight: bold;">[Sai Lệch]: ${thuyetMinhViTri}</span><br><br><span style="color: #30d158; font-weight: bold;">[Giải Pháp Tâm Linh]: ${phuongAnVatPham}</span>`;
         }
 
         function updateCompassUI(heading) {
@@ -1020,7 +1010,6 @@
                 elementBox.innerHTML = `<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${phươngVịThiếtLập[currentCode].ngũHành}</span>`;
                 judgmentBox.innerText = "ĐO HƯỚNG CHÍNH XÁC";
                 judgmentBox.className = "judgment-badge";
-                judgmentBox.removeAttribute("style");
                 judgmentBox.style.backgroundColor = "#222";
                 judgmentBox.style.color = "var(--gold)";
                 judgmentBox.style.border = "1px solid var(--gold)";
@@ -1062,6 +1051,8 @@
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
                     let noiDungDetail = `<span class="warn-text">◆ HƯỚNG HUNG (${cungTrạch.toUpperCase()}) - NÊN TRÁNH:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Tuyệt đối không đặt mặt hướng của ${tênThiếtBị} nhìn về phương vị này. Phạm phải hung tinh sẽ gây ra tổn hao nguyên khí, mang lại rủi ro và trắc trở cho gia đạo.`;
+                    
+                    // Kích hoạt mật pháp hóa giải động
                     noiDungDetail += sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung);
                     detailBox.innerHTML = noiDungDetail;
                 }
@@ -1075,6 +1066,8 @@
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
                     let noiDungDetail = `<span class="warn-text">◆ TỌA CÁT PHẠM SÁT (${cungTrạch.toUpperCase()}) - ĐẠI KỴ:</span><br>Bạn đang đặt thiết bị đè trực tiếp lên cung tốt lành <span class="good-text">(${cungTrạch})</span>.<br><br>Lưu ý nghiêm trọng: Tránh tuyệt đối đặt bồn cầu hoặc bếp lửa tại đây để không thiêu rụi hay cuốn trôi phước báu, sức khỏe và tài lộc của gia đình. Cần tìm phương vị khác.`;
+                    
+                    // Kích hoạt mật pháp hóa giải động khi đặt sai tọa
                     noiDungDetail += sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung);
                     detailBox.innerHTML = noiDungDetail;
                 }
@@ -1140,8 +1133,8 @@
             recalculateFate();
         }
 
-        function deleteMember(event, name) {
-            event.stopPropagation();
+        function deleteMember(e, name) {
+            e.stopImmediatePropagation();
             let data = JSON.parse(localStorage.getItem('fengshui_members')) || [];
             data = data.filter(m => m.name !== name);
             localStorage.setItem('fengshui_members', JSON.stringify(data));
@@ -1149,55 +1142,50 @@
         }
 
         function clearAllData() {
-            const btn = document.getElementById('btnReset');
-            btn.classList.add('executing');
-            setTimeout(() => btn.classList.remove('executing'), 400);
+            if (confirm("Bạn có chắc muốn làm mới toàn bộ dữ liệu?")) {
+                localStorage.removeItem('fengshui_members');
+                document.getElementById('userName').value = "Người Tầm Phương";
+                document.getElementById('userName').style.color = '#aaa';
+                document.getElementById('gender').value = "male";
+                document.getElementById('birthDay').value = "";
+                document.getElementById('birthMonth').value = "";
+                document.getElementById('birthYear').value = "";
+                document.getElementById('purpose').value = "";
+                loadSavedMembers();
+                recalculateFate();
+            }
+        }
 
-            document.getElementById('userName').value = 'Người Tầm Phương';
-            document.getElementById('userName').style.color = '#aaa';
-            document.getElementById('gender').value = 'male';
-            document.getElementById('birthDay').value = '';
-            document.getElementById('birthMonth').value = '';
-            document.getElementById('birthYear').value = '';
-            document.getElementById('purpose').value = '';
-            
-            targetAngle = null;
-            ghostNeedle.style.opacity = "0";
-            
+        // Khởi tạo
+        function initApp() {
+            render24SonRing();
+            loadSavedMembers();
             recalculateFate();
+            
+            // Sensor
+            if (window.DeviceOrientationEvent) {
+                window.addEventListener('deviceorientation', handleOrientation);
+                permBtn.style.display = 'block';
+            }
         }
 
         function requestPermission() {
-            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
                 DeviceOrientationEvent.requestPermission()
                     .then(permissionState => {
                         if (permissionState === 'granted') {
-                            window.addEventListener('deviceorientation', handleOrientation, true);
+                            window.addEventListener('deviceorientation', handleOrientation);
                             permBtn.style.display = 'none';
-                        } else {
-                            showCustomAlert("Quyền truy cập cảm biến bị từ chối. Bạn vẫn có thể xoay la bàn thủ công bằng thanh gạt kéo.");
                         }
                     })
                     .catch(console.error);
             } else {
-                window.addEventListener('deviceorientation', handleOrientation, true);
-                showCustomAlert("Cảm biến hướng đã được kích hoạt tự động (nếu thiết bị có hỗ trợ phần cứng).");
                 permBtn.style.display = 'none';
             }
         }
 
-        // Khởi tạo ban đầu khi trang tải xong hoàn tất
-        window.onload = function() {
-            render24SonRing();
-            loadSavedMembers();
-            recalculateFate();
-
-            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-                permBtn.style.display = 'block';
-            } else {
-                window.addEventListener('deviceorientation', handleOrientation, true);
-            }
-        };
+        // Khởi chạy ứng dụng
+        window.onload = initApp;
     </script>
 </body>
 </html>
