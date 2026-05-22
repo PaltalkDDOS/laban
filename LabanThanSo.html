@@ -106,38 +106,20 @@
             height: 38px;
         }
 
-        /* KHU VỰC NHẬP NGÀY THÁNG MỚI */
-        .date-input-group {
+        /* Style cho input ngày tháng năm */
+        .birth-inputs {
             display: flex;
-            align-items: center;
             gap: 6px;
         }
-
-        .date-input-group input {
-            text-align: center;
-            padding: 8px 4px;
-            -moz-appearance: textfield; /* Bỏ nút spin trên Firefox */
-        }
         
-        /* Bỏ nút spin trên Chrome/Safari */
-        .date-input-group input::-webkit-outer-spin-button, 
-        .date-input-group input::-webkit-inner-spin-button { 
-            -webkit-appearance: none; 
-            margin: 0; 
-        }
-
-        .date-input-group input#bDay, .date-input-group input#bMonth {
+        .birth-inputs .form-group {
             flex: 1;
         }
-
-        .date-input-group input#bYear {
-            flex: 1.5;
-        }
-
-        .date-sep {
-            color: var(--gray);
-            font-weight: bold;
+        
+        .birth-inputs input {
+            text-align: center;
             font-size: 1rem;
+            font-weight: bold;
         }
 
         .btn-action-row {
@@ -522,56 +504,52 @@
         .good-text { color: var(--green); font-weight: bold; }
         .gold-text { color: var(--gold); font-weight: bold; }
 
-        /* CUSTOM ALERT BOX (DARK MODE) */
-        .custom-alert-overlay {
-            display: none;
+        /* Custom Alert Modal */
+        .custom-alert {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            align-items: center;
             justify-content: center;
-            align-items: center;
+            z-index: 1000;
         }
-        .custom-alert-box {
-            background: #1a1a1a;
+        
+        .alert-box {
+            background: #1a1510;
             border: 2px solid var(--gold);
-            border-radius: 8px;
-            padding: 20px;
+            border-radius: 12px;
             width: 85%;
-            max-width: 350px;
+            max-width: 380px;
+            padding: 20px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 25px rgba(223, 183, 108, 0.4);
         }
-        .custom-alert-box h3 { color: var(--gold); margin: 0 0 10px 0; font-size: 1.1rem; }
-        .custom-alert-box p { color: #fff; font-size: 0.9rem; margin-bottom: 20px; line-height: 1.4; }
-        .custom-alert-box button {
-            background: linear-gradient(180deg, #c5a059, #9a7b3e);
-            color: #000; font-weight: bold; border: none;
-            padding: 8px 20px; border-radius: 4px; cursor: pointer; text-transform: uppercase;
-        }
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        /* KHUNG HÓA GIẢI */
-        .hoagiai-box {
-            margin-top: 10px;
-            padding: 10px;
-            border: 1px dashed var(--red);
-            background: rgba(255, 59, 48, 0.1);
-            border-radius: 6px;
+        
+        .alert-title {
             color: var(--red);
-        }
-        .hoagiai-title {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
             font-weight: bold;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-bottom: 4px;
+        }
+        
+        .alert-message {
+            color: #e0e0e0;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        
+        .alert-btn {
+            background: linear-gradient(180deg, #c5a059, #9a7b3e);
+            color: #000;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -600,15 +578,20 @@
             </div>
         </div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label>Ngày sinh (Dương lịch):</label>
-                <div class="date-input-group">
-                    <input type="number" id="bDay" placeholder="Ngày" maxlength="2" oninput="handleDateInput(this, 'bMonth', 2, 31)">
-                    <span class="date-sep">/</span>
-                    <input type="number" id="bMonth" placeholder="Tháng" maxlength="2" oninput="handleDateInput(this, 'bYear', 2, 12)">
-                    <span class="date-sep">/</span>
-                    <input type="number" id="bYear" placeholder="Năm (VD: 1990)" maxlength="4" oninput="handleDateInput(this, null, 4, 9999)">
+        <div class="form-group" style="margin-bottom: 6px;">
+            <label>Ngày tháng năm sinh (Dương lịch):</label>
+            <div class="birth-inputs">
+                <div class="form-group">
+                    <input type="text" id="birthDay" maxlength="2" placeholder="DD" 
+                           oninput="handleBirthInput(this, 'day')" style="width:100%;">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="birthMonth" maxlength="2" placeholder="MM" 
+                           oninput="handleBirthInput(this, 'month')" style="width:100%;">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="birthYear" maxlength="4" placeholder="YYYY" 
+                           oninput="handleBirthInput(this, 'year')" style="width:100%;">
                 </div>
             </div>
         </div>
@@ -680,11 +663,12 @@
         <div class="detail-content" id="detail-box">Đang khởi tạo mật pháp dữ liệu...</div>
     </div>
 
-    <div id="customAlert" class="custom-alert-overlay">
-        <div class="custom-alert-box">
-            <h3>CẢNH BÁO HỆ THỐNG</h3>
-            <p id="customAlertMsg"></p>
-            <button onclick="closeCustomAlert()">ĐÃ HIỂU</button>
+    <!-- Custom Alert Modal -->
+    <div id="customAlert" class="custom-alert">
+        <div class="alert-box">
+            <div class="alert-title" id="alertTitle">CẢNH BÁO</div>
+            <div class="alert-message" id="alertMessage"></div>
+            <button class="alert-btn" onclick="hideCustomAlert()">ĐÓNG</button>
         </div>
     </div>
 
@@ -704,57 +688,6 @@
         const sonRing = document.getElementById('sonRing');
         const savedContainer = document.getElementById('savedContainer');
         const savedPanel = document.getElementById('savedPanel');
-
-        // Thao tác Custom Alert
-        function showCustomAlert(msg) {
-            document.getElementById('customAlertMsg').innerText = msg;
-            document.getElementById('customAlert').style.display = 'flex';
-        }
-        function closeCustomAlert() {
-            document.getElementById('customAlert').style.display = 'none';
-        }
-
-        // Xử lý nhập ngày sinh thủ công tự động nhảy ô
-        function handleDateInput(element, nextId, maxLen, maxValue) {
-            if (element.value.length > maxLen) {
-                element.value = element.value.slice(0, maxLen);
-            }
-            
-            if (element.value.length === maxLen) {
-                const val = parseInt(element.value);
-                if (element.id === 'bDay' && (val > 31 || val < 1)) {
-                    showCustomAlert("Ngày sinh không hợp lệ! Vui lòng nhập từ 01 đến 31.");
-                    element.value = "";
-                    return;
-                }
-                if (element.id === 'bMonth' && (val > 12 || val < 1)) {
-                    showCustomAlert("Tháng sinh không hợp lệ! Vui lòng nhập từ 01 đến 12.");
-                    element.value = "";
-                    return;
-                }
-
-                if (nextId) {
-                    document.getElementById(nextId).focus();
-                } else {
-                    // Xong năm sinh thì kích hoạt tính toán và tắt bàn phím
-                    document.activeElement.blur();
-                    recalculateFate();
-                }
-            } else {
-                recalculateFate();
-            }
-        }
-
-        function getBirthDateString() {
-            let d = document.getElementById('bDay').value;
-            let m = document.getElementById('bMonth').value;
-            let y = document.getElementById('bYear').value;
-            
-            if (d && m && y && y.length === 4) {
-                return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
-            }
-            return "";
-        }
 
         const son24Data = [
             { name: "Tý", start: 352.5, end: 7.5 }, { name: "Quý", start: 7.5, end: 22.5 }, { name: "Sửu", start: 22.5, end: 37.5 },
@@ -807,6 +740,7 @@
         let currentCode = 'N';
         let currentHeading = 0;
         let targetAngle = null;
+        let currentBirthDate = null;
 
         function render24SonRing() {
             sonRing.innerHTML = "";
@@ -834,49 +768,77 @@
             }
         }
 
-        // THUẬT TOÁN MẬT PHÁP HÓA GIẢI ĐỘNG
-        function phatSinhHoaGiai(mucDich, cungHung, hanhMenh, hanhPhuongVi) {
-            let htmlHoaGiai = `<div class="hoagiai-box">
-                                <div class="hoagiai-title">⚠️ MẬT PHÁP HÓA GIẢI:</div>`;
+        function showCustomAlert(title, message) {
+            document.getElementById('alertTitle').innerText = title;
+            document.getElementById('alertMessage').innerText = message;
+            document.getElementById('customAlert').style.display = 'flex';
+        }
+
+        function hideCustomAlert() {
+            document.getElementById('customAlert').style.display = 'none';
+        }
+
+        function isValidDate(day, month, year) {
+            if (year < 1900 || year > 2100) return false;
+            if (month < 1 || month > 12) return false;
+            if (day < 1 || day > 31) return false;
             
-            if (['house', 'altar'].includes(mucDich)) {
-                if (cungHung === 'Tuyệt Mệnh') htmlHoaGiai += `Đây là đại hung tinh. Lập tức treo <b>Gương Bát Quái Tiên Thiên Lồi</b> trước cửa/bàn thờ để phản xạ sát khí. Gia chủ mệnh <b>${hanhMenh}</b> nên dùng thảm chùi chân có màu sắc khắc chế Ngũ Hành của phương vị (${hanhPhuongVi}) để triệt tiêu năng lượng xấu từ cửa.`;
-                else if (cungHung === 'Ngũ Quỷ') htmlHoaGiai += `Sát khí ngầm. Hãy treo chuông gió 6 ống bằng kim loại hoặc dùng Hồ Lô đồng nguyên chất đặt tại phương vị này để hóa giải tà khí, bảo vệ bình an.`;
-                else if (cungHung === 'Lục Sát') htmlHoaGiai += `Đề phòng thị phi, mâu thuẫn. Sử dụng vật phẩm Phong Thủy có thuộc tính tương sinh với bản mệnh <b>${hanhMenh}</b> (như Cầu Thạch Anh, Tỳ Hưu) đặt nhìn ra hướng này để trấn áp.`;
-                else htmlHoaGiai += `Treo xâu tiền Lục Đế Cổ hoặc chuỗi ngọc hợp mệnh <b>${hanhMenh}</b> để tiết chế hung họa, giữ vững tài khí.`;
-            } 
-            else if (['bed', 'workspace'].includes(mucDich)) {
-                htmlHoaGiai += `Tuyệt đối khuyên dùng: <b>Đổi hướng khác</b>. Nếu kết cấu bắt buộc, gia chủ mệnh <b>${hanhMenh}</b> hãy đặt Tượng Linh Vật hợp mệnh (Tỳ Hưu, Thiềm Thừ) quay mặt về hướng Cát của bản mệnh để kéo lại vượng khí, đồng thời kê cao đầu giường/bàn làm việc.`;
-            } 
-            else { 
-                // kitchen, toilet phạm Tọa Cát
-                htmlHoaGiai += `Lưu ý nghiêm trọng: Thiết bị uế/hỏa đang đặt đè lên cung Cát sinh vượng. Khắc phục ngay bằng cách rải lớp <b>Thạch anh vụn</b> dưới nền (nếu là WC) hoặc treo <b>Gương Bát Quái Lõm</b> trước cửa phòng để thu hồi vượng khí bị thất thoát. Nên trồng thêm cây xanh (nếu hợp mệnh ${hanhMenh}) để cân bằng.`;
+            const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            if (month === 2) {
+                const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+                if (day > (isLeap ? 29 : 28)) return false;
+            } else if (day > daysInMonth[month - 1]) {
+                return false;
+            }
+            return true;
+        }
+
+        function handleBirthInput(input, type) {
+            const val = input.value.trim();
+            
+            if (type === 'day' && val.length === 2) {
+                document.getElementById('birthMonth').focus();
+            } else if (type === 'month' && val.length === 2) {
+                document.getElementById('birthYear').focus();
             }
             
-            htmlHoaGiai += `</div>`;
-            return htmlHoaGiai;
+            if (document.getElementById('birthDay').value.length === 2 && 
+                document.getElementById('birthMonth').value.length === 2 && 
+                document.getElementById('birthYear').value.length === 4) {
+                recalculateFate();
+            }
+        }
+
+        function getBirthYear() {
+            const day = parseInt(document.getElementById('birthDay').value) || 0;
+            const month = parseInt(document.getElementById('birthMonth').value) || 0;
+            const year = parseInt(document.getElementById('birthYear').value) || 0;
+            
+            if (!isValidDate(day, month, year)) {
+                return null;
+            }
+            return year;
         }
 
         function recalculateFate() {
             const name = document.getElementById('userName').value || "Chủ mệnh";
             const gender = document.getElementById('gender').value;
-            const dateVal = getBirthDateString();
+            const birthYear = getBirthYear();
             
-            if (!dateVal) {
-                fateTxt.innerText = `${name}: Chế độ đo hướng độc lập (Chưa nhập đủ Ngày/Tháng/Năm sinh)`;
-                directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập đầy đủ ngày/tháng/năm sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
+            if (!birthYear) {
+                fateTxt.innerText = `${name}: Chế độ đo hướng độc lập (Chưa nhập năm sinh hợp lệ)`;
+                directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập ngày tháng năm sinh hợp lệ để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
                 listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
                 updateCompassUI(currentHeading);
                 return;
             }
 
-            let nămTínhThủy = 1990;
-            const d = new Date(dateVal);
-            if (!isNaN(d.getTime())) {
-                nămTínhThủy = d.getFullYear();
-                let tháng = d.getMonth() + 1;
-                let ngày = d.getDate();
-                if (tháng === 1 || (tháng === 2 && ngày < 4)) { nămTínhThủy -= 1; }
+            let nămTínhThủy = birthYear;
+            let tháng = parseInt(document.getElementById('birthMonth').value) || 1;
+            let ngày = parseInt(document.getElementById('birthDay').value) || 1;
+            
+            if (tháng === 1 || (tháng === 2 && ngày < 4)) { 
+                nămTínhThủy -= 1; 
             }
             
             chủMệnh = tínhCungPhi(nămTínhThủy, gender);
@@ -943,6 +905,25 @@
             });
         }
 
+        function getHoaGiaiSuggestions(chủMệnh, cungTrạch, mụcĐích, currentCode) {
+            const element = bátTrạchMap[chủMệnh].element;
+            let suggestions = [];
+            
+            if (['house', 'altar', 'bed', 'workspace'].includes(mụcĐích)) {
+                // Hướng Hung cần hóa giải
+                suggestions.push(`<span style="color:#ff3b30;font-weight:bold;">• Treo Chuông Gió Kim Loại hoặc Pha Lê (tăng Sinh Khí)</span>`);
+                suggestions.push(`<span style="color:#ff3b30;font-weight:bold;">• Đặt Cây Xanh + Đèn Sáng (bổ Mộc Hỏa)</span>`);
+                if (element === 'Thủy') suggestions.push(`<span style="color:#ff3b30;font-weight:bold;">• Đặt Bình Nước + Cá Vàng (tăng Thủy vận)</span>`);
+                if (element === 'Hỏa') suggestions.push(`<span style="color:#ff3b30;font-weight:bold;">• Đặt Đá Thạch Anh Hồng hoặc Đèn Muối Himalaya</span>`);
+            } else {
+                // Tọa Hung (Bếp, WC) 
+                suggestions.push(`<span style="color:#ff3b30;font-weight:bold;">• Đặt Gương Bát Quái hoặc Cây Thần Tài phía sau</span>`);
+                suggestions.push(`<span style="color:#ff3b30;font-weight:bold;">• Sử dụng Màu Vàng Đất hoặc Đỏ để hóa giải</span>`);
+            }
+            
+            return suggestions.join('<br>');
+        }
+
         function triggerGhostNeedle(angle) {
             targetAngle = angle;
             ghostNeedle.style.opacity = "1";
@@ -988,7 +969,7 @@
             let sơnHiệnTại = tìmSơnHướng(currentHeading);
             degreeTxt.innerText = `${currentHeading}° - Phương ${currentCung} - Sơn ${sơnHiệnTại}`;
 
-            if (!getBirthDateString()) {
+            if (!getBirthYear()) {
                 elementBox.innerHTML = `<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${phươngVịThiếtLập[currentCode].ngũHành}</span>`;
                 judgmentBox.innerText = "ĐO HƯỚNG CHÍNH XÁC";
                 judgmentBox.className = "judgment-badge";
@@ -1012,6 +993,8 @@
 
             judgmentBox.removeAttribute("style");
 
+            let htmlDetail = "";
+
             if (!mụcĐích) {
                 judgmentBox.innerText = `Cung vị: ${cungTrạch}`;
                 judgmentBox.className = thôngTinCung.cát ? "judgment-badge bg-good" : "judgment-badge bg-bad";
@@ -1019,36 +1002,33 @@
                 return;
             }
 
+            const isBadDirection = !thôngTinCung.cát;
+
             if (['house', 'altar', 'bed', 'workspace'].includes(mụcĐích)) {
                 let tênThiếtBị = { 'altar': "BÀN THỜ", 'bed': "GIƯỜNG NGỦ", 'workspace': "BÀN LÀM VIỆC", 'house': "NHÀ CỬA" }[mụcĐích];
                 judgmentBox.innerText = `Hướng ${tênThiếtBị}: ${cungTrạch}`;
+                
                 if (thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
-                    detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG CÁT (${cungTrạch.toUpperCase()}) - PHÙ HỢP:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Phương vị này cực kỳ lý tưởng để bố trí vị trí nhìn về (hướng) góc tọa độ ${currentHeading}°. Nhờ đón được cát khí, gia đạo sẽ nhận được nhiều phúc phần, tài lộc và bình an.`;
+                    htmlDetail = `<span class="good-text">◆ HƯỚNG CÁT (${cungTrạch.toUpperCase()}) - PHÙ HỢP:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Phương vị này cực kỳ lý tưởng để bố trí vị trí nhìn về (hướng) góc tọa độ ${currentHeading}°. Nhờ đón được cát khí, gia đạo sẽ nhận được nhiều phúc phần, tài lộc và bình an.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    let htmlPhanTich = `<span class="warn-text">◆ HƯỚNG HUNG (${cungTrạch.toUpperCase()}) - NÊN TRÁNH:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Tuyệt đối không đặt mặt hướng của ${tênThiếtBị} nhìn về phương vị này. Phạm phải hung tinh sẽ gây ra tổn hao nguyên khí, mang lại rủi ro và trắc trở.`;
-                    
-                    // Kích hoạt Hóa Giải
-                    htmlPhanTich += phatSinhHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, hànhPhươngVị);
-                    detailBox.innerHTML = htmlPhanTich;
+                    htmlDetail = `<span class="warn-text">◆ HƯỚNG HUNG (${cungTrạch.toUpperCase()}) - NÊN TRÁNH:</span><br>${thôngTinCung.ý_nghĩa}<br><br><span style="color:#ff3b30;font-weight:bold;">MẬT PHÁP HÓA GIẢI THÁI THÔNG:</span><br>${getHoaGiaiSuggestions(chủMệnh, cungTrạch, mụcĐích, currentCode)}`;
                 }
-            } 
-            else {
+            } else {
                 let tênThiếtBị = mụcĐích === 'kitchen' ? "BẾP NẤU" : "WC";
                 judgmentBox.innerText = `Tọa ${tênThiếtBị}: ${cungTrạch}`;
+                
                 if (!thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
-                    detailBox.innerHTML = `<span class="good-text">◆ TỌA HUNG ĐẮC CÁCH (${cungTrạch.toUpperCase()}) - RẤT TỐT:</span><br>Vị trí này thuộc hung vị lý tưởng <span class="warn-text">(${cungTrạch})</span>.<br><br>Nguyên lý Phong Thủy: Thiết bị xả uế hoặc sinh hỏa đun nấu đặt đè trên tọa độ hung tinh này sẽ "Lấy Độc Trị Độc", thiêu rụi và cuốn trôi vận xui rủi, hung hại ra khỏi gia trạch. Đạt chuẩn Tọa Hung Hóa Sát.`;
+                    htmlDetail = `<span class="good-text">◆ TỌA HUNG ĐẮC CÁCH (${cungTrạch.toUpperCase()}) - RẤT TỐT:</span><br>Vị trí này thuộc hung vị lý tưởng <span class="warn-text">(${cungTrạch})</span>.<br><br>Nguyên lý Phong Thủy: Thiết bị xả uế hoặc sinh hỏa đun nấu đặt đè trên tọa độ hung tinh này sẽ "Lấy Độc Trị Độc", thiêu rụi và cuốn trôi vận xui rủi, hung hại ra khỏi gia trạch. Đạt chuẩn Tọa Hung Hóa Sát.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    let htmlPhanTich = `<span class="warn-text">◆ TỌA CÁT PHẠM SÁT (${cungTrạch.toUpperCase()}) - ĐẠI KỴ:</span><br>Bạn đang đặt thiết bị đè trực tiếp lên cung tốt lành <span class="good-text">(${cungTrạch})</span>.<br><br>Lưu ý nghiêm trọng: Tránh tuyệt đối đặt bồn cầu hoặc bếp lửa tại đây để không thiêu rụi hay cuốn trôi phước báu, sức khỏe và tài lộc của gia đình. Cần tìm phương vị khác.`;
-                    
-                    // Kích hoạt Hóa Giải
-                    htmlPhanTich += phatSinhHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, hànhPhươngVị);
-                    detailBox.innerHTML = htmlPhanTich;
+                    htmlDetail = `<span class="warn-text">◆ TỌA CÁT PHẠM SÁT (${cungTrạch.toUpperCase()}) - ĐẠI KỴ:</span><br>Bạn đang đặt thiết bị đè trực tiếp lên cung tốt lành <span class="good-text">(${cungTrạch})</span>.<br><br><span style="color:#ff3b30;font-weight:bold;">MẬT PHÁP HÓA GIẢI:</span><br>${getHoaGiaiSuggestions(chủMệnh, cungTrạch, mụcĐích, currentCode)}`;
                 }
             }
+            
+            detailBox.innerHTML = htmlDetail;
         }
 
         function handleOrientation(event) {
@@ -1065,24 +1045,25 @@
         function saveCurrentMember() {
             const name = document.getElementById('userName').value.trim();
             const gender = document.getElementById('gender').value;
-            const birthDate = getBirthDateString();
+            const day = document.getElementById('birthDay').value;
+            const month = document.getElementById('birthMonth').value;
+            const year = document.getElementById('birthYear').value;
 
             if(!name || name === "Người Tầm Phương") { 
-                showCustomAlert("Vui lòng nhập họ tên thật của thành viên gia đình trước khi lưu!"); 
+                showCustomAlert("CẢNH BÁO", "Vui lòng nhập họ tên thật của thành viên gia đình!"); 
                 return; 
             }
-            if(!birthDate || birthDate.length < 10) { 
-                showCustomAlert("Vui lòng nhập đầy đủ ngày/tháng/năm sinh trước khi lưu!"); 
+            if(!day || !month || !year || !isValidDate(parseInt(day), parseInt(month), parseInt(year))) { 
+                showCustomAlert("CẢNH BÁO", "Vui lòng nhập ngày tháng năm sinh hợp lệ!"); 
                 return; 
             }
 
             let data = JSON.parse(localStorage.getItem('fengshui_members')) || [];
             data = data.filter(m => m.name !== name);
-            data.push({ name, gender, birthDate });
+            data.push({ name, gender, birthDate: `${year}-${month.padStart(2,'0')}-${day.padStart(2,'0')}` });
             localStorage.setItem('fengshui_members', JSON.stringify(data));
             
             loadSavedMembers();
-            showCustomAlert("Đã lưu thông tin gia chủ thành công!");
         }
 
         function loadSavedMembers() {
@@ -1110,13 +1091,12 @@
             document.getElementById('userName').style.color = '#fff';
             document.getElementById('gender').value = gender;
             
-            if(birthDate && birthDate.includes('-')) {
-                let parts = birthDate.split('-');
-                document.getElementById('bYear').value = parts[0];
-                document.getElementById('bMonth').value = parts[1];
-                document.getElementById('bDay').value = parts[2];
+            const dateParts = birthDate.split('-');
+            if (dateParts.length === 3) {
+                document.getElementById('birthYear').value = dateParts[0];
+                document.getElementById('birthMonth').value = dateParts[1];
+                document.getElementById('birthDay').value = dateParts[2];
             }
-            
             recalculateFate();
         }
 
@@ -1139,9 +1119,9 @@
                 nameInput.value = "Người Tầm Phương";
                 nameInput.style.color = "#aaa";
 
-                document.getElementById('bDay').value = "";
-                document.getElementById('bMonth').value = "";
-                document.getElementById('bYear').value = "";
+                document.getElementById('birthDay').value = "";
+                document.getElementById('birthMonth').value = "";
+                document.getElementById('birthYear').value = "";
                 document.getElementById('purpose').value = "";
                 document.getElementById('gender').value = "male";
 
@@ -1165,13 +1145,12 @@
                 
                 detailBox.innerHTML = "Đã làm mới hệ thống sạch sẽ. La bàn đang hoạt động độc lập ở chế độ thô nguyên bản giúp đo đạc thực địa chuẩn xác nhất.";
 
-                directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập đầy đủ ngày/tháng/năm sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
+                directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập ngày sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
                 listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
             }, 400);
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            render24SocialRing = render24SonRing;
             render24SonRing();
             loadSavedMembers();
             recalculateFate(); 
@@ -1189,7 +1168,7 @@
                         window.addEventListener('deviceorientation', handleOrientation);
                         permBtn.style.display = 'none';
                     } else {
-                        showCustomAlert("Cảm biến chưa được cấp quyền truy cập! Vui lòng kiểm tra lại cài đặt trình duyệt.");
+                        showCustomAlert("CẢNH BÁO", "Cảm biến chưa được cấp quyền truy cập!");
                     }
                 }).catch(console.error);
         }
