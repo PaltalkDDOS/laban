@@ -637,6 +637,7 @@
         <div id="element-box"></div>
         <div class="fate-display" id="fate-txt">Mệnh chủ: ...</div>
         <div id="judgment-box" class="judgment-badge bg-good">...</div>
+		<div id="cungPhiTable" style="margin-top:10px; padding:8px; background:#1f1a10; border-radius:6px; font-size:0.75rem;"></div>
     </div>
 
     <div class="control-box">
@@ -647,7 +648,7 @@
         <p class="list-title" id="list-panel-title">Danh Sách Hướng Gợi Ý</p>
         <div id="directions-container"></div>
     </div>
-<div id="cungPhiTable" style="margin-top:10px; padding:8px; background:#1f1a10; border-radius:6px; font-size:0.75rem;"></div>
+
     <div class="explanation-panel">
         <div class="detail-content" id="detail-box">Đang khởi tạo mật pháp dữ liệu...</div>
         
@@ -668,22 +669,22 @@
 
     <script>
 	function getNguHoangInfo(year) {
-    const nguHoang = {
-        0: "Ngũ Hoàng tại Trung Cung (Rất hung - Tránh động thổ lớn)",
-        1: "Nhất Bạch tại Trung Cung (Cát)",
-        2: "Nhị Hắc tại Trung Cung (Hung)",
-        3: "Tam Bích tại Trung Cung (Trung bình)",
-        4: "Tứ Lục tại Trung Cung (Hung nhẹ)",
-        5: "Ngũ Hoàng tại Trung Cung (Đại Hung)",
-        6: "Lục Bạch tại Trung Cung (Cát)",
-        7: "Thất Xích tại Trung Cung (Hung)",
-        8: "Bát Bạch tại Trung Cung (Cát)",
-        9: "Cửu Tử tại Trung Cung (Đại Cát)"
-    };
-    
-    const so = year % 9;
-    return nguHoang[so] || nguHoang[5];
-}
+            const nguHoang = {
+                0: "Ngũ Hoàng tại Trung Cung (Rất hung - Tránh động thổ lớn)",
+                1: "Nhất Bạch tại Trung Cung (Cát)",
+                2: "Nhị Hắc tại Trung Cung (Hung)",
+                3: "Tam Bích tại Trung Cung (Trung bình)",
+                4: "Tứ Lục tại Trung Cung (Hung nhẹ)",
+                5: "Ngũ Hoàng tại Trung Cung (Đại Hung)",
+                6: "Lục Bạch tại Trung Cung (Cát)",
+                7: "Thất Xích tại Trung Cung (Hung)",
+                8: "Bát Bạch tại Trung Cung (Cát)",
+                9: "Cửu Tử tại Trung Cung (Đại Cát)"
+            };
+            const so = year % 9;
+            return nguHoang[so] || nguHoang[5];
+        }
+
         const compass = document.getElementById('compass');
         const needle = document.getElementById('needle');
         const ghostNeedle = document.getElementById('ghostNeedle');
@@ -793,16 +794,14 @@
         }
         // === BẢNG CUNG PHI THEO NĂM (Truyền thống) ===
 function generateCungPhiTable() {
-    let html = `<div style="margin-top:15px; font-size:0.75rem; color:#bbb;">
-        <strong>Bảng Cung Phi một số năm gần đây:</strong><br>`;
-    
+    let html = `<strong style="color:var(--gold)">📋 Bảng Cung Phi (Nam | Nữ)</strong><br><small style="color:#888">Tra cứu nhanh theo năm sinh</small><br>`;
     const currentYear = new Date().getFullYear();
-    for (let y = currentYear - 5; y <= currentYear + 5; y++) {
-        const male = tínhCungPhi(y, 6, 15, 'male');   // Giả sử tháng 6 ngày 15
+    for (let y = currentYear - 6; y <= currentYear + 6; y++) {
+        const male = tínhCungPhi(y, 6, 15, 'male');
         const female = tínhCungPhi(y, 6, 15, 'female');
-        html += `${y}: Nam → <strong>${male}</strong> | Nữ → <strong>${female}</strong><br>`;
+        const highlight = (y === currentYear) ? ' style="background:#3a2a1f; padding:2px 6px; border-radius:4px;"' : '';
+        html += `<span${highlight}>${y}: <strong>${male}</strong> | <strong>${female}</strong></span><br>`;
     }
-    html += `</div>`;
     return html;
 }
         function tínhCungPhi(năm, tháng, ngày, giớiTính) {
@@ -840,47 +839,45 @@ function generateCungPhiTable() {
             return true;
         }
 
-        function recalculateFate() {
-    const name = document.getElementById('userName').value || "Chủ mệnh";
-    const gender = document.getElementById('gender').value;
-    
-    const dayStr = document.getElementById('birthDay').value;
-    const monthStr = document.getElementById('birthMonth').value;
-    const yearStr = document.getElementById('birthYear').value;
+function recalculateFate() {
+            const name = document.getElementById('userName').value || "Chủ mệnh";
+            const gender = document.getElementById('gender').value;
+            
+            const dayStr = document.getElementById('birthDay').value;
+            const monthStr = document.getElementById('birthMonth').value;
+            const yearStr = document.getElementById('birthYear').value;
 
-    if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
-        fateTxt.innerText = `${name}: Đo hướng tự do cơ bản (Chưa nhập đủ Ngày - Tháng - Năm sinh)`;
-        directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập đủ 3 ô Ngày, Tháng, Năm sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
-        listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
-        updateCompassUI(currentHeading);
-        return;
-    }
+            if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
+                fateTxt.innerText = `${name}: Đo hướng tự do cơ bản (Chưa nhập đủ Ngày - Tháng - Năm sinh)`;
+                directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập đủ 3 ô Ngày, Tháng, Năm sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
+                listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
+                updateCompassUI(currentHeading);
+                return;
+            }
 
-    let d = parseInt(dayStr);
-    let m = parseInt(monthStr);
-    let y = parseInt(yearStr);
+            let d = parseInt(dayStr);
+            let m = parseInt(monthStr);
+            let y = parseInt(yearStr);
 
-    if (!validateFullDate(d, m, y)) {
-        fateTxt.innerText = `${name}: Lỗi cấu trúc thời gian (Kiểm tra lại số ngày hoặc năm nhuận)`;
-        return;
-    }
+            if (!validateFullDate(d, m, y)) {
+                fateTxt.innerText = `${name}: Lỗi cấu trúc thời gian (Kiểm tra lại số ngày hoặc năm nhuận)`;
+                return;
+            }
 
-    chủMệnh = tínhCungPhi(y, m, d, gender);
-    
-    // Hiển thị thông tin Năm Âm + Ngũ Hoàng
-    const namAm = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
-    const nguHoangInfo = getNguHoangInfo(y);
+            chủMệnh = tínhCungPhi(y, m, d, gender);
+            
+            const namAm = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
+            const nguHoangInfo = getNguHoangInfo(y);
 
-    fateTxt.innerText = `${name}: Cung ${chủMệnh} (${bátTrạchMap[chủMệnh].group}) - Bản Mệnh: ${bátTrạchMap[chủMệnh].element} | Năm Âm: ${namAm} | Ngũ Hoàng ${y}: ${nguHoangInfo}`;
+            fateTxt.innerText = `${name}: Cung ${chủMệnh} (${bátTrạchMap[chủMệnh].group}) - Bản Mệnh: ${bátTrạchMap[chủMệnh].element} | Năm Âm: ${namAm} | Ngũ Hoàng ${y}: ${nguHoangInfo}`;
 
-    // Cập nhật bảng Cung Phi
-    if (document.getElementById('cungPhiTable')) {
-        document.getElementById('cungPhiTable').innerHTML = generateCungPhiTable();
-    }
-    
-    generateDirectionsList();
-    updateCompassUI(currentHeading);
-}
+            if (document.getElementById('cungPhiTable')) {
+                document.getElementById('cungPhiTable').innerHTML = generateCungPhiTable();
+            }
+            
+            generateDirectionsList();
+            updateCompassUI(currentHeading);
+        }
 
         function generateDirectionsList() {
             const mụcĐích = document.getElementById('purpose').value;
@@ -964,32 +961,110 @@ function generateCungPhiTable() {
         }
 
         // THUẬT TOÁN ĐỈNH CAO: TÍCH HỢP HUYỀN KHÔNG PHI TINH VẬN 9 (2024 - 2043)
-        function sinhLuanGiaiThienThoi(code) {
-            const huyenKhongVan9 = {
-                'N': { sao: "Nhất Bạch Đào Hoa Cát Tinh (Tiến Khí)", loai: "good", y_nghia: "Trong đại vận 9, phương Bắc đón Nhất Bạch Thủy tinh bay đến chủ quản. Phương vị này mang năng lượng tương sinh cát lành, chủ về khai thông trí tuệ, đỗ đạt học vấn, hanh thông quan hệ ngoại giao và dễ gặp được quý nhân tương trợ." },
-                'NE': { sao: "Thất Xích Phá Quân Tinh (Thoái Khí Sát)", loai: "bad", y_nghia: "Phương Đông Bắc bước vào Vận 9 bị Thất Xích Kim tinh đóng giữ. Đây là hung tinh mang sát khí, dễ kích động mâu thuẫn thị phi, tranh chấp kiện tụng tai tiếng, hoặc tổn hao tiền bạc, đề phòng họa trộm cắp." },
-                'E': { sao: "Lục Bạch Vũ Khúc Tinh (Thoái Khí Cát)", loai: "neutral", y_nghia: "Phương Đông gặp sao Lục Bạch cai quản. Quyền lực và bệ đỡ cũ từ vận trước vẫn còn, tuy nhiên tài lộc vận hành chậm hơn, thiên về giữ vững gia sản hơn là đầu tư mạo hiểm." },
-                'SE': { sao: "Nhị Hắc Bệnh Phù Tinh (Sát Khí Nhẹ)", loai: "neutral", y_nghia: "Phương Đông Nam gặp Nhị Hắc Thổ tinh chủ quản. Dù tinh tú này đang dịch chuyển dần sang sinh khí tương lai nhưng bản chất âm hàn của Bệnh Phù vẫn còn âm ỉ, cần chú ý giữ gìn sức khỏe, đặc biệt là hệ tiêu hóa." },
-                'S': { sao: "CỬU TỬ HỎA TINH (ĐƯƠNG VƯỢNG ĐẠI CÁT TINH TỐI THƯỢNG)", loai: "best", y_nghia: "Phương Nam chính là cung vị HOÀNG KIM bậc nhất của toàn bộ Vận 9 (2024-2043). Cửu Tử Tinh nắm quyền vương đạo, mang năng lượng hỏa thần bùng nổ, giúp gia đạo kích hoạt đại phú đại quý, danh tiếng lẫy lừng, thăng tiến thần tốc, hỷ sự liên miên." },
-                'SW': { sao: "Bát Bạch Tả Phụ Tinh (Thoái Khí)", loai: "neutral", y_nghia: "Phương Tây Nam bước vào thời kỳ suy thoái năng lượng của Bát Bạch. Các dòng tiền tài tích lũy cũ vẫn vững chắc nhưng dòng tiền tài lộc mới phát triển rất chậm, không nên đầu tư lớn tại phương vị này." },
-                'W': { sao: "NGŨ HOÀNG ĐẠI SÁT TÌNH (ĐẠI HUNG TINH ĐỘC NHẤT VÔ NHỊ)", loai: "worst", y_nghia: "Phương Tây trong Vận 9 phạm phải Ngũ Hoàng Đại Sát - Ngôi sao hung hãn độc hại nhất hệ thống phi tinh. Tích tụ uế khí và sát khí cực nặng, chủ về đại họa bất ngờ, hao tài tốn của khốc liệt, hoặc tật bệnh nan y hoành hành nếu tại phương này bị động thổ, mở cửa khí hay đặt thiết bị kích hoạt sai cách." },
-                'NW': { sao: "Tứ Lục Văn Khúc Tinh (Sát Khí Suy)", loai: "bad", y_nghia: "Phương Tây Bắc gặp Tứ Lục Mộc tinh. Trong vận này sao bị suy giảm năng lượng, dễ gây trì trệ về tư duy, học hành sa sút hoặc dễ vướng vào họa Đào Hoa Sát (rắc rối tình cảm ngoài luồng) làm bất ổn gia đạo." }
-            };
+        // === HÀM HUYỀN KHÔNG PHI TINH TỰ ĐỘNG THEO NĂM (ĐÃ CÓ VẬN 1,2,3) ===
+function sinhLuanGiaiThienThoi(code) {
+    const currentYear = new Date().getFullYear();
+    let vanSo = 9; // Mặc định Vận 9
 
-            const item = huyenKhongVan9[code];
-            let colorStar = "var(--gold)";
-            if (item.loai === 'best' || item.loai === 'good') colorStar = "var(--green)";
-            if (item.loai === 'worst' || item.loai === 'bad') colorStar = "var(--red)";
+    // Tự động chuyển vận
+    if (currentYear >= 2044 && currentYear <= 2063) vanSo = 1;
+    else if (currentYear >= 2064 && currentYear <= 2083) vanSo = 2;
+    else if (currentYear >= 2084 && currentYear <= 2103) vanSo = 3;
+    else if (currentYear >= 2104 && currentYear <= 2123) vanSo = 4;
+    // Có thể tiếp tục mở rộng...
 
-            return `
-                <br><br>
-                <span style="font-weight: bold; font-size: 0.95rem; display: inline-block; margin-bottom: 6px; color: #0a84ff;">
-                    ◆ THIÊN THỜI THỜI VẬN - HUYỀN KHÔNG PHI TINH VẬN 9 (2024 - 2043):
-                </span><br>
-                <span style="color: #ffffff;"><strong style="color: ${colorStar};">[Tọa Tinh Đáo Hướng]:</strong> Phương vị hiện tại đang được cai quản bởi đại tinh <strong style="color: ${colorStar};">${item.sao}</strong>.</span><br>
-                <span style="color: #ffffff;"><strong style="color: #0a84ff;">[Tác Động Thời Vận]:</strong> ${item.y_nghia}</span>
-            `;
+    const vanData = {
+        9: { // Vận 9 (2024 - 2043)
+            'N': { sao: "Nhất Bạch Đào Hoa Cát Tinh (Tiến Khí)", loai: "good", 
+                  y_nghia: "Trong đại vận 9, phương Bắc đón Nhất Bạch Thủy tinh bay đến chủ quản. Phương vị này mang năng lượng tương sinh cát lành, chủ về khai thông trí tuệ, đỗ đạt học vấn, hanh thông quan hệ ngoại giao và dễ gặp được quý nhân tương trợ." },
+            'NE': { sao: "Thất Xích Phá Quân Tinh (Thoái Khí Sát)", loai: "bad", 
+                  y_nghia: "Phương Đông Bắc bước vào Vận 9 bị Thất Xích Kim tinh đóng giữ. Đây là hung tinh mang sát khí, dễ kích động mâu thuẫn thị phi, tranh chấp kiện tụng tai tiếng, hoặc tổn hao tiền bạc, đề phòng họa trộm cắp." },
+            'E': { sao: "Lục Bạch Vũ Khúc Tinh (Thoái Khí Cát)", loai: "neutral", 
+                  y_nghia: "Phương Đông gặp sao Lục Bạch cai quản. Quyền lực và bệ đỡ cũ từ vận trước vẫn còn, tuy nhiên tài lộc vận hành chậm hơn, thiên về giữ vững gia sản hơn là đầu tư mạo hiểm." },
+            'SE': { sao: "Nhị Hắc Bệnh Phù Tinh (Sát Khí Nhẹ)", loai: "neutral", 
+                  y_nghia: "Phương Đông Nam gặp Nhị Hắc Thổ tinh chủ quản. Dù tinh tú này đang dịch chuyển dần sang sinh khí tương lai nhưng bản chất âm hàn của Bệnh Phù vẫn còn âm ỉ, cần chú ý giữ gìn sức khỏe, đặc biệt là hệ tiêu hóa." },
+            'S': { sao: "CỬU TỬ HỎA TINH (ĐƯƠNG VƯỢNG ĐẠI CÁT TINH TỐI THƯỢNG)", loai: "best", 
+                  y_nghia: "Phương Nam chính là cung vị HOÀNG KIM bậc nhất của toàn bộ Vận 9 (2024-2043). Cửu Tử Tinh nắm quyền vương đạo, mang năng lượng hỏa thần bùng nổ, giúp gia đạo kích hoạt đại phú đại quý, danh tiếng lẫy lừng, thăng tiến thần tốc, hỷ sự liên miên." },
+            'SW': { sao: "Bát Bạch Tả Phụ Tinh (Thoái Khí)", loai: "neutral", 
+                  y_nghia: "Phương Tây Nam bước vào thời kỳ suy thoái năng lượng của Bát Bạch. Các dòng tiền tài tích lũy cũ vẫn vững chắc nhưng dòng tiền tài lộc mới phát triển rất chậm, không nên đầu tư lớn tại phương vị này." },
+            'W': { sao: "NGŨ HOÀNG ĐẠI SÁT TÌNH (ĐẠI HUNG TINH ĐỘC NHẤT VÔ NHỊ)", loai: "worst", 
+                  y_nghia: "Phương Tây trong Vận 9 phạm phải Ngũ Hoàng Đại Sát - Ngôi sao hung hãn độc hại nhất hệ thống phi tinh. Tích tụ uế khí và sát khí cực nặng, chủ về đại họa bất ngờ, hao tài tốn của khốc liệt, hoặc tật bệnh nan y hoành hành nếu tại phương này bị động thổ, mở cửa khí hay đặt thiết bị kích hoạt sai cách." },
+            'NW': { sao: "Tứ Lục Văn Khúc Tinh (Sát Khí Suy)", loai: "bad", 
+                  y_nghia: "Phương Tây Bắc gặp Tứ Lục Mộc tinh. Trong vận này sao bị suy giảm năng lượng, dễ gây trì trệ về tư duy, học hành sa sút hoặc dễ vướng vào họa Đào Hoa Sát (rắc rối tình cảm ngoài luồng) làm bất ổn gia đạo." }
+        },
+        1: { // Vận 1 (2044 - 2063)
+            'N': { sao: "Nhất Bạch Thủy Tinh (Đại Cát)", loai: "best", 
+                  y_nghia: "Vận 1, phương Bắc cực vượng Thủy khí. Đây là vị trí hoàng kim, mang lại đại cát大利 về trí tuệ, học vấn, quan lộc và tài lộc dồi dào." },
+            'NE': { sao: "Nhị Hắc Thổ Tinh (Hung)", loai: "bad", 
+                  y_nghia: "Phương Đông Bắc bị Nhị Hắc chi phối, dễ gây bệnh tật, thị phi, hao tài. Nên cẩn thận động thổ." },
+            'E': { sao: "Tam Bích Mộc Tinh (Trung bình)", loai: "neutral", 
+                  y_nghia: "Phương Đông gặp Tam Bích, năng lượng trung bình, phù hợp làm việc trí óc hơn là đầu tư lớn." },
+            'SE': { sao: "Tứ Lục Mộc Tinh (Cát nhẹ)", loai: "good", 
+                  y_nghia: "Phương Đông Nam có Tứ Lục Văn Khúc, tốt cho học hành, thi cử và sáng tạo." },
+            'S': { sao: "Ngũ Hoàng Thổ Tinh (Đại Hung)", loai: "worst", 
+                  y_nghia: "Phương Nam phạm Ngũ Hoàng Đại Sát trong Vận 1. Rất hung, tránh động thổ, mở cửa lớn." },
+            'SW': { sao: "Lục Bạch Kim Tinh (Cát)", loai: "good", 
+                  y_nghia: "Phương Tây Nam có Lục Bạch, mang lại sự ổn định, quyền lực và tài lộc vững chắc." },
+            'W': { sao: "Thất Xích Kim Tinh (Hung)", loai: "bad", 
+                  y_nghia: "Phương Tây gặp Thất Xích, dễ thị phi, tranh chấp, cần hóa giải." },
+            'NW': { sao: "Bát Bạch Thổ Tinh (Cát)", loai: "good", 
+                  y_nghia: "Phương Tây Bắc có Bát Bạch, tốt cho gia đạo, sức khỏe và tích lũy tài sản." }
+        },
+        2: { // Vận 2 (2064 - 2083)
+            'N': { sao: "Nhị Hắc Thổ Tinh (Hung)", loai: "bad", 
+                  y_nghia: "Vận 2, phương Bắc bị Nhị Hắc chi phối, dễ bệnh tật và hao tổn." },
+            'NE': { sao: "Tam Bích Mộc Tinh (Trung bình)", loai: "neutral", 
+                  y_nghia: "Phương Đông Bắc có Tam Bích, năng lượng trung tính." },
+            'E': { sao: "Tứ Lục Mộc Tinh (Cát)", loai: "good", 
+                  y_nghia: "Phương Đông vượng Mộc, tốt cho sự nghiệp và học vấn." },
+            'SE': { sao: "Ngũ Hoàng Thổ Tinh (Đại Hung)", loai: "worst", 
+                  y_nghia: "Phương Đông Nam phạm Ngũ Hoàng, rất hung, cần cẩn thận." },
+            'S': { sao: "Lục Bạch Kim Tinh (Cát)", loai: "good", 
+                  y_nghia: "Phương Nam có Lục Bạch, mang lại ổn định và quyền lực." },
+            'SW': { sao: "Thất Xích Kim Tinh (Hung)", loai: "bad", 
+                  y_nghia: "Phương Tây Nam gặp Thất Xích, dễ thị phi và tranh chấp." },
+            'W': { sao: "Bát Bạch Thổ Tinh (Cát)", loai: "good", 
+                  y_nghia: "Phương Tây có Bát Bạch, tốt cho gia đạo và tài lộc." },
+            'NW': { sao: "Cửu Tử Hỏa Tinh (Đại Cát)", loai: "best", 
+                  y_nghia: "Phương Tây Bắc cực vượng Cửu Tử Hỏa, đại cát大利 về danh vọng và tài lộc." }
+        },
+        3: { // Vận 3 (2084 - 2103)
+            'N': { sao: "Tam Bích Mộc Tinh (Trung bình)", loai: "neutral", 
+                  y_nghia: "Phương Bắc gặp Tam Bích, năng lượng trung tính." },
+            'NE': { sao: "Tứ Lục Mộc Tinh (Cát)", loai: "good", 
+                  y_nghia: "Phương Đông Bắc có Tứ Lục, tốt cho văn chương và trí tuệ." },
+            'E': { sao: "Ngũ Hoàng Thổ Tinh (Đại Hung)", loai: "worst", 
+                  y_nghia: "Phương Đông phạm Ngũ Hoàng, cần hết sức cẩn thận." },
+            'SE': { sao: "Lục Bạch Kim Tinh (Cát)", loai: "good", 
+                  y_nghia: "Phương Đông Nam có Lục Bạch, mang lại ổn định." },
+            'S': { sao: "Thất Xích Kim Tinh (Hung)", loai: "bad", 
+                  y_nghia: "Phương Nam gặp Thất Xích, dễ thị phi." },
+            'SW': { sao: "Bát Bạch Thổ Tinh (Cát)", loai: "good", 
+                  y_nghia: "Phương Tây Nam có Bát Bạch, tốt cho gia đạo." },
+            'W': { sao: "Cửu Tử Hỏa Tinh (Đại Cát)", loai: "best", 
+                  y_nghia: "Phương Tây cực vượng Cửu Tử, đại cát大利." },
+            'NW': { sao: "Nhất Bạch Thủy Tinh (Cát)", loai: "good", 
+                  y_nghia: "Phương Tây Bắc có Nhất Bạch, tốt cho trí tuệ và quan lộc." }
         }
+    };
+
+    const item = (vanData[vanSo] && vanData[vanSo][code]) 
+                 ? vanData[vanSo][code] 
+                 : { sao: "Chưa có dữ liệu vận", loai: "neutral", y_nghia: "Hệ thống đang cập nhật dữ liệu cho vận mới." };
+
+    let colorStar = "var(--gold)";
+    if (item.loai === 'best' || item.loai === 'good') colorStar = "var(--green)";
+    if (item.loai === 'worst' || item.loai === 'bad') colorStar = "var(--red)";
+
+    return `
+        <br><br>
+        <span style="font-weight: bold; font-size: 0.95rem; display: inline-block; margin-bottom: 6px; color: #0a84ff;">
+            ◆ THIÊN THỜI THỜI VẬN - HUYỀN KHÔNG PHI TINH VẬN ${vanSo} (${currentYear}):
+        </span><br>
+        <span style="color: #ffffff;"><strong style="color: ${colorStar};">[Tọa Tinh Đáo Hướng]:</strong> Phương vị hiện tại đang được cai quản bởi đại tinh <strong style="color: ${colorStar};">${item.sao}</strong>.</span><br>
+        <span style="color: #ffffff;"><strong style="color: #0a84ff;">[Tác Động Thời Vận]:</strong> ${item.y_nghia}</span>
+    `;
+}
 
         function sinhMatPhapHoaGiai(mucDich, cungSat, hanhChu, phuongHuong, code) {
     let hanhPhuongVi = phươngVịThiếtLập[code].ngũHành;
