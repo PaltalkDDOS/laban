@@ -240,10 +240,10 @@
             height: 80%;
             background: linear-gradient(to bottom, #ffcc00 50%, rgba(255, 204, 0, 0.3) 50%);
             clip-path: polygon(50% 0%, 100% 15%, 60% 15%, 60% 85%, 100% 85%, 50% 100%, 0% 85%, 40% 85%, 40% 15%, 0% 15%);
-            z-index: 6; /* Đặt dưới lớp kim đỏ (z-index: 8) để ẩn khéo léo phía dưới */
+            z-index: 6;
             pointer-events: none;
             opacity: 0;
-            transition: transform 0.4s ease-out, opacity 0.3s;
+            transition: opacity 0.3s;
         }
 
         .center-pin {
@@ -405,7 +405,6 @@
             border-left: 4px solid #333;
         }
 
-        /* KHÔI PHỤC MÀU ĐỎ/XANH RÕ RÀNG CHO DANH SÁCH GỢI Ý */
         .direction-item.good { border-left-color: var(--green); }
         .direction-item.bad { border-left-color: var(--red); }
 
@@ -614,6 +613,7 @@
         let chủMệnh = 'Khảm'; 
         let currentCode = 'N';
         let currentHeading = 0;
+        let targetAngle = null;
 
         function render24SonRing() {
             sonRing.innerHTML = "";
@@ -710,7 +710,6 @@
 
             directionsContainer.innerHTML = "";
             listDirections.forEach(item => {
-                // FIX: Khôi phục phân biệt màu XANH (Tốt) và ĐỎ (Xấu) rõ ràng trực quan
                 const badgeClass = item.hopPhongThuy ? 'good' : 'bad';
                 const statusText = item.hopPhongThuy ? '🟢 PHÙ HỢP TỐT' : '❌ KHÔNG PHÙ HỢP';
                 const textColorStyle = item.hopPhongThuy ? 'color: var(--green); font-weight: bold;' : 'color: var(--red); font-weight: bold;';
@@ -728,10 +727,11 @@
             });
         }
 
-        // FIX LOGIC XOAY THỬ: Hiện kim vàng mờ nằm dưới lớp kim đỏ, kim đỏ đứng yên để người dùng tự mò trùng khớp
         function triggerGhostNeedle(angle) {
+            targetAngle = angle;
             ghostNeedle.style.opacity = "1";
-            ghostNeedle.style.transform = `rotate(${angle}deg)`;
+            
+            updateCompassUI(currentHeading);
             
             let sơnThử = tìmSơnHướng(angle);
             detailBox.innerHTML = `<span class="gold-text">◆ ĐANG BẬT KIM VÀNG XOAY THỬ:</span><br>Kim ảo màu vàng đang chỉ mốc <span class="gold-text">${angle}°</span> (Sơn <span class="good-text">${sơnThử}</span>) nằm mờ phía dưới.<br>Hãy xoay thiết bị hoặc vuốt la bàn bằng tay sao cho <span class="warn-text">Kim Đỏ thật sự trùng khớp lên vị trí Kim Vàng mờ</span> để đón chuẩn hướng phương vị.`;
@@ -755,6 +755,10 @@
             needle.style.transform = `rotate(0deg)`;
             compassSlider.value = currentHeading;
 
+            if (targetAngle !== null) {
+                ghostNeedle.style.transform = `rotate(${targetAngle - currentHeading}deg)`;
+            }
+
             let currentCung = ""; 
             if (currentHeading >= 338 || currentHeading < 23) { currentCung = "KHẢM (BẮC)"; currentCode = "N"; }
             else if (currentHeading >= 23 && currentHeading < 68) { currentCung = "CẤN (ĐÔNG BẮC)"; currentCode = "NE"; }
@@ -769,7 +773,7 @@
             degreeTxt.innerText = `${currentHeading}° - Phương ${currentCung} - Sơn ${sơnHiệnTại}`;
 
             if (!document.getElementById('birthDate').value) {
-                幕lmentBox.innerHTML = `<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${phươngVịThiếtLập[currentCode].ngũHành}</span>`;
+                elementBox.innerHTML = `<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${phươngVịThiếtLập[currentCode].ngũHành}</span>`;
                 judgmentBox.innerText = "ĐO HƯỚNG CHÍNH XÁC";
                 judgmentBox.className = "judgment-badge";
                 judgmentBox.style.backgroundColor = "#222";
@@ -800,7 +804,6 @@
             if (['house', 'altar', 'bed', 'workspace'].includes(mụcĐích)) {
                 let tênThiếtBị = { 'altar': "BÀN THỜ", 'bed': "GIƯỜNG NGỦ", 'workspace': "BÀN LÀM VIỆC", 'house': "NHÀ CỬA" }[mụcĐích];
                 judgmentBox.innerText = `Hướng ${tênThiếtBị}: ${cungTrạch}`;
-                // FIX: Hiển thị đúng màu XANH khi CÁT (TỐT) và ĐỎ khi HUNG (XẤU) cho bảng trạng thái chính
                 if (thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
                     detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG CÁT PHÙ HỢP:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Cực kỳ lý tưởng để bố trí vị trí nhìn về góc tọa độ ${currentHeading}° này.`;
@@ -825,14 +828,11 @@
         function handleOrientation(event) {
             let heading = event.webkitCompassHeading || (event.alpha ? (360 - event.alpha) : null);
             if (heading !== null) { 
-                // Khi xoay thiết bị thực tế, kim ảo mờ tự động ẩn đi để nhường sân cho cảm biến
-                ghostNeedle.style.opacity = "0"; 
                 updateCompassUI(heading); 
             }
         }
 
         function manualRotate(value) { 
-            ghostNeedle.style.opacity = "0"; 
             updateCompassUI(value); 
         }
 
@@ -904,8 +904,10 @@
                 document.getElementById('gender').value = "male";
 
                 currentHeading = 0;
+                targetAngle = null;
                 compass.style.transform = `rotate(0deg)`;
                 needle.style.transform = `rotate(0deg)`;
+                ghostNeedle.style.transform = `rotate(0deg)`;
                 ghostNeedle.style.opacity = "0";
                 compassSlider.value = 0;
 
@@ -927,6 +929,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            render24SocialRing = render24SonRing;
             render24SonRing();
             loadSavedMembers();
             recalculateFate(); 
