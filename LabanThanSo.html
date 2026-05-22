@@ -650,7 +650,13 @@
 
     <div class="explanation-panel">
         <div class="detail-content" id="detail-box">Đang khởi tạo mật pháp dữ liệu...</div>
-    </div>
+        
+        <div id="pro-advice-box" style="margin-top: 15px; border-top: 2px solid #dfb76c; padding-top: 10px; display: none;">
+            <h4 style="color: #dfb76c; margin-bottom: 8px; text-align: center; font-size: 16px;">🌟 Cẩm nang kích hoạt năng lượng</h4>
+            <div id="advice-content" style="font-size: 14px; line-height: 1.6; color: #e0e0e0; padding: 10px; background: rgba(223, 183, 108, 0.1); border-radius: 8px;">
+            </div>
+        </div>
+        </div>
 
     <div class="custom-alert-overlay" id="customAlert">
         <div class="custom-alert-box">
@@ -1041,7 +1047,7 @@
             `;
         }
 
-        function updateCompassUI(heading) {
+function updateCompassUI(heading) {
             currentHeading = Math.round(heading);
             compass.style.transform = `rotate(${-currentHeading}deg)`;
             needle.style.transform = `rotate(0deg)`;
@@ -1068,6 +1074,20 @@
             const monthStr = document.getElementById('birthMonth').value;
             const yearStr = document.getElementById('birthYear').value;
 
+            // --- Khởi tạo các biến cho đoạn nâng cấp cẩm nang ---
+            const adviceBox = document.getElementById('pro-advice-box');
+            const adviceContent = document.getElementById('advice-content');
+            const advices = {
+                "Sinh Khí": "<strong>Kích hoạt:</strong> Hướng này chủ về tài lộc và danh tiếng. Hãy đặt cây xanh hoặc vật phẩm hành Mộc để tăng cường sinh khí, giúp vận trình thăng hoa trong Vận 9.",
+                "Thiên Y": "<strong>Kích hoạt:</strong> Hướng này chủ về sức khỏe. Hãy đặt vật phẩm hành Thổ (bình gốm, đá thạch anh vàng, đồ sứ) để bồi bổ năng lượng, giúp cơ thể an khang.",
+                "Diên Niên": "<strong>Kích hoạt:</strong> Hướng này chủ về tình cảm. Hãy đặt vật phẩm hành Kim (đồ đồng, bạc, vật phẩm màu trắng/ánh kim) để gắn kết hòa khí, gia đạo ổn định.",
+                "Phục Vị": "<strong>Kích hoạt:</strong> Hướng này chủ về bình yên. Hãy đặt vật phẩm hành Thủy (chậu nước phong thủy, đồ thủy tinh, gương) để giữ sự tĩnh lặng và vững chãi.",
+                "Tuyệt Mệnh": "<strong>Hóa giải:</strong> Hướng này rất xấu. Cần dùng vật phẩm hành Kim (đồ đồng) hoặc Thổ (đá thạch anh) để hóa giải sát khí, nên tránh đặt giường ngủ ở hướng này.",
+                "Ngũ Quỷ": "<strong>Hóa giải:</strong> Dùng vật phẩm hành Thủy (bình nước, gương) để khắc chế hỏa khí của Ngũ Quỷ, giúp tâm trí tỉnh táo.",
+                "Lục Sát": "<strong>Hóa giải:</strong> Dùng vật phẩm hành Thủy (vật phẩm màu đen, xanh dương) để chuyển hóa năng lượng xung khắc thành hài hòa.",
+                "Họa Hại": "<strong>Hóa giải:</strong> Dùng vật phẩm hành Kim (đồ trang sức bằng đồng, bạc) để tiêu trừ năng lượng xấu, giúp tránh thị phi."
+            };
+
             if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
                 elementBox.innerHTML = `<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${phươngVịThiếtLập[currentCode].ngũHành}</span>`;
                 judgmentBox.innerText = "ĐO HƯỚNG CHÍNH XÁC";
@@ -1081,6 +1101,9 @@
                     <span style="color:#ffffff;">Hệ thống đang chạy ở chế độ la bàn cơ bản chuẩn xác cao.<br>
                     Hướng hiện tại: góc <span class="gold-text">${currentHeading}°</span>, phương <b>${currentCung}</b>, thích hợp để đo đạc thực tế địa hình đất đai dương trạch.</span>
                 `;
+                
+                // Ẩn cẩm nang khi ở chế độ đo tự do không có thông tin tuổi
+                if (adviceBox) adviceBox.style.display = 'none';
                 return;
             }
 
@@ -1113,10 +1136,8 @@
                 }
                 phanGiaiCoBan += sinhLuanGiaiThienThoi(currentCode);
                 detailBox.innerHTML = phanGiaiCoBan;
-                return;
-            }
-
-            if (['house', 'altar', 'bed', 'workspace'].includes(mụcĐích)) {
+            } 
+            else if (['house', 'altar', 'bed', 'workspace'].includes(mụcĐích)) {
                 let tênThiếtBị = { 'altar': "BÀN THỜ", 'bed': "GIƯỜNG NGỦ", 'workspace': "BÀN LÀM VIỆC", 'house': "NHÀ CỬA" }[mụcĐích];
                 judgmentBox.innerText = `Hướng ${tênThiếtBị}: ${cungTrạch}`;
                 
@@ -1164,6 +1185,16 @@
                     noiDungDetail += sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung, currentCode);
                     noiDungDetail += sinhLuanGiaiThienThoi(currentCode);
                     detailBox.innerHTML = noiDungDetail;
+                }
+            }
+
+            // --- Logic hiển thị nội dung cẩm nang nâng cấp cập nhật theo thời gian thực ---
+            if (adviceBox && adviceContent) {
+                if (advices[cungTrạch]) {
+                    adviceBox.style.display = 'block';
+                    adviceContent.innerHTML = advices[cungTrạch];
+                } else {
+                    adviceBox.style.display = 'none';
                 }
             }
         }
