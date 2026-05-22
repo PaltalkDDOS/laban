@@ -434,6 +434,7 @@
             border: 1px solid #252525;
             border-radius: 8px;
             padding: 12px;
+            margin-bottom: 15px;
         }
 
         .detail-content {
@@ -442,6 +443,25 @@
             padding: 10px;
             font-size: 0.8rem;
             line-height: 1.5;
+        }
+
+        /* CHỮ KÝ BẢN QUYỀN GIAO DIỆN */
+        .footer-copyright {
+            width: 92%;
+            max-width: 430px;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.7rem;
+            color: #555;
+            border-top: 1px solid #222;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+            margin-top: 15px;
+        }
+        .footer-copyright .signature-highlight {
+            color: var(--gold);
+            font-weight: bold;
+            text-shadow: 0 0 4px rgba(223, 183, 108, 0.3);
         }
 
         .warn-text { color: var(--red); font-weight: bold; }
@@ -459,9 +479,9 @@
         <div class="form-row">
             <div class="form-group" style="flex: 1.2;">
                 <label>Họ tên chủ mệnh:</label>
-                <input type="text" id="userName" value="Người Tầm Phương" 
-                       onfocus="if(this.value==='Người Tầm Phương') { this.value=''; this.style.color='#fff'; }" 
-                       onblur="if(this.value.trim()==='') { this.value='Người Tầm Phương'; this.style.color='#aaa'; }" 
+                <input type="text" id="userName" value="Thái Thông" 
+                       onfocus="if(this.value==='Thái Thông') { this.value=''; this.style.color='#fff'; }" 
+                       onblur="if(this.value.trim()==='') { this.value='Thái Thông'; this.style.color='#aaa'; }" 
                        oninput="recalculateFate()">
             </div>
             <div class="form-group" style="flex: 0.8;">
@@ -546,7 +566,16 @@
         <div class="detail-content" id="detail-box">Đang khởi tạo mật pháp dữ liệu...</div>
     </div>
 
+    <div class="footer-copyright" id="footerSign">
+        Mã nguồn mật pháp bảo mật tối cao<br>
+        Bản quyền thiết kế độc quyền thuộc sở hữu của: <span class="signature-highlight" id="lblAuthorName">Thái Thông</span><br>
+        Được mã hóa chống sao chép và làm giả trái phép © 2026.
+    </div>
+
     <script>
+        // CHỮ KÝ BẢO MẬT KHÓA NGẦM TOÀN FILE
+        const TAC_GIA_DOC_QUYEN = "Thái Thông";
+
         const compass = document.getElementById('compass');
         const needle = document.getElementById('needle');
         const ghostNeedle = document.getElementById('ghostNeedle');
@@ -596,7 +625,7 @@
             'Họa Hại': { cát: false, ý_nghĩa: 'Tiểu Hung, mệt mỏi, trắc trở bởi chuyện tiểu nhân quấy phá vụn vặt.' }
         };
 
-        const phươngVịThiếtLập = {
+        const phươngVịThiết Lập = {
             'N': { tên: "BẮC", ngũHành: "Thủy" }, 'NE': { tên: "ĐÔNG BẮC", ngũHành: "Thổ" },
             'E': { tên: "ĐÔNG", ngũHành: "Mộc" }, 'SE': { tên: "ĐÔNG NAM", ngũHành: "Mộc" },
             'S': { tên: "NAM", ngũHành: "Hỏa" }, 'SW': { tên: "TÂY NAM", ngũHành: "Thổ" },
@@ -614,8 +643,22 @@
         let currentCode = 'N';
         let currentHeading = 0;
         let targetAngle = null;
+        let systemLocked = false;
+
+        // KIỂM TRA TÍNH TOÀN VẸN VÀ CHỮ KÝ BẢN QUYỀN
+        function verifyIntegrity() {
+            const labelNode = document.getElementById('lblAuthorName');
+            if (!labelNode || labelNode.innerText !== TAC_GIA_DOC_QUYEN) {
+                systemLocked = true;
+                alert("CẢNH BÁO: Phát hiện mã nguồn bị sửa đổi chữ ký trái phép! Hệ thống sẽ tự động khóa.");
+                document.body.innerHTML = "<h1 style='color:red;text-align:center;margin-top:20%;font-size:1.5rem;'>VI PHẠM BẢN QUYỀN ĐỘC QUYỀN LA BÀN</h1><p style='color:white;text-align:center;'>Ứng dụng đã ngừng hoạt động do phát hiện hành vi thay đổi tên chủ sở hữu thiết kế.</p>";
+                return false;
+            }
+            return true;
+        }
 
         function render24SonRing() {
+            if (systemLocked) return;
             sonRing.innerHTML = "";
             son24Data.forEach((son, index) => {
                 const trungBìnhGóc = (index * 15);
@@ -642,6 +685,7 @@
         }
 
         function recalculateFate() {
+            if (systemLocked || !verifyIntegrity()) return;
             const name = document.getElementById('userName').value || "Chủ mệnh";
             const gender = document.getElementById('gender').value;
             const dateVal = document.getElementById('birthDate').value;
@@ -671,6 +715,7 @@
         }
 
         function generateDirectionsList() {
+            if (systemLocked) return;
             const mụcĐích = document.getElementById('purpose').value;
             
             if (!mụcĐích) {
@@ -728,6 +773,7 @@
         }
 
         function triggerGhostNeedle(angle) {
+            if (systemLocked) return;
             targetAngle = angle;
             ghostNeedle.style.opacity = "1";
             
@@ -750,6 +796,7 @@
         }
 
         function updateCompassUI(heading) {
+            if (systemLocked) return;
             currentHeading = Math.round(heading);
             compass.style.transform = `rotate(${-currentHeading}deg)`;
             needle.style.transform = `rotate(0deg)`;
@@ -773,7 +820,7 @@
             degreeTxt.innerText = `${currentHeading}° - Phương ${currentCung} - Sơn ${sơnHiệnTại}`;
 
             if (!document.getElementById('birthDate').value) {
-                elementBox.innerHTML = `<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${phươngVịThiếtLập[currentCode].ngũHành}</span>`;
+                elementBox.innerHTML = `<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${phươngVịThiết Lập[currentCode].ngũHành}</span>`;
                 judgmentBox.innerText = "ĐO HƯỚNG CHÍNH XÁC";
                 judgmentBox.className = "judgment-badge";
                 judgmentBox.style.backgroundColor = "#222";
@@ -783,7 +830,7 @@
                 return;
             }
 
-            const hànhPhươngVị = phươngVịThiếtLập[currentCode].ngũHành;
+            const hànhPhươngVị = phươngVịThiết Lập[currentCode].ngũHành;
             const hànhMệnhChủ = bátTrạchMap[chủMệnh].element;
             elementBox.innerHTML = `
                 <span class="element-badge" style="background: #3a3a3c;">Phương vị: ${hànhPhươngVị}</span>
@@ -802,19 +849,19 @@
             }
 
             if (['house', 'altar', 'bed', 'workspace'].includes(mụcĐích)) {
-                let tênThiếtBị = { 'altar': "BÀN THỜ", 'bed': "GIƯỜNG NGỦ", 'workspace': "BÀN LÀM VIỆC", 'house': "NHÀ CỬA" }[mụcĐích];
-                judgmentBox.innerText = `Hướng ${tênThiếtBị}: ${cungTrạch}`;
+                let tênThiết Bị = { 'altar': "BÀN THỜ", 'bed': "GIƯỜNG NGỦ", 'workspace': "BÀN LÀM VIỆC", 'house': "NHÀ CỬA" }[mụcĐích];
+                judgmentBox.innerText = `Hướng ${tênThiết Bị}: ${cungTrạch}`;
                 if (thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
                     detailBox.innerHTML = `<span class="good-text">◆ HƯỚNG CÁT PHÙ HỢP:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Cực kỳ lý tưởng để bố trí vị trí nhìn về góc tọa độ ${currentHeading}° này.`;
                 } else {
                     judgmentBox.className = "judgment-badge bg-bad";
-                    detailBox.innerHTML = `<span class="warn-text">◆ HƯỚNG HUNG NÊN TRÁNH:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Không đặt mặt hướng của ${tênThiếtBị} nhìn về phương vị này tránh tổn hao nguyên khí.`;
+                    detailBox.innerHTML = `<span class="warn-text">◆ HƯỚNG HUNG NÊN TRÁNH:</span><br>${thôngTinCung.ý_nghĩa}<br><br>Không đặt mặt hướng của ${tênThiết Bị} nhìn về phương vị này tránh tổn hao nguyên khí.`;
                 }
             } 
             else {
-                let tênThiếtBị = mụcĐích === 'kitchen' ? "BẾP NẤU" : "WC";
-                judgmentBox.innerText = `Tọa ${tênThiếtBị}: ${cungTrạch}`;
+                let tênThiết Bị = mụcĐích === 'kitchen' ? "BẾP NẤU" : "WC";
+                judgmentBox.innerText = `Tọa ${tênThiết Bị}: ${cungTrạch}`;
                 if (!thôngTinCung.cát) {
                     judgmentBox.className = "judgment-badge bg-good";
                     detailBox.innerHTML = `<span class="good-text">◆ TỌA HUNG ĐẮC CÁCH (RẤT TỐT):</span><br>Vị trí này thuộc hung vị lý tưởng <span class="warn-text">(${cungTrạch})</span>.<br><br>Nguyên lý: Thiết bị xả uế hoặc đun nấu đặt đè trên tọa độ hung tinh này sẽ thiêu rụi, cuốn trôi vận xui rủi hung hại ra khỏi gia trạch.`;
@@ -837,11 +884,12 @@
         }
 
         function saveCurrentMember() {
+            if (systemLocked) return;
             const name = document.getElementById('userName').value.trim();
             const gender = document.getElementById('gender').value;
             const birthDate = document.getElementById('birthDate').value;
 
-            if(!name || name === "Người Tầm Phương") { alert("Vui lòng nhập họ tên thật của thành viên gia đình!"); return; }
+            if(!name || name === "Thái Thông") { alert("Vui lòng nhập họ tên thật của thành viên gia đình!"); return; }
             if(!birthDate) { alert("Vui lòng chọn ngày tháng năm sinh!"); return; }
 
             let data = JSON.parse(localStorage.getItem('fengshui_members')) || [];
@@ -853,6 +901,7 @@
         }
 
         function loadSavedMembers() {
+            if (systemLocked) return;
             const data = JSON.parse(localStorage.getItem('fengshui_members')) || [];
             if(data.length === 0) {
                 savedPanel.style.display = "none";
@@ -889,6 +938,7 @@
         }
 
         function clearAllData() {
+            if (systemLocked) return;
             const btnReset = document.getElementById('btnReset');
             btnReset.classList.add('executing');
             
@@ -896,7 +946,7 @@
                 btnReset.classList.remove('executing');
                 
                 const nameInput = document.getElementById('userName');
-                nameInput.value = "Người Tầm Phương";
+                nameInput.value = "Thái Thông";
                 nameInput.style.color = "#aaa";
 
                 document.getElementById('birthDate').value = "";
@@ -925,10 +975,16 @@
 
                 directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập ngày sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
                 listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
+
+                document.getElementById('lblAuthorName').innerText = TAC_GIA_DOC_QUYEN;
             }, 400);
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('lblAuthorName').innerText = TAC_GIA_DOC_QUYEN;
+
+            if (!verifyIntegrity()) return;
+
             render24SocialRing = render24SonRing;
             render24SonRing();
             loadSavedMembers();
@@ -941,6 +997,7 @@
         });
 
         function requestPermission() {
+            if (systemLocked) return;
             DeviceOrientationEvent.requestPermission()
                 .then(response => {
                     if (response == 'granted') {
