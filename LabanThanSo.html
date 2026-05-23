@@ -1475,7 +1475,25 @@
     return true;
   }
 
-function recalculateFate() {
+// HÀM ĐÓNG MỞ LUẬN GIẢI CHI TIẾT (Đặt riêng bên ngoài để chạy mượt mà, tối ưu bộ nhớ)
+  window.toggleDienGiaiChiTiet = function() {
+      const contentDiv = document.getElementById('content-dien-giai-chi-tiet');
+      const toggleBtn = document.getElementById('btn-toggle-fengshui');
+      if (!contentDiv || !toggleBtn) return;
+      
+      if (contentDiv.style.display === 'none') {
+          contentDiv.style.display = 'block';
+          toggleBtn.innerHTML = '🙈 Đóng luận giải chi tiết';
+          toggleBtn.style.background = 'rgba(223, 183, 108, 0.15)';
+      } else {
+          contentDiv.style.display = 'none';
+          toggleBtn.innerHTML = '👁️ Xem luận giải bản mệnh chi tiết';
+          toggleBtn.style.background = 'transparent';
+      }
+  };
+
+  // HÀM TÍNH TOÁN VÀ XỬ LÝ LÔ-GÍC CHÍNH
+  function recalculateFate() {
     const name = document.getElementById('userName').value || "Chủ mệnh";
     const gender = document.getElementById('gender').value;
     const dayStr = document.getElementById('birthDay').value;
@@ -1533,7 +1551,7 @@ function recalculateFate() {
 
     let lyGiaiBoTri = `<b>Quy tắc bố trí vạn vật theo Thiên - Địa - Nhân:</b> Đối với các hạng mục mang tính chất <i>Đón nhận cát khí và sinh khí</i> vào nhà như Cửa chính, Bàn thờ, Giường ngủ, hay Két sắt tài lộc, bạn bắt buộc phải xoay mặt hoặc tựa lưng về các hướng Cát để hấp thụ trường khí tốt. Ngược lại, đối với các không gian chứa uế khí hoặc xả thải như Bếp nấu, Nhà vệ sinh, hay Kho tàng, phong thủy tối thượng áp dụng nguyên lý <b>'Tọa Hung Hướng Cát'</b> - tức là đặt cố định các thiết bị này đè lên các phương vị hướng xấu (Đè Hung) để thiêu rụi sát khí, thanh lọc toàn bộ uế khí và bảo vệ không gian sống.`;
 
-    // 3. THIẾT KẾ CƠ CHẾ NÚT BẤM (TOGGLE) THU GỌN / MỞ RỘNG THÔNG MINH
+    // 3. THIẾT KẾ GIAO DIỆN NÚT BẤM VÀ KHỐI NỘI DUNG ẨN
     let targetContainer = document.getElementById('dien-giai-bo-sung');
     if (!targetContainer) {
         targetContainer = document.createElement('div');
@@ -1542,7 +1560,7 @@ function recalculateFate() {
         fateTxt.parentNode.insertBefore(targetContainer, fateTxt.nextSibling);
     }
     
-    // Đổ cấu trúc có sẵn Nút bấm hành vi và Hộp nội dung ẩn (Mặc định nội dung là display: none)
+    // Đổ cấu trúc giao diện (Mặc định hộp giải thích content-dien-giai-chi-tiet luôn ẩn)
     targetContainer.innerHTML = `
         <div style="text-align: center; margin: 10px 0;">
             <button id="btn-toggle-fengshui" onclick="toggleDienGiaiChiTiet()" style="background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 5px 12px; font-size: 0.78rem; border-radius: 4px; cursor: pointer; transition: all 0.2s ease; font-weight: bold;">
@@ -1558,21 +1576,6 @@ function recalculateFate() {
             <p style="margin: 0;">🛠️ ${lyGiaiBoTri}</p>
         </div>
     `;
-
-    // 4. Định nghĩa hàm đóng mở nội dung ngay trong window để tránh lỗi scope
-    window.toggleDienGiaiChiTiet = function() {
-        const contentDiv = document.getElementById('content-dien-giai-chi-tiet');
-        const toggleBtn = document.getElementById('btn-toggle-fengshui');
-        if (contentDiv.style.display === 'none') {
-            contentDiv.style.display = 'block';
-            toggleBtn.innerHTML = '🙈 Đóng luận giải chi tiết';
-            toggleBtn.style.background = 'rgba(223, 183, 108, 0.15)';
-        } else {
-            contentDiv.style.display = 'none';
-            toggleBtn.innerHTML = '👁️ Xem luận giải bản mệnh chi tiết';
-            toggleBtn.style.background = 'transparent';
-        }
-    };
 
     generateDirectionsList();
     updateCompassUI(currentHeading);
