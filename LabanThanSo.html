@@ -714,63 +714,80 @@
 
 <body>
 
-  <div class="header">
+<div class="header">
     <h1>ĐẠI THUẬT LA KINH PHONG THỦY</h1>
     <div class="header-copyright">&copy; BẢN QUYỀN HỆ THỐNG: THÁI THÔNG</div>
-  </div>
+</div>
 
-  <div class="user-input-panel">
-    <div class="form-row">
-      <div class="form-group" style="flex: 1.2;">
-        <label>Họ tên chủ mệnh:</label>
-        <input type="text" id="userName" value="Người Tầm Phương" onfocus="if(this.value==='Người Tầm Phương') { this.value=''; this.style.color='#fff'; }"
-        onblur="if(this.value.trim()==='') { this.value='Người Tầm Phương'; this.style.color='#aaa'; }" oninput="recalculateFate()">
-      </div>
-      <div class="form-group" style="flex: 0.8;">
-        <label>Giới tính:</label>
-        <select id="gender" onchange="recalculateFate()">
-          <option value="male">Nam Mạng</option>
-          <option value="female">Nữ Mạng</option>
-        </select>
-      </div>
-    </div>
+<div id="toggleControl" style="text-align: center; cursor: pointer; background: #222; padding: 10px; border: 1px solid #b58e4b; color: #dfb76c; margin: 10px auto; width: 90%; border-radius: 8px; font-weight: bold;" onclick="togglePanel()">
+    <span id="toggleLabel">▲ THU GỌN BẢNG NHẬP LIỆU</span>
+</div>
 
-    <div class="form-row">
-      <div class="form-group">
-        <label>Ngày tháng năm sinh (Dương lịch):</label>
-        <div class="date-input-container">
-          <input type="text" id="birthDay" placeholder="Ngày (DD)" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthMonth')"
-          style="text-align: center;">
-          <input type="text" id="birthMonth" placeholder="Tháng (MM)" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthYear')"
-          style="text-align: center;">
-          <input type="text" id="birthYear" placeholder="Năm (YYYY)" maxlength="4" inputmode="numeric" oninput="handleDateInput(this, null)"
-          style="text-align: center;">
+<div id="mainPanelWrapper" style="display: block;">
+    <div class="user-input-panel">
+        <div class="form-row">
+            <div class="form-group" style="flex: 1.2;">
+                <label>Họ tên chủ mệnh:</label>
+                <input type="text" id="userName" value="Người Tầm Phương" onfocus="if(this.value==='Người Tầm Phương') { this.value=''; this.style.color='#fff'; }"
+                onblur="if(this.value.trim()==='') { this.value='Người Tầm Phương'; this.style.color='#aaa'; }" oninput="recalculateFate()">
+            </div>
+            <div class="form-group" style="flex: 0.8;">
+                <label>Giới tính:</label>
+                <select id="gender" onchange="recalculateFate()">
+                    <option value="male">Nam Mạng</option>
+                    <option value="female">Nữ Mạng</option>
+                </select>
+            </div>
         </div>
-      </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Ngày tháng năm sinh (Dương lịch):</label>
+                <div class="date-input-container">
+                    <input type="text" id="birthDay" placeholder="Ngày (DD)" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthMonth')" style="text-align: center;">
+                    <input type="text" id="birthMonth" placeholder="Tháng (MM)" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthYear')" style="text-align: center;">
+                    <input type="text" id="birthYear" placeholder="Năm (YYYY)" maxlength="4" inputmode="numeric" oninput="handleDateInput(this, null)" style="text-align: center;">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 6px;">
+            <label>Mục đích tầm phương vị dương trạch:</label>
+            <select id="purpose" onchange="recalculateFate()">
+                <option value="">-- Xem hướng tự do nguyên bản (Không áp bộ lọc đồ đạc) --</option>
+                <option value="house">Xem hướng Nhà, Cửa Chính (Cần Hướng Cát)</option>
+                <option value="altar">Xem hướng đặt BÀN THỜ (Cần Hướng Cát)</option>
+                <option value="bed">Xem hướng đầu GIƯỜNG NGỦ (Cần Hướng Cát)</option>
+                <option value="workspace">Xem hướng đặt BÀN LÀM VIỆC (Cần Hướng Cát)</option>
+                <option value="kitchen">Xem vị trí đặt BẾP NẤU (Tọa Hung Hướng Cát)</option>
+                <option value="toilet">Xem vị trí nhà vệ sinh / WC (Tọa Hung giải uế)</option>
+            </select>
+        </div>
+
+        <div class="btn-action-row">
+            <button class="btn-main" onclick="saveCurrentMember()">Lưu Tuổi Gia Đình</button>
+            <button class="btn-reset" id="btnReset" onclick="clearAllData()">Làm Mới Trang</button>
+        </div>
     </div>
 
-    <div class="form-group" style="margin-bottom: 6px;">
-      <label>Mục đích tầm phương vị dương trạch:</label>
-      <select id="purpose" onchange="recalculateFate()">
-        <option value="">-- Xem hướng tự do nguyên bản (Không áp bộ lọc đồ đạc) --</option>
-        <option value="house">Xem hướng Nhà, Cửa Chính (Cần Hướng Cát)</option>
-        <option value="altar">Xem hướng đặt BÀN THỜ (Cần Hướng Cát)</option>
-        <option value="bed">Xem hướng đầu GIƯỜNG NGỦ (Cần Hướng Cát)</option>
-        <option value="workspace">Xem hướng đặt BÀN LÀM VIỆC (Cần Hướng Cát)</option>
-        <option value="kitchen">Xem vị trí đặt BẾP NẤU (Tọa Hung Hướng Cát)</option>
-        <option value="toilet">Xem vị trí nhà vệ sinh / WC (Tọa Hung giải uế)</option>
-      </select>
+    <div class="saved-list-panel" id="savedPanel" style="display: none;">
+        <div class="saved-container" id="savedContainer"></div>
     </div>
+</div>
 
-    <div class="btn-action-row">
-      <button class="btn-main" onclick="saveCurrentMember()">Lưu Tuổi Gia Đình</button>
-      <button class="btn-reset" id="btnReset" onclick="clearAllData()">Làm Mới Trang</button>
-    </div>
-  </div>
-
-  <div class="saved-list-panel" id="savedPanel" style="display: none;">
-    <div class="saved-container" id="savedContainer"></div>
-  </div>
+<script>
+    function togglePanel() {
+        const wrapper = document.getElementById('mainPanelWrapper');
+        const label = document.getElementById('toggleLabel');
+        if (wrapper.style.display === 'none') {
+            wrapper.style.display = 'block';
+            label.innerHTML = '▲ THU GỌN BẢNG NHẬP LIỆU';
+        } else {
+            wrapper.style.display = 'none';
+            label.innerHTML = '▼ MỞ BẢNG NHẬP LIỆU';
+        }
+    }
+</script>
 
 <div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #222222; border-radius: 50%; box-shadow: 0 8px 30px rgba(0,0,0,0.4); border: 5px solid #b58e4b; overflow: hidden;">
 
@@ -923,7 +940,7 @@
   <script>
   // === CÁC HÀM ĐÃ ĐƯỢC TỐI ƯU ===
   let debounceTimer;
-
+ 
   function getNguHoangInfo(year) {
     const nguHoang = {
       0: "Ngũ Hoàng tại Trung Cung (Rất hung - Tránh động thổ lớn)",
