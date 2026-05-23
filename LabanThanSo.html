@@ -1602,7 +1602,6 @@ compass.style.transform = `rotate(${-heading}deg)`;
     }
 }
 
-// Thay đổi quan trọng: Ban đầu đặt là null để đánh dấu "chưa có dữ liệu gốc"
 let lastHeading = null; 
 
 // Định nghĩa các ngưỡng bộ lọc động thích ứng chống rung tay
@@ -1610,23 +1609,39 @@ const SMOOTH_MIN = 0.05; // Độ mượt tối đa khi đứng yên (kim đứn
 const SMOOTH_MAX = 0.45; // Độ nhạy tối đa khi quay nhanh (bám tay lập tức, không trễ)
 
 function handleOrientation(event) {
-    // Giữ nguyên logic lấy dữ liệu góc chuẩn từ phần mềm gốc của anh
-    let heading = event.webkitCompassHeading || (event.alpha ? (360 - event.alpha) : null);
+    let heading = null;
+
+    // 1. Kiểm tra thiết bị iOS (iPhone/iPad): Sử dụng webkitCompassHeading (đã là hướng Bắc thực địa tuyệt đối)
+    if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
+        heading = event.webkitCompassHeading;
+    } 
+    // 2. Kiểm tra thiết bị Android: Sử dụng absolute hướng thực địa nếu có
+    else if (event.absolute === true || event.absolute !== undefined) {
+        if (event.alpha !== undefined && event.alpha !== null) {
+            // Công thức chuẩn hóa hướng Bắc thực địa tuyệt đối cho Android toàn cầu
+            heading = (360 - event.alpha) % 360; 
+        }
+    }
+
+    // Nếu không lấy được hướng tuyệt đối (do trình duyệt cũ), dùng tạm alpha gốc làm mốc động
+    if (heading === null && event.alpha !== undefined && event.alpha !== null) {
+        heading = (360 - event.alpha) % 360;
+    }
     
     if (heading !== null) { 
-        // Chặn xung đột: Nếu người dùng đang chủ động kéo thanh gạt bằng tay, tạm thời không cập nhật
+        // Khóa cảm biến khi người dùng đang chủ động kéo thanh gạt bằng tay
         if (document.activeElement === document.getElementById('compassSlider')) return;
 
-        // CƠ CHẾ THÔNG MINH 1: ĐỒNG BỘ GỐC BAN ĐẦU KHI REFRESH (Tránh lờ đờ lệch hướng)
+        // CƠ CHẾ THÔNG MINH: ĐỒNG BỘ GỐC BAN ĐẦU KHI REFRESH (Nhận diện đúng hướng ngay lập tức)
         if (lastHeading === null) {
-            lastHeading = heading; // Nhận ngay hướng thực tế lúc vừa mở máy làm chuẩn hướng
+            lastHeading = heading;
             updateCompassUI(lastHeading);
             return;
         }
 
         let diff = heading - lastHeading;
         
-        // Chuẩn hóa góc sai biệt trong phạm vi -180 đến 180 độ tránh lỗi lật kim qua điểm 0° (Bắc)
+        // Chuẩn hóa góc sai biệt trong phạm vi -180 đến 180 độ tránh lỗi giật kim qua điểm 0° (Bắc)
         if (diff > 180) diff -= 360;
         if (diff < -180) diff += 360;
         
@@ -1635,9 +1650,9 @@ function handleOrientation(event) {
         let dynamicFactor;
         
         if (absDiff < 1) {
-            dynamicFactor = SMOOTH_MIN; // Tay rung nhẹ: Ép đĩa đứng yên
+            dynamicFactor = SMOOTH_MIN; // Tay rung nhẹ: Ép đĩa đứng yên phăng phắc
         } else if (absDiff > 10) {
-            dynamicFactor = SMOOTH_MAX; // Quay nhanh: Giải phóng bộ lọc để đĩa đuổi theo tay lập tức
+            dynamicFactor = SMOOTH_MAX; // Quay nhanh: Đĩa đuổi theo tay lập tức
         } else {
             dynamicFactor = SMOOTH_MIN + (absDiff / 10) * (SMOOTH_MAX - SMOOTH_MIN);
         }
@@ -1646,14 +1661,15 @@ function handleOrientation(event) {
         heading = lastHeading + diff * dynamicFactor;
         lastHeading = (heading % 360 + 360) % 360;
 
-        // Gọi hàm cập nhật giao diện
+        // Gọi hàm cập nhật giao diện của anh
         updateCompassUI(lastHeading); 
     }
 }
-        // Sửa lại hàm manualRotate để đồng bộ hướng khi người dùng gạt thanh kéo tay
+
+// Hàm đồng bộ khi gạt thanh kéo tay
 function manualRotate(value) {
     let numValue = parseFloat(value);
-    lastHeading = numValue; // Cập nhật lại biến gốc để khi buông tay ra cảm biến không bị nhảy giật về góc cũ
+    lastHeading = numValue; 
     updateCompassUI(numValue);
 }
         function saveCurrentMember() {
