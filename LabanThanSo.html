@@ -1482,58 +1482,64 @@
     generateDirectionsList();
     updateCompassUI(currentHeading);
   }
-
+  // --- CẤU HÌNH PHONG THỦY ---
+const ConfigPhongThuy = {
+    'house':     { title: "Ưu tiên Hướng Nhà / Cửa Chính", isCat: true },
+    'altar':     { title: "Ưu tiên Hướng Mặt Bàn Thờ", isCat: true },
+    'bed':       { title: "Ưu tiên Hướng Đầu Giường", isCat: true },
+    'workspace': { title: "Ưu tiên Hướng Mặt Bàn Làm Việc", isCat: true },
+    'gate':      { title: "Ưu tiên Hướng Cổng chính", isCat: true },
+    'safe':      { title: "Ưu tiên vị trí Két sắt (Tài Lộc)", isCat: true },
+    'kitchen':   { title: "Ưu tiên Tọa vị đặt Bếp nấu (Đè Hung)", isCat: false },
+    'toilet':    { title: "Ưu tiên Tọa vị đặt nhà vệ sinh (Đè Hung)", isCat: false },
+    'storage':   { title: "Ưu tiên vị trí Kho / Tủ đồ (Đè Hung)", isCat: false }
+};
   function generateDirectionsList() {
     const mụcĐích = document.getElementById('purpose').value;
-    if (!mụcĐích) {
-      directionsContainer.innerHTML =
-        "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Chọn mục đích dương trạch (Nhà, bếp, thờ...) để xem danh sách gợi ý tương ứng</div>";
-      listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
-      return;
+    const config = ConfigPhongThuy[mụcĐích];
+
+    if (!mụcĐích || !config) {
+        directionsContainer.innerHTML =
+            "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Chọn mục đích dương trạch để xem danh sách gợi ý tương ứng</div>";
+        listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
+        return;
     }
+
     let listDirections = [];
     directionMeta.forEach(dir => {
-      const cungTrạch = bátTrạchMap[chủMệnh][dir.code];
-      const isCat = cungPhầnTrăm[cungTrạch].cát;
-      let hopPhongThuy = false;
-      if (['house', 'altar', 'bed', 'workspace'].includes(mụcĐích)) {
-        hopPhongThuy = isCat;
-      } else {
-        hopPhongThuy = !isCat;
-      }
-      listDirections.push({
-        ...dir, cungTrạch: cungTrạch, isCat: isCat, hopPhongThuy: hopPhongThuy
-      });
+        const cungTrạch = bátTrạchMap[chủMệnh][dir.code];
+        const isCat = cungPhầnTrăm[cungTrạch].cát;
+        
+        // Dùng cấu hình để quyết định: Nếu mục đích cần Cát thì hopPhongThuy = isCat, ngược lại thì = !isCat
+        const hopPhongThuy = config.isCat ? isCat : !isCat;
+
+        listDirections.push({
+            ...dir, cungTrạch: cungTrạch, isCat: isCat, hopPhongThuy: hopPhongThuy
+        });
     });
+
     listDirections.sort((a, b) => b.hopPhongThuy - a.hopPhongThuy);
-    const cấuHìnhTiêuĐề = {
-      'bed': "Ưu tiên Hướng Đầu Giường (Cần quay về Cát vị)",
-      'house': "Ưu tiên Hướng Nhà / Cửa Chính (Cần nhìn về Cát vị)",
-      'altar': "Ưu tiên Hướng Mặt Bàn Thờ (Cần nhìn về Cát vị)",
-      'workspace': "Ưu tiên Hướng Mặt Bàn Làm Việc (Cần nhìn về Cát vị)",
-      'kitchen': "Ưu tiên Tọa vị đặt Bếp nấu (Cần đặt đè lên Hung vị)",
-      'toilet': "Ưu tiên Tọa vị đặt nhà vệ sinh (Cần đặt đè lên Hung vị)"
-    };
-    listPanelTitle.innerText = cấuHìnhTiêuĐề[mụcĐích];
+
+    // Hiển thị tiêu đề theo cấu hình
+    listPanelTitle.innerText = config.title;
+
     directionsContainer.innerHTML = "";
     listDirections.forEach(item => {
-      const badgeClass = item.hopPhongThuy ? 'good' : 'bad';
-      const statusText = item.hopPhongThuy ? '🟢 PHÙ HỢP TỐT' : '❌ KHÔNG PHÙ HỢP';
-      const textColorStyle = item.hopPhongThuy ? 'color: #30d158; font-weight: bold;' :
-        'color: #ff3b30; font-weight: bold;';
-      const div = document.createElement('div');
-      div.className = `direction-item ${badgeClass}`;
-      div.innerHTML =
-        `
-                    <div class="item-info">
-                        <span class="item-name" style="color:#fff;">${item.name} ➔ <span style="${textColorStyle}">${item.cungTrạch}</span></span>
-                        <span class="item-cung" style="${textColorStyle}">${statusText}</span>
-                    </div>
-                    <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})">Xoay thử</button>
-                `;
-      directionsContainer.appendChild(div);
+        const textColorStyle = item.hopPhongThuy ? 'color: #30d158; font-weight: bold;' : 'color: #ff3b30; font-weight: bold;';
+        const statusText = item.hopPhongThuy ? '🟢 PHÙ HỢP TỐT' : '❌ KHÔNG PHÙ HỢP';
+        
+        const div = document.createElement('div');
+        div.className = `direction-item ${item.hopPhongThuy ? 'good' : 'bad'}`;
+        div.innerHTML = `
+            <div class="item-info">
+                <span class="item-name" style="color:#fff;">${item.name} ➔ <span style="${textColorStyle}">${item.cungTrạch}</span></span>
+                <span class="item-cung" style="${textColorStyle}">${statusText}</span>
+            </div>
+            <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})">Xoay thử</button>
+        `;
+        directionsContainer.appendChild(div);
     });
-  }
+}
 
   function triggerGhostNeedle(angle) {
     targetAngle = angle;
