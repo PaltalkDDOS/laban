@@ -709,102 +709,68 @@
     opacity: 0.7;
     transform: scale(0.95);
   }
-  .user-input-panel {
-    font-size: 12px; /* Chữ nhỏ hơn */
-}
-.form-group label {
-    font-size: 11px;
-    margin-bottom: 2px;
-}
-.form-group input, .form-group select {
-    padding: 4px; /* Thu nhỏ các ô nhập liệu */
-    height: 30px;
-}
   </style>
 </head>
 
 <body>
 
-<div class="header">
+  <div class="header">
     <h1>ĐẠI THUẬT LA KINH PHONG THỦY</h1>
     <div class="header-copyright">&copy; BẢN QUYỀN HỆ THỐNG: THÁI THÔNG</div>
-</div>
+  </div>
 
-<div id="mainPanelWrapper" style="position: relative; border: 1px solid #333; background: #161616; padding: 15px; border-radius: 12px; margin: 10px auto; width: 90%; max-width: 400px; transition: all 0.3s ease;">
-    
-    <div id="toggleArrow" onclick="togglePanel()" style="position: absolute; top: 10px; right: 15px; cursor: pointer; color: #dfb76c; font-size: 12px; font-weight: bold; z-index: 100;">
-        ▲
+  <div class="user-input-panel">
+    <div class="form-row">
+      <div class="form-group" style="flex: 1.2;">
+        <label>Họ tên chủ mệnh:</label>
+        <input type="text" id="userName" value="Người Tầm Phương" onfocus="if(this.value==='Người Tầm Phương') { this.value=''; this.style.color='#fff'; }"
+        onblur="if(this.value.trim()==='') { this.value='Người Tầm Phương'; this.style.color='#aaa'; }" oninput="recalculateFate()">
+      </div>
+      <div class="form-group" style="flex: 0.8;">
+        <label>Giới tính:</label>
+        <select id="gender" onchange="recalculateFate()">
+          <option value="male">Nam Mạng</option>
+          <option value="female">Nữ Mạng</option>
+        </select>
+      </div>
     </div>
 
-    <div id="panelContent">
-        <div class="user-input-panel">
-            <div class="form-row">
-                <div class="form-group" style="flex: 1.2;">
-                    <label>Họ tên chủ mệnh:</label>
-                    <input type="text" id="userName" value="Người Tầm Phương" onfocus="if(this.value==='Người Tầm Phương') { this.value=''; this.style.color='#fff'; }" onblur="if(this.value.trim()==='') { this.value='Người Tầm Phương'; this.style.color='#aaa'; }" oninput="recalculateFate()">
-                </div>
-                <div class="form-group" style="flex: 0.8;">
-                    <label>Giới tính:</label>
-                    <select id="gender" onchange="recalculateFate()">
-                        <option value="male">Nam Mạng</option>
-                        <option value="female">Nữ Mạng</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Ngày tháng năm sinh (Dương lịch):</label>
-                    <div class="date-input-container">
-                        <input type="text" id="birthDay" placeholder="DD" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthMonth')" style="text-align: center;">
-                        <input type="text" id="birthMonth" placeholder="MM" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthYear')" style="text-align: center;">
-                        <input type="text" id="birthYear" placeholder="YYYY" maxlength="4" inputmode="numeric" oninput="handleDateInput(this, null)" style="text-align: center;">
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group" style="margin-bottom: 10px;">
-                <label>Mục đích tầm phương vị:</label>
-                <select id="purpose" onchange="recalculateFate()">
-                    <option value="">-- Chọn mục đích xem --</option>
-                    <option value="house">Hướng Nhà, Cửa Chính</option>
-                    <option value="altar">Hướng đặt Bàn Thờ</option>
-                    <option value="bed">Hướng đầu Giường Ngủ</option>
-                    <option value="workspace">Hướng bàn Làm việc</option>
-                    <option value="kitchen">Vị trí đặt Bếp Nấu</option>
-                    <option value="toilet">Vị trí Nhà vệ sinh / WC</option>
-                    <option value="safe">Vị trí két sắt / Tài lộc</option>
-                    <option value="gate">Hướng Cổng chính</option>
-                    <option value="storage">Vị trí Kho / Tủ đồ</option>
-                </select>
-            </div>
-
-            <div class="btn-action-row">
-                <button class="btn-main" onclick="saveCurrentMember()">Lưu Tuổi</button>
-                <button class="btn-reset" id="btnReset" onclick="clearAllData()">Làm mới</button>
-            </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Ngày tháng năm sinh (Dương lịch):</label>
+        <div class="date-input-container">
+          <input type="text" id="birthDay" placeholder="Ngày (DD)" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthMonth')"
+          style="text-align: center;">
+          <input type="text" id="birthMonth" placeholder="Tháng (MM)" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthYear')"
+          style="text-align: center;">
+          <input type="text" id="birthYear" placeholder="Năm (YYYY)" maxlength="4" inputmode="numeric" oninput="handleDateInput(this, null)"
+          style="text-align: center;">
         </div>
-
-        <div class="saved-list-panel" id="savedPanel" style="display: none; margin-top: 10px;">
-            <div class="saved-container" id="savedContainer"></div>
-        </div>
+      </div>
     </div>
-</div>
 
-<script>
-    // Hàm này bắt buộc phải có để nút bấm hoạt động
-    function togglePanel() {
-        const content = document.getElementById('panelContent');
-        const arrow = document.getElementById('toggleArrow');
-        if (content.style.display === 'none') {
-            content.style.display = 'block';
-            arrow.innerHTML = '▲';
-        } else {
-            content.style.display = 'none';
-            arrow.innerHTML = '▼';
-        }
-    }
-</script>
+    <div class="form-group" style="margin-bottom: 6px;">
+      <label>Mục đích tầm phương vị dương trạch:</label>
+      <select id="purpose" onchange="recalculateFate()">
+        <option value="">-- Xem hướng tự do nguyên bản (Không áp bộ lọc đồ đạc) --</option>
+        <option value="house">Xem hướng Nhà, Cửa Chính (Cần Hướng Cát)</option>
+        <option value="altar">Xem hướng đặt BÀN THỜ (Cần Hướng Cát)</option>
+        <option value="bed">Xem hướng đầu GIƯỜNG NGỦ (Cần Hướng Cát)</option>
+        <option value="workspace">Xem hướng đặt BÀN LÀM VIỆC (Cần Hướng Cát)</option>
+        <option value="kitchen">Xem vị trí đặt BẾP NẤU (Tọa Hung Hướng Cát)</option>
+        <option value="toilet">Xem vị trí nhà vệ sinh / WC (Tọa Hung giải uế)</option>
+      </select>
+    </div>
+
+    <div class="btn-action-row">
+      <button class="btn-main" onclick="saveCurrentMember()">Lưu Tuổi Gia Đình</button>
+      <button class="btn-reset" id="btnReset" onclick="clearAllData()">Làm Mới Trang</button>
+    </div>
+  </div>
+
+  <div class="saved-list-panel" id="savedPanel" style="display: none;">
+    <div class="saved-container" id="savedContainer"></div>
+  </div>
 
 <div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #222222; border-radius: 50%; box-shadow: 0 8px 30px rgba(0,0,0,0.4); border: 5px solid #b58e4b; overflow: hidden;">
 
@@ -957,7 +923,7 @@
   <script>
   // === CÁC HÀM ĐÃ ĐƯỢC TỐI ƯU ===
   let debounceTimer;
- 
+
   function getNguHoangInfo(year) {
     const nguHoang = {
       0: "Ngũ Hoàng tại Trung Cung (Rất hung - Tránh động thổ lớn)",
@@ -1482,64 +1448,58 @@
     generateDirectionsList();
     updateCompassUI(currentHeading);
   }
-  // --- CẤU HÌNH PHONG THỦY ---
-const ConfigPhongThuy = {
-    'house':     { title: "Ưu tiên Hướng Nhà / Cửa Chính", isCat: true },
-    'altar':     { title: "Ưu tiên Hướng Mặt Bàn Thờ", isCat: true },
-    'bed':       { title: "Ưu tiên Hướng Đầu Giường", isCat: true },
-    'workspace': { title: "Ưu tiên Hướng Mặt Bàn Làm Việc", isCat: true },
-    'gate':      { title: "Ưu tiên Hướng Cổng chính", isCat: true },
-    'safe':      { title: "Ưu tiên vị trí Két sắt (Tài Lộc)", isCat: true },
-    'kitchen':   { title: "Ưu tiên Tọa vị đặt Bếp nấu (Đè Hung)", isCat: false },
-    'toilet':    { title: "Ưu tiên Tọa vị đặt nhà vệ sinh (Đè Hung)", isCat: false },
-    'storage':   { title: "Ưu tiên vị trí Kho / Tủ đồ (Đè Hung)", isCat: false }
-};
+
   function generateDirectionsList() {
     const mụcĐích = document.getElementById('purpose').value;
-    const config = ConfigPhongThuy[mụcĐích];
-
-    if (!mụcĐích || !config) {
-        directionsContainer.innerHTML =
-            "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Chọn mục đích dương trạch để xem danh sách gợi ý tương ứng</div>";
-        listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
-        return;
+    if (!mụcĐích) {
+      directionsContainer.innerHTML =
+        "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Chọn mục đích dương trạch (Nhà, bếp, thờ...) để xem danh sách gợi ý tương ứng</div>";
+      listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
+      return;
     }
-
     let listDirections = [];
     directionMeta.forEach(dir => {
-        const cungTrạch = bátTrạchMap[chủMệnh][dir.code];
-        const isCat = cungPhầnTrăm[cungTrạch].cát;
-        
-        // Dùng cấu hình để quyết định: Nếu mục đích cần Cát thì hopPhongThuy = isCat, ngược lại thì = !isCat
-        const hopPhongThuy = config.isCat ? isCat : !isCat;
-
-        listDirections.push({
-            ...dir, cungTrạch: cungTrạch, isCat: isCat, hopPhongThuy: hopPhongThuy
-        });
+      const cungTrạch = bátTrạchMap[chủMệnh][dir.code];
+      const isCat = cungPhầnTrăm[cungTrạch].cát;
+      let hopPhongThuy = false;
+      if (['house', 'altar', 'bed', 'workspace'].includes(mụcĐích)) {
+        hopPhongThuy = isCat;
+      } else {
+        hopPhongThuy = !isCat;
+      }
+      listDirections.push({
+        ...dir, cungTrạch: cungTrạch, isCat: isCat, hopPhongThuy: hopPhongThuy
+      });
     });
-
     listDirections.sort((a, b) => b.hopPhongThuy - a.hopPhongThuy);
-
-    // Hiển thị tiêu đề theo cấu hình
-    listPanelTitle.innerText = config.title;
-
+    const cấuHìnhTiêuĐề = {
+      'bed': "Ưu tiên Hướng Đầu Giường (Cần quay về Cát vị)",
+      'house': "Ưu tiên Hướng Nhà / Cửa Chính (Cần nhìn về Cát vị)",
+      'altar': "Ưu tiên Hướng Mặt Bàn Thờ (Cần nhìn về Cát vị)",
+      'workspace': "Ưu tiên Hướng Mặt Bàn Làm Việc (Cần nhìn về Cát vị)",
+      'kitchen': "Ưu tiên Tọa vị đặt Bếp nấu (Cần đặt đè lên Hung vị)",
+      'toilet': "Ưu tiên Tọa vị đặt nhà vệ sinh (Cần đặt đè lên Hung vị)"
+    };
+    listPanelTitle.innerText = cấuHìnhTiêuĐề[mụcĐích];
     directionsContainer.innerHTML = "";
     listDirections.forEach(item => {
-        const textColorStyle = item.hopPhongThuy ? 'color: #30d158; font-weight: bold;' : 'color: #ff3b30; font-weight: bold;';
-        const statusText = item.hopPhongThuy ? '🟢 PHÙ HỢP TỐT' : '❌ KHÔNG PHÙ HỢP';
-        
-        const div = document.createElement('div');
-        div.className = `direction-item ${item.hopPhongThuy ? 'good' : 'bad'}`;
-        div.innerHTML = `
-            <div class="item-info">
-                <span class="item-name" style="color:#fff;">${item.name} ➔ <span style="${textColorStyle}">${item.cungTrạch}</span></span>
-                <span class="item-cung" style="${textColorStyle}">${statusText}</span>
-            </div>
-            <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})">Xoay thử</button>
-        `;
-        directionsContainer.appendChild(div);
+      const badgeClass = item.hopPhongThuy ? 'good' : 'bad';
+      const statusText = item.hopPhongThuy ? '🟢 PHÙ HỢP TỐT' : '❌ KHÔNG PHÙ HỢP';
+      const textColorStyle = item.hopPhongThuy ? 'color: #30d158; font-weight: bold;' :
+        'color: #ff3b30; font-weight: bold;';
+      const div = document.createElement('div');
+      div.className = `direction-item ${badgeClass}`;
+      div.innerHTML =
+        `
+                    <div class="item-info">
+                        <span class="item-name" style="color:#fff;">${item.name} ➔ <span style="${textColorStyle}">${item.cungTrạch}</span></span>
+                        <span class="item-cung" style="${textColorStyle}">${statusText}</span>
+                    </div>
+                    <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})">Xoay thử</button>
+                `;
+      directionsContainer.appendChild(div);
     });
-}
+  }
 
   function triggerGhostNeedle(angle) {
     targetAngle = angle;
