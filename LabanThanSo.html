@@ -334,19 +334,17 @@
     pointer-events: none;
   }
   
-.ghost-needle {
-    position: absolute !important;
-    top: 50%;
-    left: 50%;
-    width: 6px;
-    height: 140px; /* Độ dài kim vàng */
-    background: linear-gradient(to bottom, #ffcc00 50%, rgba(255, 204, 0, 0.3) 50%);
-    z-index: 999 !important; /* Đảm bảo nó đè lên tất cả */
-    pointer-events: none;
-    transform-origin: bottom center; /* Quan trọng: để kim xoay quanh tâm */
-    opacity: 0;
-    transition: opacity 0.3s;
-}
+        .ghost-needle {
+            position: absolute;
+            width: 6px;
+            height: 80%;
+            background: linear-gradient(to bottom, #ffcc00 50%, rgba(255, 204, 0, 0.3) 50%);
+            clip-path: polygon(50% 0%, 100% 15%, 60% 15%, 60% 85%, 100% 85%, 50% 100%, 0% 85%, 40% 85%, 40% 15%, 0% 15%);
+            z-index: 6;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
   
   .center-pin {
     position: absolute;
@@ -1543,7 +1541,8 @@ const ConfigPhongThuy = {
     });
 }
 
-          function triggerGhostNeedle(angle) {
+
+        function triggerGhostNeedle(angle) {
             targetAngle = angle;
             ghostNeedle.style.opacity = "1";
             updateCompassUI(currentHeading);
