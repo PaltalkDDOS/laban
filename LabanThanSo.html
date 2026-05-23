@@ -1601,12 +1601,57 @@ function updateCompassUI(heading) {
     }
 }
 
-        function handleOrientation(event) {
-            let heading = event.webkitCompassHeading || (event.alpha ? (360 - event.alpha) : null);
-            if (heading !== null) { 
-                updateCompassUI(heading); 
-            }
+let lastHeading = 0;
+// Định nghĩa các ngưỡng bộ lọc động thích ứng
+const SMOOTH_MIN = 0.05; // Độ mượt tối đa khi đứng yên (kim đứng im phăng phắc)
+const SMOOTH_MAX = 0.45; // Độ nhạy tối đa khi quay nhanh (bám tay lập tức, không trễ)
+
+function handleOrientation(event) {
+    let heading = null;
+
+    // 1. Kiểm tra thiết bị iOS (iPhone/iPad) ưu tiên hướng Bắc thực địa tuyệt đối
+    if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
+        heading = event.webkitCompassHeading;
+    } 
+    // 2. Nếu là thiết bị Android, tự động đảo góc chuẩn hóa hướng Bắc
+    else if (event.alpha !== undefined && event.alpha !== null) {
+        heading = (360 - event.alpha) % 360;
+    }
+
+    // 3. Tiến hành xử lý bộ lọc động thông minh nếu lấy được dữ liệu góc
+    if (heading !== null) {
+        // Chặn xung đột: Nếu người dùng đang chủ động kéo thanh gạt bằng tay, tạm thời không cập nhật từ cảm biến
+        if (document.activeElement === document.getElementById('compassSlider')) return;
+
+        let diff = heading - lastHeading;
+        
+        // Chuẩn hóa góc sai biệt trong phạm vi -180 đến 180 độ tránh lỗi lật kim qua điểm 0°
+        if (diff > 180) diff -= 360;
+        if (diff < -180) diff += 360;
+        
+        // --- TỰ ĐỘNG TÍNH TOÁN ĐỘ MƯỢT THEO TỐC ĐỘ QUAY ---
+        let absDiff = Math.abs(diff);
+        let dynamicFactor;
+        
+        if (absDiff < 1) {
+            // Khi dịch chuyển cực nhỏ (tay rung), ép kim đứng yên bằng bộ lọc cực mạnh
+            dynamicFactor = SMOOTH_MIN;
+        } else if (absDiff > 10) {
+            // Khi quay người nhanh, giải phóng bộ lọc để kim đuổi theo tay lập tức
+            dynamicFactor = SMOOTH_MAX;
+        } else {
+            // Giai đoạn chuyển tiếp mượt mà giữa đứng yên và quay nhanh
+            dynamicFactor = SMOOTH_MIN + (absDiff / 10) * (SMOOTH_MAX - SMOOTH_MIN);
         }
+        
+        // Áp dụng hệ số động thích ứng vào chuyển động la bàn
+        heading = lastHeading + diff * dynamicFactor;
+        lastHeading = (heading % 360 + 360) % 360;
+
+        // GỌI ĐÚNG HÀM CỦA ANH: Cập nhật giao diện và tính toán luận giải phong thủy
+        updateCompassUI(lastHeading);
+    }
+}
         function manualRotate(value) { 
             updateCompassUI(value); 
         }
