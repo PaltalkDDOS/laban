@@ -1873,16 +1873,20 @@ function requestPermission() {
     }
 }
         window.onload = function() {
-            render24SonRing();
-            loadSavedMembers();
-            recalculateFate();
+    render24SonRing();
+    loadSavedMembers();
+    recalculateFate();
 
-            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-                permBtn.style.display = 'block';
-            } else {
-                window.addEventListener('deviceorientation', handleOrientation, true);
-            }
-        };
+    const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
+    const eventName = (isAndroid && 'ondeviceorientationabsolute' in window) ? 'deviceorientationabsolute' : 'deviceorientation';
+
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        permBtn.style.display = 'block';
+    } else {
+        // Tự động lắng nghe la bàn tuyệt đối cho thiết bị Android
+        window.addEventListener(eventName, handleOrientation, true);
+    }
+};
     </script>
 </body>
 </html>
