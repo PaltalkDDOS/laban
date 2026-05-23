@@ -1330,7 +1330,8 @@ function sinhLuanGiaiThienThoi(code) {
 
 function updateCompassUI(heading) {
     currentHeading = Math.round(heading);
-    compass.style.transform = `rotate(${-currentHeading}deg)`;
+    // Sử dụng dấu trừ (-) trước heading để đĩa la bàn quay ngược chiều chuẩn xác với thực địa
+compass.style.transform = `rotate(${-heading}deg)`;
     needle.style.transform = `rotate(0deg)`;
     compassSlider.value = currentHeading;
 
@@ -1616,11 +1617,11 @@ function handleOrientation(event) {
         // Chặn xung đột: Nếu người dùng đang chủ động kéo thanh gạt bằng tay, tạm thời không cập nhật
         if (document.activeElement === document.getElementById('compassSlider')) return;
 
-        // --- CƠ CHẾ THÔNG MINH: ĐỒNG BỘ GỐC BAN ĐẦU KHI REFRESH ---
+        // CƠ CHẾ THÔNG MINH 1: ĐỒNG BỘ GỐC BAN ĐẦU KHI REFRESH (Tránh lờ đờ lệch hướng)
         if (lastHeading === null) {
-            lastHeading = heading; // Nhận ngay hướng thực tế lúc vừa mở máy làm chuẩn hướng Bắc
+            lastHeading = heading; // Nhận ngay hướng thực tế lúc vừa mở máy làm chuẩn hướng
             updateCompassUI(lastHeading);
-            return; // Thoát sớm, không chạy qua bộ lọc ở lần đầu tiên này
+            return;
         }
 
         let diff = heading - lastHeading;
@@ -1629,18 +1630,15 @@ function handleOrientation(event) {
         if (diff > 180) diff -= 360;
         if (diff < -180) diff += 360;
         
-        // --- THUẬT TOÁN BỘ LỌC ĐỘNG THÍCH ỨNG THEO TỐC ĐỘ QUAY ---
+        // THUẬT TOÁN BỘ LỌC ĐỘNG THÍCH ỨNG THEO TỐC ĐỘ QUAY
         let absDiff = Math.abs(diff);
         let dynamicFactor;
         
         if (absDiff < 1) {
-            // Khi dịch chuyển cực nhỏ (tay người dùng rung nhẹ), ép kim đứng yên bằng bộ lọc mạnh
-            dynamicFactor = SMOOTH_MIN;
+            dynamicFactor = SMOOTH_MIN; // Tay rung nhẹ: Ép đĩa đứng yên
         } else if (absDiff > 10) {
-            // Khi quay người nhanh, giải phóng bộ lọc để la bàn đuổi theo tay lập tức
-            dynamicFactor = SMOOTH_MAX;
+            dynamicFactor = SMOOTH_MAX; // Quay nhanh: Giải phóng bộ lọc để đĩa đuổi theo tay lập tức
         } else {
-            // Giai đoạn chuyển tiếp mượt mà giữa đứng yên và quay nhanh
             dynamicFactor = SMOOTH_MIN + (absDiff / 10) * (SMOOTH_MAX - SMOOTH_MIN);
         }
         
@@ -1648,14 +1646,16 @@ function handleOrientation(event) {
         heading = lastHeading + diff * dynamicFactor;
         lastHeading = (heading % 360 + 360) % 360;
 
-        // Gọi hàm cập nhật giao diện và luận đoán Bát Trạch của anh
+        // Gọi hàm cập nhật giao diện
         updateCompassUI(lastHeading); 
     }
 }
-        function manualRotate(value) { 
-            updateCompassUI(value); 
-        }
-
+        // Sửa lại hàm manualRotate để đồng bộ hướng khi người dùng gạt thanh kéo tay
+function manualRotate(value) {
+    let numValue = parseFloat(value);
+    lastHeading = numValue; // Cập nhật lại biến gốc để khi buông tay ra cảm biến không bị nhảy giật về góc cũ
+    updateCompassUI(numValue);
+}
         function saveCurrentMember() {
             const name = document.getElementById('userName').value.trim();
             const gender = document.getElementById('gender').value;
@@ -1833,23 +1833,23 @@ function tinhHanCuuTinhTheoNam(huong, namHienTai) {
     return { thongTinSao: thongTinSao, meoGiaiHan: meoGiaiHan };
 }
 function requestPermission() {
-            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-                DeviceOrientationEvent.requestPermission()
-                    .then(permissionState => {
-                        if (permissionState === 'granted') {
-                            window.addEventListener('deviceorientation', handleOrientation, true);
-                            permBtn.style.display = 'none';
-                        } else {
-                            showCustomAlert("Quyền truy cập cảm biến bị từ chối. Bạn vẫn có thể xoay la bàn thủ công bằng thanh gạt kéo.");
-                        }
-                    })
-                    .catch(console.error);
-            } else {
-                window.addEventListener('deviceorientation', handleOrientation, true);
-                showCustomAlert("Cảm biến hướng đã được kích hoạt tự động (nếu thiết bị có hỗ trợ phần cứng).");
-                permBtn.style.display = 'none';
-            }
-        }
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+            .then(permissionState => {
+                if (permissionState === 'granted') {
+                    window.addEventListener('deviceorientation', handleOrientation, true);
+                    permBtn.style.display = 'none';
+                } else {
+                    showCustomAlert("Quyền truy cập cảm biến bị từ chối. Bạn vẫn có thể xoay la bàn thủ công bằng thanh gạt kéo.");
+                }
+            })
+            .catch(console.error);
+    } else {
+        window.addEventListener('deviceorientation', handleOrientation, true);
+        showCustomAlert("Cảm biến hướng đã được kích hoạt tự động (nếu thiết bị có hỗ trợ phần cứng).");
+        permBtn.style.display = 'none';
+    }
+}
         window.onload = function() {
             render24SonRing();
             loadSavedMembers();
