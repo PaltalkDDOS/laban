@@ -675,13 +675,15 @@
         <div class="saved-container" id="savedContainer"></div>
     </div>
 
-  <div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #222222; border-radius: 50%; box-shadow: 0 8px 30px rgba(0,0,0,0.4); border: 5px solid #b58e4b; overflow: hidden;">
+   <div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #222222; border-radius: 50%; box-shadow: 0 8px 30px rgba(0,0,0,0.4); border: 5px solid #b58e4b; overflow: hidden;">
         
         <div class="cross-line-v" style="position: absolute; width: 1px; height: 100%; left: 50%; top: 0; background: rgba(255, 59, 48, 0.4); z-index: 10; pointer-events: none;"></div>
         <div class="cross-line-h" style="position: absolute; height: 1px; width: 100%; top: 50%; left: 0; background: rgba(255, 59, 48, 0.4); z-index: 10; pointer-events: none;"></div>
         
-        <div class="north-pointer" style="position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 14px solid #ff3b30; z-index: 12; pointer-events: none;"></div>
+        <div class="north-pointer" style="position: absolute; top: 4px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 16px solid #ff3b30; z-index: 12; pointer-events: none;"></div>
         
+        <div id="needle" style="display: none;"></div>
+        <div id="ghostNeedle" style="display: none;"></div>
         <div class="center-pin" style="position: absolute; width: 8px; height: 8px; background: #ff3b30; border: 1.5px solid #fff; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 12; pointer-events: none;"></div>
 
         <div class="compass-dial" id="compass" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center; transition: transform 0.1s ease-out;">
@@ -740,26 +742,26 @@
                 <g id="sonRingSvg"></g>
 
                 <g font-family="sans-serif" text-anchor="middle">
-                    <g font-weight="900" font-size="14">
-                        <text x="250" y="88" fill="#ff3b30" transform="rotate(0, 250, 250)">BẮC</text>
-                        <text x="250" y="104" font-size="11" font-weight="bold" fill="#ff3b30" transform="rotate(0, 250, 250)">KHẢM</text>
-                        <text x="250" y="88" fill="#ff3b30" transform="rotate(180, 250, 250)">NAM</text>
-                        <text x="250" y="104" font-size="11" font-weight="bold" fill="#ff3b30" transform="rotate(180, 250, 250)">LY</text>
-                        <text x="250" y="88" fill="#00a525" transform="rotate(90, 250, 250)">ĐÔNG</text>
-                        <text x="250" y="104" font-size="11" font-weight="bold" fill="#00a525" transform="rotate(90, 250, 250)">CHẤN</text>
-                        <text x="250" y="88" fill="#00a525" transform="rotate(270, 250, 250)">TÂY</text>
-                        <text x="250" y="104" font-size="11" font-weight="bold" fill="#00a525" transform="rotate(270, 250, 250)">ĐOÀI</text>
+                    <g font-weight="900" font-size="18">
+                        <text x="250" y="24" fill="#ff3b30" transform="rotate(0, 250, 250)">BẮC</text>
+                        <text x="250" y="38" font-size="11" font-weight="bold" fill="#ff3b30" transform="rotate(0, 250, 250)">KHẢM</text>
+                        <text x="250" y="24" fill="#ff3b30" transform="rotate(180, 250, 250)">NAM</text>
+                        <text x="250" y="38" font-size="11" font-weight="bold" fill="#ff3b30" transform="rotate(180, 250, 250)">LY</text>
+                        <text x="250" y="24" fill="#00a525" transform="rotate(90, 250, 250)">ĐÔNG</text>
+                        <text x="250" y="38" font-size="11" font-weight="bold" fill="#00a525" transform="rotate(90, 250, 250)">CHẤN</text>
+                        <text x="250" y="24" fill="#00a525" transform="rotate(270, 250, 250)">TÂY</text>
+                        <text x="250" y="38" font-size="11" font-weight="bold" fill="#00a525" transform="rotate(270, 250, 250)">ĐOÀI</text>
                     </g>
                     
-                    <g font-weight="800" font-size="11" fill="#6b4e18">
-                        <text x="250" y="90" transform="rotate(45, 250, 250)">Đ.BẮC</text>
-                        <text x="250" y="103" font-size="10" transform="rotate(45, 250, 250)">CẤN</text>
-                        <text x="250" y="90" transform="rotate(135, 250, 250)">Đ.NAM</text>
-                        <text x="250" y="103" font-size="10" transform="rotate(135, 250, 250)">TỐN</text>
-                        <text x="250" y="90" transform="rotate(225, 250, 250)">T.NAM</text>
-                        <text x="250" y="103" font-size="10" transform="rotate(225, 250, 250)">KHÔN</text>
-                        <text x="250" y="90" transform="rotate(315, 250, 250)">T.BẮC</text>
-                        <text x="250" y="103" font-size="10" transform="rotate(315, 250, 250)">CÀN</text>
+                    <g font-weight="800" font-size="13" fill="#6b4e18">
+                        <text x="250" y="24" transform="rotate(45, 250, 250)">Đ.BẮC</text>
+                        <text x="250" y="37" font-size="10" transform="rotate(45, 250, 250)">CẤN</text>
+                        <text x="250" y="24" transform="rotate(135, 250, 250)">Đ.NAM</text>
+                        <text x="250" y="37" font-size="10" transform="rotate(135, 250, 250)">TỐN</text>
+                        <text x="250" y="24" transform="rotate(225, 250, 250)">T.NAM</text>
+                        <text x="250" y="37" font-size="10" transform="rotate(225, 250, 250)">KHÔN</text>
+                        <text x="250" y="24" transform="rotate(315, 250, 250)">T.BẮC</text>
+                        <text x="250" y="37" font-size="10" transform="rotate(315, 250, 250)">CÀN</text>
                     </g>
                 </g>
 
@@ -922,14 +924,14 @@
             debounceRecalculate();
         }
 
-        function render24SonRing() {
+       function render24SonRing() {
     const sonRingSvg = document.getElementById('sonRingSvg');
     if (!sonRingSvg || typeof son24Data === 'undefined') return;
 
     sonRingSvg.innerHTML = "";
     
-    // ĐỊNH VỊ BÁN KÍNH 142PX: Giúp 24 Sơn chui gọn gàng lọt lòng vào tầng giữa
-    const radius = 142; 
+    // ĐƯA CHỮ VÀO TẦNG DƯỚI: Hạ bán kính xuống 140px để lọt lòng giữa vòng r=115 và r=168
+    const radius = 140; 
 
     son24Data.forEach((son, index) => {
         const trungBinhGoc = index * 15;
@@ -940,20 +942,23 @@
         textNode.setAttribute("y", (250 - radius).toString());
         textNode.setAttribute("text-anchor", "middle");
         textNode.setAttribute("font-family", "sans-serif");
-        textNode.setAttribute("font-size", "10.5"); // Thu nhỏ nét tinh tế như la kinh thật
+        
+        // THU NHỎ CHỮ ĐỂ KHÔNG BỊ ĐÈ NHAU KHI XOAY GÓC HẸP
+        textNode.setAttribute("font-size", "9");
         textNode.setAttribute("font-weight", "900"); 
         
+        // Xoay hướng tâm quanh gốc tọa độ phẳng (250, 250)
         textNode.setAttribute("transform", `rotate(${trungBinhGoc}, 250, 250)`);
         
         textNode.textContent = son.name;
 
-        // Phối màu chuẩn phong thủy đại thuật
+        // Giữ nguyên phối màu chuẩn phong thủy của anh
         if (["Cấn", "Tốn", "Khôn", "Càn"].includes(son.name)) {
             textNode.setAttribute("fill", "#ff3b30"); // Tứ Duy màu đỏ
         } else if (["Tý", "Mão", "Ngọ", "Dậu"].includes(son.name)) {
             textNode.setAttribute("fill", "#00a525"); // Tứ Chính màu xanh
         } else {
-            textNode.setAttribute("fill", "#5c4314"); // Can chi màu nâu đồng
+            textNode.setAttribute("fill", "#5c4314"); // Can Chi màu nâu
         }
 
         sonRingSvg.appendChild(textNode);
