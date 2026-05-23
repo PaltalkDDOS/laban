@@ -334,18 +334,17 @@
     pointer-events: none;
   }
   
-.ghost-needle {
+.#ghost-needle {
     position: absolute;
-    width: 10px; /* Tăng chiều rộng từ 6px lên 10px để dễ thấy hơn */
-    height: 80%;
-    /* Thêm shadow để nó nổi lên trên nền đĩa la bàn */
-    background: linear-gradient(to bottom, #ffcc00 50%, rgba(255, 204, 0, 0.5) 50%);
-    box-shadow: 0 0 10px #ffcc00; 
-    clip-path: polygon(50% 0%, 100% 15%, 60% 15%, 60% 85%, 100% 85%, 50% 100%, 0% 85%, 40% 85%, 40% 15%, 0% 15%);
-    z-index: 10; /* Tăng z-index lên 10 để đảm bảo nó nằm trên kim đỏ (thường kim đỏ là 8 hoặc 9) */
-    pointer-events: none;
+    /* Đảm bảo z-index cao hơn tất cả các phần tử la bàn khác */
+    z-index: 9999 !important; 
+    pointer-events: none; /* Để không chặn thao tác chạm vào la bàn */
     opacity: 0;
-    transition: opacity 0.3s, transform 0.1s ease-out; /* Thêm transform vào transition cho mượt */
+    transition: opacity 0.3s;
+    /* Đảm bảo nó được đặt ở chính giữa tâm la bàn */
+    top: 50%;
+    left: 50%;
+    transform-origin: 50% 100%; /* Cây kim xoay quanh điểm dưới cùng */
 }
   
   .center-pin {
