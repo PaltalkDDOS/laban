@@ -618,7 +618,6 @@
 </head>
 <body>
 
-
     <div class="header">
         <h1>ĐẠI THUẬT LA KINH PHONG THỦY</h1>
         <div class="header-copyright">&copy; BẢN QUYỀN HỆ THỐNG: THÁI THÔNG</div>
@@ -700,28 +699,13 @@
 
     <button id="permission-btn" onclick="requestPermission()">KÍCH HOẠT SENSOR ĐIỆN THOẠI</button>
 
-    <div class="status-panel" style="width: 92%; max-width: 430px; background: #111111; border: 1px solid var(--gold); border-radius: 12px; padding: 12px; margin: 15px auto; font-family: sans-serif; box-shadow: 0px 4px 20px rgba(0,0,0,0.7); display: block; text-align: center;">
-        
-        <div class="info-header-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); border-bottom: 1px solid #2a2a2a; padding-bottom: 10px; margin-bottom: 10px; gap: 5px;">
-            <div class="info-grid-item" style="text-align: center; border-right: 1px solid #2a2a2a;">
-                <span style="display: block; font-size: 0.72rem; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Ngũ Hành Bản Mệnh</span>
-                <b id="element-box" style="color: var(--gold); font-size: 0.95rem; font-weight: 600; display: block;">...</b>
-            </div>
-            <div class="info-grid-item" style="text-align: center;">
-                <span style="display: block; font-size: 0.72rem; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Tọa Độ & Sơn Hướng</span>
-                <b id="degree-txt" style="color: var(--gold); font-size: 0.95rem; font-weight: 600; display: block;">0° - CUNG KHẢM (BẮC)</b>
-            </div>
-        </div>
-        
-        <div class="main-result-box" style="background: #161616; border-left: 4px solid var(--gold); padding: 12px; border-radius: 4px; text-align: left; font-size: 0.88rem; line-height: 1.6;">
-            <div class="fate-display" id="fate-txt" style="font-weight: bold; color: #ffffff; margin-bottom: 6px;">
-                Mệnh chủ: ...
-            </div>
-            <div id="judgment-badge-container" style="margin-top: 6px; display: block;">
-                <span id="judgment-box" class="judgment-badge bg-good">...</span>
-            </div>
-        </div>
+    <div class="status-panel">
+        <div class="degree-display" id="degree-txt">0° - CUNG KHẢM (BẮC)</div>
+        <div id="element-box"></div>
+        <div class="fate-display" id="fate-txt">Mệnh chủ: ...</div>
+        <div id="judgment-box" class="judgment-badge bg-good">...</div>
     </div>
+
     <div class="control-box">
         <input type="range" min="0" max="360" value="0" class="slider" id="compassSlider" oninput="manualRotate(this.value)">
     </div>
@@ -748,7 +732,6 @@
             <button class="custom-alert-btn" onclick="closeCustomAlert()">Đã Hiểu</button>
         </div>
     </div>
-
 
     <script>
         // === CÁC HÀM ĐÃ ĐƯỢC TỐI ƯU ===
