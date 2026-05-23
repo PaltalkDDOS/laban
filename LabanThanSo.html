@@ -334,17 +334,19 @@
     pointer-events: none;
   }
   
-  .ghost-needle {
+.ghost-needle {
     position: absolute;
-    width: 6px;
+    width: 10px; /* Tăng chiều rộng từ 6px lên 10px để dễ thấy hơn */
     height: 80%;
-    background: linear-gradient(to bottom, #ffcc00 50%, rgba(255, 204, 0, 0.3) 50%);
+    /* Thêm shadow để nó nổi lên trên nền đĩa la bàn */
+    background: linear-gradient(to bottom, #ffcc00 50%, rgba(255, 204, 0, 0.5) 50%);
+    box-shadow: 0 0 10px #ffcc00; 
     clip-path: polygon(50% 0%, 100% 15%, 60% 15%, 60% 85%, 100% 85%, 50% 100%, 0% 85%, 40% 85%, 40% 15%, 0% 15%);
-    z-index: 6;
+    z-index: 10; /* Tăng z-index lên 10 để đảm bảo nó nằm trên kim đỏ (thường kim đỏ là 8 hoặc 9) */
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.3s;
-  }
+    transition: opacity 0.3s, transform 0.1s ease-out; /* Thêm transform vào transition cho mượt */
+}
   
   .center-pin {
     position: absolute;
@@ -1541,25 +1543,18 @@ const ConfigPhongThuy = {
     });
 }
 
-  function triggerGhostNeedle(angle) {
-    targetAngle = angle;
-    const ghost = document.getElementById('ghostNeedle');
-    
-    // Hiện kim vàng lên
-    ghost.style.display = "block";
-    ghost.style.opacity = "1";
-    
-    // Xoay kim vàng theo góc (cái này đứng yên so với màn hình)
-    ghost.style.transform = `rotate(${angle}deg)`;
-    
-    let sơnThử = tìmSơnHướng(angle);
-    detailBox.style.borderLeftColor = "var(--gold)";
-    detailBox.innerHTML = `
-        <span class="gold-text">◆ ĐANG BẬT KIM VÀNG XOAY THỬ:</span><br>
-        <span style="color:#fff;">Kim ảo màu vàng đang chỉ mốc <span class="gold-text">${angle}°</span> (Sơn <strong>${sơnThử}</strong>).<br>
-        Hãy xoay thiết bị sao cho Kim Đỏ trùng khớp với Kim Vàng mờ này.</span>
-    `;
-}
+          function triggerGhostNeedle(angle) {
+            targetAngle = angle;
+            ghostNeedle.style.opacity = "1";
+            updateCompassUI(currentHeading);
+            
+            let sơnThử = tìmSơnHướng(angle);
+            detailBox.style.borderLeftColor = "var(--gold)";
+            detailBox.innerHTML = `
+                <span class="gold-text">◆ ĐANG BẬT KIM VÀNG XOAY THỬ:</span><br>
+                <span style="color:#fff;">Kim ảo màu vàng đang chỉ mốc <span class="gold-text">${angle}°</span> (Sơn <strong>${sơnThử}</strong>) nằm mờ phía dưới.<br>Hãy xoay thiết bị hoặc vuốt la bàn bằng tay sao cho Kim Đỏ thật sự trùng khớp lên vị trí Kim Vàng mờ để đón chuẩn hướng phương vị.</span>
+            `;
+        }
 
   function tìmSơnHướng(heading) {
     let sơnTìmThấy = "Tý";
