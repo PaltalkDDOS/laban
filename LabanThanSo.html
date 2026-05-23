@@ -35,7 +35,70 @@
             padding-bottom: 30px;
             position: relative;
         }
+/* Giao diện dạng lưới sang trọng phong cách App chuyên nghiệp */
+.status-panel-grid {
+    width: 92%;
+    max-width: 430px;
+    background: #111111;
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 12px;
+    margin: 15px auto;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.7);
+}
 
+.info-header-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid #2a2a2a;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    gap: 5px;
+}
+
+.info-grid-item {
+    text-align: center;
+}
+
+.info-grid-item:not(:last-child) {
+    border-right: 1px solid #2a2a2a;
+}
+
+.info-grid-item span {
+    display: block;
+    font-size: 0.72rem;
+    color: #8e8e93;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.info-grid-item b {
+    color: var(--gold);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.main-result-box {
+    background: #161616;
+    border-left: 4px solid var(--gold);
+    padding: 12px;
+    border-radius: 4px;
+    text-align: left;
+    font-size: 0.88rem;
+    line-height: 1.6;
+}
+
+.star-warning-box {
+    margin-top: 8px;
+    padding: 6px 10px;
+    background: rgba(255, 102, 0, 0.1);
+    border: 1px solid rgba(255, 102, 0, 0.3);
+    border-radius: 4px;
+    font-size: 0.82rem;
+    color: #ff6600;
+}
         .header {
             text-align: center;
             padding: 12px;
@@ -555,6 +618,7 @@
 </head>
 <body>
 
+
     <div class="header">
         <h1>ĐẠI THUẬT LA KINH PHONG THỦY</h1>
         <div class="header-copyright">&copy; BẢN QUYỀN HỆ THỐNG: THÁI THÔNG</div>
@@ -636,13 +700,28 @@
 
     <button id="permission-btn" onclick="requestPermission()">KÍCH HOẠT SENSOR ĐIỆN THOẠI</button>
 
-    <div class="status-panel">
-        <div class="degree-display" id="degree-txt">0° - CUNG KHẢM (BẮC)</div>
-        <div id="element-box"></div>
-        <div class="fate-display" id="fate-txt">Mệnh chủ: ...</div>
-        <div id="judgment-box" class="judgment-badge bg-good">...</div>
+    <div class="status-panel" style="width: 92%; max-width: 430px; background: #111111; border: 1px solid var(--gold); border-radius: 12px; padding: 12px; margin: 15px auto; font-family: sans-serif; box-shadow: 0px 4px 20px rgba(0,0,0,0.7); display: block; text-align: center;">
+        
+        <div class="info-header-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); border-bottom: 1px solid #2a2a2a; padding-bottom: 10px; margin-bottom: 10px; gap: 5px;">
+            <div class="info-grid-item" style="text-align: center; border-right: 1px solid #2a2a2a;">
+                <span style="display: block; font-size: 0.72rem; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Ngũ Hành Bản Mệnh</span>
+                <b id="element-box" style="color: var(--gold); font-size: 0.95rem; font-weight: 600; display: block;">...</b>
+            </div>
+            <div class="info-grid-item" style="text-align: center;">
+                <span style="display: block; font-size: 0.72rem; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Tọa Độ & Sơn Hướng</span>
+                <b id="degree-txt" style="color: var(--gold); font-size: 0.95rem; font-weight: 600; display: block;">0° - CUNG KHẢM (BẮC)</b>
+            </div>
+        </div>
+        
+        <div class="main-result-box" style="background: #161616; border-left: 4px solid var(--gold); padding: 12px; border-radius: 4px; text-align: left; font-size: 0.88rem; line-height: 1.6;">
+            <div class="fate-display" id="fate-txt" style="font-weight: bold; color: #ffffff; margin-bottom: 6px;">
+                Mệnh chủ: ...
+            </div>
+            <div id="judgment-badge-container" style="margin-top: 6px; display: block;">
+                <span id="judgment-box" class="judgment-badge bg-good">...</span>
+            </div>
+        </div>
     </div>
-
     <div class="control-box">
         <input type="range" min="0" max="360" value="0" class="slider" id="compassSlider" oninput="manualRotate(this.value)">
     </div>
@@ -669,6 +748,7 @@
             <button class="custom-alert-btn" onclick="closeCustomAlert()">Đã Hiểu</button>
         </div>
     </div>
+
 
     <script>
         // === CÁC HÀM ĐÃ ĐƯỢC TỐI ƯU ===
@@ -1274,7 +1354,16 @@ function updateCompassUI(heading) {
         <span class="element-badge" style="background: #3a3a3c;">Phương vị: ${hànhPhươngVị}</span>
         <span class="element-badge" style="background: #2c2c2e; color: var(--gold)">Mệnh Cung: ${hànhMệnhChủ}</span>
     `;
+// Đẩy dữ liệu phong thủy vào hệ thống Lưới Grid thời gian thực
+document.getElementById('gridPhuongVi').innerText = hànhPhươngVị;
+document.getElementById('gridMenhCung').innerText = hànhMệnhChủ;
 
+// Tính toán năm âm lịch tự động dựa trên hàm có sẵn của anh
+if (typeof quyDoiNamDuongSangAm === "function") {
+    document.getElementById('gridNamAm').innerText = quyDoiNamDuongSangAm(parseInt(yearStr));
+} else {
+    document.getElementById('gridNamAm').innerText = yearStr;
+}
     const cungTrạch = bátTrạchMap[chủMệnh][currentCode];
     const thôngTinCung = cungPhầnTrăm[cungTrạch];
     const mụcĐích = document.getElementById('purpose').value;
@@ -1435,13 +1524,37 @@ function updateCompassUI(heading) {
     }
 }
 
-        function handleOrientation(event) {
-            let heading = event.webkitCompassHeading || (event.alpha ? (360 - event.alpha) : null);
-            if (heading !== null) { 
-                updateCompassUI(heading); 
-            }
-        }
+        let lastHeading = 0;
+const alphaSmoothFactor = 0.22; // Bộ lọc làm mượt: giá trị từ 0.1 đến 0.3 giúp kim quay cực mượt mà không bị trễ
 
+function handleOrientation(event) {
+    let heading = null;
+
+    // 1. Kiểm tra thiết bị iOS (iPhone/iPad) ưu tiên hướng Bắc thực địa tuyệt đối
+    if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
+        heading = event.webkitCompassHeading;
+    } 
+    // 2. Nếu là thiết bị Android, tự động đảo góc chuẩn hóa hướng Bắc
+    else if (event.alpha !== undefined && event.alpha !== null) {
+        heading = 360 - event.alpha;
+    }
+
+    // 3. Nếu lấy được dữ liệu góc hướng, tiến hành lọc nhiễu chống xoay vòng vòng
+    if (heading !== null) {
+        let diff = heading - lastHeading;
+        
+        // Chuẩn hóa góc sai biệt trong phạm vi -180 đến 180 độ để tránh kim bị quay ngược vòng khi qua điểm 0°
+        if (diff > 180) diff -= 360;
+        if (diff < -180) diff += 360;
+        
+        // Áp dụng bộ lọc nội suy làm mượt chuyển động của đĩa la bàn
+        heading = lastHeading + diff * alphaSmoothFactor;
+        lastHeading = (heading % 360 + 360) % 360;
+
+        // Cập nhật giao diện đĩa la bàn chuyển động theo độ số mượt mà
+        updateCompassUI(lastHeading);
+    }
+}
         function manualRotate(value) { 
             updateCompassUI(value); 
         }
