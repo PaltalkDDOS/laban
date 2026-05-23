@@ -1404,7 +1404,29 @@ function updateCompassUI(heading) {
             
             recalculateFate();
         }
+        let isSensorActive = false;
 
+function requestPermission() {
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+            .then(permissionState => {
+                if (permissionState === 'granted') {
+                    window.addEventListener('deviceorientation', handleOrientation, true);
+                    permBtn.style.display = 'none';
+                    isSensorActive = true;
+                    compassSlider.disabled = true;   // Tắt slider khi sensor chạy
+                } else {
+                    showCustomAlert("Quyền truy cập cảm biến bị từ chối. Bạn vẫn có thể xoay la bàn thủ công.");
+                }
+            })
+            .catch(console.error);
+    } else {
+        window.addEventListener('deviceorientation', handleOrientation, true);
+        isSensorActive = true;
+        compassSlider.disabled = true;
+        permBtn.style.display = 'none';
+    }
+}
         function requestPermission() {
             if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
                 DeviceOrientationEvent.requestPermission()
@@ -1424,17 +1446,23 @@ function updateCompassUI(heading) {
             }
         }
 
-        window.onload = function() {
-            render24SonRing();
-            loadSavedMembers();
-            recalculateFate();
+window.onload = function() {
+    render24SonRing();
+    loadSavedMembers();
+    recalculateFate();
 
-            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-                permBtn.style.display = 'block';
-            } else {
-                window.addEventListener('deviceorientation', handleOrientation, true);
-            }
-        };
+    // === CẢI THIỆN TOUCH CHO LA BÀN ===
+    const compassContainer = document.querySelector('.compass-container');
+    
+    compassContainer.addEventListener('touchstart', e => e.preventDefault(), { passive: false });
+    compassContainer.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        permBtn.style.display = 'block';
+    } else {
+        window.addEventListener('deviceorientation', handleOrientation, true);
+    }
+};
     </script>
 </body>
 </html>
