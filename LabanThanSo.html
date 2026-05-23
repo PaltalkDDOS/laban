@@ -675,53 +675,95 @@
         <div class="saved-container" id="savedContainer"></div>
     </div>
 
-   <div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #ffffff; border-radius: 50%; box-shadow: 0 6px 25px rgba(0,0,0,0.18); border: 4px solid #b58e4b; overflow: hidden;">
-        <div class="cross-line-v" style="position: absolute; width: 1px; height: 100%; left: 50%; top: 0; background: rgba(255, 59, 48, 0.6); z-index: 10; pointer-events: none;"></div>
-        <div class="cross-line-h" style="position: absolute; height: 1px; width: 100%; top: 50%; left: 0; background: rgba(255, 59, 48, 0.6); z-index: 10; pointer-events: none;"></div>
-        <div class="center-pin" style="position: absolute; width: 10px; height: 10px; background: #ff3b30; border: 2px solid #fff; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 12; pointer-events: none;"></div>
-        <div class="center-needle" id="needle" style="position: absolute; width: 2px; height: 50%; background: #ff3b30; left: 50%; bottom: 50%; transform-origin: bottom center; z-index: 11; pointer-events: none; display: none;"></div>
-        <div class="ghost-needle" id="ghostNeedle" style="position: absolute; width: 2px; height: 50%; background: rgba(10, 132, 255, 0.6); left: 50%; bottom: 50%; transform-origin: bottom center; z-index: 11; pointer-events: none; display: none;"></div>
-         
+  <div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #222222; border-radius: 50%; box-shadow: 0 8px 30px rgba(0,0,0,0.4); border: 5px solid #b58e4b; overflow: hidden;">
+        
+        <div class="cross-line-v" style="position: absolute; width: 1px; height: 100%; left: 50%; top: 0; background: rgba(255, 59, 48, 0.4); z-index: 10; pointer-events: none;"></div>
+        <div class="cross-line-h" style="position: absolute; height: 1px; width: 100%; top: 50%; left: 0; background: rgba(255, 59, 48, 0.4); z-index: 10; pointer-events: none;"></div>
+        
+        <div class="north-pointer" style="position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 14px solid #ff3b30; z-index: 12; pointer-events: none;"></div>
+        
+        <div class="center-pin" style="position: absolute; width: 8px; height: 8px; background: #ff3b30; border: 1.5px solid #fff; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 12; pointer-events: none;"></div>
+
         <div class="compass-dial" id="compass" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center; transition: transform 0.1s ease-out;">
             
             <svg viewBox="0 0 500 500" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1;">
-                <circle cx="250" cy="250" r="244" fill="#fdfbf7" stroke="#b58e4b" stroke-width="3"/>
-                <circle cx="250" cy="250" r="222" fill="none" stroke="#b58e4b" stroke-width="1.5"/>
-                <circle cx="250" cy="250" r="172" fill="none" stroke="#b58e4b" stroke-width="1.5"/>
-                <circle cx="250" cy="250" r="118" fill="none" stroke="#b58e4b" stroke-width="1.5"/>
-                <circle cx="250" cy="250" r="75" fill="none" stroke="#b58e4b" stroke-width="2"/>
-                <circle cx="250" cy="250" r="42" fill="#fff5f5" stroke="#ff3b30" stroke-width="1"/>
+                <circle cx="250" cy="250" r="244" fill="#fdfaf2" stroke="#b58e4b" stroke-width="3"/>
+                <circle cx="250" cy="250" r="222" fill="#fffcf7" stroke="#b58e4b" stroke-width="1.5"/>
+                <circle cx="250" cy="250" r="168" fill="#f7f2e8" stroke="#b58e4b" stroke-width="1.5"/>
+                <circle cx="250" cy="250" r="115" fill="#fdfaf2" stroke="#b58e4b" stroke-width="1.5"/>
+                <circle cx="250" cy="250" r="75" fill="#fffdfa" stroke="#b58e4b" stroke-width="2"/>
+                <circle cx="250" cy="250" r="38" fill="#fff0f0" stroke="#ff3b30" stroke-width="1"/>
 
-                <path d="M250 3 L250 15 M250 485 L250 497 M3 250 L15 250 M485 250 L497 250" stroke="#ff3b30" stroke-width="2.5"/>
-
-                <g stroke="#111" stroke-width="3.5" fill="none" stroke-linecap="round">
-                    <g transform="rotate(0, 250, 250)"><line x1="238" y1="52" x2="262" y2="52" /><line x1="238" y1="59" x2="246" y2="59" /><line x1="254" y1="59" x2="262" y2="59" /><line x1="238" y1="66" x2="246" y2="66" /><line x1="254" y1="66" x2="262" y2="66" /></g>
-                    <g transform="rotate(45, 250, 250)"><line x1="238" y1="52" x2="262" y2="52" /><line x1="238" y1="59" x2="246" y2="59" /><line x1="254" y1="59" x2="262" y2="59" /><line x1="238" y1="66" x2="246" y2="66" /><line x1="254" y1="66" x2="262" y2="66" /></g>
-                    <g transform="rotate(90, 250, 250)"><line x1="238" y1="52" x2="246" y2="52" /><line x1="254" y1="52" x2="262" y2="52" /><line x1="238" y1="59" x2="246" y2="59" /><line x1="254" y1="59" x2="262" y2="59" /><line x1="238" y1="66" x2="262" y2="66" /></g>
-                    <g transform="rotate(135, 250, 250)"><line x1="238" y1="52" x2="262" y2="52" /><line x1="238" y1="59" x2="262" y2="59" /><line x1="238" y1="66" x2="246" y2="66" /><line x1="254" y1="66" x2="262" y2="66" /></g>
-                    <g transform="rotate(180, 250, 250)"><line x1="238" y1="52" x2="262" y2="52" /><line x1="238" y1="59" x2="246" y2="59" /><line x1="254" y1="59" x2="262" y2="59" /><line x1="238" y1="66" x2="246" y2="66" /><line x1="254" y1="66" x2="262" y2="66" /></g>
-                    <g transform="rotate(225, 250, 250)"><line x1="238" y1="52" x2="246" y2="52" /><line x1="254" y1="52" x2="262" y2="52" /><line x1="238" y1="59" x2="246" y2="59" /><line x1="254" y1="59" x2="262" y2="59" /><line x1="238" y1="66" x2="246" y2="66" /><line x1="254" y1="66" x2="262" y2="66" /></g>
-                    <g transform="rotate(270, 250, 250)"><line x1="238" y1="52" x2="246" y2="52" /><line x1="254" y1="52" x2="262" y2="52" /><line x1="238" y1="59" x2="246" y2="59" /><line x1="254" y1="59" x2="262" y2="59" /><line x1="238" y1="66" x2="262" y2="66" /></g>
-                    <g transform="rotate(315, 250, 250)"><line x1="238" y1="52" x2="262" y2="52" /><line x1="238" y1="59" x2="262" y2="59" /><line x1="238" y1="66" x2="246" y2="66" /><line x1="254" y1="66" x2="262" y2="66" /></g>
+                <g stroke="#111111" stroke-width="3" fill="none" stroke-linecap="round">
+                    <g transform="rotate(0, 250, 250)">
+                        <line x1="240" y1="46" x2="246" y2="46" /><line x1="254" y1="46" x2="260" y2="46" />
+                        <line x1="240" y1="52" x2="260" y2="52" />
+                        <line x1="240" y1="58" x2="246" y2="58" /><line x1="254" y1="58" x2="260" y2="58" />
+                    </g>
+                    <g transform="rotate(45, 250, 250)">
+                        <line x1="240" y1="46" x2="260" y2="46" />
+                        <line x1="240" y1="52" x2="246" y2="52" /><line x1="254" y1="52" x2="260" y2="52" />
+                        <line x1="240" y1="58" x2="246" y2="58" /><line x1="254" y1="58" x2="260" y2="58" />
+                    </g>
+                    <g transform="rotate(90, 250, 250)">
+                        <line x1="240" y1="46" x2="246" y2="46" /><line x1="254" y1="46" x2="260" y2="46" />
+                        <line x1="240" y1="52" x2="246" y2="52" /><line x1="254" y1="52" x2="260" y2="52" />
+                        <line x1="240" y1="58" x2="260" y2="58" />
+                    </g>
+                    <g transform="rotate(135, 250, 250)">
+                        <line x1="240" y1="46" x2="260" y2="46" />
+                        <line x1="240" y1="52" x2="260" y2="52" />
+                        <line x1="240" y1="58" x2="246" y2="58" /><line x1="254" y1="58" x2="260" y2="58" />
+                    </g>
+                    <g transform="rotate(180, 250, 250)">
+                        <line x1="240" y1="46" x2="260" y2="46" />
+                        <line x1="240" y1="52" x2="246" y2="52" /><line x1="254" y1="52" x2="260" y2="52" />
+                        <line x1="240" y1="58" x2="260" y2="58" />
+                    </g>
+                    <g transform="rotate(225, 250, 250)">
+                        <line x1="240" y1="46" x2="246" y2="46" /><line x1="254" y1="46" x2="260" y2="46" />
+                        <line x1="240" y1="52" x2="246" y2="52" /><line x1="254" y1="52" x2="260" y2="52" />
+                        <line x1="240" y1="58" x2="246" y2="58" /><line x1="254" y1="58" x2="260" y2="58" />
+                    </g>
+                    <g transform="rotate(270, 250, 250)">
+                        <line x1="240" y1="46" x2="246" y2="46" /><line x1="254" y1="46" x2="260" y2="46" />
+                        <line x1="240" y1="52" x2="260" y2="52" />
+                        <line x1="240" y1="58" x2="260" y2="58" />
+                    </g>
+                    <g transform="rotate(315, 250, 250)">
+                        <line x1="240" y1="46" x2="260" y2="46" />
+                        <line x1="240" y1="52" x2="260" y2="52" />
+                        <line x1="240" y1="58" x2="260" y2="58" />
+                    </g>
                 </g>
 
                 <g id="sonRingSvg"></g>
 
-                <g font-family="sans-serif" font-size="14" font-weight="1000" text-anchor="middle">
-                    <text x="250" y="104" fill="#ff3b30" transform="rotate(0, 250, 250)">BẮC - KHẢM</text>
-                    <text x="250" y="104" fill="#ff3b30" transform="rotate(180, 250, 250)">NAM - LY</text>
-                    <text x="250" y="104" fill="#00a525" transform="rotate(90, 250, 250)">ĐÔNG - CHẤN</text>
-                    <text x="250" y="104" fill="#00a525" transform="rotate(270, 250, 250)">TÂY - ĐOÀI</text>
+                <g font-family="sans-serif" text-anchor="middle">
+                    <g font-weight="900" font-size="14">
+                        <text x="250" y="88" fill="#ff3b30" transform="rotate(0, 250, 250)">BẮC</text>
+                        <text x="250" y="104" font-size="11" font-weight="bold" fill="#ff3b30" transform="rotate(0, 250, 250)">KHẢM</text>
+                        <text x="250" y="88" fill="#ff3b30" transform="rotate(180, 250, 250)">NAM</text>
+                        <text x="250" y="104" font-size="11" font-weight="bold" fill="#ff3b30" transform="rotate(180, 250, 250)">LY</text>
+                        <text x="250" y="88" fill="#00a525" transform="rotate(90, 250, 250)">ĐÔNG</text>
+                        <text x="250" y="104" font-size="11" font-weight="bold" fill="#00a525" transform="rotate(90, 250, 250)">CHẤN</text>
+                        <text x="250" y="88" fill="#00a525" transform="rotate(270, 250, 250)">TÂY</text>
+                        <text x="250" y="104" font-size="11" font-weight="bold" fill="#00a525" transform="rotate(270, 250, 250)">ĐOÀI</text>
+                    </g>
                     
-                    <g font-size="12" fill="#6b4e18">
-                        <text x="250" y="104" transform="rotate(45, 250, 250)">Đ.BẮC (CẤN)</text>
-                        <text x="250" y="104" transform="rotate(135, 250, 250)">Đ.NAM (TỐN)</text>
-                        <text x="250" y="104" transform="rotate(225, 250, 250)">T.NAM (KHÔN)</text>
-                        <text x="250" y="104" transform="rotate(315, 250, 250)">T.BẮC (CÀN)</text>
+                    <g font-weight="800" font-size="11" fill="#6b4e18">
+                        <text x="250" y="90" transform="rotate(45, 250, 250)">Đ.BẮC</text>
+                        <text x="250" y="103" font-size="10" transform="rotate(45, 250, 250)">CẤN</text>
+                        <text x="250" y="90" transform="rotate(135, 250, 250)">Đ.NAM</text>
+                        <text x="250" y="103" font-size="10" transform="rotate(135, 250, 250)">TỐN</text>
+                        <text x="250" y="90" transform="rotate(225, 250, 250)">T.NAM</text>
+                        <text x="250" y="103" font-size="10" transform="rotate(225, 250, 250)">KHÔN</text>
+                        <text x="250" y="90" transform="rotate(315, 250, 250)">T.BẮC</text>
+                        <text x="250" y="103" font-size="10" transform="rotate(315, 250, 250)">CÀN</text>
                     </g>
                 </g>
 
-                <text x="250" y="254" font-family="sans-serif" font-size="9" font-weight="bold" fill="rgba(181, 142, 75, 0.35)" text-anchor="middle" letter-spacing="1">THÁI THÔNG</text>
+                <text x="250" y="275" font-family="sans-serif" font-size="8" font-weight="bold" fill="rgba(181, 142, 75, 0.3)" text-anchor="middle" letter-spacing="1">THÁI THÔNG</text>
             </svg>
             
             <div id="sonRing" style="display: none;"></div>
@@ -886,35 +928,32 @@
 
     sonRingSvg.innerHTML = "";
     
-    // ĐẨY BÁN KÍNH LÊN ĐÚNG 202PX: Ép toàn bộ chữ 24 sơn chui ra vòng ngoài, ôm sát vạch chia độ rìa la bàn
-    const radius = 202; 
+    // ĐỊNH VỊ BÁN KÍNH 142PX: Giúp 24 Sơn chui gọn gàng lọt lòng vào tầng giữa
+    const radius = 142; 
 
     son24Data.forEach((son, index) => {
         const trungBinhGoc = index * 15;
 
-        // Tạo phần tử text SVG chuẩn hình học phẳng
         const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
         
-        // Tọa độ gốc trục dọc trước khi xoay hướng tâm
         textNode.setAttribute("x", "250");
         textNode.setAttribute("y", (250 - radius).toString());
         textNode.setAttribute("text-anchor", "middle");
         textNode.setAttribute("font-family", "sans-serif");
-        textNode.setAttribute("font-size", "11");
-        textNode.setAttribute("font-weight", "900"); // Đậm sắc nét chuẩn chỉ
+        textNode.setAttribute("font-size", "10.5"); // Thu nhỏ nét tinh tế như la kinh thật
+        textNode.setAttribute("font-weight", "900"); 
         
-        // Xoay hướng tâm hoàn hảo
         textNode.setAttribute("transform", `rotate(${trungBinhGoc}, 250, 250)`);
         
         textNode.textContent = son.name;
 
-        // Phối màu sắc phong thủy đúng hình mẫu
+        // Phối màu chuẩn phong thủy đại thuật
         if (["Cấn", "Tốn", "Khôn", "Càn"].includes(son.name)) {
-            textNode.setAttribute("fill", "#ff3b30"); // Tứ Duy màu đỏ quyền lực
+            textNode.setAttribute("fill", "#ff3b30"); // Tứ Duy màu đỏ
         } else if (["Tý", "Mão", "Ngọ", "Dậu"].includes(son.name)) {
-            textNode.setAttribute("fill", "#00a525"); // Tứ Chính màu xanh sinh khí
+            textNode.setAttribute("fill", "#00a525"); // Tứ Chính màu xanh
         } else {
-            textNode.setAttribute("fill", "#5c4314"); // Can Chi màu nâu đồng sắc nét trên nền sáng
+            textNode.setAttribute("fill", "#5c4314"); // Can chi màu nâu đồng
         }
 
         sonRingSvg.appendChild(textNode);
