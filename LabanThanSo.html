@@ -819,8 +819,7 @@
   <div id="ghostNeedle" style="display: none;"></div>
   <div class="center-pin" style="position: absolute; width: 8px; height: 8px; background: #ff3b30; border: 1.5px solid #fff; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 12; pointer-events: none;"></div>
 
-  <div class="compass-dial" id="compass" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center; transition: transform 0.1s ease-out;"><div id="ghostNeedle" style="position: absolute; top: 50%; left: 50%; width: 6px; height: 140px; background: #ffcc00; z-index: 20; transform: translate(-50%, -100%); transform-origin: bottom center; pointer-events: none; opacity: 0; border-radius: 3px 3px 0 0;"></div>
-</div>
+  <div class="compass-dial" id="compass" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center; transition: transform 0.1s ease-out;">
     <svg viewBox="0 0 500 500" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1;">
       
       <circle cx="250" cy="250" r="244" fill="#fdfaf2" stroke="#b58e4b" stroke-width="2.5" />
@@ -920,7 +919,19 @@
     <div id="sonRing" style="display: none;"></div>
   </div>
 </div>
+<div class="compass-container" style="...">
+  <div class="cross-line-v"></div>
+  <div class="cross-line-h"></div>
+  
+  <div class="north-pointer"></div>
+  <div class="center-pin"></div>
 
+  <div id="ghostNeedle" class="ghost-needle"></div>
+
+  <div class="compass-dial" id="compass">
+      <svg viewBox="0 0 500 500">...</svg>
+  </div>
+</div>
   <button id="permission-btn" onclick="requestPermission()">KÍCH HOẠT SENSOR ĐIỆN THOẠI</button>
 
   <div class="status-panel">
