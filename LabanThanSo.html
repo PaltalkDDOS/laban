@@ -2139,26 +2139,235 @@ const ConfigPhongThuy = {
             ✅ <b>VẬN HẠN CỬU TINH NĂM ${namCheck}:</b> Trục hướng ${sơnHiệnTạiObj.huong} khí trường bình hòa, không bị đại sát tinh xung chiếu. Gia đạo an lành.
         </div>`;
     }
-    // === THUẬT TOÁN ĐIỂM THẦN SÁT CHI TIẾT 24 SƠN CHO TỪNG CUNG MỆNH CHỦ ===
+// === THUẬT TOÁN ĐIỂM THẦN SÁT CHI TIẾT 24 SƠN THEO BÁT TRẠCH MINH CHÂU ===
     let luanDoanSonChiTiet = "";
-    if (chủMệnh === "Cấn") {
-      if (sơnHiệnTại === "Càn") {
-        luanDoanSonChiTiet =
-          `<b style="color:var(--green);">[CÁT SƠN ĐẮC VỊ]</b> Sơn Càn (Tây Bắc) đạt đúng Thiên Y đại cát. Cửa chính đặt cung này đón tài khí dồi dào, gia chủ có quý nhân phò trợ, phát báu nhanh chóng.`;
-      } else if (sơnHiệnTại === "Tuất") {
-        luanDoanSonChiTiet =
-          `<b style="color:var(--red);">[HUNG SƠN SAI LỆCH]</b> Sơn Tuất (Tây Bắc) phạm vào cung vị <b>Cô Quả, Tố Tụng</b>. Tuy cùng hướng Tây Bắc nhưng nếu đặt cửa trổ lệch sang sơn Tuất này sẽ khiến nội bộ gia đạo hay nghi kỵ, tranh chấp, dễ vướng tai tiếng luật pháp.`;
-      } else if (sơnHiệnTại === "Hợi") {
-        luanDoanSonChiTiet =
-          `<b style="color:#ff9f0a;">[BÌNH HÒA TIỂU HẠN]</b> Sơn Hợi (Tây Bắc) phạm thế hao tổn nhẹ về tài lộc, tiền bạc dễ ra vào thất thường.`;
-      } else {
-        luanDoanSonChiTiet =
-          `Tọa độ la bàn đang trùng khớp vào <span class="gold-text">Sơn ${sơnHiệnTại}</span> thuộc phương ${sơnHiệnTạiObj.huong}. Khí trường vận hành tự nhiên theo quy luật bản mệnh Bát Trạch.`;
-      }
+    
+    // Ma trận dữ liệu Bát Trạch Minh Châu tra cứu 192 cặp Cát Hung (8 Mệnh x 24 Sơn vị)
+    const MaTranMinhChau = {
+        "Khảm": {
+            "Nhâm": { "loai": "Cát", "text": "Đạt Minh Châu Cát Sơn, Phục Vị tiến tài, gia đạo hưng vượng, con cái thông minh." },
+            "Tý": { "loai": "Cát", "text": "Chính vị vượng tài, công danh hiển đạt, đắc tài đắc lộc, vinh hoa phú quý." },
+            "Quý": { "loai": "Hung", "text": "Phạm thế tà khí nhập cung, âm thịnh dương suy, dễ hao tổn nữ giới hoặc người trẻ tuổi." },
+            "Sửu": { "loai": "Hung", "text": "Phạm Thiếu Vong, tài lộc hao tán, gia đạo bất hòa, sinh khí bị trì trệ." },
+            "Cấn": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia chủ tổn tài, đề phòng hỏa hoạn, trộm cắp và tai tiếng." },
+            "Dần": { "loai": "Hung", "text": "Phạm Cô Quả, nhân đinh suy giảm, tài lộc khó tụ, người trong nhà dễ cô đơn." },
+            "Giáp": { "loai": "Cát", "text": "Đắc vinh hoa phú quý, quý nhân phò trợ, làm ăn hanh thông, công thành danh toại." },
+            "Mão": { "loai": "Cát", "text": "Tiến điền tài, gia sản tăng tiến, con cái thành đạt, vạn sự đại cát." },
+            "Ất": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, kiện tụng tai ương, thị phi bủa vây, điền sản sa sút." },
+            "Thìn": { "loai": "Hung", "text": "Phạm Khẩu Thiệt, gia đạo tranh chấp xáo trộn, đề phòng tai tiếng pháp luật." },
+            "Tốn": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe tổn hại, tai ương bất ngờ, đại hung nên tránh." },
+            "Tỵ": { "loai": "Hung", "text": "Phạm Họa Hại phương vị, quan phi khẩu thiệt, làm ăn thua lỗ, gia đạo không yên." },
+            "Bính": { "loai": "Cát", "text": "Thiên Y đắc vị, sức khỏe dồi dào, bệnh tật tiêu trừ, tài lộc gia tăng bền vững." },
+            "Ngọ": { "loai": "Cát", "text": "Diên Niên chính khí, gia đạo hòa hợp, ngoại giao thuận lợi, sống trường thọ." },
+            "Đinh": { "loai": "Cát", "text": "Sinh Khí tối thượng, phát phúc nhanh chóng, điền sản dồi dào, nhân đinh hưng vượng." },
+            "Mùi": { "loai": "Hung", "text": "Phạm Bạch Hổ sát, tổn thương nhân đinh, đề phòng huyết quang tai nạn." },
+            "Khôn": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát khí, tài sản tiêu tán, sức khỏe suy kiệt, gia đạo ly tán." },
+            "Thân": { "loai": "Hung", "text": "Phạm Cô Thần, gia đạo bất hòa, vợ chồng xung khắc, tài lộc hao tổn." },
+            "Canh": { "loai": "Cát", "text": "Đắc vị tiến tài, kinh doanh phát đạt, gia nghiệp hưng thịnh, gặp nhiều may mắn." },
+            "Dậu": { "loai": "Cát", "text": "Đạt cung Quý Nhân, có người giúp đỡ lúc khó khăn, hoạn lộ hanh thông." },
+            "Tân": { "loai": "Hung", "text": "Phạm Họa Hại tai ương, tiền bạc ra vào thất thường, làm nhiều hưởng ít." },
+            "Tuất": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, trộm cắp hao tài, gia đạo bất an, đề phòng lừa gạt." },
+            "Càn": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên trục trặc, thị phi quan trường, hao tổn tâm trí." },
+            "Hợi": { "loai": "Bình", "text": "Thế bình hòa tiểu hạn, tài lộc trung bình, cần lưu ý việc quản lý tài chính." }
+        },
+        "Khôn": {
+            "Nhâm": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương, gia chủ đoản thọ, của cải tiêu tán, tai ương dồn dập." },
+            "Tý": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, dâm loạn tà ác, gia phong bại hoại, kiện cáo thị phi." },
+            "Quý": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán, tai họa bất ngờ, làm ăn lụi bại." },
+            "Sửu": { "loai": "Cát", "text": "Sinh Khí vinh hoa, đắc tài đắc lộc, gia đạo an khang, nhân đinh phát đạt." },
+            "Cấn": { "loai": "Cát", "text": "Sinh Khí chính vị, phát bảo nhanh chóng, con cái hiếu thảo, gia nghiệp vững bền." },
+            "Dần": { "loai": "Cát", "text": "Đắc vị Thiên Y, bệnh tật tiêu trừ, trường thọ phú quý, gia đình hạnh phúc." },
+            "Giáp": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi, tiền bạc tiêu hao, tinh thần bất an." },
+            "Mão": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, tổn hại nam chủ, kinh doanh thất bại, đại hung." },
+            "Ất": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, người nhà đau ốm liên miên, tài lộc suy vi." },
+            "Thìn": { "loai": "Cát", "text": "Diên Niên đắc vị, gia đạo hòa hợp, trăm bề thuận lợi, kinh doanh phát đạt." },
+            "Tốn": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, trộm cắp quấy phá, đề phòng hỏa hoạn và tai bay vạ gió." },
+            "Tỵ": { "loai": "Hung", "text": "Phạm Lục Sát sát khí, điền sản sa sút, kiện tụng kéo dài, nội bộ chia rẽ." },
+            "Bính": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn bất ngờ, nhân đinh tổn thất, vô cùng bất lợi." },
+            "Ngọ": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt, công danh trắc trở, tiểu nhân hãm hại." },
+            "Đinh": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình cảm rạn nứt, tinh thần hoang mang, làm ăn bế tắc." },
+            "Mùi": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh, tài lộc ổn định, cuộc sống bình yên." },
+            "Khôn": { "loai": "Cát", "text": "Phục Vị bản cung, điền sản tăng tiến, giữ vững cơ nghiệp, vạn sự cát tường." },
+            "Thân": { "loai": "Cát", "text": "Thiên Y đắc vị, quý nhân trợ lực, tai qua nạn khỏi, gia tăng tài lộc." },
+            "Canh": { "loai": "Hung", "text": "Phạm Họa Hại phương vị, tổn hao tiền của, gia đạo hay xảy ra tranh chấp nhỏ." },
+            "Dậu": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, bệnh tật phát sinh, tiền tài tổn hao, tinh thần suy nhược." },
+            "Tân": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, nhân đinh ly tán, thị phi rình rập, không nên trổ cửa." },
+            "Tuất": { "loai": "Cát", "text": "Diên Niên chính vị, phú quý thọ khang, gia đình hạnh phúc, công danh rạng rỡ." },
+            "Càn": { "loai": "Cát", "text": "Diên Niên đắc cách, ngoại giao thuận lợi, gia sản tăng tiến, vạn sự hanh thông." },
+            "Hợi": { "loai": "Bình", "text": "Thế bình hòa, gia đạo ít sóng gió, tiền tài đủ dùng, không có chuyển biến lớn." }
+        },
+        "Chấn": {
+            "Nhâm": { "loai": "Cát", "text": "Sinh Khí vượng cung, đại phát tài lộc, gia chủ thăng tiến, vạn sự như ý." },
+            "Tý": { "loai": "Cát", "text": "Sinh Khí tối thượng, nhân đinh hưng vượng, con cái hiển đạt, phú quý song toàn." },
+            "Quý": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, tiền của tổn hao, gia đạo bất hòa, đề phòng đau ốm." },
+            "Sửu": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, kiện cáo thị phi, gia phong suy bại, làm ăn trắc trở." },
+            "Cấn": { "loai": "Hung", "text": "Phạm Lục Sát sát phương, tinh thần bất an, tai ương rình rập, vô cùng bất lợi." },
+            "Dần": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát khí, hao tài tốn của, tổn hại nam chủ, đề phòng tai nạn." },
+            "Giáp": { "loai": "Cát", "text": "Phục Vị bản cung, gia đạo bình an, giữ vững điền sản, cuộc sống ổn định." },
+            "Mão": { "loai": "Cát", "text": "Phục Vị chính vị, danh tiếng lẫy lừng, con cái hiếu thảo, gia nghiệp vững bền." },
+            "Ất": { "loai": "Cát", "text": "Thiên Y đắc vị, bệnh tật tiêu trừ, sức khỏe dồi dào, gia tăng phước thọ." },
+            "Thìn": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, trộm cắp quấy nhiễu, làm ăn thất bát, đề phòng hỏa hoạn." },
+            "Tốn": { "loai": "Cát", "text": "Diên Niên vượng khí, gia đình hạnh phúc, vợ chồng hòa hợp, trăm bề thuận lợi." },
+            "Tỵ": { "loai": "Cát", "text": "Diên Niên đắc vị, ngoại giao hanh thông, công danh thăng tiến, tài lộc dồi dào." },
+            "Bính": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, quan phi khẩu thiệt, tai họa dồn dập, tiền tài lụi bại." },
+            "Ngọ": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn huyết quang, tổn thương nhân đinh, đại hung." },
+            "Đinh": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, tiểu nhân hãm hại, tiền bạc tiêu tán, thị phi bủa vây." },
+            "Mùi": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe suy kiệt, làm ăn bế tắc, gia đạo chia rẽ." },
+            "Khôn": { "loai": "Hung", "text": "Phạm Họa Hại sát vị, công danh trắc trở, nội bộ gia đình thường xuyên tranh chấp." },
+            "Thân": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên lận đận, tinh thần hoang mang, tổn hao tiền của." },
+            "Canh": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, gia sản tiêu tán, người nhà đau ốm, cực kỳ nguy hiểm." },
+            "Dậu": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát khí, kiện tụng thị phi, kinh doanh thua lỗ, gia đạo bất an." },
+            "Tân": { "loai": "Hung", "text": "Phạm Họa Hại tai ương, tiền bạc thất thoát, làm nhiều nhưng tích lũy không được bao nhiêu." },
+            "Tuất": { "loai": "Cát", "text": "Thiên Y đắc vị, có quý nhân giúp đỡ, vượt qua mọi nghịch cảnh, tài lộc tăng tiến." },
+            "Càn": { "loai": "Cát", "text": "Diên Niên đắc cách, thăng quan tiến chức, gia đình êm ấm, tài lộc dồi dào." },
+            "Hợi": { "loai": "Bình", "text": "Thế bình hòa tiểu hạn, vận trình ổn định, tiền tài vừa đủ, cần kiên nhẫn tích lũy." }
+        },
+        "Tốn": {
+            "Nhâm": { "loai": "Cát", "text": "Sinh Khí vượng cung, tài lộc dồi dào, thăng quan tiến chức, gia đạo an khang." },
+            "Tý": { "loai": "Cát", "text": "Sinh Khí đắc vị, điền sản tăng tiến, con cái thành đạt, vinh hoa phú quý." },
+            "Quý": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi, tiền bạc tiêu hao, tinh thần bất an." },
+            "Sửu": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán, tai họa bất ngờ, làm ăn lụi bại." },
+            "Cấn": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, tổn hại nam chủ, kinh doanh thất bại, đại hung." },
+            "Dần": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát khí, hao tài tốn của, đề phòng tai nạn bất ngờ." },
+            "Giáp": { "loai": "Cát", "text": "Diên Niên đắc vị, phú quý thọ khang, gia đình hạnh phúc, công danh rạng rỡ." },
+            "Mão": { "loai": "Cát", "text": "Diên Niên chính vị, ngoại giao thuận lợi, gia sản tăng tiến, vạn sự hanh thông." },
+            "Ất": { "loai": "Cát", "text": "Sinh Khí vượng khí, phát phúc nhanh chóng, điền sản dồi dào, nhân đinh hưng vượng." },
+            "Thìn": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh, tài lộc ổn định, cuộc sống bình yên." },
+            "Tốn": { "loai": "Cát", "text": "Phục Vị bản cung, giữ vững cơ nghiệp, gia sản thăng tiến, vạn sự cát tường." },
+            "Tỵ": { "loai": "Cát", "text": "Thiên Y đắc vị, bệnh tật tiêu trừ, sức khỏe dồi dào, gia tăng phước thọ." },
+            "Bính": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt, công danh trắc trở, tiểu nhân hãm hại." },
+            "Ngọ": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình cảm rạn nứt, tinh thần hoang mang, làm ăn bế tắc." },
+            "Đinh": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, nhân đinh ly tán, thị phi rình rập, không nên trổ cửa." },
+            "Mùi": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, trộm cắp quấy nhiễu, làm ăn thất bát, đề phòng hỏa hoạn." },
+            "Khôn": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, trộm cắp quấy phá, đề phòng tai bay vạ gió." },
+            "Thân": { "loai": "Hung", "text": "Phạm Lục Sát sát khí, điền sản sa sút, kiện tụng kéo dài, nội bộ chia rẽ." },
+            "Canh": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn bất ngờ, nhân đinh tổn thất, vô cùng bất lợi." },
+            "Dậu": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, gia sản tiêu tán, người nhà đau ốm, cực kỳ nguy hiểm." },
+            "Tân": { "loai": "Hung", "text": "Phạm Họa Hại phương vị, tổn hao tiền của, gia đạo hay xảy ra tranh chấp." },
+            "Tuất": { "loai": "Cát", "text": "Thiên Y đắc vị, quý nhân trợ lực, tai qua nạn khỏi, gia tăng tài lộc." },
+            "Càn": { "loai": "Cát", "text": "Thiên Y chính vị, sức khỏe dồi dào, quý nhân phò trợ, phát báu nhanh chóng." },
+            "Hợi": { "loai": "Bình", "text": "Thế bình hòa, vận trình ổn định, tiền tài đủ dùng, không có biến động lớn." }
+        },
+        "Càn": {
+            "Nhâm": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên trục trặc, thị phi quan trường, hao tổn tâm trí." },
+            "Tý": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, dâm loạn tà ác, gia phong suy bại, kiện cáo thị phi." },
+            "Quý": { "loai": "Hung", "text": "Phạm Lục Sát sát vị, gia đạo bất an, tinh thần hoang mang, tiền bạc hao tán." },
+            "Sửu": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi, làm ăn thua lỗ, gia đạo không yên." },
+            "Cấn": { "loai": "Cát", "text": "Thiên Y đắc vị, sức khỏe dồi dào, tài lộc gia tăng bền vững, đại cát lợi." },
+            "Dần": { "loai": "Cát", "text": "Thiên Y chính vị, tai qua nạn khỏi, quý nhân nâng đỡ, gia sản phát đạt." },
+            "Giáp": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán, tai họa bất ngờ, làm ăn lụi bại." },
+            "Mão": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, trộm cắp quấy phá, đề phòng hỏa hoạn và quan phi." },
+            "Ất": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, làm ăn thất bát, tiểu nhân quấy nhiễu, nội bộ bất hòa." },
+            "Thìn": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, gia sản tiêu tán, người nhà đau ốm, cực kỳ nguy hiểm." },
+            "Tốn": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe suy kiệt, làm ăn bế tắc, gia đạo chia rẽ." },
+            "Tỵ": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn huyết quang, tổn thương nhân đinh, đại hung." },
+            "Bính": { "loai": "Bình", "text": "Thế bình hòa tiểu hạn, tài lộc ra vào thất thường, lưu ý việc ký kết giấy tờ." },
+            "Ngọ": { "loai": "Bình", "text": "Phương vị bình hòa, vận trình trung bình, gia đạo ổn định, không có biến động lớn." },
+            "Đinh": { "loai": "Cát", "text": "Sinh Khí vượng cung, đại phát tài lộc, gia chủ thăng tiến, vạn sự như ý." },
+            "Mùi": { "loai": "Cát", "text": "Sinh Khí tối thượng, nhân đinh hưng vượng, con cái hiển đạt, phú quý song toàn." },
+            "Khôn": { "loai": "Cát", "text": "Diên Niên vượng khí, gia đình hạnh phúc, vợ chồng hòa hợp, trăm bề thuận lợi." },
+            "Thân": { "loai": "Cát", "text": "Diên Niên đắc vị, ngoại giao hanh thông, công danh thăng tiến, tài lộc dồi dào." },
+            "Canh": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh, tài lộc ổn định, cuộc sống bình yên." },
+            "Dậu": { "loai": "Cát", "text": "Phục Vị bản cung, giữ vững cơ nghiệp, gia sản thăng tiến, vạn sự cát tường." },
+            "Tân": { "loai": "Cát", "text": "Phục Vị vượng vị, công việc vững vàng, quý nhân trợ lực, tài lộc ổn định." },
+            "Tuất": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, người nhà đau ốm liên miên, tài lộc suy vi." },
+            "Càn": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt, công danh trắc trở, tiểu nhân hãm hại." },
+            "Hợi": { "loai": "Hung", "text": "Phạm Họa Hại phương vị, tổn hao tiền của, gia đạo hay xảy ra tranh chấp nhỏ." }
+        },
+        "Đoài": {
+            "Nhâm": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi, tiền bạc tiêu hao, tinh thần bất an." },
+            "Tý": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, người nhà đau ốm liên miên, tài lộc suy vi." },
+            "Quý": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt, công danh trắc trở, tiểu nhân hãm hại." },
+            "Sửu": { "loai": "Cát", "text": "Diên Niên đắc vị, phú quý thọ khang, gia đình hạnh phúc, công danh rạng rỡ." },
+            "Cấn": { "loai": "Cát", "text": "Diên Niên chính vị, ngoại giao thuận lợi, gia sản tăng tiến, vạn sự hanh thông." },
+            "Dần": { "loai": "Cát", "text": "Diên Niên vượng khí, gia đình hòa hợp, trăm bề thuận lợi, tài lộc tăng tiến." },
+            "Giáp": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, gia sản tiêu tán, người nhà đau ốm, cực kỳ nguy hiểm." },
+            "Mão": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe suy kiệt, làm ăn bế tắc, gia đạo chia rẽ." },
+            "Ất": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn huyết quang, tổn thương nhân đinh, đại hung." },
+            "Thìn": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên trục trặc, thị phi quan trường, hao tổn tâm trí." },
+            "Tốn": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, dâm loạn tà ác, gia phong suy bại, kiện cáo thị phi." },
+            "Tỵ": { "loai": "Hung", "text": "Phạm Lục Sát sát vị, gia đạo bất an, tinh thần hoang mang, tiền bạc hao tán." },
+            "Bính": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh, tài lộc ổn định, cuộc sống bình yên." },
+            "Ngọ": { "loai": "Cát", "text": "Phục Vị bản cung, giữ vững cơ nghiệp, gia sản thăng tiến, vạn sự cát tường." },
+            "Đinh": { "loai": "Cát", "text": "Phục Vị vượng vị, công việc vững vàng, quý nhân trợ lực, tài lộc ổn định." },
+            "Mùi": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán, tai họa bất ngờ, làm ăn lụi bại." },
+            "Khôn": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, trộm cắp quấy phá, đề phòng hỏa hoạn và quan phi." },
+            "Thân": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, làm ăn thất bát, tiểu nhân quấy nhiễu, nội bộ bất hòa." },
+            "Canh": { "loai": "Cát", "text": "Sinh Khí vượng cung, đại phát tài lộc, gia chủ thăng tiến, vạn sự như ý." },
+            "Dậu": { "loai": "Cát", "text": "Sinh Khí tối thượng, nhân đinh hưng vượng, con cái hiển đạt, phú quý song toàn." },
+            "Tân": { "loai": "Cát", "text": "Sinh Khí đắc vị, điền sản tăng tiến, công danh hanh thông, đại cát đại lợi." },
+            "Tuất": { "loai": "Cát", "text": "Thiên Y đắc vị, sức khỏe dồi dào, tài lộc gia tăng bền vững, đại cát lợi." },
+            "Càn": { "loai": "Cát", "text": "Thiên Y chính vị, tai qua nạn khỏi, quý nhân nâng đỡ, gia sản phát đạt." },
+            "Hợi": { "loai": "Bình", "text": "Thế bình hòa, vận trình tương đối ổn định, tiền tài vừa đủ, ít sóng gió." }
+        },
+        "Cấn": {
+            "Nhâm": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán, tai họa bất ngờ, làm ăn lụi bại." },
+            "Tý": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, trộm cắp quấy phá, đề phòng hỏa hoạn và quan phi." },
+            "Quý": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, làm ăn thất bát, tiểu nhân quấy nhiễu, nội bộ bất hòa." },
+            "Sửu": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh, tài lộc ổn định, cuộc sống bình yên." },
+            "Cấn": { "loai": "Cát", "text": "Phục Vị bản cung, giữ vững cơ nghiệp, gia sản thăng tiến, vạn sự cát tường." },
+            "Dần": { "loai": "Cát", "text": "Phục Vị vượng vị, công việc vững vàng, quý nhân trợ lực, tài lộc ổn định." },
+            "Giáp": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên trục trặc, thị phi quan trường, hao tổn tâm trí." },
+            "Mão": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, dâm loạn tà ác, gia phong suy bại, kiện cáo thị phi." },
+            "Ất": { "loai": "Hung", "text": "Phạm Lục Sát sát vị, gia đạo bất an, tinh thần hoang mang, tiền bạc hao tán." },
+            "Thìn": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi, làm ăn thua lỗ, gia đạo không yên." },
+            "Tốn": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, người nhà đau ốm liên miên, tài lộc suy vi." },
+            "Tỵ": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt, công danh trắc trở, tiểu nhân hãm hại." },
+            "Bính": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, gia sản tiêu tán, người nhà đau ốm, cực kỳ nguy hiểm." },
+            "Ngọ": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe suy kiệt, làm ăn bế tắc, gia đạo chia rẽ." },
+            "Đinh": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn huyết quang, tổn thương nhân đinh, đại hung." },
+            "Mùi": { "loai": "Cát", "text": "Diên Niên đắc vị, phú quý thọ khang, gia đình hạnh phúc, công danh rạng rỡ." },
+            "Khôn": { "loai": "Cát", "text": "Diên Niên chính vị, ngoại giao thuận lợi, gia sản tăng tiến, vạn sự hanh thông." },
+            "Thân": { "loai": "Cát", "text": "Diên Niên vượng khí, gia đình hòa hợp, trăm bề thuận lợi, tài lộc tăng tiến." },
+            "Canh": { "loai": "Cát", "text": "Sinh Khí vượng cung, đại phát tài lộc, gia chủ thăng tiến, vạn sự như ý." },
+            "Dậu": { "loai": "Cát", "text": "Sinh Khí tối thượng, nhân đinh hưng vượng, con cái hiển đạt, phú quý song toàn." },
+            "Tân": { "loai": "Cát", "text": "Sinh Khí đắc vị, điền sản tăng tiến, công danh hanh thông, đại cát đại lợi." },
+            "Tuất": { "loai": "Hung", "text": "Phạm cung Cô Quả, Tố Tụng. Khiến nội bộ gia đạo hay nghi kỵ, tranh chấp, dễ vướng luật pháp." },
+            "Càn": { "loai": "Cát", "text": "Đạt vị Thiên Y đại cát. Cửa chính đón được tài khí dồi dào, có quý nhân phò trợ phất lên nhanh chóng." },
+            "Hợi": { "loai": "Bình", "text": "Thế bình hòa tiểu hạn, hao tổn nhẹ về tài lộc, tiền bạc ra vào thất thường." }
+        },
+        "Ly": {
+            "Nhâm": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán, tai họa bất ngờ, làm ăn lụi bại." },
+            "Tý": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, trộm cắp quấy phá, đề phòng hỏa hoạn và quan phi." },
+            "Quý": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, làm ăn thất bát, tiểu nhân quấy nhiễu, nội bộ bất hòa." },
+            "Sửu": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi, làm ăn thua lỗ, gia đạo không yên." },
+            "Cấn": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, người nhà đau ốm liên miên, tài lộc suy vi." },
+            "Dần": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt, công danh trắc trở, tiểu nhân hãm hại." },
+            "Giáp": { "loai": "Cát", "text": "Sinh Khí vượng cung, đại phát tài lộc, gia chủ thăng tiến, vạn sự như ý." },
+            "Mão": { "loai": "Cát", "text": "Sinh Khí tối thượng, nhân đinh hưng vượng, con cái hiển đạt, phú quý song toàn." },
+            "Ất": { "loai": "Cát", "text": "Sinh Khí đắc vị, điền sản tăng tiến, công danh hanh thông, đại cát đại lợi." },
+            "Thìn": { "loai": "Cát", "text": "Thiên Y đắc vị, sức khỏe dồi dào, tài lộc gia tăng bền vững, đại cát lợi." },
+            "Tốn": { "loai": "Cát", "text": "Thiên Y chính vị, tai qua nạn khỏi, quý nhân nâng đỡ, gia sản phát đạt." },
+            "Tỵ": { "loai": "Cát", "text": "Thiên Y vượng vị, sức khỏe khang kiện, bệnh tật thuyên giảm, gia tăng phước thọ." },
+            "Bính": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh, tài lộc ổn định, cuộc sống bình yên." },
+            "Ngọ": { "loai": "Cát", "text": "Phục Vị bản cung, giữ vững cơ nghiệp, gia sản thăng tiến, vạn sự cát tường." },
+            "Đinh": { "loai": "Cát", "text": "Phục Vị vượng vị, công việc vững vàng, quý nhân trợ lực, tài lộc ổn định." },
+            "Mùi": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên trục trặc, thị phi quan trường, hao tổn tâm trí." },
+            "Khôn": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, dâm loạn tà ác, gia phong suy bại, kiện cáo thị phi." },
+            "Thân": { "loai": "Hung", "text": "Phạm Lục Sát sát vị, gia đạo bất an, tinh thần hoang mang, tiền bạc hao tán." },
+            "Canh": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, gia sản tiêu tán, người nhà đau ốm, cực kỳ nguy hiểm." },
+            "Dậu": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe suy kiệt, làm ăn bế tắc, gia đạo chia rẽ." },
+            "Tân": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn huyết quang, tổn thương nhân đinh, đại hung." },
+            "Tuất": { "loai": "Cát", "text": "Diên Niên đắc vị, phú quý thọ khang, gia đình hạnh phúc, công danh rạng rỡ." },
+            "Càn": { "loai": "Cát", "text": "Diên Niên chính vị, ngoại giao thuận lợi, gia sản tăng tiến, vạn sự hanh thông." },
+            "Hợi": { "loai": "Bình", "text": "Thế bình hòa, vận thế gia đạo trung bình, tiền tài vừa đủ tiêu pha, cần tiết kiệm." }
+        }
+    };
+
+    // Tra cứu tự động từ ma trận dữ liệu Bát Trạch Minh Châu
+    if (MaTranMinhChau[chủMệnh] && MaTranMinhChau[chủMệnh][sơnHiệnTại]) {
+        const duLieuMC = MaTranMinhChau[chủMệnh][sơnHiệnTại];
+        if (duLieuMC.loai === "Cát") {
+            luanDoanSonChiTiet = `<b style="color:var(--green);">[MINH CHÂU CÁT SƠN]</b> Sơn ${sơnHiệnTại} (${sơnHiệnTạiObj.huong}): ${duLieuMC.text}`;
+        } else if (duLieuMC.loai === "Hung") {
+            luanDoanSonChiTiet = `<b style="color:var(--red);">[MINH CHÂU HUNG SƠN]</b> Sơn ${sơnHiệnTại} (${sơnHiệnTạiObj.huong}): <span style="color:#ff9f0a;">${duLieuMC.text}</span>`;
+        } else {
+            luanDoanSonChiTiet = `<b style="color:var(--gray);">[MINH CHÂU BÌNH VỊ]</b> Sơn ${sơnHiệnTại} (${sơnHiệnTạiObj.huong}): ${duLieuMC.text}`;
+        }
     } else {
-      luanDoanSonChiTiet =
-        `Tọa độ la bàn đang khớp vào địa phận <span class="gold-text">Sơn ${sơnHiệnTại}</span> thuộc phương ${sơnHiệnTạiObj.huong}. Sắp xếp bố cục nạp khí cân bằng theo thông số hiển thị.`;
+        luanDoanSonChiTiet = `Tọa độ la bàn đang trùng khớp vào <span class="gold-text">Sơn ${sơnHiệnTại}</span> thuộc phương ${sơnHiệnTạiObj.huong}. Khí trường vận hành tự nhiên theo quy luật bản mệnh Bát Trạch.`;
     }
+
     judgmentBox.removeAttribute("style");
     // XỬ LÝ HIỂN THỊ LUẬN GIẢI THEO MỤC ĐÍCH XEM PHONG THỦY
     if (!mụcĐích) {
