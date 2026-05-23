@@ -1337,16 +1337,7 @@ function updateCompassUI(heading) {
         <span class="element-badge" style="background: #3a3a3c;">Phương vị: ${hànhPhươngVị}</span>
         <span class="element-badge" style="background: #2c2c2e; color: var(--gold)">Mệnh Cung: ${hànhMệnhChủ}</span>
     `;
-// Đẩy dữ liệu phong thủy vào hệ thống Lưới Grid thời gian thực
-document.getElementById('gridPhuongVi').innerText = hànhPhươngVị;
-document.getElementById('gridMenhCung').innerText = hànhMệnhChủ;
 
-// Tính toán năm âm lịch tự động dựa trên hàm có sẵn của anh
-if (typeof quyDoiNamDuongSangAm === "function") {
-    document.getElementById('gridNamAm').innerText = quyDoiNamDuongSangAm(parseInt(yearStr));
-} else {
-    document.getElementById('gridNamAm').innerText = yearStr;
-}
     const cungTrạch = bátTrạchMap[chủMệnh][currentCode];
     const thôngTinCung = cungPhầnTrăm[cungTrạch];
     const mụcĐích = document.getElementById('purpose').value;
@@ -1507,37 +1498,13 @@ if (typeof quyDoiNamDuongSangAm === "function") {
     }
 }
 
-        let lastHeading = 0;
-const alphaSmoothFactor = 0.22; // Bộ lọc làm mượt: giá trị từ 0.1 đến 0.3 giúp kim quay cực mượt mà không bị trễ
+        function handleOrientation(event) {
+            let heading = event.webkitCompassHeading || (event.alpha ? (360 - event.alpha) : null);
+            if (heading !== null) { 
+                updateCompassUI(heading); 
+            }
+        }
 
-function handleOrientation(event) {
-    let heading = null;
-
-    // 1. Kiểm tra thiết bị iOS (iPhone/iPad) ưu tiên hướng Bắc thực địa tuyệt đối
-    if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
-        heading = event.webkitCompassHeading;
-    } 
-    // 2. Nếu là thiết bị Android, tự động đảo góc chuẩn hóa hướng Bắc
-    else if (event.alpha !== undefined && event.alpha !== null) {
-        heading = 360 - event.alpha;
-    }
-
-    // 3. Nếu lấy được dữ liệu góc hướng, tiến hành lọc nhiễu chống xoay vòng vòng
-    if (heading !== null) {
-        let diff = heading - lastHeading;
-        
-        // Chuẩn hóa góc sai biệt trong phạm vi -180 đến 180 độ để tránh kim bị quay ngược vòng khi qua điểm 0°
-        if (diff > 180) diff -= 360;
-        if (diff < -180) diff += 360;
-        
-        // Áp dụng bộ lọc nội suy làm mượt chuyển động của đĩa la bàn
-        heading = lastHeading + diff * alphaSmoothFactor;
-        lastHeading = (heading % 360 + 360) % 360;
-
-        // Cập nhật giao diện đĩa la bàn chuyển động theo độ số mượt mà
-        updateCompassUI(lastHeading);
-    }
-}
         function manualRotate(value) { 
             updateCompassUI(value); 
         }
