@@ -709,6 +709,18 @@
     opacity: 0.7;
     transform: scale(0.95);
   }
+  /* Đảm bảo bảng nhập liệu luôn có chiều rộng ổn định */
+.user-input-panel, .saved-list-panel {
+    width: 100%;
+    max-width: 500px; /* Hoặc tùy chỉnh theo chiều rộng la bàn của bạn */
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* Hiệu ứng mượt mà khi ẩn hiện */
+#mainPanelWrapper {
+    overflow: hidden;
+}
   </style>
 </head>
 
@@ -719,9 +731,9 @@
     <div class="header-copyright">&copy; BẢN QUYỀN HỆ THỐNG: THÁI THÔNG</div>
 </div>
 
-<div id="toggleControl" style="text-align: center; cursor: pointer; background: #222; padding: 10px; border: 1px solid #b58e4b; color: #dfb76c; margin: 10px auto; width: 90%; border-radius: 8px; font-weight: bold;" onclick="togglePanel()">
+<center><div id="toggleControl" style="text-align: center; cursor: pointer; background: #222; padding: 10px; border: 1px solid #b58e4b; color: #dfb76c; margin: 10px auto; width: 90%; border-radius: 8px; font-weight: bold;" onclick="togglePanel()">
     <span id="toggleLabel">▲ THU GỌN BẢNG NHẬP LIỆU</span>
-</div>
+</div></center>
 
 <div id="mainPanelWrapper" style="display: block;">
     <div class="user-input-panel">
