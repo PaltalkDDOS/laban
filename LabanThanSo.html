@@ -709,17 +709,16 @@
     opacity: 0.7;
     transform: scale(0.95);
   }
-  /* Đảm bảo bảng nhập liệu luôn có chiều rộng ổn định */
-.user-input-panel, .saved-list-panel {
-    width: 100%;
-    max-width: 500px; /* Hoặc tùy chỉnh theo chiều rộng la bàn của bạn */
-    margin: 0 auto;
-    box-sizing: border-box;
+  .user-input-panel {
+    font-size: 12px; /* Chữ nhỏ hơn */
 }
-
-/* Hiệu ứng mượt mà khi ẩn hiện */
-#mainPanelWrapper {
-    overflow: hidden;
+.form-group label {
+    font-size: 11px;
+    margin-bottom: 2px;
+}
+.form-group input, .form-group select {
+    padding: 4px; /* Thu nhỏ các ô nhập liệu */
+    height: 30px;
 }
   </style>
 </head>
@@ -731,76 +730,66 @@
     <div class="header-copyright">&copy; BẢN QUYỀN HỆ THỐNG: THÁI THÔNG</div>
 </div>
 
-<center><div id="toggleControl" style="text-align: center; cursor: pointer; background: #222; padding: 10px; border: 1px solid #b58e4b; color: #dfb76c; margin: 10px auto; width: 90%; border-radius: 8px; font-weight: bold;" onclick="togglePanel()">
-    <span id="toggleLabel">▲ THU GỌN BẢNG NHẬP LIỆU</span>
-</div></center>
+<div id="mainPanelWrapper" style="position: relative; border: 1px solid #333; background: #161616; padding: 15px; border-radius: 12px; margin: 10px auto; width: 95%; max-width: 500px; display: flex; flex-direction: column; align-items: center; transition: all 0.3s ease;">
+    
+    <div id="toggleArrow" onclick="togglePanel()" style="position: absolute; top: 10px; right: 15px; cursor: pointer; color: #dfb76c; font-size: 20px; font-weight: bold; z-index: 100;">
+        ▲
+    </div>
 
-<div id="mainPanelWrapper" style="display: block;">
-    <div class="user-input-panel">
-        <div class="form-row">
-            <div class="form-group" style="flex: 1.2;">
-                <label>Họ tên chủ mệnh:</label>
-                <input type="text" id="userName" value="Người Tầm Phương" onfocus="if(this.value==='Người Tầm Phương') { this.value=''; this.style.color='#fff'; }"
-                onblur="if(this.value.trim()==='') { this.value='Người Tầm Phương'; this.style.color='#aaa'; }" oninput="recalculateFate()">
-            </div>
-            <div class="form-group" style="flex: 0.8;">
-                <label>Giới tính:</label>
-                <select id="gender" onchange="recalculateFate()">
-                    <option value="male">Nam Mạng</option>
-                    <option value="female">Nữ Mạng</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>Ngày tháng năm sinh (Dương lịch):</label>
-                <div class="date-input-container">
-                    <input type="text" id="birthDay" placeholder="Ngày (DD)" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthMonth')" style="text-align: center;">
-                    <input type="text" id="birthMonth" placeholder="Tháng (MM)" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthYear')" style="text-align: center;">
-                    <input type="text" id="birthYear" placeholder="Năm (YYYY)" maxlength="4" inputmode="numeric" oninput="handleDateInput(this, null)" style="text-align: center;">
+    <div id="panelContent" style="width: 100%;">
+        <div class="user-input-panel">
+            <div class="form-row">
+                <div class="form-group" style="flex: 1.2;">
+                    <label>Họ tên chủ mệnh:</label>
+                    <input type="text" id="userName" value="Người Tầm Phương" onfocus="if(this.value==='Người Tầm Phương') { this.value=''; this.style.color='#fff'; }" onblur="if(this.value.trim()==='') { this.value='Người Tầm Phương'; this.style.color='#aaa'; }" oninput="recalculateFate()">
+                </div>
+                <div class="form-group" style="flex: 0.8;">
+                    <label>Giới tính:</label>
+                    <select id="gender" onchange="recalculateFate()">
+                        <option value="male">Nam Mạng</option>
+                        <option value="female">Nữ Mạng</option>
+                    </select>
                 </div>
             </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Ngày tháng năm sinh (Dương lịch):</label>
+                    <div class="date-input-container">
+                        <input type="text" id="birthDay" placeholder="DD" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthMonth')" style="text-align: center;">
+                        <input type="text" id="birthMonth" placeholder="MM" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthYear')" style="text-align: center;">
+                        <input type="text" id="birthYear" placeholder="YYYY" maxlength="4" inputmode="numeric" oninput="handleDateInput(this, null)" style="text-align: center;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label>Mục đích tầm phương vị:</label>
+                <select id="purpose" onchange="recalculateFate()">
+                    <option value="">-- Chọn mục đích xem --</option>
+                    <option value="house">Hướng Nhà, Cửa Chính</option>
+                    <option value="altar">Hướng đặt Bàn Thờ</option>
+                    <option value="bed">Hướng đầu Giường Ngủ</option>
+                    <option value="workspace">Hướng bàn Làm việc</option>
+                    <option value="kitchen">Vị trí đặt Bếp Nấu</option>
+                    <option value="toilet">Vị trí Nhà vệ sinh / WC</option>
+                    <option value="safe">Vị trí két sắt / Tài lộc</option>
+                    <option value="gate">Hướng Cổng chính</option>
+                    <option value="storage">Vị trí Kho / Tủ đồ</option>
+                </select>
+            </div>
+
+            <div class="btn-action-row">
+                <button class="btn-main" onclick="saveCurrentMember()">Lưu Tuổi</button>
+                <button class="btn-reset" id="btnReset" onclick="clearAllData()">Làm mới</button>
+            </div>
         </div>
 
-        <div class="form-group" style="margin-bottom: 6px;">
-            <label>Mục đích tầm phương vị dương trạch:</label>
-            <select id="purpose" onchange="recalculateFate()">
-                <option value="">-- Xem hướng tự do nguyên bản (Không áp bộ lọc đồ đạc) --</option>
-                <option value="house">Xem hướng Nhà, Cửa Chính (Cần Hướng Cát)</option>
-                <option value="altar">Xem hướng đặt BÀN THỜ (Cần Hướng Cát)</option>
-                <option value="bed">Xem hướng đầu GIƯỜNG NGỦ (Cần Hướng Cát)</option>
-                <option value="workspace">Xem hướng đặt BÀN LÀM VIỆC (Cần Hướng Cát)</option>
-                <option value="kitchen">Xem vị trí đặt BẾP NẤU (Tọa Hung Hướng Cát)</option>
-                <option value="toilet">Xem vị trí nhà vệ sinh / WC (Tọa Hung giải uế)</option>
-            </select>
+        <div class="saved-list-panel" id="savedPanel" style="display: none; margin-top: 10px;">
+            <div class="saved-container" id="savedContainer"></div>
         </div>
-
-        <div class="btn-action-row">
-            <button class="btn-main" onclick="saveCurrentMember()">Lưu Tuổi Gia Đình</button>
-            <button class="btn-reset" id="btnReset" onclick="clearAllData()">Làm Mới Trang</button>
-        </div>
-    </div>
-
-    <div class="saved-list-panel" id="savedPanel" style="display: none;">
-        <div class="saved-container" id="savedContainer"></div>
     </div>
 </div>
-
-<script>
-    function togglePanel() {
-        const wrapper = document.getElementById('mainPanelWrapper');
-        const label = document.getElementById('toggleLabel');
-        if (wrapper.style.display === 'none') {
-            wrapper.style.display = 'block';
-            label.innerHTML = '▲ THU GỌN BẢNG NHẬP LIỆU';
-        } else {
-            wrapper.style.display = 'none';
-            label.innerHTML = '▼ MỞ BẢNG NHẬP LIỆU';
-        }
-    }
-</script>
-
 <div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #222222; border-radius: 50%; box-shadow: 0 8px 30px rgba(0,0,0,0.4); border: 5px solid #b58e4b; overflow: hidden;">
 
   <div class="cross-line-v" style="position: absolute; width: 1px; height: 100%; left: 50%; top: 0; background: rgba(255, 59, 48, 0.4); z-index: 10; pointer-events: none;"></div>
