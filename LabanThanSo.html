@@ -1829,7 +1829,24 @@ function tinhHanCuuTinhTheoNam(huong, namHienTai) {
 
     return { thongTinSao: thongTinSao, meoGiaiHan: meoGiaiHan };
 }
-
+function requestPermission() {
+            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                DeviceOrientationEvent.requestPermission()
+                    .then(permissionState => {
+                        if (permissionState === 'granted') {
+                            window.addEventListener('deviceorientation', handleOrientation, true);
+                            permBtn.style.display = 'none';
+                        } else {
+                            showCustomAlert("Quyền truy cập cảm biến bị từ chối. Bạn vẫn có thể xoay la bàn thủ công bằng thanh gạt kéo.");
+                        }
+                    })
+                    .catch(console.error);
+            } else {
+                window.addEventListener('deviceorientation', handleOrientation, true);
+                showCustomAlert("Cảm biến hướng đã được kích hoạt tự động (nếu thiết bị có hỗ trợ phần cứng).");
+                permBtn.style.display = 'none';
+            }
+        }
         window.onload = function() {
             render24SonRing();
             loadSavedMembers();
