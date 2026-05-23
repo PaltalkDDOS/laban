@@ -6,6 +6,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Đại Thuật La Kinh Phong Thủy Tối Thượng - Thái Thông</title>
   <style>
+  /* Cấu hình màu sắc mặc định (Chế độ Sáng) */
+  .compass-container {
+    --bg-ring-1: #fdfaf2;
+    --bg-ring-2: #fffcf7;
+    --bg-ring-3: #fffdfa;
+    --bg-ring-4: #f7f2e8;
+    --bg-ring-5: #fdfaf2;
+    --bg-ring-6: #fffdfa;
+    
+    --stroke-main: #b58e4b;
+    --stroke-sub: rgba(181, 142, 75, 0.6);
+    --stroke-khe: rgba(181, 142, 75, 0.7);
+    
+    --text-dong-tay: #00a525;
+    --text-phu: #6b4e18;
+    --text-brand: rgba(181, 142, 75, 0.45);
+    
+    --bg-batquai-white: #fffdfa;
+    --bg-batquai-red: #ffebeb;
+    --bg-center-sub: #fff2f2;
+    
+    color-scheme: light dark;
+  }
+
+  /* Cấu hình màu sắc cao cấp khi thiết bị bật CHẾ ĐỘ TỐI (Dark Mode) */
+  @media (prefers-color-scheme: dark) {
+    .compass-container {
+      /* Dải màu đồng tâm chuyển sang tone xám đen huyền bí, có độ tương phản xen kẽ nhau */
+      --bg-ring-1: #1e1e1e;
+      --bg-ring-2: #141414;
+      --bg-ring-3: #1a1a1a;
+      --bg-ring-4: #111111;
+      --bg-ring-5: #181818;
+      --bg-ring-6: #0f0f0f;
+      
+      /* Tăng sáng đường viền vàng kim để nổi bật trên nền tối */
+      --stroke-main: #dfb76c;
+      --stroke-sub: rgba(223, 183, 108, 0.55);
+      --stroke-khe: rgba(223, 183, 108, 0.65);
+      
+      /* Đổi chữ Đông - Tây sang màu xanh Neon dịu để nhìn cực rõ ban đêm */
+      --text-dong-tay: #30d158;
+      /* Các hướng phụ đổi sang màu vàng cát sáng */
+      --text-phu: #d2b48c;
+      --text-brand: rgba(223, 183, 108, 0.5);
+      
+      /* Tâm bát quái chế độ tối giảm độ chói nhưng tăng độ ma mị */
+      --bg-batquai-white: #1c1a17;
+      --bg-batquai-red: #2c1414;
+      --bg-center-sub: #220b0b;
+    }
+  }
   :root {
     --gold: #dfb76c;
     --dark: #070707;
@@ -806,10 +858,10 @@
     }
 </script>
 
-<div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #1a1a1a; border-radius: 50%; box-shadow: 0 12px 35px rgba(0,0,0,0.5); border: 6px solid #b58e4b; overflow: hidden; color-scheme: light !important;">
+<div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #1a1a1a; border-radius: 50%; box-shadow: 0 12px 35px rgba(0,0,0,0.6); border: 6px solid var(--stroke-main); overflow: hidden;">
 
-  <div class="cross-line-v" style="position: absolute; width: 1.2px; height: 100%; left: 50%; top: 0; background: rgba(255, 59, 48, 0.45); z-index: 10; pointer-events: none;"></div>
-  <div class="cross-line-h" style="position: absolute; height: 1.2px; width: 100%; top: 50%; left: 0; background: rgba(255, 59, 48, 0.45); z-index: 10; pointer-events: none;"></div>
+  <div class="cross-line-v" style="position: absolute; width: 1.2px; height: 100%; left: 50%; top: 0; background: rgba(255, 59, 48, 0.5); z-index: 10; pointer-events: none;"></div>
+  <div class="cross-line-h" style="position: absolute; height: 1.2px; width: 100%; top: 50%; left: 0; background: rgba(255, 59, 48, 0.5); z-index: 10; pointer-events: none;"></div>
 
   <div class="north-pointer" style="position: absolute; top: 4px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-bottom: 18px solid #ff3b30; z-index: 12; pointer-events: none;"></div>
 
@@ -819,18 +871,18 @@
   <div class="center-pin" style="position: absolute; width: 10px; height: 10px; background: #ff3b30; border: 2px solid #fff; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; pointer-events: none;"></div>
 
   <div class="compass-dial" id="compass" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center; transition: transform 0.1s ease-out;">
-    <svg viewBox="0 0 500 500" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; color-scheme: light !important; background: transparent;">
+    <svg viewBox="0 0 500 500" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; background: transparent;">
       
-      <circle cx="250" cy="250" r="244" fill="#fdfaf2" stroke="#b58e4b" stroke-width="3" style="mix-blend-mode: normal !important;" />
-      <circle cx="250" cy="250" r="226" fill="#fffcf7" stroke="#b58e4b" stroke-width="1.2" style="mix-blend-mode: normal !important;" />
-      <circle cx="250" cy="250" r="185" fill="#fffdfa" stroke="#b58e4b" stroke-width="1.2" style="mix-blend-mode: normal !important;" />
-      <circle cx="250" cy="250" r="148" fill="#f7f2e8" stroke="#b58e4b" stroke-width="1.2" style="mix-blend-mode: normal !important;" />
-      <circle cx="250" cy="250" r="110" fill="#fdfaf2" stroke="#b58e4b" stroke-width="1.5" style="mix-blend-mode: normal !important;" />
-      <circle cx="250" cy="250" r="70" fill="#fffdfa" stroke="#b58e4b" stroke-width="2.5" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="244" fill="var(--bg-ring-1)" stroke="var(--stroke-main)" stroke-width="3" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="226" fill="var(--bg-ring-2)" stroke="var(--stroke-main)" stroke-width="1.2" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="185" fill="var(--bg-ring-3)" stroke="var(--stroke-main)" stroke-width="1.2" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="148" fill="var(--bg-ring-4)" stroke="var(--stroke-main)" stroke-width="1.2" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="110" fill="var(--bg-ring-5)" stroke="var(--stroke-main)" stroke-width="1.5" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="70" fill="var(--bg-ring-6)" stroke="var(--stroke-main)" stroke-width="2.5" style="mix-blend-mode: normal !important;" />
 
-      <g stroke="rgba(181, 142, 75, 0.6)" stroke-width="1" id="vachDoRing"></g>
+      <g stroke="var(--stroke-sub)" stroke-width="1" id="vachDoRing"></g>
 
-      <g stroke="#b58e4b" stroke-width="1.8" opacity="0.85">
+      <g stroke="var(--stroke-main)" stroke-width="1.8" opacity="0.85">
         <line x1="250" y1="6" x2="250" y2="110" transform="rotate(22.5, 250, 250)" />
         <line x1="250" y1="6" x2="250" y2="110" transform="rotate(67.5, 250, 250)" />
         <line x1="250" y1="6" x2="250" y2="110" transform="rotate(112.5, 250, 250)" />
@@ -841,24 +893,24 @@
         <line x1="250" y1="6" x2="250" y2="110" transform="rotate(337.5, 250, 250)" />
       </g>
 
-      <g stroke="rgba(181, 142, 75, 0.7)" stroke-width="1.5" id="khe24SonRing"></g>
+      <g stroke="var(--stroke-khe)" stroke-width="1.5" id="khe24SonRing"></g>
 
       <g id="sonRingSvg"></g>
       <g id="phucDucRingSvg"></g>
 
       <g id="tamBatQuaiMau" style="mix-blend-mode: normal !important;">
-        <circle cx="250" cy="250" r="70" fill="none" stroke="#b58e4b" stroke-width="1" />
+        <circle cx="250" cy="250" r="70" fill="none" stroke="var(--stroke-main)" stroke-width="1" />
         
-        <path d="M250,250 L223.2,185.3 A70,70 0 0,1 276.8,185.3 Z" fill="#ffebeb" stroke="#ff3b30" stroke-width="0.8" />
-        <path d="M250,250 L276.8,185.3 A70,70 0 0,1 314.7,223.2 Z" fill="#fffdfa" stroke="#b58e4b" stroke-width="0.8" />
-        <path d="M250,250 L314.7,223.2 A70,70 0 0,1 314.7,276.8 Z" fill="#ffebeb" stroke="#ff3b30" stroke-width="0.8" />
-        <path d="M250,250 L314.7,276.8 A70,70 0 0,1 276.8,314.7 Z" fill="#fffdfa" stroke="#b58e4b" stroke-width="0.8" />
-        <path d="M250,250 L276.8,314.7 A70,70 0 0,1 223.2,314.7 Z" fill="#ffebeb" stroke="#ff3b30" stroke-width="0.8" />
-        <path d="M250,250 L223.2,314.7 A70,70 0 0,1 185.3,276.8 Z" fill="#fffdfa" stroke="#b58e4b" stroke-width="0.8" />
-        <path d="M250,250 L185.3,276.8 A70,70 0 0,1 185.3,223.2 Z" fill="#ffebeb" stroke="#ff3b30" stroke-width="0.8" />
-        <path d="M250,250 L185.3,223.2 A70,70 0 0,1 223.2,185.3 Z" fill="#fffdfa" stroke="#b58e4b" stroke-width="0.8" />
+        <path d="M250,250 L223.2,185.3 A70,70 0 0,1 276.8,185.3 Z" fill="var(--bg-batquai-red)" stroke="#ff3b30" stroke-width="0.8" />
+        <path d="M250,250 L276.8,185.3 A70,70 0 0,1 314.7,223.2 Z" fill="var(--bg-batquai-white)" stroke="var(--stroke-main)" stroke-width="0.8" />
+        <path d="M250,250 L314.7,223.2 A70,70 0 0,1 314.7,276.8 Z" fill="var(--bg-batquai-red)" stroke="#ff3b30" stroke-width="0.8" />
+        <path d="M250,250 L314.7,276.8 A70,70 0 0,1 276.8,314.7 Z" fill="var(--bg-batquai-white)" stroke="var(--stroke-main)" stroke-width="0.8" />
+        <path d="M250,250 L276.8,314.7 A70,70 0 0,1 223.2,314.7 Z" fill="var(--bg-batquai-red)" stroke="#ff3b30" stroke-width="0.8" />
+        <path d="M250,250 L223.2,314.7 A70,70 0 0,1 185.3,276.8 Z" fill="var(--bg-batquai-white)" stroke="var(--stroke-main)" stroke-width="0.8" />
+        <path d="M250,250 L185.3,276.8 A70,70 0 0,1 185.3,223.2 Z" fill="var(--bg-batquai-red)" stroke="#ff3b30" stroke-width="0.8" />
+        <path d="M250,250 L185.3,223.2 A70,70 0 0,1 223.2,185.3 Z" fill="var(--bg-batquai-white)" stroke="var(--stroke-main)" stroke-width="0.8" />
 
-        <circle cx="250" cy="250" r="36" fill="#fff2f2" stroke="#ff3b30" stroke-width="1.5" />
+        <circle cx="250" cy="250" r="36" fill="var(--bg-center-sub)" stroke="#ff3b30" stroke-width="1.5" />
       </g>
 
       <g stroke-width="2.2" fill="none" stroke-linecap="square" style="mix-blend-mode: normal !important;">
@@ -912,14 +964,14 @@
           <text x="250" y="34" fill="#ff3b30" transform="rotate(180, 250, 250)" data-goc="180">NAM</text>
           <text x="250" y="52" font-size="12" font-weight="bold" fill="#ff3b30" transform="rotate(180, 250, 250)" data-goc="180">LY</text>
           
-          <text x="250" y="34" fill="#00a525" transform="rotate(90, 250, 250)" data-goc="90">ĐÔNG</text>
-          <text x="250" y="52" font-size="12" font-weight="bold" fill="#00a525" transform="rotate(90, 250, 250)" data-goc="90">CHẤN</text>
+          <text x="250" y="34" fill="var(--text-dong-tay)" transform="rotate(90, 250, 250)" data-goc="90">ĐÔNG</text>
+          <text x="250" y="52" font-size="12" font-weight="bold" fill="var(--text-dong-tay)" transform="rotate(90, 250, 250)" data-goc="90">CHẤN</text>
           
-          <text x="250" y="34" fill="#00a525" transform="rotate(270, 250, 250)" data-goc="270">TÂY</text>
-          <text x="250" y="52" font-size="12" font-weight="bold" fill="#00a525" transform="rotate(270, 250, 250)" data-goc="270">ĐOÀI</text>
+          <text x="250" y="34" fill="var(--text-dong-tay)" transform="rotate(270, 250, 250)" data-goc="270">TÂY</text>
+          <text x="250" y="52" font-size="12" font-weight="bold" fill="var(--text-dong-tay)" transform="rotate(270, 250, 250)" data-goc="270">ĐOÀI</text>
         </g>
         
-        <g font-weight="800" font-size="14" fill="#6b4e18">
+        <g font-weight="800" font-size="14" fill="var(--text-phu)">
           <text x="250" y="34" transform="rotate(45, 250, 250)" data-goc="45">Đ.BẮC</text>
           <text x="250" y="49" font-size="11" font-weight="bold" transform="rotate(45, 250, 250)" data-goc="45">CẤN</text>
           
@@ -934,7 +986,7 @@
         </g>
       </g>
 
-      <text x="250" y="286" font-family="sans-serif" font-size="8" font-weight="bold" fill="rgba(181, 142, 75, 0.45)" text-anchor="middle" letter-spacing="1.5">THÁI THÔNG</text>
+      <text x="250" y="286" font-family="sans-serif" font-size="8" font-weight="bold" fill="var(--text-brand)" text-anchor="middle" letter-spacing="1.5">THÁI THÔNG</text>
     </svg>
     <div id="sonRing" style="display: none;"></div>
   </div>
