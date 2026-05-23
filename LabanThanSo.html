@@ -1761,16 +1761,13 @@ const ConfigPhongThuy = {
     let colorStar = "var(--gold)";
     if (item.loai === 'best' || item.loai === 'good') colorStar = "var(--green)";
     if (item.loai === 'worst' || item.loai === 'bad') colorStar = "var(--red)";
-    return
-      `
-        <br><br>
+    return `<br><br>
         <span style="font-weight: bold; font-size: 0.95rem; display: inline-block; margin-bottom: 6px; color: #0a84ff;">
             ◆ THIÊN THỜI THỜI VẬN - HUYỀN KHÔNG PHI TINH VẬN ${vanSo} (${currentYear}):
         </span><br>
         <span style="color: #ffffff;"><strong style="color: ${colorStar};">[Tọa Tinh Đáo Hướng]:</strong> Phương vị hiện tại đang được cai quản bởi đại tinh <strong style="color: ${colorStar};">${item.sao}</strong>.</span><br>
-        <span style="color: #ffffff;"><strong style="color: #0a84ff;">[Tác Động Thời Vận]:</strong> ${item.y_nghia}</span>
-    `;
-  }
+        <span style="color: #ffffff;"><strong style="color: #0a84ff;">[Tác Động Thời Vận]:</strong> ${item.y_nghia}</span>`;
+}
 
   function sinhMatPhapHoaGiai(mucDich, cungSat, hanhChu, phuongHuong, code) {
     let hanhPhuongVi = phươngVịThiếtLập[code].ngũHành;
@@ -1896,16 +1893,13 @@ const ConfigPhongThuy = {
       thuyetMinhViTri =
         `Khu vực xả uế đặt đè lên cát tinh làm tổn hại tài lộc. Chiếu theo mật pháp đối sánh: ${phuongPhapBaoQuoc}`;
     }
-    return
-      `
-        <br><br>
+    return `<br><br>
         <span style="font-weight: bold; font-size: 0.95rem; display: inline-block; margin-bottom: 6px; color: var(--red);">
             ◆ MẬT PHÁP ĐẠI THUẬT HÓA GIẢI LIÊN HOÀN (HUNG TINH × PHƯƠNG VỊ × MỆNH CHỦ):
         </span><br>
         <span style="color: #ffffff;"><strong style="color: var(--red);">[Phân Tích Bản Chất]:</strong> ${thuyetMinhViTri}</span><br><br>
-        <span style="color: #ffffff;"><strong style="color: var(--red);">[Mật Pháp Vật Phẩm Tối Thượng]:</strong> ${vatPhamToiThuong}</span>
-    `;
-  }
+        <span style="color: #ffffff;"><strong style="color: var(--red);">[Mật Pháp Vật Phẩm Tối Thượng]:</strong> ${vatPhamToiThuong}</span>`;
+}
 
   function updateCompassUI(heading) {
     currentHeading = Math.round(heading);
