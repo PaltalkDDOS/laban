@@ -1600,7 +1600,7 @@
 // ====================== BIẾN GLOBAL ======================
 let isDetailOpen = false;
 
-// ====================== HÀM HỖ TRỢ (giữ nguyên) ======================
+// ====================== HÀM HỖ TRỢ ======================
 function getHanhByHeading(heading) {
     heading = ((heading % 360) + 360) % 360;
     if (heading >= 337.5 || heading < 22.5) return "Thủy";
@@ -1634,13 +1634,13 @@ function getTuongQuan(huong, menh) {
     return "Quan hệ bình hòa - Cân bằng.";
 }
 
-// ====================== TOGGLE ĐÃ SỬA ======================
+// ====================== TOGGLE (ĐÃ TỐI ƯU) ======================
 function toggleDienGiaiChiTiet() {
     isDetailOpen = !isDetailOpen;
-    recalculateFate();        // ← Quan trọng: Gọi lại toàn bộ để render mới
+    recalculateFate();           // Quan trọng: Gọi lại để render mới hoàn toàn
 }
 
-// ====================== HÀM CHÍNH ĐÃ SỬA ======================
+// ====================== HÀM CHÍNH (ĐÃ HOÀN THIỆN) ======================
 function recalculateFate() {
     const name = document.getElementById('userName').value || "Chủ mệnh";
     const gender = document.getElementById('gender').value;
@@ -1668,7 +1668,7 @@ function recalculateFate() {
         return;
     }
 
-    // Tính toán
+    // Tính toán cơ bản
     chủMệnh = tínhCungPhi(y, m, d, gender);
     const namAm = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
     const nguHoangInfo = getNguHoangInfo(namAm);
@@ -1685,7 +1685,7 @@ function recalculateFate() {
     // Luận giải
     const lyGiaiCungPhi = `<b>Bản mệnh Bát Trạch:</b> Cung Phi của bạn là <b>${chủMệnh}</b> (${hanhCungPhi}), được xác định theo năm âm lịch ${namAm} và giới tính.`;
 
-    let lyGiaiHungCat = nguHoangInfo.includes("Ngũ Hoàng") 
+    let lyGiaiHungCat = nguHoangInfo.includes("Ngũ Hoàng")
         ? `⚠️ <b>Năm ${namAm} - Ngũ Hoàng Đại Sát:</b> Hung tinh mạnh nhất chiếu vào Trung Cung. Tuyệt đối tránh động thổ, sửa chữa lớn ở giữa nhà.`
         : (nguHoangInfo.includes("Tam Bích") || nguHoangInfo.includes("Tứ Lục"))
             ? `Năm ${namAm} có khí trung bình. Nên giữ trung tâm nhà thông thoáng, sạch sẽ.`
@@ -1709,14 +1709,14 @@ function recalculateFate() {
         fateTxt.parentNode.insertBefore(targetContainer, fateTxt.nextSibling);
     }
 
-    // Màu viền
+    // Màu viền động
     let borderColor = "var(--gold)";
     const tuongQuanText = getTuongQuan(hanhPhuongVi, hanhCungPhi);
     if (tuongQuanText.includes("Đại cát") || tuongQuanText.includes("Tương sinh")) borderColor = "#30d158";
     else if (tuongQuanText.includes("Hung") || tuongQuanText.includes("khắc Mệnh")) borderColor = "#ff3b30";
     else if (tuongQuanText.includes("Mệnh khắc Hướng")) borderColor = "#ff9500";
 
-    // Render lại toàn bộ
+    // Render
     targetContainer.innerHTML = `
         <div style="text-align: center; margin: 12px 0;">
             <button onclick="toggleDienGiaiChiTiet()" 
@@ -1729,7 +1729,7 @@ function recalculateFate() {
         <div id="content-dien-giai-chi-tiet" style="display: ${isDetailOpen ? 'block' : 'none'};
              margin: 10px 0; padding: 16px; background: rgba(223, 183, 108, 0.05);
              border: 1.5px solid ${borderColor}; border-radius: 8px; font-size: 0.88rem;
-             line-height: 1.75; text-align: left;">
+             line-height: 1.75; text-align: left; transition: all 0.3s ease;">
             
             <p style="margin: 0 0 12px 0; color: var(--gold); font-weight: bold;
                       border-bottom: 1px solid var(--gold); padding-bottom: 8px;">
