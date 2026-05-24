@@ -1655,7 +1655,7 @@ function recalculateFate() {
     }
 
     // Tính toán mệnh
-    const chủMệnh = tínhCungPhi(y, m, d, gender);        // ← Đã fix (thêm const)
+    const chủMệnh = tínhCungPhi(y, m, d, gender);
     const namAm = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
     const nguHoangInfo = getNguHoangInfo(namAm);
     const hanhCungPhi = bátTrạchMap[chủMệnh].element;
@@ -1668,7 +1668,7 @@ function recalculateFate() {
     const toaHeading = (currentHeading + 180) % 360;
     const hanhToa = getHanhByHeading(toaHeading);
 
-    // Luận giải
+    // Luận giải (GIỮ NGUYÊN LỜI VĂN CỦA BẠN)
     let lyGiaiCungPhi = `Bạn thuộc cung <b>${chủMệnh}</b> (${nhomMenh}), hành <b>${hanhCungPhi}</b>. Đây là cơ sở quan trọng để chọn hướng đón khí theo Bát Trạch.`;
 
     let lyGiaiHungCat = nguHoangInfo.includes("Ngũ Hoàng")
@@ -1695,7 +1695,7 @@ function recalculateFate() {
     else if (tuongQuanHuong.includes("Hung")) borderColor = "#ff3b30";
     else if (tuongQuanHuong.includes("Mệnh khắc")) borderColor = "#ff9500";
 
-    // Render panel
+    // Render panel (TỐI ƯU HIỂN THỊ NÚT BẤM)
     let targetContainer = document.getElementById('dien-giai-bo-sung');
     if (!targetContainer) {
         targetContainer = document.createElement('div');
@@ -1706,12 +1706,16 @@ function recalculateFate() {
         }
     }
 
+    // Logic nút bấm dựa trên biến global isDetailOpen
+    const btnLabel = isDetailOpen ? '🙈 Đóng luận giải chi tiết' : '👁️ Xem luận giải chi tiết';
+    const btnBkg = isDetailOpen ? 'rgba(223, 183, 108, 0.15)' : 'transparent';
+
     targetContainer.innerHTML = `
         <div style="text-align: center; margin: 10px 0;">
             <button id="btn-toggle-fengshui" onclick="toggleDienGiaiChiTiet()" 
-                    style="background: transparent; border: 1px solid var(--gold); color: var(--gold);
+                    style="background: ${btnBkg}; border: 1px solid var(--gold); color: var(--gold);
                            padding: 8px 16px; font-size: 0.85rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
-                👁️ Xem luận giải chi tiết
+                ${btnLabel}
             </button>
         </div>
         <div id="content-dien-giai-chi-tiet" style="display: ${isDetailOpen ? 'block' : 'none'}; margin: 10px 0; padding: 14px;
