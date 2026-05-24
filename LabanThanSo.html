@@ -1580,23 +1580,6 @@
       }
   };
 
-// HÀM ĐÓNG MỞ LUẬN GIẢI CHI TIẾT (Giữ nguyên bên ngoài)
-  window.toggleDienGiaiChiTiet = function() {
-      const contentDiv = document.getElementById('content-dien-giai-chi-tiet');
-      const toggleBtn = document.getElementById('btn-toggle-fengshui');
-      if (!contentDiv || !toggleBtn) return;
-      
-      if (contentDiv.style.display === 'none') {
-          contentDiv.style.display = 'block';
-          toggleBtn.innerHTML = '🙈 Đóng luận giải chi tiết';
-          toggleBtn.style.background = 'rgba(223, 183, 108, 0.15)';
-      } else {
-          contentDiv.style.display = 'none';
-          toggleBtn.innerHTML = '👁️ Xem luận giải bản mệnh chi tiết';
-          toggleBtn.style.background = 'transparent';
-      }
-  };
-
 // ====================== GLOBAL ======================
 let isDetailOpen = false;
 
@@ -1749,13 +1732,6 @@ function recalculateFate() {
     updateCompassUI(currentHeading);
 }
 
-function toggleDienGiaiChiTiet() {
-    isDetailOpen = !isDetailOpen;
-    const content = document.getElementById('content-dien-giai-chi-tiet');
-    const btn = document.getElementById('btn-toggle-fengshui');
-    if (content) content.style.display = isDetailOpen ? 'block' : 'none';
-    if (btn) btn.innerText = isDetailOpen ? 'Ẩn luận giải chi tiết' : '👁️ Xem luận giải chi tiết';
-}
   // --- CẤU HÌNH PHONG THỦY ---
 const ConfigPhongThuy = {
     'house':     { title: "Ưu tiên Hướng Nhà / Cửa Chính", isCat: true },
