@@ -324,61 +324,61 @@
     letter-spacing: 2px;
   }
   
-  /* === KIM ĐỎ CHÍNH - PHIÊN BẢN ĐẸP, MẠNH MẼ, NEON SẠCH === */
+  /* === KIM ĐỎ CHÍNH - MŨI TÊN ĐẸP, NHỌN, MẠNH MẼ === */
   .center-needle {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 8px;
-    height: 89%;
-    background: linear-gradient(to bottom, #ff2d2d 48%, #ff6b6b 52%);
+    width: 7.8px;
+    height: 90%;
+    background: linear-gradient(to bottom, #ff2222 48%, #ff5555 52%);
     clip-path: polygon(
       50% 0%, 
-      100% 24%, 
-      68% 24%, 
-      68% 79%, 
-      100% 79%, 
+      100% 26%, 
+      70% 26%, 
+      70% 77%, 
+      100% 77%, 
       50% 100%, 
-      0% 79%, 
-      32% 79%, 
-      32% 24%, 
-      0% 24%
+      0% 77%, 
+      30% 77%, 
+      30% 26%, 
+      0% 26%
     );
     transform: translate(-50%, -50%) rotate(0deg);
     transform-origin: center center;
     z-index: 9;
     pointer-events: none;
     
-    /* Hiệu ứng Neon mạnh mẽ nhưng sang trọng */
     box-shadow: 
-      0 0 8px #ff2d2d,
-      0 0 16px #ff2d2d,
-      0 0 28px rgba(255, 45, 45, 0.7),
-      0 0 40px rgba(255, 100, 100, 0.4);
+      0 0 8px #ff2222,
+      0 0 18px #ff2222,
+      0 0 30px rgba(255, 34, 34, 0.65);
     
-    filter: brightness(1.12) contrast(1.1);
+    filter: brightness(1.15) contrast(1.08);
   }
-  
-/* === KIM VÀNG GHOST - NEON TINH TẾ, CHỈ 1 MŨI TÊN === */
+
+  /* === KIM VÀNG GHOST - NEON TINH TẾ, ÍT CHÓI HƠN === */
   .ghost-needle {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 6.2px;
+    width: 6px;
     height: 86%;
-    background: linear-gradient(to bottom, #ffeb3b 45%, #ffc107 55%);
-    clip-path: polygon(50% 0%, 100% 22%, 68% 22%, 68% 100%, 32% 100%, 32% 22%, 0% 22%);
+    background: linear-gradient(to bottom, #ffe74c 46%, #ffcc00 54%);
+    clip-path: polygon(50% 0%, 100% 23%, 68% 23%, 68% 100%, 32% 100%, 32% 23%, 0% 23%);
     transform: translate(-50%, -50%) rotate(0deg);
     transform-origin: center center;
     z-index: 7;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.35s ease, transform 0.12s ease-out;
+    transition: opacity 0.4s ease, transform 0.15s ease-out;
+    
     box-shadow: 
-      0 0 12px #ffeb3b,
-      0 0 22px #ffeb3b,
-      0 0 32px rgba(255, 235, 59, 0.6);
-    filter: brightness(1.25);
+      0 0 10px #ffe74c,
+      0 0 20px #ffe74c,
+      0 0 28px rgba(255, 231, 76, 0.5);
+    
+    filter: brightness(1.2);
   }
   .center-pin {
     position: absolute;
