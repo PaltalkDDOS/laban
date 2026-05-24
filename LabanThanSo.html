@@ -1672,7 +1672,7 @@ function recalculateFate() {
     }
 
     // Tính toán mệnh
-    chủMệnh = tínhCungPhi(y, m, d, gender);
+    const chủMệnh = tínhCungPhi(y, m, d, gender);        // ← Đã fix (thêm const)
     const namAm = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
     const nguHoangInfo = getNguHoangInfo(namAm);
     const hanhCungPhi = bátTrạchMap[chủMệnh].element;
