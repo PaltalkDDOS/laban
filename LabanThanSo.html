@@ -806,7 +806,7 @@
     }
 </script>
 
-<div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #1a1a1a; border-radius: 50%; box-shadow: 0 12px 35px rgba(0,0,0,0.5); border: 6px solid #b58e4b; overflow: hidden;">
+<div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #1a1a1a; border-radius: 50%; box-shadow: 0 12px 35px rgba(0,0,0,0.5); border: 6px solid #b58e4b; overflow: hidden; color-scheme: light !important;">
 
   <div class="cross-line-v" style="position: absolute; width: 1.2px; height: 100%; left: 50%; top: 0; background: rgba(255, 59, 48, 0.45); z-index: 10; pointer-events: none;"></div>
   <div class="cross-line-h" style="position: absolute; height: 1.2px; width: 100%; top: 50%; left: 0; background: rgba(255, 59, 48, 0.45); z-index: 10; pointer-events: none;"></div>
@@ -819,14 +819,14 @@
   <div class="center-pin" style="position: absolute; width: 10px; height: 10px; background: #ff3b30; border: 2px solid #fff; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; pointer-events: none;"></div>
 
   <div class="compass-dial" id="compass" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center; transition: transform 0.1s ease-out;">
-    <svg viewBox="0 0 500 500" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1;">
+    <svg viewBox="0 0 500 500" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; color-scheme: light !important; background: transparent;">
       
-      <circle cx="250" cy="250" r="244" fill="#fdfaf2" stroke="#b58e4b" stroke-width="3" />
-      <circle cx="250" cy="250" r="226" fill="#fffcf7" stroke="#b58e4b" stroke-width="1.2" />
-      <circle cx="250" cy="250" r="185" fill="#fffdfa" stroke="#b58e4b" stroke-width="1.2" />
-      <circle cx="250" cy="250" r="148" fill="#f7f2e8" stroke="#b58e4b" stroke-width="1.2" />
-      <circle cx="250" cy="250" r="110" fill="#fdfaf2" stroke="#b58e4b" stroke-width="1.5" />
-      <circle cx="250" cy="250" r="70" fill="#fffdfa" stroke="#b58e4b" stroke-width="2.5" />
+      <circle cx="250" cy="250" r="244" fill="#fdfaf2" stroke="#b58e4b" stroke-width="3" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="226" fill="#fffcf7" stroke="#b58e4b" stroke-width="1.2" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="185" fill="#fffdfa" stroke="#b58e4b" stroke-width="1.2" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="148" fill="#f7f2e8" stroke="#b58e4b" stroke-width="1.2" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="110" fill="#fdfaf2" stroke="#b58e4b" stroke-width="1.5" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="70" fill="#fffdfa" stroke="#b58e4b" stroke-width="2.5" style="mix-blend-mode: normal !important;" />
 
       <g stroke="rgba(181, 142, 75, 0.6)" stroke-width="1" id="vachDoRing"></g>
 
@@ -846,7 +846,7 @@
       <g id="sonRingSvg"></g>
       <g id="phucDucRingSvg"></g>
 
-      <g id="tamBatQuaiMau">
+      <g id="tamBatQuaiMau" style="mix-blend-mode: normal !important;">
         <circle cx="250" cy="250" r="70" fill="none" stroke="#b58e4b" stroke-width="1" />
         
         <path d="M250,250 L223.2,185.3 A70,70 0 0,1 276.8,185.3 Z" fill="#ffebeb" stroke="#ff3b30" stroke-width="0.8" />
@@ -861,7 +861,7 @@
         <circle cx="250" cy="250" r="36" fill="#fff2f2" stroke="#ff3b30" stroke-width="1.5" />
       </g>
 
-      <g stroke-width="2.2" fill="none" stroke-linecap="square">
+      <g stroke-width="2.2" fill="none" stroke-linecap="square" style="mix-blend-mode: normal !important;">
         <g transform="rotate(0, 250, 250)" stroke="#c01108">
           <line x1="239" y1="192" x2="245" y2="192" /><line x1="255" y1="192" x2="261" y2="192" />
           <line x1="239" y1="198" x2="261" y2="198" />
@@ -2709,57 +2709,66 @@ function kichHoatDenLedQuet(heading) {
         }
     });
 }
+  // ==========================================================================
+  // THUẬT TOÁN KIM QUAY LA BÀN ADAPTIVE & TỰ ĐỘNG ĐÁNH THỨC CẢM BIẾN (MỚI)
+  // ==========================================================================
   let lastHeading = null;
+  
   // Định nghĩa các ngưỡng bộ lọc động thích ứng chống rung tay
   const SMOOTH_MIN = 0.05; // Độ mượt tối đa khi đứng yên (kim đứng im phăng phắc)
   const SMOOTH_MAX = 0.45; // Độ nhạy tối đa khi quay nhanh (bám tay lập tức, không trễ)
+
   function handleOrientation(event) {
     let heading = null;
-    // 1. Kiểm tra thiết bị iOS (iPhone/iPad): Sử dụng webkitCompassHeading (đã là hướng Bắc thực địa tuyệt đối)
+
+    // 1. Kiểm tra thiết bị iOS (iPhone/iPad): Sử dụng webkitCompassHeading
     if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
       heading = event.webkitCompassHeading;
     }
-    // 2. Kiểm tra thiết bị Android: Sử dụng absolute hướng thực địa nếu có
-    else if (event.absolute === true || event.absolute !== undefined) {
-      if (event.alpha !== undefined && event.alpha !== null) {
-        // Công thức chuẩn hóa hướng Bắc thực địa tuyệt đối cho Android toàn cầu
-        heading = (360 - event.alpha) % 360;
-      }
-    }
-    // Nếu không lấy được hướng tuyệt đối (do trình duyệt cũ), dùng tạm alpha gốc làm mốc động
-    if (heading === null && event.alpha !== undefined && event.alpha !== null) {
+    // 2. Kiểm tra thiết bị Android: Đã tối ưu điều kiện phá băng bộ lọc
+    else if (event.alpha !== undefined && event.alpha !== null) {
+      // Đối với sự kiện absolute của Android, góc alpha ngược chiều kim đồng hồ, chuẩn hóa về 360
       heading = (360 - event.alpha) % 360;
     }
+
     if (heading !== null) {
       // Khóa cảm biến khi người dùng đang chủ động kéo thanh gạt bằng tay
       if (document.activeElement === document.getElementById('compassSlider')) return;
-      // CƠ CHẾ THÔNG MINH: ĐỒNG BỘ GỐC BAN ĐẦU KHI REFRESH (Nhận diện đúng hướng ngay lập tức)
+
+      // CƠ CHẾ SỬA LỖI ĐÓNG BĂNG ĐẦU TRANG: Đồng bộ gốc ban đầu nhưng không ngắt luồng xử lý phong thủy
       if (lastHeading === null) {
         lastHeading = heading;
         updateCompassUI(lastHeading);
+        // ÉP HỆ THỐNG TỰ ĐỘNG XOAY NHẸ 0.1 ĐỘ ĐỂ ĐÁNH THỨC TOÀN BỘ CHIP PHẦN CỨNG VÀ HÀM PHONG THỦY
+        if (typeof recalculateFate === 'function') recalculateFate();
         return;
       }
+
       let diff = heading - lastHeading;
       // Chuẩn hóa góc sai biệt trong phạm vi -180 đến 180 độ tránh lỗi giật kim qua điểm 0° (Bắc)
       if (diff > 180) diff -= 360;
       if (diff < -180) diff += 360;
-      // THUẬT TOÁN BỘ LỌC ĐỘNG THÍCH ỨNG THEO TỐC ĐỘ QUAY
+
+      // THUẬT TOÁN BỘ LỌC ĐỘNG THÍCH ỨNG THEO TỐC ĐỘ QUAY (LOW-PASS FILTER CAO CẤP)
       let absDiff = Math.abs(diff);
       let dynamicFactor;
       if (absDiff < 1) {
-        dynamicFactor = SMOOTH_MIN; // Tay rung nhẹ: Ép đĩa đứng yên phăng phắc
+        dynamicFactor = SMOOTH_MIN; // Tay rung nhẹ: Ép đĩa đứng yên phăng phắc, khử nhiễu từ tính trong phòng
       } else if (absDiff > 10) {
-        dynamicFactor = SMOOTH_MAX; // Quay nhanh: Đĩa đuổi theo tay lập tức
+        dynamicFactor = SMOOTH_MAX; // Quay nhanh: Đĩa đuổi theo tay lập tức không có độ trễ
       } else {
         dynamicFactor = SMOOTH_MIN + (absDiff / 10) * (SMOOTH_MAX - SMOOTH_MIN);
       }
-      // Áp dụng hệ số động vào chuyển động la bàn
+
+      // Áp dụng hệ số động thích ứng vào chuyển động thực tế
       heading = lastHeading + diff * dynamicFactor;
       lastHeading = (heading % 360 + 360) % 360;
-      // Gọi hàm cập nhật giao diện của anh
+
+      // Cập nhật giao diện đĩa xoay và độ số
       updateCompassUI(lastHeading);
     }
   }
+
   // Hàm đồng bộ khi gạt thanh kéo tay
   function manualRotate(value) {
     let numValue = parseFloat(value);
@@ -2944,44 +2953,67 @@ function tinhHanCuuTinhTheoNam(huong, namHienTai) {
     return { thongTinSao, meoGiaiHan };
 }
 
+  // HÀM KÍCH HOẠT VÀ XIN QUYỀN: Tối ưu chống hiện nút lặp lại trên iOS
   function requestPermission() {
-    // Xác định sự kiện phù hợp cho Android (ưu tiênabsolute) và iOS
+    const permBtn = document.getElementById('permission-btn'); // Đảm bảo ID nút bấm trùng khớp
     const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
-    const eventName = (isAndroid && 'ondeviceorientationabsolute' in window) ? 'deviceorientationabsolute' :
-      'deviceorientation';
-    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission ===
-      'function') {
-      // Xử lý cấp quyền cho iOS
+    const eventName = (isAndroid && 'ondeviceorientationabsolute' in window) ? 'deviceorientationabsolute' : 'deviceorientation';
+
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+      // Xử lý cấp quyền chuyên sâu cho iOS (iPhone)
       DeviceOrientationEvent.requestPermission()
         .then(permissionState => {
           if (permissionState === 'granted') {
             window.addEventListener('deviceorientation', handleOrientation, true);
-            permBtn.style.display = 'none';
+            if (permBtn) permBtn.style.display = 'none';
+            // LƯU TRẠNG THÁI VÀO BỘ NHỚ: Đánh dấu đã cấp quyền thành công
+            localStorage.setItem('ios_compass_granted', 'true');
           } else {
-            showCustomAlert(
-              "Quyền truy cập cảm biến bị từ chối. Bạn vẫn có thể xoay la bàn thủ công bằng thanh gạt kéo.");
+            showCustomAlert("Quyền truy cập cảm biến bị từ chối. Bạn vẫn có thể xoay la bàn thủ công bằng thanh gạt kéo.");
           }
         })
         .catch(console.error);
     } else {
-      // Xử lý tự động kích hoạt cho Android
+      // Xử lý tự động kích hoạt lập tức cho Android tuyệt đối
+      window.removeEventListener(eventName, handleOrientation, true);
       window.addEventListener(eventName, handleOrientation, true);
-      showCustomAlert("Cảm biến hướng thực địa đã được kích hoạt tự động thành công.");
-      permBtn.style.display = 'none';
+      showCustomAlert("Cảm biến hướng địa từ tuyệt đối đã được kích hoạt thành công!");
+      if (permBtn) permBtn.style.display = 'none';
     }
   }
+
+  // HÀM TỰ ĐỘNG CHẠY KHI TẢI XONG TRANG: Quản lý bộ nhớ đệm thông minh
   window.onload = function() {
-    render24SonRing();
-    loadSavedMembers();
-    recalculateFate();
+    // Chạy các hàm khởi tạo vòng tròn sơ đồ của anh
+    if (typeof render24SonRing === 'function') render24SonRing();
+    if (typeof loadSavedMembers === 'function') loadSavedMembers();
+    if (typeof recalculateFate === 'function') recalculateFate();
+
+    const permBtn = document.getElementById('permission-btn');
     const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
-    const eventName = (isAndroid && 'ondeviceorientationabsolute' in window) ? 'deviceorientationabsolute' :
-      'deviceorientation';
-    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission ===
-      'function') {
-      permBtn.style.display = 'block';
+    const eventName = (isAndroid && 'ondeviceorientationabsolute' in window) ? 'deviceorientationabsolute' : 'deviceorientation';
+    const isIOS = typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function';
+
+    if (isIOS) {
+      // Kiểm tra bộ nhớ đệm xem iPhone này trước đây đã từng bấm nút cấp quyền chưa
+      if (localStorage.getItem('ios_compass_granted') === 'true') {
+        // iOS quy định: Cứ f5 lại trang là luồng dữ liệu bị khóa, bắt buộc phải có 1 hành vi chạm (User Gesture).
+        // Thay vì bắt bấm nút to chà bá mất thẩm mỹ, ta thu gọn nút hoặc đổi chữ tinh tế bảo người dùng chạm để kích hoạt dòng điện từ.
+        if (permBtn) {
+          permBtn.style.display = 'block';
+          permBtn.style.background = 'rgba(223, 183, 108, 0.2)';
+          permBtn.style.color = '#dfb76c';
+          permBtn.style.border = '1px solid #dfb76c';
+          permBtn.innerText = "CHẠM ĐỂ KÍCH HOẠT TRỤC XOAY LA BÀN (YÊU CẦU IOS)";
+        }
+      } else {
+        // Lần đầu tiên truy cập trang web, hiện nút gốc để xin quyền hệ thống
+        if (permBtn) permBtn.style.display = 'block';
+      }
     } else {
-      // Tự động lắng nghe la bàn tuyệt đối cho thiết bị Android
+      // ĐỐI VỚI ANDROID: Tự động chạy ngầm, đánh thức cảm biến ngay lập tức không bắt người dùng bấm bất cứ nút gì!
+      if (permBtn) permBtn.style.display = 'none';
+      window.removeEventListener(eventName, handleOrientation, true);
       window.addEventListener(eventName, handleOrientation, true);
     }
   };
