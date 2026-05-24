@@ -324,38 +324,46 @@
     letter-spacing: 2px;
   }
   
-  /* === KIM ĐỎ CHÍNH (Mạnh mẽ, sắc nét, cân đối hơn) === */
+  /* === KIM ĐỎ CHÍNH - MẠNH MẼ, CHUYÊN NGHIỆP, MŨI TÊN ĐẸP === */
   .center-needle {
     position: absolute;
     left: 50%;
     top: 50%;
     width: 8px;
-    height: 87%;
-    background: linear-gradient(to bottom, #ff3b30 50%, #ff6666 50%);
-    clip-path: polygon(50% 0%, 100% 18%, 62% 18%, 62% 83%, 100% 83%, 50% 100%, 0% 83%, 38% 83%, 38% 18%, 0% 18%);
+    height: 90%;
+    background: linear-gradient(to bottom, #ff2d2d 48%, #ff7777 52%);
+    clip-path: polygon(50% 0%, 100% 25%, 65% 25%, 65% 78%, 100% 78%, 50% 100%, 0% 78%, 35% 78%, 35% 25%, 0% 25%);
     transform: translate(-50%, -50%) rotate(0deg);
     transform-origin: center center;
     z-index: 9;
     pointer-events: none;
-    box-shadow: 0 0 10px rgba(255, 59, 48, 0.8);
+    box-shadow: 
+      0 0 8px #ff2d2d,
+      0 0 18px rgba(255, 45, 45, 0.7),
+      0 0 28px rgba(255, 100, 100, 0.4);
+    filter: brightness(1.1) contrast(1.15);
   }
 
-  /* === KIM VÀNG GHOST (Chỉ 1 mũi tên, tinh tế) === */
+  /* === KIM VÀNG GHOST - NEON TINH TẾ, CHỈ 1 MŨI TÊN === */
   .ghost-needle {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 6.5px;
-    height: 84%;
-    background: linear-gradient(to bottom, #ffe066 48%, #ffcc00 52%);
-    clip-path: polygon(50% 0%, 100% 20%, 65% 20%, 65% 100%, 35% 100%, 0 20%, 0% 20%); /* Chỉ 1 mũi tên */
+    width: 6.2px;
+    height: 86%;
+    background: linear-gradient(to bottom, #ffeb3b 45%, #ffc107 55%);
+    clip-path: polygon(50% 0%, 100% 22%, 68% 22%, 68% 100%, 32% 100%, 32% 22%, 0% 22%);
     transform: translate(-50%, -50%) rotate(0deg);
     transform-origin: center center;
     z-index: 7;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.35s ease, transform 0.12s ease-out;
-    box-shadow: 0 0 12px rgba(255, 220, 80, 0.85);
+    box-shadow: 
+      0 0 12px #ffeb3b,
+      0 0 22px #ffeb3b,
+      0 0 32px rgba(255, 235, 59, 0.6);
+    filter: brightness(1.25);
   }
   .center-pin {
     position: absolute;
