@@ -324,33 +324,39 @@
     letter-spacing: 2px;
   }
   
+  /* === KIM ĐỎ CHÍNH (Mạnh mẽ, sắc nét, cân đối hơn) === */
   .center-needle {
-    position: absolute;
-    width: 8px;
-    height: 85%;
-    background: linear-gradient(to bottom, var(--red) 50%, #ccc 50%);
-    clip-path: polygon(50% 0%, 100% 15%, 60% 15%, 60% 85%, 100% 85%, 50% 100%, 0% 85%, 40% 85%, 40% 15%, 0% 15%);
-    z-index: 8;
-    pointer-events: none;
-  }
-  
-   .ghost-needle {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 6px;
-    height: 82%;           /* Tăng nhẹ để khớp chiều dài kim đỏ */
-    background: linear-gradient(to bottom, #ffcc00 50%, rgba(255, 204, 0, 0.45) 50%);
-    clip-path: polygon(50% 0%, 100% 15%, 60% 15%, 60% 85%, 100% 85%, 50% 100%, 0% 85%, 40% 85%, 40% 15%, 0% 15%);
-    transform: translate(-50%, -50%) rotate(0deg);   /* Quan trọng */
-    transform-origin: center center;                 /* Rất quan trọng */
+    width: 8px;
+    height: 87%;
+    background: linear-gradient(to bottom, #ff3b30 50%, #ff6666 50%);
+    clip-path: polygon(50% 0%, 100% 18%, 62% 18%, 62% 83%, 100% 83%, 50% 100%, 0% 83%, 38% 83%, 38% 18%, 0% 18%);
+    transform: translate(-50%, -50%) rotate(0deg);
+    transform-origin: center center;
+    z-index: 9;
+    pointer-events: none;
+    box-shadow: 0 0 10px rgba(255, 59, 48, 0.8);
+  }
+
+  /* === KIM VÀNG GHOST (Chỉ 1 mũi tên, tinh tế) === */
+  .ghost-needle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 6.5px;
+    height: 84%;
+    background: linear-gradient(to bottom, #ffe066 48%, #ffcc00 52%);
+    clip-path: polygon(50% 0%, 100% 20%, 65% 20%, 65% 100%, 35% 100%, 0 20%, 0% 20%); /* Chỉ 1 mũi tên */
+    transform: translate(-50%, -50%) rotate(0deg);
+    transform-origin: center center;
     z-index: 7;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.4s ease, transform 0.15s ease-out;
-    box-shadow: 0 0 8px rgba(255, 204, 0, 0.6);
-}
-  
+    transition: opacity 0.35s ease, transform 0.12s ease-out;
+    box-shadow: 0 0 12px rgba(255, 220, 80, 0.85);
+  }
   .center-pin {
     position: absolute;
     width: 12px;
