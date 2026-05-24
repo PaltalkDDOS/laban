@@ -324,58 +324,57 @@
     letter-spacing: 2px;
   }
   
-/* === KIM LA BÀN - ĐỎ (ĐẦU CHỈ HƯỚNG) === */
+/* === KIM LA BÀN CHÍNH - ĐỎ (ĐẦU NHỌN CHỈ HƯỚNG) === */
 .center-needle {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 8px; /* Kim la bàn thường dày và mạnh mẽ hơn */
-  height: 90%; /* Chiều dài bao phủ gần hết mặt la bàn */
-  /* Gradient tạo chiều sâu cho kim kim loại */
-  background: linear-gradient(to bottom, #ff2222 50%, #8b0000 50%);
+  width: 6px; /* Thu nhỏ lại cho thanh thoát */
+  height: 90%;
+  background: linear-gradient(to bottom, #ff2222 50%, #cc0000 50%);
   
-  /* Xoay quanh tâm tuyệt đối */
   transform-origin: 50% 50%;
   transform: translate(-50%, -50%) rotate(0deg);
   
-  /* Hình dáng mũi tên nhọn 2 đầu đặc trưng la bàn */
+  /* Đầu trên nhọn hoắt, đầu dưới vát chéo tinh tế */
   clip-path: polygon(
-    50% 0%,       /* Đỉnh nhọn phía trên */
-    100% 15%,     /* Cạnh phải trên */
-    50% 50%,      /* Gốc nối giữa (tâm) */
-    100% 90%,     /* Cạnh phải dưới */
-    50% 100%,     /* Đáy nhọn phía dưới */
-    0% 90%,       /* Cạnh trái dưới */
-    50% 50%,      /* Gốc nối giữa (tâm) */
-    0% 15%        /* Cạnh trái trên */
+    50% 0%,       /* Đỉnh nhọn */
+    100% 25%,     /* Vát phải */
+    85% 50%,      /* Thắt nhẹ ở giữa cho đẹp */
+    100% 95%,     /* Đuôi dưới vát */
+    50% 100%,     /* Đáy đuôi */
+    0% 95%,       /* Đuôi dưới vát */
+    15% 50%,      /* Thắt nhẹ ở giữa */
+    0% 25%        /* Vát trái */
   );
   
   z-index: 9;
   pointer-events: none;
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+  box-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
 }
 
-/* === KIM LA BÀN - VÀNG (GHOST/ĐỐI TRỌNG) === */
+/* === KIM VÀNG GHOST - MỎNG, TINH TẾ === */
 .ghost-needle {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 7px;
-  height: 86%; /* Ngắn hơn chút để không bị đè lên hoàn toàn */
-  background: linear-gradient(to bottom, #f1c40f 50%, #b8860b 50%);
+  width: 5px;
+  height: 86%;
+  background: linear-gradient(to bottom, #f1c40f 50%, #d4af37 50%);
   
   transform-origin: 50% 50%;
   transform: translate(-50%, -50%) rotate(0deg);
   
+  /* Cùng kiểu dáng với kim đỏ nhưng mảnh hơn */
   clip-path: polygon(
-    50% 0%, 100% 15%, 50% 50%, 100% 90%, 50% 100%, 0% 90%, 50% 50%, 0% 15%
+    50% 0%, 100% 25%, 85% 50%, 100% 95%, 50% 100%, 0% 95%, 15% 50%, 0% 25%
   );
   
   z-index: 7;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.4s ease, transform 0.1s linear;
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
 }
   .center-pin {
     position: absolute;
