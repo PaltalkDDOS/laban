@@ -375,6 +375,22 @@
   box-shadow: 0 0 6px #d4af37, 0 0 12px rgba(212, 175, 55, 0.3);
   filter: brightness(1.1);
 }
+.north-pointer {
+  position: absolute;
+  top: 2px;                    /* Giảm xuống một chút */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;                 /* Rộng hơn */
+  height: 32px;                /* Dài hơn */
+  background: #ff3b30;
+  z-index: 20;                 /* Cao hơn center-pin */
+  pointer-events: none;
+  clip-path: polygon(50% 0%, 100% 100%, 50% 82%, 0% 100%);
+  box-shadow: 0 0 12px #ff3b30, 
+              0 0 22px #ff3b30,
+              0 0 35px rgba(255, 59, 48, 0.6);
+  border-radius: 2px;
+}
   .center-pin {
     position: absolute;
     width: 12px;
@@ -837,8 +853,8 @@
 
 <div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #1a1a1a; border-radius: 50%; box-shadow: 0 12px 35px rgba(0,0,0,0.5); border: 6px solid #b58e4b; overflow: hidden; color-scheme: light !important;">
 
-  <div class="cross-line-v" style="position: absolute; width: 1.2px; height: 100%; left: 50%; top: 0; background: rgba(255, 59, 48, 0.45); z-index: 10; pointer-events: none;"></div>
-  <div class="cross-line-h" style="position: absolute; height: 1.2px; width: 100%; top: 50%; left: 0; background: rgba(255, 59, 48, 0.45); z-index: 10; pointer-events: none;"></div>
+<div class="cross-line-v" style="position: absolute; width: 1px; height: 92%; left: 50%; top: 4%; background: rgba(255, 59, 48, 0.28); z-index: 8; pointer-events: none; transform: translateX(-50%);"></div>
+  <div class="cross-line-h" style="position: absolute; height: 1px; width: 92%; top: 50%; left: 4%; background: rgba(255, 59, 48, 0.28); z-index: 8; pointer-events: none; transform: translateY(-50%);"></div>
 
   <div class="north-pointer" style="
   position: absolute; 
