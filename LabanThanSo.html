@@ -334,17 +334,22 @@
     pointer-events: none;
   }
   
-        .ghost-needle {
-            position: absolute;
-            width: 6px;
-            height: 80%;
-            background: linear-gradient(to bottom, #ffcc00 50%, rgba(255, 204, 0, 0.3) 50%);
-            clip-path: polygon(50% 0%, 100% 15%, 60% 15%, 60% 85%, 100% 85%, 50% 100%, 0% 85%, 40% 85%, 40% 15%, 0% 15%);
-            z-index: 6;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
+   .ghost-needle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 6px;
+    height: 82%;           /* Tăng nhẹ để khớp chiều dài kim đỏ */
+    background: linear-gradient(to bottom, #ffcc00 50%, rgba(255, 204, 0, 0.45) 50%);
+    clip-path: polygon(50% 0%, 100% 15%, 60% 15%, 60% 85%, 100% 85%, 50% 100%, 0% 85%, 40% 85%, 40% 15%, 0% 15%);
+    transform: translate(-50%, -50%) rotate(0deg);   /* Quan trọng */
+    transform-origin: center center;                 /* Rất quan trọng */
+    z-index: 7;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.15s ease-out;
+    box-shadow: 0 0 8px rgba(255, 204, 0, 0.6);
+}
   
   .center-pin {
     position: absolute;
@@ -814,7 +819,7 @@
   <div class="north-pointer" style="position: absolute; top: 4px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-bottom: 18px solid #ff3b30; z-index: 12; pointer-events: none;"></div>
 
   <div id="needle" style="display: none;"></div>
-  <div id="ghostNeedle" class="ghost-needle" style="display: none; left: 50%; top: 50%; transform: translate(-50%, -50%);"></div>
+  <div id="ghostNeedle" class="ghost-needle" style="display: none;"></div>
   
   <div class="center-pin" style="position: absolute; width: 10px; height: 10px; background: #ff3b30; border: 2px solid #fff; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; pointer-events: none;"></div>
 
@@ -1694,16 +1699,15 @@ const ConfigPhongThuy = {
     if (ghost) {
         ghost.style.display = 'block';
         ghost.style.opacity = "1";
-        ghost.style.transform = `rotate(${angle}deg)`;
+        ghost.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
     }
     
     let sơnThử = tìmSơnHướng(angle);
-    
     detailBox.style.borderLeftColor = "var(--gold)";
     detailBox.innerHTML = `
-        <span class="gold-text">◆ ĐANG BẬT KIM VÀNG XOAY THỬ:</span><br>
-        <span style="color:#fff;">Kim ảo màu vàng đang chỉ mốc <span class="gold-text">${angle}°</span> (Sơn <strong>${sơnThử}</strong>).<br>
-        Hãy xoay thiết bị hoặc vuốt la bàn bằng tay sao cho <strong>Kim Đỏ</strong> trùng khớp với Kim Vàng để đo chính xác.</span>
+        <span class="gold-text">◆ KIM VÀNG XOAY THỬ: ${angle}°</span><br>
+        <span style="color:#fff;">Kim vàng đang chỉ <strong>${sơnThử}</strong>.<br>
+        Hãy xoay la bàn sao cho kim đỏ trùng với kim vàng.</span>
     `;
     
     updateCompassUI(currentHeading);
@@ -2055,9 +2059,7 @@ const ConfigPhongThuy = {
     compass.style.transform = `rotate(${-heading}deg)`;
     needle.style.transform = `rotate(0deg)`;
     compassSlider.value = currentHeading;
-    if (targetAngle !== null) {
-      ghostNeedle.style.transform = `rotate(${targetAngle - currentHeading}deg)`;
-    }
+
     // 1. Phân định 8 Cung Phương vị Bát Quái gốc
     let currentCung = "";
     if (currentHeading >= 338 || currentHeading < 23) {
@@ -2646,13 +2648,14 @@ const ConfigPhongThuy = {
 
     // KÍCH HOẠT HIỆU ỨNG ĐÈN LED Ở CHẾ ĐỘ CAO CẤP
     kichHoatDenLedQuet(currentHeading);
-	    // === CẬP NHẬT KIM VÀNG (GHOST NEEDLE) ===
-    if (targetAngle !== null) {
-        const ghost = document.getElementById('ghostNeedle');
-        if (ghost) {
-            ghost.style.transform = `rotate(${targetAngle - currentHeading}deg)`;
-        }
+// === CẬP NHẬT KIM VÀNG (GHOST NEEDLE) ===
+if (targetAngle !== null) {
+    const ghost = document.getElementById('ghostNeedle');
+    if (ghost) {
+        ghost.style.opacity = "1";
+        ghost.style.transform = `translate(-50%, -50%) rotate(${targetAngle - currentHeading}deg)`;
     }
+}
 }
 
 // Tách logic đèn LED quét thành hàm riêng biệt để chạy mượt mà, tái sử dụng tốt
