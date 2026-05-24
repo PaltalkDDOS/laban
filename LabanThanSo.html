@@ -324,62 +324,57 @@
     letter-spacing: 2px;
   }
   
-  /* === KIM ĐỎ CHÍNH - MŨI TÊN ĐẸP, NHỌN, MẠNH MẼ === */
-  .center-needle {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 7.8px;
-    height: 90%;
-    background: linear-gradient(to bottom, #ff2222 48%, #ff5555 52%);
-    clip-path: polygon(
-      50% 0%, 
-      100% 26%, 
-      70% 26%, 
-      70% 77%, 
-      100% 77%, 
-      50% 100%, 
-      0% 77%, 
-      30% 77%, 
-      30% 26%, 
-      0% 26%
-    );
-    transform: translate(-50%, -50%) rotate(0deg);
-    transform-origin: center center;
-    z-index: 9;
-    pointer-events: none;
-    
-    box-shadow: 
-      0 0 8px #ff2222,
-      0 0 18px #ff2222,
-      0 0 30px rgba(255, 34, 34, 0.65);
-    
-    filter: brightness(1.15) contrast(1.08);
-  }
+/* === KIM ĐỎ CHÍNH - MŨI TÊN SẮC BÉN, TINH TẾ HƠN === */
+.center-needle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 7px; /* Giảm nhẹ độ rộng để thanh thoát hơn */
+  height: 90%;
+  /* Giảm opacity của gradient nền xuống một chút để bớt gắt */
+  background: linear-gradient(to bottom, rgba(255, 30, 30, 0.9) 48%, rgba(255, 80, 80, 0.9) 52%);
+  /* Điều chỉnh clip-path để mũi tên thon gọn và nhọn hơn ở đầu */
+  clip-path: polygon(
+    50% 0%, 
+    100% 20%, 
+    65% 20%, 
+    65% 85%, 
+    100% 100%, 
+    50% 92%, 
+    0% 100%, 
+    35% 85%, 
+    35% 20%, 
+    0% 20%
+  );
+  transform: translate(-50%, -50%) rotate(0deg);
+  transform-origin: 50% 50%;
+  z-index: 9;
+  pointer-events: none;
+  /* Giảm nhẹ shadow để bớt chói mắt */
+  box-shadow: 0 0 5px #ff2222, 0 0 10px rgba(255, 34, 34, 0.4);
+  filter: brightness(1.05);
+}
 
-  /* === KIM VÀNG GHOST - NEON TINH TẾ, ÍT CHÓI HƠN === */
-  .ghost-needle {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 6px;
-    height: 86%;
-    background: linear-gradient(to bottom, #ffe74c 46%, #ffcc00 54%);
-    clip-path: polygon(50% 0%, 100% 23%, 68% 23%, 68% 100%, 32% 100%, 32% 23%, 0% 23%);
-    transform: translate(-50%, -50%) rotate(0deg);
-    transform-origin: center center;
-    z-index: 7;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.4s ease, transform 0.15s ease-out;
-    
-    box-shadow: 
-      0 0 10px #ffe74c,
-      0 0 20px #ffe74c,
-      0 0 28px rgba(255, 231, 76, 0.5);
-    
-    filter: brightness(1.2);
-  }
+/* === KIM VÀNG GHOST - VÀNG KIM LOẠI/VÀNG NGHỆ NEON === */
+.ghost-needle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 5.5px;
+  height: 86%;
+  /* Chuyển sang tông vàng đậm hơn, sang trọng (Gold Metallic Neon) */
+  background: linear-gradient(to bottom, #d4af37 0%, #f1c40f 50%, #d4af37 100%);
+  clip-path: polygon(50% 0%, 100% 15%, 65% 15%, 65% 100%, 35% 100%, 35% 15%, 0% 15%);
+  transform: translate(-50%, -50%) rotate(0deg);
+  transform-origin: 50% 50%;
+  z-index: 7;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.15s ease-out;
+  /* Giảm blur của shadow để trông tinh tế, không bị nhòe chói */
+  box-shadow: 0 0 6px #d4af37, 0 0 12px rgba(212, 175, 55, 0.3);
+  filter: brightness(1.1);
+}
   .center-pin {
     position: absolute;
     width: 12px;
