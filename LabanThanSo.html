@@ -1768,79 +1768,53 @@ const ConfigPhongThuy = {
     'toilet':    { title: "Ưu tiên Tọa vị đặt nhà vệ sinh (Đè Hung)", isCat: false },
     'storage':   { title: "Ưu tiên vị trí Kho / Tủ đồ (Đè Hung)", isCat: false }
 };
-function generateDirectionsList() {
+  function generateDirectionsList() {
     const mụcĐích = document.getElementById('purpose').value;
     const config = ConfigPhongThuy[mụcĐích];
 
     if (!mụcĐích || !config) {
-        directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Chọn mục đích để xem danh sách Sơn gợi ý</div>";
-        listPanelTitle.innerText = "Danh Sách Sơn Gợi Ý";
+        directionsContainer.innerHTML =
+            "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Chọn mục đích dương trạch để xem danh sách gợi ý tương ứng</div>";
+        listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
         return;
     }
 
-    let listSơn = [];
+    let listDirections = [];
+    directionMeta.forEach(dir => {
+        const cungTrạch = bátTrạchMap[chủMệnh][dir.code];
+        const isCat = cungPhầnTrăm[cungTrạch].cát;
+        
+        // Dùng cấu hình để quyết định: Nếu mục đích cần Cát thì hopPhongThuy = isCat, ngược lại thì = !isCat
+        const hopPhongThuy = config.isCat ? isCat : !isCat;
 
-    // Lặp qua 24 sơn thay vì 8 hướng
-    son24Data.forEach(sơn => {
-        // 1. Xác định hướng gốc của sơn (để tra Bát Trạch)
-        // Lưu ý: Bạn cần đảm bảo son24Data có thuộc tính 'code' (Ví dụ: 'N', 'NE'...)
-        const code8Huong = mapSơnToCode(sơn.name); 
-        const cungTrạch = bátTrạchMap[chủMệnh][code8Huong];
-        const isCatBatTrach = cungPhầnTrăm[cungTrạch].cát;
-
-        // 2. Tra cứu "Minh Châu Cát Sơn" (Ma trận 192 cặp Cát Hung)
-        const infoSơn = MaTranMinhChau[chủMệnh][sơn.name] || { loai: "Bình", text: "Cần xem xét kỹ địa hình." };
-        const isCatSơn = infoSơn.loai === "Cát";
-
-        // 3. Logic hợp phong thủy: Kết hợp cả Bát Trạch và Sơn
-        // Nếu mục đích cần Cát, thì phải Cát cả 2 mới coi là Phù Hợp
-        const hopPhongThuy = config.isCat ? (isCatBatTrach && isCatSơn) : (!isCatBatTrach && !isCatSơn);
-
-        listSơn.push({
-            name: sơn.name,
-            angle: sơn.start, // Góc đại diện
-            cungTrạch: cungTrạch,
-            luanGiai: infoSơn.text,
-            hopPhongThuy: hopPhongThuy
+        listDirections.push({
+            ...dir, cungTrạch: cungTrạch, isCat: isCat, hopPhongThuy: hopPhongThuy
         });
     });
 
-    // Sắp xếp: Ưu tiên sơn phù hợp lên đầu
-    listSơn.sort((a, b) => b.hopPhongThuy - a.hopPhongThuy);
+    listDirections.sort((a, b) => b.hopPhongThuy - a.hopPhongThuy);
 
-    listPanelTitle.innerText = config.title + " (Chi tiết 24 Sơn)";
+    // Hiển thị tiêu đề theo cấu hình
+    listPanelTitle.innerText = config.title;
 
     directionsContainer.innerHTML = "";
-    listSơn.forEach(item => {
-        const textColorStyle = item.hopPhongThuy ? 'color: #30d158;' : 'color: #ff3b30;';
-        const statusText = item.hopPhongThuy ? '🟢 CÁT' : '❌ HUNG';
+    listDirections.forEach(item => {
+        const textColorStyle = item.hopPhongThuy ? 'color: #30d158; font-weight: bold;' : 'color: #ff3b30; font-weight: bold;';
+        const statusText = item.hopPhongThuy ? '🟢 PHÙ HỢP TỐT' : '❌ KHÔNG PHÙ HỢP';
         
         const div = document.createElement('div');
         div.className = `direction-item ${item.hopPhongThuy ? 'good' : 'bad'}`;
         div.innerHTML = `
             <div class="item-info">
-                <span class="item-name" style="color:#fff; font-weight:bold;">Sơn ${item.name} ➔ ${item.cungTrạch}</span>
-                <span class="item-cung" style="${textColorStyle} font-weight:bold;">${statusText}</span>
-                <div style="font-size:0.75rem; color:#ccc; margin-top:5px; line-height:1.2;">${item.luanGiai}</div>
+                <span class="item-name" style="color:#fff;">${item.name} ➔ <span style="${textColorStyle}">${item.cungTrạch}</span></span>
+                <span class="item-cung" style="${textColorStyle}">${statusText}</span>
             </div>
-            <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})">Xoay</button>
+            <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})">Xoay thử</button>
         `;
         directionsContainer.appendChild(div);
     });
 }
-function mapSơnToCode(tenSon) {
-    const map = {
-        "Nhâm": "N", "Tý": "N", "Quý": "N",
-        "Sửu": "NE", "Cấn": "NE", "Dần": "NE",
-        "Giáp": "E", "Mão": "E", "Ất": "E",
-        "Thìn": "SE", "Tốn": "SE", "Tỵ": "SE",
-        "Bính": "S", "Ngọ": "S", "Đinh": "S",
-        "Mùi": "SW", "Khôn": "SW", "Thân": "SW",
-        "Canh": "W", "Dậu": "W", "Tân": "W",
-        "Tuất": "NW", "Càn": "NW", "Hợi": "NW"
-    };
-    return map[tenSon] || "N";
-}
+
 
         function triggerGhostNeedle(angle) {
     targetAngle = angle;
