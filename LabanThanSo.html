@@ -324,56 +324,58 @@
     letter-spacing: 2px;
   }
   
-/* === KIM ĐỎ CHÍNH - MŨI TÊN SẮC BÉN, TINH TẾ HƠN === */
+/* === KIM LA BÀN - ĐỎ (ĐẦU CHỈ HƯỚNG) === */
 .center-needle {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 7px; /* Giảm nhẹ độ rộng để thanh thoát hơn */
-  height: 90%;
-  /* Giảm opacity của gradient nền xuống một chút để bớt gắt */
-  background: linear-gradient(to bottom, rgba(255, 30, 30, 0.9) 48%, rgba(255, 80, 80, 0.9) 52%);
-  /* Điều chỉnh clip-path để mũi tên thon gọn và nhọn hơn ở đầu */
-  clip-path: polygon(
-    50% 0%, 
-    100% 20%, 
-    65% 20%, 
-    65% 85%, 
-    100% 100%, 
-    50% 92%, 
-    0% 100%, 
-    35% 85%, 
-    35% 20%, 
-    0% 20%
-  );
-  transform: translate(-50%, -50%) rotate(0deg);
+  width: 8px; /* Kim la bàn thường dày và mạnh mẽ hơn */
+  height: 90%; /* Chiều dài bao phủ gần hết mặt la bàn */
+  /* Gradient tạo chiều sâu cho kim kim loại */
+  background: linear-gradient(to bottom, #ff2222 50%, #8b0000 50%);
+  
+  /* Xoay quanh tâm tuyệt đối */
   transform-origin: 50% 50%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  
+  /* Hình dáng mũi tên nhọn 2 đầu đặc trưng la bàn */
+  clip-path: polygon(
+    50% 0%,       /* Đỉnh nhọn phía trên */
+    100% 15%,     /* Cạnh phải trên */
+    50% 50%,      /* Gốc nối giữa (tâm) */
+    100% 90%,     /* Cạnh phải dưới */
+    50% 100%,     /* Đáy nhọn phía dưới */
+    0% 90%,       /* Cạnh trái dưới */
+    50% 50%,      /* Gốc nối giữa (tâm) */
+    0% 15%        /* Cạnh trái trên */
+  );
+  
   z-index: 9;
   pointer-events: none;
-  /* Giảm nhẹ shadow để bớt chói mắt */
-  box-shadow: 0 0 5px #ff2222, 0 0 10px rgba(255, 34, 34, 0.4);
-  filter: brightness(1.05);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
 }
 
-/* === KIM VÀNG GHOST - VÀNG KIM LOẠI/VÀNG NGHỆ NEON === */
+/* === KIM LA BÀN - VÀNG (GHOST/ĐỐI TRỌNG) === */
 .ghost-needle {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 5.5px;
-  height: 86%;
-  /* Chuyển sang tông vàng đậm hơn, sang trọng (Gold Metallic Neon) */
-  background: linear-gradient(to bottom, #d4af37 0%, #f1c40f 50%, #d4af37 100%);
-  clip-path: polygon(50% 0%, 100% 15%, 65% 15%, 65% 100%, 35% 100%, 35% 15%, 0% 15%);
-  transform: translate(-50%, -50%) rotate(0deg);
+  width: 7px;
+  height: 86%; /* Ngắn hơn chút để không bị đè lên hoàn toàn */
+  background: linear-gradient(to bottom, #f1c40f 50%, #b8860b 50%);
+  
   transform-origin: 50% 50%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  
+  clip-path: polygon(
+    50% 0%, 100% 15%, 50% 50%, 100% 90%, 50% 100%, 0% 90%, 50% 50%, 0% 15%
+  );
+  
   z-index: 7;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.4s ease, transform 0.15s ease-out;
-  /* Giảm blur của shadow để trông tinh tế, không bị nhòe chói */
-  box-shadow: 0 0 6px #d4af37, 0 0 12px rgba(212, 175, 55, 0.3);
-  filter: brightness(1.1);
+  transition: opacity 0.4s ease, transform 0.1s linear;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
 }
   .center-pin {
     position: absolute;
