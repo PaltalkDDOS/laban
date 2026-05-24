@@ -853,8 +853,35 @@
 
 <div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #1a1a1a; border-radius: 50%; box-shadow: 0 12px 35px rgba(0,0,0,0.5); border: 6px solid #b58e4b; overflow: hidden; color-scheme: light !important;">
 
-<div class="cross-line-v" style="position: absolute; width: 1px; height: 92%; left: 50%; top: 4%; background: rgba(255, 59, 48, 0.28); z-index: 8; pointer-events: none; transform: translateX(-50%);"></div>
-  <div class="cross-line-h" style="position: absolute; height: 1px; width: 92%; top: 50%; left: 4%; background: rgba(255, 59, 48, 0.28); z-index: 8; pointer-events: none; transform: translateY(-50%);"></div>
+<!-- Đường dọc -->
+<div class="cross-line-v" style="
+  position: absolute; 
+  width: 1px; 
+  height: 92%; 
+  left: 50%; 
+  top: 4%; 
+  background: rgba(255, 59, 48, 0.28); 
+  z-index: 8; 
+  pointer-events: none; 
+  transform: translateX(-50%);
+  /* Cắt bỏ đoạn giữa (từ 43% đến 57%) */
+  clip-path: polygon(0% 0%, 100% 0%, 100% 43%, 0% 43%, 0% 57%, 100% 57%, 100% 100%, 0% 100%);
+"></div>
+
+<!-- Đường ngang -->
+<div class="cross-line-h" style="
+  position: absolute; 
+  height: 1px; 
+  width: 92%; 
+  top: 50%; 
+  left: 4%; 
+  background: rgba(255, 59, 48, 0.28); 
+  z-index: 8; 
+  pointer-events: none; 
+  transform: translateY(-50%);
+  /* Cắt bỏ đoạn giữa (từ 43% đến 57%) */
+  clip-path: polygon(0% 0%, 43% 0%, 43% 100%, 57% 100%, 57% 0%, 100% 0%, 100% 100%, 0% 100%);
+"></div>
 
   <div class="north-pointer" style="
   position: absolute; 
@@ -875,7 +902,7 @@
   <div id="needle" style="display: none;"></div>
   <div id="ghostNeedle" class="ghost-needle" style="display: none;"></div>
   
-  <div class="center-pin" style="position: absolute; width: 10px; height: 10px; background: #ff3b30; border: 2px solid #fff; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; pointer-events: none;"></div>
+
 
   <div class="compass-dial" id="compass" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center; transition: transform 0.1s ease-out;">
     <svg viewBox="0 0 500 500" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; color-scheme: light !important; background: transparent;">
@@ -906,19 +933,19 @@
       <g id="phucDucRingSvg"></g>
 
       <g id="tamBatQuaiMau" style="mix-blend-mode: normal !important;">
-        <circle cx="250" cy="250" r="70" fill="none" stroke="#b58e4b" stroke-width="1" />
-        
-        <path d="M250,250 L223.2,185.3 A70,70 0 0,1 276.8,185.3 Z" fill="#ffebeb" stroke="#ff3b30" stroke-width="0.8" />
-        <path d="M250,250 L276.8,185.3 A70,70 0 0,1 314.7,223.2 Z" fill="#fffdfa" stroke="#b58e4b" stroke-width="0.8" />
-        <path d="M250,250 L314.7,223.2 A70,70 0 0,1 314.7,276.8 Z" fill="#ffebeb" stroke="#ff3b30" stroke-width="0.8" />
-        <path d="M250,250 L314.7,276.8 A70,70 0 0,1 276.8,314.7 Z" fill="#fffdfa" stroke="#b58e4b" stroke-width="0.8" />
-        <path d="M250,250 L276.8,314.7 A70,70 0 0,1 223.2,314.7 Z" fill="#ffebeb" stroke="#ff3b30" stroke-width="0.8" />
-        <path d="M250,250 L223.2,314.7 A70,70 0 0,1 185.3,276.8 Z" fill="#fffdfa" stroke="#b58e4b" stroke-width="0.8" />
-        <path d="M250,250 L185.3,276.8 A70,70 0 0,1 185.3,223.2 Z" fill="#ffebeb" stroke="#ff3b30" stroke-width="0.8" />
-        <path d="M250,250 L185.3,223.2 A70,70 0 0,1 223.2,185.3 Z" fill="#fffdfa" stroke="#b58e4b" stroke-width="0.8" />
-
-        <circle cx="250" cy="250" r="36" fill="#fff2f2" stroke="#ff3b30" stroke-width="1.5" />
-      </g>
+  <!-- Vòng tròn nền -->
+  <circle cx="250" cy="250" r="36" fill="#fff" stroke="#ff3b30" stroke-width="1.5" />
+  
+  <!-- Nửa ĐEN (Phía trên/Phải) -->
+  <path d="M250,214 A36,36 0 0,1 250,286 A18,18 0 0,0 250,250 A18,18 0 0,1 250,214" fill="#333" />
+  
+  <!-- Nửa TRẮNG (Phía dưới/Trái) -->
+  <path d="M250,286 A36,36 0 0,1 250,214 A18,18 0 0,0 250,250 A18,18 0 0,1 250,286" fill="#fff" />
+  
+  <!-- Mắt (Đảm bảo nằm đúng vị trí trong vùng của nó) -->
+  <circle cx="250" cy="232" r="6" fill="#fff" /> <!-- Mắt trắng nằm trong nền Đen -->
+  <circle cx="250" cy="268" r="6" fill="#333" />  <!-- Mắt đen nằm trong nền Trắng -->
+</g>
 
       <g stroke-width="2.2" fill="none" stroke-linecap="square" style="mix-blend-mode: normal !important;">
         <g transform="rotate(0, 250, 250)" stroke="#c01108">
