@@ -814,7 +814,7 @@
   <div class="north-pointer" style="position: absolute; top: 4px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-bottom: 18px solid #ff3b30; z-index: 12; pointer-events: none;"></div>
 
   <div id="needle" style="display: none;"></div>
-  <div id="ghostNeedle" style="display: none;"></div>
+  <div id="ghostNeedle" class="ghost-needle" style="display: none; left: 50%; top: 50%; transform: translate(-50%, -50%);"></div>
   
   <div class="center-pin" style="position: absolute; width: 10px; height: 10px; background: #ff3b30; border: 2px solid #fff; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; pointer-events: none;"></div>
 
@@ -1688,17 +1688,26 @@ const ConfigPhongThuy = {
 
 
         function triggerGhostNeedle(angle) {
-            targetAngle = angle;
-            ghostNeedle.style.opacity = "1";
-            updateCompassUI(currentHeading);
-            
-            let sơnThử = tìmSơnHướng(angle);
-            detailBox.style.borderLeftColor = "var(--gold)";
-            detailBox.innerHTML = `
-                <span class="gold-text">◆ ĐANG BẬT KIM VÀNG XOAY THỬ:</span><br>
-                <span style="color:#fff;">Kim ảo màu vàng đang chỉ mốc <span class="gold-text">${angle}°</span> (Sơn <strong>${sơnThử}</strong>) nằm mờ phía dưới.<br>Hãy xoay thiết bị hoặc vuốt la bàn bằng tay sao cho Kim Đỏ thật sự trùng khớp lên vị trí Kim Vàng mờ để đón chuẩn hướng phương vị.</span>
-            `;
-        }
+    targetAngle = angle;
+    
+    const ghost = document.getElementById('ghostNeedle');
+    if (ghost) {
+        ghost.style.display = 'block';
+        ghost.style.opacity = "1";
+        ghost.style.transform = `rotate(${angle}deg)`;
+    }
+    
+    let sơnThử = tìmSơnHướng(angle);
+    
+    detailBox.style.borderLeftColor = "var(--gold)";
+    detailBox.innerHTML = `
+        <span class="gold-text">◆ ĐANG BẬT KIM VÀNG XOAY THỬ:</span><br>
+        <span style="color:#fff;">Kim ảo màu vàng đang chỉ mốc <span class="gold-text">${angle}°</span> (Sơn <strong>${sơnThử}</strong>).<br>
+        Hãy xoay thiết bị hoặc vuốt la bàn bằng tay sao cho <strong>Kim Đỏ</strong> trùng khớp với Kim Vàng để đo chính xác.</span>
+    `;
+    
+    updateCompassUI(currentHeading);
+}
 
   function tìmSơnHướng(heading) {
     let sơnTìmThấy = "Tý";
@@ -2637,6 +2646,13 @@ const ConfigPhongThuy = {
 
     // KÍCH HOẠT HIỆU ỨNG ĐÈN LED Ở CHẾ ĐỘ CAO CẤP
     kichHoatDenLedQuet(currentHeading);
+	    // === CẬP NHẬT KIM VÀNG (GHOST NEEDLE) ===
+    if (targetAngle !== null) {
+        const ghost = document.getElementById('ghostNeedle');
+        if (ghost) {
+            ghost.style.transform = `rotate(${targetAngle - currentHeading}deg)`;
+        }
+    }
 }
 
 // Tách logic đèn LED quét thành hàm riêng biệt để chạy mượt mà, tái sử dụng tốt
