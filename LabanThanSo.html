@@ -1600,17 +1600,17 @@
 // ====================== BIẾN GLOBAL ======================
 let isDetailOpen = false;
 
-// ====================== HÀM HỖ TRỢ ======================
+// ====================== HÀM HỖ TRỢ (giữ nguyên) ======================
 function getHanhByHeading(heading) {
     heading = ((heading % 360) + 360) % 360;
-    if (heading >= 337.5 || heading < 22.5) return "Thủy";     // Bắc
-    if (heading >= 22.5 && heading < 67.5) return "Thổ";       // Đông Bắc
-    if (heading >= 67.5 && heading < 112.5) return "Mộc";      // Đông
-    if (heading >= 112.5 && heading < 157.5) return "Mộc";     // Đông Nam
-    if (heading >= 157.5 && heading < 202.5) return "Hỏa";     // Nam
-    if (heading >= 202.5 && heading < 247.5) return "Thổ";     // Tây Nam
-    if (heading >= 247.5 && heading < 292.5) return "Kim";     // Tây
-    if (heading >= 292.5 && heading < 337.5) return "Kim";     // Tây Bắc
+    if (heading >= 337.5 || heading < 22.5) return "Thủy";
+    if (heading >= 22.5 && heading < 67.5) return "Thổ";
+    if (heading >= 67.5 && heading < 112.5) return "Mộc";
+    if (heading >= 112.5 && heading < 157.5) return "Mộc";
+    if (heading >= 157.5 && heading < 202.5) return "Hỏa";
+    if (heading >= 202.5 && heading < 247.5) return "Thổ";
+    if (heading >= 247.5 && heading < 292.5) return "Kim";
+    if (heading >= 292.5 && heading < 337.5) return "Kim";
     return "Chưa xác định";
 }
 
@@ -1634,7 +1634,13 @@ function getTuongQuan(huong, menh) {
     return "Quan hệ bình hòa - Cân bằng.";
 }
 
-// ====================== HÀM CHÍNH ======================
+// ====================== TOGGLE ĐÃ SỬA ======================
+function toggleDienGiaiChiTiet() {
+    isDetailOpen = !isDetailOpen;
+    recalculateFate();        // ← Quan trọng: Gọi lại toàn bộ để render mới
+}
+
+// ====================== HÀM CHÍNH ĐÃ SỬA ======================
 function recalculateFate() {
     const name = document.getElementById('userName').value || "Chủ mệnh";
     const gender = document.getElementById('gender').value;
@@ -1646,7 +1652,7 @@ function recalculateFate() {
         fateTxt.innerText = `${name}: Đo hướng tự do (Chưa nhập đủ ngày sinh)`;
         directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Nhập đầy đủ thông tin để kích hoạt phân tích chuyên sâu</div>";
         listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
-        
+       
         const oldPanel = document.getElementById('dien-giai-bo-sung');
         if (oldPanel) oldPanel.remove();
         updateCompassUI(currentHeading);
@@ -1662,7 +1668,7 @@ function recalculateFate() {
         return;
     }
 
-    // Tính toán cơ bản
+    // Tính toán
     chủMệnh = tínhCungPhi(y, m, d, gender);
     const namAm = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
     const nguHoangInfo = getNguHoangInfo(namAm);
@@ -1676,27 +1682,25 @@ function recalculateFate() {
     const toaHeading = (currentHeading + 180) % 360;
     const hanhToa = getHanhByHeading(toaHeading);
 
-    // ==================== LUẬN GIẢI CHUYÊN SÂU ====================
-    const lyGiaiCungPhi = `<b>Bản mệnh Bát Trạch:</b> Cung Phi của bạn là <b>${chủMệnh}</b> (${hanhCungPhi}), được xác định theo năm âm lịch ${namAm} và giới tính. Đây là nền tảng cốt lõi để định hướng khí trường cho toàn bộ ngôi nhà.`;
+    // Luận giải
+    const lyGiaiCungPhi = `<b>Bản mệnh Bát Trạch:</b> Cung Phi của bạn là <b>${chủMệnh}</b> (${hanhCungPhi}), được xác định theo năm âm lịch ${namAm} và giới tính.`;
 
-    let lyGiaiHungCat = "";
-    if (nguHoangInfo.includes("Ngũ Hoàng")) {
-        lyGiaiHungCat = `⚠️ <b>Năm ${namAm} - Ngũ Hoàng Đại Sát:</b> Hung tinh mạnh nhất chiếu vào Trung Cung. Tuyệt đối tránh động thổ, sửa chữa lớn ở giữa nhà để bảo vệ gia đạo và tài lộc.`;
-    } else if (nguHoangInfo.includes("Tam Bích") || nguHoangInfo.includes("Tứ Lục")) {
-        lyGiaiHungCat = `Năm ${namAm} có khí trung bình (Tam Bích/Tứ Lục). Nên giữ trung tâm nhà thông thoáng, sạch sẽ để điều hòa sinh khí, tránh tích tụ uế khí.`;
-    } else {
-        lyGiaiHungCat = `Năm ${namAm} khí số ổn định, cát nhiều hung ít. Đây là thời điểm thuận lợi để triển khai các việc lớn trong nhà.`;
-    }
+    let lyGiaiHungCat = nguHoangInfo.includes("Ngũ Hoàng") 
+        ? `⚠️ <b>Năm ${namAm} - Ngũ Hoàng Đại Sát:</b> Hung tinh mạnh nhất chiếu vào Trung Cung. Tuyệt đối tránh động thổ, sửa chữa lớn ở giữa nhà.`
+        : (nguHoangInfo.includes("Tam Bích") || nguHoangInfo.includes("Tứ Lục"))
+            ? `Năm ${namAm} có khí trung bình. Nên giữ trung tâm nhà thông thoáng, sạch sẽ.`
+            : `Năm ${namAm} khí số ổn định, cát nhiều hung ít.`;
 
     const lyGiaiHuong = `<b>Hướng hiện tại (${hanhPhuongVi} - ${Math.round(currentHeading)}°):</b> ${getTuongQuan(hanhPhuongVi, hanhCungPhi)}`;
-    const lyGiaiToa = `<b>Tọa nhà (${hanhToa} - ${Math.round(toaHeading)}°):</b> ${getTuongQuan(hanhToa, hanhCungPhi)}`;
+    
+    const lyGiaiToa = `<b>Tọa nhà (${hanhToa} - ${Math.round(toaHeading)}°):</b> ${getTuongQuan(hanhToa, hanhCungPhi)} <small>(lưng nhà - hướng ngược với Hướng)</small>`;
 
     const lyGiaiBoTri = `
         <b>Nguyên tắc Tọa Hung - Hướng Cát:</b><br>
-        • <b style="color:#30d158">Cát vị (Đón sinh khí):</b> Ưu tiên đặt <b>Cửa chính, Bàn thờ, Giường ngủ</b> theo hướng tốt.<br>
-        • <b style="color:#ff3b30">Hung vị (Trấn sát):</b> Đặt <b>Bếp, Toilet, Kho chứa</b> tại hướng xấu để hóa giải sát khí.`;
+        • <b style="color:#30d158">Cát vị:</b> Ưu tiên đặt Cửa chính, Bàn thờ, Giường ngủ theo hướng tốt.<br>
+        • <b style="color:#ff3b30">Hung vị:</b> Đặt Bếp, Toilet, Kho chứa tại hướng xấu để hóa giải.`;
 
-    // Tạo hoặc lấy container
+    // Container
     let targetContainer = document.getElementById('dien-giai-bo-sung');
     if (!targetContainer) {
         targetContainer = document.createElement('div');
@@ -1705,25 +1709,21 @@ function recalculateFate() {
         fateTxt.parentNode.insertBefore(targetContainer, fateTxt.nextSibling);
     }
 
-    // Xác định màu viền theo kết quả
+    // Màu viền
     let borderColor = "var(--gold)";
     const tuongQuanText = getTuongQuan(hanhPhuongVi, hanhCungPhi);
-    if (tuongQuanText.includes("Đại cát") || tuongQuanText.includes("Tương sinh")) {
-        borderColor = "#30d158";
-    } else if (tuongQuanText.includes("Hung") || tuongQuanText.includes("khắc Mệnh")) {
-        borderColor = "#ff3b30";
-    } else if (tuongQuanText.includes("Mệnh khắc Hướng")) {
-        borderColor = "#ff9500";
-    }
+    if (tuongQuanText.includes("Đại cát") || tuongQuanText.includes("Tương sinh")) borderColor = "#30d158";
+    else if (tuongQuanText.includes("Hung") || tuongQuanText.includes("khắc Mệnh")) borderColor = "#ff3b30";
+    else if (tuongQuanText.includes("Mệnh khắc Hướng")) borderColor = "#ff9500";
 
-    // Render (đảm bảo luôn cập nhật khi xoay la bàn)
+    // Render lại toàn bộ
     targetContainer.innerHTML = `
         <div style="text-align: center; margin: 12px 0;">
-            <button id="btn-toggle-fengshui" onclick="toggleDienGiaiChiTiet()" 
+            <button onclick="toggleDienGiaiChiTiet()" 
                     style="background: transparent; border: 1px solid var(--gold); color: var(--gold);
                            padding: 8px 16px; font-size: 0.85rem; border-radius: 4px; cursor: pointer;
                            font-weight: bold; transition: 0.3s;">
-                👁️ Xem luận giải chi tiết
+                ${isDetailOpen ? 'Ẩn luận giải chi tiết' : '👁️ Xem luận giải chi tiết'}
             </button>
         </div>
         <div id="content-dien-giai-chi-tiet" style="display: ${isDetailOpen ? 'block' : 'none'};
@@ -1745,12 +1745,6 @@ function recalculateFate() {
 
     generateDirectionsList();
     updateCompassUI(currentHeading);
-}
-
-function toggleDienGiaiChiTiet() {
-    isDetailOpen = !isDetailOpen;
-    const content = document.getElementById('content-dien-giai-chi-tiet');
-    if (content) content.style.display = isDetailOpen ? 'block' : 'none';
 }
   // --- CẤU HÌNH PHONG THỦY ---
 const ConfigPhongThuy = {
