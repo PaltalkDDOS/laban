@@ -1563,7 +1563,7 @@
     return true;
   }
 
-// ====================== HÀM ĐÓNG MỞ LUẬN GIẢI CHI TIẾT ======================
+// ====================== HÀM ĐÓNG MỞ GIẢI THÍCH CHI TIẾT ======================
 window.toggleDienGiaiChiTiet = function() {
     const contentDiv = document.getElementById('content-dien-giai-chi-tiet');
     const toggleBtn = document.getElementById('btn-toggle-fengshui');
@@ -1572,30 +1572,24 @@ window.toggleDienGiaiChiTiet = function() {
     if (contentDiv.style.display === 'none' || contentDiv.style.display === '') {
         contentDiv.style.display = 'block';
         isDetailOpen = true;
-        // Ghi nhận góc la bàn CHÍNH XÁC tại thời điểm khách bấm MỞ
+        // Giữ nguyên cơ chế thông minh: Khóa chặt góc la bàn tại giây bấm MỞ
         lockedHeadingAtOpen = currentHeading; 
-        toggleBtn.innerHTML = '🙈 Đóng luận giải chi tiết';
+        toggleBtn.innerHTML = '🙈 Đóng giải thích thuật ngữ';
         toggleBtn.style.background = 'rgba(223, 183, 108, 0.15)';
     } else {
         contentDiv.style.display = 'none';
         isDetailOpen = false;
-        // Bấm ĐÓNG: Làm sạch hoàn toàn bộ nhớ góc cũ để chuẩn bị cho lần mở sau
+        // Bấm ĐÓNG: Làm sạch bộ nhớ góc cũ ngay lập tức
         lockedHeadingAtOpen = null; 
-        toggleBtn.innerHTML = '👁️ Xem luận giải bản mệnh chi tiết';
+        toggleBtn.innerHTML = '👁️ Xem giải thích thuật ngữ hiển thị';
         toggleBtn.style.background = 'transparent';
     }
-    // Chạy lại hàm để cập nhật ngay lập tức trạng thái giao diện sạch/mới
     recalculateFate(); 
 };
 
 // ====================== GLOBAL ======================
 let isDetailOpen = false;
 let lockedHeadingAtOpen = null; // Biến thông minh lưu góc cố định lúc mở bảng
-
-// Quy luật Ngũ Hành
-const sinhChoMenh = { "Mộc":"Hỏa", "Hỏa":"Thổ", "Thổ":"Kim", "Kim":"Thủy", "Thủy":"Mộc" };
-const khacMenh = { "Mộc":"Thổ", "Thổ":"Thủy", "Thủy":"Hỏa", "Hỏa":"Kim", "Kim":"Mộc" };
-const menhKhacHuong = { "Thổ":"Thủy", "Thủy":"Hỏa", "Hỏa":"Kim", "Kim":"Mộc", "Mộc":"Thổ" };
 
 // ====================== HÀM HỖ TRỢ ======================
 function getHanhByHeading(heading) {
@@ -1611,22 +1605,9 @@ function getHanhByHeading(heading) {
     return "Chưa xác định";
 }
 
-function getTuongQuan(huong, menh) {
-    if (huong === menh) return "Hợp nhau (Bình hòa - Ổn định)";
-    if (sinhChoMenh[huong] === menh) return "Rất tốt (Tương sinh - Đại cát)";
-    if (khacMenh[huong] === menh) return "Xấu (Hướng xung khắc Mệnh - Hung)";
-    if (menhKhacHuong[menh] === huong) return "Hao tổn (Mệnh bị khắc Hướng)";
-    return "Bình thường";
-}
+// (LƯU Ý: Đã xóa bỏ các hàm getTuongQuan và getChiTietTuongQuan cũ để tránh phán đoán sai lệch)
 
-function getChiTietTuongQuan(huong, menh) {
-    if (huong === menh) return "Hướng này và tuổi của bạn cùng chung một nhóm năng lượng, giúp giữ gìn sự ổn định, gia đình êm ấm và thuận hòa.";
-    if (sinhChoMenh[huong] === menh) return `Hướng này mang năng lượng bổ trợ trực tiếp cho tuổi của bạn. Đây là hướng **Đại Cát**, cực kỳ may mắn, nên ưu tiên chọn làm hướng cửa chính, hướng giường ngủ hoặc bàn thờ.`;
-    if (khacMenh[huong] === menh) return `Hướng này xung khắc trực tiếp với tuổi của bạn. Đây là hướng **Xấu (Hung)**, nên tránh việc đặt cửa ra vào hoặc đầu giường ngủ tại đây để hạn chế rủi ro.`;
-    if (menhKhacHuong[menh] === huong) return `Tuổi của bạn bị ngược dòng năng lượng với hướng này, dễ gây tiêu hao sức khỏe hoặc tài lộc. Nên hạn chế dùng làm hướng quay mặt chính của ngôi nhà.`;
-    return "Mối quan hệ bình thường, không tốt không xấu.";
-}
-
+// ====================== HÀM CHÍNH ĐÃ TỐI GIẢN & CHUẨN XÁC ======================
 function recalculateFate() {
     const name = document.getElementById('userName').value || "Chủ mệnh";
     const gender = document.getElementById('gender').value;
@@ -1655,7 +1636,7 @@ function recalculateFate() {
         return;
     }
 
-    // ====================== GIỮ NGUYÊN LOGIC GỐC ======================
+    // ====================== GIỮ NGUYÊN LOGIC GỐC CỦA ANH ======================
     chủMệnh = tínhCungPhi(y, m, d, gender);
     const namAm = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
     const nguHoangInfo = getNguHoangInfo(namAm);
@@ -1665,77 +1646,40 @@ function recalculateFate() {
 
     fateTxt.innerText = `${name}: Cung ${chủMệnh} (${nhomMenh}) - Bản Mệnh Cung Phi: ${hanhCungPhi} | Năm Âm: ${namAm} | ${nguHoangInfo}`;
 
-    // ====================== PHẦN NÂNG CẤP THÔNG MINH THEO MỤC ĐÍCH ======================
+    // ====================== XỬ LÝ KHÓA TỌA ĐỘ VÀ TRANSLATE TỪ NGỮ ĐƠN GIẢN ======================
     let headingToCalculate = currentHeading; 
     if (isDetailOpen && lockedHeadingAtOpen !== null) {
         headingToCalculate = lockedHeadingAtOpen;
     }
 
     const hanhPhuongVi = getHanhByHeading(headingToCalculate);
-    const toaHeading = (headingToCalculate + 180) % 360;
-    const hanhToa = getHanhByHeading(toaHeading);
 
-    let lyGiaiCungPhi = `Dựa vào năm sinh âm lịch <b>${namAm}</b>, bạn thuộc cung <b>${chủMệnh}</b> (Nhóm tuổi: <b>${nhomMenh}</b>), mang năng lượng của hành <b>${hanhCungPhi}</b>. `;
+    // Chuyển đổi tên mục đích sang tiếng Việt bình dân
+    let tenMucDichBinhDan = "Vị trí / Hướng đang chọn";
+    if (mucDich === 'house') tenMucDich = "Cửa chính / Mặt tiền nhà";
+    else if (mucDich === 'altar') tenMucDich = "Mặt Bàn thờ / Thần Tài";
+    else if (mucDich === 'bed') tenMucDich = "Đầu Giường ngủ";
+    else if (mucDich === 'workspace') tenMucDich = "Mặt Bàn làm việc";
+    else if (mucDich === 'business_shelf') tenMucDich = "Tủ kệ hàng / Quầy kinh doanh (Quầy bánh mì, tủ nước,...)";
+    else if (mucDich === 'safe') tenMucDich = "Két sắt / Thùng đựng tiền";
+    else if (mucDich === 'kitchen') tenMucDich = "Bếp nấu (Lò nướng, lò vi sóng)";
+    else if (mucDich === 'toilet') tenMucDich = "Nhà vệ sinh / WC / Khu xả uế";
+    else if (mucDich === 'storage') tenMucDich = "Kho chứa đồ / Tủ hàng tồn";
 
-    // Tự động nhảy chữ theo mục đích sử dụng
-    let tenMucDichBinhDan = "vị trí đang chọn";
-    let thuyetMinhMucDich = "";
-
-    if (mucDich === 'house') {
-        tenMucDichBinhDan = "Hướng mặt tiền nhà / Cửa chính";
-        thuyetMinhMucDich = "Mặt tiền nhà là nơi đón luồng khí tổng thể, quyết định sự thành bại lâu dài của cả gia đình.";
-    } else if (mucDich === 'altar') {
-        tenMucDichBinhDan = "Hướng mặt Bàn thờ / Thần tài";
-        thuyetMinhMucDich = "Bàn thờ hay ban Thần Tài cần nhìn về hướng tốt để tụ tài lộc, được thần linh và tổ tiên che chở, phù hộ buôn may bán đắt.";
-    } else if (mucDich === 'bed') {
-        tenMucDichBinhDan = "Hướng đầu Giường ngủ";
-        thuyetMinhMucDich = "Đầu giường ngủ cần tựa vào hướng tốt để khi nằm ngủ, cơ thể hấp thụ được năng lượng an lành, giúp giấc ngủ sâu và bảo vệ sức khỏe.";
-    } else if (mucDich === 'workspace') {
-        tenMucDichBinhDan = "Hướng mặt Bàn làm việc";
-        thuyetMinhMucDich = "Mặt bàn làm việc cần nhìn về hướng tốt để đầu óc luôn tỉnh táo, có nhiều quyết định sáng suốt và công việc hanh thông.";
-    } else if (mucDich === 'business_shelf') {
-        tenMucDichBinhDan = "Vị trí Tủ bánh mì / Quầy kệ kinh doanh";
-        thuyetMinhMucDich = "Đối với người làm ăn, vị trí tủ hàng, quầy bán bánh mì, quầy pha chế là trung tâm sinh tài. Đặt quầy kệ hướng về góc tốt giúp thu hút khách đông, mua may bán đắt.";
-    } else if (mucDich === 'safe') {
-        tenMucDichBinhDan = "Vị trí Két sắt / Thùng đựng tiền";
-        thuyetMinhMucDich = "Két sắt và thùng tiền là nơi giữ tài sản lõi, bắt buộc phải quay mặt hoặc đặt ở cung tốt để giữ tiền tài không bị thất thoát.";
-    } else if (mucDich === 'kitchen') {
-        tenMucDichBinhDan = "Vị trí đặt Bếp nấu";
-        thuyetMinhMucDich = "Bếp mang năng lượng Hỏa cực mạnh. Áp dụng mẹo phong thủy 'Tọa Hung Hướng Cát': Bếp phải đặt đè lên góc xấu (để lửa thiêu rụi cái xấu) và quay miệng bếp nhìn về hướng tốt.";
-    } else if (mucDich === 'toilet') {
-        tenMucDichBinhDan = "Vị trí Nhà vệ sinh / WC";
-        thuyetMinhMucDich = "Nhà vệ sinh là nơi xả uế khí, bắt buộc phải đặt đè lên các góc xấu (Hung) để dùng uế khí trấn áp điềm gở, tuyệt đối tránh đặt vào góc tốt.";
-    } else if (mucDich === 'storage') {
-        tenMucDichBinhDan = "Vị trí Kho hàng / Tủ đồ";
-        thuyetMinhMucDich = "Kho chứa đồ phế liệu hoặc hàng tồn cần đặt ở góc xấu để không làm ảnh hưởng đến dòng chảy tài lộc của cửa hàng.";
-    }
-
-    let lyGiaiHungCat = "";
-    if (nguHoangInfo.includes("Tam Bích")) {
-        lyGiaiHungCat = `<b>Vận khí tâm nhà năm ${namAm}:</b> Sao Tam Bích đóng ở giữa nhà. Khí trung bình, dễ gây xao lãng nhẹ trong công việc. Nên giữ không gian trung tâm cửa hàng, ngôi nhà luôn thoáng mát.`;
-    } else if (nguHoangInfo.includes("Tứ Lục")) {
-        lyGiaiHungCat = `<b>Vận khí tâm nhà năm ${namAm}:</b> Sao Tứ Lục đóng ở giữa nhà. Khí hơi biến động, dễ gây mệt mỏi nhẹ lúc bắt đầu khởi sự.`;
+    // Dịch nghĩa ngắn gọn về Vận khí tâm nhà (Trung cung)
+    let giaiThichSao = "";
+    if (nguHoangInfo.includes("Tam Bích") || nguHoangInfo.includes("Tứ Lục")) {
+        giaiThichSao = `Năm sinh âm lịch này gặp sao mang năng lượng Mộc quản năm, khi đóng ở giữa tâm nhà (vốn thuộc Thổ) sẽ gây ra sự lệch khí nhẹ ở mức <b>Trung bình</b>. Chỉ cần giữ khu vực giữa nhà hoặc giữa cửa hàng luôn sạch sẽ, thoáng đãng là tự động hóa giải.`;
     } else if (nguHoangInfo.includes("Ngũ Hoàng")) {
-        lyGiaiHungCat = `<b>Cảnh báo cực xấu năm ${namAm}:</b> Sao Ngũ Hoàng Đại Sát đóng ngay giữa nhà. Tuyệt đối tránh sửa chữa, đập phá lớn ở khu vực trung tâm cửa hàng để tránh thất thoát tiền bạc ngoài ý muốn.`;
+        giaiThichSao = `Năm sinh này phạm sao xấu Ngũ Hoàng đóng tại giữa nhà, mang sát khí hành Thổ rất mạnh. Cần giữ trung tâm nhà yên tĩnh, tránh đập phá, sửa chữa lớn ở khu vực này trong năm.`;
     } else {
-        lyGiaiHungCat = `<b>Vận khí tâm nhà năm ${namAm}:</b> Năng lượng ổn định, lành nhiều dữ ít, hỗ trợ tốt cho việc duy trì kinh doanh và gia đạo bình an.`;
+        giaiThichSao = `Năng lượng chủ quản năm sinh tại trung tâm nhà ở trạng thái ổn định, an lành, không có biến động xấu.`;
     }
 
-    const tuongQuanHuong = getTuongQuan(hanhPhuongVi, hanhCungPhi);
-    const lyGiaiHuong = `<b>${tenMucDichBinhDan} hiện tại (Hành ${hanhPhuongVi} - Góc xoay ${Math.round(headingToCalculate)}°):</b> Kết quả: <span style="font-weight:bold;">${tuongQuanHuong}</span>. ${getChiTietTuongQuan(hanhPhuongVi, hanhCungPhi)} <br><i style="color:#aaa;">(${thuyetMinhMucDich})</i>`;
+    // Khóa cứng màu viền vàng luxury, không đổi xanh đỏ bậy bạ nữa
+    let borderColor = "var(--gold)"; 
 
-    const tuongQuanToa = getTuongQuan(hanhToa, hanhCungPhi);
-    const lyGiaiToa = `<b>Phía đối diện/sau lưng (Hành ${hanhToa} - Góc xoay ${Math.round(toaHeading)}°):</b> Kết quả: <span style="font-weight:bold;">${tuongQuanToa}</span>. Nguyên tắc phong thủy cần sự cân bằng giữa phía trước mặt nhìn về và phía sau lưng tựa vào để tạo thế vững chắc.`;
-
-    const lyGiaiBoTri = `<b>Mẹo sắp xếp thực tế cho người làm ăn:</b><br><br>
-        • <b style="color:#30d158">Nên Đặt Vào Vị Trí Tốt</b>: Cửa hàng, Bàn thờ Thần Tài, Két tiền, Quầy bánh mì/Quầy kệ bán hàng, Giường ngủ.<br>
-        • <b style="color:#ff3b30">Nên Đặt Vào Vị Trí Xấu</b>: Bếp nấu, Lò nướng, Nhà vệ sinh, Thùng rác để đốt cháy sát khí, bảo vệ dòng tiền.`;
-
-    let borderColor = "var(--gold)";
-    if (tuongQuanHuong.includes("Rất tốt") || tuongQuanHuong.includes("Tương sinh")) borderColor = "#30d158";
-    else if (tuongQuanHuong.includes("Xấu") || tuongQuanHuong.includes("Hung")) borderColor = "#ff3b30";
-
-    // Render HTML
+    // Render HTML sạch sẽ, đóng vai trò "Từ điển tra cứu khái niệm"
     let targetContainer = document.getElementById('dien-giai-bo-sung');
     if (!targetContainer) {
         targetContainer = document.createElement('div');
@@ -1745,7 +1689,7 @@ function recalculateFate() {
     }
 
     const displayStyle = isDetailOpen ? 'block' : 'none';
-    const btnText = isDetailOpen ? '🙈 Đóng luận giải chi tiết' : '👁️ Xem luận giải bản mệnh chi tiết';
+    const btnText = isDetailOpen ? '🙈 Đóng giải thích thuật ngữ' : '👁️ Xem giải thích thuật ngữ hiển thị';
     const btnBkg = isDetailOpen ? 'rgba(223, 183, 108, 0.15)' : 'transparent';
 
     targetContainer.innerHTML = `
@@ -1758,15 +1702,14 @@ function recalculateFate() {
         </div>
         <div id="content-dien-giai-chi-tiet" style="display: ${displayStyle}; margin: 10px 0; padding: 14px;
              background: rgba(223, 183, 108, 0.06); border: 1.5px solid ${borderColor}; border-radius: 8px;
-             font-size: 0.86rem; line-height: 1.65; text-align: left;">
+             font-size: 0.86rem; line-height: 1.65; text-align: left; color: #fff;">
             <p style="margin:0 0 10px 0; color:var(--gold); font-weight:bold; border-bottom:1px solid var(--gold); padding-bottom:6px;">
-                🔮 LUẬN GIẢI PHONG THỦY THỰC TẾ & BÌNH DÂN
+                📖 GIẢI NGHĨA CÁC THUẬT NGỮ TRÊN MÀN HÌNH
             </p>
-            <p style="margin:6px 0;">🎯 ${lyGiaiCungPhi}</p>
-            <p style="margin:6px 0;">⚠️ ${lyGiaiHungCat}</p>
-            <p style="margin:12px 0;">🚪 ${lyGiaiHuong}</p>
-            <p style="margin:12px 0;">🧱 ${lyGiaiToa}</p>
-            <p style="margin:10px 0 0 0; padding-top:8px; border-top:1px dashed rgba(223, 183, 108, 0.3);">${lyGiaiBoTri}</p>
+            <p style="margin:8px 0;">📍 <b>Phương vị:</b> Là hướng thực tế mà đầu điện thoại/la bàn của bạn đang chĩa vào. Hướng này tương ứng với năng lượng hành <b>${hanhPhuongVi}</b> (Góc xoay la bàn hiện tại: <b>${Math.round(headingToCalculate)}°</b>).</p>
+            <p style="margin:8px 0;">🎯 <b>Mệnh Cung Phi (Hành ${hanhCungPhi}):</b> Quẻ mệnh phong thủy cốt lõi được tính toán dựa trên năm sinh và giới tính của bạn (Bạn thuộc cung <b>${chủMệnh}</b>, nhóm tuổi <b>${nhomMenh}</b>). Mệnh này dùng để đối chiếu trực tiếp với la bàn Bát Trạch phía dưới.</p>
+            <p style="margin:8px 0;">⚠️ <b>Vận khí tâm nhà (Trung Cung):</b> ${giaiThichSao}</p>
+            <p style="margin:8px 0;">🚪 <b>Mục đích xem:</b> Bạn đang tiến hành đo đạc vị trí cho <b>${tenMucDichBinhDan}</b>. Hãy cuộn xuống phía dưới để xem kết quả Cát/Hung chính xác theo hệ Bát Trạch Minh Châu và mật pháp hóa giải.</p>
         </div>
     `;
 
