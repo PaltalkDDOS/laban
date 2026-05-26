@@ -1156,8 +1156,23 @@
     <div id="sonRing" style="display: none;"></div>
   </div>
 </div>
+  
+<button id="permission-btn" onclick="document.getElementById('iosPermissionModal').style.display = 'flex'" style="display:none; margin: 10px auto; padding: 10px 20px; background: #dfb76c; border: none; border-radius: 5px; font-weight: bold; color: #000;">
+    KÍCH HOẠT SENSOR ĐIỆN THOẠI
+</button>
 
-  <button id="permission-btn" onclick="requestPermission()">KÍCH HOẠT SENSOR ĐIỆN THOẠI</button>
+<div id="iosPermissionModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:10000; justify-content:center; align-items:center; backdrop-filter: blur(5px);">
+    <div style="background:#1c1c1e; padding:30px; border-radius:20px; text-align:center; width:80%; max-width:400px; border:1px solid #dfb76c;">
+        <div style="font-size:3rem; margin-bottom:15px;">🧭</div>
+        <h3 style="color:#dfb76c; margin-bottom:15px;">KÍCH HOẠT LA BÀN</h3>
+        <p style="color:#ccc; font-size:0.95rem; line-height:1.5; margin-bottom:25px;">
+            Để sử dụng tính năng La Bàn xoay tự động, vui lòng nhấn "ĐỒNG Ý" ở thông báo tiếp theo từ trình duyệt.
+        </p>
+        <button onclick="handleModalClick()" style="width:100%; padding:15px; background:#dfb76c; border:none; border-radius:10px; font-weight:bold; color:#000; cursor:pointer; font-size:1rem;">
+            ĐỒNG Ý KÍCH HOẠT
+        </button>
+    </div>
+</div>
 
   <div class="status-panel">
     <div class="degree-display" id="degree-txt">0° - CUNG KHẢM (BẮC)</div>
@@ -2935,44 +2950,54 @@ function addOrientationListener() {
     orientationListenerAdded = true;
 }
 
-// ====================== KHỞI CHẠY KHI ĐÃ TẢI XONG TRANG TRÌNH DUYỆT ======================
 window.onload = function() {
-    // Tự động nạp trước các hàm khởi tạo cấu trúc vòng kinh 24 sơn và ma trận phong thủy gốc của bạn
+    // 1. Khởi tạo các thành phần logic của app
     if (typeof render24SonRing === 'function') render24SonRing();
     if (typeof loadSavedMembers === 'function') loadSavedMembers();
     if (typeof recalculateFate === 'function') recalculateFate();
 
     const permBtn = document.getElementById('permission-btn');
+    const modal = document.getElementById('iosPermissionModal');
     
-    // Kiểm tra chính xác xem người dùng có đang truy cập bằng thiết bị Apple (iOS/iPadOS) hay không
+    // Kiểm tra thiết bị iOS
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
                   (navigator.platform === 'MacIntel' && 'ontouchend' in document) ||
                   (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function');
 
     if (isIOS) {
-        if (permBtn) {
-            permBtn.style.display = 'block';
-            
-            // Nếu trước đó đã từng được cấp quyền, đổi giao diện nút sang màu vàng nhẹ như mong muốn của bạn
-            if (localStorage.getItem('ios_compass_granted') === 'true') {
+        // Kiểm tra xem đã từng cấp quyền chưa
+        const hasGranted = localStorage.getItem('ios_compass_granted') === 'true';
+
+        if (!hasGranted) {
+            // LẦN ĐẦU: Hiện Modal trang trọng để người dùng bắt buộc đọc và nhấn Đồng ý
+            if (modal) modal.style.display = 'flex';
+            // Ẩn nút cũ đi vì đã có Modal làm việc đó
+            if (permBtn) permBtn.style.display = 'none';
+        } else {
+            // LẦN SAU: Hiện nút màu vàng nhẹ để người dùng chủ động chạm (yêu cầu bắt buộc của Safari)
+            if (permBtn) {
+                permBtn.style.display = 'block';
                 permBtn.style.background = 'rgba(223, 183, 108, 0.2)';
                 permBtn.style.color = '#dfb76c';
                 permBtn.style.border = '1px solid #dfb76c';
                 permBtn.innerText = "CHẠM ĐỂ KÍCH HOẠT LA BÀN (iOS)";
-            } else {
-                permBtn.innerText = "KÍCH HOẠT LA BÀN TỰ ĐỘNG";
+                // Đảm bảo nút vẫn gọi hàm requestPermission gốc của bạn
+                permBtn.onclick = requestPermission;
             }
-            
-            // SỬA LỖI CHIẾN LƯỢC: Kể cả khi có localStorage hay chưa, khi click vào nút vàng nhẹ
-            // vẫn PHẢI bắt buộc chạy qua hàm `requestPermission` để đánh thức luồng dữ liệu của Safari.
-            permBtn.onclick = requestPermission;
         }
     } else {
-        // Đối với hệ điều hành Android: Tự động lắng nghe cảm biến ngay lập tức khi vào trang mà không cần qua nút bấm trung gian
+        // Đối với Android: Tự động chạy ngay lập tức
         addOrientationListener();
         if (permBtn) permBtn.style.display = 'none';
     }
 };
+
+// Hàm xử lý nút trong Modal (Đảm bảo gọi đúng hàm requestPermission gốc)
+function handleModalClick() {
+    const modal = document.getElementById('iosPermissionModal');
+    if (modal) modal.style.display = 'none';
+    requestPermission(); // Gọi lại hàm gốc của bạn
+}
   </script>
 </body>
 
