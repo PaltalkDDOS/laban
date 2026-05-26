@@ -1279,21 +1279,23 @@ const MaTranMinhChau = {
         "Hợi": { "loai": "Bình", "text": "Thế bình hòa, vận thế gia đạo trung bình." }
     }
 };
-// ====================== NGŨ HOÀNG (Cải tiến text chi tiết hơn) ======================
+// ====================== NGŨ HOÀNG & CỬU TINH (Đã sửa lỗi vắng mặt Sao Cửu Tử) ======================
 function getNguHoangInfo(year) {
     const nguHoang = {
-        0: "Ngũ Hoàng tại Trung Cung (Đại Hung - Tránh động thổ lớn)",
         1: "Nhất Bạch tại Trung Cung (Đại Cát)",
         2: "Nhị Hắc tại Trung Cung (Hung - Bệnh tật)",
         3: "Tam Bích tại Trung Cung (Trung bình)",
         4: "Tứ Lục tại Trung Cung (Hung nhẹ)",
-        5: "Ngũ Hoàng tại Trung Cung (Đại Hung)",
+        5: "Ngũ Hoàng tại Trung Cung (Đại Hung - Tránh động thổ lớn)",
         6: "Lục Bạch tại Trung Cung (Cát - Quyền lộc)",
         7: "Thất Xích tại Trung Cung (Hung - Thị phi)",
         8: "Bát Bạch tại Trung Cung (Cát)",
         9: "Cửu Tử tại Trung Cung (Đại Cát - Vượng khí)"
     };
-    const so = year % 9;
+    
+    let so = year % 9;
+    if (so === 0) so = 9; // Nếu chia hết cho 9 (dư 0) thì quy về Sao số 9 (Cửu Tử)
+    
     return nguHoang[so] || nguHoang[5];
 }
 
@@ -1475,7 +1477,7 @@ function handleDateInput(currentInput, nextInputId) {
     debounceRecalculate();
 }
 
-// ====================== RENDER 24 SƠN RING - TỐI ƯU AN TOÀN ======================
+// ====================== RENDER 24 SƠN RING - CHUẨN XÁC TUYỆT ĐỐI ======================
 function render24SonRing() {
     // 1. Vạch độ ngoài cùng
     const vachDoRing = document.getElementById('vachDoRing');
@@ -1499,14 +1501,14 @@ function render24SonRing() {
         khe24SonRing.innerHTML = lines24Html;
     }
 
-    // 3. Chữ 24 Sơn (Cải tiến: offset nhẹ để chữ đẹp hơn)
+    // 3. Chữ 24 Sơn (Đã đưa về góc chuẩn tâm ô lý tưởng)
     const sonRingSvg = document.getElementById('sonRingSvg');
     if (!sonRingSvg) return;
     sonRingSvg.innerHTML = "";
     const rSon = 136;
 
     son24Data.forEach((son, index) => {
-        const goc = (index * 15 - 5) % 360;   // Offset -5° → chữ cân đối, không lệch
+        const goc = (index * 15) % 360; // Trả về góc gốc để chữ nằm chính giữa ô
 
         const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
         textNode.setAttribute("x", "250");
@@ -1532,7 +1534,7 @@ function render24SonRing() {
         sonRingSvg.appendChild(textNode);
     });
 
-    // 4. Vòng 24 Sao Phúc Đức
+    // 4. Vòng 24 Sao Phúc Đức (Đã đưa về góc chuẩn tâm ô lý tưởng)
     const phucDucRingSvg = document.getElementById('phucDucRingSvg');
     if (!phucDucRingSvg) return;
     phucDucRingSvg.innerHTML = "";
@@ -1545,7 +1547,7 @@ function render24SonRing() {
     ];
 
     phucDucNames.forEach((name, index) => {
-        const goc = (index * 15 - 5) % 360;
+        const goc = (index * 15) % 360; // Trả về góc gốc để sao khớp vị trí với Sơn hướng
         const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
         textNode.setAttribute("x", "250");
         textNode.setAttribute("y", "72");
