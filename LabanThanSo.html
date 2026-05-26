@@ -323,7 +323,57 @@
     pointer-events: none;
     letter-spacing: 2px;
   }
-  
+  /* Tùy chỉnh panel danh sách */
+.directions-list-panel {
+    margin: 15px auto;
+    width: 90%;
+    max-width: 500px;
+}
+
+.list-title {
+    color: #dfb76c;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Cấu trúc thu/mở */
+.direction-item {
+    background: #1c1c1e;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    overflow: hidden;
+}
+
+.direction-item summary {
+    padding: 12px 15px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    list-style: none; /* Ẩn dấu chấm mặc định */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Tạo mũi tên chỉ hướng */
+.direction-item summary::after {
+    content: '▼';
+    font-size: 0.8rem;
+    color: #dfb76c;
+}
+
+.direction-item[open] summary::after {
+    content: '▲';
+}
+
+.direction-content {
+    padding: 10px 15px 15px 15px;
+    border-top: 1px solid #333;
+    font-size: 0.9rem;
+    color: #ccc;
+}
 /* === KIM ĐỎ CHÍNH - MŨI TÊN SẮC BÉN, TINH TẾ HƠN === */
 .center-needle {
   position: absolute;
@@ -803,6 +853,22 @@
     padding: 15px;
     flex: 1;
 }
+/* Đảm bảo mũi tên tự đổi chiều */
+.directions-list-panel[open] .list-title::after {
+    content: ' ▴';
+}
+.directions-list-panel:not([open]) .list-title::after {
+    content: ' ▾';
+}
+
+/* Làm cho tiêu đề trông giống nút bấm */
+#list-panel-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #dfb76c;
+    color: #dfb76c;
+}
   </style>
 </head>
 
@@ -1105,10 +1171,14 @@
     <input type="range" min="0" max="360" value="0" class="slider" id="compassSlider" oninput="manualRotate(this.value)">
   </div>
 
-  <div class="directions-list-panel">
-    <p class="list-title" id="list-panel-title">Danh Sách Hướng Gợi Ý</p>
-    <div id="directions-container"></div>
-  </div>
+<details class="directions-list-panel" open>
+    <summary class="list-title" id="list-panel-title" 
+             style="cursor: pointer; list-style: none; padding: 10px; background: #161616; border-radius: 8px; text-align: center; display: block;">
+        Danh Sách Hướng Gợi Ý ▾
+    </summary>
+    <div id="directions-container">
+        </div>
+</details>
 
   <div class="explanation-panel">
     <div class="detail-content" id="detail-box">Đang khởi tạo mật pháp dữ liệu...</div>   
@@ -1758,9 +1828,6 @@ function getHanhByHeading(heading) {
     return "Chưa xác định";
 }
 
-// (LƯU Ý: Đã xóa bỏ các hàm getTuongQuan và getChiTietTuongQuan cũ để tránh phán đoán sai lệch)
-
-// ====================== HÀM CHÍNH ĐÃ TỐI GIẢN & CHUẨN XÁC ======================
 // ====================== HÀM CHÍNH recalculateFate() - ĐẦY ĐỦ ======================
 function recalculateFate() {
     const name = document.getElementById('userName').value || "Chủ mệnh";
