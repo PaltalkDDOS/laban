@@ -2241,27 +2241,27 @@ function updateCompassUI(heading) {
         </div>`;
     }
 
-    // --- LUẬN ĐOÁN MINH CHÂU (DẠNG TEXT THUẦN TÚY - ĐỦ DỮ LIỆU) ---
-    // Hiển thị giống hệt format gốc của bạn
-    // --- LUẬN ĐOÁN MINH CHÂU (DẠNG TEXT THUẦN TÚY - ĐÚNG MÀU CÁT/HUNG) ---
+// --- LUẬN ĐOÁN MINH CHÂU (DẠNG TEXT THUẦN TÚY - CÓ GIẢI PHÁP ĐẸP) ---
     if (typeof MaTranMinhChau !== 'undefined' && MaTranMinhChau[chủMệnh]?.[sơnHiệnTại]) {
         const mc = MaTranMinhChau[chủMệnh][sơnHiệnTại];
         
-        // CẤU HÌNH MÀU CHUẨN: Cát = Xanh lá (#30d158), Hung = Đỏ (#ff3b30)
         const isCat = mc.loai === 'Cát';
         const color = isCat ? '#30d158' : '#ff3b30';
         const label = isCat ? '[MINH CHÂU CÁT SƠN]' : '[MINH CHÂU HUNG SƠN]';
         
-        luanDoanSonChiTiet = `<b style="color:${color};">${label}</b> Sơn ${sơnHiệnTại} (${sơnHiệnTạiObj?.huong}): ${mc.text}`;
+        // Phần thông tin Sơn/Hướng xám ghi, in nghiêng
+        const thongSo = `<span style="color:#a0a0a0; font-style:italic;">Sơn ${sơnHiệnTại} (${sơnHiệnTạiObj?.huong}):</span>`;
         
-        // Nếu có giải pháp, nối thêm vào
+        luanDoanSonChiTiet = `<b style="color:${color};">${label}</b> ${thongSo} ${mc.text}`;
+        
+        // Cải tiến phần GIẢI PHÁP: Màu sắc đồng bộ với tiêu đề, thêm icon 💡
         if (mc.giaiphap) {
-            luanDoanSonChiTiet += `<br><br><b>Giải pháp:</b> ${mc.giaiphap}`;
+            luanDoanSonChiTiet += `<br><br><span style="color:${color}; font-weight:bold;">💡 Giải pháp:</span> 
+                                  <span style="color:#ffffff;">${mc.giaiphap}</span>`;
         }
     } else {
-        luanDoanSonChiTiet = `Tọa độ la bàn tại ${currentHeading}° - Sơn ${sơnHiệnTại} - Phương ${sơnHiệnTạiObj?.huong}.`;
+        luanDoanSonChiTiet = `<span style="color:#a0a0a0; font-style:italic;">Tọa độ: ${currentHeading}° | Sơn ${sơnHiệnTại} | Phương ${sơnHiệnTạiObj?.huong}.</span>`;
     }
-
 // ==================== 6. XỬ LÝ THEO MỤC ĐÍCH (ĐÃ KHÔI PHỤC CHI TIẾT) ====================
 const config = ConfigPhongThuy[mụcĐích] || { title: "Cung vị", isCat: true };
 const isGood = config.isCat ? thôngTinCung.cát : !thôngTinCung.cát;
