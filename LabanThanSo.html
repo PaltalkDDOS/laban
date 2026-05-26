@@ -324,73 +324,28 @@
     letter-spacing: 2px;
   }
   
-/* === KIM ĐỎ CHÍNH - MŨI TÊN SẮC BÉN, TINH TẾ HƠN === */
-.center-needle {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 7px; /* Giảm nhẹ độ rộng để thanh thoát hơn */
-  height: 90%;
-  /* Giảm opacity của gradient nền xuống một chút để bớt gắt */
-  background: linear-gradient(to bottom, rgba(255, 30, 30, 0.9) 48%, rgba(255, 80, 80, 0.9) 52%);
-  /* Điều chỉnh clip-path để mũi tên thon gọn và nhọn hơn ở đầu */
-  clip-path: polygon(
-    50% 0%, 
-    100% 20%, 
-    65% 20%, 
-    65% 85%, 
-    100% 100%, 
-    50% 92%, 
-    0% 100%, 
-    35% 85%, 
-    35% 20%, 
-    0% 20%
-  );
-  transform: translate(-50%, -50%) rotate(0deg);
-  transform-origin: 50% 50%;
-  z-index: 9;
-  pointer-events: none;
-  /* Giảm nhẹ shadow để bớt chói mắt */
-  box-shadow: 0 0 5px #ff2222, 0 0 10px rgba(255, 34, 34, 0.4);
-  filter: brightness(1.05);
-}
-
-/* === KIM VÀNG GHOST - VÀNG KIM LOẠI/VÀNG NGHỆ NEON === */
-.ghost-needle {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 5.5px;
-  height: 86%;
-  /* Chuyển sang tông vàng đậm hơn, sang trọng (Gold Metallic Neon) */
-  background: linear-gradient(to bottom, #d4af37 0%, #f1c40f 50%, #d4af37 100%);
-  clip-path: polygon(50% 0%, 100% 15%, 65% 15%, 65% 100%, 35% 100%, 35% 15%, 0% 15%);
-  transform: translate(-50%, -50%) rotate(0deg);
-  transform-origin: 50% 50%;
-  z-index: 7;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s ease, transform 0.15s ease-out;
-  /* Giảm blur của shadow để trông tinh tế, không bị nhòe chói */
-  box-shadow: 0 0 6px #d4af37, 0 0 12px rgba(212, 175, 55, 0.3);
-  filter: brightness(1.1);
-}
-.north-pointer {
-  position: absolute;
-  top: 2px;                    /* Giảm xuống một chút */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 18px;                 /* Rộng hơn */
-  height: 32px;                /* Dài hơn */
-  background: #ff3b30;
-  z-index: 20;                 /* Cao hơn center-pin */
-  pointer-events: none;
-  clip-path: polygon(50% 0%, 100% 100%, 50% 82%, 0% 100%);
-  box-shadow: 0 0 12px #ff3b30, 
-              0 0 22px #ff3b30,
-              0 0 35px rgba(255, 59, 48, 0.6);
-  border-radius: 2px;
-}
+  .center-needle {
+    position: absolute;
+    width: 8px;
+    height: 85%;
+    background: linear-gradient(to bottom, var(--red) 50%, #ccc 50%);
+    clip-path: polygon(50% 0%, 100% 15%, 60% 15%, 60% 85%, 100% 85%, 50% 100%, 0% 85%, 40% 85%, 40% 15%, 0% 15%);
+    z-index: 8;
+    pointer-events: none;
+  }
+  
+        .ghost-needle {
+            position: absolute;
+            width: 6px;
+            height: 80%;
+            background: linear-gradient(to bottom, #ffcc00 50%, rgba(255, 204, 0, 0.3) 50%);
+            clip-path: polygon(50% 0%, 100% 15%, 60% 15%, 60% 85%, 100% 85%, 50% 100%, 0% 85%, 40% 85%, 40% 15%, 0% 15%);
+            z-index: 6;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+  
   .center-pin {
     position: absolute;
     width: 12px;
@@ -551,7 +506,6 @@
   }
   
   .control-box {
-    display: none !important;   /* Thêm !important để chắc chắn ẩn */
     width: 92%;
     max-width: 430px;
     background: #111;
@@ -854,56 +808,15 @@
 
 <div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #1a1a1a; border-radius: 50%; box-shadow: 0 12px 35px rgba(0,0,0,0.5); border: 6px solid #b58e4b; overflow: hidden; color-scheme: light !important;">
 
-<!-- Đường dọc -->
-<div class="cross-line-v" style="
-  position: absolute; 
-  width: 1px; 
-  height: 92%; 
-  left: 50%; 
-  top: 4%; 
-  background: rgba(255, 59, 48, 0.28); 
-  z-index: 8; 
-  pointer-events: none; 
-  transform: translateX(-50%);
-  /* Cắt bỏ đoạn giữa (từ 43% đến 57%) */
-  clip-path: polygon(0% 0%, 100% 0%, 100% 43%, 0% 43%, 0% 57%, 100% 57%, 100% 100%, 0% 100%);
-"></div>
+  <div class="cross-line-v" style="position: absolute; width: 1.2px; height: 100%; left: 50%; top: 0; background: rgba(255, 59, 48, 0.45); z-index: 10; pointer-events: none;"></div>
+  <div class="cross-line-h" style="position: absolute; height: 1.2px; width: 100%; top: 50%; left: 0; background: rgba(255, 59, 48, 0.45); z-index: 10; pointer-events: none;"></div>
 
-<!-- Đường ngang -->
-<div class="cross-line-h" style="
-  position: absolute; 
-  height: 1px; 
-  width: 92%; 
-  top: 50%; 
-  left: 4%; 
-  background: rgba(255, 59, 48, 0.28); 
-  z-index: 8; 
-  pointer-events: none; 
-  transform: translateY(-50%);
-  /* Cắt bỏ đoạn giữa (từ 43% đến 57%) */
-  clip-path: polygon(0% 0%, 43% 0%, 43% 100%, 57% 100%, 57% 0%, 100% 0%, 100% 100%, 0% 100%);
-"></div>
-
-  <div class="north-pointer" style="
-  position: absolute; 
-  top: 4px; 
-  left: 50%; 
-  transform: translateX(-50%); 
-  width: 12px; 
-  height: 24px; 
-  background: #ff3b30; 
-  z-index: 12; 
-  pointer-events: none;
-  /* Cắt hình mũi tên thon gọn */
-  clip-path: polygon(50% 0%, 100% 100%, 50% 85%, 0% 100%);
-  /* Hiệu ứng Neon */
-  box-shadow: 0 0 10px #ff3b30, 0 0 20px #ff3b30;
-"></div>
+  <div class="north-pointer" style="position: absolute; top: 4px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-bottom: 18px solid #ff3b30; z-index: 12; pointer-events: none;"></div>
 
   <div id="needle" style="display: none;"></div>
-  <div id="ghostNeedle" class="ghost-needle" style="display: none;"></div>
+  <div id="ghostNeedle" style="display: none;"></div>
   
-
+  <div class="center-pin" style="position: absolute; width: 10px; height: 10px; background: #ff3b30; border: 2px solid #fff; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; pointer-events: none;"></div>
 
   <div class="compass-dial" id="compass" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center; transition: transform 0.1s ease-out;">
     <svg viewBox="0 0 500 500" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; color-scheme: light !important; background: transparent;">
@@ -934,19 +847,19 @@
       <g id="phucDucRingSvg"></g>
 
       <g id="tamBatQuaiMau" style="mix-blend-mode: normal !important;">
-  <!-- Vòng tròn nền -->
-  <circle cx="250" cy="250" r="36" fill="#fff" stroke="#ff3b30" stroke-width="1.5" />
-  
-  <!-- Nửa ĐEN (Phía trên/Phải) -->
-  <path d="M250,214 A36,36 0 0,1 250,286 A18,18 0 0,0 250,250 A18,18 0 0,1 250,214" fill="#333" />
-  
-  <!-- Nửa TRẮNG (Phía dưới/Trái) -->
-  <path d="M250,286 A36,36 0 0,1 250,214 A18,18 0 0,0 250,250 A18,18 0 0,1 250,286" fill="#fff" />
-  
-  <!-- Mắt (Đảm bảo nằm đúng vị trí trong vùng của nó) -->
-  <circle cx="250" cy="232" r="6" fill="#fff" /> <!-- Mắt trắng nằm trong nền Đen -->
-  <circle cx="250" cy="268" r="6" fill="#333" />  <!-- Mắt đen nằm trong nền Trắng -->
-</g>
+        <circle cx="250" cy="250" r="70" fill="none" stroke="#b58e4b" stroke-width="1" />
+        
+        <path d="M250,250 L223.2,185.3 A70,70 0 0,1 276.8,185.3 Z" fill="#ffebeb" stroke="#ff3b30" stroke-width="0.8" />
+        <path d="M250,250 L276.8,185.3 A70,70 0 0,1 314.7,223.2 Z" fill="#fffdfa" stroke="#b58e4b" stroke-width="0.8" />
+        <path d="M250,250 L314.7,223.2 A70,70 0 0,1 314.7,276.8 Z" fill="#ffebeb" stroke="#ff3b30" stroke-width="0.8" />
+        <path d="M250,250 L314.7,276.8 A70,70 0 0,1 276.8,314.7 Z" fill="#fffdfa" stroke="#b58e4b" stroke-width="0.8" />
+        <path d="M250,250 L276.8,314.7 A70,70 0 0,1 223.2,314.7 Z" fill="#ffebeb" stroke="#ff3b30" stroke-width="0.8" />
+        <path d="M250,250 L223.2,314.7 A70,70 0 0,1 185.3,276.8 Z" fill="#fffdfa" stroke="#b58e4b" stroke-width="0.8" />
+        <path d="M250,250 L185.3,276.8 A70,70 0 0,1 185.3,223.2 Z" fill="#ffebeb" stroke="#ff3b30" stroke-width="0.8" />
+        <path d="M250,250 L185.3,223.2 A70,70 0 0,1 223.2,185.3 Z" fill="#fffdfa" stroke="#b58e4b" stroke-width="0.8" />
+
+        <circle cx="250" cy="250" r="36" fill="#fff2f2" stroke="#ff3b30" stroke-width="1.5" />
+      </g>
 
       <g stroke-width="2.2" fill="none" stroke-linecap="square" style="mix-blend-mode: normal !important;">
         <g transform="rotate(0, 250, 250)" stroke="#c01108">
@@ -1036,8 +949,7 @@
     <div id="judgment-box" class="judgment-badge bg-good">...</div>
   </div>
 
-    <!-- Thanh kéo tay la bàn - Đã ẩn vì không cần thiết -->
-  <div class="control-box" style="display: none;">
+  <div class="control-box">
     <input type="range" min="0" max="360" value="0" class="slider" id="compassSlider" oninput="manualRotate(this.value)">
   </div>
 
@@ -1580,54 +1492,25 @@
       }
   };
 
-// ====================== GLOBAL ======================
-let isDetailOpen = false;
+// HÀM ĐÓNG MỞ LUẬN GIẢI CHI TIẾT (Giữ nguyên bên ngoài)
+  window.toggleDienGiaiChiTiet = function() {
+      const contentDiv = document.getElementById('content-dien-giai-chi-tiet');
+      const toggleBtn = document.getElementById('btn-toggle-fengshui');
+      if (!contentDiv || !toggleBtn) return;
+      
+      if (contentDiv.style.display === 'none') {
+          contentDiv.style.display = 'block';
+          toggleBtn.innerHTML = '🙈 Đóng luận giải chi tiết';
+          toggleBtn.style.background = 'rgba(223, 183, 108, 0.15)';
+      } else {
+          contentDiv.style.display = 'none';
+          toggleBtn.innerHTML = '👁️ Xem luận giải bản mệnh chi tiết';
+          toggleBtn.style.background = 'transparent';
+      }
+  };
 
-// Quy luật Ngũ Hành (Tự động cho tất cả mệnh)
-const sinhChoMenh = { "Mộc":"Hỏa", "Hỏa":"Thổ", "Thổ":"Kim", "Kim":"Thủy", "Thủy":"Mộc" };
-const khacMenh = { "Mộc":"Thổ", "Thổ":"Thủy", "Thủy":"Hỏa", "Hỏa":"Kim", "Kim":"Mộc" };
-const menhKhacHuong = { "Thổ":"Thủy", "Thủy":"Hỏa", "Hỏa":"Kim", "Kim":"Mộc", "Mộc":"Thổ" };
-
-// ====================== HÀM HỖ TRỢ ======================
-function getHanhByHeading(heading) {
-    heading = ((heading % 360) + 360) % 360;
-    if (heading >= 337.5 || heading < 22.5) return "Thủy";
-    if (heading >= 22.5 && heading < 67.5) return "Thổ";
-    if (heading >= 67.5 && heading < 112.5) return "Mộc";
-    if (heading >= 112.5 && heading < 157.5) return "Mộc";
-    if (heading >= 157.5 && heading < 202.5) return "Hỏa";
-    if (heading >= 202.5 && heading < 247.5) return "Thổ";
-    if (heading >= 247.5 && heading < 292.5) return "Kim";
-    if (heading >= 292.5 && heading < 337.5) return "Kim";
-    return "Chưa xác định";
-}
-
-function getTuongQuan(huong, menh) {
-    if (huong === menh) return "Đồng khí (Bình hòa)";
-    if (sinhChoMenh[huong] === menh) return "Tương sinh (Đại cát)";
-    if (khacMenh[huong] === menh) return "Hướng khắc Mệnh (Hung)";
-    if (menhKhacHuong[menh] === huong) return "Mệnh khắc Hướng";
-    return "Quan hệ bình hòa";
-}
-
-function getChiTietTuongQuan(huong, menh) {
-    if (huong === menh) {
-        return "Hướng và mệnh cùng hành, tạo sự ổn định và hài hòa cho gia đạo.";
-    }
-    if (sinhChoMenh[huong] === menh) {
-        return `Hướng <b>${huong}</b> sinh cho mệnh <b>${menh}</b>. Đây là hướng Đại cát, rất tốt cho cửa chính, giường ngủ và bàn thờ.`;
-    }
-    if (khacMenh[huong] === menh) {
-        return `Hướng <b>${huong}</b> khắc mệnh <b>${menh}</b>. Đây là hướng Hung, nên tránh đặt cửa chính hoặc giường ngủ.`;
-    }
-    if (menhKhacHuong[menh] === huong) {
-        return `Mệnh <b>${menh}</b> khắc hướng <b>${huong}</b>. Dễ tiêu hao năng lượng, nên hạn chế sử dụng làm hướng chính.`;
-    }
-    return "Quan hệ trung tính.";
-}
-
-// ====================== HÀM CHÍNH ======================
-function recalculateFate() {
+  // HÀM TÍNH TOÁN VÀ XỬ LÝ LÔ-GÍC CHÍNH (Đã thêm giải nghĩa Phương vị tự động)
+  function recalculateFate() {
     const name = document.getElementById('userName').value || "Chủ mệnh";
     const gender = document.getElementById('gender').value;
     const dayStr = document.getElementById('birthDay').value;
@@ -1635,14 +1518,16 @@ function recalculateFate() {
     const yearStr = document.getElementById('birthYear').value;
 
     if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
-        fateTxt.innerText = `${name}: Đo hướng tự do cơ bản (Chưa nhập đủ ngày sinh)`;
-        directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập đủ ngày tháng năm sinh</div>";
-        listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
-        
-        const oldPanel = document.getElementById('dien-giai-bo-sung');
-        if (oldPanel) oldPanel.remove();
-        updateCompassUI(currentHeading);
-        return;
+      fateTxt.innerText = `${name}: Đo hướng tự do cơ bản (Chưa nhập đủ Ngày - Tháng - Năm sinh)`;
+      directionsContainer.innerHTML =
+        "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập đủ 3 ô Ngày, Tháng, Năm sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
+      listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
+      
+      const oldPanel = document.getElementById('dien-giai-bo-sung');
+      if (oldPanel) oldPanel.remove();
+
+      updateCompassUI(currentHeading);
+      return;
     }
 
     let d = parseInt(dayStr);
@@ -1650,92 +1535,98 @@ function recalculateFate() {
     let y = parseInt(yearStr);
 
     if (!validateFullDate(d, m, y)) {
-        fateTxt.innerText = `${name}: Lỗi ngày tháng năm sinh`;
-        return;
+      fateTxt.innerText = `${name}: Lỗi cấu trúc thời gian (Kiểm tra lại số ngày hoặc năm nhuận)`;
+      return;
     }
 
-    // Tính toán mệnh
-    const chủMệnh = tínhCungPhi(y, m, d, gender);
+    // 1. Kế thừa logic tính toán gốc
+    chủMệnh = tínhCungPhi(y, m, d, gender);
     const namAm = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
-    const nguHoangInfo = getNguHoangInfo(namAm);
-    const hanhCungPhi = bátTrạchMap[chủMệnh].element;
+    const nguHoangInfo = getNguHoangInfo(namAm); 
+    
+    const hanhCungPhi = bátTrạchMap[chủMệnh].element; // Hành của người (Ví dụ: Thổ)
     const nhomMenh = bátTrạchMap[chủMệnh].group;
 
-    fateTxt.innerText = `${name}: Cung ${chủMệnh} (${nhomMenh}) • Hành ${hanhCungPhi} • Năm Âm ${namAm} • ${nguHoangInfo}`;
+    fateTxt.innerText =
+      `${name}: Cung ${chủMệnh} (${nhomMenh}) - Bản Mệnh Cung Phi: ${hanhCungPhi} | Năm Âm: ${namAm} | Ngũ Hoàng ${namAm}: ${nguHoangInfo}`;
 
-    // Phân tích hướng & tọa
-    const hanhPhuongVi = getHanhByHeading(currentHeading);
-    const toaHeading = (currentHeading + 180) % 360;
-    const hanhToa = getHanhByHeading(toaHeading);
+    // 2. XÂY DỰNG NỘI DUNG DIỄN GIẢI ĐỘNG
+    let lyGiaiCungPhi = `Bản mệnh dựa trên niên đại năm âm lịch <b>${namAm}</b> của bạn tương ứng với các trường khí vận hành của vũ trụ. Trong đo đạc thiết kế địa lý và xoay hướng <b>Bát Trạch</b>, chúng ta bắt buộc phải lấy <b>Mệnh Cung Phi</b> làm lệnh điều hành cốt lõi: Bạn thuộc phi cung <b>${chủMệnh}</b>, đại diện cho nhóm <b>${nhomMenh}</b> mang đặc tính khí của hành <b>${hanhCungPhi}</b>. Cơ thể và ngôi nhà của bạn sẽ đạt trạng thái cộng hưởng năng lượng cát lành cao nhất khi hướng về các phương vị thuộc nhóm mệnh này.`;
 
-    // Luận giải (GIỮ NGUYÊN LỜI VĂN CỦA BẠN)
-    let lyGiaiCungPhi = `Bạn thuộc cung <b>${chủMệnh}</b> (${nhomMenh}), hành <b>${hanhCungPhi}</b>. Đây là cơ sở quan trọng để chọn hướng đón khí theo Bát Trạch.`;
+    let lyGiaiHungCat = "";
+    if (nguHoangInfo.includes("Tam Bích")) {
+        lyGiaiHungCat = `<b>Lý giải hiện tượng khí số đóng tại Trung Cung:</b> Theo vận trình khí số của năm âm lịch <b>${namAm}</b>, ngôi sao làm chủ quản năm đó là <b>Tam Bích (Mộc Tinh)</b> bay vào đóng giữ tại vùng trung tâm của ngôi nhà (Trung Cung vốn thuộc Thổ). Do hành Mộc của sao xung khắc với hành Thổ bản địa của tâm nhà, nó tạo nên một trạng thái trường khí ở mức <b>Trung bình</b>. Sát khí này không gây tai họa lớn, nhưng dễ khiến tâm lý chủ mệnh có lúc bị xao nhãng, đôi khi dễ nóng nảy hoặc gặp đôi chút vướng mắc nhỏ ở bước đầu khi triển khai công việc. Bạn nên giữ trung tâm nhà luôn gọn gàng, sáng sủa để điều hòa khí trường.`;
+    } else if (nguHoangInfo.includes("Tứ Lục")) {
+        lyGiaiHungCat = `<b>Lý giải hiện tượng Hung nhẹ đóng tại Trung Cung:</b> Theo vận trình khí số của năm âm lịch <b>${namAm}</b>, ngôi sao làm chủ quản năm đó là <b>Tứ Lục (Mộc Tinh)</b> bay vào đóng giữ tại vùng Trung tâm của ngôi nhà (Trung Cung vốn thuộc Thổ). Do hành Mộc của sao xung khắc nhẹ với hành Thổ bản địa của tâm nhà, nó tạo nên một trạng thái nhiễu động nhỏ gọi là <b>'Hung nhẹ'</b>. Sát khí này rất yếu, không gây ra tai họa lớn mà chỉ dễ khiến tâm lý có lúc bị mệt mỏi nhẹ hoặc gặp trắc trở nhỏ lúc ban đầu khởi sự công việc.`;
+    } else if (nguHoangInfo.includes("Ngũ Hoàng")) {
+        lyGiaiHungCat = `<b>Cảnh báo hiện tượng Đại Hung đóng tại Trung Cung:</b> Vào năm <b>${namAm}</b>, niên tinh phạm phải <b>Ngũ Hoàng Đại Sát</b> đóng ngay tại tâm nhà. Đây là hung tinh mang năng lượng Thổ sát cực mạnh, chủ về biến động bất ngờ. Cần giữ khu vực Trung Cung của ngôi nhà luôn yên tĩnh, tránh động thổ, đục đẽo hay sửa chữa lớn tại vùng lõi này trong năm để bảo toàn tài lộc và gia đạo.`;
+    } else {
+        lyGiaiHungCat = `<b>Lý giải thiên thời tại Trung Cung:</b> Ngôi sao chủ quản đóng giữ vùng tâm nhà (Trung Cung) trong năm sinh âm lịch <b>${namAm}</b> mang trường khí ổn hòa, an lành, cát nhiều hung ít, giúp củng cố sự ổn định và bình an cho gia đạo của chủ mệnh.`;
+    }
 
-    let lyGiaiHungCat = nguHoangInfo.includes("Ngũ Hoàng")
-        ? `⚠️ <b>Ngũ Hoàng Đại Sát ${namAm}:</b> Trung cung bị hung khí mạnh. Tránh động thổ, sửa chữa lớn ở giữa nhà.`
-        : (nguHoangInfo.includes("Tam Bích") || nguHoangInfo.includes("Tứ Lục"))
-        ? `<b>Năm ${namAm}:</b> Trung cung có khí nhiễu nhẹ. Nên giữ khu vực giữa nhà sạch sẽ, thoáng sáng.`
-        : `<b>Năm ${namAm}:</b> Khí số ổn định, cát nhiều hung ít.`;
+    // LÔ-GÍC THÔNG MINH MỚI: TỰ ĐỘNG GIẢI NGHĨA "PHƯƠNG VỊ" THEO LA BÀN ĐANG XOAY
+    let hanhPhuongVi = "Chưa xác định";
+    if (typeof currentHeading !== 'undefined') {
+        // Thuật toán bóc tách hướng la bàn sang Ngũ hành phương vị
+        if (currentHeading >= 337.5 || currentHeading < 22.5) hanhPhuongVi = "Thủy"; // Hướng Bắc
+        else if (currentHeading >= 22.5 && currentHeading < 67.5) hanhPhuongVi = "Thổ"; // Hướng Đông Bắc
+        else if (currentHeading >= 67.5 && currentHeading < 112.5) hanhPhuongVi = "Mộc"; // Hướng Đông
+        else if (currentHeading >= 112.5 && currentHeading < 157.5) hanhPhuongVi = "Mộc"; // Hướng Đông Nam
+        else if (currentHeading >= 157.5 && currentHeading < 202.5) hanhPhuongVi = "Hỏa"; // Hướng Nam
+        else if (currentHeading >= 202.5 && currentHeading < 247.5) hanhPhuongVi = "Thổ"; // Hướng Tây Nam
+        else if (currentHeading >= 247.5 && currentHeading < 292.5) hanhPhuongVi = "Kim"; // Hướng Tây
+        else if (currentHeading >= 292.5 && currentHeading < 337.5) hanhPhuongVi = "Kim"; // Hướng Tây Bắc
+    }
 
-    const tuongQuanHuong = getTuongQuan(hanhPhuongVi, hanhCungPhi);
-    const lyGiaiHuong = `<b>Hướng ${hanhPhuongVi} (${Math.round(currentHeading)}°):</b> ${tuongQuanHuong}. ${getChiTietTuongQuan(hanhPhuongVi, hanhCungPhi)}`;
+    let lyGiaiTuongQuanPhuongVi = "";
+    if (hanhCungPhi === "Thổ") {
+        if (hanhPhuongVi === "Thủy") {
+            lyGiaiTuongQuanPhuongVi = `<b>Đối chiếu phương vị la bàn hiện tại (Phương vị: Thủy | Mệnh Cung: Thổ):</b> La bàn đang chỉ vào phương vị mang trường khí hành <b>Thủy</b> (Hướng Bắc). Đối với mệnh Cung Phi của bạn là <b>Thổ</b>, đây là mối quan hệ <i>Mệnh khắc Hướng</i> (Thổ khắc Thủy). Việc xây cửa chính hoặc đặt vị trí đón khí quay về phương vị Thủy này sẽ gây hao tổn năng lượng của bản mệnh để chế ngự phương hướng, dẫn đến trường khí bị suy yếu, dễ phạm vào cung xấu (Ngũ Quỷ).`;
+        } else if (hanhPhuongVi === "Hỏa") {
+            lyGiaiTuongQuanPhuongVi = `<b>Đối chiếu phương vị la bàn hiện tại (Phương vị: Hỏa | Mệnh Cung: Thổ):</b> La bàn đang chỉ vào hướng mang trường khí hành <b>Hỏa</b> (Hướng Nam). Đây là quan hệ <i>Tương sinh đại cát</i> (Hỏa sinh Thổ), hướng nhà nuôi dưỡng bồi đắp năng lượng cho bản mệnh, rất tốt cho sức khỏe và tài lộc.`;
+        } else if (hanhPhuongVi === "Thổ") {
+            lyGiaiTuongQuanPhuongVi = `<b>Đối chiếu phương vị la bàn hiện tại (Phương vị: Thổ | Mệnh Cung: Thổ):</b> La bàn đang chỉ vào hướng mang trường khí hành <b>Thổ</b> (Tây Nam / Đông Bắc). Đây là quan hệ <i>Bình hòa, đồng khí</i> (Thổ hợp Thổ), giúp bản mệnh vững vàng, gia đạo yên ổn, đón nhận nhiều sinh khí tốt lành.`;
+        } else if (hanhPhuongVi === "Mộc") {
+            lyGiaiTuongQuanPhuongVi = `<b>Đối chiếu phương vị la bàn hiện tại (Phương vị: Mộc | Mệnh Cung: Thổ):</b> La bàn đang chỉ vào hướng mang trường khí hành <b>Mộc</b> (Hướng Đông / Đông Nam). Đây là mối quan hệ <i>Hướng khắc Mệnh</i> (Mộc khắc Thổ). Trường khí của hướng xung khắc và chèn ép bản mệnh, dễ sinh bệnh tật, mệt mỏi hoặc trắc trở trong công việc.`;
+        } else if (hanhPhuongVi === "Kim") {
+            lyGiaiTuongQuanPhuongVi = `<b>Đối chiếu phương vị la bàn hiện tại (Phương vị: Kim | Mệnh Cung: Thổ):</b> La bàn đang chỉ vào hướng mang trường khí hành <b>Kim</b> (Hướng Tây / Tây Bắc). Đây là quan hệ <i>Sinh xuất</i> (Thổ sinh Kim), bản mệnh phải tiết chế bớt năng lượng để nuôi dưỡng hướng, làm giảm bớt vượng khí của chủ nhà.`;
+        }
+    } else {
+        // Dự phòng cho các cung mệnh khác khi anh đổi ngày sinh
+        lyGiaiTuongQuanPhuongVi = `<b>Đối chiếu phương vị la bàn hiện tại (Phương vị: ${hanhPhuongVi} | Mệnh Cung: ${hanhCungPhi}):</b> Hệ thống đang đo đạc sự tương tác giữa hành <b>${hanhPhuongVi}</b> của hướng đất và hành <b>${hanhCungPhi}</b> của phi cung để đưa ra gợi ý bố trí thích hợp nhất.`;
+    }
 
-    const tuongQuanToa = getTuongQuan(hanhToa, hanhCungPhi);
-    const lyGiaiToa = `<b>Tọa ${hanhToa} (${Math.round(toaHeading)}°):</b> ${tuongQuanToa}. ${getChiTietTuongQuan(hanhToa, hanhCungPhi)}`;
+    let lyGiaiBoTri = `<b>Quy tắc bố trí vạn vật theo Thiên - Địa - Nhân:</b> Đối với các hạng mục mang tính chất <i>Đón nhận cát khí và sinh khí</i> vào nhà như Cửa chính, Bàn thờ, Giường ngủ, hay Két sắt tài lộc, bạn bắt buộc phải xoay mặt hoặc tựa lưng về các hướng Cát để hấp thụ trường khí tốt. Ngược lại, đối với các không gian chứa uế khí hoặc xả thải như Bếp nấu, Nhà vệ sinh, hay Kho tàng, phong thủy tối thượng áp dụng nguyên lý <b>'Tọa Hung Hướng Cát'</b> - tức là đặt cố định các thiết bị này đè lên các phương vị hướng xấu (Đè Hung) để thiêu rụi sát khí, thanh lọc toàn bộ uế khí và bảo vệ không gian sống.`;
 
-    const lyGiaiBoTri = `
-        <b>Nguyên tắc Tọa Hung - Hướng Cát:</b><br><br>
-        • <b style="color:#30d158">Hướng Cát (Đón sinh khí)</b>: Dùng cho <b>Cửa chính, Bàn thờ, Giường ngủ, Bàn làm việc</b>.<br>
-        • <b style="color:#ff3b30">Hướng Hung (Trấn sát)</b>: Dùng cho <b>Bếp nấu, Nhà vệ sinh, Kho chứa</b> để hóa giải sát khí.
-    `;
-
-    // Màu viền động
-    let borderColor = "var(--gold)";
-    if (tuongQuanHuong.includes("Đại cát") || tuongQuanHuong.includes("Tương sinh")) borderColor = "#30d158";
-    else if (tuongQuanHuong.includes("Hung")) borderColor = "#ff3b30";
-    else if (tuongQuanHuong.includes("Mệnh khắc")) borderColor = "#ff9500";
-
-    // Render panel (TỐI ƯU HIỂN THỊ NÚT BẤM)
+    // 3. THIẾT KẾ GIAO DIỆN
     let targetContainer = document.getElementById('dien-giai-bo-sung');
     if (!targetContainer) {
         targetContainer = document.createElement('div');
         targetContainer.id = 'dien-giai-bo-sung';
         targetContainer.style.width = '100%';
-        if (fateTxt && fateTxt.parentNode) {
-            fateTxt.parentNode.insertBefore(targetContainer, fateTxt.nextSibling);
-        }
+        fateTxt.parentNode.insertBefore(targetContainer, fateTxt.nextSibling);
     }
-
-    // Logic nút bấm dựa trên biến global isDetailOpen
-    const btnLabel = isDetailOpen ? '🙈 Đóng luận giải chi tiết' : '👁️ Xem luận giải chi tiết';
-    const btnBkg = isDetailOpen ? 'rgba(223, 183, 108, 0.15)' : 'transparent';
-
+    
     targetContainer.innerHTML = `
         <div style="text-align: center; margin: 10px 0;">
-            <button id="btn-toggle-fengshui" onclick="toggleDienGiaiChiTiet()" 
-                    style="background: ${btnBkg}; border: 1px solid var(--gold); color: var(--gold);
-                           padding: 8px 16px; font-size: 0.85rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
-                ${btnLabel}
+            <button id="btn-toggle-fengshui" onclick="toggleDienGiaiChiTiet()" style="background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 5px 12px; font-size: 0.78rem; border-radius: 4px; cursor: pointer; transition: all 0.2s ease; font-weight: bold;">
+                👁️ Xem luận giải bản mệnh chi tiết
             </button>
         </div>
-        <div id="content-dien-giai-chi-tiet" style="display: ${isDetailOpen ? 'block' : 'none'}; margin: 10px 0; padding: 14px;
-             background: rgba(223, 183, 108, 0.06); border: 1.5px solid ${borderColor}; border-radius: 8px;
-             font-size: 0.86rem; line-height: 1.65; text-align: left;">
-            <p style="margin:0 0 10px 0; color:var(--gold); font-weight:bold; border-bottom:1px solid var(--gold); padding-bottom:6px;">
-                🔮 LUẬN GIẢI PHONG THỦY
+        <div id="content-dien-giai-chi-tiet" style="display: none; margin: 10px 0; padding: 14px; background: rgba(223, 183, 108, 0.06); border: 1.5px dashed var(--gold); border-radius: 8px; font-size: 0.84rem; color: #e0e0e0; line-height: 1.6; text-align: left; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);">
+            <p style="margin: 0 0 10px 0; color: var(--gold); font-weight: bold; font-size: 0.92rem; border-bottom: 1px solid rgba(223, 183, 108, 0.25); padding-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+                <span>🔮</span> LUẬN GIẢI PHONG THỦY THÔNG MINH
             </p>
-            <p style="margin:6px 0;">${lyGiaiCungPhi}</p>
-            <p style="margin:6px 0;">${lyGiaiHungCat}</p>
-            <p style="margin:6px 0;">${lyGiaiHuong}</p>
-            <p style="margin:6px 0;">${lyGiaiToa}</p>
-            <p style="margin:6px 0;">${lyGiaiBoTri}</p>
+            <p style="margin: 0 0 10px 0;">🎯 ${lyGiaiCungPhi}</p>
+            <p style="margin: 0 0 10px 0;">⚠️ ${lyGiaiHungCat}</p>
+            <p style="margin: 0 0 10px 0;">🌐 ${lyGiaiTuongQuanPhuongVi}</p>
+            <p style="margin: 0;">🛠️ ${lyGiaiBoTri}</p>
         </div>
     `;
 
     generateDirectionsList();
     updateCompassUI(currentHeading);
-}
-
+  }
   // --- CẤU HÌNH PHONG THỦY ---
 const ConfigPhongThuy = {
     'house':     { title: "Ưu tiên Hướng Nhà / Cửa Chính", isCat: true },
@@ -1797,25 +1688,17 @@ const ConfigPhongThuy = {
 
 
         function triggerGhostNeedle(angle) {
-    targetAngle = angle;
-    
-    const ghost = document.getElementById('ghostNeedle');
-    if (ghost) {
-        ghost.style.display = 'block';
-        ghost.style.opacity = "1";
-        ghost.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
-    }
-    
-    let sơnThử = tìmSơnHướng(angle);
-    detailBox.style.borderLeftColor = "var(--gold)";
-    detailBox.innerHTML = `
-        <span class="gold-text">◆ KIM VÀNG XOAY THỬ: ${angle}°</span><br>
-        <span style="color:#fff;">Kim vàng đang chỉ <strong>${sơnThử}</strong>.<br>
-        Hãy xoay la bàn sao cho kim đỏ trùng với kim vàng.</span>
-    `;
-    
-    updateCompassUI(currentHeading);
-}
+            targetAngle = angle;
+            ghostNeedle.style.opacity = "1";
+            updateCompassUI(currentHeading);
+            
+            let sơnThử = tìmSơnHướng(angle);
+            detailBox.style.borderLeftColor = "var(--gold)";
+            detailBox.innerHTML = `
+                <span class="gold-text">◆ ĐANG BẬT KIM VÀNG XOAY THỬ:</span><br>
+                <span style="color:#fff;">Kim ảo màu vàng đang chỉ mốc <span class="gold-text">${angle}°</span> (Sơn <strong>${sơnThử}</strong>) nằm mờ phía dưới.<br>Hãy xoay thiết bị hoặc vuốt la bàn bằng tay sao cho Kim Đỏ thật sự trùng khớp lên vị trí Kim Vàng mờ để đón chuẩn hướng phương vị.</span>
+            `;
+        }
 
   function tìmSơnHướng(heading) {
     let sơnTìmThấy = "Tý";
@@ -2163,7 +2046,9 @@ const ConfigPhongThuy = {
     compass.style.transform = `rotate(${-heading}deg)`;
     needle.style.transform = `rotate(0deg)`;
     compassSlider.value = currentHeading;
-
+    if (targetAngle !== null) {
+      ghostNeedle.style.transform = `rotate(${targetAngle - currentHeading}deg)`;
+    }
     // 1. Phân định 8 Cung Phương vị Bát Quái gốc
     let currentCung = "";
     if (currentHeading >= 338 || currentHeading < 23) {
@@ -2752,14 +2637,6 @@ const ConfigPhongThuy = {
 
     // KÍCH HOẠT HIỆU ỨNG ĐÈN LED Ở CHẾ ĐỘ CAO CẤP
     kichHoatDenLedQuet(currentHeading);
-// === CẬP NHẬT KIM VÀNG (GHOST NEEDLE) ===
-if (targetAngle !== null) {
-    const ghost = document.getElementById('ghostNeedle');
-    if (ghost) {
-        ghost.style.opacity = "1";
-        ghost.style.transform = `translate(-50%, -50%) rotate(${targetAngle - currentHeading}deg)`;
-    }
-}
 }
 
 // Tách logic đèn LED quét thành hàm riêng biệt để chạy mượt mà, tái sử dụng tốt
@@ -2832,58 +2709,57 @@ function kichHoatDenLedQuet(heading) {
         }
     });
 }
-// ==========================================================================
-// THUẬT TOÁN KIM QUAY LA BÀN - TỐI ƯU TOÀN DIỆN (FINAL)
-// ==========================================================================
-let lastHeading = null;
-let orientationListenerAdded = false;   // ← Flag quan trọng chống trùng listener
-
-const SMOOTH_MIN = 0.07;   // Tăng nhẹ để nhạy hơn
-const SMOOTH_MAX = 0.52;   // Tăng để bám tay tốt hơn khi xoay nhanh
-
-// ====================== HANDLE ORIENTATION ======================
-function handleOrientation(event) {
+  let lastHeading = null;
+  // Định nghĩa các ngưỡng bộ lọc động thích ứng chống rung tay
+  const SMOOTH_MIN = 0.05; // Độ mượt tối đa khi đứng yên (kim đứng im phăng phắc)
+  const SMOOTH_MAX = 0.45; // Độ nhạy tối đa khi quay nhanh (bám tay lập tức, không trễ)
+  function handleOrientation(event) {
     let heading = null;
-
+    // 1. Kiểm tra thiết bị iOS (iPhone/iPad): Sử dụng webkitCompassHeading (đã là hướng Bắc thực địa tuyệt đối)
     if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
-        heading = event.webkitCompassHeading;           // iOS
-    } 
-    else if (event.alpha !== undefined && event.alpha !== null) {
-        heading = (360 - event.alpha) % 360;            // Android
+      heading = event.webkitCompassHeading;
     }
-
-    if (heading === null) return;
-
-    // Khóa khi đang kéo slider thủ công
-    if (document.activeElement === document.getElementById('compassSlider')) return;
-
-    // Khởi tạo lần đầu + đánh thức phong thủy
-    if (lastHeading === null) {
+    // 2. Kiểm tra thiết bị Android: Sử dụng absolute hướng thực địa nếu có
+    else if (event.absolute === true || event.absolute !== undefined) {
+      if (event.alpha !== undefined && event.alpha !== null) {
+        // Công thức chuẩn hóa hướng Bắc thực địa tuyệt đối cho Android toàn cầu
+        heading = (360 - event.alpha) % 360;
+      }
+    }
+    // Nếu không lấy được hướng tuyệt đối (do trình duyệt cũ), dùng tạm alpha gốc làm mốc động
+    if (heading === null && event.alpha !== undefined && event.alpha !== null) {
+      heading = (360 - event.alpha) % 360;
+    }
+    if (heading !== null) {
+      // Khóa cảm biến khi người dùng đang chủ động kéo thanh gạt bằng tay
+      if (document.activeElement === document.getElementById('compassSlider')) return;
+      // CƠ CHẾ THÔNG MINH: ĐỒNG BỘ GỐC BAN ĐẦU KHI REFRESH (Nhận diện đúng hướng ngay lập tức)
+      if (lastHeading === null) {
         lastHeading = heading;
         updateCompassUI(lastHeading);
-        if (typeof recalculateFate === 'function') recalculateFate();
         return;
+      }
+      let diff = heading - lastHeading;
+      // Chuẩn hóa góc sai biệt trong phạm vi -180 đến 180 độ tránh lỗi giật kim qua điểm 0° (Bắc)
+      if (diff > 180) diff -= 360;
+      if (diff < -180) diff += 360;
+      // THUẬT TOÁN BỘ LỌC ĐỘNG THÍCH ỨNG THEO TỐC ĐỘ QUAY
+      let absDiff = Math.abs(diff);
+      let dynamicFactor;
+      if (absDiff < 1) {
+        dynamicFactor = SMOOTH_MIN; // Tay rung nhẹ: Ép đĩa đứng yên phăng phắc
+      } else if (absDiff > 10) {
+        dynamicFactor = SMOOTH_MAX; // Quay nhanh: Đĩa đuổi theo tay lập tức
+      } else {
+        dynamicFactor = SMOOTH_MIN + (absDiff / 10) * (SMOOTH_MAX - SMOOTH_MIN);
+      }
+      // Áp dụng hệ số động vào chuyển động la bàn
+      heading = lastHeading + diff * dynamicFactor;
+      lastHeading = (heading % 360 + 360) % 360;
+      // Gọi hàm cập nhật giao diện của anh
+      updateCompassUI(lastHeading);
     }
-
-    let diff = heading - lastHeading;
-    if (diff > 180) diff -= 360;
-    if (diff < -180) diff += 360;
-
-    const absDiff = Math.abs(diff);
-    let dynamicFactor = SMOOTH_MIN;
-
-    if (absDiff > 8) {
-        dynamicFactor = SMOOTH_MAX;
-    } else if (absDiff > 1) {
-        dynamicFactor = SMOOTH_MIN + (absDiff / 8) * (SMOOTH_MAX - SMOOTH_MIN);
-    }
-
-    heading = lastHeading + diff * dynamicFactor;
-    lastHeading = (heading % 360 + 360) % 360;
-
-    updateCompassUI(lastHeading);
-}
-
+  }
   // Hàm đồng bộ khi gạt thanh kéo tay
   function manualRotate(value) {
     let numValue = parseFloat(value);
@@ -3068,82 +2944,47 @@ function tinhHanCuuTinhTheoNam(huong, namHienTai) {
     return { thongTinSao, meoGiaiHan };
 }
 
-// ====================== REQUEST PERMISSION ======================
-function requestPermission() {
-    const permBtn = document.getElementById('permission-btn');
-    const isIOS = typeof DeviceOrientationEvent !== 'undefined' && 
-                  typeof DeviceOrientationEvent.requestPermission === 'function';
-
-    if (isIOS) {
-        DeviceOrientationEvent.requestPermission()
-            .then(permissionState => {
-                if (permissionState === 'granted') {
-                    localStorage.setItem('ios_compass_granted', 'true');
-                    addOrientationListener();
-                    if (permBtn) permBtn.style.display = 'none';
-                } else {
-                    showCustomAlert("Quyền truy cập cảm biến bị từ chối. Bạn vẫn có thể xoay la bàn thủ công.");
-                }
-            })
-            .catch(console.error);
-    } else {
-        // Android
-        addOrientationListener();
-        if (permBtn) permBtn.style.display = 'none';
-        showCustomAlert("Cảm biến hướng địa từ đã được kích hoạt thành công!");
-    }
-}
-
-// ====================== THÊM LISTENER (TRÁNH TRÙNG) ======================
-function addOrientationListener() {
-    if (orientationListenerAdded) return;
-
+  function requestPermission() {
+    // Xác định sự kiện phù hợp cho Android (ưu tiênabsolute) và iOS
     const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
-    const eventName = (isAndroid && 'ondeviceorientationabsolute' in window) 
-        ? 'deviceorientationabsolute' 
-        : 'deviceorientation';
-
-    window.removeEventListener(eventName, handleOrientation, true);
-    window.addEventListener(eventName, handleOrientation, true);
-
-    orientationListenerAdded = true;
-}
-
-// ====================== WINDOW ONLOAD ======================
-window.onload = function() {
-    if (typeof render24SonRing === 'function') render24SonRing();
-    if (typeof loadSavedMembers === 'function') loadSavedMembers();
-    if (typeof recalculateFate === 'function') recalculateFate();
-
-    const permBtn = document.getElementById('permission-btn');
-    const isIOS = typeof DeviceOrientationEvent !== 'undefined' && 
-                  typeof DeviceOrientationEvent.requestPermission === 'function';
-
-    if (isIOS) {
-        if (localStorage.getItem('ios_compass_granted') === 'true') {
-            // Đã cấp quyền trước → chỉ cần chạm 1 lần để kích hoạt
-            if (permBtn) {
-                permBtn.style.display = 'block';
-                permBtn.style.background = 'rgba(223, 183, 108, 0.2)';
-                permBtn.style.color = '#dfb76c';
-                permBtn.style.border = '1px solid #dfb76c';
-                permBtn.innerText = "CHẠM ĐỂ KÍCH HOẠT LA BÀN (iOS)";
-                
-                // Chỉ cần chạm là kích hoạt
-                permBtn.onclick = function() {
-                    addOrientationListener();
-                    permBtn.style.display = 'none';
-                };
-            }
-        } else {
-            if (permBtn) permBtn.style.display = 'block';
-        }
+    const eventName = (isAndroid && 'ondeviceorientationabsolute' in window) ? 'deviceorientationabsolute' :
+      'deviceorientation';
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission ===
+      'function') {
+      // Xử lý cấp quyền cho iOS
+      DeviceOrientationEvent.requestPermission()
+        .then(permissionState => {
+          if (permissionState === 'granted') {
+            window.addEventListener('deviceorientation', handleOrientation, true);
+            permBtn.style.display = 'none';
+          } else {
+            showCustomAlert(
+              "Quyền truy cập cảm biến bị từ chối. Bạn vẫn có thể xoay la bàn thủ công bằng thanh gạt kéo.");
+          }
+        })
+        .catch(console.error);
     } else {
-        // Android: Tự động kích hoạt
-        addOrientationListener();
-        if (permBtn) permBtn.style.display = 'none';
+      // Xử lý tự động kích hoạt cho Android
+      window.addEventListener(eventName, handleOrientation, true);
+      showCustomAlert("Cảm biến hướng thực địa đã được kích hoạt tự động thành công.");
+      permBtn.style.display = 'none';
     }
-};
+  }
+  window.onload = function() {
+    render24SonRing();
+    loadSavedMembers();
+    recalculateFate();
+    const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
+    const eventName = (isAndroid && 'ondeviceorientationabsolute' in window) ? 'deviceorientationabsolute' :
+      'deviceorientation';
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission ===
+      'function') {
+      permBtn.style.display = 'block';
+    } else {
+      // Tự động lắng nghe la bàn tuyệt đối cho thiết bị Android
+      window.addEventListener(eventName, handleOrientation, true);
+    }
+  };
   </script>
 </body>
 
