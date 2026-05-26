@@ -1068,116 +1068,333 @@
   // === CÁC HÀM ĐÃ ĐƯỢC TỐI ƯU ===
   let debounceTimer;
  
-// ====================== NGŨ HOÀNG & CỬU TINH ======================
-function getNguHoangInfo(year) {
+  function getNguHoangInfo(year) {
     const nguHoang = {
-        0: "Ngũ Hoàng tại Trung Cung (Đại Hung - Tránh động thổ lớn)",
-        1: "Nhất Bạch tại Trung Cung (Đại Cát)",
-        2: "Nhị Hắc tại Trung Cung (Hung - Bệnh tật)",
-        3: "Tam Bích tại Trung Cung (Trung bình)",
-        4: "Tứ Lục tại Trung Cung (Hung nhẹ)",
-        5: "Ngũ Hoàng tại Trung Cung (Đại Hung)",
-        6: "Lục Bạch tại Trung Cung (Cát - Quyền lộc)",
-        7: "Thất Xích tại Trung Cung (Hung - Thị phi)",
-        8: "Bát Bạch tại Trung Cung (Cát)",
-        9: "Cửu Tử tại Trung Cung (Đại Cát - Vượng khí)"
+      0: "Ngũ Hoàng tại Trung Cung (Rất hung - Tránh động thổ lớn)",
+      1: "Nhất Bạch tại Trung Cung (Cát)",
+      2: "Nhị Hắc tại Trung Cung (Hung)",
+      3: "Tam Bích tại Trung Cung (Trung bình)",
+      4: "Tứ Lục tại Trung Cung (Hung nhẹ)",
+      5: "Ngũ Hoàng tại Trung Cung (Đại Hung)",
+      6: "Lục Bạch tại Trung Cung (Cát)",
+      7: "Thất Xích tại Trung Cung (Hung)",
+      8: "Bát Bạch tại Trung Cung (Cát)",
+      9: "Cửu Tử tại Trung Cung (Đại Cát)"
     };
-    
     const so = year % 9;
     return nguHoang[so] || nguHoang[5];
-}
-
-// ====================== GLOBAL ELEMENTS ======================
-const compass = document.getElementById('compass');
-const needle = document.getElementById('needle');
-const ghostNeedle = document.getElementById('ghostNeedle');
-const degreeTxt = document.getElementById('degree-txt');
-const elementBox = document.getElementById('element-box');
-const fateTxt = document.getElementById('fate-txt');
-const judgmentBox = document.getElementById('judgment-box');
-const detailBox = document.getElementById('detail-box');
-const compassSlider = document.getElementById('compassSlider');
-const permBtn = document.getElementById('permission-btn');
-const directionsContainer = document.getElementById('directions-container');
-const listPanelTitle = document.getElementById('list-panel-title');
-const savedContainer = document.getElementById('savedContainer');
-const savedPanel = document.getElementById('savedPanel');
-
-// ====================== 24 SƠN ======================
-const son24Data = [
-    { name: "Nhâm", start: 337.5, end: 352.5 },
-    { name: "Tý",  start: 352.5, end: 7.5 },
-    { name: "Quý", start: 7.5,   end: 22.5 },
-    { name: "Sửu", start: 22.5,  end: 37.5 },
-    { name: "Cấn", start: 37.5,  end: 52.5 },
-    { name: "Dần", start: 52.5,  end: 67.5 },
-    { name: "Giáp",start: 67.5,  end: 82.5 },
-    { name: "Mão", start: 82.5,  end: 97.5 },
-    { name: "Ất",  start: 97.5,  end: 112.5 },
-    { name: "Thìn",start: 112.5, end: 127.5 },
-    { name: "Tốn", start: 127.5, end: 142.5 },
-    { name: "Tỵ",  start: 142.5, end: 157.5 },
-    { name: "Bính",start: 157.5, end: 172.5 },
-    { name: "Ngọ", start: 172.5, end: 187.5 },
-    { name: "Đinh",start: 187.5, end: 202.5 },
-    { name: "Mùi", start: 202.5, end: 217.5 },
-    { name: "Khôn",start: 217.5, end: 232.5 },
-    { name: "Thân",start: 232.5, end: 247.5 },
-    { name: "Canh",start: 247.5, end: 262.5 },
-    { name: "Dậu", start: 262.5, end: 277.5 },
-    { name: "Tân", start: 277.5, end: 292.5 },
-    { name: "Tuất",start: 292.5, end: 307.5 },
-    { name: "Càn", start: 307.5, end: 322.5 },
-    { name: "Hợi", start: 322.5, end: 337.5 }
-];
-
-// ====================== BÁT TRẠCH MAP ======================
-const bátTrạchMap = {
-    'Khảm': { 'N':'Phục Vị', 'NE':'Ngũ Quỷ', 'E':'Thiên Y', 'SE':'Sinh Khí', 'S':'Diên Niên', 'SW':'Tuyệt Mệnh', 'W':'Họa Hại', 'NW':'Lục Sát', 'group':'Đông Tứ Mệnh', 'element':'Thủy' },
-    'Ly':   { 'N':'Diên Niên', 'NE':'Họa Hại', 'E':'Sinh Khí', 'SE':'Thiên Y', 'S':'Phục Vị', 'SW':'Lục Sát', 'W':'Ngũ Quỷ', 'NW':'Tuyệt Mệnh', 'group':'Đông Tứ Mệnh', 'element':'Hỏa' },
-    'Chấn': { 'N':'Thiên Y', 'NE':'Lục Sát', 'E':'Phục Vị', 'SE':'Diên Niên', 'S':'Sinh Khí', 'SW':'Họa Hại', 'W':'Tuyệt Mệnh', 'NW':'Ngũ Quỷ', 'group':'Đông Tứ Mệnh', 'element':'Mộc' },
-    'Tốn':  { 'N':'Sinh Khí', 'NE':'Tuyệt Mệnh', 'E':'Diên Niên', 'SE':'Phục Vị', 'S':'Thiên Y', 'SW':'Ngũ Quỷ', 'W':'Lục Sát', 'NW':'Họa Hại', 'group':'Đông Tứ Mệnh', 'element':'Mộc' },
-    'Càn':  { 'N':'Lục Sát', 'NE':'Thiên Y', 'E':'Ngũ Quỷ', 'SE':'Họa Hại', 'S':'Tuyệt Mệnh', 'SW':'Diên Niên', 'W':'Sinh Khí', 'NW':'Phục Vị', 'group':'Tây Tứ Mệnh', 'element':'Kim' },
-    'Khôn': { 'N':'Tuyệt Mệnh', 'NE':'Sinh Khí', 'E':'Họa Hại', 'SE':'Ngũ Quỷ', 'S':'Lục Sát', 'SW':'Phục Vị', 'W':'Thiên Y', 'NW':'Diên Niên', 'group':'Tây Tứ Mệnh', 'element':'Thổ' },
-    'Đoài': { 'N':'Họa Hại', 'NE':'Diên Niên', 'E':'Tuyệt Mệnh', 'SE':'Lục Sát', 'S':'Ngũ Quỷ', 'SW':'Thiên Y', 'W':'Phục Vị', 'NW':'Sinh Khí', 'group':'Tây Tứ Mệnh', 'element':'Kim' },
-    'Cấn':  { 'N':'Ngũ Quỷ', 'NE':'Phục Vị', 'E':'Lục Sát', 'SE':'Họa Hại', 'S':'Tuyệt Mệnh', 'SW':'Sinh Khí', 'W':'Diên Niên', 'NW':'Thiên Y', 'group':'Tây Tứ Mệnh', 'element':'Thổ' }
-};
-
-// ====================== CUNG TINH ======================
-const cungPhầnTrăm = {
-    'Sinh Khí':   { cát: true,  ý_nghĩa: 'Cung Đại Cát: Chủ về vượng khí, thu hút tài lộc, sự nghiệp thăng tiến mạnh mẽ.' },
-    'Thiên Y':    { cát: true,  ý_nghĩa: 'Cung Trung Cát: Mang lại sức khỏe dồi dào, tiêu trừ bệnh tật, gia đạo bình an.' },
-    'Diên Niên':  { cát: true,  ý_nghĩa: 'Cung Cát Tinh: Hòa hợp gia đạo, quan hệ ngoại giao tốt, tình duyên bền vững.' },
-    'Phục Vị':    { cát: true,  ý_nghĩa: 'Cung Tiểu Cát: Vững vàng tâm trí, may mắn thi cử, công việc ổn định.' },
-    'Tuyệt Mệnh': { cát: false, ý_nghĩa: 'Cung Đại Hung: Sát khí cực mạnh, dễ gây bệnh nặng, phá sản, tai ương.' },
-    'Ngũ Quỷ':    { cát: false, ý_nghĩa: 'Cung Hung Tinh: Tai họa bất ngờ, thị phi, kiện tụng, hao tài.' },
-    'Lục Sát':    { cát: false, ý_nghĩa: 'Cung Hung Tinh: Mâu thuẫn gia đạo, tranh chấp, tình cảm trục trặc.' },
-    'Họa Hại':    { cát: false, ý_nghĩa: 'Cung Tiểu Hung: Rủi ro vụn vặt, tiểu nhân quấy phá, hao mòn tài lộc.' }
-};
-
-// ====================== PHƯƠNG VỊ & HƯỚNG ======================
-const phươngVịThiếtLập = {
-    'N':  { tên: "BẮC",      ngũHành: "Thủy" },
-    'NE': { tên: "ĐÔNG BẮC", ngũHành: "Thổ" },
-    'E':  { tên: "ĐÔNG",     ngũHành: "Mộc" },
-    'SE': { tên: "ĐÔNG NAM", ngũHành: "Mộc" },
-    'S':  { tên: "NAM",      ngũHành: "Hỏa" },
-    'SW': { tên: "TÂY NAM",  ngũHành: "Thổ" },
-    'W':  { tên: "TÂY",      ngũHành: "Kim" },
-    'NW': { tên: "TÂY BẮC",  ngũHành: "Kim" }
-};
-
-const directionMeta = [
-    { code: 'N',  name: 'BẮC (Khảm)',     angle: 0   },
-    { code: 'NE', name: 'ĐÔNG BẮC (Cấn)', angle: 45  },
-    { code: 'E',  name: 'ĐÔNG (Chấn)',    angle: 90  },
-    { code: 'SE', name: 'ĐÔNG NAM (Tốn)', angle: 135 },
-    { code: 'S',  name: 'NAM (Ly)',       angle: 180 },
-    { code: 'SW', name: 'TÂY NAM (Khôn)', angle: 225 },
-    { code: 'W',  name: 'TÂY (Đoài)',     angle: 270 },
-    { code: 'NW', name: 'TÂY BẮC (Càn)',  angle: 315 }
-];
-// ====================== GLOBAL VARIABLES ======================
+  }
+  const compass = document.getElementById('compass');
+  const needle = document.getElementById('needle');
+  const ghostNeedle = document.getElementById('ghostNeedle');
+  const degreeTxt = document.getElementById('degree-txt');
+  const elementBox = document.getElementById('element-box');
+  const fateTxt = document.getElementById('fate-txt');
+  const judgmentBox = document.getElementById('judgment-box');
+  const detailBox = document.getElementById('detail-box');
+  const compassSlider = document.getElementById('compassSlider');
+  const permBtn = document.getElementById('permission-btn');
+  const directionsContainer = document.getElementById('directions-container');
+  const listPanelTitle = document.getElementById('list-panel-title');
+  const sonRing = document.getElementById('sonRing');
+  const savedContainer = document.getElementById('savedContainer');
+  const savedPanel = document.getElementById('savedPanel');
+  const son24Data = [{
+    name: "Tý",
+    start: 352.5,
+    end: 7.5
+  }, {
+    name: "Quý",
+    start: 7.5,
+    end: 22.5
+  }, {
+    name: "Sửu",
+    start: 22.5,
+    end: 37.5
+  }, {
+    name: "Cấn",
+    start: 37.5,
+    end: 52.5
+  }, {
+    name: "Dần",
+    start: 52.5,
+    end: 67.5
+  }, {
+    name: "Giáp",
+    start: 67.5,
+    end: 82.5
+  }, {
+    name: "Mão",
+    start: 82.5,
+    end: 97.5
+  }, {
+    name: "Ất",
+    start: 97.5,
+    end: 112.5
+  }, {
+    name: "Thìn",
+    start: 112.5,
+    end: 127.5
+  }, {
+    name: "Tốn",
+    start: 127.5,
+    end: 142.5
+  }, {
+    name: "Tỵ",
+    start: 142.5,
+    end: 157.5
+  }, {
+    name: "Bính",
+    start: 157.5,
+    end: 172.5
+  }, {
+    name: "Ngọ",
+    start: 172.5,
+    end: 187.5
+  }, {
+    name: "Đinh",
+    start: 187.5,
+    end: 202.5
+  }, {
+    name: "Mùi",
+    start: 202.5,
+    end: 217.5
+  }, {
+    name: "Khôn",
+    start: 217.5,
+    end: 232.5
+  }, {
+    name: "Thân",
+    start: 232.5,
+    end: 247.5
+  }, {
+    name: "Canh",
+    start: 247.5,
+    end: 262.5
+  }, {
+    name: "Dậu",
+    start: 262.5,
+    end: 277.5
+  }, {
+    name: "Tân",
+    start: 277.5,
+    end: 292.5
+  }, {
+    name: "Tuất",
+    start: 292.5,
+    end: 307.5
+  }, {
+    name: "Càn",
+    start: 307.5,
+    end: 322.5
+  }, {
+    name: "Hợi",
+    start: 322.5,
+    end: 337.5
+  }, {
+    name: "Nhâm",
+    start: 337.5,
+    end: 352.5
+  }];
+  const bátTrạchMap = {
+    'Khảm': {
+      'N': 'Phục Vị',
+      'NE': 'Ngũ Quỷ',
+      'E': 'Thiên Y',
+      'SE': 'Sinh Khí',
+      'S': 'Diên Niên',
+      'SW': 'Tuyệt Mệnh',
+      'W': 'Họa Hại',
+      'NW': 'Lục Sát',
+      'group': 'Đông Tứ Mệnh',
+      'element': 'Thủy'
+    },
+    'Ly': {
+      'N': 'Diên Niên',
+      'NE': 'Họa Hại',
+      'E': 'Sinh Khí',
+      'SE': 'Thiên Y',
+      'S': 'Phục Vị',
+      'SW': 'Lục Sát',
+      'W': 'Ngũ Quỷ',
+      'NW': 'Tuyệt Mệnh',
+      'group': 'Đông Tứ Mệnh',
+      'element': 'Hỏa'
+    },
+    'Chấn': {
+      'N': 'Thiên Y',
+      'NE': 'Lục Sát',
+      'E': 'Phục Vị',
+      'SE': 'Diên Niên',
+      'S': 'Sinh Khí',
+      'SW': 'Họa Hại',
+      'W': 'Tuyệt Mệnh',
+      'NW': 'Ngũ Quỷ',
+      'group': 'Đông Tứ Mệnh',
+      'element': 'Mộc'
+    },
+    'Tốn': {
+      'N': 'Sinh Khí',
+      'NE': 'Tuyệt Mệnh',
+      'E': 'Diên Niên',
+      'SE': 'Phục Vị',
+      'S': 'Thiên Y',
+      'SW': 'Ngũ Quỷ',
+      'W': 'Lục Sát',
+      'NW': 'Họa Hại',
+      'group': 'Đông Tứ Mệnh',
+      'element': 'Mộc'
+    },
+    'Càn': {
+      'N': 'Lục Sát',
+      'NE': 'Thiên Y',
+      'E': 'Ngũ Quỷ',
+      'SE': 'Họa Hại',
+      'S': 'Tuyệt Mệnh',
+      'SW': 'Diên Niên',
+      'W': 'Sinh Khí',
+      'NW': 'Phục Vị',
+      'group': 'Tây Tứ Mệnh',
+      'element': 'Kim'
+    },
+    'Khôn': {
+      'N': 'Tuyệt Mệnh',
+      'NE': 'Sinh Khí',
+      'E': 'Họa Hại',
+      'SE': 'Ngũ Quỷ',
+      'S': 'Lục Sát',
+      'SW': 'Phục Vị',
+      'W': 'Thiên Y',
+      'NW': 'Diên Niên',
+      'group': 'Tây Tứ Mệnh',
+      'element': 'Thổ'
+    },
+    'Đoài': {
+      'N': 'Họa Hại',
+      'NE': 'Diên Niên',
+      'E': 'Tuyệt Mệnh',
+      'SE': 'Lục Sát',
+      'S': 'Ngũ Quỷ',
+      'SW': 'Thiên Y',
+      'W': 'Phục Vị',
+      'NW': 'Sinh Khí',
+      'group': 'Tây Tứ Mệnh',
+      'element': 'Kim'
+    },
+    'Cấn': {
+      'N': 'Ngũ Quỷ',
+      'NE': 'Phục Vị',
+      'E': 'Lục Sát',
+      'SE': 'Họa Hại',
+      'S': 'Tuyệt Mệnh',
+      'SW': 'Sinh Khí',
+      'W': 'Diên Niên',
+      'NW': 'Thiên Y',
+      'group': 'Tây Tứ Mệnh',
+      'element': 'Thổ'
+    }
+  };
+  const cungPhầnTrăm = {
+    'Sinh Khí': {
+      cát: true,
+      ý_nghĩa: 'Cung Đại Cát: Chủ về vượng khí, thu hút tài lộc, giúp công danh sự nghiệp thăng tiến không ngừng.'
+    },
+    'Thiên Y': {
+      cát: true,
+      ý_nghĩa: 'Cung Trung Cát: Được lộc trời cho về sức khỏe, tiêu trừ bệnh tật, gia đạo bình an, trường thọ.'
+    },
+    'Diên Niên': {
+      cát: true,
+      ý_nghĩa: 'Cung Cát Tinh: Chủ về sự hòa thuận, củng cố các mối quan hệ ngoại giao, gia đình êm ấm, tình duyên bền vững.'
+    },
+    'Phục Vị': {
+      cát: true,
+      ý_nghĩa: 'Cung Tiểu Cát: Giúp vững vàng tâm trí, củng cố sức mạnh bản thân, mang lại may mắn trong học hành, thi cử.'
+    },
+    'Tuyệt Mệnh': {
+      cát: false,
+      ý_nghĩa: 'Cung Đại Hung: Cực kỳ nguy hiểm, mang sát khí mạnh, dễ gây tổn hại sức khỏe, bệnh tật hiểm nghèo hoặc phá sản.'
+    },
+    'Ngũ Quỷ': {
+      cát: false,
+      ý_nghĩa: 'Cung Hung Tinh: Mang đến tai họa bất ngờ, thị phi quấy phá, dễ dính líu pháp lý hoặc hao tài tốn của.'
+    },
+    'Lục Sát': {
+      cát: false,
+      ý_nghĩa: 'Cung Hung Tinh: Sinh ra sát khí, gây mâu thuẫn gia đạo, trục trặc tình cảm, dễ vướng vào tranh chấp, kiện tụng.'
+    },
+    'Họa Hại': {
+      cát: false,
+      ý_nghĩa: 'Cung Tiểu Hung: Thường mang lại rủi ro vụn vặt, mệt mỏi, trắc trở bởi chuyện tiểu nhân quấy phá, hao mòn tài lộc.'
+    }
+  };
+  const phươngVịThiếtLập = {
+    'N': {
+      tên: "BẮC",
+      ngũHành: "Thủy"
+    },
+    'NE': {
+      tên: "ĐÔNG BẮC",
+      ngũHành: "Thổ"
+    },
+    'E': {
+      tên: "ĐÔNG",
+      ngũHành: "Mộc"
+    },
+    'SE': {
+      tên: "ĐÔNG NAM",
+      ngũHành: "Mộc"
+    },
+    'S': {
+      tên: "NAM",
+      ngũHành: "Hỏa"
+    },
+    'SW': {
+      tên: "TÂY NAM",
+      ngũHành: "Thổ"
+    },
+    'W': {
+      tên: "TÂY",
+      ngũHành: "Kim"
+    },
+    'NW': {
+      tên: "TÂY BẮC",
+      ngũHành: "Kim"
+    }
+  };
+  const directionMeta = [{
+    code: 'N',
+    name: 'BẮC (Khảm)',
+    angle: 0
+  }, {
+    code: 'NE',
+    name: 'ĐÔNG BẮC (Cấn)',
+    angle: 45
+  }, {
+    code: 'E',
+    name: 'ĐÔNG (Chấn)',
+    angle: 90
+  }, {
+    code: 'SE',
+    name: 'ĐÔNG NAM (Tốn)',
+    angle: 135
+  }, {
+    code: 'S',
+    name: 'NAM (Ly)',
+    angle: 180
+  }, {
+    code: 'SW',
+    name: 'TÂY NAM (Khôn)',
+    angle: 225
+  }, {
+    code: 'W',
+    name: 'TÂY (Đoài)',
+    angle: 270
+  }, {
+    code: 'NW',
+    name: 'TÂY BẮC (Càn)',
+    angle: 315
+  }];
   let chủMệnh = 'Khảm';
   let currentCode = 'N';
   let currentHeading = 0;
