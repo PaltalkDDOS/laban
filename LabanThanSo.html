@@ -2777,16 +2777,14 @@ function getHuongDoiXung(huong) {
     return map[huong];
 }
 
-// Hàm hiển thị bảng giải thích
 function showExplanation(sonName, textInfo, solInfo) {
     const modal = document.getElementById('infoModal');
     
-    // Nâng cấp: Nút đóng cố định ở góc trên (Header) để không bị mất trên điện thoại
     modal.innerHTML = `
-        <div class="modal-content" style="background:#1c1c1e; color:#fff; border-radius:15px; width:90%; max-width:500px; max-height:85vh; display:flex; flex-direction:column; margin:auto; overflow:hidden;">
-            <div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #444;">
+        <div class="modal-content" style="background:#1c1c1e; color:#fff; border-radius:15px; width:90%; max-width:500px; max-height:85vh; display:flex; flex-direction:column; margin:auto; overflow:hidden; position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 15px; border-bottom:1px solid #444;">
                 <span style="font-weight:bold; font-size:1.1rem; color:#dfb76c;">Giải Thích: ${sonName}</span>
-                <button onclick="closeModal()" style="background:#ff3b30; border:none; color:white; padding:6px 12px; border-radius:5px; font-weight:bold; cursor:pointer;">ĐÓNG</button>
+                <button onclick="event.stopPropagation(); closeModal();" style="background:transparent; border:none; color:#ff3b30; font-size:2rem; font-weight:bold; cursor:pointer; line-height:1; padding:0 5px; outline:none;">&times;</button>
             </div>
             
             <div id="modalBody" style="overflow-y:auto; padding:15px;">
@@ -2798,22 +2796,19 @@ function showExplanation(sonName, textInfo, solInfo) {
 
                 <div style="border-top:1px solid #444; padding-top:15px;">
                     <p style="margin:0 0 10px 0; color:#dfb76c; font-weight:bold;">📖 KIẾN THỨC PHONG THỦY:</p>
-                    
                     <p style="margin:5px 0; line-height:1.5;"><strong>1. Cung (Hướng) vs Sơn (Chi tiết):</strong><br>
                     Hướng là 45 độ tổng thể (Đại cục). Sơn là 15 độ chi tiết (Phân kim). Nếu Sơn đắc khí tốt hơn Cung, tại điểm đó vượng khí được nhân đôi.</p>
-                    
                     <p style="margin:10px 0; line-height:1.5;"><strong>2. Ý nghĩa thuật ngữ:</strong><br>
-                    - <strong>Cát (Tốt):</strong> Sinh Khí (Tài lộc), Thiên Y (Sức khỏe), Diên Niên (Gia đạo), Phục Vị (Bình yên).<br>
+                    - <strong>Cát (Tốt):</strong> Sinh Khí, Thiên Y, Diên Niên, Phục Vị.<br>
                     - <strong>Hung (Xấu):</strong> Tuyệt Mệnh, Ngũ Quỷ, Lục Sát, Họa Hại.<br>
                     - <strong>Bình/Cô Quả:</strong> Trạng thái trung tính hoặc xấu nhẹ.</p>
-                    
                     <p style="margin:5px 0; font-style:italic; color:#8e8e93; line-height:1.5;">* Ví dụ: Hướng Tây là Diên Niên, nhưng Sơn Dậu lại là Sinh Khí. Nếu đặt vật phẩm đúng Sơn Dậu, bạn vừa được hưởng hòa thuận (Diên Niên), vừa kích hoạt tài lộc (Sinh Khí).</p>
                 </div>
             </div>
         </div>
     `;
 
-    // Cho phép bấm vào nền tối để đóng (tăng trải nghiệm người dùng)
+    // Khi bấm ra ngoài nền tối thì đóng
     modal.onclick = function(e) { if (e.target === modal) closeModal(); };
     modal.style.display = 'flex';
 }
