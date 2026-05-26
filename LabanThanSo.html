@@ -1970,205 +1970,95 @@ function tìmSơnHướng(heading) {
     }
     return "Tý"; // fallback
 }
-  // THUẬT TOÁN ĐỈNH CAO: TÍCH HỢP HUYỀN KHÔNG PHI TINH VẬN 9 (2024 - 2043)
-  // === HÀM HUYỀN KHÔNG PHI TINH TỰ ĐỘNG THEO NĂM (ĐÃ CÓ VẬN 1,2,3) ===
-// === HÀM HUYỀN KHÔNG PHI TINH VẬN - ĐÃ NÂNG CẤP ===
+
+// === DỮ LIỆU HUYỀN KHÔNG PHI TINH - FULL 9 VẬN (CÓ NGŨ HÀNH) ===
+const VAN_DATA = {
+    1: { 'N': { sao: "Nhất Bạch", hanh: "Thủy", loai: "best", y_nghia: "Thủy khí vượng, đại cát về trí tuệ và tài lộc." }, 'NE': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Dễ bệnh tật, thị phi, bất lợi cho sức khỏe." }, 'E': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Năng lượng trung bình, công việc trí óc khá tốt." }, 'SE': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Tốt cho học hành, văn chương và sáng tạo." }, 'S': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Phạm Ngũ Hoàng Đại Sát, tuyệt đối tránh động thổ." }, 'SW': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Vượng quyền lực, công danh sự nghiệp ổn định." }, 'W': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Dễ bị lừa gạt, tranh chấp và hao hụt tài sản." }, 'NW': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Vượng tài lộc, gia đạo bình an, tích lũy tốt." } },
+    2: { 'N': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Dễ bệnh tật, cần chú ý tiêu hóa và phụ khoa." }, 'NE': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Dễ xung đột lời nói, cần thận trọng." }, 'E': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Sự nghiệp thăng tiến, học vấn phát triển." }, 'SE': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Đại hung, tránh tác động mạnh vào phương này." }, 'S': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Có quý nhân, quyền lực thăng hoa." }, 'SW': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Cẩn thận thị phi, trộm cắp, tai bay vạ gió." }, 'W': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài lộc vượng, kinh doanh thuận lợi." }, 'NW': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Đại cát, danh vọng cao, hỷ sự đến liên miên." } },
+    3: { 'N': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Cạnh tranh nhiều nhưng dễ khẳng định vị thế." }, 'NE': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Trí tuệ minh mẫn, văn chương xuất chúng." }, 'E': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Sát khí nặng, tránh mọi sửa chữa, xây dựng." }, 'SE': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Công danh, quyền lực củng cố vững chắc." }, 'S': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Dễ dính líu đến tranh chấp luật pháp, thị phi." }, 'SW': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài sản tăng trưởng, gia đạo hòa thuận." }, 'W': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Vượng khí cực đại, đại phú quý." }, 'NW': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Đào hoa, quý nhân, học vấn tốt." } },
+    4: { 'N': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Thông minh, học vấn hanh thông." }, 'NE': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Hung tinh cần tránh xa, không nên động thổ." }, 'E': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Vượng quý nhân, công việc thuận lợi." }, 'SE': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Cần đề phòng hao tài và thị phi." }, 'S': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài lộc, thịnh vượng, kinh tế phát triển." }, 'SW': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Hỷ sự, danh tiếng lan xa." }, 'W': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Trí tuệ, học vấn, quan lộc thăng tiến." }, 'NW': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Cẩn thận bệnh tật, sức khỏe suy yếu." } },
+    5: { 'N': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Đại hung, cần tĩnh không nên động." }, 'NE': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Quyền lực, công danh ổn định." }, 'E': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Cẩn thận hao tài và tiểu nhân quấy phá." }, 'SE': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài lộc vững, sự nghiệp tiến triển." }, 'S': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Đại cát, vượng danh, hỷ sự." }, 'SW': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Trí tuệ, quý nhân phù trợ." }, 'W': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Sức khỏe kém, cần chú ý." }, 'NW': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Năng lượng trung tính, cần sự kiên nhẫn." } },
+    6: { 'N': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Vượng quý nhân, quyền thế." }, 'NE': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Cần đề phòng tranh chấp, kiện tụng." }, 'E': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài lộc dồi dào, kinh doanh phát đạt." }, 'SE': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Danh vọng, vượng nhân duyên." }, 'S': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Trí tuệ, học hành, quan lộc." }, 'SW': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Sức khỏe không ổn định." }, 'W': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Trung tính, chú ý lời ăn tiếng nói." }, 'NW': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Tốt cho học hành, thi cử." } },
+    7: { 'N': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Dễ thất thoát tài sản, cẩn thận thị phi." }, 'NE': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài lộc vững chắc." }, 'E': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Danh vọng cao, hỷ sự dồi dào." }, 'SE': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Quý nhân, trí tuệ." }, 'S': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Sức khỏe cần chú ý." }, 'SW': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Cần cẩn thận trong giao tiếp." }, 'W': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Học tập tốt, tư duy tốt." }, 'NW': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Đại hung, không nên tác động." } },
+    8: { 'N': { sao: "Bát Bạch", hanh: "Thổ", loai: "best", y_nghia: "Vượng tài, gia đạo hưng thịnh." }, 'NE': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Danh tiếng, vận may đến." }, 'E': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Trí tuệ, sự nghiệp tốt." }, 'SE': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Chú ý bệnh tật." }, 'S': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Trung bình." }, 'SW': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Học hành, danh tiếng." }, 'W': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Đại hung." }, 'NW': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Quyền lực, công danh." } },
+    9: { 'N': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Trí tuệ, quý nhân tương trợ." }, 'NE': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Thị phi, tranh chấp." }, 'E': { sao: "Lục Bạch", hanh: "Kim", loai: "neutral", y_nghia: "Tài lộc chậm phát triển." }, 'SE': { sao: "Nhị Hắc", hanh: "Thổ", loai: "neutral", y_nghia: "Chú ý tiêu hóa." }, 'S': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Hoàng kim vận 9, đại phú quý." }, 'SW': { sao: "Bát Bạch", hanh: "Thổ", loai: "neutral", y_nghia: "Tài lộc thoái khí." }, 'W': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Đại hung, tránh động thổ." }, 'NW': { sao: "Tứ Lục", hanh: "Mộc", loai: "bad", y_nghia: "Trì trệ học hành." } }
+};
+
 function sinhLuanGiaiThienThoi(code) {
     const currentYear = new Date().getFullYear();
-    let vanSo = 9; // Mặc định Vận 9 (2024-2043)
+    let vanSo = Math.floor((currentYear - 1864) / 20) % 9 + 1;
+    const item = VAN_DATA[vanSo] ? VAN_DATA[vanSo][code] : null;
 
-    // Tự động chuyển vận
-    if (currentYear >= 2044 && currentYear <= 2063) vanSo = 1;
-    else if (currentYear >= 2064 && currentYear <= 2083) vanSo = 2;
-    else if (currentYear >= 2084 && currentYear <= 2103) vanSo = 3;
-    else if (currentYear >= 2104 && currentYear <= 2123) vanSo = 4;
-    else if (currentYear >= 2124 && currentYear <= 2143) vanSo = 5;
-    else if (currentYear >= 2144 && currentYear <= 2163) vanSo = 6;
+    if (!item) return `<p style="color: #666;">Dữ liệu chưa được thiết lập.</p>`;
 
-    const vanData = {
-        9: { // Vận 9 (2024 - 2043)
-            'N':  { sao: "Nhất Bạch Thủy Tinh", loai: "good",    y_nghia: "Phương Bắc đón Nhất Bạch Đào Hoa Cát Tinh, mang lại trí tuệ, quan lộc và quý nhân tương trợ mạnh mẽ." },
-            'NE': { sao: "Thất Xích Phá Quân Tinh", loai: "bad", y_nghia: "Phương Đông Bắc bị Thất Xích Kim tinh đóng giữ, dễ xảy ra thị phi, tranh chấp và hao tài." },
-            'E':  { sao: "Lục Bạch Vũ Khúc Tinh", loai: "neutral", y_nghia: "Phương Đông có Lục Bạch, quyền lực cũ vẫn còn nhưng tài lộc mới phát triển chậm." },
-            'SE': { sao: "Nhị Hắc Bệnh Phù Tinh", loai: "neutral", y_nghia: "Phương Đông Nam gặp Nhị Hắc, cần chú ý sức khỏe, đặc biệt hệ tiêu hóa và đề phòng bệnh tật." },
-            'S':  { sao: "Cửu Tử Hỏa Tinh", loai: "best", y_nghia: "Phương Nam là vị trí Hoàng Kim của Vận 9, cực vượng, mang lại đại phú đại quý, danh tiếng và hỷ sự liên miên." },
-            'SW': { sao: "Bát Bạch Tả Phụ Tinh", loai: "neutral", y_nghia: "Phương Tây Nam đang ở giai đoạn thoái khí, tài lộc cũ vẫn vững nhưng mới phát triển chậm." },
-            'W':  { sao: "Ngũ Hoàng Đại Sát Tinh", loai: "worst", y_nghia: "Phương Tây phạm Ngũ Hoàng Đại Sát - hung tinh mạnh nhất. Tuyệt đối tránh động thổ, sửa chữa lớn." },
-            'NW': { sao: "Tứ Lục Văn Khúc Tinh", loai: "bad", y_nghia: "Phương Tây Bắc gặp Tứ Lục, dễ trì trệ học hành, tư duy và rắc rối tình cảm." }
-        },
-        1: { // Vận 1 (2044 - 2063)
-            'N':  { sao: "Nhất Bạch Thủy Tinh", loai: "best", y_nghia: "Phương Bắc cực vượng Thủy khí, mang lại đại cát về trí tuệ, học vấn và tài lộc." },
-            'NE': { sao: "Nhị Hắc Thổ Tinh", loai: "bad", y_nghia: "Phương Đông Bắc bị Nhị Hắc chi phối, dễ bệnh tật và thị phi." },
-            'E':  { sao: "Tam Bích Mộc Tinh", loai: "neutral", y_nghia: "Phương Đông năng lượng trung bình, phù hợp công việc trí óc." },
-            'SE': { sao: "Tứ Lục Mộc Tinh", loai: "good", y_nghia: "Phương Đông Nam có Tứ Lục Văn Khúc, tốt cho học hành và sáng tạo." },
-            'S':  { sao: "Ngũ Hoàng Thổ Tinh", loai: "worst", y_nghia: "Phương Nam phạm Ngũ Hoàng Đại Sát, rất hung, tránh động thổ." },
-            'SW': { sao: "Lục Bạch Kim Tinh", loai: "good", y_nghia: "Phương Tây Nam có Lục Bạch, mang lại ổn định và quyền lực." },
-            'W':  { sao: "Thất Xích Kim Tinh", loai: "bad", y_nghia: "Phương Tây gặp Thất Xích, dễ thị phi và tranh chấp." },
-            'NW': { sao: "Bát Bạch Thổ Tinh", loai: "good", y_nghia: "Phương Tây Bắc có Bát Bạch, tốt cho gia đạo và tích lũy tài sản." }
-        },
-        2: { // Vận 2 (2064 - 2083)
-            'N':  { sao: "Nhị Hắc Thổ Tinh", loai: "bad", y_nghia: "Phương Bắc bị Nhị Hắc chi phối, dễ bệnh tật và hao tổn." },
-            'NE': { sao: "Tam Bích Mộc Tinh", loai: "neutral", y_nghia: "Phương Đông Bắc năng lượng trung tính." },
-            'E':  { sao: "Tứ Lục Mộc Tinh", loai: "good", y_nghia: "Phương Đông vượng Mộc, tốt cho sự nghiệp và học vấn." },
-            'SE': { sao: "Ngũ Hoàng Thổ Tinh", loai: "worst", y_nghia: "Phương Đông Nam phạm Ngũ Hoàng, rất hung." },
-            'S':  { sao: "Lục Bạch Kim Tinh", loai: "good", y_nghia: "Phương Nam có Lục Bạch, mang lại ổn định và quyền lực." },
-            'SW': { sao: "Thất Xích Kim Tinh", loai: "bad", y_nghia: "Phương Tây Nam gặp Thất Xích, dễ thị phi." },
-            'W':  { sao: "Bát Bạch Thổ Tinh", loai: "good", y_nghia: "Phương Tây có Bát Bạch, tốt cho gia đạo và tài lộc." },
-            'NW': { sao: "Cửu Tử Hỏa Tinh", loai: "best", y_nghia: "Phương Tây Bắc cực vượng Cửu Tử Hỏa, đại cát về danh vọng." }
-        },
-        3: { // Vận 3 (2084 - 2103)
-            'N':  { sao: "Tam Bích Mộc Tinh", loai: "neutral", y_nghia: "Phương Bắc gặp Tam Bích, năng lượng trung tính." },
-            'NE': { sao: "Tứ Lục Mộc Tinh", loai: "good", y_nghia: "Phương Đông Bắc có Tứ Lục, tốt cho văn chương và trí tuệ." },
-            'E':  { sao: "Ngũ Hoàng Thổ Tinh", loai: "worst", y_nghia: "Phương Đông phạm Ngũ Hoàng, cần hết sức cẩn thận." },
-            'SE': { sao: "Lục Bạch Kim Tinh", loai: "good", y_nghia: "Phương Đông Nam có Lục Bạch, mang lại ổn định." },
-            'S':  { sao: "Thất Xích Kim Tinh", loai: "bad", y_nghia: "Phương Nam gặp Thất Xích, dễ thị phi." },
-            'SW': { sao: "Bát Bạch Thổ Tinh", loai: "good", y_nghia: "Phương Tây Nam có Bát Bạch, tốt cho gia đạo." },
-            'W':  { sao: "Cửu Tử Hỏa Tinh", loai: "best", y_nghia: "Phương Tây cực vượng Cửu Tử, đại cát大利." },
-            'NW': { sao: "Nhất Bạch Thủy Tinh", loai: "good", y_nghia: "Phương Tây Bắc có Nhất Bạch, tốt cho trí tuệ và quan lộc." }
-        }
-    };
-
-    const item = (vanData[vanSo] && vanData[vanSo][code]) 
-        ? vanData[vanSo][code] 
-        : { sao: "Vận khí trung hòa", loai: "neutral", y_nghia: "Phương vị này đang ở trạng thái cân bằng theo vận hạn hiện tại." };
-
-    let colorStar = "var(--gold)";
-    if (item.loai === 'best' || item.loai === 'good') colorStar = "var(--green)";
-    if (item.loai === 'worst' || item.loai === 'bad') colorStar = "var(--red)";
+    const colorMap = { best: "#00ff00", good: "#aaff00", neutral: "#e0e0e0", bad: "#ffaa00", worst: "#ff0000" };
+    const colorStar = colorMap[item.loai] || "#fff";
 
     return `
-        <br><br>
-        <span style="font-weight: bold; font-size: 0.95rem; color: #0a84ff; display: inline-block; margin-bottom: 6px;">
-            ◆ HUYỀN KHÔNG PHI TINH VẬN ${vanSo} (${currentYear})
-        </span><br>
-        <span style="color: ${colorStar}; font-weight: 600;">${item.sao}</span><br>
-        <span style="color: #e0e0e0; line-height: 1.55;">${item.y_nghia}</span>`;
+        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border-left: 5px solid ${colorStar}; margin-top: 20px;">
+            <span style="font-weight: bold; font-size: 0.95rem; color: #0a84ff;">
+                ◆ HUYỀN KHÔNG PHI TINH VẬN ${vanSo} (${currentYear})
+            </span><br>
+            <span style="color: ${colorStar}; font-weight: 800; font-size: 1.1rem; display: block; margin: 5px 0;">
+                ${item.sao} (${item.hanh})
+            </span>
+            <span style="color: #cfcfcf; line-height: 1.6;">${item.y_nghia}</span>
+        </div>`;
 }
 
-  function sinhMatPhapHoaGiai(mucDich, cungSat, hanhChu, phuongHuong, code) {
-    let hanhPhuongVi = phươngVịThiếtLập[code].ngũHành;
-    let phuongPhapBaoQuoc = "";
-    let vatPhamToiThuong = "";
-    if (cungSat === 'Tuyệt Mệnh') {
-      if (hanhChu === 'Mộc') {
-        phuongPhapBaoQuoc =
-          `Tuyệt Mệnh sát thuộc Kim trực tiếp khắc hại bản mệnh Mộc của gia chủ, lại tọa lạc ở phương vị ${phuongHuong} (${hanhPhuongVi}). Đây là thế trận cực hung "Quỷ Sai Lộ Xương", tàn phá nghiêm trọng cả sức khỏe lẫn tài lộc, khiến sự nghiệp dễ bị gián đoạn, gia đạo bất an.`;
-        vatPhamToiThuong =
-          "Sử dụng vật phẩm hành Thủy cao cấp như <strong>Hồ Lô Thủy Tinh Xanh Lam</strong> hoặc <strong>Bình Nước An Nhẫn Phong Thủy</strong> đặt tại phương vị này. Thủy đóng vai trò cầu nối chuyển hóa liên hoàn (Kim sát sinh Thủy - Thủy tương sinh bồi đắp Mộc mệnh), vừa hóa giải triệt để tính hung ác của Tuyệt Mệnh Kim, vừa quay lại nuôi dưỡng bản thể chủ mệnh phát triển viên mãn, mang lại vượng khí lâu dài.";
-      } else if (hanhChu === 'Hỏa') {
-        phuongPhapBaoQuoc =
-          `Tuyệt Mệnh Kim sát gặp Cung Mệnh Hỏa của gia chủ. Mặc dù Hỏa mệnh có thể khắc chế được Kim sát, nhưng bản thể gia chủ sẽ bị hao tổn nguyên khí và kiệt quệ sinh lực rất nặng khi phải gồng gánh chống chọi lâu dài với Sát tinh tại phương vị này.`;
-        vatPhamToiThuong =
-          "Bố trí linh vật thuộc hành Mộc tinh khiết như <strong>Hồ Lô Gỗ Đào Lâu Năm Kinh Chú</strong> hoặc <strong>Gậy Như Ý Gỗ Sưa</strong>. Mộc đóng vai trò chất xúc tác làm dịu sự xung đột mạch khí giữa phương vị và bản mệnh, đồng thời gia tăng Hỏa lực chính khí nội tại giúp gia chủ thiêu rụi triệt để tà khí Tuyệt Mệnh, chuyển hung thành cát.";
-      } else if (hanhChu === 'Thổ') {
-        phuongPhapBaoQuoc =
-          `Tuyệt Mệnh Kim sát hút cạn sinh khí từ Cung Mệnh Thổ của gia chủ (Thổ phải sinh xuất nuôi Kim hung tinh), khiến gia đạo lâm vào thế hao tài tốn của, sức khỏe suy kiệt lâm bệnh hiểm nghèo.`;
-        vatPhamToiThuong =
-          "Đặt một <strong>Cặp Tỳ Hưu bằng Đá Thạch Anh Đỏ hoặc Hồng</strong> (thuộc hành Hỏa) tại vị trí này. Năng lượng Hỏa thần từ đá tự nhiên sẽ trực tiếp thiêu đốt, áp chế và tiêu diệt Tuyệt Mệnh Kim sát, đồng thời Hỏa sinh Thổ bồi hoàn lại năng lượng gốc bệ vững cho bản mệnh gia chủ, giúp gia đạo vững vàng vượt qua tai ương.";
-      } else if (hanhChu === 'Kim') {
-        phuongPhapBaoQuoc =
-          `Tuyệt Mệnh Kim sát đồng hành cùng bản mệnh Kim tạo nên thế trận "Tỷ Kiếp Trợ Sát", làm sát khí hệ Kim kết tụ lại dồn dập, đẩy mạnh họa phá sản và tai nạn bất ngờ lên mức cực đại.`;
-        vatPhamToiThuong =
-          "Bài trí <strong>Quả Cầu Thạch Anh Đen</strong> hoặc <strong>Đĩa Thất Tinh Thạch Anh Khói</strong> (thuộc hành Thủy) để tiết hao, rút cạn năng lượng dư thừa của Tuyệt Mệnh Kim sát một cách êm dịu nhất mà không làm tổn hại hay xung đột đến bản mệnh Kim của gia chủ.";
-      } else { // Thủy
-        phuongPhapBaoQuoc =
-          `Gia chủ mệnh Thủy được Tuyệt Mệnh Kim sinh xuất, nhìn qua ngỡ là tốt nhưng thực tế đây là dòng Thủy nhiễm tạp chất sát khí nặng nề, gây rối loạn tâm trí, u uất và dính líu pháp lý.`;
-        vatPhamToiThuong =
-          "Bố trí một <strong>Tháp Văn Xương Đá Thạch Anh Xanh Lục</strong> hoặc các chậu <strong>Cây Xanh Thủy Sinh Vượng Khí</strong> (thuộc hành Mộc) để hút sạch dòng nước lũ chứa sát khí, lọc sạch uế khí, biến nguy thành cơ an lành, giúp gia chủ tâm thái sáng suốt, vượng tài.";
-      }
-    } else if (cungSat === 'Ngũ Quỷ') {
-      if (hanhChu === 'Kim') {
-        phuongPhapBaoQuoc =
-          `Ngũ Quỷ Hỏa tinh thiêu đốt trực diện Cung Mệnh Kim của gia chủ, tạo thế trận "Lửa Thiêu Cốt Tủy", sinh ra tai họa hoạn nạn ập đến bất ngờ, thị phi quấy phá khốc liệt và hao tán tài sản thần tốc.`;
-        vatPhamToiThuong =
-          "Đặt một <strong>Đĩa Thất Tinh Thạch Anh Vàng</strong> hoặc <strong>Tượng Tỳ Hưu Ngọc Hoàng Long Nguyên Khối</strong> (thuộc hành Thổ). Thổ đóng vai trò lá chắn tối thượng hút hết hỏa khí hung tàn của Ngũ Quỷ, sau đó Thổ lại quay sang tương sinh chuyển hóa bồi bổ năng lượng cường đại cho mệnh Kim của chủ nhà.";
-      } else if (hanhChu === 'Mộc') {
-        phuongPhapBaoQuoc =
-          `Ngũ Quỷ Hỏa tinh rút cạn tinh huyết năng lượng của Cung Mệnh Mộc (Mộc phải sinh xuất cho Hỏa sát), khiến gia chủ hao mòn trí lực, kinh doanh thua lỗ, gia đạo lục đục không yên.`;
-        vatPhamToiThuong =
-          "Treo <strong>Chuông Gió Đồng Pháp Khí 6 Thanh</strong> kết hợp đặt <strong>Tháp Văn Xương Bằng Đồng Nguyên Khối</strong> (thuộc hành Kim). Kim lực mạnh mẽ sẽ chặt đứt mạch liên kết tà tính của Hỏa tinh tại phương vị này, giải phóng bản mệnh Mộc khỏi thế kiệt quệ.";
-      } else if (hanhChu === 'Thủy') {
-        phuongPhapBaoQuoc =
-          `Cung Mệnh Thủy xung đột trực diện kịch liệt với Ngũ Quỷ Hỏa tinh, hình thành cục diện đại kỵ "Thủy Hỏa Vị Tế", làm dòng khí trong nhà đảo điên, vợ chồng ly tán, tinh thần bất an.`;
-        vatPhamToiThuong =
-          "Sử dụng vật phẩm chứa linh khí Mộc cao như <strong>Hồ Lô Gỗ Đào Tự Nhiên Thần Chú</strong> hoặc <strong>Tranh Trúc Chỉ Phong Thủy</strong> tại phương vị này để chuyển hóa tương khắc thành thế sinh sát thuần khiết: Thủy sinh Mộc - Mộc sinh Hỏa (thuần hóa thuần thục ác tính Ngũ Quỷ thành ngọn lửa sinh hoạt lành tính).";
-      } else if (hanhChu === 'Hỏa') {
-        phuongPhapBaoQuoc =
-          `Ngũ Quỷ Hỏa kết hợp với bản mệnh Hỏa tạo thành ngọn lửa hung tàn thiêu rụi toàn bộ hậu vận, khiến tính khí thành viên gia đình nóng nảy thất thường, dễ vướng vào tranh chấp luật pháp bĩ cực.`;
-        vatPhamToiThuong =
-          "Bố trí một <strong>Lu Nước Phong Thủy Tuần Hoàn Màu Đen</strong> hoặc đặt <strong>Quả Cầu Thạch Anh Tím trên Đế Thạch Anh Thô</strong> (thuộc hành Thổ) giúp hấp thu toàn bộ nhiệt lượng tiêu cực dư thừa, bình ổn hoàn toàn trật tự năng lượng.";
-      } else { // Thổ
-        phuongPhapBaoQuoc =
-          `Mệnh Thổ vô tình hấp thụ năng lượng Hỏa từ Ngũ Quỷ tinh. Dù là mối quan hệ sinh nhưng do nạp phải dòng khí độc hại của sát tinh, gia chủ dễ rơi vào trạng thái trì trệ, suy nghĩ tiêu cực, chịu nhiều u uất.`;
-        vatPhamToiThuong =
-          "Sử dụng <strong>Gương Bát Quái Gỗ Đào</strong> ở cửa hoặc đặt <strong>Cặp Kỳ Lân Bằng Đồng</strong> (thuộc hành Kim) tại phương vị này nhằm tiết giảm triệt để Thổ khí đã bị nhiễm độc tà khí, trả lại sự thanh tịnh cho dương trạch.";
-      }
-    } else if (cungSat === 'Lục Sát') {
-      if (hanhChu === 'Hỏa') {
-        phuongPhapBaoQuoc =
-          `Lục Sát Thủy tinh dập tắt hoàn toàn sinh hỏa Cung Mệnh của gia chủ, sinh ra thế trận "Hàn Băng Thấm Cốt", gây chứng đau đầu kinh niên, mâu thuẫn nội bộ gia đình gay gắt và cắt đứt mạch tình duyên nhân duyên tốt đẹp.`;
-        vatPhamToiThuong =
-          "Bố trí các chậu cây lớn như <strong>Cây Phát Tài Núi</strong> hoặc bài trí <strong>Vật Phẩm Gỗ Trầm Hương Cao Cấp</strong> (thuộc hành Mộc) tại góc này. Mộc lực sẽ như một chiếc máy bơm hút cạn dòng nước độc Lục Sát Thủy tinh, sau đó chuyển hóa sinh khí Mộc sinh Hỏa tiếp ứng bồi bổ trực tiếp cho bản mệnh gia chủ.";
-      } else if (hanhChu === 'Kim') {
-        phuongPhapBaoQuoc =
-          `Cung Mệnh Kim bị Lục Sát Thủy bào mòn rò rỉ khí lực nghiêm trọng, khiến tiền tài trong nhà thất thoát không rõ nguyên nhân, đầu tư thua lỗ trắng tay.`;
-        vatPhamToiThuong =
-          "Sử dụng <strong>Ấn Rồng Thạch Anh Vàng</strong> hoặc đặt <strong>Khối Đá Thạch Anh Vàng Tự Nhiên</strong> (thuộc hành Thổ) để đắp đê chắn sóng, trấn át hoàn toàn sự rò rỉ năng lượng của mạch Kim qua dòng Thủy sát.";
-      } else if (hanhChu === 'Thổ') {
-        phuongPhapBaoQuoc =
-          `Mệnh Thổ của gia chủ phải vắt kiệt sức lực để ngăn chặn Lục Sát Thủy tinh quấy phá phương vị, dẫn tới bản thể bị kiệt quệ, sự nghiệp gặp bế tắc và tiểu nhân hãm hại sau lưng.`;
-        vatPhamToiThuong =
-          "Treo một thanh <strong>Kiếm Gỗ Đào Pháp Khí Thất Tinh</strong> hoặc bài trí <strong>Tượng Tỳ Hưu bằng Gỗ Đào quý</strong> (thuộc hành Mộc). Mộc sẽ đứng ra thu nạp mạch khí Thủy của Lục Sát, nới lỏng thế bóp nghẹt áp lực lên Thổ mệnh gia chủ.";
-      } else if (hanhChu === 'Mộc') {
-        phuongPhapBaoQuoc =
-          `Mệnh Mộc được Thủy tương sinh, nhưng Lục Sát Thủy lại mang âm khí quá nặng, tựa như dòng nước ngập úng làm thối rữa rễ cây, gây ra những tai tiếng thị phi từ trên trời rơi xuống.`;
-        vatPhamToiThuong =
-          "Thiết lập hệ thống <strong>Đèn Chiếu Sáng Quang Phổ Ấm Cường Độ Cao</strong> (thuộc hành Hỏa) kết hợp các <strong>Thảm Trải Màu Đỏ/Hồng</strong> tại phương vị này nhằm dùng dương hỏa thiêu đốt, sấy khô tính chất âm hàn, lạnh lẽo hung hiểm của Thủy sát.";
-      } else { // Thủy
-        phuongPhapBaoQuoc =
-          `Lục Sát Thủy tinh hòa cùng Cung Mệnh Thủy tạo thành thế lũ quét cuốn trôi hoàn toàn gia sản, của cải tích lũy và phá vỡ sự bình yên vốn có.`;
-        vatPhamToiThuong =
-          "Bố trí <strong>Tháp Cây Xanh Vạn Niên Thanh Thủy Sinh</strong> hoặc đặt <strong>Cặp Tỳ Hưu bằng Gỗ Đào Kinh Chú</strong> (thuộc hành Mộc) để làm vật trung gian hút bớt hung tính dữ dội của dòng nước lũ phong thủy này.";
-      }
-    } else { // Họa Hại
-      if (hanhChu === 'Thủy') {
-        phuongPhapBaoQuoc =
-          `Họa Hại Thổ sát vùi lấp hoàn toàn mạch tài lộc và Cung Mệnh Thủy của gia chủ, bóp nghẹt các cơ hội thăng tiến, khiến cuộc sống ngập tràn rủi ro vụn vặt bực dọc.`;
-        vatPhamToiThuong =
-          "Treo một chiếc <strong>Chuông Gió Bằng Đồng Kim Loại Cực Nhạy</strong> kết hợp đặt <strong>Cặp Kỳ Lân Bằng Đồng Nguyên Khối Trấn Trạch</strong> (thuộc hành Kim). Kim lực sẽ đứng ra hút kiệt Thổ khí tích tụ của Họa Hại tinh, giải phóng hoàn toàn cho mạch Thủy bản mệnh của chủ nhà lưu thông hanh thông.";
-      } else if (hanhChu === 'Mộc') {
-        phuongPhapBaoQuoc =
-          `Cung Mệnh Mộc phải vắt kiệt sức để khắc chế khối Thổ sát của Họa Hại tinh, làm tinh thần mệt mỏi, suy nhược thần kinh và công việc bị trì trệ bế tắc triền miên.`;
-        vatPhamToiThuong =
-          "Bố trí <strong>Quả Cầu Thạch Anh Trắng Tự Nhiên</strong> hoặc đặt <strong>Hồ Lô Bằng Đồng Đúc</strong> (thuộc hành Kim). Thiết lập thế trận cân bằng dòng khí ngũ hành mới, cởi trói hoàn toàn áp lực đè nặng lên bản mệnh Mộc.";
-      } else if (hanhChu === 'Hỏa') {
-        phuongPhapBaoQuoc =
-          `Cung Mệnh Hỏa sinh xuất cho Họa Hại Thổ sát, vô tình tiếp thêm năng lượng khiến Hung tinh ngày một bành trướng dữ dội, quay lại quấy nhiễu tàn phá gia đạo nặng nề.`;
-        vatPhamToiThuong =
-          "Bố trí một <strong>Bình Nước An Nhẫn Phong Thủy Đại Gia Trì</strong> hoặc bài trí các linh vật mang sắc <strong>Đen hoặc Xanh Dương</strong> (thuộc hành Thủy) nhằm phong tỏa hoàn toàn gốc rễ Hỏa sinh Thổ tiêu cực, dập tắt sự phát tán của Hung tinh.";
-      } else if (hanhChu === 'Kim') {
-        phuongPhapBaoQuoc =
-          `Mệnh Kim nhận sự tương sinh từ Thổ sát, nhưng đây là dòng sinh độc hại, mang theo rủi ro, ốm đau vụn vặt bám đuổi dai dẳng.`;
-        vatPhamToiThuong =
-          "Bài trí <strong>Chậu Cây Thạch Anh Tóc Xanh</strong> hoặc dán <strong>Phù Chú Mộc Trấn Trạch</strong> (thuộc hành Mộc) tại góc này nhằm phá vỡ cấu trúc tích tụ đất đá cứng nhắc của Thổ sát, triệt tiêu hung tính từ gốc rễ.";
-      } else { // Thổ
-        phuongPhapBaoQuoc =
-          `Họa Hại Thổ sát đồng hành cùng Cung Mệnh Thổ tạo nên cục diện "Bãi Đất Hoang Trì Trệ", làm mất đi toàn bộ động lực phát triển, cuộc sống rơi vào vòng lặp bế tắc vô định.`;
-        vatPhamToiThuong =
-          "Sử dụng <strong>Kiếm Thất Tinh Bằng Đồng</strong> hoặc bài trí <strong>Tháp Văn Xương Bằng Đồng Gỗ Đại Pháp Cụ 9 Tầng</strong> (thuộc hành Kim) nhằm đục phá, đập tan khối Thổ khí đang ứ đọng bĩ cực.";
-      }
+const DATA_HOA_GIAI = {
+    'Tuyệt Mệnh': {
+        'Mộc': { phap: 'Tuyệt Mệnh sát thuộc Kim trực tiếp khắc hại bản mệnh Mộc của gia chủ, lại tọa lạc ở phương vị ${phuongHuong} (${hanhPhuongVi}). Đây là thế trận cực hung "Quỷ Sai Lộ Xương", tàn phá nghiêm trọng cả sức khỏe lẫn tài lộc, khiến sự nghiệp dễ bị gián đoạn, gia đạo bất an.', vat: 'Sử dụng vật phẩm hành Thủy cao cấp như <strong>Hồ Lô Thủy Tinh Xanh Lam</strong> hoặc <strong>Bình Nước An Nhẫn Phong Thủy</strong> đặt tại phương vị này. Thủy đóng vai trò cầu nối chuyển hóa liên hoàn (Kim sát sinh Thủy - Thủy tương sinh bồi đắp Mộc mệnh), vừa hóa giải triệt để tính hung ác của Tuyệt Mệnh Kim, vừa quay lại nuôi dưỡng bản thể chủ mệnh phát triển viên mãn, mang lại vượng khí lâu dài.' },
+        'Hỏa': { phap: 'Tuyệt Mệnh Kim sát gặp Cung Mệnh Hỏa của gia chủ. Mặc dù Hỏa mệnh có thể khắc chế được Kim sát, nhưng bản thể gia chủ sẽ bị hao tổn nguyên khí và kiệt quệ sinh lực rất nặng khi phải gồng gánh chống chọi lâu dài với Sát tinh tại phương vị này.', vat: 'Bố trí linh vật thuộc hành Mộc tinh khiết như <strong>Hồ Lô Gỗ Đào Lâu Năm Kinh Chú</strong> hoặc <strong>Gậy Như Ý Gỗ Sưa</strong>. Mộc đóng vai trò chất xúc tác làm dịu sự xung đột mạch khí giữa phương vị và bản mệnh, đồng thời gia tăng Hỏa lực chính khí nội tại giúp gia chủ thiêu rụi triệt để tà khí Tuyệt Mệnh, chuyển hung thành cát.' },
+        'Thổ': { phap: 'Tuyệt Mệnh Kim sát hút cạn sinh khí từ Cung Mệnh Thổ của gia chủ (Thổ phải sinh xuất nuôi Kim hung tinh), khiến gia đạo lâm vào thế hao tài tốn của, sức khỏe suy kiệt lâm bệnh hiểm nghèo.', vat: 'Đặt một <strong>Cặp Tỳ Hưu bằng Đá Thạch Anh Đỏ hoặc Hồng</strong> (thuộc hành Hỏa) tại vị trí này. Năng lượng Hỏa thần từ đá tự nhiên sẽ trực tiếp thiêu đốt, áp chế và tiêu diệt Tuyệt Mệnh Kim sát, đồng thời Hỏa sinh Thổ bồi hoàn lại năng lượng gốc bệ vững cho bản mệnh gia chủ, giúp gia đạo vững vàng vượt qua tai ương.' },
+        'Kim': { phap: 'Tuyệt Mệnh Kim sát đồng hành cùng bản mệnh Kim tạo nên thế trận "Tỷ Kiếp Trợ Sát", làm sát khí hệ Kim kết tụ lại dồn dập, đẩy mạnh họa phá sản và tai nạn bất ngờ lên mức cực đại.', vat: 'Bài trí <strong>Quả Cầu Thạch Anh Đen</strong> hoặc <strong>Đĩa Thất Tinh Thạch Anh Khói</strong> (thuộc hành Thủy) để tiết hao, rút cạn năng lượng dư thừa của Tuyệt Mệnh Kim sát một cách êm dịu nhất mà không làm tổn hại hay xung đột đến bản mệnh Kim của gia chủ.' },
+        'Thủy': { phap: 'Gia chủ mệnh Thủy được Tuyệt Mệnh Kim sinh xuất, nhìn qua ngỡ là tốt nhưng thực tế đây là dòng Thủy nhiễm tạp chất sát khí nặng nề, gây rối loạn tâm trí, u uất và dính líu pháp lý.', vat: 'Bố trí một <strong>Tháp Văn Xương Đá Thạch Anh Xanh Lục</strong> hoặc các chậu <strong>Cây Xanh Thủy Sinh Vượng Khí</strong> (thuộc hành Mộc) để hút sạch dòng nước lũ chứa sát khí, lọc sạch uế khí, biến nguy thành cơ an lành, giúp gia chủ tâm thái sáng suốt, vượng tài.' }
+    },
+    'Ngũ Quỷ': {
+        'Kim': { phap: 'Ngũ Quỷ Hỏa tinh thiêu đốt trực diện Cung Mệnh Kim của gia chủ, tạo thế trận "Lửa Thiêu Cốt Tủy", sinh ra tai họa hoạn nạn ập đến bất ngờ, thị phi quấy phá khốc liệt và hao tán tài sản thần tốc.', vat: 'Đặt một <strong>Đĩa Thất Tinh Thạch Anh Vàng</strong> hoặc <strong>Tượng Tỳ Hưu Ngọc Hoàng Long Nguyên Khối</strong> (thuộc hành Thổ). Thổ đóng vai trò lá chắn tối thượng hút hết hỏa khí hung tàn của Ngũ Quỷ, sau đó Thổ lại quay sang tương sinh chuyển hóa bồi bổ năng lượng cường đại cho mệnh Kim của chủ nhà.' },
+        'Mộc': { phap: 'Ngũ Quỷ Hỏa tinh rút cạn tinh huyết năng lượng của Cung Mệnh Mộc (Mộc phải sinh xuất cho Hỏa sát), khiến gia chủ hao mòn trí lực, kinh doanh thua lỗ, gia đạo lục đục không yên.', vat: 'Treo <strong>Chuông Gió Đồng Pháp Khí 6 Thanh</strong> kết hợp đặt <strong>Tháp Văn Xương Bằng Đồng Nguyên Khối</strong> (thuộc hành Kim). Kim lực mạnh mẽ sẽ chặt đứt mạch liên kết tà tính của Hỏa tinh tại phương vị này, giải phóng bản mệnh Mộc khỏi thế kiệt quệ.' },
+        'Thủy': { phap: 'Cung Mệnh Thủy xung đột trực diện kịch liệt với Ngũ Quỷ Hỏa tinh, hình thành cục diện đại kỵ "Thủy Hỏa Vị Tế", làm dòng khí trong nhà đảo điên, vợ chồng ly tán, tinh thần bất an.', vat: 'Sử dụng vật phẩm chứa linh khí Mộc cao như <strong>Hồ Lô Gỗ Đào Tự Nhiên Thần Chú</strong> hoặc <strong>Tranh Trúc Chỉ Phong Thủy</strong> tại phương vị này để chuyển hóa tương khắc thành thế sinh sát thuần khiết: Thủy sinh Mộc - Mộc sinh Hỏa (thuần hóa thuần thục ác tính Ngũ Quỷ thành ngọn lửa sinh hoạt lành tính).' },
+        'Hỏa': { phap: 'Ngũ Quỷ Hỏa kết hợp với bản mệnh Hỏa tạo thành ngọn lửa hung tàn thiêu rụi toàn bộ hậu vận, khiến tính khí thành viên gia đình nóng nảy thất thường, dễ vướng vào tranh chấp luật pháp bĩ cực.', vat: 'Bố trí một <strong>Lu Nước Phong Thủy Tuần Hoàn Màu Đen</strong> hoặc đặt <strong>Quả Cầu Thạch Anh Tím trên Đế Thạch Anh Thô</strong> (thuộc hành Thổ) giúp hấp thu toàn bộ nhiệt lượng tiêu cực dư thừa, bình ổn hoàn toàn trật tự năng lượng.' },
+        'Thổ': { phap: 'Mệnh Thổ vô tình hấp thụ năng lượng Hỏa từ Ngũ Quỷ tinh. Dù là mối quan hệ sinh nhưng do nạp phải dòng khí độc hại của sát tinh, gia chủ dễ rơi vào trạng thái trì trệ, suy nghĩ tiêu cực, chịu nhiều u uất.', vat: 'Sử dụng <strong>Gương Bát Quái Gỗ Đào</strong> ở cửa hoặc đặt <strong>Cặp Kỳ Lân Bằng Đồng</strong> (thuộc hành Kim) tại phương vị này nhằm tiết giảm triệt để Thổ khí đã bị nhiễm độc tà khí, trả lại sự thanh tịnh cho dương trạch.' }
+    },
+    'Lục Sát': {
+        'Hỏa': { phap: 'Lục Sát Thủy tinh dập tắt hoàn toàn sinh hỏa Cung Mệnh của gia chủ, sinh ra thế trận "Hàn Băng Thấm Cốt", gây chứng đau đầu kinh niên, mâu thuẫn nội bộ gia đình gay gắt và cắt đứt mạch tình duyên nhân duyên tốt đẹp.', vat: 'Bố trí các chậu cây lớn như <strong>Cây Phát Tài Núi</strong> hoặc bài trí <strong>Vật Phẩm Gỗ Trầm Hương Cao Cấp</strong> (thuộc hành Mộc) tại góc này. Mộc lực sẽ như một chiếc máy bơm hút cạn dòng nước độc Lục Sát Thủy tinh, sau đó chuyển hóa sinh khí Mộc sinh Hỏa tiếp ứng bồi bổ trực tiếp cho bản mệnh gia chủ.' },
+        'Kim': { phap: 'Cung Mệnh Kim bị Lục Sát Thủy bào mòn rò rỉ khí lực nghiêm trọng, khiến tiền tài trong nhà thất thoát không rõ nguyên nhân, đầu tư thua lỗ trắng tay.', vat: 'Sử dụng <strong>Ấn Rồng Thạch Anh Vàng</strong> hoặc đặt <strong>Khối Đá Thạch Anh Vàng Tự Nhiên</strong> (thuộc hành Thổ) để đắp đê chắn sóng, trấn át hoàn toàn sự rò rỉ năng lượng của mạch Kim qua dòng Thủy sát.' },
+        'Thổ': { phap: 'Mệnh Thổ của gia chủ phải vắt kiệt sức lực để ngăn chặn Lục Sát Thủy tinh quấy phá phương vị, dẫn tới bản thể bị kiệt quệ, sự nghiệp gặp bế tắc và tiểu nhân hãm hại sau lưng.', vat: 'Treo một thanh <strong>Kiếm Gỗ Đào Pháp Khí Thất Tinh</strong> hoặc bài trí <strong>Tượng Tỳ Hưu bằng Gỗ Đào quý</strong> (thuộc hành Mộc). Mộc sẽ đứng ra thu nạp mạch khí Thủy của Lục Sát, nới lỏng thế bóp nghẹt áp lực lên Thổ mệnh gia chủ.' },
+        'Mộc': { phap: 'Mệnh Mộc được Thủy tương sinh, nhưng Lục Sát Thủy lại mang âm khí quá nặng, tựa như dòng nước ngập úng làm thối rữa rễ cây, gây ra những tai tiếng thị phi từ trên trời rơi xuống.', vat: 'Thiết lập hệ thống <strong>Đèn Chiếu Sáng Quang Phổ Ấm Cường Độ Cao</strong> (thuộc hành Hỏa) kết hợp các <strong>Thảm Trải Màu Đỏ/Hồng</strong> tại phương vị này nhằm dùng dương hỏa thiêu đốt, sấy khô tính chất âm hàn, lạnh lẽo hung hiểm của Thủy sát.' },
+        'Thủy': { phap: 'Lục Sát Thủy tinh hòa cùng Cung Mệnh Thủy tạo thành thế lũ quét cuốn trôi hoàn toàn gia sản, của cải tích lũy và phá vỡ sự bình yên vốn có.', vat: 'Bố trí <strong>Tháp Cây Xanh Vạn Niên Thanh Thủy Sinh</strong> hoặc đặt <strong>Cặp Tỳ Hưu bằng Gỗ Đào Kinh Chú</strong> (thuộc hành Mộc) để làm vật trung gian hút bớt hung tính dữ dội của dòng nước lũ phong thủy này.' }
+    },
+    'Họa Hại': {
+        'Thủy': { phap: 'Họa Hại Thổ sát vùi lấp hoàn toàn mạch tài lộc và Cung Mệnh Thủy của gia chủ, bóp nghẹt các cơ hội thăng tiến, khiến cuộc sống ngập tràn rủi ro vụn vặt bực dọc.', vat: 'Treo một chiếc <strong>Chuông Gió Bằng Đồng Kim Loại Cực Nhạy</strong> kết hợp đặt <strong>Cặp Kỳ Lân Bằng Đồng Nguyên Khối Trấn Trạch</strong> (thuộc hành Kim). Kim lực sẽ đứng ra hút kiệt Thổ khí tích tụ của Họa Hại tinh, giải phóng hoàn toàn cho mạch Thủy bản mệnh của chủ nhà lưu thông hanh thông.' },
+        'Mộc': { phap: 'Cung Mệnh Mộc phải vắt kiệt sức để khắc chế khối Thổ sát của Họa Hại tinh, làm tinh thần mệt mỏi, suy nhược thần kinh và công việc bị trì trệ bế tắc triền miên.', vat: 'Bố trí <strong>Quả Cầu Thạch Anh Trắng Tự Nhiên</strong> hoặc đặt <strong>Hồ Lô Bằng Đồng Đúc</strong> (thuộc hành Kim). Thiết lập thế trận cân bằng dòng khí ngũ hành mới, cởi trói hoàn toàn áp lực đè nặng lên bản mệnh Mộc.' },
+        'Hỏa': { phap: 'Cung Mệnh Hỏa sinh xuất cho Họa Hại Thổ sát, vô tình tiếp thêm năng lượng khiến Hung tinh ngày một bành trướng dữ dội, quay lại quấy nhiễu tàn phá gia đạo nặng nề.', vat: 'Bố trí một <strong>Bình Nước An Nhẫn Phong Thủy Đại Gia Trì</strong> hoặc bài trí các linh vật mang sắc <strong>Đen hoặc Xanh Dương</strong> (thuộc hành Thủy) nhằm phong tỏa hoàn toàn gốc rễ Hỏa sinh Thổ tiêu cực, dập tắt sự phát tán của Hung tinh.' },
+        'Kim': { phap: 'Mệnh Kim nhận sự tương sinh từ Thổ sát, nhưng đây là dòng sinh độc hại, mang theo rủi ro, ốm đau vụn vặt bám đuổi dai dẳng.', vat: 'Bài trí <strong>Chậu Cây Thạch Anh Tóc Xanh</strong> hoặc dán <strong>Phù Chú Mộc Trấn Trạch</strong> (thuộc hành Mộc) tại góc này nhằm phá vỡ cấu trúc tích tụ đất đá cứng nhắc của Thổ sát, triệt tiêu hung tính từ gốc rễ.' },
+        'Thổ': { phap: 'Họa Hại Thổ sát đồng hành cùng Cung Mệnh Thổ tạo nên cục diện "Bãi Đất Hoang Trì Trệ", làm mất đi toàn bộ động lực phát triển, cuộc sống rơi vào vòng lặp bế tắc vô định.', vat: 'Sử dụng <strong>Kiếm Thất Tinh Bằng Đồng</strong> hoặc bài trí <strong>Tháp Văn Xương Bằng Đồng Gỗ Đại Pháp Cụ 9 Tầng</strong> (thuộc hành Kim) nhằm đục phá, đập tan khối Thổ khí đang ứ đọng bĩ cực.' }
     }
+};
+function sinhMatPhapHoaGiai(mucDich, cungSat, hanhChu, phuongHuong, code) {
+    // Lấy hành phương vị an toàn
+    let hanhPhuongVi = (typeof phươngVịThiếtLập !== 'undefined' && phươngVịThiếtLập[code]) 
+                       ? phươngVịThiếtLập[code].ngũHành : "Thổ";
+    
+    // Tra cứu dữ liệu từ Object
+    let data = DATA_HOA_GIAI[cungSat] ? DATA_HOA_GIAI[cungSat][hanhChu] : null;
+    if (!data) return "Dữ liệu hóa giải chưa được thiết lập cho cung này.";
+
+    // Thay thế biến trong văn bản gốc
+    let phuongPhapBaoQuoc = data.phap.replace("${phuongHuong}", phuongHuong).replace("${hanhPhuongVi}", hanhPhuongVi);
+    let vatPhamToiThuong = data.vat;
+
+    // Logic thuyết minh ngữ cảnh
     let thuyetMinhViTri = "";
     if (['house', 'altar', 'bed', 'workspace'].includes(mucDich)) {
-      thuyetMinhViTri =
-        `Thiết lập nhìn về phương vị bị phạm đại kỵ Sát tinh <strong>${cungSat}</strong>. ${phuongPhapBaoQuoc}`;
+        thuyetMinhViTri = `Thiết lập nhìn về phương vị bị phạm đại kỵ Sát tinh <strong>${cungSat}</strong>. ${phuongPhapBaoQuoc}`;
     } else if (mucDich === 'kitchen') {
-      thuyetMinhViTri =
-        `Bếp nấu đang đặt đè sai lên cung tốt, thiêu rụi phước báu. Đồng thời nếu rơi vào thế hung tinh bị kích động nghịch chiều: ${phuongPhapBaoQuoc}`;
+        thuyetMinhViTri = `Bếp nấu đang đặt đè sai lên cung tốt, thiêu rụi phước báu. Đồng thời nếu rơi vào thế hung tinh bị kích động nghịch chiều: ${phuongPhapBaoQuoc}`;
     } else {
-      thuyetMinhViTri =
-        `Khu vực xả uế đặt đè lên cát tinh làm tổn hại tài lộc. Chiếu theo mật pháp đối sánh: ${phuongPhapBaoQuoc}`;
+        thuyetMinhViTri = `Khu vực xả uế đặt đè lên cát tinh làm tổn hại tài lộc. Chiếu theo mật pháp đối sánh: ${phuongPhapBaoQuoc}`;
     }
+
     return `<br><br>
         <span style="font-weight: bold; font-size: 0.95rem; display: inline-block; margin-bottom: 6px; color: var(--red);">
             ◆ MẬT PHÁP ĐẠI THUẬT HÓA GIẢI LIÊN HOÀN (HUNG TINH × PHƯƠNG VỊ × MỆNH CHỦ):
