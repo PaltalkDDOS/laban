@@ -1067,404 +1067,399 @@
   <script>
   // === CÁC HÀM ĐÃ ĐƯỢC TỐI ƯU ===
   let debounceTimer;
-// Ma trận dữ liệu Bát Trạch Minh Châu - ĐÃ BỔ SUNG ĐẦY ĐỦ HƠN
-// Ma trận Bát Trạch Minh Châu - HOÀN CHỈNH 192 CẶP (8 Mệnh x 24 Sơn)
-const MaTranMinhChau = {
-    "Khảm": {
-        "Nhâm": { "loai": "Cát", "text": "Đại cát Minh Châu, Nhâm Thủy sinh vượng Khảm cung, Phục Vị đắc vị, tiến tài lộc, gia đạo hưng vượng." },
-        "Tý": { "loai": "Cát", "text": "Chính vị vượng tài, Tý Thủy đắc địa, công danh hiển đạt, đắc tài đắc lộc, vinh hoa phú quý." },
-        "Quý": { "loai": "Hung", "text": "Quý Thủy âm hàn nhập cung, âm thịnh dương suy, dễ hao tổn nữ giới hoặc người trẻ tuổi." },
-        "Sửu": { "loai": "Hung", "text": "Phạm Thiếu Vong sát, tài lộc hao tán, gia đạo bất hòa, sinh khí bị trì trệ." },
-        "Cấn": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia chủ tổn tài, đề phòng hỏa hoạn, trộm cắp và tai tiếng." },
-        "Dần": { "loai": "Hung", "text": "Phạm Cô Quả sát, nhân đinh suy giảm, tài lộc khó tụ, người trong nhà dễ cô đơn." },
-        "Giáp": { "loai": "Cát", "text": "Giáp Mộc sinh Khảm Thủy, đắc vinh hoa phú quý, quý nhân phò trợ, làm ăn hanh thông." },
-        "Mão": { "loai": "Cát", "text": "Mão Mộc vượng tướng, tiến điền tài, gia sản tăng tiến, con cái thành đạt." },
-        "Ất": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, kiện tụng tai ương, thị phi bủa vây." },
-        "Thìn": { "loai": "Hung", "text": "Phạm Khẩu Thiệt sát, gia đạo tranh chấp xáo trộn, dễ vướng pháp luật." },
-        "Tốn": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe tổn hại nghiêm trọng, tai ương bất ngờ." },
-        "Tỵ": { "loai": "Hung", "text": "Phạm Họa Hại phương vị, quan phi khẩu thiệt, làm ăn thua lỗ." },
-        "Bính": { "loai": "Cát", "text": "Thiên Y đắc vị, sức khỏe dồi dào, bệnh tật tiêu trừ, tài lộc bền vững." },
-        "Ngọ": { "loai": "Cát", "text": "Diên Niên chính khí, gia đạo hòa hợp, ngoại giao thuận lợi, trường thọ." },
-        "Đinh": { "loai": "Cát", "text": "Sinh Khí tối thượng, phát phúc nhanh chóng, điền sản dồi dào, nhân đinh hưng vượng." },
-        "Mùi": { "loai": "Hung", "text": "Phạm Bạch Hổ sát, tổn thương nhân đinh, đề phòng huyết quang tai nạn." },
-        "Khôn": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát khí, tài sản tiêu tán, sức khỏe suy kiệt, gia đạo ly tán." },
-        "Thân": { "loai": "Hung", "text": "Phạm Cô Thần sát, gia đạo bất hòa, vợ chồng xung khắc." },
-        "Canh": { "loai": "Cát", "text": "Đắc vị tiến tài, kinh doanh phát đạt, gia nghiệp hưng thịnh." },
-        "Dậu": { "loai": "Cát", "text": "Đạt cung Quý Nhân, có người giúp đỡ lúc khó khăn, hoạn lộ hanh thông." },
-        "Tân": { "loai": "Hung", "text": "Phạm Họa Hại tai ương, tiền bạc ra vào thất thường." },
-        "Tuất": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, trộm cắp hao tài, gia đạo bất an." },
-        "Càn": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên trục trặc, hao tổn tâm trí." },
-        "Hợi": { "loai": "Bình", "text": "Thế bình hòa tiểu hạn, tài lộc trung bình, cần quản lý tài chính chặt chẽ." }
-    },
-    "Khôn": {
-        "Nhâm": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương, gia chủ đoản thọ, của cải tiêu tán, tai ương dồn dập." },
-        "Tý": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, dâm loạn tà ác, gia phong bại hoại." },
-        "Quý": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán, tai họa bất ngờ." },
-        "Sửu": { "loai": "Cát", "text": "Sinh Khí vinh hoa, đắc tài đắc lộc, gia đạo an khang." },
-        "Cấn": { "loai": "Cát", "text": "Sinh Khí chính vị, phát bảo nhanh chóng, gia nghiệp vững bền." },
-        "Dần": { "loai": "Cát", "text": "Đắc vị Thiên Y, bệnh tật tiêu trừ, trường thọ phú quý." },
-        "Giáp": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi, tinh thần bất an." },
-        "Mão": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, tổn hại nam chủ, đại hung." },
-        "Ất": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, người nhà đau ốm liên miên." },
-        "Thìn": { "loai": "Cát", "text": "Diên Niên đắc vị, gia đạo hòa hợp, kinh doanh phát đạt." },
-        "Tốn": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, trộm cắp quấy phá." },
-        "Tỵ": { "loai": "Hung", "text": "Phạm Lục Sát sát khí, kiện tụng kéo dài." },
-        "Bính": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn bất ngờ." },
-        "Ngọ": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt." },
-        "Đinh": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình cảm rạn nứt." },
-        "Mùi": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh, tài lộc ổn định." },
-        "Khôn": { "loai": "Cát", "text": "Phục Vị bản cung, điền sản tăng tiến, vạn sự cát tường." },
-        "Thân": { "loai": "Cát", "text": "Thiên Y đắc vị, quý nhân trợ lực, gia tăng tài lộc." },
-        "Canh": { "loai": "Hung", "text": "Phạm Họa Hại phương vị, tổn hao tiền của." },
-        "Dậu": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, bệnh tật phát sinh." },
-        "Tân": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, nhân đinh ly tán." },
-        "Tuất": { "loai": "Cát", "text": "Diên Niên chính vị, phú quý thọ khang." },
-        "Càn": { "loai": "Cát", "text": "Diên Niên đắc cách, ngoại giao thuận lợi." },
-        "Hợi": { "loai": "Bình", "text": "Thế bình hòa, gia đạo ít sóng gió." }
-    },
-    "Chấn": {
-        "Nhâm": { "loai": "Cát", "text": "Sinh Khí vượng cung, đại phát tài lộc, gia chủ thăng tiến." },
-        "Tý": { "loai": "Cát", "text": "Sinh Khí tối thượng, nhân đinh hưng vượng, con cái hiển đạt." },
-        "Quý": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, gia đạo bất hòa." },
-        "Sửu": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, kiện cáo thị phi." },
-        "Cấn": { "loai": "Hung", "text": "Phạm Lục Sát sát phương, tinh thần bất an." },
-        "Dần": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát khí, hao tài tốn của." },
-        "Giáp": { "loai": "Cát", "text": "Phục Vị bản cung, gia đạo bình an." },
-        "Mão": { "loai": "Cát", "text": "Phục Vị chính vị, danh tiếng lẫy lừng." },
-        "Ất": { "loai": "Cát", "text": "Thiên Y đắc vị, sức khỏe dồi dào." },
-        "Thìn": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, trộm cắp quấy nhiễu." },
-        "Tốn": { "loai": "Cát", "text": "Diên Niên vượng khí, gia đình hạnh phúc." },
-        "Tỵ": { "loai": "Cát", "text": "Diên Niên đắc vị, công danh thăng tiến." },
-        "Bính": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, tai họa dồn dập." },
-        "Ngọ": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, đại hung." },
-        "Đinh": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, tiểu nhân hãm hại." },
-        "Mùi": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe suy kiệt." },
-        "Khôn": { "loai": "Hung", "text": "Phạm Họa Hại sát vị, công danh trắc trở." },
-        "Thân": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên lận đận." },
-        "Canh": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, cực kỳ nguy hiểm." },
-        "Dậu": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát khí, kiện tụng thị phi." },
-        "Tân": { "loai": "Hung", "text": "Phạm Họa Hại tai ương, tiền bạc thất thoát." },
-        "Tuất": { "loai": "Cát", "text": "Thiên Y đắc vị, quý nhân giúp đỡ." },
-        "Càn": { "loai": "Cát", "text": "Diên Niên đắc cách, tài lộc dồi dào." },
-        "Hợi": { "loai": "Bình", "text": "Thế bình hòa tiểu hạn." }
-    },
-    "Tốn": {
-        "Nhâm": { "loai": "Cát", "text": "Sinh Khí vượng cung, tài lộc dồi dào, thăng quan tiến chức." },
-        "Tý": { "loai": "Cát", "text": "Sinh Khí đắc vị, điền sản tăng tiến, con cái thành đạt." },
-        "Quý": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi." },
-        "Sửu": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán." },
-        "Cấn": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, tổn hại nam chủ." },
-        "Dần": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát khí, hao tài tốn của." },
-        "Giáp": { "loai": "Cát", "text": "Diên Niên đắc vị, phú quý thọ khang." },
-        "Mão": { "loai": "Cát", "text": "Diên Niên chính vị, ngoại giao thuận lợi." },
-        "Ất": { "loai": "Cát", "text": "Sinh Khí vượng khí, phát phúc nhanh chóng." },
-        "Thìn": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh." },
-        "Tốn": { "loai": "Cát", "text": "Phục Vị bản cung, giữ vững cơ nghiệp." },
-        "Tỵ": { "loai": "Cát", "text": "Thiên Y đắc vị, sức khỏe dồi dào." },
-        "Bính": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt." },
-        "Ngọ": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình cảm rạn nứt." },
-        "Đinh": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, nhân đinh ly tán." },
-        "Mùi": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, trộm cắp quấy nhiễu." },
-        "Khôn": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, đề phòng tai bay vạ gió." },
-        "Thân": { "loai": "Hung", "text": "Phạm Lục Sát sát khí, kiện tụng kéo dài." },
-        "Canh": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn bất ngờ." },
-        "Dậu": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, cực kỳ nguy hiểm." },
-        "Tân": { "loai": "Hung", "text": "Phạm Họa Hại phương vị, tổn hao tiền của." },
-        "Tuất": { "loai": "Cát", "text": "Thiên Y đắc vị, quý nhân trợ lực." },
-        "Càn": { "loai": "Cát", "text": "Thiên Y chính vị, sức khỏe dồi dào." },
-        "Hợi": { "loai": "Bình", "text": "Thế bình hòa, vận trình ổn định." }
-    },
-    "Càn": {
-        "Nhâm": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên trục trặc, hao tổn tâm trí." },
-        "Tý": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, dâm loạn tà ác." },
-        "Quý": { "loai": "Hung", "text": "Phạm Lục Sát sát vị, gia đạo bất an." },
-        "Sửu": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi." },
-        "Cấn": { "loai": "Cát", "text": "Thiên Y đắc vị, sức khỏe dồi dào, tài lộc gia tăng." },
-        "Dần": { "loai": "Cát", "text": "Thiên Y chính vị, tai qua nạn khỏi, quý nhân nâng đỡ." },
-        "Giáp": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán." },
-        "Mão": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, trộm cắp quấy phá." },
-        "Ất": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, tiểu nhân quấy nhiễu." },
-        "Thìn": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, cực kỳ nguy hiểm." },
-        "Tốn": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe suy kiệt." },
-        "Tỵ": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn huyết quang." },
-        "Bính": { "loai": "Bình", "text": "Thế bình hòa tiểu hạn." },
-        "Ngọ": { "loai": "Bình", "text": "Phương vị bình hòa, vận trình trung bình." },
-        "Đinh": { "loai": "Cát", "text": "Sinh Khí vượng cung, đại phát tài lộc." },
-        "Mùi": { "loai": "Cát", "text": "Sinh Khí tối thượng, nhân đinh hưng vượng." },
-        "Khôn": { "loai": "Cát", "text": "Diên Niên vượng khí, gia đình hạnh phúc." },
-        "Thân": { "loai": "Cát", "text": "Diên Niên đắc vị, ngoại giao hanh thông." },
-        "Canh": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh." },
-        "Dậu": { "loai": "Cát", "text": "Phục Vị bản cung, giữ vững cơ nghiệp." },
-        "Tân": { "loai": "Cát", "text": "Phục Vị vượng vị, công việc vững vàng." },
-        "Tuất": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, người nhà đau ốm." },
-        "Càn": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt." },
-        "Hợi": { "loai": "Hung", "text": "Phạm Họa Hại phương vị, tổn hao tiền của." }
-    },
-    "Đoài": {
-        "Nhâm": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi." },
-        "Tý": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, người nhà đau ốm." },
-        "Quý": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt." },
-        "Sửu": { "loai": "Cát", "text": "Diên Niên đắc vị, phú quý thọ khang." },
-        "Cấn": { "loai": "Cát", "text": "Diên Niên chính vị, ngoại giao thuận lợi." },
-        "Dần": { "loai": "Cát", "text": "Diên Niên vượng khí, gia đình hòa hợp." },
-        "Giáp": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, cực kỳ nguy hiểm." },
-        "Mão": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe suy kiệt." },
-        "Ất": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn huyết quang." },
-        "Thìn": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên trục trặc." },
-        "Tốn": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, dâm loạn tà ác." },
-        "Tỵ": { "loai": "Hung", "text": "Phạm Lục Sát sát vị, gia đạo bất an." },
-        "Bính": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh." },
-        "Ngọ": { "loai": "Cát", "text": "Phục Vị bản cung, giữ vững cơ nghiệp." },
-        "Đinh": { "loai": "Cát", "text": "Phục Vị vượng vị, công việc vững vàng." },
-        "Mùi": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán." },
-        "Khôn": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, trộm cắp quấy phá." },
-        "Thân": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, tiểu nhân quấy nhiễu." },
-        "Canh": { "loai": "Cát", "text": "Sinh Khí vượng cung, đại phát tài lộc." },
-        "Dậu": { "loai": "Cát", "text": "Sinh Khí tối thượng, nhân đinh hưng vượng." },
-        "Tân": { "loai": "Cát", "text": "Sinh Khí đắc vị, điền sản tăng tiến." },
-        "Tuất": { "loai": "Cát", "text": "Thiên Y đắc vị, sức khỏe dồi dào." },
-        "Càn": { "loai": "Cát", "text": "Thiên Y chính vị, tai qua nạn khỏi." },
-        "Hợi": { "loai": "Bình", "text": "Thế bình hòa, vận trình tương đối ổn định." }
-    },
-    "Cấn": {
-        "Nhâm": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán." },
-        "Tý": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, trộm cắp quấy phá." },
-        "Quý": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, tiểu nhân quấy nhiễu." },
-        "Sửu": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh." },
-        "Cấn": { "loai": "Cát", "text": "Phục Vị bản cung, giữ vững cơ nghiệp." },
-        "Dần": { "loai": "Cát", "text": "Phục Vị vượng vị, công việc vững vàng." },
-        "Giáp": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên trục trặc." },
-        "Mão": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, dâm loạn tà ác." },
-        "Ất": { "loai": "Hung", "text": "Phạm Lục Sát sát vị, gia đạo bất an." },
-        "Thìn": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi." },
-        "Tốn": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, người nhà đau ốm." },
-        "Tỵ": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt." },
-        "Bính": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, cực kỳ nguy hiểm." },
-        "Ngọ": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe suy kiệt." },
-        "Đinh": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn huyết quang." },
-        "Mùi": { "loai": "Cát", "text": "Diên Niên đắc vị, phú quý thọ khang." },
-        "Khôn": { "loai": "Cát", "text": "Diên Niên chính vị, ngoại giao thuận lợi." },
-        "Thân": { "loai": "Cát", "text": "Diên Niên vượng khí, gia đình hòa hợp." },
-        "Canh": { "loai": "Cát", "text": "Sinh Khí vượng cung, đại phát tài lộc." },
-        "Dậu": { "loai": "Cát", "text": "Sinh Khí tối thượng, nhân đinh hưng vượng." },
-        "Tân": { "loai": "Cát", "text": "Sinh Khí đắc vị, điền sản tăng tiến." },
-        "Tuất": { "loai": "Hung", "text": "Phạm Cô Quả, Tố Tụng, nội bộ hay tranh chấp." },
-        "Càn": { "loai": "Cát", "text": "Đạt vị Thiên Y đại cát, quý nhân phò trợ." },
-        "Hợi": { "loai": "Bình", "text": "Thế bình hòa tiểu hạn, hao tổn nhẹ về tài lộc." }
-    },
-    "Ly": {
-        "Nhâm": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán." },
-        "Tý": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, trộm cắp quấy phá." },
-        "Quý": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, tiểu nhân quấy nhiễu." },
-        "Sửu": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi." },
-        "Cấn": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, người nhà đau ốm." },
-        "Dần": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt." },
-        "Giáp": { "loai": "Cát", "text": "Sinh Khí vượng cung, đại phát tài lộc." },
-        "Mão": { "loai": "Cát", "text": "Sinh Khí tối thượng, nhân đinh hưng vượng." },
-        "Ất": { "loai": "Cát", "text": "Sinh Khí đắc vị, điền sản tăng tiến." },
-        "Thìn": { "loai": "Cát", "text": "Thiên Y đắc vị, sức khỏe dồi dào." },
-        "Tốn": { "loai": "Cát", "text": "Thiên Y chính vị, quý nhân nâng đỡ." },
-        "Tỵ": { "loai": "Cát", "text": "Thiên Y vượng vị, bệnh tật thuyên giảm." },
-        "Bính": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh." },
-        "Ngọ": { "loai": "Cát", "text": "Phục Vị bản cung, giữ vững cơ nghiệp." },
-        "Đinh": { "loai": "Cát", "text": "Phục Vị vượng vị, công việc vững vàng." },
-        "Mùi": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên trục trặc." },
-        "Khôn": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, dâm loạn tà ác." },
-        "Thân": { "loai": "Hung", "text": "Phạm Lục Sát sát vị, gia đạo bất an." },
-        "Canh": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, cực kỳ nguy hiểm." },
-        "Dậu": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe suy kiệt." },
-        "Tân": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn huyết quang." },
-        "Tuất": { "loai": "Cát", "text": "Diên Niên đắc vị, phú quý thọ khang." },
-        "Càn": { "loai": "Cát", "text": "Diên Niên chính vị, ngoại giao thuận lợi." },
-        "Hợi": { "loai": "Bình", "text": "Thế bình hòa, vận thế gia đạo trung bình." }
-    }
-};
-// ====================== NGŨ HOÀNG & CỬU TINH ======================
-function getNguHoangInfo(year) {
+ 
+  function getNguHoangInfo(year) {
     const nguHoang = {
-        0: "Ngũ Hoàng tại Trung Cung (Đại Hung - Tránh động thổ lớn)",
-        1: "Nhất Bạch tại Trung Cung (Đại Cát)",
-        2: "Nhị Hắc tại Trung Cung (Hung - Bệnh tật)",
-        3: "Tam Bích tại Trung Cung (Trung bình)",
-        4: "Tứ Lục tại Trung Cung (Hung nhẹ)",
-        5: "Ngũ Hoàng tại Trung Cung (Đại Hung)",
-        6: "Lục Bạch tại Trung Cung (Cát - Quyền lộc)",
-        7: "Thất Xích tại Trung Cung (Hung - Thị phi)",
-        8: "Bát Bạch tại Trung Cung (Cát)",
-        9: "Cửu Tử tại Trung Cung (Đại Cát - Vượng khí)"
+      0: "Ngũ Hoàng tại Trung Cung (Rất hung - Tránh động thổ lớn)",
+      1: "Nhất Bạch tại Trung Cung (Cát)",
+      2: "Nhị Hắc tại Trung Cung (Hung)",
+      3: "Tam Bích tại Trung Cung (Trung bình)",
+      4: "Tứ Lục tại Trung Cung (Hung nhẹ)",
+      5: "Ngũ Hoàng tại Trung Cung (Đại Hung)",
+      6: "Lục Bạch tại Trung Cung (Cát)",
+      7: "Thất Xích tại Trung Cung (Hung)",
+      8: "Bát Bạch tại Trung Cung (Cát)",
+      9: "Cửu Tử tại Trung Cung (Đại Cát)"
     };
-    
     const so = year % 9;
     return nguHoang[so] || nguHoang[5];
-}
+  }
+  const compass = document.getElementById('compass');
+  const needle = document.getElementById('needle');
+  const ghostNeedle = document.getElementById('ghostNeedle');
+  const degreeTxt = document.getElementById('degree-txt');
+  const elementBox = document.getElementById('element-box');
+  const fateTxt = document.getElementById('fate-txt');
+  const judgmentBox = document.getElementById('judgment-box');
+  const detailBox = document.getElementById('detail-box');
+  const compassSlider = document.getElementById('compassSlider');
+  const permBtn = document.getElementById('permission-btn');
+  const directionsContainer = document.getElementById('directions-container');
+  const listPanelTitle = document.getElementById('list-panel-title');
+  const sonRing = document.getElementById('sonRing');
+  const savedContainer = document.getElementById('savedContainer');
+  const savedPanel = document.getElementById('savedPanel');
+  const son24Data = [{
+    name: "Tý",
+    start: 352.5,
+    end: 7.5
+  }, {
+    name: "Quý",
+    start: 7.5,
+    end: 22.5
+  }, {
+    name: "Sửu",
+    start: 22.5,
+    end: 37.5
+  }, {
+    name: "Cấn",
+    start: 37.5,
+    end: 52.5
+  }, {
+    name: "Dần",
+    start: 52.5,
+    end: 67.5
+  }, {
+    name: "Giáp",
+    start: 67.5,
+    end: 82.5
+  }, {
+    name: "Mão",
+    start: 82.5,
+    end: 97.5
+  }, {
+    name: "Ất",
+    start: 97.5,
+    end: 112.5
+  }, {
+    name: "Thìn",
+    start: 112.5,
+    end: 127.5
+  }, {
+    name: "Tốn",
+    start: 127.5,
+    end: 142.5
+  }, {
+    name: "Tỵ",
+    start: 142.5,
+    end: 157.5
+  }, {
+    name: "Bính",
+    start: 157.5,
+    end: 172.5
+  }, {
+    name: "Ngọ",
+    start: 172.5,
+    end: 187.5
+  }, {
+    name: "Đinh",
+    start: 187.5,
+    end: 202.5
+  }, {
+    name: "Mùi",
+    start: 202.5,
+    end: 217.5
+  }, {
+    name: "Khôn",
+    start: 217.5,
+    end: 232.5
+  }, {
+    name: "Thân",
+    start: 232.5,
+    end: 247.5
+  }, {
+    name: "Canh",
+    start: 247.5,
+    end: 262.5
+  }, {
+    name: "Dậu",
+    start: 262.5,
+    end: 277.5
+  }, {
+    name: "Tân",
+    start: 277.5,
+    end: 292.5
+  }, {
+    name: "Tuất",
+    start: 292.5,
+    end: 307.5
+  }, {
+    name: "Càn",
+    start: 307.5,
+    end: 322.5
+  }, {
+    name: "Hợi",
+    start: 322.5,
+    end: 337.5
+  }, {
+    name: "Nhâm",
+    start: 337.5,
+    end: 352.5
+  }];
+  const bátTrạchMap = {
+    'Khảm': {
+      'N': 'Phục Vị',
+      'NE': 'Ngũ Quỷ',
+      'E': 'Thiên Y',
+      'SE': 'Sinh Khí',
+      'S': 'Diên Niên',
+      'SW': 'Tuyệt Mệnh',
+      'W': 'Họa Hại',
+      'NW': 'Lục Sát',
+      'group': 'Đông Tứ Mệnh',
+      'element': 'Thủy'
+    },
+    'Ly': {
+      'N': 'Diên Niên',
+      'NE': 'Họa Hại',
+      'E': 'Sinh Khí',
+      'SE': 'Thiên Y',
+      'S': 'Phục Vị',
+      'SW': 'Lục Sát',
+      'W': 'Ngũ Quỷ',
+      'NW': 'Tuyệt Mệnh',
+      'group': 'Đông Tứ Mệnh',
+      'element': 'Hỏa'
+    },
+    'Chấn': {
+      'N': 'Thiên Y',
+      'NE': 'Lục Sát',
+      'E': 'Phục Vị',
+      'SE': 'Diên Niên',
+      'S': 'Sinh Khí',
+      'SW': 'Họa Hại',
+      'W': 'Tuyệt Mệnh',
+      'NW': 'Ngũ Quỷ',
+      'group': 'Đông Tứ Mệnh',
+      'element': 'Mộc'
+    },
+    'Tốn': {
+      'N': 'Sinh Khí',
+      'NE': 'Tuyệt Mệnh',
+      'E': 'Diên Niên',
+      'SE': 'Phục Vị',
+      'S': 'Thiên Y',
+      'SW': 'Ngũ Quỷ',
+      'W': 'Lục Sát',
+      'NW': 'Họa Hại',
+      'group': 'Đông Tứ Mệnh',
+      'element': 'Mộc'
+    },
+    'Càn': {
+      'N': 'Lục Sát',
+      'NE': 'Thiên Y',
+      'E': 'Ngũ Quỷ',
+      'SE': 'Họa Hại',
+      'S': 'Tuyệt Mệnh',
+      'SW': 'Diên Niên',
+      'W': 'Sinh Khí',
+      'NW': 'Phục Vị',
+      'group': 'Tây Tứ Mệnh',
+      'element': 'Kim'
+    },
+    'Khôn': {
+      'N': 'Tuyệt Mệnh',
+      'NE': 'Sinh Khí',
+      'E': 'Họa Hại',
+      'SE': 'Ngũ Quỷ',
+      'S': 'Lục Sát',
+      'SW': 'Phục Vị',
+      'W': 'Thiên Y',
+      'NW': 'Diên Niên',
+      'group': 'Tây Tứ Mệnh',
+      'element': 'Thổ'
+    },
+    'Đoài': {
+      'N': 'Họa Hại',
+      'NE': 'Diên Niên',
+      'E': 'Tuyệt Mệnh',
+      'SE': 'Lục Sát',
+      'S': 'Ngũ Quỷ',
+      'SW': 'Thiên Y',
+      'W': 'Phục Vị',
+      'NW': 'Sinh Khí',
+      'group': 'Tây Tứ Mệnh',
+      'element': 'Kim'
+    },
+    'Cấn': {
+      'N': 'Ngũ Quỷ',
+      'NE': 'Phục Vị',
+      'E': 'Lục Sát',
+      'SE': 'Họa Hại',
+      'S': 'Tuyệt Mệnh',
+      'SW': 'Sinh Khí',
+      'W': 'Diên Niên',
+      'NW': 'Thiên Y',
+      'group': 'Tây Tứ Mệnh',
+      'element': 'Thổ'
+    }
+  };
+  const cungPhầnTrăm = {
+    'Sinh Khí': {
+      cát: true,
+      ý_nghĩa: 'Cung Đại Cát: Chủ về vượng khí, thu hút tài lộc, giúp công danh sự nghiệp thăng tiến không ngừng.'
+    },
+    'Thiên Y': {
+      cát: true,
+      ý_nghĩa: 'Cung Trung Cát: Được lộc trời cho về sức khỏe, tiêu trừ bệnh tật, gia đạo bình an, trường thọ.'
+    },
+    'Diên Niên': {
+      cát: true,
+      ý_nghĩa: 'Cung Cát Tinh: Chủ về sự hòa thuận, củng cố các mối quan hệ ngoại giao, gia đình êm ấm, tình duyên bền vững.'
+    },
+    'Phục Vị': {
+      cát: true,
+      ý_nghĩa: 'Cung Tiểu Cát: Giúp vững vàng tâm trí, củng cố sức mạnh bản thân, mang lại may mắn trong học hành, thi cử.'
+    },
+    'Tuyệt Mệnh': {
+      cát: false,
+      ý_nghĩa: 'Cung Đại Hung: Cực kỳ nguy hiểm, mang sát khí mạnh, dễ gây tổn hại sức khỏe, bệnh tật hiểm nghèo hoặc phá sản.'
+    },
+    'Ngũ Quỷ': {
+      cát: false,
+      ý_nghĩa: 'Cung Hung Tinh: Mang đến tai họa bất ngờ, thị phi quấy phá, dễ dính líu pháp lý hoặc hao tài tốn của.'
+    },
+    'Lục Sát': {
+      cát: false,
+      ý_nghĩa: 'Cung Hung Tinh: Sinh ra sát khí, gây mâu thuẫn gia đạo, trục trặc tình cảm, dễ vướng vào tranh chấp, kiện tụng.'
+    },
+    'Họa Hại': {
+      cát: false,
+      ý_nghĩa: 'Cung Tiểu Hung: Thường mang lại rủi ro vụn vặt, mệt mỏi, trắc trở bởi chuyện tiểu nhân quấy phá, hao mòn tài lộc.'
+    }
+  };
+  const phươngVịThiếtLập = {
+    'N': {
+      tên: "BẮC",
+      ngũHành: "Thủy"
+    },
+    'NE': {
+      tên: "ĐÔNG BẮC",
+      ngũHành: "Thổ"
+    },
+    'E': {
+      tên: "ĐÔNG",
+      ngũHành: "Mộc"
+    },
+    'SE': {
+      tên: "ĐÔNG NAM",
+      ngũHành: "Mộc"
+    },
+    'S': {
+      tên: "NAM",
+      ngũHành: "Hỏa"
+    },
+    'SW': {
+      tên: "TÂY NAM",
+      ngũHành: "Thổ"
+    },
+    'W': {
+      tên: "TÂY",
+      ngũHành: "Kim"
+    },
+    'NW': {
+      tên: "TÂY BẮC",
+      ngũHành: "Kim"
+    }
+  };
+  const directionMeta = [{
+    code: 'N',
+    name: 'BẮC (Khảm)',
+    angle: 0
+  }, {
+    code: 'NE',
+    name: 'ĐÔNG BẮC (Cấn)',
+    angle: 45
+  }, {
+    code: 'E',
+    name: 'ĐÔNG (Chấn)',
+    angle: 90
+  }, {
+    code: 'SE',
+    name: 'ĐÔNG NAM (Tốn)',
+    angle: 135
+  }, {
+    code: 'S',
+    name: 'NAM (Ly)',
+    angle: 180
+  }, {
+    code: 'SW',
+    name: 'TÂY NAM (Khôn)',
+    angle: 225
+  }, {
+    code: 'W',
+    name: 'TÂY (Đoài)',
+    angle: 270
+  }, {
+    code: 'NW',
+    name: 'TÂY BẮC (Càn)',
+    angle: 315
+  }];
+  let chủMệnh = 'Khảm';
+  let currentCode = 'N';
+  let currentHeading = 0;
+  let targetAngle = null;
 
-// ====================== GLOBAL ELEMENTS ======================
-const compass = document.getElementById('compass');
-const needle = document.getElementById('needle');
-const ghostNeedle = document.getElementById('ghostNeedle');
-const degreeTxt = document.getElementById('degree-txt');
-const elementBox = document.getElementById('element-box');
-const fateTxt = document.getElementById('fate-txt');
-const judgmentBox = document.getElementById('judgment-box');
-const detailBox = document.getElementById('detail-box');
-const compassSlider = document.getElementById('compassSlider');
-const permBtn = document.getElementById('permission-btn');
-const directionsContainer = document.getElementById('directions-container');
-const listPanelTitle = document.getElementById('list-panel-title');
-const savedContainer = document.getElementById('savedContainer');
-const savedPanel = document.getElementById('savedPanel');
+  function showCustomAlert(msg) {
+    document.getElementById('customAlertMsg').innerText = msg;
+    document.getElementById('customAlert').classList.add('active');
+  }
 
-// ====================== 24 SƠN ======================
-const son24Data = [
-    { name: "Nhâm", start: 337.5, end: 352.5 },
-    { name: "Tý",  start: 352.5, end: 7.5 },
-    { name: "Quý", start: 7.5,   end: 22.5 },
-    { name: "Sửu", start: 22.5,  end: 37.5 },
-    { name: "Cấn", start: 37.5,  end: 52.5 },
-    { name: "Dần", start: 52.5,  end: 67.5 },
-    { name: "Giáp",start: 67.5,  end: 82.5 },
-    { name: "Mão", start: 82.5,  end: 97.5 },
-    { name: "Ất",  start: 97.5,  end: 112.5 },
-    { name: "Thìn",start: 112.5, end: 127.5 },
-    { name: "Tốn", start: 127.5, end: 142.5 },
-    { name: "Tỵ",  start: 142.5, end: 157.5 },
-    { name: "Bính",start: 157.5, end: 172.5 },
-    { name: "Ngọ", start: 172.5, end: 187.5 },
-    { name: "Đinh",start: 187.5, end: 202.5 },
-    { name: "Mùi", start: 202.5, end: 217.5 },
-    { name: "Khôn",start: 217.5, end: 232.5 },
-    { name: "Thân",start: 232.5, end: 247.5 },
-    { name: "Canh",start: 247.5, end: 262.5 },
-    { name: "Dậu", start: 262.5, end: 277.5 },
-    { name: "Tân", start: 277.5, end: 292.5 },
-    { name: "Tuất",start: 292.5, end: 307.5 },
-    { name: "Càn", start: 307.5, end: 322.5 },
-    { name: "Hợi", start: 322.5, end: 337.5 }
-];
+  function closeCustomAlert() {
+    document.getElementById('customAlert').classList.remove('active');
+  }
 
-// ====================== BÁT TRẠCH MAP ======================
-const bátTrạchMap = {
-    'Khảm': { 'N':'Phục Vị', 'NE':'Ngũ Quỷ', 'E':'Thiên Y', 'SE':'Sinh Khí', 'S':'Diên Niên', 'SW':'Tuyệt Mệnh', 'W':'Họa Hại', 'NW':'Lục Sát', 'group':'Đông Tứ Mệnh', 'element':'Thủy' },
-    'Ly':   { 'N':'Diên Niên', 'NE':'Họa Hại', 'E':'Sinh Khí', 'SE':'Thiên Y', 'S':'Phục Vị', 'SW':'Lục Sát', 'W':'Ngũ Quỷ', 'NW':'Tuyệt Mệnh', 'group':'Đông Tứ Mệnh', 'element':'Hỏa' },
-    'Chấn': { 'N':'Thiên Y', 'NE':'Lục Sát', 'E':'Phục Vị', 'SE':'Diên Niên', 'S':'Sinh Khí', 'SW':'Họa Hại', 'W':'Tuyệt Mệnh', 'NW':'Ngũ Quỷ', 'group':'Đông Tứ Mệnh', 'element':'Mộc' },
-    'Tốn':  { 'N':'Sinh Khí', 'NE':'Tuyệt Mệnh', 'E':'Diên Niên', 'SE':'Phục Vị', 'S':'Thiên Y', 'SW':'Ngũ Quỷ', 'W':'Lục Sát', 'NW':'Họa Hại', 'group':'Đông Tứ Mệnh', 'element':'Mộc' },
-    'Càn':  { 'N':'Lục Sát', 'NE':'Thiên Y', 'E':'Ngũ Quỷ', 'SE':'Họa Hại', 'S':'Tuyệt Mệnh', 'SW':'Diên Niên', 'W':'Sinh Khí', 'NW':'Phục Vị', 'group':'Tây Tứ Mệnh', 'element':'Kim' },
-    'Khôn': { 'N':'Tuyệt Mệnh', 'NE':'Sinh Khí', 'E':'Họa Hại', 'SE':'Ngũ Quỷ', 'S':'Lục Sát', 'SW':'Phục Vị', 'W':'Thiên Y', 'NW':'Diên Niên', 'group':'Tây Tứ Mệnh', 'element':'Thổ' },
-    'Đoài': { 'N':'Họa Hại', 'NE':'Diên Niên', 'E':'Tuyệt Mệnh', 'SE':'Lục Sát', 'S':'Ngũ Quỷ', 'SW':'Thiên Y', 'W':'Phục Vị', 'NW':'Sinh Khí', 'group':'Tây Tứ Mệnh', 'element':'Kim' },
-    'Cấn':  { 'N':'Ngũ Quỷ', 'NE':'Phục Vị', 'E':'Lục Sát', 'SE':'Họa Hại', 'S':'Tuyệt Mệnh', 'SW':'Sinh Khí', 'W':'Diên Niên', 'NW':'Thiên Y', 'group':'Tây Tứ Mệnh', 'element':'Thổ' }
-};
-
-// ====================== CUNG TINH ======================
-const cungPhầnTrăm = {
-    'Sinh Khí':   { cát: true,  ý_nghĩa: 'Cung Đại Cát: Chủ về vượng khí, thu hút tài lộc, sự nghiệp thăng tiến mạnh mẽ.' },
-    'Thiên Y':    { cát: true,  ý_nghĩa: 'Cung Trung Cát: Mang lại sức khỏe dồi dào, tiêu trừ bệnh tật, gia đạo bình an.' },
-    'Diên Niên':  { cát: true,  ý_nghĩa: 'Cung Cát Tinh: Hòa hợp gia đạo, quan hệ ngoại giao tốt, tình duyên bền vững.' },
-    'Phục Vị':    { cát: true,  ý_nghĩa: 'Cung Tiểu Cát: Vững vàng tâm trí, may mắn thi cử, công việc ổn định.' },
-    'Tuyệt Mệnh': { cát: false, ý_nghĩa: 'Cung Đại Hung: Sát khí cực mạnh, dễ gây bệnh nặng, phá sản, tai ương.' },
-    'Ngũ Quỷ':    { cát: false, ý_nghĩa: 'Cung Hung Tinh: Tai họa bất ngờ, thị phi, kiện tụng, hao tài.' },
-    'Lục Sát':    { cát: false, ý_nghĩa: 'Cung Hung Tinh: Mâu thuẫn gia đạo, tranh chấp, tình cảm trục trặc.' },
-    'Họa Hại':    { cát: false, ý_nghĩa: 'Cung Tiểu Hung: Rủi ro vụn vặt, tiểu nhân quấy phá, hao mòn tài lộc.' }
-};
-
-// ====================== PHƯƠNG VỊ & HƯỚNG ======================
-const phươngVịThiếtLập = {
-    'N':  { tên: "BẮC",      ngũHành: "Thủy" },
-    'NE': { tên: "ĐÔNG BẮC", ngũHành: "Thổ" },
-    'E':  { tên: "ĐÔNG",     ngũHành: "Mộc" },
-    'SE': { tên: "ĐÔNG NAM", ngũHành: "Mộc" },
-    'S':  { tên: "NAM",      ngũHành: "Hỏa" },
-    'SW': { tên: "TÂY NAM",  ngũHành: "Thổ" },
-    'W':  { tên: "TÂY",      ngũHành: "Kim" },
-    'NW': { tên: "TÂY BẮC",  ngũHành: "Kim" }
-};
-
-const directionMeta = [
-    { code: 'N',  name: 'BẮC (Khảm)',     angle: 0   },
-    { code: 'NE', name: 'ĐÔNG BẮC (Cấn)', angle: 45  },
-    { code: 'E',  name: 'ĐÔNG (Chấn)',    angle: 90  },
-    { code: 'SE', name: 'ĐÔNG NAM (Tốn)', angle: 135 },
-    { code: 'S',  name: 'NAM (Ly)',       angle: 180 },
-    { code: 'SW', name: 'TÂY NAM (Khôn)', angle: 225 },
-    { code: 'W',  name: 'TÂY (Đoài)',     angle: 270 },
-    { code: 'NW', name: 'TÂY BẮC (Càn)',  angle: 315 }
-];
-// ====================== GLOBAL VARIABLES ======================
-let chủMệnh = 'Khảm';
-let currentCode = 'N';
-let currentHeading = 0;
-let targetAngle = null;
-
-// ====================== ALERT FUNCTIONS ======================
-function showCustomAlert(msg) {
-    const alertMsg = document.getElementById('customAlertMsg');
-    const alertOverlay = document.getElementById('customAlert');
-    if (alertMsg) alertMsg.innerText = msg;
-    if (alertOverlay) alertOverlay.classList.add('active');
-}
-
-function closeCustomAlert() {
-    const alertOverlay = document.getElementById('customAlert');
-    if (alertOverlay) alertOverlay.classList.remove('active');
-}
-
-// ====================== DATE INPUT HANDLER ======================
-function handleDateInput(currentInput, nextInputId) {
+  function handleDateInput(currentInput, nextInputId) {
     currentInput.value = currentInput.value.replace(/[^0-9]/g, '');
-    
-    const val = parseInt(currentInput.value) || 0;
-    
+    let val = parseInt(currentInput.value) || 0;
     if (currentInput.id === 'birthDay' && val > 31) {
-        currentInput.value = "31";
-        showCustomAlert("Ngày trong tháng không thể vượt quá 31!");
+      currentInput.value = "31";
+      showCustomAlert("Ngày trong tháng không thể vượt quá 31!");
     }
     if (currentInput.id === 'birthMonth' && val > 12) {
-        currentInput.value = "12";
-        showCustomAlert("Tháng không thể vượt quá 12!");
+      currentInput.value = "12";
+      showCustomAlert("Tháng không thể vượt quá 12!");
     }
-    
-    // Auto focus next field
     if (currentInput.value.length >= currentInput.maxLength && nextInputId) {
-        const nextField = document.getElementById(nextInputId);
-        if (nextField) nextField.focus();
+      document.getElementById(nextInputId).focus();
     }
-    
     debounceRecalculate();
-}
+  }
 
-// ====================== RENDER 24 SƠN RING - TỐI ƯU ======================
-function render24SonRing() {
-    // 1. Vạch độ ngoài cùng (360 độ)
+  function render24SonRing() {
+    // 1. Tự động sinh 360 vạch chia độ ngoài cùng
     const vachDoRing = document.getElementById('vachDoRing');
     if (vachDoRing) {
         let linesHtml = "";
         for (let i = 0; i < 360; i++) {
-            const y2 = (i % 10 === 0) ? 28 : (i % 5 === 0) ? 25 : 23;
+            let y2 = 23;
+            if (i % 10 === 0) y2 = 28;
+            else if (i % 5 === 0) y2 = 25;
             linesHtml += `<line x1="250" y1="18" x2="250" y2="${y2}" transform="rotate(${i}, 250, 250)" />`;
         }
         vachDoRing.innerHTML = linesHtml;
     }
 
-    // 2. Vạch ngăn 24 Sơn
+    // 2. Kẻ vạch ô ngăn cung riêng biệt cho 24 Sơn Hướng (Từ bán kính 115px đến 162px)
     const khe24SonRing = document.getElementById('khe24SonRing');
     if (khe24SonRing) {
         let lines24Html = "";
         for (let i = 0; i < 24; i++) {
-            const gocBiên = i * 15 - 7.5;
+            // Lệch trục một góc 7.5 độ để đường kẻ đóng vai trò làm vách ngăn, kẹp tên Sơn vào tâm ô
+            let gocBiên = i * 15 - 7.5;
             lines24Html += `<line x1="250" y1="115" x2="250" y2="162" transform="rotate(${gocBiên}, 250, 250)" />`;
         }
         khe24SonRing.innerHTML = lines24Html;
     }
 
-    // 3. Chữ 24 Sơn
+    // 3. Khởi dựng tầng chữ 24 Sơn Hướng
     const sonRingSvg = document.getElementById('sonRingSvg');
-    if (!sonRingSvg) return;
-
+    if (!sonRingSvg || typeof son24Data === 'undefined') return;
     sonRingSvg.innerHTML = "";
-    const rSon = 136;
 
+    const rSon = 136; // Nằm trung cung lọt lòng giữa r=115 và r=162
     son24Data.forEach((son, index) => {
-        const goc = (index * 15) % 360;
-        
+        const trungBinhGoc = (index * 15) % 360;
         const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
         textNode.setAttribute("x", "250");
         textNode.setAttribute("y", (250 - rSon).toString());
@@ -1472,11 +1467,11 @@ function render24SonRing() {
         textNode.setAttribute("font-family", "sans-serif");
         textNode.setAttribute("font-size", "10");
         textNode.setAttribute("font-weight", "900");
-        textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
-        textNode.setAttribute("data-son-goc", goc.toString());
+        textNode.setAttribute("transform", `rotate(${trungBinhGoc}, 250, 250)`);
+        textNode.setAttribute("data-son-goc", trungBinhGoc.toString());
         textNode.textContent = son.name;
 
-        // Màu sắc theo phong thủy
+        // Định dạng sắc màu chuẩn phong thủy của anh
         if (["Cấn", "Tốn", "Khôn", "Càn"].includes(son.name)) {
             textNode.setAttribute("fill", "#ff3b30");
             textNode.setAttribute("data-color", "#ff3b30");
@@ -1487,68 +1482,66 @@ function render24SonRing() {
             textNode.setAttribute("fill", "#5c4314");
             textNode.setAttribute("data-color", "#5c4314");
         }
-
         sonRingSvg.appendChild(textNode);
     });
 
-    // 4. Vòng 24 Sao Phúc Đức (Tầng ngoài)
+    // 4. Khởi dựng bổ sung vòng 24 Sao Phúc Đức ở tầng ngoài (Bán kính r=178)
     const phucDucRingSvg = document.getElementById('phucDucRingSvg');
-    if (!phucDucRingSvg) return;
-
     const phucDucNames = [
-        "Phúc Đức","Ôn Hoàng","Tấn Tài","Trường Bệnh","Tố Tụng","Quan Tước",
-        "Quan Quý","Tự Điểu","Vượng Trang","Hưng Phước","Pháp Trường","Điên Cuồng",
-        "Khẩu Thiệt","Vượng Tài","Đăng Doanh","Thiếu Vong","Thiên Tặc","Tử Mất",
-        "Vượng Tâm","Khóc Khấp","Cô Quả","Vinh Phước","Thiếu Vong","Xương Dâm"
+        "Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", 
+        "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", 
+        "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", 
+        "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"
     ];
-
-    phucDucRingSvg.innerHTML = "";
-    phucDucNames.forEach((name, index) => {
-        const goc = (index * 15) % 360;
-        
-        const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        textNode.setAttribute("x", "250");
-        textNode.setAttribute("y", "72");
-        textNode.setAttribute("text-anchor", "middle");
-        textNode.setAttribute("font-family", "sans-serif");
-        textNode.setAttribute("font-size", "6.5");
-        textNode.setAttribute("font-weight", "600");
-        textNode.setAttribute("fill", "#7a623c");
-        textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
-        textNode.setAttribute("data-sao-goc", goc.toString());
-        textNode.textContent = name;
-        
-        phucDucRingSvg.appendChild(textNode);
-    });
+    if (phucDucRingSvg) {
+        phucDucRingSvg.innerHTML = "";
+        phucDucNames.forEach((name, index) => {
+            const gocSao = (index * 15) % 360;
+            const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            textNode.setAttribute("x", "250");
+            textNode.setAttribute("y", "72"); // Nằm ở dải tầng ngoài r=178
+            textNode.setAttribute("text-anchor", "middle");
+            textNode.setAttribute("font-family", "sans-serif");
+            textNode.setAttribute("font-size", "6.5");
+            textNode.setAttribute("font-weight", "600");
+            textNode.setAttribute("fill", "#7a623c");
+            textNode.setAttribute("transform", `rotate(${gocSao}, 250, 250)`);
+            textNode.setAttribute("data-sao-goc", gocSao.toString());
+            textNode.textContent = name;
+            phucDucRingSvg.appendChild(textNode);
+        });
+    }
 }
-function tínhCungPhi(năm, tháng, ngày, giớiTính) {
-    // 1. Dùng toán tử ba ngôi (ternary) giúp rút gọn code, nhìn sạch và chuyên nghiệp hơn
-    let namTinh = (tháng < 2 || (tháng === 2 && ngày < 5)) ? năm - 1 : năm;
 
+  function tínhCungPhi(năm, tháng, ngày, giớiTính) {
+    // Xử lý Lập Xuân chính xác hơn
+    let namTinh = năm;
+    if (tháng < 2 || (tháng === 2 && ngày < 5)) {
+      namTinh = năm - 1;
+    }
     let sốDư = namTinh % 9;
     if (sốDư === 0) sốDư = 9;
-
     let kếtQuả;
     if (giớiTính === 'male') {
-        kếtQuả = (11 - sốDư) % 9;
+      kếtQuả = (11 - sốDư) % 9;
+      if (kếtQuả === 0) kếtQuả = 9;
     } else {
-        kếtQuả = (sốDư + 4) % 9;
+      kếtQuả = (sốDư + 4) % 9;
+      if (kếtQuả === 0) kếtQuả = 9;
     }
-    
-    if (kếtQuả === 0) kếtQuả = 9;
-
-    // 2. Xử lý số 5 (Bắt buộc phải có)
-    if (kếtQuả === 5) {
-        kếtQuả = (giớiTính === 'male') ? 2 : 8;
-    }
-
     const mapCung = {
-        1: 'Khảm', 2: 'Khôn', 3: 'Chấn', 4: 'Tốn',
-        6: 'Càn', 7: 'Đoài', 8: 'Cấn', 9: 'Ly'
+      1: 'Khảm',
+      2: 'Khôn',
+      3: 'Chấn',
+      4: 'Tốn',
+      5: 'Khôn',
+      6: 'Càn',
+      7: 'Đoài',
+      8: 'Cấn',
+      9: 'Ly'
     };
-
     return mapCung[kếtQuả];
-}
+  }
 
   function debounceRecalculate() {
     clearTimeout(debounceTimer);
@@ -1570,33 +1563,30 @@ function tínhCungPhi(năm, tháng, ngày, giớiTính) {
     return true;
   }
 
-// ====================== HÀM ĐÓNG MỞ GIẢI THÍCH CHI TIẾT ======================
-window.toggleDienGiaiChiTiet = function() {
-    const contentDiv = document.getElementById('content-dien-giai-chi-tiet');
-    const toggleBtn = document.getElementById('btn-toggle-fengshui');
-    if (!contentDiv || !toggleBtn) return;
-
-    if (contentDiv.style.display === 'none' || contentDiv.style.display === '') {
-        contentDiv.style.display = 'block';
-        isDetailOpen = true;
-        // Giữ nguyên cơ chế thông minh: Khóa chặt góc la bàn tại giây bấm MỞ
-        lockedHeadingAtOpen = currentHeading; 
-        toggleBtn.innerHTML = '🙈 Đóng giải thích thuật ngữ';
-        toggleBtn.style.background = 'rgba(223, 183, 108, 0.15)';
-    } else {
-        contentDiv.style.display = 'none';
-        isDetailOpen = false;
-        // Bấm ĐÓNG: Làm sạch bộ nhớ góc cũ ngay lập tức
-        lockedHeadingAtOpen = null; 
-        toggleBtn.innerHTML = '👁️ Xem giải thích thuật ngữ hiển thị';
-        toggleBtn.style.background = 'transparent';
-    }
-    recalculateFate(); 
-};
+// HÀM ĐÓNG MỞ LUẬN GIẢI CHI TIẾT (Đặt riêng bên ngoài để chạy mượt mà, tối ưu bộ nhớ)
+  window.toggleDienGiaiChiTiet = function() {
+      const contentDiv = document.getElementById('content-dien-giai-chi-tiet');
+      const toggleBtn = document.getElementById('btn-toggle-fengshui');
+      if (!contentDiv || !toggleBtn) return;
+      
+      if (contentDiv.style.display === 'none') {
+          contentDiv.style.display = 'block';
+          toggleBtn.innerHTML = '🙈 Đóng luận giải chi tiết';
+          toggleBtn.style.background = 'rgba(223, 183, 108, 0.15)';
+      } else {
+          contentDiv.style.display = 'none';
+          toggleBtn.innerHTML = '👁️ Xem luận giải bản mệnh chi tiết';
+          toggleBtn.style.background = 'transparent';
+      }
+  };
 
 // ====================== GLOBAL ======================
 let isDetailOpen = false;
-let lockedHeadingAtOpen = null; // Biến thông minh lưu góc cố định lúc mở bảng
+
+// Quy luật Ngũ Hành (Tự động cho tất cả mệnh)
+const sinhChoMenh = { "Mộc":"Hỏa", "Hỏa":"Thổ", "Thổ":"Kim", "Kim":"Thủy", "Thủy":"Mộc" };
+const khacMenh = { "Mộc":"Thổ", "Thổ":"Thủy", "Thủy":"Hỏa", "Hỏa":"Kim", "Kim":"Mộc" };
+const menhKhacHuong = { "Thổ":"Thủy", "Thủy":"Hỏa", "Hỏa":"Kim", "Kim":"Mộc", "Mộc":"Thổ" };
 
 // ====================== HÀM HỖ TRỢ ======================
 function getHanhByHeading(heading) {
@@ -1612,20 +1602,41 @@ function getHanhByHeading(heading) {
     return "Chưa xác định";
 }
 
-// (LƯU Ý: Đã xóa bỏ các hàm getTuongQuan và getChiTietTuongQuan cũ để tránh phán đoán sai lệch)
+function getTuongQuan(huong, menh) {
+    if (huong === menh) return "Đồng khí (Bình hòa)";
+    if (sinhChoMenh[huong] === menh) return "Tương sinh (Đại cát)";
+    if (khacMenh[huong] === menh) return "Hướng khắc Mệnh (Hung)";
+    if (menhKhacHuong[menh] === huong) return "Mệnh khắc Hướng";
+    return "Quan hệ bình hòa";
+}
 
-// ====================== HÀM CHÍNH ĐÃ TỐI GIẢN & CHUẨN XÁC ======================
+function getChiTietTuongQuan(huong, menh) {
+    if (huong === menh) {
+        return "Hướng và mệnh cùng hành, tạo sự ổn định và hài hòa cho gia đạo.";
+    }
+    if (sinhChoMenh[huong] === menh) {
+        return `Hướng <b>${huong}</b> sinh cho mệnh <b>${menh}</b>. Đây là hướng Đại cát, rất tốt cho cửa chính, giường ngủ và bàn thờ.`;
+    }
+    if (khacMenh[huong] === menh) {
+        return `Hướng <b>${huong}</b> khắc mệnh <b>${menh}</b>. Đây là hướng Hung, nên tránh đặt cửa chính hoặc giường ngủ.`;
+    }
+    if (menhKhacHuong[menh] === huong) {
+        return `Mệnh <b>${menh}</b> khắc hướng <b>${huong}</b>. Dễ tiêu hao năng lượng, nên hạn chế sử dụng làm hướng chính.`;
+    }
+    return "Quan hệ trung tính.";
+}
+
+// ====================== HÀM CHÍNH ======================
 function recalculateFate() {
     const name = document.getElementById('userName').value || "Chủ mệnh";
     const gender = document.getElementById('gender').value;
     const dayStr = document.getElementById('birthDay').value;
     const monthStr = document.getElementById('birthMonth').value;
     const yearStr = document.getElementById('birthYear').value;
-    const mucDich = document.getElementById('purpose').value; // Lấy mục đích người dùng chọn
 
     if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
-        fateTxt.innerText = `${name}: Đo hướng tự do cơ bản (Chưa nhập đủ Ngày - Tháng - Năm sinh)`;
-        directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập đủ 3 ô Ngày, Tháng, Năm sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
+        fateTxt.innerText = `${name}: Đo hướng tự do cơ bản (Chưa nhập đủ ngày sinh)`;
+        directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập đủ ngày tháng năm sinh</div>";
         listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
         
         const oldPanel = document.getElementById('dien-giai-bo-sung');
@@ -1639,84 +1650,85 @@ function recalculateFate() {
     let y = parseInt(yearStr);
 
     if (!validateFullDate(d, m, y)) {
-        fateTxt.innerText = `${name}: Lỗi cấu trúc thời gian (Kiểm tra lại số ngày hoặc năm nhuận)`;
+        fateTxt.innerText = `${name}: Lỗi ngày tháng năm sinh`;
         return;
     }
 
-    // ====================== GIỮ NGUYÊN LOGIC GỐC CỦA ANH ======================
-    chủMệnh = tínhCungPhi(y, m, d, gender);
+    // Tính toán mệnh
+    const chủMệnh = tínhCungPhi(y, m, d, gender);
     const namAm = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
     const nguHoangInfo = getNguHoangInfo(namAm);
-  
     const hanhCungPhi = bátTrạchMap[chủMệnh].element;
     const nhomMenh = bátTrạchMap[chủMệnh].group;
 
-    fateTxt.innerText = `${name}: Cung ${chủMệnh} (${nhomMenh}) - Bản Mệnh Cung Phi: ${hanhCungPhi} | Năm Âm: ${namAm} | ${nguHoangInfo}`;
+    fateTxt.innerText = `${name}: Cung ${chủMệnh} (${nhomMenh}) • Hành ${hanhCungPhi} • Năm Âm ${namAm} • ${nguHoangInfo}`;
 
-    // ====================== XỬ LÝ KHÓA TỌA ĐỘ VÀ TRANSLATE TỪ NGỮ ĐƠN GIẢN ======================
-    let headingToCalculate = currentHeading; 
-    if (isDetailOpen && lockedHeadingAtOpen !== null) {
-        headingToCalculate = lockedHeadingAtOpen;
-    }
+    // Phân tích hướng & tọa
+    const hanhPhuongVi = getHanhByHeading(currentHeading);
+    const toaHeading = (currentHeading + 180) % 360;
+    const hanhToa = getHanhByHeading(toaHeading);
 
-    const hanhPhuongVi = getHanhByHeading(headingToCalculate);
+    // Luận giải (GIỮ NGUYÊN LỜI VĂN CỦA BẠN)
+    let lyGiaiCungPhi = `Bạn thuộc cung <b>${chủMệnh}</b> (${nhomMenh}), hành <b>${hanhCungPhi}</b>. Đây là cơ sở quan trọng để chọn hướng đón khí theo Bát Trạch.`;
 
-    // Chuyển đổi tên mục đích sang tiếng Việt bình dân
-    let tenMucDichBinhDan = "Vị trí / Hướng đang chọn";
-    if (mucDich === 'house') tenMucDich = "Cửa chính / Mặt tiền nhà";
-    else if (mucDich === 'altar') tenMucDich = "Mặt Bàn thờ / Thần Tài";
-    else if (mucDich === 'bed') tenMucDich = "Đầu Giường ngủ";
-    else if (mucDich === 'workspace') tenMucDich = "Mặt Bàn làm việc";
-    else if (mucDich === 'business_shelf') tenMucDich = "Tủ kệ hàng / Quầy kinh doanh (Quầy bánh mì, tủ nước,...)";
-    else if (mucDich === 'safe') tenMucDich = "Két sắt / Thùng đựng tiền";
-    else if (mucDich === 'kitchen') tenMucDich = "Bếp nấu (Lò nướng, lò vi sóng)";
-    else if (mucDich === 'toilet') tenMucDich = "Nhà vệ sinh / WC / Khu xả uế";
-    else if (mucDich === 'storage') tenMucDich = "Kho chứa đồ / Tủ hàng tồn";
+    let lyGiaiHungCat = nguHoangInfo.includes("Ngũ Hoàng")
+        ? `⚠️ <b>Ngũ Hoàng Đại Sát ${namAm}:</b> Trung cung bị hung khí mạnh. Tránh động thổ, sửa chữa lớn ở giữa nhà.`
+        : (nguHoangInfo.includes("Tam Bích") || nguHoangInfo.includes("Tứ Lục"))
+        ? `<b>Năm ${namAm}:</b> Trung cung có khí nhiễu nhẹ. Nên giữ khu vực giữa nhà sạch sẽ, thoáng sáng.`
+        : `<b>Năm ${namAm}:</b> Khí số ổn định, cát nhiều hung ít.`;
 
-    // Dịch nghĩa ngắn gọn về Vận khí tâm nhà (Trung cung)
-    let giaiThichSao = "";
-    if (nguHoangInfo.includes("Tam Bích") || nguHoangInfo.includes("Tứ Lục")) {
-        giaiThichSao = `Năm sinh âm lịch này gặp sao mang năng lượng Mộc quản năm, khi đóng ở giữa tâm nhà (vốn thuộc Thổ) sẽ gây ra sự lệch khí nhẹ ở mức <b>Trung bình</b>. Chỉ cần giữ khu vực giữa nhà hoặc giữa cửa hàng luôn sạch sẽ, thoáng đãng là tự động hóa giải.`;
-    } else if (nguHoangInfo.includes("Ngũ Hoàng")) {
-        giaiThichSao = `Năm sinh này phạm sao xấu Ngũ Hoàng đóng tại giữa nhà, mang sát khí hành Thổ rất mạnh. Cần giữ trung tâm nhà yên tĩnh, tránh đập phá, sửa chữa lớn ở khu vực này trong năm.`;
-    } else {
-        giaiThichSao = `Năng lượng chủ quản năm sinh tại trung tâm nhà ở trạng thái ổn định, an lành, không có biến động xấu.`;
-    }
+    const tuongQuanHuong = getTuongQuan(hanhPhuongVi, hanhCungPhi);
+    const lyGiaiHuong = `<b>Hướng ${hanhPhuongVi} (${Math.round(currentHeading)}°):</b> ${tuongQuanHuong}. ${getChiTietTuongQuan(hanhPhuongVi, hanhCungPhi)}`;
 
-    // Khóa cứng màu viền vàng luxury, không đổi xanh đỏ bậy bạ nữa
-    let borderColor = "var(--gold)"; 
+    const tuongQuanToa = getTuongQuan(hanhToa, hanhCungPhi);
+    const lyGiaiToa = `<b>Tọa ${hanhToa} (${Math.round(toaHeading)}°):</b> ${tuongQuanToa}. ${getChiTietTuongQuan(hanhToa, hanhCungPhi)}`;
 
-    // Render HTML sạch sẽ, đóng vai trò "Từ điển tra cứu khái niệm"
+    const lyGiaiBoTri = `
+        <b>Nguyên tắc Tọa Hung - Hướng Cát:</b><br><br>
+        • <b style="color:#30d158">Hướng Cát (Đón sinh khí)</b>: Dùng cho <b>Cửa chính, Bàn thờ, Giường ngủ, Bàn làm việc</b>.<br>
+        • <b style="color:#ff3b30">Hướng Hung (Trấn sát)</b>: Dùng cho <b>Bếp nấu, Nhà vệ sinh, Kho chứa</b> để hóa giải sát khí.
+    `;
+
+    // Màu viền động
+    let borderColor = "var(--gold)";
+    if (tuongQuanHuong.includes("Đại cát") || tuongQuanHuong.includes("Tương sinh")) borderColor = "#30d158";
+    else if (tuongQuanHuong.includes("Hung")) borderColor = "#ff3b30";
+    else if (tuongQuanHuong.includes("Mệnh khắc")) borderColor = "#ff9500";
+
+    // Render panel (TỐI ƯU HIỂN THỊ NÚT BẤM)
     let targetContainer = document.getElementById('dien-giai-bo-sung');
     if (!targetContainer) {
         targetContainer = document.createElement('div');
         targetContainer.id = 'dien-giai-bo-sung';
         targetContainer.style.width = '100%';
-        fateTxt.parentNode.insertBefore(targetContainer, fateTxt.nextSibling);
+        if (fateTxt && fateTxt.parentNode) {
+            fateTxt.parentNode.insertBefore(targetContainer, fateTxt.nextSibling);
+        }
     }
 
-    const displayStyle = isDetailOpen ? 'block' : 'none';
-    const btnText = isDetailOpen ? '🙈 Đóng giải thích thuật ngữ' : '👁️ Xem giải thích thuật ngữ hiển thị';
+    // Logic nút bấm dựa trên biến global isDetailOpen
+    const btnLabel = isDetailOpen ? '🙈 Đóng luận giải chi tiết' : '👁️ Xem luận giải chi tiết';
     const btnBkg = isDetailOpen ? 'rgba(223, 183, 108, 0.15)' : 'transparent';
 
     targetContainer.innerHTML = `
         <div style="text-align: center; margin: 10px 0;">
-            <button id="btn-toggle-fengshui" onclick="toggleDienGiaiChiTiet()"
+            <button id="btn-toggle-fengshui" onclick="toggleDienGiaiChiTiet()" 
                     style="background: ${btnBkg}; border: 1px solid var(--gold); color: var(--gold);
                            padding: 8px 16px; font-size: 0.85rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
-                ${btnText}
+                ${btnLabel}
             </button>
         </div>
-        <div id="content-dien-giai-chi-tiet" style="display: ${displayStyle}; margin: 10px 0; padding: 14px;
+        <div id="content-dien-giai-chi-tiet" style="display: ${isDetailOpen ? 'block' : 'none'}; margin: 10px 0; padding: 14px;
              background: rgba(223, 183, 108, 0.06); border: 1.5px solid ${borderColor}; border-radius: 8px;
-             font-size: 0.86rem; line-height: 1.65; text-align: left; color: #fff;">
+             font-size: 0.86rem; line-height: 1.65; text-align: left;">
             <p style="margin:0 0 10px 0; color:var(--gold); font-weight:bold; border-bottom:1px solid var(--gold); padding-bottom:6px;">
-                📖 GIẢI NGHĨA CÁC THUẬT NGỮ
+                🔮 LUẬN GIẢI PHONG THỦY
             </p>
-            <p style="margin:8px 0;">📍 <b>Phương vị:</b> Là hướng thực tế mà đầu điện thoại/la bàn của bạn đang chĩa vào. Hướng này tương ứng với năng lượng hành <b>${hanhPhuongVi}</b> (Góc xoay la bàn hiện tại: <b>${Math.round(headingToCalculate)}°</b>).</p>
-            <p style="margin:8px 0;">🎯 <b>Mệnh Cung Phi (Hành ${hanhCungPhi}):</b> Quẻ mệnh phong thủy cốt lõi được tính toán dựa trên năm sinh và giới tính của bạn (Bạn thuộc cung <b>${chủMệnh}</b>, nhóm tuổi <b>${nhomMenh}</b>). Mệnh này dùng để đối chiếu trực tiếp với la bàn Bát Trạch phía dưới.</p>
-            <p style="margin:8px 0;">⚠️ <b>Vận khí tâm nhà (Trung Cung):</b> ${giaiThichSao}</p>
-            <p style="margin:8px 0;">🚪 <b>Mục đích xem:</b> Bạn đang tiến hành đo đạc vị trí cho <b>${tenMucDichBinhDan}</b>. Hãy cuộn xuống phía dưới để xem kết quả Cát/Hung chính xác theo hệ Bát Trạch Minh Châu và mật pháp hóa giải.</p>
+            <p style="margin:6px 0;">${lyGiaiCungPhi}</p>
+            <p style="margin:6px 0;">${lyGiaiHungCat}</p>
+            <p style="margin:6px 0;">${lyGiaiHuong}</p>
+            <p style="margin:6px 0;">${lyGiaiToa}</p>
+            <p style="margin:6px 0;">${lyGiaiBoTri}</p>
         </div>
     `;
 
@@ -1736,15 +1748,13 @@ const ConfigPhongThuy = {
     'toilet':    { title: "Ưu tiên Tọa vị đặt nhà vệ sinh (Đè Hung)", isCat: false },
     'storage':   { title: "Ưu tiên vị trí Kho / Tủ đồ (Đè Hung)", isCat: false }
 };
-function generateDirectionsList() {
+  function generateDirectionsList() {
     const mụcĐích = document.getElementById('purpose').value;
     const config = ConfigPhongThuy[mụcĐích];
- 
+
     if (!mụcĐích || !config) {
-        directionsContainer.innerHTML = `
-            <div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>
-                Chọn mục đích dương trạch để xem danh sách gợi ý tương ứng
-            </div>`;
+        directionsContainer.innerHTML =
+            "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Chọn mục đích dương trạch để xem danh sách gợi ý tương ứng</div>";
         listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
         return;
     }
@@ -1753,76 +1763,38 @@ function generateDirectionsList() {
     directionMeta.forEach(dir => {
         const cungTrạch = bátTrạchMap[chủMệnh][dir.code];
         const isCat = cungPhầnTrăm[cungTrạch].cát;
+        
+        // Dùng cấu hình để quyết định: Nếu mục đích cần Cát thì hopPhongThuy = isCat, ngược lại thì = !isCat
         const hopPhongThuy = config.isCat ? isCat : !isCat;
+
         listDirections.push({
-            ...dir,
-            cungTrạch: cungTrạch,
-            isCat: isCat,
-            hopPhongThuy: hopPhongThuy
+            ...dir, cungTrạch: cungTrạch, isCat: isCat, hopPhongThuy: hopPhongThuy
         });
     });
 
     listDirections.sort((a, b) => b.hopPhongThuy - a.hopPhongThuy);
+
+    // Hiển thị tiêu đề theo cấu hình
     listPanelTitle.innerText = config.title;
+
     directionsContainer.innerHTML = "";
-
     listDirections.forEach(item => {
-        const textColorStyle = item.hopPhongThuy
-            ? 'color: #30d158; font-weight: bold;'
-            : 'color: #ff3b30; font-weight: bold;';
-     
-        const statusText = item.hopPhongThuy
-            ? '🟢 PHÙ HỢP TỐT'
-            : '❌ KHÔNG PHÙ HỢP';
-
-        // 3 Sơn Vị
-        const sonGroup = getSonGroupForDirection(item.code);
-        let sonHTML = "";
-        sonGroup.forEach((son, index) => {
-            const dataSon = MaTranMinhChau[chủMệnh] ? MaTranMinhChau[chủMệnh][son] : null;
-            const color = dataSon && dataSon.loai === "Cát" ? "#30d158" :
-                         (dataSon && dataSon.loai === "Hung" ? "#ff3b30" : "#8e8e93");
-          
-            sonHTML += `<span style="color:${color}; font-weight:700;">${son}</span>`;
-            if (index < sonGroup.length - 1) sonHTML += ` • `;
-        });
-
+        const textColorStyle = item.hopPhongThuy ? 'color: #30d158; font-weight: bold;' : 'color: #ff3b30; font-weight: bold;';
+        const statusText = item.hopPhongThuy ? '🟢 PHÙ HỢP TỐT' : '❌ KHÔNG PHÙ HỢP';
+        
         const div = document.createElement('div');
         div.className = `direction-item ${item.hopPhongThuy ? 'good' : 'bad'}`;
         div.innerHTML = `
-            <div class="item-info" style="flex:1;">
-                <span class="item-name" style="color:#fff; font-size:0.92rem;">
-                    ${item.name} ➔ <span style="${textColorStyle}">${item.cungTrạch}</span>
-                </span>
-                
-                <div style="margin:4px 0 5px 0; font-size:0.76rem; line-height:1.25;">
-                    <span style="color:#dfb76c; font-weight:600;">SƠN VỊ:</span> 
-                    ${sonHTML}
-                </div>
-                
-                <span class="item-cung" style="${textColorStyle}; font-size:0.85rem;">
-                    ${statusText}
-                </span>
+            <div class="item-info">
+                <span class="item-name" style="color:#fff;">${item.name} ➔ <span style="${textColorStyle}">${item.cungTrạch}</span></span>
+                <span class="item-cung" style="${textColorStyle}">${statusText}</span>
             </div>
-            <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})" style="font-size:0.78rem; padding:4px 9px;">Xoay thử</button>
+            <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})">Xoay thử</button>
         `;
         directionsContainer.appendChild(div);
     });
 }
-// Map 8 hướng chính → 3 Sơn tương ứng
-function getSonGroupForDirection(code) {
-    const map = {
-        'N':  ['Nhâm', 'Tý', 'Quý'],
-        'NE': ['Sửu', 'Cấn', 'Dần'],
-        'E':  ['Giáp', 'Mão', 'Ất'],
-        'SE': ['Thìn', 'Tốn', 'Tỵ'],
-        'S':  ['Bính', 'Ngọ', 'Đinh'],
-        'SW': ['Mùi', 'Khôn', 'Thân'],
-        'W':  ['Canh', 'Dậu', 'Tân'],
-        'NW': ['Tuất', 'Càn', 'Hợi']
-    };
-    return map[code] || [];
-}
+
 
         function triggerGhostNeedle(angle) {
     targetAngle = angle;
@@ -1845,93 +1817,212 @@ function getSonGroupForDirection(code) {
     updateCompassUI(currentHeading);
 }
 
-function tìmSơnHướng(heading) {
-    heading = ((heading % 360) + 360) % 360; // Chuẩn hóa góc
-
-    for (let son of son24Data) {
-        if (son.start > son.end) { // Trường hợp wrap-around (Nhâm, Tý)
-            if (heading >= son.start || heading < son.end) {
-                return son.name;
-            }
-        } else if (heading >= son.start && heading < son.end) {
-            return son.name;
-        }
-    }
-    return "Tý"; // fallback
-}
+  function tìmSơnHướng(heading) {
+    let sơnTìmThấy = "Tý";
+    son24Data.forEach(son => {
+      if (son.start > son.end) {
+        if (heading >= son.start || heading < son.end) sơnTìmThấy = son.name;
+      } else {
+        if (heading >= son.start && heading < son.end) sơnTìmThấy = son.name;
+      }
+    });
+    return sơnTìmThấy;
+  }
   // THUẬT TOÁN ĐỈNH CAO: TÍCH HỢP HUYỀN KHÔNG PHI TINH VẬN 9 (2024 - 2043)
   // === HÀM HUYỀN KHÔNG PHI TINH TỰ ĐỘNG THEO NĂM (ĐÃ CÓ VẬN 1,2,3) ===
-// === HÀM HUYỀN KHÔNG PHI TINH VẬN - ĐÃ NÂNG CẤP ===
-function sinhLuanGiaiThienThoi(code) {
+  function sinhLuanGiaiThienThoi(code) {
     const currentYear = new Date().getFullYear();
-    let vanSo = 9; // Mặc định Vận 9 (2024-2043)
-
+    let vanSo = 9; // Mặc định Vận 9
     // Tự động chuyển vận
     if (currentYear >= 2044 && currentYear <= 2063) vanSo = 1;
     else if (currentYear >= 2064 && currentYear <= 2083) vanSo = 2;
     else if (currentYear >= 2084 && currentYear <= 2103) vanSo = 3;
     else if (currentYear >= 2104 && currentYear <= 2123) vanSo = 4;
-    else if (currentYear >= 2124 && currentYear <= 2143) vanSo = 5;
-    else if (currentYear >= 2144 && currentYear <= 2163) vanSo = 6;
-
+    // Có thể tiếp tục mở rộng...
     const vanData = {
-        9: { // Vận 9 (2024 - 2043)
-            'N':  { sao: "Nhất Bạch Thủy Tinh", loai: "good",    y_nghia: "Phương Bắc đón Nhất Bạch Đào Hoa Cát Tinh, mang lại trí tuệ, quan lộc và quý nhân tương trợ mạnh mẽ." },
-            'NE': { sao: "Thất Xích Phá Quân Tinh", loai: "bad", y_nghia: "Phương Đông Bắc bị Thất Xích Kim tinh đóng giữ, dễ xảy ra thị phi, tranh chấp và hao tài." },
-            'E':  { sao: "Lục Bạch Vũ Khúc Tinh", loai: "neutral", y_nghia: "Phương Đông có Lục Bạch, quyền lực cũ vẫn còn nhưng tài lộc mới phát triển chậm." },
-            'SE': { sao: "Nhị Hắc Bệnh Phù Tinh", loai: "neutral", y_nghia: "Phương Đông Nam gặp Nhị Hắc, cần chú ý sức khỏe, đặc biệt hệ tiêu hóa và đề phòng bệnh tật." },
-            'S':  { sao: "Cửu Tử Hỏa Tinh", loai: "best", y_nghia: "Phương Nam là vị trí Hoàng Kim của Vận 9, cực vượng, mang lại đại phú đại quý, danh tiếng và hỷ sự liên miên." },
-            'SW': { sao: "Bát Bạch Tả Phụ Tinh", loai: "neutral", y_nghia: "Phương Tây Nam đang ở giai đoạn thoái khí, tài lộc cũ vẫn vững nhưng mới phát triển chậm." },
-            'W':  { sao: "Ngũ Hoàng Đại Sát Tinh", loai: "worst", y_nghia: "Phương Tây phạm Ngũ Hoàng Đại Sát - hung tinh mạnh nhất. Tuyệt đối tránh động thổ, sửa chữa lớn." },
-            'NW': { sao: "Tứ Lục Văn Khúc Tinh", loai: "bad", y_nghia: "Phương Tây Bắc gặp Tứ Lục, dễ trì trệ học hành, tư duy và rắc rối tình cảm." }
+      9: { // Vận 9 (2024 - 2043)
+        'N': {
+          sao: "Nhất Bạch Đào Hoa Cát Tinh (Tiến Khí)",
+          loai: "good",
+          y_nghia: "Trong đại vận 9, phương Bắc đón Nhất Bạch Thủy tinh bay đến chủ quản. Phương vị này mang năng lượng tương sinh cát lành, chủ về khai thông trí tuệ, đỗ đạt học vấn, hanh thông quan hệ ngoại giao và dễ gặp được quý nhân tương trợ."
         },
-        1: { // Vận 1 (2044 - 2063)
-            'N':  { sao: "Nhất Bạch Thủy Tinh", loai: "best", y_nghia: "Phương Bắc cực vượng Thủy khí, mang lại đại cát về trí tuệ, học vấn và tài lộc." },
-            'NE': { sao: "Nhị Hắc Thổ Tinh", loai: "bad", y_nghia: "Phương Đông Bắc bị Nhị Hắc chi phối, dễ bệnh tật và thị phi." },
-            'E':  { sao: "Tam Bích Mộc Tinh", loai: "neutral", y_nghia: "Phương Đông năng lượng trung bình, phù hợp công việc trí óc." },
-            'SE': { sao: "Tứ Lục Mộc Tinh", loai: "good", y_nghia: "Phương Đông Nam có Tứ Lục Văn Khúc, tốt cho học hành và sáng tạo." },
-            'S':  { sao: "Ngũ Hoàng Thổ Tinh", loai: "worst", y_nghia: "Phương Nam phạm Ngũ Hoàng Đại Sát, rất hung, tránh động thổ." },
-            'SW': { sao: "Lục Bạch Kim Tinh", loai: "good", y_nghia: "Phương Tây Nam có Lục Bạch, mang lại ổn định và quyền lực." },
-            'W':  { sao: "Thất Xích Kim Tinh", loai: "bad", y_nghia: "Phương Tây gặp Thất Xích, dễ thị phi và tranh chấp." },
-            'NW': { sao: "Bát Bạch Thổ Tinh", loai: "good", y_nghia: "Phương Tây Bắc có Bát Bạch, tốt cho gia đạo và tích lũy tài sản." }
+        'NE': {
+          sao: "Thất Xích Phá Quân Tinh (Thoái Khí Sát)",
+          loai: "bad",
+          y_nghia: "Phương Đông Bắc bước vào Vận 9 bị Thất Xích Kim tinh đóng giữ. Đây là hung tinh mang sát khí, dễ kích động mâu thuẫn thị phi, tranh chấp kiện tụng tai tiếng, hoặc tổn hao tiền bạc, đề phòng họa trộm cắp."
         },
-        2: { // Vận 2 (2064 - 2083)
-            'N':  { sao: "Nhị Hắc Thổ Tinh", loai: "bad", y_nghia: "Phương Bắc bị Nhị Hắc chi phối, dễ bệnh tật và hao tổn." },
-            'NE': { sao: "Tam Bích Mộc Tinh", loai: "neutral", y_nghia: "Phương Đông Bắc năng lượng trung tính." },
-            'E':  { sao: "Tứ Lục Mộc Tinh", loai: "good", y_nghia: "Phương Đông vượng Mộc, tốt cho sự nghiệp và học vấn." },
-            'SE': { sao: "Ngũ Hoàng Thổ Tinh", loai: "worst", y_nghia: "Phương Đông Nam phạm Ngũ Hoàng, rất hung." },
-            'S':  { sao: "Lục Bạch Kim Tinh", loai: "good", y_nghia: "Phương Nam có Lục Bạch, mang lại ổn định và quyền lực." },
-            'SW': { sao: "Thất Xích Kim Tinh", loai: "bad", y_nghia: "Phương Tây Nam gặp Thất Xích, dễ thị phi." },
-            'W':  { sao: "Bát Bạch Thổ Tinh", loai: "good", y_nghia: "Phương Tây có Bát Bạch, tốt cho gia đạo và tài lộc." },
-            'NW': { sao: "Cửu Tử Hỏa Tinh", loai: "best", y_nghia: "Phương Tây Bắc cực vượng Cửu Tử Hỏa, đại cát về danh vọng." }
+        'E': {
+          sao: "Lục Bạch Vũ Khúc Tinh (Thoái Khí Cát)",
+          loai: "neutral",
+          y_nghia: "Phương Đông gặp sao Lục Bạch cai quản. Quyền lực và bệ đỡ cũ từ vận trước vẫn còn, tuy nhiên tài lộc vận hành chậm hơn, thiên về giữ vững gia sản hơn là đầu tư mạo hiểm."
         },
-        3: { // Vận 3 (2084 - 2103)
-            'N':  { sao: "Tam Bích Mộc Tinh", loai: "neutral", y_nghia: "Phương Bắc gặp Tam Bích, năng lượng trung tính." },
-            'NE': { sao: "Tứ Lục Mộc Tinh", loai: "good", y_nghia: "Phương Đông Bắc có Tứ Lục, tốt cho văn chương và trí tuệ." },
-            'E':  { sao: "Ngũ Hoàng Thổ Tinh", loai: "worst", y_nghia: "Phương Đông phạm Ngũ Hoàng, cần hết sức cẩn thận." },
-            'SE': { sao: "Lục Bạch Kim Tinh", loai: "good", y_nghia: "Phương Đông Nam có Lục Bạch, mang lại ổn định." },
-            'S':  { sao: "Thất Xích Kim Tinh", loai: "bad", y_nghia: "Phương Nam gặp Thất Xích, dễ thị phi." },
-            'SW': { sao: "Bát Bạch Thổ Tinh", loai: "good", y_nghia: "Phương Tây Nam có Bát Bạch, tốt cho gia đạo." },
-            'W':  { sao: "Cửu Tử Hỏa Tinh", loai: "best", y_nghia: "Phương Tây cực vượng Cửu Tử, đại cát大利." },
-            'NW': { sao: "Nhất Bạch Thủy Tinh", loai: "good", y_nghia: "Phương Tây Bắc có Nhất Bạch, tốt cho trí tuệ và quan lộc." }
+        'SE': {
+          sao: "Nhị Hắc Bệnh Phù Tinh (Sát Khí Nhẹ)",
+          loai: "neutral",
+          y_nghia: "Phương Đông Nam gặp Nhị Hắc Thổ tinh chủ quản. Dù tinh tú này đang dịch chuyển dần sang sinh khí tương lai nhưng bản chất âm hàn của Bệnh Phù vẫn còn âm ỉ, cần chú ý giữ gìn sức khỏe, đặc biệt là hệ tiêu hóa."
+        },
+        'S': {
+          sao: "CỬU TỬ HỎA TINH (ĐƯƠNG VƯỢNG ĐẠI CÁT TINH TỐI THƯỢNG)",
+          loai: "best",
+          y_nghia: "Phương Nam chính là cung vị HOÀNG KIM bậc nhất của toàn bộ Vận 9 (2024-2043). Cửu Tử Tinh nắm quyền vương đạo, mang năng lượng hỏa thần bùng nổ, giúp gia đạo kích hoạt đại phú đại quý, danh tiếng lẫy lừng, thăng tiến thần tốc, hỷ sự liên miên."
+        },
+        'SW': {
+          sao: "Bát Bạch Tả Phụ Tinh (Thoái Khí)",
+          loai: "neutral",
+          y_nghia: "Phương Tây Nam bước vào thời kỳ suy thoái năng lượng của Bát Bạch. Các dòng tiền tài tích lũy cũ vẫn vững chắc nhưng dòng tiền tài lộc mới phát triển rất chậm, không nên đầu tư lớn tại phương vị này."
+        },
+        'W': {
+          sao: "NGŨ HOÀNG ĐẠI SÁT TÌNH (ĐẠI HUNG TINH ĐỘC NHẤT VÔ NHỊ)",
+          loai: "worst",
+          y_nghia: "Phương Tây trong Vận 9 phạm phải Ngũ Hoàng Đại Sát - Ngôi sao hung hãn độc hại nhất hệ thống phi tinh. Tích tụ uế khí và sát khí cực nặng, chủ về đại họa bất ngờ, hao tài tốn của khốc liệt, hoặc tật bệnh nan y hoành hành nếu tại phương này bị động thổ, mở cửa khí hay đặt thiết bị kích hoạt sai cách."
+        },
+        'NW': {
+          sao: "Tứ Lục Văn Khúc Tinh (Sát Khí Suy)",
+          loai: "bad",
+          y_nghia: "Phương Tây Bắc gặp Tứ Lục Mộc tinh. Trong vận này sao bị suy giảm năng lượng, dễ gây trì trệ về tư duy, học hành sa sút hoặc dễ vướng vào họa Đào Hoa Sát (rắc rối tình cảm ngoài luồng) làm bất ổn gia đạo."
         }
+      },
+      1: { // Vận 1 (2044 - 2063)
+        'N': {
+          sao: "Nhất Bạch Thủy Tinh (Đại Cát)",
+          loai: "best",
+          y_nghia: "Vận 1, phương Bắc cực vượng Thủy khí. Đây là vị trí hoàng kim, mang lại đại cát大利 về trí tuệ, học vấn, quan lộc và tài lộc dồi dào."
+        },
+        'NE': {
+          sao: "Nhị Hắc Thổ Tinh (Hung)",
+          loai: "bad",
+          y_nghia: "Phương Đông Bắc bị Nhị Hắc chi phối, dễ gây bệnh tật, thị phi, hao tài. Nên cẩn thận động thổ."
+        },
+        'E': {
+          sao: "Tam Bích Mộc Tinh (Trung bình)",
+          loai: "neutral",
+          y_nghia: "Phương Đông gặp Tam Bích, năng lượng trung bình, phù hợp làm việc trí óc hơn là đầu tư lớn."
+        },
+        'SE': {
+          sao: "Tứ Lục Mộc Tinh (Cát nhẹ)",
+          loai: "good",
+          y_nghia: "Phương Đông Nam có Tứ Lục Văn Khúc, tốt cho học hành, thi cử và sáng tạo."
+        },
+        'S': {
+          sao: "Ngũ Hoàng Thổ Tinh (Đại Hung)",
+          loai: "worst",
+          y_nghia: "Phương Nam phạm Ngũ Hoàng Đại Sát trong Vận 1. Rất hung, tránh động thổ, mở cửa lớn."
+        },
+        'SW': {
+          sao: "Lục Bạch Kim Tinh (Cát)",
+          loai: "good",
+          y_nghia: "Phương Tây Nam có Lục Bạch, mang lại sự ổn định, quyền lực và tài lộc vững chắc."
+        },
+        'W': {
+          sao: "Thất Xích Kim Tinh (Hung)",
+          loai: "bad",
+          y_nghia: "Phương Tây gặp Thất Xích, dễ thị phi, tranh chấp, cần hóa giải."
+        },
+        'NW': {
+          sao: "Bát Bạch Thổ Tinh (Cát)",
+          loai: "good",
+          y_nghia: "Phương Tây Bắc có Bát Bạch, tốt cho gia đạo, sức khỏe và tích lũy tài sản."
+        }
+      },
+      2: { // Vận 2 (2064 - 2083)
+        'N': {
+          sao: "Nhị Hắc Thổ Tinh (Hung)",
+          loai: "bad",
+          y_nghia: "Vận 2, phương Bắc bị Nhị Hắc chi phối, dễ bệnh tật và hao tổn."
+        },
+        'NE': {
+          sao: "Tam Bích Mộc Tinh (Trung bình)",
+          loai: "neutral",
+          y_nghia: "Phương Đông Bắc có Tam Bích, năng lượng trung tính."
+        },
+        'E': {
+          sao: "Tứ Lục Mộc Tinh (Cát)",
+          loai: "good",
+          y_nghia: "Phương Đông vượng Mộc, tốt cho sự nghiệp và học vấn."
+        },
+        'SE': {
+          sao: "Ngũ Hoàng Thổ Tinh (Đại Hung)",
+          loai: "worst",
+          y_nghia: "Phương Đông Nam phạm Ngũ Hoàng, rất hung, cần cẩn thận."
+        },
+        'S': {
+          sao: "Lục Bạch Kim Tinh (Cát)",
+          loai: "good",
+          y_nghia: "Phương Nam có Lục Bạch, mang lại ổn định và quyền lực."
+        },
+        'SW': {
+          sao: "Thất Xích Kim Tinh (Hung)",
+          loai: "bad",
+          y_nghia: "Phương Tây Nam gặp Thất Xích, dễ thị phi và tranh chấp."
+        },
+        'W': {
+          sao: "Bát Bạch Thổ Tinh (Cát)",
+          loai: "good",
+          y_nghia: "Phương Tây có Bát Bạch, tốt cho gia đạo và tài lộc."
+        },
+        'NW': {
+          sao: "Cửu Tử Hỏa Tinh (Đại Cát)",
+          loai: "best",
+          y_nghia: "Phương Tây Bắc cực vượng Cửu Tử Hỏa, đại cát大利 về danh vọng và tài lộc."
+        }
+      },
+      3: { // Vận 3 (2084 - 2103)
+        'N': {
+          sao: "Tam Bích Mộc Tinh (Trung bình)",
+          loai: "neutral",
+          y_nghia: "Phương Bắc gặp Tam Bích, năng lượng trung tính."
+        },
+        'NE': {
+          sao: "Tứ Lục Mộc Tinh (Cát)",
+          loai: "good",
+          y_nghia: "Phương Đông Bắc có Tứ Lục, tốt cho văn chương và trí tuệ."
+        },
+        'E': {
+          sao: "Ngũ Hoàng Thổ Tinh (Đại Hung)",
+          loai: "worst",
+          y_nghia: "Phương Đông phạm Ngũ Hoàng, cần hết sức cẩn thận."
+        },
+        'SE': {
+          sao: "Lục Bạch Kim Tinh (Cát)",
+          loai: "good",
+          y_nghia: "Phương Đông Nam có Lục Bạch, mang lại ổn định."
+        },
+        'S': {
+          sao: "Thất Xích Kim Tinh (Hung)",
+          loai: "bad",
+          y_nghia: "Phương Nam gặp Thất Xích, dễ thị phi."
+        },
+        'SW': {
+          sao: "Bát Bạch Thổ Tinh (Cát)",
+          loai: "good",
+          y_nghia: "Phương Tây Nam có Bát Bạch, tốt cho gia đạo."
+        },
+        'W': {
+          sao: "Cửu Tử Hỏa Tinh (Đại Cát)",
+          loai: "best",
+          y_nghia: "Phương Tây cực vượng Cửu Tử, đại cát大利."
+        },
+        'NW': {
+          sao: "Nhất Bạch Thủy Tinh (Cát)",
+          loai: "good",
+          y_nghia: "Phương Tây Bắc có Nhất Bạch, tốt cho trí tuệ và quan lộc."
+        }
+      }
     };
-
-    const item = (vanData[vanSo] && vanData[vanSo][code]) 
-        ? vanData[vanSo][code] 
-        : { sao: "Vận khí trung hòa", loai: "neutral", y_nghia: "Phương vị này đang ở trạng thái cân bằng theo vận hạn hiện tại." };
-
+    const item = (vanData[vanSo] && vanData[vanSo][code]) ? vanData[vanSo][code] : {
+      sao: "Chưa có dữ liệu vận",
+      loai: "neutral",
+      y_nghia: "Hệ thống đang cập nhật dữ liệu cho vận mới."
+    };
     let colorStar = "var(--gold)";
     if (item.loai === 'best' || item.loai === 'good') colorStar = "var(--green)";
     if (item.loai === 'worst' || item.loai === 'bad') colorStar = "var(--red)";
-
-    return `
-        <br><br>
-        <span style="font-weight: bold; font-size: 0.95rem; color: #0a84ff; display: inline-block; margin-bottom: 6px;">
-            ◆ HUYỀN KHÔNG PHI TINH VẬN ${vanSo} (${currentYear})
+    return `<br><br>
+        <span style="font-weight: bold; font-size: 0.95rem; display: inline-block; margin-bottom: 6px; color: #0a84ff;">
+            ◆ THIÊN THỜI THỜI VẬN - HUYỀN KHÔNG PHI TINH VẬN ${vanSo} (${currentYear}):
         </span><br>
-        <span style="color: ${colorStar}; font-weight: 600;">${item.sao}</span><br>
-        <span style="color: #e0e0e0; line-height: 1.55;">${item.y_nghia}</span>`;
+        <span style="color: #ffffff;"><strong style="color: ${colorStar};">[Tọa Tinh Đáo Hướng]:</strong> Phương vị hiện tại đang được cai quản bởi đại tinh <strong style="color: ${colorStar};">${item.sao}</strong>.</span><br>
+        <span style="color: #ffffff;"><strong style="color: #0a84ff;">[Tác Động Thời Vận]:</strong> ${item.y_nghia}</span>`;
 }
 
   function sinhMatPhapHoaGiai(mucDich, cungSat, hanhChu, phuongHuong, code) {
@@ -2309,7 +2400,219 @@ function sinhLuanGiaiThienThoi(code) {
         </div>`;
     }
 // === THUẬT TOÁN ĐIỂM THẦN SÁT CHI TIẾT 24 SƠN THEO BÁT TRẠCH MINH CHÂU ===
-    let luanDoanSonChiTiet = "";   
+    let luanDoanSonChiTiet = "";
+    
+    // Ma trận dữ liệu Bát Trạch Minh Châu tra cứu 192 cặp Cát Hung (8 Mệnh x 24 Sơn vị)
+    const MaTranMinhChau = {
+        "Khảm": {
+            "Nhâm": { "loai": "Cát", "text": "Đạt Minh Châu Cát Sơn, Phục Vị tiến tài, gia đạo hưng vượng, con cái thông minh." },
+            "Tý": { "loai": "Cát", "text": "Chính vị vượng tài, công danh hiển đạt, đắc tài đắc lộc, vinh hoa phú quý." },
+            "Quý": { "loai": "Hung", "text": "Phạm thế tà khí nhập cung, âm thịnh dương suy, dễ hao tổn nữ giới hoặc người trẻ tuổi." },
+            "Sửu": { "loai": "Hung", "text": "Phạm Thiếu Vong, tài lộc hao tán, gia đạo bất hòa, sinh khí bị trì trệ." },
+            "Cấn": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia chủ tổn tài, đề phòng hỏa hoạn, trộm cắp và tai tiếng." },
+            "Dần": { "loai": "Hung", "text": "Phạm Cô Quả, nhân đinh suy giảm, tài lộc khó tụ, người trong nhà dễ cô đơn." },
+            "Giáp": { "loai": "Cát", "text": "Đắc vinh hoa phú quý, quý nhân phò trợ, làm ăn hanh thông, công thành danh toại." },
+            "Mão": { "loai": "Cát", "text": "Tiến điền tài, gia sản tăng tiến, con cái thành đạt, vạn sự đại cát." },
+            "Ất": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, kiện tụng tai ương, thị phi bủa vây, điền sản sa sút." },
+            "Thìn": { "loai": "Hung", "text": "Phạm Khẩu Thiệt, gia đạo tranh chấp xáo trộn, đề phòng tai tiếng pháp luật." },
+            "Tốn": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe tổn hại, tai ương bất ngờ, đại hung nên tránh." },
+            "Tỵ": { "loai": "Hung", "text": "Phạm Họa Hại phương vị, quan phi khẩu thiệt, làm ăn thua lỗ, gia đạo không yên." },
+            "Bính": { "loai": "Cát", "text": "Thiên Y đắc vị, sức khỏe dồi dào, bệnh tật tiêu trừ, tài lộc gia tăng bền vững." },
+            "Ngọ": { "loai": "Cát", "text": "Diên Niên chính khí, gia đạo hòa hợp, ngoại giao thuận lợi, sống trường thọ." },
+            "Đinh": { "loai": "Cát", "text": "Sinh Khí tối thượng, phát phúc nhanh chóng, điền sản dồi dào, nhân đinh hưng vượng." },
+            "Mùi": { "loai": "Hung", "text": "Phạm Bạch Hổ sát, tổn thương nhân đinh, đề phòng huyết quang tai nạn." },
+            "Khôn": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát khí, tài sản tiêu tán, sức khỏe suy kiệt, gia đạo ly tán." },
+            "Thân": { "loai": "Hung", "text": "Phạm Cô Thần, gia đạo bất hòa, vợ chồng xung khắc, tài lộc hao tổn." },
+            "Canh": { "loai": "Cát", "text": "Đắc vị tiến tài, kinh doanh phát đạt, gia nghiệp hưng thịnh, gặp nhiều may mắn." },
+            "Dậu": { "loai": "Cát", "text": "Đạt cung Quý Nhân, có người giúp đỡ lúc khó khăn, hoạn lộ hanh thông." },
+            "Tân": { "loai": "Hung", "text": "Phạm Họa Hại tai ương, tiền bạc ra vào thất thường, làm nhiều hưởng ít." },
+            "Tuất": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, trộm cắp hao tài, gia đạo bất an, đề phòng lừa gạt." },
+            "Càn": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên trục trặc, thị phi quan trường, hao tổn tâm trí." },
+            "Hợi": { "loai": "Bình", "text": "Thế bình hòa tiểu hạn, tài lộc trung bình, cần lưu ý việc quản lý tài chính." }
+        },
+        "Khôn": {
+            "Nhâm": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương, gia chủ đoản thọ, của cải tiêu tán, tai ương dồn dập." },
+            "Tý": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, dâm loạn tà ác, gia phong bại hoại, kiện cáo thị phi." },
+            "Quý": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán, tai họa bất ngờ, làm ăn lụi bại." },
+            "Sửu": { "loai": "Cát", "text": "Sinh Khí vinh hoa, đắc tài đắc lộc, gia đạo an khang, nhân đinh phát đạt." },
+            "Cấn": { "loai": "Cát", "text": "Sinh Khí chính vị, phát bảo nhanh chóng, con cái hiếu thảo, gia nghiệp vững bền." },
+            "Dần": { "loai": "Cát", "text": "Đắc vị Thiên Y, bệnh tật tiêu trừ, trường thọ phú quý, gia đình hạnh phúc." },
+            "Giáp": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi, tiền bạc tiêu hao, tinh thần bất an." },
+            "Mão": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, tổn hại nam chủ, kinh doanh thất bại, đại hung." },
+            "Ất": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, người nhà đau ốm liên miên, tài lộc suy vi." },
+            "Thìn": { "loai": "Cát", "text": "Diên Niên đắc vị, gia đạo hòa hợp, trăm bề thuận lợi, kinh doanh phát đạt." },
+            "Tốn": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, trộm cắp quấy phá, đề phòng hỏa hoạn và tai bay vạ gió." },
+            "Tỵ": { "loai": "Hung", "text": "Phạm Lục Sát sát khí, điền sản sa sút, kiện tụng kéo dài, nội bộ chia rẽ." },
+            "Bính": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn bất ngờ, nhân đinh tổn thất, vô cùng bất lợi." },
+            "Ngọ": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt, công danh trắc trở, tiểu nhân hãm hại." },
+            "Đinh": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình cảm rạn nứt, tinh thần hoang mang, làm ăn bế tắc." },
+            "Mùi": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh, tài lộc ổn định, cuộc sống bình yên." },
+            "Khôn": { "loai": "Cát", "text": "Phục Vị bản cung, điền sản tăng tiến, giữ vững cơ nghiệp, vạn sự cát tường." },
+            "Thân": { "loai": "Cát", "text": "Thiên Y đắc vị, quý nhân trợ lực, tai qua nạn khỏi, gia tăng tài lộc." },
+            "Canh": { "loai": "Hung", "text": "Phạm Họa Hại phương vị, tổn hao tiền của, gia đạo hay xảy ra tranh chấp nhỏ." },
+            "Dậu": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, bệnh tật phát sinh, tiền tài tổn hao, tinh thần suy nhược." },
+            "Tân": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, nhân đinh ly tán, thị phi rình rập, không nên trổ cửa." },
+            "Tuất": { "loai": "Cát", "text": "Diên Niên chính vị, phú quý thọ khang, gia đình hạnh phúc, công danh rạng rỡ." },
+            "Càn": { "loai": "Cát", "text": "Diên Niên đắc cách, ngoại giao thuận lợi, gia sản tăng tiến, vạn sự hanh thông." },
+            "Hợi": { "loai": "Bình", "text": "Thế bình hòa, gia đạo ít sóng gió, tiền tài đủ dùng, không có chuyển biến lớn." }
+        },
+        "Chấn": {
+            "Nhâm": { "loai": "Cát", "text": "Sinh Khí vượng cung, đại phát tài lộc, gia chủ thăng tiến, vạn sự như ý." },
+            "Tý": { "loai": "Cát", "text": "Sinh Khí tối thượng, nhân đinh hưng vượng, con cái hiển đạt, phú quý song toàn." },
+            "Quý": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, tiền của tổn hao, gia đạo bất hòa, đề phòng đau ốm." },
+            "Sửu": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, kiện cáo thị phi, gia phong suy bại, làm ăn trắc trở." },
+            "Cấn": { "loai": "Hung", "text": "Phạm Lục Sát sát phương, tinh thần bất an, tai ương rình rập, vô cùng bất lợi." },
+            "Dần": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát khí, hao tài tốn của, tổn hại nam chủ, đề phòng tai nạn." },
+            "Giáp": { "loai": "Cát", "text": "Phục Vị bản cung, gia đạo bình an, giữ vững điền sản, cuộc sống ổn định." },
+            "Mão": { "loai": "Cát", "text": "Phục Vị chính vị, danh tiếng lẫy lừng, con cái hiếu thảo, gia nghiệp vững bền." },
+            "Ất": { "loai": "Cát", "text": "Thiên Y đắc vị, bệnh tật tiêu trừ, sức khỏe dồi dào, gia tăng phước thọ." },
+            "Thìn": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, trộm cắp quấy nhiễu, làm ăn thất bát, đề phòng hỏa hoạn." },
+            "Tốn": { "loai": "Cát", "text": "Diên Niên vượng khí, gia đình hạnh phúc, vợ chồng hòa hợp, trăm bề thuận lợi." },
+            "Tỵ": { "loai": "Cát", "text": "Diên Niên đắc vị, ngoại giao hanh thông, công danh thăng tiến, tài lộc dồi dào." },
+            "Bính": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, quan phi khẩu thiệt, tai họa dồn dập, tiền tài lụi bại." },
+            "Ngọ": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn huyết quang, tổn thương nhân đinh, đại hung." },
+            "Đinh": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, tiểu nhân hãm hại, tiền bạc tiêu tán, thị phi bủa vây." },
+            "Mùi": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe suy kiệt, làm ăn bế tắc, gia đạo chia rẽ." },
+            "Khôn": { "loai": "Hung", "text": "Phạm Họa Hại sát vị, công danh trắc trở, nội bộ gia đình thường xuyên tranh chấp." },
+            "Thân": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên lận đận, tinh thần hoang mang, tổn hao tiền của." },
+            "Canh": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, gia sản tiêu tán, người nhà đau ốm, cực kỳ nguy hiểm." },
+            "Dậu": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát khí, kiện tụng thị phi, kinh doanh thua lỗ, gia đạo bất an." },
+            "Tân": { "loai": "Hung", "text": "Phạm Họa Hại tai ương, tiền bạc thất thoát, làm nhiều nhưng tích lũy không được bao nhiêu." },
+            "Tuất": { "loai": "Cát", "text": "Thiên Y đắc vị, có quý nhân giúp đỡ, vượt qua mọi nghịch cảnh, tài lộc tăng tiến." },
+            "Càn": { "loai": "Cát", "text": "Diên Niên đắc cách, thăng quan tiến chức, gia đình êm ấm, tài lộc dồi dào." },
+            "Hợi": { "loai": "Bình", "text": "Thế bình hòa tiểu hạn, vận trình ổn định, tiền tài vừa đủ, cần kiên nhẫn tích lũy." }
+        },
+        "Tốn": {
+            "Nhâm": { "loai": "Cát", "text": "Sinh Khí vượng cung, tài lộc dồi dào, thăng quan tiến chức, gia đạo an khang." },
+            "Tý": { "loai": "Cát", "text": "Sinh Khí đắc vị, điền sản tăng tiến, con cái thành đạt, vinh hoa phú quý." },
+            "Quý": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi, tiền bạc tiêu hao, tinh thần bất an." },
+            "Sửu": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán, tai họa bất ngờ, làm ăn lụi bại." },
+            "Cấn": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, tổn hại nam chủ, kinh doanh thất bại, đại hung." },
+            "Dần": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát khí, hao tài tốn của, đề phòng tai nạn bất ngờ." },
+            "Giáp": { "loai": "Cát", "text": "Diên Niên đắc vị, phú quý thọ khang, gia đình hạnh phúc, công danh rạng rỡ." },
+            "Mão": { "loai": "Cát", "text": "Diên Niên chính vị, ngoại giao thuận lợi, gia sản tăng tiến, vạn sự hanh thông." },
+            "Ất": { "loai": "Cát", "text": "Sinh Khí vượng khí, phát phúc nhanh chóng, điền sản dồi dào, nhân đinh hưng vượng." },
+            "Thìn": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh, tài lộc ổn định, cuộc sống bình yên." },
+            "Tốn": { "loai": "Cát", "text": "Phục Vị bản cung, giữ vững cơ nghiệp, gia sản thăng tiến, vạn sự cát tường." },
+            "Tỵ": { "loai": "Cát", "text": "Thiên Y đắc vị, bệnh tật tiêu trừ, sức khỏe dồi dào, gia tăng phước thọ." },
+            "Bính": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt, công danh trắc trở, tiểu nhân hãm hại." },
+            "Ngọ": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình cảm rạn nứt, tinh thần hoang mang, làm ăn bế tắc." },
+            "Đinh": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, nhân đinh ly tán, thị phi rình rập, không nên trổ cửa." },
+            "Mùi": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, trộm cắp quấy nhiễu, làm ăn thất bát, đề phòng hỏa hoạn." },
+            "Khôn": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, trộm cắp quấy phá, đề phòng tai bay vạ gió." },
+            "Thân": { "loai": "Hung", "text": "Phạm Lục Sát sát khí, điền sản sa sút, kiện tụng kéo dài, nội bộ chia rẽ." },
+            "Canh": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn bất ngờ, nhân đinh tổn thất, vô cùng bất lợi." },
+            "Dậu": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, gia sản tiêu tán, người nhà đau ốm, cực kỳ nguy hiểm." },
+            "Tân": { "loai": "Hung", "text": "Phạm Họa Hại phương vị, tổn hao tiền của, gia đạo hay xảy ra tranh chấp." },
+            "Tuất": { "loai": "Cát", "text": "Thiên Y đắc vị, quý nhân trợ lực, tai qua nạn khỏi, gia tăng tài lộc." },
+            "Càn": { "loai": "Cát", "text": "Thiên Y chính vị, sức khỏe dồi dào, quý nhân phò trợ, phát báu nhanh chóng." },
+            "Hợi": { "loai": "Bình", "text": "Thế bình hòa, vận trình ổn định, tiền tài đủ dùng, không có biến động lớn." }
+        },
+        "Càn": {
+            "Nhâm": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên trục trặc, thị phi quan trường, hao tổn tâm trí." },
+            "Tý": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, dâm loạn tà ác, gia phong suy bại, kiện cáo thị phi." },
+            "Quý": { "loai": "Hung", "text": "Phạm Lục Sát sát vị, gia đạo bất an, tinh thần hoang mang, tiền bạc hao tán." },
+            "Sửu": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi, làm ăn thua lỗ, gia đạo không yên." },
+            "Cấn": { "loai": "Cát", "text": "Thiên Y đắc vị, sức khỏe dồi dào, tài lộc gia tăng bền vững, đại cát lợi." },
+            "Dần": { "loai": "Cát", "text": "Thiên Y chính vị, tai qua nạn khỏi, quý nhân nâng đỡ, gia sản phát đạt." },
+            "Giáp": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán, tai họa bất ngờ, làm ăn lụi bại." },
+            "Mão": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, trộm cắp quấy phá, đề phòng hỏa hoạn và quan phi." },
+            "Ất": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, làm ăn thất bát, tiểu nhân quấy nhiễu, nội bộ bất hòa." },
+            "Thìn": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, gia sản tiêu tán, người nhà đau ốm, cực kỳ nguy hiểm." },
+            "Tốn": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe suy kiệt, làm ăn bế tắc, gia đạo chia rẽ." },
+            "Tỵ": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn huyết quang, tổn thương nhân đinh, đại hung." },
+            "Bính": { "loai": "Bình", "text": "Thế bình hòa tiểu hạn, tài lộc ra vào thất thường, lưu ý việc ký kết giấy tờ." },
+            "Ngọ": { "loai": "Bình", "text": "Phương vị bình hòa, vận trình trung bình, gia đạo ổn định, không có biến động lớn." },
+            "Đinh": { "loai": "Cát", "text": "Sinh Khí vượng cung, đại phát tài lộc, gia chủ thăng tiến, vạn sự như ý." },
+            "Mùi": { "loai": "Cát", "text": "Sinh Khí tối thượng, nhân đinh hưng vượng, con cái hiển đạt, phú quý song toàn." },
+            "Khôn": { "loai": "Cát", "text": "Diên Niên vượng khí, gia đình hạnh phúc, vợ chồng hòa hợp, trăm bề thuận lợi." },
+            "Thân": { "loai": "Cát", "text": "Diên Niên đắc vị, ngoại giao hanh thông, công danh thăng tiến, tài lộc dồi dào." },
+            "Canh": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh, tài lộc ổn định, cuộc sống bình yên." },
+            "Dậu": { "loai": "Cát", "text": "Phục Vị bản cung, giữ vững cơ nghiệp, gia sản thăng tiến, vạn sự cát tường." },
+            "Tân": { "loai": "Cát", "text": "Phục Vị vượng vị, công việc vững vàng, quý nhân trợ lực, tài lộc ổn định." },
+            "Tuất": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, người nhà đau ốm liên miên, tài lộc suy vi." },
+            "Càn": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt, công danh trắc trở, tiểu nhân hãm hại." },
+            "Hợi": { "loai": "Hung", "text": "Phạm Họa Hại phương vị, tổn hao tiền của, gia đạo hay xảy ra tranh chấp nhỏ." }
+        },
+        "Đoài": {
+            "Nhâm": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi, tiền bạc tiêu hao, tinh thần bất an." },
+            "Tý": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, người nhà đau ốm liên miên, tài lộc suy vi." },
+            "Quý": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt, công danh trắc trở, tiểu nhân hãm hại." },
+            "Sửu": { "loai": "Cát", "text": "Diên Niên đắc vị, phú quý thọ khang, gia đình hạnh phúc, công danh rạng rỡ." },
+            "Cấn": { "loai": "Cát", "text": "Diên Niên chính vị, ngoại giao thuận lợi, gia sản tăng tiến, vạn sự hanh thông." },
+            "Dần": { "loai": "Cát", "text": "Diên Niên vượng khí, gia đình hòa hợp, trăm bề thuận lợi, tài lộc tăng tiến." },
+            "Giáp": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, gia sản tiêu tán, người nhà đau ốm, cực kỳ nguy hiểm." },
+            "Mão": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe suy kiệt, làm ăn bế tắc, gia đạo chia rẽ." },
+            "Ất": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn huyết quang, tổn thương nhân đinh, đại hung." },
+            "Thìn": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên trục trặc, thị phi quan trường, hao tổn tâm trí." },
+            "Tốn": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, dâm loạn tà ác, gia phong suy bại, kiện cáo thị phi." },
+            "Tỵ": { "loai": "Hung", "text": "Phạm Lục Sát sát vị, gia đạo bất an, tinh thần hoang mang, tiền bạc hao tán." },
+            "Bính": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh, tài lộc ổn định, cuộc sống bình yên." },
+            "Ngọ": { "loai": "Cát", "text": "Phục Vị bản cung, giữ vững cơ nghiệp, gia sản thăng tiến, vạn sự cát tường." },
+            "Đinh": { "loai": "Cát", "text": "Phục Vị vượng vị, công việc vững vàng, quý nhân trợ lực, tài lộc ổn định." },
+            "Mùi": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán, tai họa bất ngờ, làm ăn lụi bại." },
+            "Khôn": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, trộm cắp quấy phá, đề phòng hỏa hoạn và quan phi." },
+            "Thân": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, làm ăn thất bát, tiểu nhân quấy nhiễu, nội bộ bất hòa." },
+            "Canh": { "loai": "Cát", "text": "Sinh Khí vượng cung, đại phát tài lộc, gia chủ thăng tiến, vạn sự như ý." },
+            "Dậu": { "loai": "Cát", "text": "Sinh Khí tối thượng, nhân đinh hưng vượng, con cái hiển đạt, phú quý song toàn." },
+            "Tân": { "loai": "Cát", "text": "Sinh Khí đắc vị, điền sản tăng tiến, công danh hanh thông, đại cát đại lợi." },
+            "Tuất": { "loai": "Cát", "text": "Thiên Y đắc vị, sức khỏe dồi dào, tài lộc gia tăng bền vững, đại cát lợi." },
+            "Càn": { "loai": "Cát", "text": "Thiên Y chính vị, tai qua nạn khỏi, quý nhân nâng đỡ, gia sản phát đạt." },
+            "Hợi": { "loai": "Bình", "text": "Thế bình hòa, vận trình tương đối ổn định, tiền tài vừa đủ, ít sóng gió." }
+        },
+        "Cấn": {
+            "Nhâm": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán, tai họa bất ngờ, làm ăn lụi bại." },
+            "Tý": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, trộm cắp quấy phá, đề phòng hỏa hoạn và quan phi." },
+            "Quý": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, làm ăn thất bát, tiểu nhân quấy nhiễu, nội bộ bất hòa." },
+            "Sửu": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh, tài lộc ổn định, cuộc sống bình yên." },
+            "Cấn": { "loai": "Cát", "text": "Phục Vị bản cung, giữ vững cơ nghiệp, gia sản thăng tiến, vạn sự cát tường." },
+            "Dần": { "loai": "Cát", "text": "Phục Vị vượng vị, công việc vững vàng, quý nhân trợ lực, tài lộc ổn định." },
+            "Giáp": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên trục trặc, thị phi quan trường, hao tổn tâm trí." },
+            "Mão": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, dâm loạn tà ác, gia phong suy bại, kiện cáo thị phi." },
+            "Ất": { "loai": "Hung", "text": "Phạm Lục Sát sát vị, gia đạo bất an, tinh thần hoang mang, tiền bạc hao tán." },
+            "Thìn": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi, làm ăn thua lỗ, gia đạo không yên." },
+            "Tốn": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, người nhà đau ốm liên miên, tài lộc suy vi." },
+            "Tỵ": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt, công danh trắc trở, tiểu nhân hãm hại." },
+            "Bính": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, gia sản tiêu tán, người nhà đau ốm, cực kỳ nguy hiểm." },
+            "Ngọ": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe suy kiệt, làm ăn bế tắc, gia đạo chia rẽ." },
+            "Đinh": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn huyết quang, tổn thương nhân đinh, đại hung." },
+            "Mùi": { "loai": "Cát", "text": "Diên Niên đắc vị, phú quý thọ khang, gia đình hạnh phúc, công danh rạng rỡ." },
+            "Khôn": { "loai": "Cát", "text": "Diên Niên chính vị, ngoại giao thuận lợi, gia sản tăng tiến, vạn sự hanh thông." },
+            "Thân": { "loai": "Cát", "text": "Diên Niên vượng khí, gia đình hòa hợp, trăm bề thuận lợi, tài lộc tăng tiến." },
+            "Canh": { "loai": "Cát", "text": "Sinh Khí vượng cung, đại phát tài lộc, gia chủ thăng tiến, vạn sự như ý." },
+            "Dậu": { "loai": "Cát", "text": "Sinh Khí tối thượng, nhân đinh hưng vượng, con cái hiển đạt, phú quý song toàn." },
+            "Tân": { "loai": "Cát", "text": "Sinh Khí đắc vị, điền sản tăng tiến, công danh hanh thông, đại cát đại lợi." },
+            "Tuất": { "loai": "Hung", "text": "Phạm cung Cô Quả, Tố Tụng. Khiến nội bộ gia đạo hay nghi kỵ, tranh chấp, dễ vướng luật pháp." },
+            "Càn": { "loai": "Cát", "text": "Đạt vị Thiên Y đại cát. Cửa chính đón được tài khí dồi dào, có quý nhân phò trợ phất lên nhanh chóng." },
+            "Hợi": { "loai": "Bình", "text": "Thế bình hòa tiểu hạn, hao tổn nhẹ về tài lộc, tiền bạc ra vào thất thường." }
+        },
+        "Ly": {
+            "Nhâm": { "loai": "Hung", "text": "Phạm Ngũ Quỷ đại sát, gia đình ly tán, tai họa bất ngờ, làm ăn lụi bại." },
+            "Tý": { "loai": "Hung", "text": "Phạm Ngũ Quỷ phương, trộm cắp quấy phá, đề phòng hỏa hoạn và quan phi." },
+            "Quý": { "loai": "Hung", "text": "Phạm Ngũ Quỷ sát vị, làm ăn thất bát, tiểu nhân quấy nhiễu, nội bộ bất hòa." },
+            "Sửu": { "loai": "Hung", "text": "Phạm Họa Hại phương, khẩu thiệt thị phi, làm ăn thua lỗ, gia đạo không yên." },
+            "Cấn": { "loai": "Hung", "text": "Phạm Họa Hại chi khí, người nhà đau ốm liên miên, tài lộc suy vi." },
+            "Dần": { "loai": "Hung", "text": "Phạm Họa Hại sát, của cải hao hụt, công danh trắc trở, tiểu nhân hãm hại." },
+            "Giáp": { "loai": "Cát", "text": "Sinh Khí vượng cung, đại phát tài lộc, gia chủ thăng tiến, vạn sự như ý." },
+            "Mão": { "loai": "Cát", "text": "Sinh Khí tối thượng, nhân đinh hưng vượng, con cái hiển đạt, phú quý song toàn." },
+            "Ất": { "loai": "Cát", "text": "Sinh Khí đắc vị, điền sản tăng tiến, công danh hanh thông, đại cát đại lợi." },
+            "Thìn": { "loai": "Cát", "text": "Thiên Y đắc vị, sức khỏe dồi dào, tài lộc gia tăng bền vững, đại cát lợi." },
+            "Tốn": { "loai": "Cát", "text": "Thiên Y chính vị, tai qua nạn khỏi, quý nhân nâng đỡ, gia sản phát đạt." },
+            "Tỵ": { "loai": "Cát", "text": "Thiên Y vượng vị, sức khỏe khang kiện, bệnh tật thuyên giảm, gia tăng phước thọ." },
+            "Bính": { "loai": "Cát", "text": "Phục Vị đắc cách, gia đạo an ninh, tài lộc ổn định, cuộc sống bình yên." },
+            "Ngọ": { "loai": "Cát", "text": "Phục Vị bản cung, giữ vững cơ nghiệp, gia sản thăng tiến, vạn sự cát tường." },
+            "Đinh": { "loai": "Cát", "text": "Phục Vị vượng vị, công việc vững vàng, quý nhân trợ lực, tài lộc ổn định." },
+            "Mùi": { "loai": "Hung", "text": "Phạm Lục Sát phương vị, tình duyên trục trặc, thị phi quan trường, hao tổn tâm trí." },
+            "Khôn": { "loai": "Hung", "text": "Phạm Lục Sát chi khí, dâm loạn tà ác, gia phong suy bại, kiện cáo thị phi." },
+            "Thân": { "loai": "Hung", "text": "Phạm Lục Sát sát vị, gia đạo bất an, tinh thần hoang mang, tiền bạc hao tán." },
+            "Canh": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh hung phương, gia sản tiêu tán, người nhà đau ốm, cực kỳ nguy hiểm." },
+            "Dậu": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh sát phương, sức khỏe suy kiệt, làm ăn bế tắc, gia đạo chia rẽ." },
+            "Tân": { "loai": "Hung", "text": "Phạm Tuyệt Mệnh phương vị, tai nạn huyết quang, tổn thương nhân đinh, đại hung." },
+            "Tuất": { "loai": "Cát", "text": "Diên Niên đắc vị, phú quý thọ khang, gia đình hạnh phúc, công danh rạng rỡ." },
+            "Càn": { "loai": "Cát", "text": "Diên Niên chính vị, ngoại giao thuận lợi, gia sản tăng tiến, vạn sự hanh thông." },
+            "Hợi": { "loai": "Bình", "text": "Thế bình hòa, vận thế gia đạo trung bình, tiền tài vừa đủ tiêu pha, cần tiết kiệm." }
+        }
+    };
 
     // Tra cứu tự động từ ma trận dữ liệu Bát Trạch Minh Châu
     if (MaTranMinhChau[chủMệnh] && MaTranMinhChau[chủMệnh][sơnHiệnTại]) {
