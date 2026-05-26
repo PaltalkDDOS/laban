@@ -2571,31 +2571,31 @@ function kichHoatDenLedQuet(heading) {
     });
 }
 // ==========================================================================
-// THUẬT TOÁN KIM QUAY LA BÀN - TỐI ƯU TOÀN DIỆN (FINAL)
+// THUẬT TOÁN KIM QUAY LA BÀN - GIỮ NGUYÊN BỘ LỌC MƯỢT VÀ SỬA TRIỆT ĐỂ LỖI SAFARI
 // ==========================================================================
 let lastHeading = null;
-let orientationListenerAdded = false;   // ← Flag quan trọng chống trùng listener
+let orientationListenerAdded = false;   // Flag quan trọng chống trùng hoặc lặp listener
 
-const SMOOTH_MIN = 0.07;   // Tăng nhẹ để nhạy hơn
-const SMOOTH_MAX = 0.52;   // Tăng để bám tay tốt hơn khi xoay nhanh
+const SMOOTH_MIN = 0.07;   // Giữ nguyên thông số bộ lọc mượt gốc của bạn
+const SMOOTH_MAX = 0.52;   
 
 // ====================== HANDLE ORIENTATION ======================
 function handleOrientation(event) {
     let heading = null;
 
     if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
-        heading = event.webkitCompassHeading;           // iOS
+        heading = event.webkitCompassHeading;           // Độ số chuẩn xác nhất cho iOS (Safari & Chrome iOS)
     } 
     else if (event.alpha !== undefined && event.alpha !== null) {
-        heading = (360 - event.alpha) % 360;            // Android
+        heading = (360 - event.alpha) % 360;            // Độ số cho các dòng máy Android
     }
 
     if (heading === null) return;
 
-    // Khóa khi đang kéo slider thủ công
+    // Khóa hướng khi người dùng đang tương tác kéo thanh slider thủ công
     if (document.activeElement === document.getElementById('compassSlider')) return;
 
-    // Khởi tạo lần đầu + đánh thức phong thủy
+    // Khởi tạo hướng xoay lần đầu tiên khi mở app + tính toán phong thủy bản mệnh
     if (lastHeading === null) {
         lastHeading = heading;
         updateCompassUI(lastHeading);
@@ -2603,6 +2603,7 @@ function handleOrientation(event) {
         return;
     }
 
+    // Thuật toán lọc nội suy động gốc của bạn - Giúp đĩa la bàn chuyển động cực kỳ mượt mà
     let diff = heading - lastHeading;
     if (diff > 180) diff -= 360;
     if (diff < -180) diff += 360;
@@ -2622,12 +2623,12 @@ function handleOrientation(event) {
     updateCompassUI(lastHeading);
 }
 
-  // Hàm đồng bộ khi gạt thanh kéo tay
-  function manualRotate(value) {
+// Hàm đồng bộ tọa độ khi người dùng kéo gạt thanh gạt tay thủ công
+function manualRotate(value) {
     let numValue = parseFloat(value);
     lastHeading = numValue;
     updateCompassUI(numValue);
-  }
+}
 
   function saveCurrentMember() {
     const name = document.getElementById('userName').value.trim();
@@ -2806,13 +2807,13 @@ function tinhHanCuuTinhTheoNam(huong, namHienTai) {
     return { thongTinSao, meoGiaiHan };
 }
 
-// ====================== REQUEST PERMISSION ======================
+// ====================== XỬ LÝ CẤP QUYỀN VÀ TRUY CẬP CẢM BIẾN TIÊU CHUẨN ======================
 function requestPermission() {
     const permBtn = document.getElementById('permission-btn');
-    const isIOS = typeof DeviceOrientationEvent !== 'undefined' && 
-                  typeof DeviceOrientationEvent.requestPermission === 'function';
-
-    if (isIOS) {
+    
+    // Kiểm tra xem trình duyệt có hỗ trợ hàm kích hoạt quyền cảm biến của iOS hay không
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        // BẮT BUỘC phải gọi dòng này trong sự kiện click của mọi phiên làm việc để Safari nhả dữ liệu cảm biến
         DeviceOrientationEvent.requestPermission()
             .then(permissionState => {
                 if (permissionState === 'granted') {
@@ -2820,64 +2821,77 @@ function requestPermission() {
                     addOrientationListener();
                     if (permBtn) permBtn.style.display = 'none';
                 } else {
-                    showCustomAlert("Quyền truy cập cảm biến bị từ chối. Bạn vẫn có thể xoay la bàn thủ công.");
+                    if (typeof showCustomAlert === 'function') {
+                        showCustomAlert("Quyền truy cập cảm biến bị từ chối. Bạn vẫn có thể xoay la bàn thủ công.");
+                    } else {
+                        alert("Quyền truy cập cảm biến bị từ chối. Bạn vẫn có thể xoay la bàn thủ công.");
+                    }
                 }
             })
-            .catch(console.error);
+            .catch(err => {
+                console.error(err);
+                let errMsg = "Không thể kích hoạt cảm biến la bàn! Lưu ý quan trọng: Trình duyệt Safari trên iOS bắt buộc bạn phải chạy trang web này qua giao thức bảo mật HTTPS (tên miền có ổ khóa mã hóa) thì mới có thể sử dụng la bàn cảm biến thực địa.";
+                if (typeof showCustomAlert === 'function') showCustomAlert(errMsg); else alert(errMsg);
+            });
     } else {
-        // Android
+        // Thiết bị Android hoặc các dòng máy khác không yêu cầu bước xác nhận chủ động của Apple
         addOrientationListener();
         if (permBtn) permBtn.style.display = 'none';
-        showCustomAlert("Cảm biến hướng địa từ đã được kích hoạt thành công!");
+        if (typeof showCustomAlert === 'function') showCustomAlert("Cảm biến hướng địa từ đã được kích hoạt thành công!");
     }
 }
 
-// ====================== THÊM LISTENER (TRÁNH TRÙNG) ======================
 function addOrientationListener() {
     if (orientationListenerAdded) return;
 
-    const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
-    const eventName = (isAndroid && 'ondeviceorientationabsolute' in window) 
-        ? 'deviceorientationabsolute' 
-        : 'deviceorientation';
-
-    window.removeEventListener(eventName, handleOrientation, true);
-    window.addEventListener(eventName, handleOrientation, true);
+    // Ưu tiên lắng nghe sự kiện tuyệt đối (absolute) trên các máy Android mới nhằm chống nhiễu từ trường địa phương
+    if ('ondeviceorientationabsolute' in window) {
+        window.addEventListener('deviceorientationabsolute', handleOrientation, true);
+    } else if ('ondeviceorientation' in window) {
+        window.addEventListener('deviceorientation', handleOrientation, true);
+    } else {
+        let noSensorMsg = "Thiết bị hoặc cấu hình trình duyệt hiện tại không hỗ trợ tính năng cảm biến la bàn.";
+        if (typeof showCustomAlert === 'function') showCustomAlert(noSensorMsg); else alert(noSensorMsg);
+        return;
+    }
 
     orientationListenerAdded = true;
 }
 
-// ====================== WINDOW ONLOAD ======================
+// ====================== KHỞI CHẠY KHI ĐÃ TẢI XONG TRANG TRÌNH DUYỆT ======================
 window.onload = function() {
+    // Tự động nạp trước các hàm khởi tạo cấu trúc vòng kinh 24 sơn và ma trận phong thủy gốc của bạn
     if (typeof render24SonRing === 'function') render24SonRing();
     if (typeof loadSavedMembers === 'function') loadSavedMembers();
     if (typeof recalculateFate === 'function') recalculateFate();
 
     const permBtn = document.getElementById('permission-btn');
-    const isIOS = typeof DeviceOrientationEvent !== 'undefined' && 
-                  typeof DeviceOrientationEvent.requestPermission === 'function';
+    
+    // Kiểm tra chính xác xem người dùng có đang truy cập bằng thiết bị Apple (iOS/iPadOS) hay không
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                  (navigator.platform === 'MacIntel' && 'ontouchend' in document) ||
+                  (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function');
 
     if (isIOS) {
-        if (localStorage.getItem('ios_compass_granted') === 'true') {
-            // Đã cấp quyền trước → chỉ cần chạm 1 lần để kích hoạt
-            if (permBtn) {
-                permBtn.style.display = 'block';
+        if (permBtn) {
+            permBtn.style.display = 'block';
+            
+            // Nếu trước đó đã từng được cấp quyền, đổi giao diện nút sang màu vàng nhẹ như mong muốn của bạn
+            if (localStorage.getItem('ios_compass_granted') === 'true') {
                 permBtn.style.background = 'rgba(223, 183, 108, 0.2)';
                 permBtn.style.color = '#dfb76c';
                 permBtn.style.border = '1px solid #dfb76c';
                 permBtn.innerText = "CHẠM ĐỂ KÍCH HOẠT LA BÀN (iOS)";
-                
-                // Chỉ cần chạm là kích hoạt
-                permBtn.onclick = function() {
-                    addOrientationListener();
-                    permBtn.style.display = 'none';
-                };
+            } else {
+                permBtn.innerText = "KÍCH HOẠT LA BÀN TỰ ĐỘNG";
             }
-        } else {
-            if (permBtn) permBtn.style.display = 'block';
+            
+            // SỬA LỖI CHIẾN LƯỢC: Kể cả khi có localStorage hay chưa, khi click vào nút vàng nhẹ
+            // vẫn PHẢI bắt buộc chạy qua hàm `requestPermission` để đánh thức luồng dữ liệu của Safari.
+            permBtn.onclick = requestPermission;
         }
     } else {
-        // Android: Tự động kích hoạt
+        // Đối với hệ điều hành Android: Tự động lắng nghe cảm biến ngay lập tức khi vào trang mà không cần qua nút bấm trung gian
         addOrientationListener();
         if (permBtn) permBtn.style.display = 'none';
     }
