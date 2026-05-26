@@ -1319,6 +1319,42 @@ const MaTranMinhChau = {
         "Hợi": { loai: "Bình", diem: 56, cap_do: "Bình Hòa", nhom: "Bình", hanh: "Thủy", goc_do_min: 322.5, goc_do_max: 337.5, icon: "circle-yellow", linhvuc: ["tai_loc"], doi_tuong: ["gia_dinh"], text: "Thế bình hòa, vận thế gia đạo trung bình.", giaiphap: "Giữ cân bằng." }
     }
 };
+
+// Danh sách Địa chi tuần hoàn 12 năm
+const DIA_CHI = ["Thân", "Dậu", "Tuất", "Hợi", "Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi"];
+
+function khoiTaoDuLieuPhongThuy() {
+    const data = {};
+    const DIA_CHI = ["Thân", "Dậu", "Tuất", "Hợi", "Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi"];
+    
+    // Cửu tinh nghịch hành theo năm: 2026 (số 9), 2027 (số 8)...
+    // Vị trí Ngũ Hoàng (số 5) trong cửu cung ứng với năm:
+    const viTriNguHoang = ["Trung Cung", "Tây Bắc", "Tây", "Đông Bắc", "Nam", "Bắc", "Tây Nam", "Đông", "Đông Nam"];
+
+    for (let nam = 2026; nam <= 2100; nam++) {
+        data[nam] = {};
+        
+        // 1. Tính Ngũ Hoàng tự động
+        const chiIndex = (nam - 2026) % 9;
+        const huongNguHoang = viTriNguHoang[chiIndex];
+        data[nam][huongNguHoang] = { ten: "NGŨ HOÀNG ĐẠI SÁT", loai: "worst", giaiPhap: "Treo chuông gió đồng 6 thanh.", color: "#ff453a" };
+        
+        // 2. Tính Tam Sát tự động
+        const diaChiIndex = (nam - 2024) % 12;
+        const diaChi = DIA_CHI[diaChiIndex];
+        let tamSatHuong = "";
+        if (["Thân", "Tý", "Thìn"].includes(diaChi)) tamSatHuong = "Nam";
+        else if (["Dần", "Ngọ", "Tuất"].includes(diaChi)) tamSatHuong = "Bắc";
+        else if (["Tỵ", "Dậu", "Sửu"].includes(diaChi)) tamSatHuong = "Đông";
+        else if (["Hợi", "Mão", "Mùi"].includes(diaChi)) tamSatHuong = "Tây";
+        
+        data[nam][tamSatHuong] = { ten: "TAM SÁT", loai: "bad", giaiPhap: "Đặt đôi Kỳ Lân đồng.", color: "#ff9f0a" };
+    }
+    return data;
+}
+
+const KHO_DU_LIEU_PHONG_THUY = khoiTaoDuLieuPhongThuy();
+
 // ====================== NGŨ HOÀNG & CỬU TINH (Đã sửa lỗi vắng mặt Sao Cửu Tử) ======================
 function getNguHoangInfo(year) {
     const nguHoang = {
@@ -2140,7 +2176,7 @@ function updateCompassUI(heading) {
         return;
     }
 
-    // ==================== 5. CHẾ ĐỘ CAO CẤP ====================
+// ==================== 5. CHẾ ĐỘ CAO CẤP ====================
     const hànhPhươngVị = phươngVịThiếtLập[currentCode].ngũHành;
     const hànhMệnhChủ = bátTrạchMap[chủMệnh].element;
 
@@ -2152,22 +2188,23 @@ function updateCompassUI(heading) {
     const cungTrạch = bátTrạchMap[chủMệnh][currentCode];
     const thôngTinCung = cungPhầnTrăm[cungTrạch];
 
-    // Cửu Tinh + Minh Châu (giữ nguyên phần của bạn)
+    // Cửu Tinh + Minh Châu (Nâng cấp tự động hóa)
     let canhBaoCuuTinh = "", giaiHanCuuTinh = "";
     const namCheck = new Date().getFullYear();
-    let phuongViNguyHiem = (namCheck === 2026) ? "Đông Bắc" : (namCheck === 2027 ? "Nam" : "Trung Cung");
+    const hướngHiệnTại = sơnHiệnTạiObj.huong;
 
-    if (sơnHiệnTạiObj.huong === phuongViNguyHiem) {
-        canhBaoCuuTinh = `<div style="margin-top:10px;padding:8px;background:rgba(255,59,48,0.15);border:1px solid var(--red);border-radius:4px;font-size:0.85rem;color:#ff453a;">⚠️ <b>CẢNH BÁO ${namCheck}:</b> Hướng ${sơnHiệnTạiObj.huong} bị <b>NGŨ HOÀNG ĐẠI SÁT</b>!</div>`;
-        giaiHanCuuTinh = `<div style="color:#ff9f0a;font-size:0.82rem;">👉 Giải pháp: Treo chuông gió đồng 6 thanh.</div>`;
-    } else if (sơnHiệnTạiObj.huong === "Nam" && namCheck === 2026) {
-        canhBaoCuuTinh = `<div style="margin-top:10px;padding:8px;background:rgba(255,159,10,0.12);border:1px solid #ff9f0a;border-radius:4px;font-size:0.85rem;color:#ff9f0a;">⚠️ <b>CẢNH BÁO ${namCheck}:</b> Nam phạm <b>TAM SÁT</b>.</div>`;
-        giaiHanCuuTinh = `<div style="color:#0a84ff;font-size:0.82rem;">👉 Giải pháp: Đặt cặp Kỳ Lân đồng.</div>`;
+    // Lấy dữ liệu từ KHO_DU_LIEU_PHONG_THUY đã tạo bên ngoài
+    const dataNam = KHO_DU_LIEU_PHONG_THUY[namCheck] || {};
+    const hungSat = dataNam[hướngHiệnTại];
+
+    if (hungSat) {
+        canhBaoCuuTinh = `<div style="margin-top:10px;padding:8px;background:rgba(255,59,48,0.15);border:1px solid ${hungSat.color};border-radius:4px;font-size:0.85rem;color:${hungSat.color};">⚠️ <b>CẢNH BÁO ${namCheck}:</b> Hướng ${hướngHiệnTại} phạm <b>${hungSat.ten}</b>!</div>`;
+        giaiHanCuuTinh = `<div style="color:${hungSat.color};font-size:0.82rem; margin-top:4px;">👉 Giải pháp: ${hungSat.giaiPhap}</div>`;
     } else {
         canhBaoCuuTinh = `<div style="margin-top:10px;padding:6px;background:rgba(48,209,88,0.1);border:1px solid var(--green);border-radius:4px;font-size:0.82rem;color:#30d158;">✅ Vận hạn Cửu Tinh năm ${namCheck}: Bình hòa.</div>`;
     }
 
-    let luanDoanSonChiTiet = `Tọa độ trùng <span class="gold-text">Sơn ${sơnHiệnTại}</span> (${sơnHiệnTạiObj.huong}).`;
+    let luanDoanSonChiTiet = `Tọa độ trùng <span class="gold-text">Sơn ${sơnHiệnTại}</span> (${hướngHiệnTại}).`;
     if (MaTranMinhChau[chủMệnh]?.[sơnHiệnTại]) {
         const mc = MaTranMinhChau[chủMệnh][sơnHiệnTại];
         luanDoanSonChiTiet = `<b style="color:${mc.loai === 'Cát' ? 'var(--green)' : 'var(--red)'};">[MINH CHÂU ${mc.loai.toUpperCase()}]</b> Sơn ${sơnHiệnTại}: ${mc.text}`;
