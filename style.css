@@ -1008,3 +1008,15 @@ body {
     margin-top: 20px !important;
     width: 100% !important;
 }
+/* Animation nhấp nháy */
+@keyframes blink-fade {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+.fs-icon.blink {
+    animation: blink-fade 1.5s ease-in-out 3; /* Nháy 3 lần rồi dừng */
+}
+.fullscreen-mode {
+    cursor: zoom-out; /* Con trỏ chuột đổi thành dấu trừ khi vào FS */
+}
