@@ -839,3 +839,35 @@ body {
     border: 1px solid #dfb76c;
     color: #dfb76c;
 }
+#fullscreenCompass {
+    transition: all 0.4s ease;
+}
+
+.fs-corner-icon {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    background: rgba(223, 183, 108, 0.15);
+    border: 2px solid #dfb76c;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: #dfb76c;
+    z-index: 1001;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 0 15px rgba(223, 183, 108, 0.4);
+}
+
+.fs-corner-icon:hover {
+    background: rgba(223, 183, 108, 0.3);
+    transform: scale(1.1);
+}
+
+/* 4 góc icon */
+#fs-top-left    { top: 20px; left: 20px; }
+#fs-top-right   { top: 20px; right: 20px; }
+#fs-bottom-left { bottom: 100px; left: 20px; }
+#fs-bottom-right{ bottom: 100px; right: 20px; }
