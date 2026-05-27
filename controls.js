@@ -1847,3 +1847,57 @@ function handleModalClick() {
     if (modal) modal.style.display = 'none';
     requestPermission();
 }
+// ====================== FULLSCREEN - ĐƠN GIẢN & HOẠT ĐỘNG ======================
+let isFullscreen = false;
+
+function enterFullscreenCompass() {
+    const fs = document.getElementById('fullscreenCompass');
+    const original = document.querySelector('.compass-container');
+    if (!fs || !original) return;
+
+    document.getElementById('fs-compass-container').innerHTML = original.outerHTML;
+    
+    // Fix ID để la bàn quay
+    const dial = document.querySelector('#fs-compass-container .compass-dial');
+    if (dial) dial.id = 'compass';
+
+    fs.style.display = 'flex';
+    isFullscreen = true;
+
+    if (typeof updateFullscreenInfo === 'function') {
+        updateFullscreenInfo(currentHeading || 0);
+    }
+}
+
+function exitFullscreenCompass() {
+    document.getElementById('fullscreenCompass').style.display = 'none';
+    isFullscreen = false;
+}
+
+// Tạo nút phóng to
+function createFullscreenButton() {
+    const container = document.querySelector('.compass-container');
+    if (!container) return;
+
+    let btn = document.getElementById('fs-btn');
+    if (btn) btn.remove();
+
+    btn = document.createElement('div');
+    btn.id = 'fs-btn';
+    btn.style.cssText = `position:absolute; top:-30px; right:-30px; width:60px; height:60px; background:#dfb76c; color:#000; border:4px solid #fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:2rem; z-index:300; cursor:pointer; box-shadow:0 0 20px rgba(223,183,108,0.9);`;
+    btn.innerHTML = '⛶';
+    btn.onclick = enterFullscreenCompass;
+    container.appendChild(btn);
+}
+
+// Khởi tạo
+window.addEventListener('load', () => {
+    setTimeout(createFullscreenButton, 800);
+});
+
+// Double tap thoát
+document.getElementById('fullscreenCompass').addEventListener('click', function() {
+    let t = this.lastTap || 0;
+    if (Date.now() - t < 300) exitFullscreenCompass();
+    this.lastTap = Date.now();
+});
