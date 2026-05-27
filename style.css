@@ -493,6 +493,7 @@ body {
 }
 
 /* ====================== STATUS PANEL ====================== */
+/* ====================== STATUS PANEL NÂNG CẤP ====================== */
 .status-panel {
     width: 92%;
     max-width: 430px;
@@ -504,12 +505,23 @@ body {
     margin-bottom: 8px;
     position: relative;
     z-index: 10;
+    /* NÂNG CẤP: Giữ khung đứng yên */
+    min-height: 140px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
 }
 
 .degree-display {
     font-size: 1rem;
     color: var(--gold);
     font-weight: bold;
+    /* NÂNG CẤP: Chống vỡ khung nếu tên sơn quá dài */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.3s ease;
 }
 
 .element-badge {
@@ -530,6 +542,9 @@ body {
     border-radius: 4px;
     border-left: 4px solid var(--gold);
     text-align: left;
+    /* NÂNG CẤP: Giữ chiều cao ổn định */
+    min-height: 20px;
+    transition: all 0.3s ease;
 }
 
 .judgment-badge {
@@ -540,6 +555,13 @@ body {
     font-size: 0.85rem;
     margin-top: 2px;
     text-transform: uppercase;
+    /* NÂNG CẤP: Đổi màu mượt */
+    transition: background 0.3s, color 0.3s, border 0.3s;
+}
+
+/* NÂNG CẤP: Thêm class xám cho tên sơn khi muốn làm dịu */
+.text-gray {
+    color: #888 !important;
 }
 
 .bg-good {
