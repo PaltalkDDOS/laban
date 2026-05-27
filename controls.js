@@ -1025,17 +1025,9 @@ function getLuanDoanChiTiet(huong, son) {
 
 function updateCompassUI(heading) {
     currentHeading = Math.round(heading);
-  
-    // === XOAY LA BÀN GỐC ===
     compass.style.transform = `rotate(${-heading}deg)`;
     needle.style.transform = `rotate(0deg)`;
     compassSlider.value = currentHeading;
-
-    // === XOAY LA BÀN FULLSCREEN ===
-    const fsCompass = document.querySelector('#fs-compass-container .compass-dial');
-    if (fsCompass) {
-        fsCompass.style.transform = `rotate(${-heading}deg)`;
-    }
 
     // ==================== 1. XÁC ĐỊNH 8 CUNG ====================
     let currentCung = "";
@@ -1060,22 +1052,16 @@ function updateCompassUI(heading) {
 
     // ==================== 2. 24 SƠN ====================
     const data24Son = [{ son: "Nhâm", min: 337.5, max: 352.5, huong: "Bắc" }, { son: "Tý", min: 352.5, max: 7.5, huong: "Bắc" }, { son: "Quý", min: 7.5, max: 22.5, huong: "Bắc" }, { son: "Sửu", min: 22.5, max: 37.5, huong: "Đông Bắc" }, { son: "Cấn", min: 37.5, max: 52.5, huong: "Đông Bắc" }, { son: "Dần", min: 52.5, max: 67.5, huong: "Đông Bắc" }, { son: "Giáp", min: 67.5, max: 82.5, huong: "Đông" }, { son: "Mão", min: 82.5, max: 97.5, huong: "Đông" }, { son: "Ất", min: 97.5, max: 112.5, huong: "Đông" }, { son: "Thìn", min: 112.5, max: 127.5, huong: "Đông Nam" }, { son: "Tốn", min: 127.5, max: 142.5, huong: "Đông Nam" }, { son: "Tỵ", min: 142.5, max: 157.5, huong: "Đông Nam" }, { son: "Bính", min: 157.5, max: 172.5, huong: "Nam" }, { son: "Ngọ", min: 172.5, max: 187.5, huong: "Nam" }, { son: "Đinh", min: 187.5, max: 202.5, huong: "Nam" }, { son: "Mùi", min: 202.5, max: 217.5, huong: "Tây Nam" }, { son: "Khôn", min: 217.5, max: 232.5, huong: "Tây Nam" }, { son: "Thân", min: 232.5, max: 247.5, huong: "Tây Nam" }, { son: "Canh", min: 247.5, max: 262.5, huong: "Tây" }, { son: "Dậu", min: 262.5, max: 277.5, huong: "Tây" }, { son: "Tân", min: 277.5, max: 292.5, huong: "Tây" }, { son: "Tuất", min: 292.5, max: 307.5, huong: "Tây Bắc" }, { son: "Càn", min: 307.5, max: 322.5, huong: "Tây Bắc" }, { son: "Hợi", min: 322.5, max: 337.5, huong: "Tây Bắc" }];
+
     let gockim = (currentHeading % 360 + 360) % 360;
     let sơnHiệnTạiObj = data24Son.find(s => {
         if (s.min > s.max) return gockim >= s.min || gockim < s.max;
         return gockim >= s.min && gockim < s.max;
     }) || data24Son[1];
-
     let sơnHiệnTại = sơnHiệnTạiObj.son;
-
-    // Lưu biến toàn cục cho Fullscreen
-    window.currentCung = currentCung;
-    window.sơnHiệnTại = sơnHiệnTại;
-    window.sơnHiệnTạiObj = sơnHiệnTạiObj;
-
     degreeTxt.innerText = `${currentHeading}° - Phương ${currentCung} - Sơn ${sơnHiệnTại}`;
 
-    // ==================== 3. LẤY DỮ LIỆU (phần còn lại của bạn) ====================
+    // ==================== 3. LẤY DỮ LIỆU ====================
     const dayStr = document.getElementById('birthDay').value;
     const monthStr = document.getElementById('birthMonth').value;
     const yearStr = document.getElementById('birthYear').value;
@@ -1231,12 +1217,9 @@ detailBox.innerHTML = noiDungDetail;
         if (advices[cungTrạch]) adviceContent.innerHTML = advices[cungTrạch];
     }
 
-	    if (isFullscreen && typeof updateFullscreenInfo === 'function') {
-        updateFullscreenInfo(currentHeading);
-    }
     // ==================== 8. HIỆU ỨNG ====================
     kichHoatDenLedQuet(currentHeading);
-     
+
     // Ghost Needle - CHỈ 1 LẦN
     if (targetAngle !== null && document.getElementById('ghostNeedle')) {
         const ghost = document.getElementById('ghostNeedle');
@@ -1864,93 +1847,3 @@ function handleModalClick() {
     if (modal) modal.style.display = 'none';
     requestPermission();
 }
-// ====================== FULLSCREEN LA BÀN - ĐÃ SỬA TEXT CẬP NHẬT ======================
-let isFullscreen = false;
-
-function enterFullscreenCompass() {
-    const fs = document.getElementById('fullscreenCompass');
-    const original = document.querySelector('.compass-container');
-    if (!fs || !original) return;
-
-    const fsContainer = document.getElementById('fs-compass-container');
-    fsContainer.innerHTML = original.outerHTML;
-
-    // Fix ID để la bàn quay
-    const clonedDial = fsContainer.querySelector('.compass-dial');
-    if (clonedDial) clonedDial.id = 'compass';
-
-    fs.style.display = 'flex';
-    isFullscreen = true;
-
-    // Cập nhật thông tin ngay lập tức
-    if (typeof updateFullscreenInfo === 'function') {
-        updateFullscreenInfo(currentHeading || 0);
-    }
-}
-
-function exitFullscreenCompass() {
-    const fs = document.getElementById('fullscreenCompass');
-    if (fs) fs.style.display = 'none';
-    isFullscreen = false;
-}
-
-// Cập nhật text trong fullscreen
-function updateFullscreenInfo(heading) {
-    const degreeEl = document.getElementById('fs-degree');
-    const infoEl = document.getElementById('fs-info');
-
-    const currentCung = window.currentCung || "KHẢM";
-    const son = window.sơnHiệnTại || "Tý";
-    const huong = window.sơnHiệnTạiObj?.huong || "Bắc";
-
-    if (degreeEl) {
-        degreeEl.textContent = `${Math.round(heading)}° - Phương ${currentCung} (${huong}) - Sơn ${son}`;
-    }
-
-    let detail = `<strong>Tọa độ: ${Math.round(heading)}° | Phương: ${huong} | Sơn: ${son}</strong>`;
-
-    const birthYear = document.getElementById('birthYear')?.value;
-    if (birthYear && birthYear.length === 4) {
-        detail += `<br><span style="color:#a0ffa0;">Phương vị: ${window.hànhPhươngVị || '—'} | Mệnh: ${window.hànhMệnhChủ || '—'} | Cung vị: ${window.cungTrạch || '—'}</span>`;
-    }
-
-    if (infoEl) infoEl.innerHTML = detail;
-}
-
-// Tạo nút phóng to (đẩy xa ra)
-function createFullscreenButton() {
-    const container = document.querySelector('.compass-container');
-    if (!container) return;
-
-    let btn = document.getElementById('fs-enter-btn');
-    if (btn) btn.remove();
-
-    btn = document.createElement('div');
-    btn.id = 'fs-enter-btn';
-    btn.style.cssText = `
-        position: absolute;
-        top: -35px;
-        right: -35px;
-        width: 62px;
-        height: 62px;
-        background: #dfb76c;
-        color: #000;
-        border: 4px solid #fff;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2.2rem;
-        z-index: 300;
-        cursor: pointer;
-        box-shadow: 0 0 25px rgba(223,183,108,0.9);
-    `;
-    btn.innerHTML = '⛶';
-    btn.onclick = enterFullscreenCompass;
-    container.appendChild(btn);
-}
-
-// Khởi tạo
-window.addEventListener('load', () => {
-    setTimeout(createFullscreenButton, 1200);
-});
