@@ -1850,48 +1850,61 @@ function handleModalClick() {
 let isFullScreen = false;
 let originalCompassParent = null;
 
-// Biến lưu trạng thái icon
-const fsIcon = document.querySelector('.fs-icon');
-
-// Khi load trang, cho icon nháy để người dùng chú ý
-window.onload = () => {
-    fsIcon.classList.add('blink');
-    // Sau 5 giây, xóa class blink để tránh nháy mãi
-    setTimeout(() => fsIcon.classList.remove('blink'), 5000);
-};
-
 function toggleFullScreenMode() {
-    if (isFullScreen) return;
-
-    // ẨN ICON KHI VÀO FULLSCREEN
-    fsIcon.style.display = 'none';
+    // 1. Nếu đang Fullscreen thì thoát
+    if (isFullScreen) {
+        exitFullScreenMode();
+        return;
+    }
 
     const compassContainer = document.querySelector('.compass-container');
     const statusPanel = document.querySelector('.status-panel');
 
+    // 2. Kiểm tra nếu không tìm thấy la bàn thì dừng lại ngay
+    if (!compassContainer) {
+        console.error("Không tìm thấy compass-container");
+        return;
+    }
+
+    // 3. Chỉ lưu lại vị trí cha nếu chưa có (tránh ghi đè nếu gọi hàm nhiều lần)
     if (!originalCompassParent) {
         originalCompassParent = compassContainer.parentElement;
     }
 
+    // 4. Tạo Overlay Fullscreen
     const fsDiv = document.createElement('div');
     fsDiv.id = 'fullscreenMode';
     fsDiv.className = 'fullscreen-mode active';
     fsDiv.innerHTML = `
-        <div id="fs-compass-wrapper"></div>
-        <div id="fs-status-wrapper"></div>
+        <div id="fs-compass-wrapper" style="width: 96vw; max-width: 460px; height: 96vw; max-height: 460px; margin: 20px auto 10px;"></div>
+        <div id="fs-status-wrapper" style="width: 92%; max-width: 460px; margin: 0 auto;"></div>
     `;
     document.body.appendChild(fsDiv);
 
+    // 5. Di chuyển các phần tử vào Fullscreen
     document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
-    if (statusPanel) document.getElementById('fs-status-wrapper').appendChild(statusPanel);
+    if (statusPanel) {
+        document.getElementById('fs-status-wrapper').appendChild(statusPanel);
+    }
 
     isFullScreen = true;
+
+    // 6. Cập nhật lại UI sau khi di chuyển
+    requestAnimationFrame(() => {
+        if (typeof updateCompassUI === 'function' && typeof lastHeading !== 'undefined') {
+            updateCompassUI(lastHeading);
+        }
+        if (typeof recalculateFate === 'function') {
+            recalculateFate();
+        }
+    });
 }
 
 function exitFullScreenMode() {
     const fs = document.getElementById('fullscreenMode');
     if (!fs) return;
 
+    // Hiệu ứng mờ dần trước khi xóa
     fs.style.opacity = '0';
     
     setTimeout(() => {
@@ -1905,12 +1918,10 @@ function exitFullScreenMode() {
 
         fs.remove();
         isFullScreen = false;
-
-        // HIỆN LẠI ICON KHI THOÁT
-        fsIcon.style.display = 'flex';
         
+        // Cập nhật sau khi đã trả về vị trí
         if (typeof updateCompassUI === 'function') updateCompassUI(lastHeading);
-    }, 300);
+    }, 300); // Khớp với transition 0.3s
 }
 
 // DOUBLE TAP để thoát (rất quan trọng trên mobile)
@@ -1925,4 +1936,26 @@ document.addEventListener('touchend', function(e) {
         exitFullScreenMode();
     }
     lastTapTime = currentTime;
+});
+// Khởi tạo trạng thái icon khi load trang
+document.addEventListener('DOMContentLoaded', () => {
+    const fsIcon = document.querySelector('.fs-icon');
+    if (!fsIcon) return;
+
+    // Kiểm tra xem đã hiển thị trước đó chưa
+    const hasSeenIcon = localStorage.getItem('hasSeenIcon');
+
+    if (!hasSeenIcon) {
+        // Nếu chưa từng thấy: Thêm class nháy
+        fsIcon.classList.add('blink');
+        
+        // Sau 5 giây (nháy xong) thì ẩn vĩnh viễn
+        setTimeout(() => {
+            fsIcon.style.display = 'none'; 
+            localStorage.setItem('hasSeenIcon', 'true'); // Ghi nhớ lại
+        }, 5000);
+    } else {
+        // Nếu đã từng thấy rồi thì ẩn luôn
+        fsIcon.style.display = 'none';
+    }
 });
