@@ -1023,37 +1023,11 @@ function getLuanDoanChiTiet(huong, son) {
     return html;
 }
 
-// ====================== CACHE DOM ELEMENTS (Chỉ chạy 1 lần) ======================
-let domCache = null;
-
-function getDomCache() {
-    if (domCache) return domCache;
-
-    domCache = {
-        compass: document.getElementById('compass'),
-        needle: document.getElementById('needle'),
-        compassSlider: document.getElementById('compassSlider'),
-        degreeTxt: document.getElementById('degree-txt'),
-        elementBox: document.getElementById('element-box'),
-        fateTxt: document.getElementById('fate-txt'),
-        judgmentBox: document.getElementById('judgment-box'),
-        detailBox: document.getElementById('detail-box'),
-        adviceBox: document.getElementById('pro-advice-box'),
-        adviceContent: document.getElementById('advice-content')
-    };
-    return domCache;
-}
-
-// ====================== HÀM CHÍNH - ĐÃ TỐI ƯU ======================
 function updateCompassUI(heading) {
-    const cache = getDomCache();
-    
     currentHeading = Math.round(heading);
-    
-    // 1. Cập nhật xoay la bàn (phần nhẹ)
-    cache.compass.style.transform = `rotate(${-heading}deg)`;
-    if (cache.needle) cache.needle.style.transform = `rotate(0deg)`;
-    if (cache.compassSlider) cache.compassSlider.value = currentHeading;
+    compass.style.transform = `rotate(${-heading}deg)`;
+    needle.style.transform = `rotate(0deg)`;
+    compassSlider.value = currentHeading;
 
     // ==================== 1. XÁC ĐỊNH 8 CUNG ====================
     let currentCung = "";
