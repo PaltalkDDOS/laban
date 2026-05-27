@@ -274,7 +274,26 @@
     <div id="sonRing" style="display: none;"></div>
   </div>
 </div>
-  
+<!-- FULLSCREEN COMPASS -->
+<div id="fullscreenCompass" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0a0a; z-index: 99999; flex-direction: column; align-items: center; justify-content: center; overflow: hidden;">
+    
+    <div style="position: absolute; top: 20px; left: 20px; color: #dfb76c; font-size: 1.1rem; font-weight: bold; z-index: 1000;" id="fs-degree">
+        0° - Phương KHẢM (BẮC) - Sơn Tý
+    </div>
+
+    <div class="compass-container" style="width: 92vw; height: 92vw; max-width: 620px; max-height: 620px; margin: 0 auto; position: relative;" id="fs-compass-container">
+        <!-- Copy nội dung compass-dial từ compass-container gốc vào đây (hoặc clone) -->
+        <!-- Để đơn giản, chúng ta sẽ clone động từ compass gốc -->
+    </div>
+
+    <div id="fs-info" style="margin-top: 20px; text-align: center; color: #fff; font-size: 0.95rem; line-height: 1.6; max-width: 90%;">
+        <!-- Thông tin chi tiết sẽ được update động -->
+    </div>
+
+    <div style="position: absolute; bottom: 30px; color: #666; font-size: 0.8rem;">
+        Nhấn 2 lần vào màn hình để thoát
+    </div>
+</div>
 <button id="permission-btn" onclick="document.getElementById('iosPermissionModal').style.display = 'flex'" style="display:none; margin: 10px auto; padding: 10px 20px; background: #dfb76c; border: none; border-radius: 5px; font-weight: bold; color: #000;">
     KÍCH HOẠT SENSOR ĐIỆN THOẠI
 </button>
