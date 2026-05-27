@@ -2079,10 +2079,15 @@ function syncToFullscreen(heading) {
 function openFullscreen() {
     const overlay = document.getElementById('fullscreenOverlay');
     overlay.style.display = 'flex';
-    if (overlay.requestFullscreen) overlay.requestFullscreen();
+    // Mở rộng trình duyệt ra toàn màn hình thật sự
+    if (overlay.requestFullscreen) {
+        overlay.requestFullscreen();
+    }
 }
 
 function closeFullscreen() {
     document.getElementById('fullscreenOverlay').style.display = 'none';
-    if (document.exitFullscreen) document.exitFullscreen();
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    }
 }
