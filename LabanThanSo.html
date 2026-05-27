@@ -101,7 +101,19 @@
         </div>
     </div>
 </div>
+<div onclick="openFullscreen()" style="position: absolute; top: 10px; right: 10px; z-index: 20; cursor: pointer; background: rgba(0,0,0,0.5); padding: 5px; border-radius: 5px; color: #b58e4b; border: 1px solid #b58e4b;">
+    ⛶ Phóng to
+</div>
+<div id="fullscreenOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 99999; flex-direction: column; align-items: center; justify-content: center;">
+    <div onclick="closeFullscreen()" style="position: absolute; top: 20px; right: 20px; color: #b58e4b; cursor: pointer; font-size: 30px;">✕</div>
+    
+    <div id="fs-info-panel" style="color: #dfb76c; text-align: center; margin-bottom: 30px; font-family: sans-serif;">
+        <div id="fs-degree" style="font-size: 2rem; font-weight: bold;">0°</div>
+        <div id="fs-fate" style="font-size: 1.5rem; margin-top: 10px;"></div>
+    </div>
 
+    <div id="fs-compass-container" style="width: 80vmin; height: 80vmin; position: relative;"></div>
+</div>
 <div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #1a1a1a; border-radius: 50%; box-shadow: 0 12px 35px rgba(0,0,0,0.5); border: 6px solid #b58e4b; overflow: hidden; color-scheme: light !important;">
 
 <!-- Đường dọc -->
