@@ -880,3 +880,20 @@ body {
     background: rgba(223, 183, 108, 0.2);
     transform: scale(1.1);
 }
+#fs-trigger {
+    position: absolute;
+    top: 5px;   /* Cách mép trên 5px */
+    right: 5px; /* Cách mép phải 5px */
+    width: 24px;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.4);
+    color: #dfb76c;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    z-index: 999; /* Luôn nổi trên la bàn */
+    border: 1px solid rgba(223, 183, 108, 0.5);
+}
