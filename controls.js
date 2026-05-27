@@ -1856,71 +1856,77 @@ function toggleFullScreenMode() {
         return;
     }
 
-    originalCompassParent = document.querySelector('.compass-container').parentElement;
+    const compassContainer = document.querySelector('.compass-container');
+    if (!compassContainer) return;
 
-    const compass = document.querySelector('.compass-container');
-    const status = document.querySelector('.status-panel');
+    originalCompassParent = compassContainer.parentElement;
+
+    const statusPanel = document.querySelector('.status-panel');
 
     const fsDiv = document.createElement('div');
     fsDiv.id = 'fullscreenMode';
     fsDiv.className = 'fullscreen-mode active';
 
     fsDiv.innerHTML = `
-        <div id="fs-compass-wrapper" style="width: 94vw; max-width: 480px; height: 94vw; max-height: 480px; margin: 20px auto;"></div>
-        <div id="fs-status-wrapper" style="width: 92%; max-width: 460px; margin: 10px auto;"></div>
+        <div id="fs-compass-wrapper" style="width: 96vw; max-width: 460px; height: 96vw; max-height: 460px; margin: 20px auto 10px;"></div>
+        <div id="fs-status-wrapper" style="width: 92%; max-width: 460px; margin: 0 auto;"></div>
     `;
 
     document.body.appendChild(fsDiv);
 
-    // Di chuyển element thật sang
-    document.getElementById('fs-compass-wrapper').appendChild(compass);
-    document.getElementById('fs-status-wrapper').appendChild(status);
+    // Di chuyển element thật
+    document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
+    if (statusPanel) {
+        document.getElementById('fs-status-wrapper').appendChild(statusPanel);
+    }
 
     isFullScreen = true;
 
-    // Update la bàn
+    // Cập nhật la bàn
     setTimeout(() => {
-        if (typeof updateCompassUI === 'function' && lastHeading) {
+        if (typeof updateCompassUI === 'function' && typeof lastHeading !== 'undefined') {
             updateCompassUI(lastHeading);
         }
         if (typeof recalculateFate === 'function') recalculateFate();
-    }, 200);
+    }, 180);
 }
 
 function exitFullScreenMode() {
     const fs = document.getElementById('fullscreenMode');
     if (!fs) return;
 
-    const compass = document.querySelector('.compass-container');
-    const status = document.querySelector('.status-panel');
+    const compassContainer = document.querySelector('.compass-container');
+    const statusPanel = document.querySelector('.status-panel');
 
-    if (compass && originalCompassParent) {
-        originalCompassParent.appendChild(compass);
+    if (compassContainer && originalCompassParent) {
+        originalCompassParent.appendChild(compassContainer);
     }
-    if (status) {
-        document.querySelector('.compass-container').parentElement.parentElement.appendChild(status);
+    if (statusPanel) {
+        // Trả status panel về đúng vị trí
+        const mainStatusArea = document.querySelector('.compass-container').parentElement.parentElement;
+        if (mainStatusArea) mainStatusArea.appendChild(statusPanel);
     }
 
     fs.remove();
     isFullScreen = false;
 
     setTimeout(() => {
-        if (typeof updateCompassUI === 'function' && lastHeading) {
+        if (typeof updateCompassUI === 'function' && typeof lastHeading !== 'undefined') {
             updateCompassUI(lastHeading);
         }
     }, 100);
 }
 
-// === DOUBLE TAP để thoát Fullscreen ===
-let lastTap = 0;
+// DOUBLE TAP để thoát (rất quan trọng trên mobile)
+let lastTapTime = 0;
 document.addEventListener('touchend', function(e) {
     if (!isFullScreen) return;
-    
+
     const currentTime = new Date().getTime();
-    const tapLength = currentTime - lastTap;
-    
-    if (tapLength < 500 && tapLength > 0) {
+    const tapLength = currentTime - lastTapTime;
+
+    if (tapLength < 450 && tapLength > 0) {
         exitFullScreenMode();
     }
-    lastTap = currentTime;
+    lastTapTime = currentTime;
 });
