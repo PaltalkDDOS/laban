@@ -1898,21 +1898,18 @@ function exitFullScreenMode() {
     const compassContainer = document.querySelector('.compass-container');
     const statusPanel = document.querySelector('.status-panel');
 
-    // 1. Trả la bàn về cha cũ (nơi chứa nó trước khi vào FS)
     if (compassContainer && originalCompassParent) {
         originalCompassParent.appendChild(compassContainer);
     }
-
-    // 2. Trả status panel về ngay sau compass-container (vị trí mặc định)
-    if (statusPanel && compassContainer) {
-        compassContainer.parentNode.insertBefore(statusPanel, compassContainer.nextSibling);
+    if (statusPanel) {
+        // Trả status panel về đúng vị trí
+        const mainStatusArea = document.querySelector('.compass-container').parentElement.parentElement;
+        if (mainStatusArea) mainStatusArea.appendChild(statusPanel);
     }
 
-    // 3. Xóa div fullscreen
     fs.remove();
     isFullScreen = false;
 
-    // Cập nhật lại giao diện
     setTimeout(() => {
         if (typeof updateCompassUI === 'function' && typeof lastHeading !== 'undefined') {
             updateCompassUI(lastHeading);
