@@ -1119,6 +1119,9 @@ function updateCompassUI(heading) {
     }
 
 // ==================== 5. CHẾ ĐỘ CAO CẤP (BẢN HOÀN THIỆN - ĐÚNG TEXT GỐC) ====================
+    const cache = getDomCache();
+    
+    // Kiểm tra an toàn trước khi truy cập đối tượng
     const hànhPhươngVị = phươngVịThiếtLập?.[currentCode]?.ngũHành || "N/A";
     const hànhMệnhChủ = bátTrạchMap?.[chủMệnh]?.element || "N/A";
     
@@ -1129,10 +1132,12 @@ function updateCompassUI(heading) {
         `;
     }
 
+    // Khai báo biến an toàn
     const cungTrạch = bátTrạchMap?.[chủMệnh]?.[currentCode] || "Khác";
     const thôngTinCung = cungPhầnTrăm?.[cungTrạch] || { cát: true, ý_nghĩa: "Thông tin không xác định." };
    
     const namHienTai = new Date().getFullYear();
+    // Đảm bảo hàm tinhHanCuuTinhTheoNam luôn trả về object hợp lệ
     const ketQua = typeof tinhHanCuuTinhTheoNam === 'function'
         ? tinhHanCuuTinhTheoNam(sơnHiệnTạiObj?.huong || "Trung Cung", namHienTai)
         : { thongTinSao: "Chưa có dữ liệu", meoGiaiHan: "" };
@@ -1140,7 +1145,7 @@ function updateCompassUI(heading) {
     let canhBaoCuuTinh = "";
     let giaiHanCuuTinh = "";
     const boxStyle = "margin-top:10px; padding:10px; border-radius:6px; font-size:0.85rem; line-height:1.4;";
-
+    // Xử lý logic cảnh báo
     if (ketQua.thongTinSao.includes("⚠️")) {
         canhBaoCuuTinh = `<div style="${boxStyle} background:rgba(255,59,48,0.1); border:1px solid #ff3b30; color:#ff3b30;">
             <b style="display:block; margin-bottom:4px;">⚠️ CẢNH BÁO ${namHienTai}:</b>
@@ -1157,16 +1162,20 @@ function updateCompassUI(heading) {
         </div>`;
     }
 
-    // --- LUẬN ĐOÁN MINH CHÂU ---
+// --- LUẬN ĐOÁN MINH CHÂU (DẠNG TEXT THUẦN TÚY - CÓ GIẢI PHÁP ĐẸP) ---
     if (typeof MaTranMinhChau !== 'undefined' && MaTranMinhChau[chủMệnh]?.[sơnHiệnTại]) {
         const mc = MaTranMinhChau[chủMệnh][sơnHiệnTại];
+       
         const isCat = mc.loai === 'Cát';
         const color = isCat ? '#30d158' : '#ff3b30';
         const label = isCat ? '[MINH CHÂU CÁT SƠN]' : '[MINH CHÂU HUNG SƠN]';
+       
+        // Phần thông tin Sơn/Hướng xám ghi, in nghiêng
         const thongSo = `<span style="color:#a0a0a0; font-style:italic;">Sơn ${sơnHiệnTại} (${sơnHiệnTạiObj?.huong}):</span>`;
        
         luanDoanSonChiTiet = `<b style="color:${color};">${label}</b> ${thongSo} ${mc.text}`;
        
+        // Cải tiến phần GIẢI PHÁP: Màu sắc đồng bộ với tiêu đề, thêm icon 💡
         if (mc.giaiphap) {
             luanDoanSonChiTiet += `<br><br><span style="color:${color}; font-weight:bold;">💡 Giải pháp:</span>
                                   <span style="color:#ffffff;">${mc.giaiphap}</span>`;
@@ -1175,75 +1184,81 @@ function updateCompassUI(heading) {
         luanDoanSonChiTiet = `<span style="color:#a0a0a0; font-style:italic;">Tọa độ: ${currentHeading}° | Sơn ${sơnHiệnTại} | Phương ${sơnHiệnTạiObj?.huong}.</span>`;
     }
 
-    // ==================== 6. XỬ LÝ THEO MỤC ĐÍCH ====================
-    const config = ConfigPhongThuy[mụcĐích] || { title: "Cung vị", isCat: true };
-    const isGood = config.isCat ? thôngTinCung.cát : !thôngTinCung.cát;
+// ==================== 6. XỬ LÝ THEO MỤC ĐÍCH (ĐÃ KHÔI PHỤC CHI TIẾT) ====================
+const config = ConfigPhongThuy[mụcĐích] || { title: "Cung vị", isCat: true };
+const isGood = config.isCat ? thôngTinCung.cát : !thôngTinCung.cát;
 
-    if (cache.judgmentBox) {
-        cache.judgmentBox.removeAttribute("style");
-        cache.judgmentBox.innerText = `${config.title}: ${cungTrạch}`;
-        cache.judgmentBox.className = isGood ? "judgment-badge bg-good" : "judgment-badge bg-bad";
+if (cache.judgmentBox) {
+    cache.judgmentBox.removeAttribute("style");
+    cache.judgmentBox.innerText = `${config.title}: ${cungTrạch}`;
+    cache.judgmentBox.className = isGood ? "judgment-badge bg-good" : "judgment-badge bg-bad";
+}
+if (cache.detailBox) {
+    cache.detailBox.style.borderLeftColor = isGood ? "var(--green)" : "var(--red)";
+}
+
+// --- LOGIC GỐC: TỰ ĐỘNG TRÍCH XUẤT VĂN BẢN CHI TIẾT ---
+let noiDungDetail = "";
+// Phần 1: Thông tin chính
+noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,255,255,0.05); border-left: 4px solid ' + (isGood ? '#30d158' : '#ff3b30') + '">';
+noiDungDetail += '<strong style="color: ' + (isGood ? '#30d158' : '#ff3b30') + '; font-size: 1.05rem; display:block; margin-bottom:5px;">';
+noiDungDetail += '◆ ' + (!mụcĐích ? (isGood ? 'CÁT TINH' : 'HUNG TINH') : (isGood ? 'CÁT CÁCH' : 'HUNG CÁCH')) + ' (' + cungTrạch.toUpperCase() + '):</strong>';
+noiDungDetail += '<span style="color:#ffffff; font-size:0.9rem;">';
+if (!mụcĐích) {
+    noiDungDetail += 'Góc xoay <span class="gold-text">' + currentHeading + '°</span> đối chiếu mệnh cung <strong>' + chủMệnh + '</strong> gặp cung tinh <strong>' + cungTrạch + '</strong>.<br>';
+}
+noiDungDetail += thôngTinCung.ý_nghĩa + '</span></div>';
+
+// Phần 2: Hóa giải
+if (!isGood) {
+    const matPhap = (typeof sinhMatPhapHoaGiai === 'function') ? sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung, currentCode) : "";
+    const camNang = advices[cungTrạch] || "";
+    noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,159,10,0.08); border:1px solid #ff9f0a;">';
+    noiDungDetail += '<h4 style="color:#ff9f0a; margin:0 0 8px 0; font-size: 0.9rem;">🛠 PHÁP HÓA GIẢI TỔNG HỢP</h4>';
+    noiDungDetail += '<div style="color:#fff; font-size:0.85rem; line-height:1.5;">' + matPhap;
+    if (camNang) {
+        noiDungDetail += '<br><b style="color:#dfb76c;">Danh mục vật phẩm bổ trợ:</b><div style="color:#ccc;">' + camNang.replace(/👉 <em>.*?<\/em>:<br>/, '') + '</div>';
     }
-    if (cache.detailBox) {
-        cache.detailBox.style.borderLeftColor = isGood ? "var(--green)" : "var(--red)";
-    }
+    noiDungDetail += '</div></div>';
+}
 
-    // --- LOGIC GỐC: TỰ ĐỘNG TRÍCH XUẤT VĂN BẢN CHI TIẾT ---
-    let noiDungDetail = "";
-    // (Toàn bộ phần xây dựng noiDungDetail giữ nguyên như bạn cung cấp)
-    noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,255,255,0.05); border-left: 4px solid ' + (isGood ? '#30d158' : '#ff3b30') + '">';
-    noiDungDetail += '<strong style="color: ' + (isGood ? '#30d158' : '#ff3b30') + '; font-size: 1.05rem; display:block; margin-bottom:5px;">';
-    noiDungDetail += '◆ ' + (!mụcĐích ? (isGood ? 'CÁT TINH' : 'HUNG TINH') : (isGood ? 'CÁT CÁCH' : 'HUNG CÁCH')) + ' (' + cungTrạch.toUpperCase() + '):</strong>';
-    noiDungDetail += '<span style="color:#ffffff; font-size:0.9rem;">';
-    if (!mụcĐích) {
-        noiDungDetail += 'Góc xoay <span class="gold-text">' + currentHeading + '°</span> đối chiếu mệnh cung <strong>' + chủMệnh + '</strong> gặp cung tinh <strong>' + cungTrạch + '</strong>.<br>';
-    }
-    noiDungDetail += thôngTinCung.ý_nghĩa + '</span></div>';
+// Phần 3: Thần sát (KHÔI PHỤC ĐẦY ĐỦ VĂN BẢN CHI TIẾT)
+noiDungDetail += '<div style="margin-top:15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.2); border: 1px solid #d4af37;">';
+noiDungDetail += '<div style="margin-bottom:12px;">';
+noiDungDetail += '<b style="color:var(--gold); font-size: 0.95rem;">🎯 THẦN SÁT ĐỘ SỐ (24 SƠN CHI TIẾT):</b>';
+noiDungDetail += '<div style="margin-top:8px; color:#fff; font-size: 0.95rem; line-height: 1.6;">' + luanDoanSonChiTiet + '</div>';
+noiDungDetail += '</div>';
 
-    if (!isGood) {
-        const matPhap = (typeof sinhMatPhapHoaGiai === 'function') ? sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung, currentCode) : "";
-        const camNang = advices[cungTrạch] || "";
-        noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,159,10,0.08); border:1px solid #ff9f0a;">';
-        noiDungDetail += '<h4 style="color:#ff9f0a; margin:0 0 8px 0; font-size: 0.9rem;">🛠 PHÁP HÓA GIẢI TỔNG HỢP</h4>';
-        noiDungDetail += '<div style="color:#fff; font-size:0.85rem; line-height:1.5;">' + matPhap;
-        if (camNang) {
-            noiDungDetail += '<br><b style="color:#dfb76c;">Danh mục vật phẩm bổ trợ:</b><div style="color:#ccc;">' + camNang.replace(/👉 <em>.*?<\/em>:<br>/, '') + '</div>';
-        }
-        noiDungDetail += '</div></div>';
-    }
+// Vận hạn cửu tinh
+noiDungDetail += '<div style="border-top: 1px dashed #444; padding-top: 10px;">';
+noiDungDetail += '<b style="color:var(--gold); font-size: 0.95rem;">⏳ VẬN HẠN CỬU TINH (NĂM ' + namHienTai + '):</b>';
+noiDungDetail += '<div style="margin-top:5px; color:#fff; font-size: 0.9rem; line-height: 1.5;">' + canhBaoCuuTinh + giaiHanCuuTinh + '</div>';
+noiDungDetail += '</div>';
+noiDungDetail += '</div>';
 
-    noiDungDetail += '<div style="margin-top:15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.2); border: 1px solid #d4af37;">';
-    noiDungDetail += '<div style="margin-bottom:12px;">';
-    noiDungDetail += '<b style="color:var(--gold); font-size: 0.95rem;">🎯 THẦN SÁT ĐỘ SỐ (24 SƠN CHI TIẾT):</b>';
-    noiDungDetail += '<div style="margin-top:8px; color:#fff; font-size: 0.95rem; line-height: 1.6;">' + luanDoanSonChiTiet + '</div>';
-    noiDungDetail += '</div>';
+// Phần 4: Thiên thời
+if (typeof sinhLuanGiaiThienThoi === 'function') {
+    noiDungDetail += '<div style="margin-top:10px; font-size:0.85rem; color:#aaa; font-style:italic;">' + sinhLuanGiaiThienThoi(currentCode) + '</div>';
+}
 
-    noiDungDetail += '<div style="border-top: 1px dashed #444; padding-top: 10px;">';
-    noiDungDetail += '<b style="color:var(--gold); font-size: 0.95rem;">⏳ VẬN HẠN CỬU TINH (NĂM ' + namHienTai + '):</b>';
-    noiDungDetail += '<div style="margin-top:5px; color:#fff; font-size: 0.9rem; line-height: 1.5;">' + canhBaoCuuTinh + giaiHanCuuTinh + '</div>';
-    noiDungDetail += '</div>';
-    noiDungDetail += '</div>';
+if (cache.detailBox) {
+    cache.detailBox.innerHTML = noiDungDetail;
+}
 
-    if (typeof sinhLuanGiaiThienThoi === 'function') {
-        noiDungDetail += '<div style="margin-top:10px; font-size:0.85rem; color:#aaa; font-style:italic;">' + sinhLuanGiaiThienThoi(currentCode) + '</div>';
-    }
+// ==================== 7. ADVICE BOX ====================
+if (cache.adviceBox && cache.adviceContent) {
+    cache.adviceBox.style.display = advices[cungTrạch] ? 'block' : 'none';
+    if (advices[cungTrạch]) cache.adviceContent.innerHTML = advices[cungTrạch];
+}
 
-    if (cache.detailBox) cache.detailBox.innerHTML = noiDungDetail;
+// ==================== 8. HIỆU ỨNG ====================
+kichHoatDenLedQuet(currentHeading);
 
-    // ==================== 7. ADVICE BOX ====================
-    if (cache.adviceBox && cache.adviceContent) {
-        cache.adviceBox.style.display = advices[cungTrạch] ? 'block' : 'none';
-        if (advices[cungTrạch]) cache.adviceContent.innerHTML = advices[cungTrạch];
-    }
-
-    // ==================== 8. HIỆU ỨNG ====================
-    kichHoatDenLedQuet(currentHeading);
-
-    if (targetAngle !== null && document.getElementById('ghostNeedle')) {
-        const ghost = document.getElementById('ghostNeedle');
-        ghost.style.opacity = "1";
-        ghost.style.transform = `translate(-50%, -50%) rotate(${targetAngle - currentHeading}deg)`;
-    }
+// Ghost Needle - CHỈ 1 LẦN
+if (targetAngle !== null && document.getElementById('ghostNeedle')) {
+    const ghost = document.getElementById('ghostNeedle');
+    ghost.style.opacity = "1";
+    ghost.style.transform = `translate(-50%, -50%) rotate(${targetAngle - currentHeading}deg)`;
 }
 
 /**
