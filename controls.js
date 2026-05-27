@@ -390,8 +390,6 @@ let currentCode = 'N';
 let currentHeading = 0;
 let targetAngle = null;
 
-// ====================== ALERT & DATE INPUT (NÂNG CẤP) ======================
-
 /**
  * Hiển thị cảnh báo với tiêu đề tùy chỉnh
  * @param {string} msg - Nội dung thông báo
@@ -1256,46 +1254,67 @@ function getPhongThuySatTinh(huong, nam) {
     return results; // Trả về mảng để bạn có thể hiển thị nhiều cảnh báo cùng lúc
 }
 
-// Tách logic đèn LED quét thành hàm riêng biệt để chạy mượt mà, tái sử dụng tốt
+// ====================== CACHE ELEMENTS - TỐI ƯU HIỆU SUẤT ======================
+let sonTextsCache = null;
+let huongLonTextsCache = null;
+let saoTextsCache = null;
+
+function cacheCompassElements() {
+    if (sonTextsCache) return; // Chỉ cache 1 lần
+
+    sonTextsCache = document.querySelectorAll("#sonRingSvg text");
+    huongLonTextsCache = document.querySelectorAll("#chuHuongLonG text");
+    saoTextsCache = document.querySelectorAll("#phucDucRingSvg text");
+}
+
+// ====================== HÀM CHÍNH - ĐÃ TỐI ƯU MÀ VẪN GIỐNG HỆT BẢN GỐC ======================
 function kichHoatDenLedQuet(heading) {
-    // Đoạn sửa đổi cốt lõi: Sử dụng trực tiếp góc heading truyền vào để tính góc đích chính xác
-    let ledTargetAngle = (heading % 360 + 360) % 360;
+    const ledTargetAngle = ((heading % 360) + 360) % 360;
+
+    cacheCompassElements();
 
     // 1. Làm sáng chữ 8 Hướng Lớn
-    const huongLonTexts = document.querySelectorAll("#chuHuongLonG text");
-    huongLonTexts.forEach(txt => {
-        let textGoc = parseFloat(txt.getAttribute("data-goc"));
+    huongLonTextsCache.forEach(txt => {
+        const textGoc = parseFloat(txt.getAttribute("data-goc")) || 0;
         let phanSai = Math.abs(ledTargetAngle - textGoc);
         if (phanSai > 180) phanSai = 360 - phanSai;
 
-        if (phanSai <= 22.5) { 
+        if (phanSai <= 22.5) {
             txt.style.opacity = "1";
             txt.style.fontWeight = "900";
-            if (txt.getAttribute("fill") === "#00a525") txt.style.fill = "#00ff37";
-            else if (txt.getAttribute("fill") === "#ff3b30") txt.style.fill = "#ff1a00";
+            if (txt.getAttribute("fill") === "#00a525") {
+                txt.style.fill = "#00ff37";
+            } else if (txt.getAttribute("fill") === "#ff3b30") {
+                txt.style.fill = "#ff1a00";
+            }
         } else {
-            txt.style.opacity = "0.5"; 
+            txt.style.opacity = "0.5";
+            txt.style.fontWeight = "normal";
+            
             if (txt.parentNode.getAttribute("id") === "textChinhPhuong") {
-                txt.style.fill = txt.getAttribute("transform") ? (txt.getAttribute("transform").includes("rotate(90") || txt.getAttribute("transform").includes("rotate(270") ? "#00a525" : "#ff3b30") : "#ff3b30";
+                const transform = txt.getAttribute("transform") || "";
+                txt.style.fill = (transform.includes("rotate(90") || transform.includes("rotate(270")) 
+                    ? "#00a525" 
+                    : "#ff3b30";
             } else {
                 txt.style.fill = "#6b4e18";
             }
         }
     });
 
-    // 2. Làm sáng và phóng to chữ 24 Sơn Hướng (Khi kim nằm lọt lòng cung ô 15 độ)
-    const sonTexts = document.querySelectorAll("#sonRingSvg text");
-    sonTexts.forEach(txt => {
-        let sonGoc = parseFloat(txt.getAttribute("data-son-goc"));
+    // 2. Làm sáng chữ 24 Sơn
+    sonTextsCache.forEach(txt => {
+        const sonGoc = parseFloat(txt.getAttribute("data-son-goc")) || 0;
         let phanSai = Math.abs(ledTargetAngle - sonGoc);
         if (phanSai > 180) phanSai = 360 - phanSai;
 
-        if (phanSai <= 7.5) { 
+        if (phanSai <= 7.5) {
             txt.style.opacity = "1";
-            txt.style.fontSize = "13px"; 
-            let origColor = txt.getAttribute("data-color");
+            txt.style.fontSize = "13px";
+            const origColor = txt.getAttribute("data-color");
+            
             if (origColor === "#5c4314") {
-                txt.style.fill = "#ffcc00"; 
+                txt.style.fill = "#ffcc00";
             } else if (origColor === "#ff3b30") {
                 txt.style.fill = "#ff0000";
             } else {
@@ -1304,19 +1323,18 @@ function kichHoatDenLedQuet(heading) {
         } else {
             txt.style.opacity = "0.5";
             txt.style.fontSize = "10px";
-            txt.style.fill = txt.getAttribute("data-color");
+            txt.style.fill = txt.getAttribute("data-color") || "#8a8a8f";
         }
     });
 
-    // 3. Làm sáng tên Sao tại vòng Phúc Đức ngoài cùng
-    const saoTexts = document.querySelectorAll("#phucDucRingSvg text");
-    saoTexts.forEach(txt => {
-        let saoGoc = parseFloat(txt.getAttribute("data-sao-goc"));
+    // 3. Làm sáng Sao Phúc Đức
+    saoTextsCache.forEach(txt => {
+        const saoGoc = parseFloat(txt.getAttribute("data-sao-goc")) || 0;
         let phanSai = Math.abs(ledTargetAngle - saoGoc);
         if (phanSai > 180) phanSai = 360 - phanSai;
 
         if (phanSai <= 7.5) {
-            txt.style.fill = "#ff4500"; 
+            txt.style.fill = "#ff4500";
             txt.style.opacity = "1";
             txt.style.fontSize = "8px";
         } else {
@@ -1327,63 +1345,83 @@ function kichHoatDenLedQuet(heading) {
     });
 }
 // ==========================================================================
-// THUẬT TOÁN KIM QUAY LA BÀN - GIỮ NGUYÊN BỘ LỌC MƯỢT VÀ SỬA TRIỆT ĐỂ LỖI SAFARI
+// THUẬT TOÁN KIM QUAY LA BÀN - PHIÊN BẢN TỐI ƯU (MƯỢT + ỔN ĐỊNH)
 // ==========================================================================
 let lastHeading = null;
-let orientationListenerAdded = false;   // Flag quan trọng chống trùng hoặc lặp listener
+let orientationListenerAdded = false;
+let rafId = null;
+let lastUpdateTime = 0;
 
-const SMOOTH_MIN = 0.07;   // Giữ nguyên thông số bộ lọc mượt gốc của bạn
-const SMOOTH_MAX = 0.52;   
+const SMOOTH_MIN = 0.08;
+const SMOOTH_MAX = 0.55;
+const THROTTLE_MS = 16; // ~60fps
 
-// ====================== HANDLE ORIENTATION ======================
+// ====================== HANDLE ORIENTATION - ĐÃ NÂNG CẤP ======================
 function handleOrientation(event) {
-    let heading = null;
+    let rawHeading = null;
 
+    // Ưu tiên webkitCompassHeading cho iOS (chính xác nhất)
     if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
-        heading = event.webkitCompassHeading;           // Độ số chuẩn xác nhất cho iOS (Safari & Chrome iOS)
+        rawHeading = event.webkitCompassHeading;
     } 
     else if (event.alpha !== undefined && event.alpha !== null) {
-        heading = (360 - event.alpha) % 360;            // Độ số cho các dòng máy Android
+        rawHeading = (360 - event.alpha) % 360;
     }
 
-    if (heading === null) return;
+    if (rawHeading === null) return;
 
-    // Khóa hướng khi người dùng đang tương tác kéo thanh slider thủ công
-    if (document.activeElement === document.getElementById('compassSlider')) return;
+    // Khóa khi đang kéo slider thủ công
+    if (document.activeElement?.id === 'compassSlider') return;
 
-    // Khởi tạo hướng xoay lần đầu tiên khi mở app + tính toán phong thủy bản mệnh
+    const now = Date.now();
+    if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) {
+        return; // Throttle để tránh update quá nhanh
+    }
+    lastUpdateTime = now;
+
+    // Khởi tạo lần đầu
     if (lastHeading === null) {
-        lastHeading = heading;
+        lastHeading = rawHeading;
         updateCompassUI(lastHeading);
         if (typeof recalculateFate === 'function') recalculateFate();
         return;
     }
 
-    // Thuật toán lọc nội suy động gốc của bạn - Giúp đĩa la bàn chuyển động cực kỳ mượt mà
-    let diff = heading - lastHeading;
+    // === Thuật toán lọc mượt động ===
+    let diff = rawHeading - lastHeading;
     if (diff > 180) diff -= 360;
     if (diff < -180) diff += 360;
 
     const absDiff = Math.abs(diff);
     let dynamicFactor = SMOOTH_MIN;
 
-    if (absDiff > 8) {
+    if (absDiff > 12) {
         dynamicFactor = SMOOTH_MAX;
-    } else if (absDiff > 1) {
-        dynamicFactor = SMOOTH_MIN + (absDiff / 8) * (SMOOTH_MAX - SMOOTH_MIN);
+    } else if (absDiff > 1.5) {
+        dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
     }
 
-    heading = lastHeading + diff * dynamicFactor;
-    lastHeading = (heading % 360 + 360) % 360;
+    const newHeading = lastHeading + diff * dynamicFactor;
+    lastHeading = (newHeading % 360 + 360) % 360;
 
-    updateCompassUI(lastHeading);
+    // Sử dụng requestAnimationFrame để update UI mượt mà
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+        updateCompassUI(lastHeading);
+    });
 }
 
-// Hàm đồng bộ tọa độ khi người dùng kéo gạt thanh gạt tay thủ công
+// ====================== MANUAL ROTATE (KÉO SLIDER) ======================
 function manualRotate(value) {
-    let numValue = parseFloat(value);
-    lastHeading = numValue;
-    updateCompassUI(numValue);
+    const numValue = parseFloat(value);
+    if (isNaN(numValue)) return;
+
+    lastHeading = (numValue % 360 + 360) % 360;
+    
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+        updateCompassUI(lastHeading);
+    });
 }
 
 function saveCurrentMember() {
