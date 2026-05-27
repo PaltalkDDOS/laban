@@ -1001,6 +1001,13 @@ body {
     margin: 10px auto;
 }
 
+/* Đảm bảo khi statusPanel trở về vị trí mặc định không bị lỗi layout */
+.status-panel {
+    display: block !important; 
+    position: relative !important;
+    margin-top: 20px !important;
+    width: 100% !important;
+}
 /* Animation nhấp nháy */
 @keyframes blink-fade {
     0%, 100% { opacity: 0.3; }
