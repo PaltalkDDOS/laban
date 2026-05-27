@@ -1895,37 +1895,29 @@ function exitFullScreenMode() {
     const fs = document.getElementById('fullscreenMode');
     if (!fs) return;
 
-    const compass = document.querySelector('.compass-container');
-    const status = document.querySelector('.status-panel');
+    const compassContainer = document.querySelector('.compass-container');
+    const statusPanel = document.querySelector('.status-panel');
 
-    // 1. Kiểm tra an toàn trước khi di chuyển
-    if (compass && originalCompassParent) {
-        // Trả la bàn về nơi ở cũ
-        originalCompassParent.appendChild(compass);
-
-        // 2. Trả status panel về "đúng vị trí" so với la bàn
-        // Nếu originalCompassParent là container gốc, statusPanel nên nằm ngay sau la bàn
-        if (status) {
-            // Sử dụng insertBefore để đảm bảo status luôn đứng sau compass
-            originalCompassParent.insertBefore(status, compass.nextSibling);
-        }
+    // 1. Trả la bàn về cha cũ (nơi chứa nó trước khi vào FS)
+    if (compassContainer && originalCompassParent) {
+        originalCompassParent.appendChild(compassContainer);
     }
 
-    // 3. Dọn dẹp DOM
+    // 2. Trả status panel về ngay sau compass-container (vị trí mặc định)
+    if (statusPanel && compassContainer) {
+        compassContainer.parentNode.insertBefore(statusPanel, compassContainer.nextSibling);
+    }
+
+    // 3. Xóa div fullscreen
     fs.remove();
     isFullScreen = false;
 
-    // 4. Giải phóng bộ nhớ và reset lại các trạng thái UI
-    // Sử dụng requestAnimationFrame để đảm bảo trình duyệt đã render xong DOM mới
-    requestAnimationFrame(() => {
+    // Cập nhật lại giao diện
+    setTimeout(() => {
         if (typeof updateCompassUI === 'function' && typeof lastHeading !== 'undefined') {
             updateCompassUI(lastHeading);
         }
-        // Gọi lại recalculateFate nếu cần để đồng bộ dữ liệu
-        if (typeof recalculateFate === 'function') {
-            recalculateFate();
-        }
-    });
+    }, 100);
 }
 
 // DOUBLE TAP để thoát (rất quan trọng trên mobile)
