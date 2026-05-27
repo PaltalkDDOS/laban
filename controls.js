@@ -1794,3 +1794,51 @@ function handleModalClick() {
     if (modal) modal.style.display = 'none';
     requestPermission(); // Gọi lại hàm gốc của bạn
 }
+
+function openFullscreen() {
+    const overlay = document.getElementById('fullscreenOverlay');
+    const fsContainer = document.getElementById('fs-compass-container');
+    
+    // 1. Clone la bàn gốc
+    const original = document.querySelector('.compass-container');
+    const clone = original.cloneNode(true);
+    
+    // Xóa nút "Phóng to" trong bản clone để không bị thừa
+    const btn = clone.querySelector('[onclick="openFullscreen()"]');
+    if(btn) btn.remove();
+    
+    fsContainer.innerHTML = '';
+    fsContainer.appendChild(clone);
+    
+    // 2. Lấy dữ liệu (Thay 'degree-display', 'fate-display' bằng ID thật trên trang bạn)
+    document.getElementById('fs-degree').innerText = document.getElementById('degree-display')?.innerText || '0°';
+    document.getElementById('fs-fate').innerText = document.getElementById('fate-display')?.innerText || 'Chưa xác định';
+    
+    // 3. Mở full
+    overlay.style.display = 'flex';
+    if (overlay.requestFullscreen) overlay.requestFullscreen();
+    
+    // 4. Đồng bộ xoay liên tục
+    startSync();
+}
+
+function startSync() {
+    const originalCompass = document.getElementById('compass');
+    const fsCompass = document.querySelector('#fs-compass-container #compass');
+    
+    const loop = setInterval(() => {
+        if (document.getElementById('fullscreenOverlay').style.display === 'none') {
+            clearInterval(loop);
+            return;
+        }
+        // Gán góc xoay từ cái gốc sang cái Fullscreen
+        if (originalCompass && fsCompass) {
+            fsCompass.style.transform = originalCompass.style.transform;
+        }
+    }, 30); // 30ms cập nhật 1 lần, rất mượt
+}
+
+function closeFullscreen() {
+    document.getElementById('fullscreenOverlay').style.display = 'none';
+    if (document.exitFullscreen) document.exitFullscreen();
+}
