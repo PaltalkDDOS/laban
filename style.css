@@ -879,46 +879,47 @@ body {
 }
 /* ====================== FULL SCREEN MODE & ICON ====================== */
 
-/* Icon Fullscreen góc la bàn */
+/* Icon Fullscreen - Dạng tối giản, tinh tế */
 .fs-icon {
     position: absolute;
-    top: 18px;
-    right: 18px;
+    top: 10px; /* Nằm ngay sát cạnh trên la bàn */
+    right: 10px;
     z-index: 150;
     cursor: pointer;
-    background: rgba(0,0,0,0.65);
     color: #dfb76c;
-    font-size: 26px;
-    width: 44px;
-    height: 44px;
+    font-size: 24px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    border: 2px solid #dfb76c;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.5);
-    transition: all 0.2s ease;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
     user-select: none;
+    opacity: 0.7; /* Mờ nhẹ khi không tương tác */
+}
+
+.fs-icon:active {
+    transform: scale(0.85); /* Hiệu ứng nhấn */
+    opacity: 1;
 }
 
 .fs-icon:hover {
-    background: rgba(223, 183, 108, 0.3);
-    transform: scale(1.12);
-    color: white;
+    opacity: 1;
+    transform: scale(1.1);
 }
 
-/* Responsive mobile */
+/* Responsive cho mobile */
 @media (max-width: 480px) {
     .fs-icon {
-        top: 16px;
-        right: 16px;
-        width: 48px;
-        height: 48px;
-        font-size: 28px;
+        top: 12px;
+        right: 12px;
+        width: 40px;
+        height: 40px;
+        font-size: 26px;
     }
 }
 
-/* Fullscreen Mode */
+/* Fullscreen Mode - Mượt mà */
 .fullscreen-mode {
     position: fixed;
     top: 0;
@@ -928,15 +929,18 @@ body {
     background: #0a0a0a;
     z-index: 99999;
     overflow: hidden;
-    display: none;
+    display: none; /* Mặc định ẩn */
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding-top: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .fullscreen-mode.active {
     display: flex;
+    opacity: 1;
 }
 
 /* Wrapper trong fullscreen */
@@ -953,6 +957,7 @@ body {
     max-width: 460px;
     margin: 10px auto;
 }
+
 /* Đảm bảo khi statusPanel trở về vị trí mặc định không bị lỗi layout */
 .status-panel {
     display: block !important; 
