@@ -1,955 +1,341 @@
-:root {
-  --gold: #dfb76c;
-  --dark: #070707;
-  --panel: #161616;
-  --text: #e0e0e0;
-  --red: #ff3b30;
-  --green: #30d158;
-  --blue: #0a84ff;
-  --gray: #8e8e93;
-  --orange-bright: #ff6600;
-}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Đại Thuật La Kinh Phong Thủy Tối Thượng - Thái Thông</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="header">
+    <h1>ĐẠI THUẬT LA KINH PHONG THỦY</h1>
+    <div class="header-copyright">&copy; BẢN QUYỀN HỆ THỐNG: THÁI THÔNG</div>
+</div>
 
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
+<div id="mainPanelWrapper" style="position: relative; border: 1px solid #333; background: #161616; padding: 15px; border-radius: 12px; margin: 10px auto; width: 90%; max-width: 500px; transition: all 0.3s ease;">
+    
+    <div id="toggleArrow" onclick="togglePanel()" style="position: absolute; top: 10px; right: 15px; cursor: pointer; color: #dfb76c; font-size: 12px; font-weight: bold; z-index: 100;">
+        ▲
+    </div>
 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: var(--dark);
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  padding-bottom: 30px;
-  position: relative;
-}
+    <div id="panelContent">
+        <div class="user-input-panel">
+            <div class="form-row">
+                <div class="form-group" style="flex: 1.2;">
+                    <label>Họ tên chủ mệnh:</label>
+                    <input type="text" id="userName" value="Người Tầm Phương" onfocus="if(this.value==='Người Tầm Phương') { this.value=''; this.style.color='#fff'; }" onblur="if(this.value.trim()==='') { this.value='Người Tầm Phương'; this.style.color='#aaa'; }" oninput="recalculateFate()">
+                </div>
+                <div class="form-group" style="flex: 0.8;">
+                    <label>Giới tính:</label>
+                    <select id="gender" onchange="recalculateFate()">
+                        <option value="male">Nam Mạng</option>
+                        <option value="female">Nữ Mạng</option>
+                    </select>
+                </div>
+            </div>
 
-/* ==================== TỐI ƯU HIỆU SUẤT LA BÀN & ANIMATION ==================== */
-.compass-dial,
-.center-needle,
-.ghost-needle,
-#sonRingSvg text,
-#chuHuongLonG text,
-#phucDucRingSvg text {
-  will-change: transform, opacity, fill;
-  transition: all 0.08s ease-out;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Ngày tháng năm sinh (Dương lịch):</label>
+                    <div class="date-input-container">
+                        <input type="text" id="birthDay" placeholder="DD" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthMonth')" style="text-align: center;">
+                        <input type="text" id="birthMonth" placeholder="MM" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthYear')" style="text-align: center;">
+                        <input type="text" id="birthYear" placeholder="YYYY" maxlength="4" inputmode="numeric" oninput="handleDateInput(this, null)" style="text-align: center;">
+                    </div>
+                </div>
+            </div>
 
-/* Giao diện dạng lưới sang trọng phong cách App chuyên nghiệp */
-.status-panel-grid {
-  width: 92%;
-  max-width: 430px;
-  background: #111111;
-  border: 1px solid var(--gold);
-  border-radius: 12px;
-  padding: 12px;
-  margin: 15px auto;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.7);
-}
+<div class="form-group" style="margin-bottom: 12px;">
+    <label style="display: block; font-size: 0.85rem; color: var(--gold); margin-bottom: 5px; font-weight: bold;">
+        Mục đích tầm phương vị:
+    </label>
+    <select id="purpose" onchange="recalculateFate()" 
+            class="purpose-select">
+        <option value="">-- Chọn mục đích tầm phương vị --</option>
+        
+        <optgroup label="🏛️ DƯƠNG TRẠCH CHỦ CỤC (Nhà Ở & Sinh Hoạt)">
+            <option value="house">Hướng Nhà / Cửa Chính (Đại Môn)</option>
+            <option value="gate">Hướng Cổng Chính (Lộ Khẩu)</option>
+            <option value="altar">Hướng Bàn Thờ / Ban Thần Tài</option>
+            <option value="bed">Hướng Đầu Giường Ngủ (Sàng Vị)</option>
+            <option value="livingroom">Hướng Phòng Khách (Trung Đường)</option>
+            <option value="bedroom_master">Hướng Phòng Ngủ Chính (Chủ Khang)</option>
+            <option value="balcony">Hướng Ban Công / Cửa Sổ Lớn</option>
+        </optgroup>
+        
+        <optgroup label="📚 VĂN XƯƠNG KHOA DANH (Học Hành & Sự Nghiệp)">
+            <option value="workspace">Hướng Bàn Làm Việc (Quyền Lực Vị)</option>
+            <option value="ceo_office">Hướng Phòng Sếp / Bàn Lãnh Đạo</option>
+            <option value="study_desk">Hướng Bàn Học / Văn Xương Vị</option>
+        </optgroup>
+        
+        <optgroup label="💰 ĐẮC TÀI MẬU DỊCH (Kinh Doanh Thương Mại)">
+            <option value="signboard">Hướng Biển Hiệu (Minh Đường Lộ)</option>
+            <option value="counter">Hướng Quầy Thu Ngân (Tài Khố Vị)</option>
+            <option value="safe">Vị trí Két Sắt (Tụ Tài Bảo Khố)</option>
+            <option value="bakery">Hướng Quầy Bánh Mì / Tiệm Bánh</option>
+            <option value="coffee">Hướng Quán Cà Phê / Trà Sữa</option>
+            <option value="restaurant">Hướng Quán Ăn / Nhà Hàng</option>
+            <option value="shop">Hướng Cửa Hàng / Tạp Hóa / Showroom</option>
+            <option value="salon">Hướng Salon Tóc / Nail / Spa</option>
+        </optgroup>
+        
+        <optgroup label="🛠️ TỌA VỊ TRẤN SÁT (Hệ Thống Đè Hung)">
+            <option value="kitchen">Vị trí Đặt Bếp Nấu (Táo Vị)</option>
+            <option value="toilet">Vị trí Nhà Vệ Sinh (Huyền Vũ Tiêu Sát)</option>
+            <option value="septic_tank">Vị trí Hầm Tự Hoại / Bể Phốt</option>
+            <option value="storage">Vị trí Kho Hàng / Tủ Đồ</option>
+            <option value="trash_area">Vị trí Thùng Rác / Khu Phế Liệu</option>
+        </optgroup>
+    </select>
+</div>
 
-.info-header-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-bottom: 1px solid #2a2a2a;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  gap: 5px;
-}
+            <div class="btn-action-row">
+                <button class="btn-main" onclick="saveCurrentMember()">Lưu Tuổi</button>
+                <button class="btn-reset" id="btnReset" onclick="clearAllData()">Làm mới</button>
+            </div>
+        </div>
 
-.info-grid-item {
-  text-align: center;
-}
+        <div class="saved-list-panel" id="savedPanel" style="display: none; margin-top: 10px;">
+            <div class="saved-container" id="savedContainer"></div>
+        </div>
+    </div>
+</div>
 
-.info-grid-item:not(:last-child) {
-  border-right: 1px solid #2a2a2a;
-}
+<div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #1a1a1a; border-radius: 50%; box-shadow: 0 12px 35px rgba(0,0,0,0.5); border: 6px solid #b58e4b; overflow: hidden; color-scheme: light !important;">
 
-.info-grid-item span {
-  display: block;
-  font-size: 0.72rem;
-  color: #8e8e93;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 4px;
-}
+<!-- Đường dọc -->
+<div class="cross-line-v" style="
+  position: absolute; 
+  width: 1px; 
+  height: 92%; 
+  left: 50%; 
+  top: 4%; 
+  background: rgba(255, 59, 48, 0.28); 
+  z-index: 8; 
+  pointer-events: none; 
+  transform: translateX(-50%);
+  /* Cắt bỏ đoạn giữa (từ 43% đến 57%) */
+  clip-path: polygon(0% 0%, 100% 0%, 100% 43%, 0% 43%, 0% 57%, 100% 57%, 100% 100%, 0% 100%);
+"></div>
 
-.info-grid-item b {
-  color: var(--gold);
-  font-size: 0.95rem;
-  font-weight: 600;
-}
+<!-- Đường ngang -->
+<div class="cross-line-h" style="
+  position: absolute; 
+  height: 1px; 
+  width: 92%; 
+  top: 50%; 
+  left: 4%; 
+  background: rgba(255, 59, 48, 0.28); 
+  z-index: 8; 
+  pointer-events: none; 
+  transform: translateY(-50%);
+  /* Cắt bỏ đoạn giữa (từ 43% đến 57%) */
+  clip-path: polygon(0% 0%, 43% 0%, 43% 100%, 57% 100%, 57% 0%, 100% 0%, 100% 100%, 0% 100%);
+"></div>
 
-.main-result-box {
-  background: #161616;
-  border-left: 4px solid var(--gold);
-  padding: 12px;
-  border-radius: 4px;
-  text-align: left;
-  font-size: 0.88rem;
-  line-height: 1.6;
-}
-
-.star-warning-box {
-  margin-top: 8px;
-  padding: 6px 10px;
-  background: rgba(255,102,0,0.1);
-  border: 1px solid rgba(255,102,0,0.3);
-  border-radius: 4px;
-  font-size: 0.82rem;
-  color: #ff6600;
-}
-
-.header {
-  text-align: center;
-  padding: 12px;
-  border-bottom: 2px solid var(--gold);
-  width: 100%;
-  background: linear-gradient(180deg, #1f1a10 0%, var(--dark) 100%);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-  position: relative;
-  z-index: 10;
-}
-
-.header h1 {
-  color: var(--gold);
-  font-size: 1.1rem;
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.header-copyright {
-  color: var(--gold);
-  font-size: 0.75rem;
-  margin-top: 6px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-shadow: 0 0 5px rgba(223,183,108,0.4);
-}
-
-.user-input-panel {
-  width: 92%;
-  max-width: 430px;
-  background: #1a1510;
-  border: 1px solid #443322;
-  padding: 12px;
-  border-radius: 8px;
-  margin-top: 12px;
-  position: relative;
-  z-index: 10;
-}
-
-.form-row {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
-  width: 100%;
-}
-
-.form-group {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.form-group label {
-  font-size: 0.75rem;
-  color: var(--gold);
-  margin-bottom: 4px;
-  font-weight: bold;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.form-group input,
-.form-group select {
-  background: #2a2218;
-  border: 1px solid var(--gold);
-  color: #fff;
-  padding: 8px;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  outline: none;
-  height: 38px;
-  width: 100%;
-}
-
-.date-input-container {
-  display: flex;
-  gap: 6px;
-  width: 100%;
-}
-
-.date-input-container input {
-  flex: 1;
-  min-width: 0;
-}
-
-.btn-action-row {
-  display: flex;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.btn-main {
-  flex: 1;
-  background: linear-gradient(180deg, #c5a059, #9a7b3e);
-  color: #000;
-  border: none;
-  padding: 8px;
-  border-radius: 4px;
-  font-weight: bold;
-  font-size: 0.8rem;
-  cursor: pointer;
-  text-transform: uppercase;
-}
-
-.btn-reset {
-  background: linear-gradient(180deg, var(--orange-bright), #cc5200);
-  color: #fff;
-  border: 1px solid #ffaa66;
-  padding: 8px 12px;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  font-weight: bold;
-  cursor: pointer;
-  text-transform: uppercase;
-  box-shadow: 0 4px 10px rgba(255,102,0,0.3);
-  transition: all 0.2s ease;
-}
-
-.saved-list-panel {
-  width: 92%;
-  max-width: 430px;
-  background: #111;
-  margin-top: 8px;
-  border-radius: 6px;
-  padding: 6px;
-  border: 1px dashed #332211;
-  position: relative;
-  z-index: 10;
-}
-
-.saved-container {
-  display: flex;
-  gap: 6px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-}
-
-.saved-chip {
-  background: #252018;
-  border: 1px solid #554433;
-  padding: 4px 8px;
-  border-radius: 15px;
-  font-size: 0.75rem;
-  color: #ddd;
-  cursor: pointer;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.saved-chip:hover {
-  border-color: var(--gold);
-}
-
-.saved-chip .del-btn {
-  color: var(--red);
-  font-weight: bold;
-  margin-left: 4px;
-}
-
-.compass-container {
-  position: relative;
-  width: 320px;
-  height: 320px;
-  max-width: 88vw;
-  max-height: 88vw;
-  margin: 15px auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  z-index: 10;
-}
-
-.cross-line-v {
-  position: absolute;
-  width: 1.5px;
-  height: 100%;
-  background: var(--red);
-  z-index: 10;
+  <div class="north-pointer" style="
+  position: absolute; 
+  top: 4px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  width: 12px; 
+  height: 24px; 
+  background: #ff3b30; 
+  z-index: 12; 
   pointer-events: none;
-}
-
-.cross-line-h {
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  background: rgba(255,59,48,0.3);
-  z-index: 2;
-  pointer-events: none;
-}
-
-.compass-dial {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 4px double var(--gold);
-  border-radius: 50%;
-  background: radial-gradient(circle, #1a1a1a 0%, #050505 65%, #111 100%);
-  box-shadow: 0 0 20px rgba(223,183,108,0.2);
-  z-index: 1;
-  will-change: transform;
-  transition: transform 0.2s ease-out;
-}
-
-.compass-watermark {
-  position: absolute;
-  bottom: 25%;
-  width: 100%;
-  text-align: center;
-  font-size: 0.6rem;
-  color: rgba(223,183,108,0.3);
-  font-weight: bold;
-  z-index: 2;
-  pointer-events: none;
-  letter-spacing: 2px;
-}
-
-/* === KIM ĐỎ CHÍNH - MŨI TÊN SẮC BÉN,TINH TẾ HƠN === */
-.center-needle {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 7px;
-  height: 90%;
-  background: linear-gradient(to bottom, rgba(255,30,30,0.9) 48%, rgba(255,80,80,0.9) 52%);
-  clip-path: polygon(50% 0%, 100% 20%, 65% 20%, 65% 85%, 100% 100%, 50% 92%, 0% 100%, 35% 85%, 35% 20%, 0% 20%);
-  transform: translate(-50%, -50%) rotate(0deg);
-  transform-origin: 50% 50%;
-  z-index: 9;
-  pointer-events: none;
-  box-shadow: 0 0 5px #ff2222, 0 0 10px rgba(255,34,34,0.4);
-  filter: brightness(1.05);
-}
-
-/* === KIM VÀNG GHOST - VÀNG KIM LOẠI/VÀNG NGHỆ NEON === */
-.ghost-needle {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 5.5px;
-  height: 86%;
-  background: linear-gradient(to bottom, #d4af37 0%, #f1c40f 50%, #d4af37 100%);
-  clip-path: polygon(50% 0%, 100% 15%, 65% 15%, 65% 100%, 35% 100%, 35% 15%, 0% 15%);
-  transform: translate(-50%, -50%) rotate(0deg);
-  transform-origin: 50% 50%;
-  z-index: 7;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s ease, transform 0.15s ease-out;
-  box-shadow: 0 0 6px #d4af37, 0 0 12px rgba(212,175,55,0.3);
-  filter: brightness(1.1);
-}
-
-/* ====================== LA BÀN - NÂNG CẤP CAO CẤP 2026 ====================== */
-
-
-/* === MŨI TÊN BẮC (North Pointer) === */
-.north-pointer {
-    position: absolute;
-    top: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 22px;
-    height: 38px;
-    background: linear-gradient(180deg, #ff3b30, #c8102e);
-    z-index: 25;
-    pointer-events: none;
-    clip-path: polygon(50% 0%, 100% 100%, 50% 82%, 0% 100%);
-    box-shadow: 
-        0 0 12px #ff3b30,
-        0 0 25px #ff3b30,
-        0 0 40px rgba(255, 59, 48, 0.7);
-    border-radius: 3px;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
-}
-
-/* === CENTER PIN === */
-.center-pin {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 18px;
-    height: 18px;
-    background: radial-gradient(circle at 40% 40%, #f5d76e, var(--gold), #b38b2e);
-    border: 2px solid #fff;
-    border-radius: 50%;
-    z-index: 30;
-    box-shadow: 
-        0 0 8px rgba(223, 183, 108, 0.9),
-        inset 0 3px 6px rgba(255,255,255,0.6),
-        0 4px 12px rgba(0,0,0,0.7);
-}
-
-/* === NHÃN HƯỚNG === */
-.direction-label {
-    position: absolute;
-    font-weight: 900;
-    font-size: 0.72rem;
-    text-align: center;
-    width: 52px;
-    line-height: 1.1;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-    z-index: 15;
-    pointer-events: none;
-}
-
-.lbl-kham {
-    color: #ff3b30;
-    top: 18px;
-    left: calc(50% - 26px);
-}
-
-.lbl-ly {
-    color: #ffcc00;
-    bottom: 18px;
-    left: calc(50% - 26px);
-    transform: rotate(180deg);
-}
-
-.lbl-chan {
-    color: #00c853;
-    right: 12px;
-    top: calc(50% - 18px);
-    transform: rotate(90deg);
-}
-
-.lbl-doai {
-    color: #00c853;
-    left: 12px;
-    top: calc(50% - 18px);
-    transform: rotate(-90deg);
-}
-
-.lbl-can, .lbl-can2 {
-    color: #ffb300;
-    font-size: 0.68rem;
-}
-
-.lbl-can  { top: 42px; right: 38px; transform: rotate(45deg); }
-.lbl-can2 { top: 42px; left: 38px;  transform: rotate(-45deg); }
-
-.lbl-ton {
-    color: #ffb300;
-    bottom: 42px;
-    right: 38px;
-    transform: rotate(135deg);
-}
-
-.lbl-khon {
-    color: #ffb300;
-    bottom: 42px;
-    left: 38px;
-    transform: rotate(-135deg);
-}
-
-/* === SON RING TEXT === */
-.son-ring-text {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-}
-
-.son-item {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 20px;
-    margin-left: -10px;
-    height: 50%;
-    transform-origin: bottom center;
-    font-size: 0.5rem;
-    color: #8a8a8f;
-    text-align: center;
-    padding-top: 45px;
-}
-
-/* ====================== STATUS PANEL ====================== */
-.status-panel {
-    width: 92%;
-    max-width: 430px;
-    background: var(--panel);
-    border: 1px solid var(--gold);
-    padding: 12px;
-    border-radius: 8px;
-    text-align: center;
-    margin-bottom: 8px;
-    position: relative;
-    z-index: 10;
-}
-
-.degree-display {
-    font-size: 1rem;
-    color: var(--gold);
-    font-weight: bold;
-}
-
-.element-badge {
-    display: inline-block;
-    font-size: 0.7rem;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-top: 4px;
-    font-weight: bold;
-}
-
-.fate-display {
-    font-size: 0.8rem;
-    color: #fff;
-    background: #222;
-    padding: 6px;
-    margin: 6px 0;
-    border-radius: 4px;
-    border-left: 4px solid var(--gold);
-    text-align: left;
-}
-
-.judgment-badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 15px;
-    font-weight: bold;
-    font-size: 0.85rem;
-    margin-top: 2px;
-    text-transform: uppercase;
-}
-
-.bg-good {
-    background-color: rgba(48,209,88,0.15);
-    color: var(--green);
-    border: 1px solid var(--green);
-}
-
-.bg-bad {
-    background-color: rgba(255,59,48,0.15);
-    color: var(--red);
-    border: 1px solid var(--red);
-}
-
-/* ====================== CONTROL & PERMISSION ====================== */
-.control-box {
-    display: none !important;
-    width: 92%;
-    max-width: 430px;
-    background: #111;
-    padding: 6px;
-    border-radius: 6px;
-    margin-bottom: 10px;
-    position: relative;
-    z-index: 10;
-}
-
-.slider {
-    width: 100%;
-    accent-color: var(--gold);
-    height: 20px;
-}
-
-#permission-btn {
-    display: none;
-    background: var(--red);
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 0.85rem;
-    cursor: pointer;
-    margin-bottom: 12px;
-    width: 92%;
-    max-width: 430px;
-    position: relative;
-    z-index: 10;
-}
-
-/* ====================== DIRECTIONS LIST ====================== */
-.directions-list-panel {
-    width: 92%;
-    max-width: 430px;
-    background: var(--panel);
-    border: 1px solid #282828;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 12px;
-    position: relative;
-    z-index: 10;
-}
-
-.list-title {
-    color: var(--gold);
-    font-size: 0.8rem;
-    font-weight: bold;
-    margin: 0 0 10px 0;
-    text-transform: uppercase;
-    border-bottom: 1px solid #333;
-    padding-bottom: 6px;
-    text-align: center;
-}
-
-.direction-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #0d0d0d;
-    padding: 6px 10px;
-    margin-bottom: 6px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    border-left: 4px solid #333;
-}
-
-.direction-item.good {
-    border-left-color: var(--green);
-}
-
-.direction-item.bad {
-    border-left-color: var(--red);
-}
-
-.item-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.item-name {
-    font-weight: bold;
-    color: #fff;
-}
-
-.item-cung {
-    font-size: 0.7rem;
-}
-
-.btn-rotate {
-    background: #2a2218;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-/* ====================== EXPLANATION PANEL ====================== */
-.explanation-panel {
-    width: 92%;
-    max-width: 430px;
-    background: var(--panel);
-    border: 1px solid #252525;
-    border-radius: 8px;
-    padding: 12px;
-    position: relative;
-    z-index: 10;
-}
-
-.detail-content {
-    background: #080808;
-    border-left: 4px solid var(--gold);
-    padding: 10px;
-    font-size: 0.85rem;
-    line-height: 1.6;
-    color: #ffffff;
-    transition: border-left-color 0.3s ease;
-}
-
-.gold-text {
-    color: var(--gold);
-    font-weight: bold;
-}
-
-/* ====================== CUSTOM ALERT ====================== */
-.custom-alert-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.85);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 99999;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
-.custom-alert-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.custom-alert-box {
-    background: #1a1410;
-    border: 2px solid var(--gold);
-    border-radius: 10px;
-    width: 88%;
-    max-width: 340px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 15px rgba(223,183,108,0.2);
-    transform: scale(0.8);
-    transition: transform 0.3s ease;
-}
-
-.custom-alert-overlay.active .custom-alert-box {
-    transform: scale(1);
-}
-
-.custom-alert-title {
-    color: var(--red);
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-}
-
-.custom-alert-msg {
-    color: #f0f0f0;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    margin-bottom: 20px;
-}
-
-.custom-alert-btn {
-    background: linear-gradient(180deg, #ff8833, var(--orange-bright));
-    color: white;
-    border: none;
-    padding: 8px 24px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    cursor: pointer;
-    text-transform: uppercase;
-    box-shadow: 0 4px 10px rgba(255,102,0,0.3);
-}
-
-/* ====================== MISC ====================== */
-.btn-reset.executing {
-    opacity: 0.7;
-    transform: scale(0.95);
-}
-
-.user-input-panel {
-    font-size: 12px;
-}
-
-.form-group label {
-    font-size: 11px;
-    margin-bottom: 2px;
-}
-
-.form-group input,
-.form-group select {
-    padding: 4px;
-    height: 30px;
-}
-
-.fengshui-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid #444;
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-}
-
-/* ====================== INFO MODAL ====================== */
-#infoModal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.85);
-    display: none;
-    flex-direction: column;
-    z-index: 9999;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.modal-content {
-    background: #1c1c1e;
-    color: #fff;
-    border-radius: 15px;
-    width: 100%;
-    max-width: 500px;
-    max-height: 85vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    margin: auto;
-}
-
-#modalBody {
-    overflow-y: auto;
-    padding: 15px;
-    flex: 1;
-}
-
-/* Directions Panel Toggle */
-.directions-list-panel[open] .list-title::after {
-    content: ' ▴';
-}
-
-.directions-list-panel:not([open]) .list-title::after {
-    content: ' ▾';
-}
-
-#list-panel-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #dfb76c;
-    color: #dfb76c;
-}
-/* ====================== BEAUTIFUL SELECT ====================== */
-.purpose-select {
-    width: 100%;
-    padding: 11px 14px;
-    background: #2a2218;
-    border: 1px solid var(--gold);
-    color: #fff;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-family: 'Times New Roman', Times, serif;
-    outline: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23dfb76c' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.025 2.345 4 3.204 4h9.592c.858 0 1.319 1.025.753 1.659l-4.796 5.48a1 1 0 01-1.506 0z'/%3E%3C/svg%3E");
-    background-position: right 14px center;
-    background-repeat: no-repeat;
-    background-size: 12px;
-}
-
-.purpose-select:hover {
-    border-color: #f1c40f;
-    box-shadow: 0 0 8px rgba(223, 183, 108, 0.3);
-}
-
-.purpose-select:focus {
-    border-color: #f1c40f;
-    box-shadow: 0 0 12px rgba(223, 183, 108, 0.5);
-}
-
-/* Tùy chỉnh option trên mobile */
-.purpose-select option {
-    background: #1f1a14;
-    color: #fff;
-    padding: 10px;
-}
-/* ====================== FULL SCREEN MODE & ICON ====================== */
-
-/* Icon Fullscreen góc la bàn */
-.fs-icon {
-    position: absolute;
-    top: 18px;
-    right: 18px;
-    z-index: 150;
-    cursor: pointer;
-    background: rgba(0,0,0,0.65);
-    color: #dfb76c;
-    font-size: 26px;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    border: 2px solid #dfb76c;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.5);
-    transition: all 0.2s ease;
-    user-select: none;
-}
-
-.fs-icon:hover {
-    background: rgba(223, 183, 108, 0.3);
-    transform: scale(1.12);
-    color: white;
-}
-
-/* Responsive mobile */
-@media (max-width: 480px) {
-    .fs-icon {
-        top: 16px;
-        right: 16px;
-        width: 48px;
-        height: 48px;
-        font-size: 28px;
-    }
-}
-
-/* Fullscreen Mode */
-.fullscreen-mode {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #0a0a0a;
-    z-index: 99999;
-    overflow: hidden;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-top: 10px;
-}
-
-.fullscreen-mode.active {
-    display: flex;
-}
-
-/* Wrapper trong fullscreen */
-#fs-compass-wrapper {
-    width: 96vw;
-    max-width: 480px;
-    height: 96vw;
-    max-height: 480px;
-    margin: 10px auto;
-}
-
-#fs-status-wrapper {
-    width: 92%;
-    max-width: 460px;
-    margin: 10px auto;
-}
+  /* Cắt hình mũi tên thon gọn */
+  clip-path: polygon(50% 0%, 100% 100%, 50% 85%, 0% 100%);
+  /* Hiệu ứng Neon */
+  box-shadow: 0 0 10px #ff3b30, 0 0 20px #ff3b30;
+"></div>
+
+  <div id="needle" style="display: none;"></div>
+  <div id="ghostNeedle" class="ghost-needle" style="display: none;"></div>
+  
+
+
+  <div class="compass-dial" id="compass" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center; transition: transform 0.1s ease-out;">
+    <svg viewBox="0 0 500 500" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; color-scheme: light !important; background: transparent;">
+      
+      <circle cx="250" cy="250" r="244" fill="#fdfaf2" stroke="#b58e4b" stroke-width="3" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="226" fill="#fffcf7" stroke="#b58e4b" stroke-width="1.2" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="185" fill="#fffdfa" stroke="#b58e4b" stroke-width="1.2" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="148" fill="#f7f2e8" stroke="#b58e4b" stroke-width="1.2" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="110" fill="#fdfaf2" stroke="#b58e4b" stroke-width="1.5" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="70" fill="#fffdfa" stroke="#b58e4b" stroke-width="2.5" style="mix-blend-mode: normal !important;" />
+
+      <g stroke="rgba(181, 142, 75, 0.6)" stroke-width="1" id="vachDoRing"></g>
+
+      <g stroke="#b58e4b" stroke-width="1.8" opacity="0.85">
+        <line x1="250" y1="6" x2="250" y2="110" transform="rotate(22.5, 250, 250)" />
+        <line x1="250" y1="6" x2="250" y2="110" transform="rotate(67.5, 250, 250)" />
+        <line x1="250" y1="6" x2="250" y2="110" transform="rotate(112.5, 250, 250)" />
+        <line x1="250" y1="6" x2="250" y2="110" transform="rotate(157.5, 250, 250)" />
+        <line x1="250" y1="6" x2="250" y2="110" transform="rotate(202.5, 250, 250)" />
+        <line x1="250" y1="6" x2="250" y2="110" transform="rotate(247.5, 250, 250)" />
+        <line x1="250" y1="6" x2="250" y2="110" transform="rotate(292.5, 250, 250)" />
+        <line x1="250" y1="6" x2="250" y2="110" transform="rotate(337.5, 250, 250)" />
+      </g>
+
+      <g stroke="rgba(181, 142, 75, 0.7)" stroke-width="1.5" id="khe24SonRing"></g>
+
+      <g id="sonRingSvg"></g>
+      <g id="phucDucRingSvg"></g>
+
+      <g id="tamBatQuaiMau" style="mix-blend-mode: normal !important;">
+  <!-- Vòng tròn nền -->
+  <circle cx="250" cy="250" r="36" fill="#fff" stroke="#ff3b30" stroke-width="1.5" />
+  
+  <!-- Nửa ĐEN (Phía trên/Phải) -->
+  <path d="M250,214 A36,36 0 0,1 250,286 A18,18 0 0,0 250,250 A18,18 0 0,1 250,214" fill="#333" />
+  
+  <!-- Nửa TRẮNG (Phía dưới/Trái) -->
+  <path d="M250,286 A36,36 0 0,1 250,214 A18,18 0 0,0 250,250 A18,18 0 0,1 250,286" fill="#fff" />
+  
+  <!-- Mắt (Đảm bảo nằm đúng vị trí trong vùng của nó) -->
+  <circle cx="250" cy="232" r="6" fill="#fff" /> <!-- Mắt trắng nằm trong nền Đen -->
+  <circle cx="250" cy="268" r="6" fill="#333" />  <!-- Mắt đen nằm trong nền Trắng -->
+</g>
+
+      <g stroke-width="2.2" fill="none" stroke-linecap="square" style="mix-blend-mode: normal !important;">
+        <g transform="rotate(0, 250, 250)" stroke="#c01108">
+          <line x1="239" y1="192" x2="245" y2="192" /><line x1="255" y1="192" x2="261" y2="192" />
+          <line x1="239" y1="198" x2="261" y2="198" />
+          <line x1="239" y1="204" x2="245" y2="204" /><line x1="255" y1="204" x2="261" y2="204" />
+        </g>
+        <g transform="rotate(45, 250, 250)" stroke="#4a320c">
+          <line x1="239" y1="192" x2="261" y2="192" />
+          <line x1="239" y1="198" x2="245" y2="198" /><line x1="255" y1="198" x2="261" y2="198" />
+          <line x1="239" y1="204" x2="245" y2="204" /><line x1="255" y1="204" x2="261" y2="204" />
+        </g>
+        <g transform="rotate(90, 250, 250)" stroke="#c01108">
+          <line x1="239" y1="192" x2="245" y2="192" /><line x1="255" y1="192" x2="261" y2="192" />
+          <line x1="239" y1="198" x2="245" y2="198" /><line x1="255" y1="198" x2="261" y2="198" />
+          <line x1="239" y1="204" x2="261" y2="204" />
+        </g>
+        <g transform="rotate(135, 250, 250)" stroke="#4a320c">
+          <line x1="239" y1="192" x2="261" y2="192" />
+          <line x1="239" y1="198" x2="261" y2="198" />
+          <line x1="239" y1="204" x2="245" y2="204" /><line x1="255" y1="204" x2="261" y2="204" />
+        </g>
+        <g transform="rotate(180, 250, 250)" stroke="#c01108">
+          <line x1="239" y1="192" x2="261" y2="192" />
+          <line x1="239" y1="198" x2="245" y2="198" /><line x1="255" y1="198" x2="261" y2="198" />
+          <line x1="239" y1="204" x2="261" y2="204" />
+        </g>
+        <g transform="rotate(225, 250, 250)" stroke="#4a320c">
+          <line x1="239" y1="192" x2="245" y2="192" /><line x1="255" y1="192" x2="261" y2="192" />
+          <line x1="239" y1="198" x2="245" y2="198" /><line x1="255" y1="198" x2="261" y2="198" />
+          <line x1="239" y1="204" x2="245" y2="204" /><line x1="255" y1="204" x2="261" y2="204" />
+        </g>
+        <g transform="rotate(270, 250, 250)" stroke="#c01108">
+          <line x1="239" y1="192" x2="245" y2="192" /><line x1="255" y1="192" x2="261" y2="192" />
+          <line x1="239" y1="198" x2="261" y2="198" />
+          <line x1="239" y1="204" x2="261" y2="204" />
+        </g>
+        <g transform="rotate(315, 250, 250)" stroke="#4a320c">
+          <line x1="239" y1="192" x2="261" y2="192" />
+          <line x1="239" y1="198" x2="261" y2="198" />
+          <line x1="239" y1="204" x2="261" y2="204" />
+        </g>
+      </g>
+
+      <g font-family="sans-serif" text-anchor="middle" id="chuHuongLonG">
+        <g font-weight="900" font-size="20">
+          <text x="250" y="34" fill="#ff3b30" data-goc="0">BẮC</text>
+          <text x="250" y="52" font-size="12" font-weight="bold" fill="#ff3b30" data-goc="0">KHẢM</text>
+          
+          <text x="250" y="34" fill="#ff3b30" transform="rotate(180, 250, 250)" data-goc="180">NAM</text>
+          <text x="250" y="52" font-size="12" font-weight="bold" fill="#ff3b30" transform="rotate(180, 250, 250)" data-goc="180">LY</text>
+          
+          <text x="250" y="34" fill="#00a525" transform="rotate(90, 250, 250)" data-goc="90">ĐÔNG</text>
+          <text x="250" y="52" font-size="12" font-weight="bold" fill="#00a525" transform="rotate(90, 250, 250)" data-goc="90">CHẤN</text>
+          
+          <text x="250" y="34" fill="#00a525" transform="rotate(270, 250, 250)" data-goc="270">TÂY</text>
+          <text x="250" y="52" font-size="12" font-weight="bold" fill="#00a525" transform="rotate(270, 250, 250)" data-goc="270">ĐOÀI</text>
+        </g>
+        
+        <g font-weight="800" font-size="14" fill="#6b4e18">
+          <text x="250" y="34" transform="rotate(45, 250, 250)" data-goc="45">Đ.BẮC</text>
+          <text x="250" y="49" font-size="11" font-weight="bold" transform="rotate(45, 250, 250)" data-goc="45">CẤN</text>
+          
+          <text x="250" y="34" transform="rotate(135, 250, 250)" data-goc="135">Đ.NAM</text>
+          <text x="250" y="49" font-size="11" font-weight="bold" transform="rotate(135, 250, 250)" data-goc="135">TỐN</text>
+          
+          <text x="250" y="34" transform="rotate(225, 250, 250)" data-goc="225">T.NAM</text>
+          <text x="250" y="49" font-size="11" font-weight="bold" transform="rotate(225, 250, 250)" data-goc="225">KHÔN</text>
+          
+          <text x="250" y="34" transform="rotate(315, 250, 250)" data-goc="315">T.BẮC</text>
+          <text x="250" y="49" font-size="11" font-weight="bold" transform="rotate(315, 250, 250)" data-goc="315">CÀN</text>
+        </g>
+      </g>
+
+      <text x="250" y="286" font-family="sans-serif" font-size="8" font-weight="bold" fill="rgba(181, 142, 75, 0.45)" text-anchor="middle" letter-spacing="1.5">THÁI THÔNG</text>
+    </svg>
+    <div id="sonRing" style="display: none;"></div>
+  </div>
+</div>
+  <!-- ICON FULLSCREEN ĐẸP - NỔI BẬT -->
+<div onclick="toggleFullScreenMode()" class="fs-icon">⛶</div>
+<button id="permission-btn" onclick="document.getElementById('iosPermissionModal').style.display = 'flex'" style="display:none; margin: 10px auto; padding: 10px 20px; background: #dfb76c; border: none; border-radius: 5px; font-weight: bold; color: #000;">
+    KÍCH HOẠT SENSOR ĐIỆN THOẠI
+</button>
+
+<div id="iosPermissionModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:10000; justify-content:center; align-items:center; backdrop-filter: blur(5px);">
+    <div style="background:#1c1c1e; padding:30px; border-radius:20px; text-align:center; width:80%; max-width:400px; border:1px solid #dfb76c;">
+        <div style="font-size:3rem; margin-bottom:15px;">🧭</div>
+        <h3 style="color:#dfb76c; margin-bottom:15px;">KÍCH HOẠT LA BÀN</h3>
+        <p style="color:#ccc; font-size:0.95rem; line-height:1.5; margin-bottom:25px;">
+            Để sử dụng tính năng La Bàn xoay tự động, vui lòng nhấn "ĐỒNG Ý" ở thông báo tiếp theo từ trình duyệt.
+        </p>
+        <button onclick="handleModalClick()" style="width:100%; padding:15px; background:#dfb76c; border:none; border-radius:10px; font-weight:bold; color:#000; cursor:pointer; font-size:1rem;">
+            ĐỒNG Ý KÍCH HOẠT
+        </button>
+    </div>
+</div>
+
+  <div class="status-panel">
+    <div class="degree-display" id="degree-txt">0° - CUNG KHẢM (BẮC)</div>
+    <div id="element-box"></div>
+    <div class="fate-display" id="fate-txt">Mệnh chủ: ...</div>
+    <div id="judgment-box" class="judgment-badge bg-good">...</div>
+  </div>
+
+    <!-- Thanh kéo tay la bàn - Đã ẩn vì không cần thiết -->
+  <div class="control-box" style="display: none;">
+    <input type="range" min="0" max="360" value="0" class="slider" id="compassSlider" oninput="manualRotate(this.value)">
+  </div>
+
+<details class="directions-list-panel" open>
+    <summary class="list-title" id="list-panel-title" 
+             style="cursor: pointer; list-style: none; padding: 10px; background: #161616; border-radius: 8px; text-align: center; display: block;">
+        Danh Sách Hướng Gợi Ý ▾
+    </summary>
+    <div id="directions-container">
+        </div>
+</details>
+
+  <div class="explanation-panel">
+    <div class="detail-content" id="detail-box">Đang khởi tạo mật pháp dữ liệu...</div>   
+  </div>
+
+  <div class="custom-alert-overlay" id="customAlert">
+    <div class="custom-alert-box">
+      <div class="custom-alert-title">⚠️ Sai Lệch Dữ Liệu</div>
+      <div class="custom-alert-msg" id="customAlertMsg">Nội dung cảnh báo phong thủy tại đây.</div>
+      <button class="custom-alert-btn" onclick="closeCustomAlert()">Đã Hiểu</button>
+    </div>
+  </div>
+<div id="infoModal" onclick="this.style.display='none'" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; padding:20px; align-items:center; justify-content:center;">
+    <div style="background:#1c1c1e; max-width:450px; padding:25px; border-radius:15px; color:#fff; border:1px solid #dfb76c;">
+        <h3 id="modalTitle" style="color:#dfb76c; margin-top:0;"></h3>
+        <div id="modalBody" style="font-size:0.95rem; line-height:1.6; color:#ccc;"></div>
+        <button style="width:100%; margin-top:20px; padding:10px; background:#dfb76c; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">ĐÓNG</button>
+    </div>
+</div>
+
+<script src="controls.js"></script>
+</body>
+
+</html>
