@@ -513,14 +513,24 @@ body {
 }
 
 .degree-display {
-    font-size: 1rem;
+    font-size: 1rem; /* Mặc định */
     color: var(--gold);
     font-weight: bold;
-    /* NÂNG CẤP: Chống vỡ khung nếu tên sơn quá dài */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: color 0.3s ease;
+    line-height: 1.2;
+    padding: 0 5px;
+    /* Xóa bỏ text-overflow cũ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* Cho phép xuống dòng nếu cần */
+    word-break: break-word; /* Đảm bảo từ dài sẽ tự xuống */
+}
+
+/* Nâng cấp: Tự động giảm size font nếu nội dung quá dài */
+@media (max-width: 350px) {
+    .degree-display {
+        font-size: 0.85rem;
+    }
 }
 
 .element-badge {
