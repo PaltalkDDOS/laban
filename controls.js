@@ -1847,3 +1847,44 @@ function handleModalClick() {
     if (modal) modal.style.display = 'none';
     requestPermission();
 }
+let isFullScreen = false;
+
+function toggleFullScreenMode() {
+    const fullscreenDiv = document.createElement('div');
+    fullscreenDiv.id = 'fullscreenMode';
+    fullscreenDiv.className = 'fullscreen-mode active';
+    
+    fullscreenDiv.innerHTML = `
+        <button onclick="exitFullScreenMode()" class="fullscreen-exit-btn">✕ THOÁT</button>
+        
+        <div class="fullscreen-compass-container">
+            ${document.querySelector('.compass-container').outerHTML}
+        </div>
+        
+        <div class="fullscreen-status">
+            ${document.querySelector('.status-panel').outerHTML}
+        </div>
+    `;
+    
+    document.body.appendChild(fullscreenDiv);
+    
+    // Cập nhật lại ID cho la bàn trong mode full
+    setTimeout(() => {
+        if (typeof updateCompassUI === 'function') updateCompassUI(lastHeading || 0);
+    }, 100);
+    
+    isFullScreen = true;
+}
+
+function exitFullScreenMode() {
+    const fs = document.getElementById('fullscreenMode');
+    if (fs) fs.remove();
+    isFullScreen = false;
+}
+
+// Nhấn ESC để thoát
+document.addEventListener('keydown', function(e) {
+    if (e.key === "Escape" && isFullScreen) {
+        exitFullScreenMode();
+    }
+});
