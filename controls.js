@@ -1851,30 +1851,37 @@ let isFullScreen = false;
 let originalCompassParent = null;
 
 function toggleFullScreenMode() {
+    // 1. Nếu đang Fullscreen thì thoát
     if (isFullScreen) {
         exitFullScreenMode();
         return;
     }
 
     const compassContainer = document.querySelector('.compass-container');
-    if (!compassContainer) return;
-
-    originalCompassParent = compassContainer.parentElement;
-
     const statusPanel = document.querySelector('.status-panel');
 
+    // 2. Kiểm tra nếu không tìm thấy la bàn thì dừng lại ngay
+    if (!compassContainer) {
+        console.error("Không tìm thấy compass-container");
+        return;
+    }
+
+    // 3. Chỉ lưu lại vị trí cha nếu chưa có (tránh ghi đè nếu gọi hàm nhiều lần)
+    if (!originalCompassParent) {
+        originalCompassParent = compassContainer.parentElement;
+    }
+
+    // 4. Tạo Overlay Fullscreen
     const fsDiv = document.createElement('div');
     fsDiv.id = 'fullscreenMode';
     fsDiv.className = 'fullscreen-mode active';
-
     fsDiv.innerHTML = `
         <div id="fs-compass-wrapper" style="width: 96vw; max-width: 460px; height: 96vw; max-height: 460px; margin: 20px auto 10px;"></div>
         <div id="fs-status-wrapper" style="width: 92%; max-width: 460px; margin: 0 auto;"></div>
     `;
-
     document.body.appendChild(fsDiv);
 
-    // Di chuyển element thật
+    // 5. Di chuyển các phần tử vào Fullscreen
     document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
     if (statusPanel) {
         document.getElementById('fs-status-wrapper').appendChild(statusPanel);
@@ -1882,39 +1889,52 @@ function toggleFullScreenMode() {
 
     isFullScreen = true;
 
-    // Cập nhật la bàn
-    setTimeout(() => {
+    // 6. Cập nhật lại UI sau khi di chuyển
+    requestAnimationFrame(() => {
         if (typeof updateCompassUI === 'function' && typeof lastHeading !== 'undefined') {
             updateCompassUI(lastHeading);
         }
-        if (typeof recalculateFate === 'function') recalculateFate();
-    }, 180);
+        if (typeof recalculateFate === 'function') {
+            recalculateFate();
+        }
+    });
 }
 
 function exitFullScreenMode() {
     const fs = document.getElementById('fullscreenMode');
     if (!fs) return;
 
-    const compassContainer = document.querySelector('.compass-container');
-    const statusPanel = document.querySelector('.status-panel');
+    const compass = document.querySelector('.compass-container');
+    const status = document.querySelector('.status-panel');
 
-    if (compassContainer && originalCompassParent) {
-        originalCompassParent.appendChild(compassContainer);
-    }
-    if (statusPanel) {
-        // Trả status panel về đúng vị trí
-        const mainStatusArea = document.querySelector('.compass-container').parentElement.parentElement;
-        if (mainStatusArea) mainStatusArea.appendChild(statusPanel);
+    // 1. Kiểm tra an toàn trước khi di chuyển
+    if (compass && originalCompassParent) {
+        // Trả la bàn về nơi ở cũ
+        originalCompassParent.appendChild(compass);
+
+        // 2. Trả status panel về "đúng vị trí" so với la bàn
+        // Nếu originalCompassParent là container gốc, statusPanel nên nằm ngay sau la bàn
+        if (status) {
+            // Sử dụng insertBefore để đảm bảo status luôn đứng sau compass
+            originalCompassParent.insertBefore(status, compass.nextSibling);
+        }
     }
 
+    // 3. Dọn dẹp DOM
     fs.remove();
     isFullScreen = false;
 
-    setTimeout(() => {
+    // 4. Giải phóng bộ nhớ và reset lại các trạng thái UI
+    // Sử dụng requestAnimationFrame để đảm bảo trình duyệt đã render xong DOM mới
+    requestAnimationFrame(() => {
         if (typeof updateCompassUI === 'function' && typeof lastHeading !== 'undefined') {
             updateCompassUI(lastHeading);
         }
-    }, 100);
+        // Gọi lại recalculateFate nếu cần để đồng bộ dữ liệu
+        if (typeof recalculateFate === 'function') {
+            recalculateFate();
+        }
+    });
 }
 
 // DOUBLE TAP để thoát (rất quan trọng trên mobile)
