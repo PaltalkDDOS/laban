@@ -878,47 +878,91 @@ body {
     padding: 10px;
 }
 /* ====================== FULL SCREEN MODE & ICON ====================== */
-
-/* Icon Fullscreen góc la bàn */
+/* ICON FULLSCREEN NHỎ GỌN - 4 GÓC */
 .fs-icon {
     position: absolute;
-    top: 18px;
-    right: 18px;
-    z-index: 150;
+    top: 12px;
+    right: 12px;
+    z-index: 160;
     cursor: pointer;
-    background: rgba(0,0,0,0.65);
-    color: #dfb76c;
-    font-size: 26px;
-    width: 44px;
-    height: 44px;
+    color: #ffeb3b;
+    font-size: 22px;
+    width: 34px;
+    height: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    border: 2px solid #dfb76c;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.5);
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
     user-select: none;
+    opacity: 0.85;
+    text-shadow: 0 0 8px rgba(255, 235, 59, 0.6);
 }
 
 .fs-icon:hover {
-    background: rgba(223, 183, 108, 0.3);
-    transform: scale(1.12);
-    color: white;
+    opacity: 1;
+    transform: scale(1.25);
+    color: #fff;
+    text-shadow: 0 0 12px rgba(255, 235, 59, 0.9);
 }
 
-/* Responsive mobile */
+/* Mobile */
 @media (max-width: 480px) {
     .fs-icon {
-        top: 16px;
-        right: 16px;
-        width: 48px;
-        height: 48px;
-        font-size: 28px;
+        top: 14px;
+        right: 14px;
+        font-size: 24px;
+        width: 38px;
+        height: 38px;
     }
 }
 
-/* Fullscreen Mode */
+
+
+
+/* Icon Fullscreen - Dạng tối giản, tinh tế */
+.fs-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 160;
+    cursor: pointer;
+    color: #ffeb3b;
+    font-size: 22px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    user-select: none;
+    opacity: 0.85;
+    text-shadow: 0 0 8px rgba(255, 235, 59, 0.6);
+}
+
+.fs-icon:active {
+    transform: scale(0.85); /* Hiệu ứng nhấn */
+    opacity: 1;
+}
+
+.fs-icon:hover {
+    opacity: 1;
+    transform: scale(1.25);
+    color: #fff;
+    text-shadow: 0 0 12px rgba(255, 235, 59, 0.9);
+}
+
+/* Responsive cho mobile */
+@media (max-width: 480px) {
+    .fs-icon {
+        top: 14px;
+        right: 14px;
+        font-size: 24px;
+        width: 38px;
+        height: 38px;
+    }
+}
+
+/* Fullscreen Mode - Mượt mà */
 .fullscreen-mode {
     position: fixed;
     top: 0;
@@ -928,15 +972,18 @@ body {
     background: #0a0a0a;
     z-index: 99999;
     overflow: hidden;
-    display: none;
+    display: none; /* Mặc định ẩn */
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding-top: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .fullscreen-mode.active {
     display: flex;
+    opacity: 1;
 }
 
 /* Wrapper trong fullscreen */
@@ -953,10 +1000,23 @@ body {
     max-width: 460px;
     margin: 10px auto;
 }
+
 /* Đảm bảo khi statusPanel trở về vị trí mặc định không bị lỗi layout */
 .status-panel {
     display: block !important; 
     position: relative !important;
     margin-top: 20px !important;
     width: 100% !important;
+}
+/* Animation nhấp nháy */
+@keyframes blink-fade {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+.fs-icon.blink {
+    animation: blink-fade 1.5s ease-in-out 3; /* Nháy 3 lần */
+}
+.fullscreen-mode {
+    cursor: zoom-out; /* Con trỏ chuột đổi thành dấu trừ khi vào FS */
 }
