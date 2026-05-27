@@ -1733,102 +1733,124 @@ function closeModal() {
         }
     }
 	
-// ====================== XỬ LÝ CẤP QUYỀN VÀ TRUY CẬP CẢM BIẾN TIÊU CHUẨN ======================
+// ====================== XỬ LÝ CẤP QUYỀN VÀ TRUY CẬP CẢM BIẾN ======================
 function requestPermission() {
     const permBtn = document.getElementById('permission-btn');
-    
-    // Kiểm tra xem trình duyệt có hỗ trợ hàm kích hoạt quyền cảm biến của iOS hay không
+
     if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-        // BẮT BUỘC phải gọi dòng này trong sự kiện click của mọi phiên làm việc để Safari nhả dữ liệu cảm biến
         DeviceOrientationEvent.requestPermission()
             .then(permissionState => {
                 if (permissionState === 'granted') {
                     localStorage.setItem('ios_compass_granted', 'true');
                     addOrientationListener();
-                    if (permBtn) permBtn.style.display = 'none';
+                    closePermissionModal();
+                    if (typeof showCustomAlert === 'function') {
+                        showCustomAlert("✅ Cảm biến la bàn đã được kích hoạt thành công!", "Thành Công");
+                    }
                 } else {
                     if (typeof showCustomAlert === 'function') {
                         showCustomAlert("Quyền truy cập cảm biến bị từ chối. Bạn vẫn có thể xoay la bàn thủ công.");
                     } else {
-                        alert("Quyền truy cập cảm biến bị từ chối. Bạn vẫn có thể xoay la bàn thủ công.");
+                        alert("Quyền truy cập cảm biến bị từ chối.");
                     }
                 }
             })
             .catch(err => {
                 console.error(err);
-                let errMsg = "Không thể kích hoạt cảm biến la bàn! Lưu ý quan trọng: Trình duyệt Safari trên iOS bắt buộc bạn phải chạy trang web này qua giao thức bảo mật HTTPS (tên miền có ổ khóa mã hóa) thì mới có thể sử dụng la bàn cảm biến thực địa.";
-                if (typeof showCustomAlert === 'function') showCustomAlert(errMsg); else alert(errMsg);
+                let errMsg = "Không thể kích hoạt cảm biến!\nSafari trên iOS yêu cầu trang web chạy trên HTTPS.";
+                if (typeof showCustomAlert === 'function') showCustomAlert(errMsg);
+                else alert(errMsg);
             });
     } else {
-        // Thiết bị Android hoặc các dòng máy khác không yêu cầu bước xác nhận chủ động của Apple
         addOrientationListener();
-        if (permBtn) permBtn.style.display = 'none';
-        if (typeof showCustomAlert === 'function') showCustomAlert("Cảm biến hướng địa từ đã được kích hoạt thành công!");
+        closePermissionModal();
+        if (typeof showCustomAlert === 'function') {
+            showCustomAlert("Cảm biến đã được kích hoạt!");
+        }
     }
 }
 
 function addOrientationListener() {
     if (orientationListenerAdded) return;
 
-    // Ưu tiên lắng nghe sự kiện tuyệt đối (absolute) trên các máy Android mới nhằm chống nhiễu từ trường địa phương
     if ('ondeviceorientationabsolute' in window) {
         window.addEventListener('deviceorientationabsolute', handleOrientation, true);
     } else if ('ondeviceorientation' in window) {
         window.addEventListener('deviceorientation', handleOrientation, true);
     } else {
-        let noSensorMsg = "Thiết bị hoặc cấu hình trình duyệt hiện tại không hỗ trợ tính năng cảm biến la bàn.";
-        if (typeof showCustomAlert === 'function') showCustomAlert(noSensorMsg); else alert(noSensorMsg);
+        if (typeof showCustomAlert === 'function') {
+            showCustomAlert("Thiết bị không hỗ trợ cảm biến la bàn.");
+        }
         return;
     }
-
     orientationListenerAdded = true;
 }
 
+function closePermissionModal() {
+    const modal = document.getElementById('iosPermissionModal');
+    if (modal) modal.style.display = 'none';
+}
+
+// ====================== KHỞI TẠO - LUÔN HIỂN MODAL TRÊN iOS ======================
 window.onload = function() {
-    // 1. Khởi tạo các thành phần logic của app
     if (typeof render24SonRing === 'function') render24SonRing();
     if (typeof loadSavedMembers === 'function') loadSavedMembers();
     if (typeof recalculateFate === 'function') recalculateFate();
 
-    const permBtn = document.getElementById('permission-btn');
     const modal = document.getElementById('iosPermissionModal');
-    
-    // Kiểm tra thiết bị iOS
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+    const permBtn = document.getElementById('permission-btn');
+
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
                   (navigator.platform === 'MacIntel' && 'ontouchend' in document) ||
                   (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function');
 
     if (isIOS) {
-        // Kiểm tra xem đã từng cấp quyền chưa
-        const hasGranted = localStorage.getItem('ios_compass_granted') === 'true';
+        // LUÔN HIỂN MODAL trên iOS (theo yêu cầu)
+        if (modal) {
+            modal.style.display = 'flex';
+            
+            const hasGranted = localStorage.getItem('ios_compass_granted') === 'true';
+            
+            // Thay đổi nội dung modal tùy theo lần đầu hay lần sau
+            const modalTitle = modal.querySelector('h3');
+            const modalText = modal.querySelector('p');
+            const modalButton = modal.querySelector('button');
 
-        if (!hasGranted) {
-            // LẦN ĐẦU: Hiện Modal trang trọng để người dùng bắt buộc đọc và nhấn Đồng ý
-            if (modal) modal.style.display = 'flex';
-            // Ẩn nút cũ đi vì đã có Modal làm việc đó
-            if (permBtn) permBtn.style.display = 'none';
-        } else {
-            // LẦN SAU: Hiện nút màu vàng nhẹ để người dùng chủ động chạm (yêu cầu bắt buộc của Safari)
-            if (permBtn) {
-                permBtn.style.display = 'block';
-                permBtn.style.background = 'rgba(223, 183, 108, 0.2)';
-                permBtn.style.color = '#dfb76c';
-                permBtn.style.border = '1px solid #dfb76c';
-                permBtn.innerText = "CHẠM ĐỂ KÍCH HOẠT LA BÀN (iOS)";
-                // Đảm bảo nút vẫn gọi hàm requestPermission gốc của bạn
-                permBtn.onclick = requestPermission;
+            if (hasGranted) {
+                // Lần sau: Không hỏi quyền nữa
+                if (modalTitle) modalTitle.textContent = "KÍCH HOẠT LA BÀN";
+                if (modalText) modalText.innerHTML = `
+                    Cảm biến la bàn đã được cấp quyền trước đó.<br><br>
+                    Nhấn nút bên dưới để <strong>kích hoạt la bàn tự động</strong>.
+                `;
+                if (modalButton) {
+                    modalButton.textContent = "KÍCH HOẠT LA BÀN NGAY";
+                    modalButton.onclick = function() {
+                        closePermissionModal();
+                        addOrientationListener();
+                        if (typeof showCustomAlert === 'function') {
+                            showCustomAlert("✅ La bàn đã được kích hoạt!", "Thành Công");
+                        }
+                    };
+                }
+            } else {
+                // Lần đầu: Hỏi quyền bình thường
+                if (modalButton) modalButton.onclick = handleModalClick;
             }
         }
+        
+        // Ẩn nút permission-btn vì dùng modal
+        if (permBtn) permBtn.style.display = 'none';
     } else {
-        // Đối với Android: Tự động chạy ngay lập tức
+        // Android hoặc thiết bị khác
         addOrientationListener();
         if (permBtn) permBtn.style.display = 'none';
     }
 };
 
-// Hàm xử lý nút trong Modal (Đảm bảo gọi đúng hàm requestPermission gốc)
+// Hàm xử lý cho lần đầu (hỏi quyền)
 function handleModalClick() {
     const modal = document.getElementById('iosPermissionModal');
     if (modal) modal.style.display = 'none';
-    requestPermission(); // Gọi lại hàm gốc của bạn
+    requestPermission();
 }
