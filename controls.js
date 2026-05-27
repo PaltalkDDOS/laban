@@ -633,10 +633,12 @@ function recalculateFate() {
     const yearStr = document.getElementById('birthYear').value;
     const mucDich = document.getElementById('purpose').value;
 
-    // Chưa nhập ngày tháng năm sinh
+    // 1. Logic kiểm tra đầu vào
     if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
-        fateTxt.innerText = `${name}: Đo hướng tự do cơ bản (Chưa nhập đủ Ngày - Tháng - Năm sinh)`;
-        directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập đủ 3 ô Ngày, Tháng, Năm sinh để kích hoạt sơ đồ gợi ý Cát/Hung</div>";
+        // Nâng cấp: Dùng innerHTML với <br> để tránh nhảy khung
+        degreeTxt.innerHTML = "0°<br><span style='font-size:0.85em;'>CUNG KHẢM</span>";
+        fateTxt.innerText = `${name}: Đo hướng tự do cơ bản (Chưa nhập đủ ngày tháng năm sinh)`;
+        directionsContainer.innerHTML = "<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>Vui lòng nhập đủ ngày tháng năm sinh để kích hoạt gợi ý</div>";
         listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
         
         const oldPanel = document.getElementById('dien-giai-bo-sung');
@@ -650,43 +652,38 @@ function recalculateFate() {
     let y = parseInt(yearStr);
 
     if (!validateFullDate(d, m, y)) {
-        fateTxt.innerText = `${name}: Lỗi cấu trúc thời gian (Kiểm tra lại số ngày hoặc năm nhuận)`;
+        fateTxt.innerText = `${name}: Lỗi cấu trúc thời gian`;
         return;
     }
 
-    // Tính toán cung mệnh
+    // 2. Tính toán cung mệnh
     chủMệnh = tínhCungPhi(y, m, d, gender);
     const namAm = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
     const nguHoangInfo = getNguHoangInfo(namAm);
-  
     const hanhCungPhi = bátTrạchMap[chủMệnh].element;
     const nhomMenh = bátTrạchMap[chủMệnh].group;
 
+    // Nâng cấp phần hiển thị Sơn (Đảm bảo không bị cắt chữ)
+    // Giả sử currentHeading và getSơnByHeading là hàm có sẵn của bạn
+    const currentSơn = getSơnByHeading(currentHeading); 
+    const degreeVal = Math.round(currentHeading);
+    
+    // Logic mới: Nếu tên Sơn dài thì tự động tách dòng, khung vẫn đứng im
+    degreeTxt.innerHTML = `${degreeVal}°<br><span style="font-size: 0.85em;">CUNG ${currentSơn}</span>`;
+
     fateTxt.innerText = `${name}: Cung ${chủMệnh} (${nhomMenh}) - Bản Mệnh Cung Phi: ${hanhCungPhi} | Năm Âm: ${namAm} | ${nguHoangInfo}`;
 
-    // Xử lý góc khóa khi xem chi tiết
-    let headingToCalculate = currentHeading; 
-    if (isDetailOpen && lockedHeadingAtOpen !== null) {
-        headingToCalculate = lockedHeadingAtOpen;
-    }
-
+    // 3. Xử lý góc khóa & giải thích
+    let headingToCalculate = isDetailOpen && lockedHeadingAtOpen !== null ? lockedHeadingAtOpen : currentHeading;
     const hanhPhuongVi = getHanhByHeading(headingToCalculate);
-
-    // LẤY THÔNG TIN TỪ CONFIG (ĐÂY LÀ ĐIỂM QUAN TRỌNG NHẤT)
     const config = ConfigPhongThuy[mucDich];
     const tenMucDichBinhDan = config ? config.title : "Vị trí / Hướng đang chọn";
 
-    // Giải thích Ngũ Hoàng
-    let giaiThichSao = "";
-    if (nguHoangInfo.includes("Tam Bích") || nguHoangInfo.includes("Tứ Lục")) {
-        giaiThichSao = `Năm sinh âm lịch này gặp sao mang năng lượng Mộc quản năm, khi đóng ở giữa tâm nhà (vốn thuộc Thổ) sẽ gây ra sự lệch khí nhẹ ở mức <b>Trung bình</b>. Chỉ cần giữ khu vực giữa nhà hoặc giữa cửa hàng luôn sạch sẽ, thoáng đãng là tự động hóa giải.`;
-    } else if (nguHoangInfo.includes("Ngũ Hoàng")) {
-        giaiThichSao = `Năm sinh này phạm sao xấu Ngũ Hoàng đóng tại giữa nhà, mang sát khí hành Thổ rất mạnh. Cần giữ trung tâm nhà yên tĩnh, tránh đập phá, sửa chữa lớn ở khu vực này trong năm.`;
-    } else {
-        giaiThichSao = `Năng lượng chủ quản năm sinh tại trung tâm nhà ở trạng thái ổn định, an lành, không có biến động xấu.`;
-    }
+    let giaiThichSao = (nguHoangInfo.includes("Tam Bích") || nguHoangInfo.includes("Tứ Lục")) ? 
+        `Năm sinh này gặp năng lượng Mộc quản năm, cần giữ khu vực giữa nhà thoáng đãng.` :
+        (nguHoangInfo.includes("Ngũ Hoàng") ? `Năm sinh phạm Ngũ Hoàng, tránh đập phá khu vực trung tâm.` : `Năng lượng trung tâm ổn định, an lành.`);
 
-    // Render phần giải thích thuật ngữ
+    // 4. Render phần giải thích
     let targetContainer = document.getElementById('dien-giai-bo-sung');
     if (!targetContainer) {
         targetContainer = document.createElement('div');
@@ -695,28 +692,17 @@ function recalculateFate() {
         fateTxt.parentNode.insertBefore(targetContainer, fateTxt.nextSibling);
     }
 
-    const displayStyle = isDetailOpen ? 'block' : 'none';
-    const btnText = isDetailOpen ? '🙈 Đóng giải thích thuật ngữ' : '👁️ Xem giải thích thuật ngữ hiển thị';
-    const btnBkg = isDetailOpen ? 'rgba(223, 183, 108, 0.15)' : 'transparent';
-
     targetContainer.innerHTML = `
         <div style="text-align: center; margin: 10px 0;">
-            <button id="btn-toggle-fengshui" onclick="toggleDienGiaiChiTiet()"
-                    style="background: ${btnBkg}; border: 1px solid var(--gold); color: var(--gold);
-                           padding: 8px 16px; font-size: 0.85rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
-                ${btnText}
+            <button id="btn-toggle-fengshui" onclick="toggleDienGiaiChiTiet()" style="background: ${isDetailOpen ? 'rgba(223, 183, 108, 0.15)' : 'transparent'}; border: 1px solid var(--gold); color: var(--gold); padding: 8px 16px; font-size: 0.85rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                ${isDetailOpen ? '🙈 Đóng giải thích thuật ngữ' : '👁️ Xem giải thích thuật ngữ'}
             </button>
         </div>
-        <div id="content-dien-giai-chi-tiet" style="display: ${displayStyle}; margin: 10px 0; padding: 14px;
-             background: rgba(223, 183, 108, 0.06); border: 1.5px solid var(--gold); border-radius: 8px;
-             font-size: 0.86rem; line-height: 1.65; text-align: left; color: #fff;">
-            <p style="margin:0 0 10px 0; color:var(--gold); font-weight:bold; border-bottom:1px solid var(--gold); padding-bottom:6px;">
-                📖 GIẢI NGHĨA CÁC THUẬT NGỮ
-            </p>
-            <p style="margin:8px 0;">📍 <b>Phương vị:</b> Là hướng thực tế mà đầu điện thoại/la bàn của bạn đang chĩa vào. Hướng này tương ứng với năng lượng hành <b>${hanhPhuongVi}</b> (Góc xoay la bàn hiện tại: <b>${Math.round(headingToCalculate)}°</b>).</p>
-            <p style="margin:8px 0;">🎯 <b>Mệnh Cung Phi (Hành ${hanhCungPhi}):</b> Quẻ mệnh phong thủy cốt lõi được tính toán dựa trên năm sinh và giới tính của bạn (Bạn thuộc cung <b>${chủMệnh}</b>, nhóm tuổi <b>${nhomMenh}</b>). Mệnh này dùng để đối chiếu trực tiếp với la bàn Bát Trạch phía dưới.</p>
-            <p style="margin:8px 0;">⚠️ <b>Vận khí tâm nhà (Trung Cung):</b> ${giaiThichSao}</p>
-            <p style="margin:8px 0;">🚪 <b>Mục đích xem:</b> Bạn đang tiến hành đo đạc vị trí cho <b>${tenMucDichBinhDan}</b>. Hãy cuộn xuống phía dưới để xem kết quả Cát/Hung chính xác theo hệ Bát Trạch Minh Châu và mật pháp hóa giải.</p>
+        <div id="content-dien-giai-chi-tiet" style="display: ${isDetailOpen ? 'block' : 'none'}; margin: 10px 0; padding: 14px; background: rgba(223, 183, 108, 0.06); border: 1.5px solid var(--gold); border-radius: 8px; font-size: 0.86rem; line-height: 1.65; text-align: left; color: #fff;">
+            <p style="margin:0 0 10px 0; color:var(--gold); font-weight:bold; border-bottom:1px solid var(--gold); padding-bottom:6px;">📖 GIẢI NGHĨA THUẬT NGỮ</p>
+            <p style="margin:8px 0;">📍 <b>Phương vị:</b> Hướng ${hanhPhuongVi} (Góc: ${Math.round(headingToCalculate)}°).</p>
+            <p style="margin:8px 0;">🎯 <b>Mệnh Cung Phi:</b> Bạn thuộc cung <b>${chủMệnh}</b>, hành <b>${hanhCungPhi}</b>.</p>
+            <p style="margin:8px 0;">⚠️ <b>Vận khí:</b> ${giaiThichSao}</p>
         </div>
     `;
 
