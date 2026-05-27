@@ -1025,9 +1025,17 @@ function getLuanDoanChiTiet(huong, son) {
 
 function updateCompassUI(heading) {
     currentHeading = Math.round(heading);
+   
+    // === XOAY LA BÀN GỐC ===
     compass.style.transform = `rotate(${-heading}deg)`;
     needle.style.transform = `rotate(0deg)`;
     compassSlider.value = currentHeading;
+
+    // === XOAY LA BÀN FULLSCREEN (nếu đang mở) ===
+    const fsCompass = document.querySelector('#fs-compass-container .compass-dial');
+    if (fsCompass) {
+        fsCompass.style.transform = `rotate(${-heading}deg)`;
+    }
 
     // ==================== 1. XÁC ĐỊNH 8 CUNG ====================
     let currentCung = "";
@@ -1058,7 +1066,14 @@ function updateCompassUI(heading) {
         if (s.min > s.max) return gockim >= s.min || gockim < s.max;
         return gockim >= s.min && gockim < s.max;
     }) || data24Son[1];
+
     let sơnHiệnTại = sơnHiệnTạiObj.son;
+
+    // Lưu biến toàn cục cho Fullscreen sử dụng
+    window.currentCung = currentCung;
+    window.sơnHiệnTại = sơnHiệnTại;
+    window.sơnHiệnTạiObj = sơnHiệnTạiObj;
+
     degreeTxt.innerText = `${currentHeading}° - Phương ${currentCung} - Sơn ${sơnHiệnTại}`;
 
     // ==================== 3. LẤY DỮ LIỆU ====================
@@ -1216,10 +1231,12 @@ detailBox.innerHTML = noiDungDetail;
         adviceBox.style.display = advices[cungTrạch] ? 'block' : 'none';
         if (advices[cungTrạch]) adviceContent.innerHTML = advices[cungTrạch];
     }
-
+if (isFullscreen && typeof updateFullscreenInfo === 'function') {
+        updateFullscreenInfo(currentHeading);
+    }
     // ==================== 8. HIỆU ỨNG ====================
     kichHoatDenLedQuet(currentHeading);
-
+     
     // Ghost Needle - CHỈ 1 LẦN
     if (targetAngle !== null && document.getElementById('ghostNeedle')) {
         const ghost = document.getElementById('ghostNeedle');
@@ -1847,27 +1864,26 @@ function handleModalClick() {
     if (modal) modal.style.display = 'none';
     requestPermission();
 }
-// ====================== FULLSCREEN LA BÀN - PHIÊN BẢN ỔN ĐỊNH ======================
+// ====================== FULLSCREEN LA BÀN - PHIÊN BẢN CUỐI CÙNG ======================
 let isFullscreen = false;
-let doubleTapTimeout = null;
 
 function enterFullscreenCompass() {
     const fs = document.getElementById('fullscreenCompass');
     const original = document.querySelector('.compass-container');
-    
     if (!fs || !original) return;
 
     const fsContainer = document.getElementById('fs-compass-container');
     fsContainer.innerHTML = original.outerHTML;
 
-    // Fix id cho kim la bàn trong fullscreen
     const clonedDial = fsContainer.querySelector('.compass-dial');
-    if (clonedDial) clonedDial.id = 'fs-compass-dial';
+    if (clonedDial) clonedDial.id = 'compass';
 
     fs.style.display = 'flex';
     isFullscreen = true;
 
-    updateFullscreenInfo();
+    if (typeof updateFullscreenInfo === 'function') {
+        updateFullscreenInfo(window.currentHeading || 0);
+    }
 }
 
 function exitFullscreenCompass() {
@@ -1876,82 +1892,54 @@ function exitFullscreenCompass() {
     isFullscreen = false;
 }
 
-function updateFullscreenInfo() {
-    const degreeEl = document.getElementById('fs-degree');
-    const infoEl = document.getElementById('fs-info');
-
-    const heading = window.currentHeading || 0;
-    const cung = window.currentCung || "KHẢM";
-    const son = window.sơnHiệnTại || "Tý";
-    const huong = window.sơnHiệnTạiObj?.huong || "Bắc";
-
-    if (degreeEl) {
-        degreeEl.textContent = `${Math.round(heading)}° - Phương ${cung} (${huong}) - Sơn ${son}`;
-    }
-
-    let html = `<strong style="color:#dfb76c;">Tọa độ: ${Math.round(heading)}° | Phương: ${huong} | Sơn: ${son}</strong>`;
-
-    const birthYear = document.getElementById('birthYear')?.value;
-    if (birthYear && birthYear.length === 4) {
-        html += `<br><span style="color:#a0ffa0;">Phương vị: ${window.hànhPhươngVị || '—'} | Mệnh: ${window.hànhMệnhChủ || '—'} | Cung vị: ${window.cungTrạch || '—'}</span>`;
-    }
-
-    if (infoEl) infoEl.innerHTML = html;
-}
-
-// Double tap để thoát
-function setupDoubleTapExit() {
-    const fs = document.getElementById('fullscreenCompass');
-    if (!fs) return;
-
-    fs.addEventListener('click', () => {
-        if (!isFullscreen) return;
-        if (doubleTapTimeout) {
-            clearTimeout(doubleTapTimeout);
-            doubleTapTimeout = null;
-            exitFullscreenCompass();
-        } else {
-            doubleTapTimeout = setTimeout(() => doubleTapTimeout = null, 280);
-        }
-    });
-}
-
-// Tạo nút phóng to ở la bàn chính
+// TẠO NÚT PHÓNG TO - ĐẶT NGOÀI VÒNG TRÒN
 function createFullscreenButton() {
     const container = document.querySelector('.compass-container');
     if (!container) return;
 
-    let btn = document.getElementById('fs-enter-btn');
-    if (btn) btn.remove();
+    // Xóa nút cũ nếu có
+    let oldBtn = document.getElementById('fs-enter-btn');
+    if (oldBtn) oldBtn.remove();
 
-    btn = document.createElement('div');
+    const btn = document.createElement('div');
     btn.id = 'fs-enter-btn';
     btn.style.cssText = `
-        position:absolute; top:12px; right:12px; width:46px; height:46px; 
-        background:rgba(223,183,108,0.25); border:2.5px solid #dfb76c; 
-        border-radius:50%; display:flex; align-items:center; justify-content:center; 
-        font-size:1.6rem; color:#dfb76c; z-index:200; cursor:pointer; 
-        box-shadow:0 0 15px rgba(223,183,108,0.5);
+        position: absolute;
+        top: -25px;
+        right: -25px;
+        width: 58px;
+        height: 58px;
+        background: #dfb76c;
+        color: #000;
+        border: 3px solid #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.95rem;
+        z-index: 999;
+        cursor: pointer;
+        box-shadow: 0 0 25px rgba(223,183,108,0.9);
+        user-select: none;
     `;
     btn.innerHTML = '⛶';
-    btn.title = "Toàn màn hình";
-
+    btn.title = "Phóng to toàn màn hình";
     btn.onclick = enterFullscreenCompass;
+
     container.appendChild(btn);
 }
 
 // Khởi tạo
 window.addEventListener('load', () => {
-    setTimeout(() => {
-        createFullscreenButton();
-        setupDoubleTapExit();
-    }, 1200);
+    setTimeout(createFullscreenButton, 1500);   // Delay để chắc chắn DOM load
 });
 
-// Đồng bộ khi la bàn xoay
-const oldUpdate = typeof updateCompassUI === 'function' ? updateCompassUI : null;
-window.updateCompassUI = function(heading) {
-    if (oldUpdate) oldUpdate(heading);
-    window.currentHeading = heading;
-    if (isFullscreen) updateFullscreenInfo();
-};
+// Double tap thoát
+document.getElementById('fullscreenCompass').addEventListener('click', function(e) {
+    let lastTap = this.lastTap || 0;
+    const now = Date.now();
+    if (now - lastTap < 300) {
+        exitFullscreenCompass();
+    }
+    this.lastTap = now;
+});
