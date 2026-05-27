@@ -871,3 +871,11 @@ body {
 #fs-top-right   { top: 20px; right: 20px; }
 #fs-bottom-left { bottom: 100px; left: 20px; }
 #fs-bottom-right{ bottom: 100px; right: 20px; }
+#fullscreenCompass {
+    transition: opacity 0.4s ease;
+}
+
+#fs-compass-container .compass-container {
+    box-shadow: 0 0 40px rgba(223, 183, 108, 0.6);
+    border: 8px solid #dfb76c;
+}
