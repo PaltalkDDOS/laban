@@ -1015,7 +1015,7 @@ body {
 }
 
 .fs-icon.blink {
-    animation: blink-fade 1.5s ease-in-out 3; /* Nháy 3 lần rồi dừng */
+    animation: blink-fade 1.5s ease-in-out 3; /* Nháy 3 lần */
 }
 .fullscreen-mode {
     cursor: zoom-out; /* Con trỏ chuột đổi thành dấu trừ khi vào FS */
