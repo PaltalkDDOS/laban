@@ -1901,20 +1901,27 @@ function exitFullScreenMode() {
     if (compassContainer && originalCompassParent) {
         originalCompassParent.appendChild(compassContainer);
     }
+
+    // Trả status panel về đúng vị trí
     if (statusPanel) {
-        // Trả status panel về đúng vị trí
-        const mainStatusArea = document.querySelector('.compass-container').parentElement.parentElement;
-        if (mainStatusArea) mainStatusArea.appendChild(statusPanel);
+        const statusParent = document.querySelector('.compass-container').parentElement.parentElement;
+        if (statusParent) {
+            statusParent.appendChild(statusPanel);
+        }
     }
 
     fs.remove();
     isFullScreen = false;
 
+    // Buộc cập nhật lại la bàn
     setTimeout(() => {
         if (typeof updateCompassUI === 'function' && typeof lastHeading !== 'undefined') {
             updateCompassUI(lastHeading);
         }
-    }, 100);
+        if (typeof recalculateFate === 'function') {
+            recalculateFate();
+        }
+    }, 80);
 }
 
 // DOUBLE TAP để thoát (rất quan trọng trên mobile)
