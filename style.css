@@ -493,18 +493,7 @@ body {
 }
 
 /* ====================== STATUS PANEL ====================== */
-.status-panel {
-    width: 92%;
-    max-width: 430px;
-    background: var(--panel);
-    border: 1px solid var(--gold);
-    padding: 12px;
-    border-radius: 8px;
-    text-align: center;
-    margin-bottom: 8px;
-    position: relative;
-    z-index: 10;
-}
+
 
 .degree-display {
     font-size: 1rem;
