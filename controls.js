@@ -1937,25 +1937,3 @@ document.addEventListener('touchend', function(e) {
     }
     lastTapTime = currentTime;
 });
-// Khởi tạo trạng thái icon khi load trang
-document.addEventListener('DOMContentLoaded', () => {
-    const fsIcon = document.querySelector('.fs-icon');
-    if (!fsIcon) return;
-
-    // Kiểm tra xem đã hiển thị trước đó chưa
-    const hasSeenIcon = localStorage.getItem('hasSeenIcon');
-
-    if (!hasSeenIcon) {
-        // Nếu chưa từng thấy: Thêm class nháy
-        fsIcon.classList.add('blink');
-        
-        // Sau 5 giây (nháy xong) thì ẩn vĩnh viễn
-        setTimeout(() => {
-            fsIcon.style.display = 'none'; 
-            localStorage.setItem('hasSeenIcon', 'true'); // Ghi nhớ lại
-        }, 5000);
-    } else {
-        // Nếu đã từng thấy rồi thì ẩn luôn
-        fsIcon.style.display = 'none';
-    }
-});
