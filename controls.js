@@ -1850,29 +1850,33 @@ function handleModalClick() {
 let isFullScreen = false;
 
 function toggleFullScreenMode() {
+    const fs = document.getElementById('fullscreenMode');
+    if (fs) {
+        fs.remove();
+        isFullScreen = false;
+        return;
+    }
+
     const fullscreenDiv = document.createElement('div');
     fullscreenDiv.id = 'fullscreenMode';
     fullscreenDiv.className = 'fullscreen-mode active';
     
     fullscreenDiv.innerHTML = `
-        <button onclick="exitFullScreenMode()" class="fullscreen-exit-btn">✕ THOÁT</button>
+        <button onclick="exitFullScreenMode()" 
+                style="position: absolute; top: 20px; right: 20px; background: #ff3b30; color: white; border: none; padding: 10px 18px; border-radius: 30px; font-weight: bold; z-index: 100001;">
+            ✕ THOÁT
+        </button>
         
-        <div class="fullscreen-compass-container">
+        <div style="width: 94vw; max-width: 460px; height: 94vw; max-height: 460px; margin: 20px auto;">
             ${document.querySelector('.compass-container').outerHTML}
         </div>
         
-        <div class="fullscreen-status">
+        <div style="width: 92%; max-width: 460px; text-align: center; margin-top: 10px;">
             ${document.querySelector('.status-panel').outerHTML}
         </div>
     `;
-    
+
     document.body.appendChild(fullscreenDiv);
-    
-    // Cập nhật lại ID cho la bàn trong mode full
-    setTimeout(() => {
-        if (typeof updateCompassUI === 'function') updateCompassUI(lastHeading || 0);
-    }, 100);
-    
     isFullScreen = true;
 }
 
@@ -1882,9 +1886,7 @@ function exitFullScreenMode() {
     isFullScreen = false;
 }
 
-// Nhấn ESC để thoát
-document.addEventListener('keydown', function(e) {
-    if (e.key === "Escape" && isFullScreen) {
-        exitFullScreenMode();
-    }
+// Thoát bằng nút ESC
+document.addEventListener('keydown', (e) => {
+    if (e.key === "Escape") exitFullScreenMode();
 });
