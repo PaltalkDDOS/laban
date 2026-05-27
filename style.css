@@ -925,3 +925,41 @@ body {
     z-index: 100000;
     cursor: pointer;
 }
+/* ICON FULLSCREEN NỔI */
+.fullscreen-icon {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    z-index: 100;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.65);
+    color: #dfb76c;
+    font-size: 26px;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid #dfb76c;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.fullscreen-icon:hover {
+    background: rgba(223, 183, 108, 0.2);
+    transform: scale(1.1);
+    color: #fff;
+}
+
+/* Responsive cho mobile */
+@media (max-width: 480px) {
+    .fullscreen-icon {
+        top: 18px;
+        right: 18px;
+        width: 50px;
+        height: 50px;
+        font-size: 28px;
+    }
+}
