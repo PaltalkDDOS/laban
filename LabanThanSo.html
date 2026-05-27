@@ -274,7 +274,14 @@
     <div id="sonRing" style="display: none;"></div>
   </div>
 </div>
-  
+ <div class="btn-fullscreen" onclick="openFullscreen()">⛶ PHÓNG TO LA BÀN</div>
+
+<div id="fullscreenOverlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:#000; z-index:9999; flex-direction:column; align-items:center; justify-content:center; overflow-y:auto; padding:20px;">
+    <div onclick="closeFullscreen()" style="position:absolute; top:20px; right:20px; color:#dfb76c; cursor:pointer; font-size:30px;">✕</div>
+    <div id="fs-degree-txt" style="color:#dfb76c; font-size:1.2rem; font-weight:bold;"></div>
+    <div id="fs-compass" style="width:70vmin; height:70vmin; margin:20px 0;"> </div>
+    <div id="fs-detail-box" style="width:100%; max-width:500px; color:#fff;"></div>
+</div> 
 <button id="permission-btn" onclick="document.getElementById('iosPermissionModal').style.display = 'flex'" style="display:none; margin: 10px auto; padding: 10px 20px; background: #dfb76c; border: none; border-radius: 5px; font-weight: bold; color: #000;">
     KÍCH HOẠT SENSOR ĐIỆN THOẠI
 </button>
