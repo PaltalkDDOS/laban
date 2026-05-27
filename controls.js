@@ -1847,35 +1847,37 @@ function handleModalClick() {
     if (modal) modal.style.display = 'none';
     requestPermission();
 }
+// Dữ liệu danh mục gốc của bạn (để khởi tạo modal)
+const purposeData = [
+    { label: "🏛️ DƯƠNG TRẠCH CHỦ CỤC", items: [{v:"house", t:"Hướng Nhà / Cửa Chính (Đại Môn)"}, {v:"gate", t:"Hướng Cổng Chính (Lộ Khẩu)"}, {v:"altar", t:"Hướng Bàn Thờ / Ban Thần Tài"}, {v:"bed", t:"Hướng Đầu Giường Ngủ (Sàng Vị)"}, {v:"livingroom", t:"Hướng Phòng Khách (Trung Đường)"}, {v:"bedroom_master", t:"Hướng Phòng Ngủ Chính (Chủ Khang)"}, {v:"balcony", t:"Hướng Ban Công / Cửa Sổ Lớn"}] },
+    { label: "📚 VĂN XƯƠNG KHOA DANH", items: [{v:"workspace", t:"Hướng Bàn Làm Việc (Quyền Lực Vị)"}, {v:"ceo_office", t:"Hướng Phòng Sếp / Bàn Lãnh Đạo"}, {v:"study_desk", t:"Hướng Bàn Học / Văn Xương Vị"}] },
+    { label: "💰 ĐẮC TÀI MẬU DỊCH", items: [{v:"signboard", t:"Hướng Biển Hiệu (Minh Đường Lộ)"}, {v:"counter", t:"Hướng Quầy Thu Ngân (Tài Khố Vị)"}, {v:"safe", t:"Vị trí Két Sắt (Tụ Tài Bảo Khố)"}, {v:"bakery", t:"Hướng Quầy Bánh Mì / Tiệm Bánh"}, {v:"coffee", t:"Hướng Quán Cà Phê / Trà Sữa"}, {v:"restaurant", t:"Hướng Quán Ăn / Nhà Hàng"}, {v:"shop", t:"Hướng Cửa Hàng / Tạp Hóa / Showroom"}, {v:"salon", t:"Hướng Salon Tóc / Nail / Spa"}] },
+    { label: "🛠️ TỌA VỊ TRẤN SÁT", items: [{v:"kitchen", t:"Vị trí Đặt Bếp Nấu (Táo Vị Trấn Sát)"}, {v:"toilet", t:"Vị trí Nhà Vệ Sinh (Huyền Vũ Tiêu Sát)"}, {v:"septic_tank", t:"Vị trí Hầm Tự Hoại / Bể Phốt"}, {v:"storage", t:"Vị trí Kho Hàng / Tủ Đồ Lưu Trữ"}, {v:"trash_area", t:"Vị trí Thùng Rác / Khu Phế Liệu"}] }
+];
+
 function openPurposeModal() {
     const modal = document.getElementById('purposeModal');
     const content = document.getElementById('modalContent');
     
-    // Copy cấu trúc từ select cũ sang nhưng dưới dạng nút bấm
-    // Bạn chỉ cần chạy hàm này 1 lần khi load trang để tạo list
     if (content.innerHTML === '') {
-        const select = document.createElement('select');
-        select.innerHTML = document.getElementById('purpose').innerHTML; // Lấy option từ select gốc
-        
-        let html = '';
-        Array.from(select.children).forEach(group => {
-            if (group.tagName === 'OPTGROUP') {
-                html += `<div style="color:var(--gold); margin:15px 0 5px; font-weight:bold; border-bottom:1px solid #333;">${group.label}</div>`;
-                Array.from(group.children).forEach(opt => {
-                    html += `<div onclick="selectPurpose('${opt.value}', '${opt.text}')" 
-                             style="padding:12px; border:1px solid #333; margin:5px 0; border-radius:6px; background:#1a1a1a;">
-                             ${opt.text}</div>`;
-                });
-            }
+        purposeData.forEach(group => {
+            content.innerHTML += `<div style="color:var(--gold); margin:20px 0 10px; font-weight:bold; font-size:0.9rem; border-bottom:1px solid #333;">${group.label}</div>`;
+            group.items.forEach(item => {
+                content.innerHTML += `<div onclick="selectPurpose('${item.v}', '${item.t}')" 
+                    style="padding:15px; border:1px solid #333; margin:8px 0; border-radius:8px; background:#1a1a1a; cursor:pointer;">
+                    ${item.t}</div>`;
+            });
         });
-        content.innerHTML = html;
     }
     modal.style.display = 'block';
 }
 
 function selectPurpose(value, text) {
-    document.getElementById('purpose').value = value; // Gán cho input ẩn
-    document.getElementById('purposeDisplay').innerText = text; // Hiển thị nút
+    const input = document.getElementById('purpose');
+    input.value = value;
+    document.getElementById('purposeDisplay').innerText = text;
     document.getElementById('purposeModal').style.display = 'none';
-    recalculateFate(); // Gọi lại logic của bạn
+    
+    // Gọi lại hàm xử lý của bạn
+    if (typeof recalculateFate === 'function') recalculateFate();
 }
