@@ -1866,51 +1866,6 @@ function openFullscreen() {
     startFsSync();
 }
 
-function startFsSync() {
-    const fsCompass = document.querySelector('#fs-compass-container #compass');
-    const originalCompass = document.getElementById('compass');
-    
-    const sync = setInterval(() => {
-        if (document.getElementById('fullscreenOverlay').style.display === 'none') {
-            clearInterval(sync);
-            return;
-        }
-        
-        // Đồng bộ xoay (lấy từ cái gốc gán qua cái Fullscreen)
-        if (originalCompass && fsCompass) {
-            fsCompass.style.transform = originalCompass.style.transform;
-        }
-        
-        // Đồng bộ chữ (Bạn hãy điền ID thực tế của bạn vào đây)
-        // Ví dụ: document.getElementById('do-o-goc').innerText
-        document.getElementById('fs-degree').innerText = document.getElementById('degree-display')?.innerText || '0°';
-        document.getElementById('fs-basic-info').innerText = document.getElementById('info-display')?.innerText || '';
-    }, 30);
-}
-
-function closeFullscreen() {
-    document.getElementById('fullscreenOverlay').style.display = 'none';
-    if (document.exitFullscreen) document.exitFullscreen();
-}
-// Nút này bạn hãy đặt ở nơi bạn muốn trong HTML gốc:
-// <div class="btn-fullscreen" onclick="openFullscreen()">⛶ PHÓNG TO LA BÀN</div>
-
-function openFullscreen() {
-    const overlay = document.getElementById('fullscreenOverlay');
-    const fsContainer = document.getElementById('fs-compass-container');
-    const original = document.querySelector('.compass-container');
-    
-    // 1. Clone la bàn (giữ nguyên mọi thứ bên trong)
-    fsContainer.innerHTML = '';
-    fsContainer.appendChild(original.cloneNode(true));
-    
-    overlay.style.display = 'flex';
-    if (overlay.requestFullscreen) overlay.requestFullscreen();
-    
-    // 2. Kích hoạt đồng bộ
-    startFsSync();
-}
-
 let rafId = null;
 
 function startFsSync() {
