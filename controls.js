@@ -1857,14 +1857,16 @@ let lastTapTime = 0;
  * Dùng e.target để biết chính xác người dùng đang bấm vào cái gì
  */
 function handleInteraction(e) {
+    // Tìm phần tử .compass-container gần nhất từ điểm bạn chạm
     const isCompass = e.target.closest('.compass-container');
-    const isFullScreenDiv = e.target.closest('#fullscreenMode');
+    const isFullScreenDiv = document.getElementById('fullscreenMode');
     
-    // Nếu bấm vào la bàn (và chưa full) -> Full màn hình
+    // Nếu chạm vào vùng la bàn (và đang ở chế độ thường)
     if (isCompass && !isFullScreen) {
+        e.preventDefault(); // Ngăn chặn các sự kiện hệ thống khác
         toggleFullScreenMode();
     } 
-    // Nếu bấm vào màn hình full (đang full) -> Thoát
+    // Nếu chạm vào vùng fullscreen (và đang ở chế độ full)
     else if (isFullScreen && isFullScreenDiv) {
         exitFullScreenMode();
     }
