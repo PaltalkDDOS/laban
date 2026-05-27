@@ -921,6 +921,12 @@ body {
     }
 }
 
+/* Tăng độ sáng cho icon khi ở chế độ Fullscreen */
+.fullscreen-mode .fs-icon {
+    opacity: 0.8;
+    color: #ffffff;
+}
+
 /* Fullscreen Mode - Mượt mà */
 .fullscreen-mode {
     position: fixed;
