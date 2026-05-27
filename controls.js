@@ -1847,7 +1847,7 @@ function handleModalClick() {
     if (modal) modal.style.display = 'none';
     requestPermission();
 }
-// Dữ liệu danh mục gốc của bạn (để khởi tạo modal)
+// Dữ liệu và hàm hiển thị modal
 const purposeData = [
     { label: "🏛️ DƯƠNG TRẠCH CHỦ CỤC", items: [{v:"house", t:"Hướng Nhà / Cửa Chính (Đại Môn)"}, {v:"gate", t:"Hướng Cổng Chính (Lộ Khẩu)"}, {v:"altar", t:"Hướng Bàn Thờ / Ban Thần Tài"}, {v:"bed", t:"Hướng Đầu Giường Ngủ (Sàng Vị)"}, {v:"livingroom", t:"Hướng Phòng Khách (Trung Đường)"}, {v:"bedroom_master", t:"Hướng Phòng Ngủ Chính (Chủ Khang)"}, {v:"balcony", t:"Hướng Ban Công / Cửa Sổ Lớn"}] },
     { label: "📚 VĂN XƯƠNG KHOA DANH", items: [{v:"workspace", t:"Hướng Bàn Làm Việc (Quyền Lực Vị)"}, {v:"ceo_office", t:"Hướng Phòng Sếp / Bàn Lãnh Đạo"}, {v:"study_desk", t:"Hướng Bàn Học / Văn Xương Vị"}] },
@@ -1859,25 +1859,23 @@ function openPurposeModal() {
     const modal = document.getElementById('purposeModal');
     const content = document.getElementById('modalContent');
     
-    if (content.innerHTML === '') {
-        purposeData.forEach(group => {
-            content.innerHTML += `<div style="color:var(--gold); margin:20px 0 10px; font-weight:bold; font-size:0.9rem; border-bottom:1px solid #333;">${group.label}</div>`;
-            group.items.forEach(item => {
-                content.innerHTML += `<div onclick="selectPurpose('${item.v}', '${item.t}')" 
-                    style="padding:15px; border:1px solid #333; margin:8px 0; border-radius:8px; background:#1a1a1a; cursor:pointer;">
-                    ${item.t}</div>`;
-            });
+    // Xóa nội dung cũ để nạp lại mới
+    content.innerHTML = ''; 
+    
+    purposeData.forEach(group => {
+        content.innerHTML += `<div style="color:#dfb76c; margin:20px 0 10px; font-weight:bold; font-size:0.9rem; border-bottom:1px solid #333;">${group.label}</div>`;
+        group.items.forEach(item => {
+            content.innerHTML += `<div onclick="selectPurpose('${item.v}', '${item.t}')" 
+                style="padding:15px; border:1px solid #333; margin:8px 0; border-radius:8px; background:#1a1a1a; cursor:pointer; color:#fff;">
+                ${item.t}</div>`;
         });
-    }
+    });
     modal.style.display = 'block';
 }
 
 function selectPurpose(value, text) {
-    const input = document.getElementById('purpose');
-    input.value = value;
+    document.getElementById('purpose').value = value;
     document.getElementById('purposeDisplay').innerText = text;
     document.getElementById('purposeModal').style.display = 'none';
-    
-    // Gọi lại hàm xử lý của bạn
     if (typeof recalculateFate === 'function') recalculateFate();
 }
