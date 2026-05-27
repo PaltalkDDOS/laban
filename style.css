@@ -283,6 +283,11 @@ body {
   justify-content: center;
   overflow: hidden;
   z-index: 10;
+  
+  /* BỔ SUNG CÁI NÀY ĐỂ BẮT LỆNH CHẠM TỐT HƠN */
+  touch-action: manipulation; 
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent; /* Loại bỏ vùng chọn màu xám khi chạm vào la bàn */
 }
 
 .cross-line-v {
