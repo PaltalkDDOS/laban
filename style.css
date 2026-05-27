@@ -878,25 +878,6 @@ body {
     padding: 10px;
 }
 /* ====================== FULL SCREEN MODE ====================== */
-.fullscreen-mode {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #0a0a0a;
-    z-index: 99999;
-    overflow: hidden;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.fullscreen-mode.active {
-    display: flex;
-}
-
 .fullscreen-compass-container {
     width: 92vw;
     max-width: 420px;
@@ -962,4 +943,22 @@ body {
         height: 50px;
         font-size: 28px;
     }
+}
+.fullscreen-mode {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #0a0a0a;
+    z-index: 99999;
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.fullscreen-mode.active {
+    display: flex;
 }
