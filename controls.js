@@ -1744,6 +1744,7 @@ function requestPermission() {
                     localStorage.setItem('ios_compass_granted', 'true');
                     addOrientationListener();
                     closePermissionModal();
+                    // Chỉ hiện thông báo khi lần đầu thành công
                     if (typeof showCustomAlert === 'function') {
                         showCustomAlert("✅ Cảm biến la bàn đã được kích hoạt thành công!", "Thành Công");
                     }
@@ -1764,9 +1765,6 @@ function requestPermission() {
     } else {
         addOrientationListener();
         closePermissionModal();
-        if (typeof showCustomAlert === 'function') {
-            showCustomAlert("Cảm biến đã được kích hoạt!");
-        }
     }
 }
 
@@ -1805,19 +1803,17 @@ window.onload = function() {
                   (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function');
 
     if (isIOS) {
-        // LUÔN HIỂN MODAL trên iOS (theo yêu cầu)
         if (modal) {
             modal.style.display = 'flex';
-            
+           
             const hasGranted = localStorage.getItem('ios_compass_granted') === 'true';
-            
-            // Thay đổi nội dung modal tùy theo lần đầu hay lần sau
+           
             const modalTitle = modal.querySelector('h3');
             const modalText = modal.querySelector('p');
             const modalButton = modal.querySelector('button');
 
             if (hasGranted) {
-                // Lần sau: Không hỏi quyền nữa
+                // === LẦN SAU: Chỉ kích hoạt, KHÔNG hiện alert thừa ===
                 if (modalTitle) modalTitle.textContent = "KÍCH HOẠT LA BÀN";
                 if (modalText) modalText.innerHTML = `
                     Cảm biến la bàn đã được cấp quyền trước đó.<br><br>
@@ -1828,27 +1824,24 @@ window.onload = function() {
                     modalButton.onclick = function() {
                         closePermissionModal();
                         addOrientationListener();
-                        if (typeof showCustomAlert === 'function') {
-                            showCustomAlert("✅ La bàn đã được kích hoạt!", "Thành Công");
-                        }
+                        // KHÔNG hiện alert thành công lần 2
                     };
                 }
             } else {
-                // Lần đầu: Hỏi quyền bình thường
+                // Lần đầu: Hỏi quyền
                 if (modalButton) modalButton.onclick = handleModalClick;
             }
         }
         
-        // Ẩn nút permission-btn vì dùng modal
         if (permBtn) permBtn.style.display = 'none';
     } else {
-        // Android hoặc thiết bị khác
+        // Android & khác
         addOrientationListener();
         if (permBtn) permBtn.style.display = 'none';
     }
 };
 
-// Hàm xử lý cho lần đầu (hỏi quyền)
+// Hàm xử lý lần đầu (hỏi quyền)
 function handleModalClick() {
     const modal = document.getElementById('iosPermissionModal');
     if (modal) modal.style.display = 'none';
