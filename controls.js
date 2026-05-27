@@ -1847,3 +1847,35 @@ function handleModalClick() {
     if (modal) modal.style.display = 'none';
     requestPermission();
 }
+function openPurposeModal() {
+    const modal = document.getElementById('purposeModal');
+    const content = document.getElementById('modalContent');
+    
+    // Copy cấu trúc từ select cũ sang nhưng dưới dạng nút bấm
+    // Bạn chỉ cần chạy hàm này 1 lần khi load trang để tạo list
+    if (content.innerHTML === '') {
+        const select = document.createElement('select');
+        select.innerHTML = document.getElementById('purpose').innerHTML; // Lấy option từ select gốc
+        
+        let html = '';
+        Array.from(select.children).forEach(group => {
+            if (group.tagName === 'OPTGROUP') {
+                html += `<div style="color:var(--gold); margin:15px 0 5px; font-weight:bold; border-bottom:1px solid #333;">${group.label}</div>`;
+                Array.from(group.children).forEach(opt => {
+                    html += `<div onclick="selectPurpose('${opt.value}', '${opt.text}')" 
+                             style="padding:12px; border:1px solid #333; margin:5px 0; border-radius:6px; background:#1a1a1a;">
+                             ${opt.text}</div>`;
+                });
+            }
+        });
+        content.innerHTML = html;
+    }
+    modal.style.display = 'block';
+}
+
+function selectPurpose(value, text) {
+    document.getElementById('purpose').value = value; // Gán cho input ẩn
+    document.getElementById('purposeDisplay').innerText = text; // Hiển thị nút
+    document.getElementById('purposeModal').style.display = 'none';
+    recalculateFate(); // Gọi lại logic của bạn
+}
