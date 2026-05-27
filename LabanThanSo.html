@@ -274,20 +274,7 @@
     <div id="sonRing" style="display: none;"></div>
   </div>
 </div>
-<!-- ==================== FULLSCREEN COMPASS ==================== -->
-<div id="fullscreenCompass" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#050505; z-index:99999; flex-direction:column; align-items:center; justify-content:center; overflow:hidden;">
-    <div id="fs-degree" style="position:absolute; top:25px; left:50%; transform:translateX(-50%); color:#dfb76c; font-size:1.3rem; font-weight:bold; text-align:center; z-index:1000;">
-        0° - Phương KHẢM (BẮC) - Sơn Tý
-    </div>
-    
-    <div id="fs-compass-container" style="width:92vw; height:92vw; max-width:620px; max-height:620px; position:relative;"></div>
-    
-    <div id="fs-info" style="margin-top:20px; text-align:center; color:#ddd; font-size:1rem; line-height:1.6; padding:0 15px;"></div>
-    
-    <div style="position:absolute; bottom:30px; color:#666; font-size:0.85rem;">
-        Nhấn 2 lần màn hình để thoát
-    </div>
-</div>
+  
 <button id="permission-btn" onclick="document.getElementById('iosPermissionModal').style.display = 'flex'" style="display:none; margin: 10px auto; padding: 10px 20px; background: #dfb76c; border: none; border-radius: 5px; font-weight: bold; color: #000;">
     KÍCH HOẠT SENSOR ĐIỆN THOẠI
 </button>
@@ -346,6 +333,17 @@
 </div>
 
 <script src="controls.js"></script>
+<div id="fullscreenOverlay" onclick="if(event.target === this) closeFullscreen()" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 99999; flex-direction: column; align-items: center; justify-content: center;">
+    
+    <div onclick="closeFullscreen()" style="position: absolute; top: 20px; right: 20px; color: #dfb76c; cursor: pointer; font-size: 30px; z-index: 100;">✕</div>
+    
+    <div id="fs-info-box" style="color: #dfb76c; text-align: center; margin-bottom: 20px; font-family: sans-serif;">
+        <div id="fs-degree" style="font-size: 1.5rem; font-weight: bold;"></div>
+        <div id="fs-basic-info" style="font-size: 1.2rem; margin-top: 5px;"></div>
+    </div>
+
+    <div id="fs-compass-container" style="width: 80vmin; height: 80vmin; position: relative;"></div>
+</div>
 </body>
 
 </html>
