@@ -1856,71 +1856,71 @@ function toggleFullScreenMode() {
         return;
     }
 
-    // Lưu vị trí gốc
-    originalCompassParent = document.querySelector('.compass-container').parentNode;
+    originalCompassParent = document.querySelector('.compass-container').parentElement;
 
-    const compassContainer = document.querySelector('.compass-container');
-    const statusPanel = document.querySelector('.status-panel');
+    const compass = document.querySelector('.compass-container');
+    const status = document.querySelector('.status-panel');
 
-    const fullscreenDiv = document.createElement('div');
-    fullscreenDiv.id = 'fullscreenMode';
-    fullscreenDiv.className = 'fullscreen-mode active';
+    const fsDiv = document.createElement('div');
+    fsDiv.id = 'fullscreenMode';
+    fsDiv.className = 'fullscreen-mode active';
 
-    fullscreenDiv.innerHTML = `
-        <button onclick="exitFullScreenMode()" 
-                style="position: absolute; top: 20px; right: 20px; background: #ff3b30; color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; z-index: 100001; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
-            ✕ THOÁT FULLSCREEN
-        </button>
-        
-        <div id="fs-compass-wrapper" style="width: 94vw; max-width: 460px; height: 94vw; max-height: 460px; margin: 30px auto 15px;"></div>
-        
-        <div id="fs-status-wrapper" style="width: 92%; max-width: 460px; margin: 0 auto;"></div>
+    fsDiv.innerHTML = `
+        <div id="fs-compass-wrapper" style="width: 94vw; max-width: 480px; height: 94vw; max-height: 480px; margin: 20px auto;"></div>
+        <div id="fs-status-wrapper" style="width: 92%; max-width: 460px; margin: 10px auto;"></div>
     `;
 
-    document.body.appendChild(fullscreenDiv);
+    document.body.appendChild(fsDiv);
 
-    // Di chuyển element thật (không clone) vào fullscreen
-    const fsCompassWrapper = document.getElementById('fs-compass-wrapper');
-    const fsStatusWrapper = document.getElementById('fs-status-wrapper');
-    
-    fsCompassWrapper.appendChild(compassContainer);
-    fsStatusWrapper.appendChild(statusPanel);
+    // Di chuyển element thật sang
+    document.getElementById('fs-compass-wrapper').appendChild(compass);
+    document.getElementById('fs-status-wrapper').appendChild(status);
 
     isFullScreen = true;
 
-    // Buộc update lại la bàn
+    // Update la bàn
     setTimeout(() => {
-        if (typeof updateCompassUI === 'function' && lastHeading !== null) {
+        if (typeof updateCompassUI === 'function' && lastHeading) {
             updateCompassUI(lastHeading);
         }
-        if (typeof recalculateFate === 'function') {
-            recalculateFate();
-        }
-    }, 150);
+        if (typeof recalculateFate === 'function') recalculateFate();
+    }, 200);
 }
 
 function exitFullScreenMode() {
     const fs = document.getElementById('fullscreenMode');
     if (!fs) return;
 
-    const compassContainer = document.querySelector('.compass-container');
-    const statusPanel = document.querySelector('.status-panel');
+    const compass = document.querySelector('.compass-container');
+    const status = document.querySelector('.status-panel');
 
-    // Trả element về vị trí cũ
-    if (compassContainer && originalCompassParent) {
-        originalCompassParent.appendChild(compassContainer);
+    if (compass && originalCompassParent) {
+        originalCompassParent.appendChild(compass);
     }
-    if (statusPanel) {
-        document.querySelector('.compass-container').parentElement.parentElement.appendChild(statusPanel); // điều chỉnh nếu cần
+    if (status) {
+        document.querySelector('.compass-container').parentElement.parentElement.appendChild(status);
     }
 
     fs.remove();
     isFullScreen = false;
 
-    // Update lại một lần nữa
     setTimeout(() => {
-        if (typeof updateCompassUI === 'function' && lastHeading !== null) {
+        if (typeof updateCompassUI === 'function' && lastHeading) {
             updateCompassUI(lastHeading);
         }
     }, 100);
 }
+
+// === DOUBLE TAP để thoát Fullscreen ===
+let lastTap = 0;
+document.addEventListener('touchend', function(e) {
+    if (!isFullScreen) return;
+    
+    const currentTime = new Date().getTime();
+    const tapLength = currentTime - lastTap;
+    
+    if (tapLength < 500 && tapLength > 0) {
+        exitFullScreenMode();
+    }
+    lastTap = currentTime;
+});
