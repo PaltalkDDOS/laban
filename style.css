@@ -839,41 +839,41 @@ body {
     border: 1px solid #dfb76c;
     color: #dfb76c;
 }
-/* Tối ưu hóa thẻ select cho điện thoại */
-#purpose {
+/* ====================== BEAUTIFUL SELECT ====================== */
+.purpose-select {
     width: 100%;
-    padding: 12px 15px;
-    background: #111 !important;
-    border: 1px solid var(--gold) !important;
-    color: #fff !important;
-    border-radius: 8px;
-    font-size: 0.95rem;
+    padding: 11px 14px;
+    background: #2a2218;
+    border: 1px solid var(--gold);
+    color: #fff;
+    border-radius: 6px;
+    font-size: 0.9rem;
     font-family: 'Times New Roman', Times, serif;
+    outline: none;
     cursor: pointer;
-    
-    /* Mẹo quan trọng: Xóa bỏ hoàn toàn giao diện mặc định xấu xí của trình duyệt */
-    appearance: none; 
+    transition: all 0.2s ease;
+    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    
-    /* Thêm mũi tên vàng tinh tế */
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23dfb76c' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23dfb76c' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.025 2.345 4 3.204 4h9.592c.858 0 1.319 1.025.753 1.659l-4.796 5.48a1 1 0 01-1.506 0z'/%3E%3C/svg%3E");
+    background-position: right 14px center;
     background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 8px 10px;
+    background-size: 12px;
 }
 
-/* Hiệu ứng khi nhấn vào */
-#purpose:focus {
-    border-color: #fff;
-    box-shadow: 0 0 8px rgba(223, 183, 108, 0.4);
-    outline: none;
+.purpose-select:hover {
+    border-color: #f1c40f;
+    box-shadow: 0 0 8px rgba(223, 183, 108, 0.3);
 }
 
-/* Style cho các nhóm mục đích để khi xổ xuống trông sang hơn */
-optgroup {
-    background: #1a1a1a;
-    color: var(--gold);
-    font-weight: bold;
-    font-size: 0.9rem;
+.purpose-select:focus {
+    border-color: #f1c40f;
+    box-shadow: 0 0 12px rgba(223, 183, 108, 0.5);
+}
+
+/* Tùy chỉnh option trên mobile */
+.purpose-select option {
+    background: #1f1a14;
+    color: #fff;
+    padding: 10px;
 }
