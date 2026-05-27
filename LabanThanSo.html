@@ -333,15 +333,19 @@
 </div>
 
 <script src="controls.js"></script>
-<div id="fullscreenOverlay" onclick="this.style.display='none'" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 99999; flex-direction: column; align-items: center; justify-content: center;">
+<div id="fullscreenOverlay" onclick="this.style.display='none'" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: <div id="fullscreenOverlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:#000; z-index:99999; flex-direction:column; align-items:center; justify-content:center; overflow-y:auto; padding:20px;">
     
-    <div id="fs-degree-txt" style="color:#dfb76c; font-size: 20px; font-weight:bold; margin-bottom: 20px;"></div>
+    <div onclick="closeFullscreen()" style="position:absolute; top:20px; right:20px; color:#dfb76c; cursor:pointer; font-size:30px;">✕</div>
     
-    <div id="fs-compass" style="width: 80vmin; height: 80vmin; background: #1a1a1a; border-radius: 50%; border: 6px solid #b58e4b;">
-       </div>
-
-    <div id="fs-detail-box" style="margin-top: 20px; color:#fff; width: 90%; max-width: 500px; font-size: 14px;"></div>
+    <div id="fs-degree-txt" style="color:#dfb76c; font-size:1.2rem; font-weight:bold; margin-bottom:15px;"></div>
+    
+    <div id="fs-compass" style="width:70vmin; height:70vmin; margin-bottom:20px;">
+        </div>
+    
+    <div id="fs-detail-box" style="width:100%; max-width:500px; color:#fff;"></div>
 </div>
+
+<div class="btn-fullscreen" onclick="openFullscreen()">⛶ PHÓNG TO LA BÀN</div>
 </body>
 
 </html>
