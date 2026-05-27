@@ -877,43 +877,79 @@ body {
     color: #fff;
     padding: 10px;
 }
-/* ICON FULLSCREEN ĐẸP & NỔI BẬT */
+/* ====================== FULL SCREEN MODE & ICON ====================== */
+
+/* Icon Fullscreen góc la bàn */
 .fs-icon {
     position: absolute;
-    top: 28px;           /* Đã dịch xuống dưới một chút */
-    right: 22px;
-    z-index: 160;
+    top: 18px;
+    right: 18px;
+    z-index: 150;
     cursor: pointer;
-    background: rgba(0,0,0,0.4);
-    color: #ffeb3b;      /* Màu vàng sáng nổi bật */
-    font-size: 29px;
-    width: 48px;
-    height: 48px;
+    background: rgba(0,0,0,0.65);
+    color: #dfb76c;
+    font-size: 26px;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    border: 2.5px solid #ffeb3b;
-    box-shadow: 0 0 12px rgba(255, 235, 59, 0.6),
-                0 4px 15px rgba(0,0,0,0.5);
-    transition: all 0.25s ease;
+    border: 2px solid #dfb76c;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+    transition: all 0.2s ease;
     user-select: none;
 }
 
 .fs-icon:hover {
-    background: rgba(255, 235, 59, 0.25);
-    transform: scale(1.18) rotate(15deg);
+    background: rgba(223, 183, 108, 0.3);
+    transform: scale(1.12);
     color: white;
-    box-shadow: 0 0 18px rgba(255, 235, 59, 0.9);
 }
 
-/* Mobile tối ưu */
+/* Responsive mobile */
 @media (max-width: 480px) {
     .fs-icon {
-        top: 24px;
-        right: 20px;
-        width: 52px;
-        height: 52px;
-        font-size: 31px;
+        top: 16px;
+        right: 16px;
+        width: 48px;
+        height: 48px;
+        font-size: 28px;
     }
+}
+
+/* Fullscreen Mode */
+.fullscreen-mode {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #0a0a0a;
+    z-index: 99999;
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.fullscreen-mode.active {
+    display: flex;
+}
+
+/* Wrapper trong fullscreen */
+#fs-compass-wrapper {
+    width: 96vw;
+    max-width: 480px;
+    height: 96vw;
+    max-height: 480px;
+    margin: 10px auto;
+}
+
+#fs-status-wrapper {
+    width: 92%;
+    max-width: 460px;
+    margin: 10px auto;
 }
