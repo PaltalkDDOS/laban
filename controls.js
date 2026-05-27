@@ -1894,11 +1894,16 @@ function toggleFullScreenMode() {
     if (!compassContainer) return;
     if (!originalCompassParent) originalCompassParent = compassContainer.parentElement;
 
-    // Tạo Fullscreen Container
+    // --- NÂNG CẤP: TÌM VÀ ẨN CÁC PHẦN GIẢI THÍCH ---
+    // Giả sử phần giải thích của bạn có ID là 'dien-giai-bo-sung'
+    const giaiThichThuatNgu = document.getElementById('dien-giai-bo-sung');
+    if (giaiThichThuatNgu) {
+        giaiThichThuatNgu.style.display = 'none'; // Ẩn nó đi khi vào Fullscreen
+    }
+
     const fsDiv = document.createElement('div');
     fsDiv.id = 'fullscreenMode';
     fsDiv.className = 'fullscreen-mode active';
-    // Thêm style để chống tràn màn hình mobile
     fsDiv.style.cssText = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.9); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:opacity 0.3s;";
     
     fsDiv.innerHTML = `
@@ -1910,7 +1915,6 @@ function toggleFullScreenMode() {
     document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
     if (statusPanel) document.getElementById('fs-status-wrapper').appendChild(statusPanel);
 
-    // Ẩn icon nếu có
     if (fsIcon) fsIcon.style.opacity = '0';
 
     isFullScreen = true;
@@ -1926,16 +1930,20 @@ function exitFullScreenMode() {
         const compass = document.querySelector('.compass-container');
         const status = document.querySelector('.status-panel');
         const fsIcon = document.querySelector('.fs-icon');
+        const giaiThichThuatNgu = document.getElementById('dien-giai-bo-sung');
 
         if (compass && originalCompassParent) {
             originalCompassParent.appendChild(compass);
             if (status) originalCompassParent.insertBefore(status, compass.nextSibling);
         }
 
+        // --- NÂNG CẤP: HIỆN LẠI PHẦN GIẢI THÍCH KHI THOÁT ---
+        if (giaiThichThuatNgu) {
+            giaiThichThuatNgu.style.display = ''; // Quay về trạng thái mặc định (có thể là block hoặc flex)
+        }
+
         fs.remove();
         isFullScreen = false;
-        
-        // Hiện lại icon
         if (fsIcon) fsIcon.style.opacity = '1';
         
         if (typeof updateCompassUI === 'function') updateCompassUI(lastHeading);
