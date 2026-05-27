@@ -1025,13 +1025,13 @@ function getLuanDoanChiTiet(huong, son) {
 
 function updateCompassUI(heading) {
     currentHeading = Math.round(heading);
-   
+  
     // === XOAY LA BÀN GỐC ===
     compass.style.transform = `rotate(${-heading}deg)`;
     needle.style.transform = `rotate(0deg)`;
     compassSlider.value = currentHeading;
 
-    // === XOAY LA BÀN FULLSCREEN (nếu đang mở) ===
+    // === XOAY LA BÀN FULLSCREEN ===
     const fsCompass = document.querySelector('#fs-compass-container .compass-dial');
     if (fsCompass) {
         fsCompass.style.transform = `rotate(${-heading}deg)`;
@@ -1060,7 +1060,6 @@ function updateCompassUI(heading) {
 
     // ==================== 2. 24 SƠN ====================
     const data24Son = [{ son: "Nhâm", min: 337.5, max: 352.5, huong: "Bắc" }, { son: "Tý", min: 352.5, max: 7.5, huong: "Bắc" }, { son: "Quý", min: 7.5, max: 22.5, huong: "Bắc" }, { son: "Sửu", min: 22.5, max: 37.5, huong: "Đông Bắc" }, { son: "Cấn", min: 37.5, max: 52.5, huong: "Đông Bắc" }, { son: "Dần", min: 52.5, max: 67.5, huong: "Đông Bắc" }, { son: "Giáp", min: 67.5, max: 82.5, huong: "Đông" }, { son: "Mão", min: 82.5, max: 97.5, huong: "Đông" }, { son: "Ất", min: 97.5, max: 112.5, huong: "Đông" }, { son: "Thìn", min: 112.5, max: 127.5, huong: "Đông Nam" }, { son: "Tốn", min: 127.5, max: 142.5, huong: "Đông Nam" }, { son: "Tỵ", min: 142.5, max: 157.5, huong: "Đông Nam" }, { son: "Bính", min: 157.5, max: 172.5, huong: "Nam" }, { son: "Ngọ", min: 172.5, max: 187.5, huong: "Nam" }, { son: "Đinh", min: 187.5, max: 202.5, huong: "Nam" }, { son: "Mùi", min: 202.5, max: 217.5, huong: "Tây Nam" }, { son: "Khôn", min: 217.5, max: 232.5, huong: "Tây Nam" }, { son: "Thân", min: 232.5, max: 247.5, huong: "Tây Nam" }, { son: "Canh", min: 247.5, max: 262.5, huong: "Tây" }, { son: "Dậu", min: 262.5, max: 277.5, huong: "Tây" }, { son: "Tân", min: 277.5, max: 292.5, huong: "Tây" }, { son: "Tuất", min: 292.5, max: 307.5, huong: "Tây Bắc" }, { son: "Càn", min: 307.5, max: 322.5, huong: "Tây Bắc" }, { son: "Hợi", min: 322.5, max: 337.5, huong: "Tây Bắc" }];
-
     let gockim = (currentHeading % 360 + 360) % 360;
     let sơnHiệnTạiObj = data24Son.find(s => {
         if (s.min > s.max) return gockim >= s.min || gockim < s.max;
@@ -1069,14 +1068,24 @@ function updateCompassUI(heading) {
 
     let sơnHiệnTại = sơnHiệnTạiObj.son;
 
-    // Lưu biến toàn cục cho Fullscreen sử dụng
+    // Lưu biến toàn cục cho Fullscreen
     window.currentCung = currentCung;
     window.sơnHiệnTại = sơnHiệnTại;
     window.sơnHiệnTạiObj = sơnHiệnTạiObj;
 
     degreeTxt.innerText = `${currentHeading}° - Phương ${currentCung} - Sơn ${sơnHiệnTại}`;
 
-    // ==================== 3. LẤY DỮ LIỆU ====================
+    // ==================== 3. LẤY DỮ LIỆU (phần còn lại của bạn) ====================
+    const dayStr = document.getElementById('birthDay').value;
+    const monthStr = document.getElementById('birthMonth').value;
+    const yearStr = document.getElementById('birthYear').value;
+    const mụcĐích = document.getElementById('purpose').value;
+    const adviceBox = document.getElementById('pro-advice-box');
+    const adviceContent = document.getElementById('advice-content');
+
+    // ==================== Phần còn lại của hàm gốc (từ CHẾ ĐỘ THÔ trở xuống) ====================
+    // === Bạn copy nguyên phần code cũ từ đây trở xuống ===
+
     const dayStr = document.getElementById('birthDay').value;
     const monthStr = document.getElementById('birthMonth').value;
     const yearStr = document.getElementById('birthYear').value;
