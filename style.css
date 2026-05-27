@@ -839,3 +839,35 @@ body {
     border: 1px solid #dfb76c;
     color: #dfb76c;
 }
+/* ====================== FULLSCREEN LA BÀN CSS ====================== */
+#fullscreenCompass {
+    transition: all 0.4s ease;
+}
+
+#fs-compass-container .compass-container {
+    box-shadow: 0 0 50px rgba(223, 183, 108, 0.7);
+    border: 8px solid #dfb76c;
+    background: #0a0a0a;
+}
+
+#fs-degree {
+    text-shadow: 0 0 15px rgba(0,0,0,0.9);
+}
+
+#fs-info {
+    background: rgba(0,0,0,0.6);
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 1px solid #dfb76c;
+    max-width: 85%;
+}
+
+/* Nút phóng to */
+#fs-btn {
+    transition: all 0.2s ease;
+}
+
+#fs-btn:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 30px rgba(223,183,108,1);
+}
