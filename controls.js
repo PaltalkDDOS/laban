@@ -1733,38 +1733,39 @@ function closeModal() {
         }
     }
 	
-// ====================== XỬ LÝ CẤP QUYỀN VÀ TRUY CẬP CẢM BIẾN ======================
+// ====================== XỬ LÝ CẤP QUYỀN VÀ TRUY CẬP CẢM BIẾN TIÊU CHUẨN ======================
 function requestPermission() {
     const permBtn = document.getElementById('permission-btn');
 
     if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        // iOS / Safari cần requestPermission
         DeviceOrientationEvent.requestPermission()
             .then(permissionState => {
+                closePermissionModal();
                 if (permissionState === 'granted') {
                     localStorage.setItem('ios_compass_granted', 'true');
                     addOrientationListener();
-                    closePermissionModal();
-                    // Chỉ hiện thông báo khi lần đầu thành công
-                    if (typeof showCustomAlert === 'function') {
-                        showCustomAlert("✅ Cảm biến la bàn đã được kích hoạt thành công!", "Thành Công");
-                    }
+                    if (permBtn) permBtn.style.display = 'none';
+                    // KHÔNG hiện alert thành công (theo yêu cầu mới)
                 } else {
                     if (typeof showCustomAlert === 'function') {
-                        showCustomAlert("Quyền truy cập cảm biến bị từ chối. Bạn vẫn có thể xoay la bàn thủ công.");
-                    } else {
-                        alert("Quyền truy cập cảm biến bị từ chối.");
+                        showCustomAlert("Bạn đã từ chối quyền truy cập cảm biến.\nBạn vẫn có thể xoay la bàn thủ công.", "Thông báo");
                     }
                 }
             })
             .catch(err => {
                 console.error(err);
-                let errMsg = "Không thể kích hoạt cảm biến!\nSafari trên iOS yêu cầu trang web chạy trên HTTPS.";
+                closePermissionModal();
+                let errMsg = "Không thể kích hoạt cảm biến la bàn!\n\nSafari trên iOS yêu cầu trang web phải chạy trên HTTPS.";
                 if (typeof showCustomAlert === 'function') showCustomAlert(errMsg);
                 else alert(errMsg);
             });
     } else {
-        addOrientationListener();
+        // Android, Chrome, Firefox... không cần requestPermission
         closePermissionModal();
+        addOrientationListener();
+        if (permBtn) permBtn.style.display = 'none';
+        // KHÔNG hiện alert "thành công" trên Android nữa
     }
 }
 
@@ -1776,9 +1777,8 @@ function addOrientationListener() {
     } else if ('ondeviceorientation' in window) {
         window.addEventListener('deviceorientation', handleOrientation, true);
     } else {
-        if (typeof showCustomAlert === 'function') {
-            showCustomAlert("Thiết bị không hỗ trợ cảm biến la bàn.");
-        }
+        let noSensorMsg = "Thiết bị hoặc cấu hình trình duyệt hiện tại không hỗ trợ tính năng cảm biến la bàn.";
+        if (typeof showCustomAlert === 'function') showCustomAlert(noSensorMsg);
         return;
     }
     orientationListenerAdded = true;
@@ -1789,59 +1789,59 @@ function closePermissionModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// ====================== KHỞI TẠO - LUÔN HIỂN MODAL TRÊN iOS ======================
+// ====================== KHỞI TẠO ======================
 window.onload = function() {
+    // Khởi tạo các chức năng chính của app
     if (typeof render24SonRing === 'function') render24SonRing();
     if (typeof loadSavedMembers === 'function') loadSavedMembers();
     if (typeof recalculateFate === 'function') recalculateFate();
 
-    const modal = document.getElementById('iosPermissionModal');
     const permBtn = document.getElementById('permission-btn');
+    const modal = document.getElementById('iosPermissionModal');
 
+    // Kiểm tra iOS
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
                   (navigator.platform === 'MacIntel' && 'ontouchend' in document) ||
                   (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function');
 
-    if (isIOS) {
-        if (modal) {
-            modal.style.display = 'flex';
-           
-            const hasGranted = localStorage.getItem('ios_compass_granted') === 'true';
-           
-            const modalTitle = modal.querySelector('h3');
-            const modalText = modal.querySelector('p');
-            const modalButton = modal.querySelector('button');
+    if (isIOS && modal) {
+        // === iOS: Luôn hiện modal đẹp ===
+        modal.style.display = 'flex';
 
-            if (hasGranted) {
-                // === LẦN SAU: Chỉ kích hoạt, KHÔNG hiện alert thừa ===
-                if (modalTitle) modalTitle.textContent = "KÍCH HOẠT LA BÀN";
-                if (modalText) modalText.innerHTML = `
-                    Cảm biến la bàn đã được cấp quyền trước đó.<br><br>
-                    Nhấn nút bên dưới để <strong>kích hoạt la bàn tự động</strong>.
-                `;
-                if (modalButton) {
-                    modalButton.textContent = "KÍCH HOẠT LA BÀN NGAY";
-                    modalButton.onclick = function() {
-                        closePermissionModal();
-                        addOrientationListener();
-                        // KHÔNG hiện alert thành công lần 2
-                    };
-                }
-            } else {
-                // Lần đầu: Hỏi quyền
-                if (modalButton) modalButton.onclick = handleModalClick;
+        const hasGranted = localStorage.getItem('ios_compass_granted') === 'true';
+        const modalTitle = modal.querySelector('h3');
+        const modalText = modal.querySelector('p');
+        const modalButton = modal.querySelector('button');
+
+        if (hasGranted) {
+            // Lần sau
+            if (modalTitle) modalTitle.textContent = "KÍCH HOẠT LA BÀN";
+            if (modalText) modalText.innerHTML = `Cảm biến la bàn đã được cấp quyền trước đó.<br><br>Nhấn để kích hoạt la bàn tự động.`;
+            if (modalButton) {
+                modalButton.textContent = "KÍCH HOẠT NGAY";
+                modalButton.onclick = () => {
+                    closePermissionModal();
+                    addOrientationListener();
+                };
             }
+        } else {
+            // Lần đầu
+            if (modalTitle) modalTitle.textContent = "KÍCH HOẠT LA BÀN";
+            if (modalText) modalText.innerHTML = `Để la bàn xoay tự động theo hướng điện thoại,<br>vui lòng cho phép truy cập cảm biến chuyển động.`;
+            if (modalButton) modalButton.onclick = handleModalClick;
         }
-        
+
+        // Ẩn nút dự phòng
         if (permBtn) permBtn.style.display = 'none';
-    } else {
-        // Android & khác
+    } 
+    else {
+        // Android, Chrome, Firefox... → Tự động kích hoạt
         addOrientationListener();
         if (permBtn) permBtn.style.display = 'none';
     }
 };
 
-// Hàm xử lý lần đầu (hỏi quyền)
+// Hàm xử lý cho lần đầu (gọi request của Safari)
 function handleModalClick() {
     const modal = document.getElementById('iosPermissionModal');
     if (modal) modal.style.display = 'none';
