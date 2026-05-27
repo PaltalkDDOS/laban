@@ -46,45 +46,22 @@
             </div>
 
 <div class="form-group" style="margin-bottom: 10px;">
-    <label style="display: block; font-size: 0.85rem; color: var(--gold); margin-bottom: 4px; font-weight: bold;">Mục đích tầm phương vị:</label>
-    <select id="purpose" onchange="recalculateFate()" style="width: 100%; padding: 5px; background: #111; border: 1px solid var(--gold); color: #fff; border-radius: 4px; font-size: 0.9rem; outline: none; cursor: pointer; font-family: 'Times New Roman', Times, serif;">
-        <option value="">-- Khởi Tạo Mục Đích Tầm Phương --</option>
-        
-        <optgroup label="🏛️ DƯƠNG TRẠCH CHỦ CỤC (Nhà Ở & Sinh Hoạt)">
-            <option value="house">Hướng Nhà / Cửa Chính (Đại Môn)</option>
-            <option value="gate">Hướng Cổng Chính (Lộ Khẩu)</option>
-            <option value="altar">Hướng Bàn Thờ / Ban Thần Tài</option>
-            <option value="bed">Hướng Đầu Giường Ngủ (Sàng Vị)</option>
-            <option value="livingroom">Hướng Phòng Khách (Trung Đường)</option>
-            <option value="bedroom_master">Hướng Phòng Ngủ Chính (Chủ Khang)</option>
-            <option value="balcony">Hướng Ban Công / Cửa Sổ Lớn</option>
-        </optgroup>
-        
-        <optgroup label="📚 VĂN XƯƠNG KHOA DANH (Học Hành & Sự Nghiệp)">
-            <option value="workspace">Hướng Bàn Làm Việc (Quyền Lực Vị)</option>
-            <option value="ceo_office">Hướng Phòng Sếp / Bàn Lãnh Đạo</option>
-            <option value="study_desk">Hướng Bàn Học / Văn Xương Vị</option>
-        </optgroup>
-        
-        <optgroup label="💰 ĐẮC TÀI MẬU DỊCH (Kinh Doanh Thương MẠi)">
-            <option value="signboard">Hướng Biển Hiệu (Minh Đường Lộ)</option>
-            <option value="counter">Hướng Quầy Thu Ngân (Tài Khố Vị)</option>
-            <option value="safe">Vị trí Két Sắt (Tụ Tài Bảo Khố)</option>
-            <option value="bakery">Hướng Quầy Bánh Mì / Tiệm Bánh</option>
-            <option value="coffee">Hướng Quán Cà Phê / Trà Sữa</option>
-            <option value="restaurant">Hướng Quán Ăn / Nhà Hàng</option>
-            <option value="shop">Hướng Cửa Hàng / Tạp Hóa / Showroom</option>
-            <option value="salon">Hướng Salon Tóc / Nail / Spa</option>
-        </optgroup>
-        
-        <optgroup label="🛠️ TỌA VỊ TRẤN SÁT (Hệ Thống Đè Hung Kỹ Thuật)">
-            <option value="kitchen">Vị trí Đặt Bếp Nấu (Táo Vị Trấn Sát)</option>
-            <option value="toilet">Vị trí Nhà Vệ Sinh (Huyền Vũ Tiêu Sát)</option>
-            <option value="septic_tank">Vị trí Hầm Tự Hoại / Bể Phốt</option>
-            <option value="storage">Vị trí Kho Hàng / Tủ Đồ Lưu Trữ</option>
-            <option value="trash_area">Vị trí Thùng Rác / Khu Phế Liệu</option>
-        </optgroup>
-    </select>
+    <label style="display: block; font-size: 0.85rem; color: var(--gold); margin-bottom: 6px; font-weight: bold; text-transform: uppercase;">Mục đích tầm phương vị:</label>
+    
+    <div id="purposeDisplay" onclick="openPurposeModal()" 
+         style="width: 100%; padding: 12px; background: #111; border: 1px solid var(--gold); color: #fff; border-radius: 6px; font-size: 0.95rem; cursor: pointer; text-align: center; font-family: 'Times New Roman';">
+         -- Khởi Tạo Mục Đích Tầm Phương --
+    </div>
+    <input type="hidden" id="purpose" value="" onchange="recalculateFate()">
+</div>
+
+<div id="purposeModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:99999; padding:20px; overflow-y:auto;">
+    <div style="max-width: 500px; margin: auto;">
+        <h3 style="text-align:center; color: var(--gold); margin-bottom:20px;">CHỌN MỤC ĐÍCH</h3>
+        <div id="modalContent"></div>
+        <button onclick="document.getElementById('purposeModal').style.display='none'" 
+                style="width:100%; margin-top:20px; padding:12px; background:#333; color:#fff; border:none; border-radius:6px;">ĐÓNG</button>
+    </div>
 </div>
 
             <div class="btn-action-row">
