@@ -1852,31 +1852,43 @@ let isFullScreen = false;
 let originalCompassParent = null;
 let lastTapTime = 0;
 
-// Khởi tạo sự kiện khi trang tải xong
+// Sử dụng Event Delegation gắn vào document
 document.addEventListener('DOMContentLoaded', () => {
-    const compassContainer = document.querySelector('.compass-container');
     const fsIcon = document.querySelector('.fs-icon');
 
-    // 1. Hiệu ứng nhấp nháy icon lần đầu
+    // 1. Hiệu ứng nháy icon lần đầu (dùng localStorage)
     if (fsIcon && !localStorage.getItem('hasSeenFsIcon')) {
         fsIcon.classList.add('blink');
         localStorage.setItem('hasSeenFsIcon', 'true');
         setTimeout(() => fsIcon.classList.remove('blink'), 5000);
     }
-
-    // 2. Lắng nghe Double Tap/Click vào La Bàn để vào Fullscreen
-    compassContainer.addEventListener('touchend', handleCompassTap);
-    compassContainer.addEventListener('dblclick', toggleFullScreenMode);
 });
 
-function handleCompassTap(e) {
-    if (isFullScreen) return;
+// Sự kiện CHUNG cho cả La Bàn (để vào FS) và Màn hình FS (để thoát)
+document.addEventListener('touchend', (e) => {
     const currentTime = new Date().getTime();
-    if (currentTime - lastTapTime < 450) {
-        toggleFullScreenMode();
+    const tapLength = currentTime - lastTapTime;
+    
+    // Xử lý Double Tap vào La Bàn để vào Fullscreen
+    if (e.target.closest('.compass-container') && !isFullScreen) {
+        if (tapLength < 450 && tapLength > 0) toggleFullScreenMode();
     }
+    // Xử lý Double Tap vào màn hình Fullscreen để thoát
+    else if (isFullScreen && document.getElementById('fullscreenMode') && tapLength < 450) {
+        exitFullScreenMode();
+    }
+    
     lastTapTime = currentTime;
-}
+});
+
+// Xử lý Double Click cho Desktop (Máy tính)
+document.addEventListener('dblclick', (e) => {
+    if (e.target.closest('.compass-container') && !isFullScreen) {
+        toggleFullScreenMode();
+    } else if (isFullScreen) {
+        exitFullScreenMode();
+    }
+});
 
 function toggleFullScreenMode() {
     if (isFullScreen) return;
@@ -1886,7 +1898,6 @@ function toggleFullScreenMode() {
     const fsIcon = document.querySelector('.fs-icon');
 
     if (!compassContainer) return;
-
     if (!originalCompassParent) originalCompassParent = compassContainer.parentElement;
 
     const fsDiv = document.createElement('div');
@@ -1901,8 +1912,8 @@ function toggleFullScreenMode() {
     document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
     if (statusPanel) document.getElementById('fs-status-wrapper').appendChild(statusPanel);
     
-    // Ẩn icon vĩnh viễn sau khi đã vào lần đầu
-    if (fsIcon) fsIcon.style.display = 'none';
+    // Ẩn icon nhưng không xóa nó khỏi DOM
+    if (fsIcon) fsIcon.classList.add('hidden');
 
     isFullScreen = true;
 
@@ -1914,6 +1925,7 @@ function toggleFullScreenMode() {
 
 function exitFullScreenMode() {
     const fs = document.getElementById('fullscreenMode');
+    const fsIcon = document.querySelector('.fs-icon');
     if (!fs) return;
 
     fs.style.opacity = '0';
@@ -1925,32 +1937,14 @@ function exitFullScreenMode() {
         if (compass && originalCompassParent) {
             originalCompassParent.appendChild(compass);
             if (status) originalCompassParent.insertBefore(status, compass.nextSibling);
-            
-            // --- NÂNG CẤP TẠI ĐÂY ---
-            // Gán lại sự kiện Double Tap vào la bàn sau khi nó được trả về
-            compass.removeEventListener('touchend', handleCompassTap); // Tránh trùng lặp
-            compass.addEventListener('touchend', handleCompassTap);
-            
-            compass.removeEventListener('dblclick', toggleFullScreenMode);
-            compass.addEventListener('dblclick', toggleFullScreenMode);
-            // ------------------------
         }
 
         fs.remove();
         isFullScreen = false;
         
+        // Hiện lại icon khi đã thoát Fullscreen
+        if (fsIcon) fsIcon.classList.remove('hidden');
+        
         if (typeof updateCompassUI === 'function') updateCompassUI(lastHeading);
     }, 300);
 }
-
-// Thoát khi Double Tap/Click vào màn hình Fullscreen
-document.addEventListener('touchend', function(e) {
-    if (!isFullScreen) return;
-    const currentTime = new Date().getTime();
-    if (currentTime - lastTapTime < 450) exitFullScreenMode();
-    lastTapTime = currentTime;
-});
-
-document.addEventListener('dblclick', function(e) {
-    if (isFullScreen) exitFullScreenMode();
-});
