@@ -1904,37 +1904,24 @@ function exitFullScreenMode() {
     const fs = document.getElementById('fullscreenMode');
     if (!fs) return;
 
-    const compass = document.querySelector('.compass-container');
-    const status = document.querySelector('.status-panel');
+    // Hiệu ứng mờ dần trước khi xóa
+    fs.style.opacity = '0';
+    
+    setTimeout(() => {
+        const compass = document.querySelector('.compass-container');
+        const status = document.querySelector('.status-panel');
 
-    // 1. Kiểm tra an toàn trước khi di chuyển
-    if (compass && originalCompassParent) {
-        // Trả la bàn về nơi ở cũ
-        originalCompassParent.appendChild(compass);
-
-        // 2. Trả status panel về "đúng vị trí" so với la bàn
-        // Nếu originalCompassParent là container gốc, statusPanel nên nằm ngay sau la bàn
-        if (status) {
-            // Sử dụng insertBefore để đảm bảo status luôn đứng sau compass
-            originalCompassParent.insertBefore(status, compass.nextSibling);
+        if (compass && originalCompassParent) {
+            originalCompassParent.appendChild(compass);
+            if (status) originalCompassParent.insertBefore(status, compass.nextSibling);
         }
-    }
 
-    // 3. Dọn dẹp DOM
-    fs.remove();
-    isFullScreen = false;
-
-    // 4. Giải phóng bộ nhớ và reset lại các trạng thái UI
-    // Sử dụng requestAnimationFrame để đảm bảo trình duyệt đã render xong DOM mới
-    requestAnimationFrame(() => {
-        if (typeof updateCompassUI === 'function' && typeof lastHeading !== 'undefined') {
-            updateCompassUI(lastHeading);
-        }
-        // Gọi lại recalculateFate nếu cần để đồng bộ dữ liệu
-        if (typeof recalculateFate === 'function') {
-            recalculateFate();
-        }
-    });
+        fs.remove();
+        isFullScreen = false;
+        
+        // Cập nhật sau khi đã trả về vị trí
+        if (typeof updateCompassUI === 'function') updateCompassUI(lastHeading);
+    }, 300); // Khớp với transition 0.3s
 }
 
 // DOUBLE TAP để thoát (rất quan trọng trên mobile)
