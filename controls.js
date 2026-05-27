@@ -1925,6 +1925,15 @@ function exitFullScreenMode() {
         if (compass && originalCompassParent) {
             originalCompassParent.appendChild(compass);
             if (status) originalCompassParent.insertBefore(status, compass.nextSibling);
+            
+            // --- NÂNG CẤP TẠI ĐÂY ---
+            // Gán lại sự kiện Double Tap vào la bàn sau khi nó được trả về
+            compass.removeEventListener('touchend', handleCompassTap); // Tránh trùng lặp
+            compass.addEventListener('touchend', handleCompassTap);
+            
+            compass.removeEventListener('dblclick', toggleFullScreenMode);
+            compass.addEventListener('dblclick', toggleFullScreenMode);
+            // ------------------------
         }
 
         fs.remove();
