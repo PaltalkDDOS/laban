@@ -101,6 +101,8 @@
         </div>
     </div>
 </div>
+<!-- ICON FULLSCREEN ĐÚNG VỊ TRÍ -->
+<div onclick="toggleFullScreenMode()" class="fs-icon">⛶</div>
 
 <div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #1a1a1a; border-radius: 50%; box-shadow: 0 12px 35px rgba(0,0,0,0.5); border: 6px solid #b58e4b; overflow: hidden; color-scheme: light !important;">
 
@@ -300,11 +302,7 @@
     <div class="fate-display" id="fate-txt">Mệnh chủ: ...</div>
     <div id="judgment-box" class="judgment-badge bg-good">...</div>
   </div>
-<!-- ICON FULLSCREEN GÓC TRÊN PHẢI LA BÀN -->
-<div onclick="toggleFullScreenMode()" 
-     class="fs-icon">
-    ⛶
-</div>
+
     <!-- Thanh kéo tay la bàn - Đã ẩn vì không cần thiết -->
   <div class="control-box" style="display: none;">
     <input type="range" min="0" max="360" value="0" class="slider" id="compassSlider" oninput="manualRotate(this.value)">
