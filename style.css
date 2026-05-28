@@ -71,7 +71,7 @@ body {
   text-shadow: 0 0 5px rgba(223,183,108,0.4);
 }
 
-/* ==================== PANELS CHUNG ==================== */
+/* ==================== PANELS ==================== */
 .user-input-panel,
 .status-panel,
 .saved-list-panel,
@@ -80,9 +80,8 @@ body {
   width: 92%;
   max-width: 430px;
   margin: 12px auto;
-  background: var(--panel);
-  border-radius: 8px;
   padding: 12px;
+  border-radius: 8px;
   position: relative;
   z-index: 10;
 }
@@ -108,15 +107,17 @@ body {
 }
 
 .directions-list-panel {
+  background: var(--panel);
   border: 1px solid #282828;
   margin-bottom: 12px;
 }
 
 .explanation-panel {
+  background: var(--panel);
   border: 1px solid #252525;
 }
 
-/* ==================== FORM & INPUT ==================== */
+/* ==================== FORM ==================== */
 .form-row {
   display: flex;
   gap: 8px;
@@ -165,7 +166,6 @@ body {
   min-width: 0;
 }
 
-/* Buttons */
 .btn-action-row {
   display: flex;
   gap: 8px;
@@ -236,7 +236,7 @@ body {
   margin-left: 4px;
 }
 
-/* ==================== COMPASS STYLES ==================== */
+/* ==================== COMPASS ==================== */
 .compass-container {
   position: relative;
   width: 85vw;
@@ -309,51 +309,55 @@ body {
   filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
 }
 
-/* Kim & Ghost Needle */
-.center-needle, .ghost-needle {
+.center-needle {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) rotate(0deg);
-  transform-origin: 50% 50%;
-  pointer-events: none;
-}
-
-.center-needle {
   width: 7px;
   height: 90%;
   background: linear-gradient(to bottom, rgba(255,30,30,0.9) 48%, rgba(255,80,80,0.9) 52%);
   clip-path: polygon(50% 0%, 100% 20%, 65% 20%, 65% 85%, 100% 100%, 50% 92%, 0% 100%, 35% 85%, 35% 20%, 0% 20%);
+  transform: translate(-50%, -50%) rotate(0deg);
+  transform-origin: 50% 50%;
   z-index: 9;
+  pointer-events: none;
   box-shadow: 0 0 5px #ff2222, 0 0 10px rgba(255,34,34,0.4);
+  filter: brightness(1.05);
 }
 
 .ghost-needle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
   width: 5.5px;
   height: 86%;
   background: linear-gradient(to bottom, #d4af37 0%, #f1c40f 50%, #d4af37 100%);
   clip-path: polygon(50% 0%, 100% 15%, 65% 15%, 65% 100%, 35% 100%, 35% 15%, 0% 15%);
+  transform: translate(-50%, -50%) rotate(0deg);
+  transform-origin: 50% 50%;
   z-index: 7;
+  pointer-events: none;
   opacity: 0;
   transition: opacity 0.4s ease, transform 0.15s ease-out;
   box-shadow: 0 0 6px #d4af37, 0 0 12px rgba(212,175,55,0.3);
+  filter: brightness(1.1);
 }
 
-/* Direction Labels & Son Ring (giữ nguyên) */
-.direction-label, .lbl-kham, .lbl-ly, .lbl-chan, .lbl-doai, 
-.lbl-can, .lbl-can2, .lbl-ton, .lbl-khon,
+/* Direction Labels & Son Items */
+.direction-label, .lbl-kham, .lbl-ly, .lbl-chan, .lbl-doai, .lbl-can, .lbl-can2, .lbl-ton, .lbl-khon,
 .son-ring-text, .son-item, .compass-watermark, .center-pin {
-  /* Giữ nguyên tất cả styles gốc */
   position: absolute;
   font-weight: 900;
   font-size: 0.72rem;
   text-align: center;
+  width: 52px;
+  line-height: 1.1;
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
   z-index: 15;
   pointer-events: none;
 }
 
-/* ==================== STATUS, DIRECTIONS, EXPLANATION ==================== */
+/* Status & Judgment */
 .degree-display {
   font-size: 1rem;
   color: var(--gold);
@@ -421,7 +425,7 @@ body {
 .direction-item.good { border-left-color: var(--green); }
 .direction-item.bad  { border-left-color: var(--red); }
 
-/* Explanation */
+/* Explanation Panel */
 .detail-content {
   background: #080808;
   border-left: 4px solid var(--gold);
@@ -429,9 +433,10 @@ body {
   font-size: 0.85rem;
   line-height: 1.6;
   color: #ffffff;
+  transition: border-left-color 0.3s ease;
 }
 
-/* ==================== FULLSCREEN & MISC ==================== */
+/* Fullscreen */
 .fullscreen-mode {
   position: fixed;
   top: 0; left: 0;
@@ -475,8 +480,9 @@ body {
   color: #fff;
 }
 
-/* Modal & Alert */
-.custom-alert-overlay, #infoModal {
+/* Modals */
+.custom-alert-overlay,
+#infoModal {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.85);
@@ -486,11 +492,14 @@ body {
   justify-content: center;
 }
 
-.custom-alert-box, .modal-content {
+.custom-alert-box,
+.modal-content {
   background: #1a1410;
   border: 2px solid var(--gold);
   border-radius: 10px;
   padding: 20px;
+  width: 88%;
+  max-width: 340px;
 }
 
 /* Purpose Select */
@@ -506,9 +515,16 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23dfb76c' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.025 2.345 4 3.204 4h9.592c.858 0 1.319 1.025.753 1.659l-4.796 5.48a1 1 0 01-1.506 0z'/%3E%3C/svg%3E");
   background-position: right 14px center;
   background-repeat: no-repeat;
+  background-size: 12px;
 }
 
-/* Control box - đã bỏ !important */
+.purpose-select:hover,
+.purpose-select:focus {
+  border-color: #f1c40f;
+  box-shadow: 0 0 8px rgba(223,183,108,0.3);
+}
+
+/* Misc */
 .control-box {
   display: none;
   width: 92%;
@@ -519,7 +535,6 @@ body {
   margin-bottom: 10px;
 }
 
-/* Misc */
 #permission-btn {
   display: none;
   background: var(--red);
