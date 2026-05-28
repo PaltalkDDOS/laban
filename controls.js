@@ -1733,10 +1733,10 @@ function closeModal() {
         }
     }
 	
-// ====================== QUẢN LÝ QUYỀN LA BÀN iOS - PHIÊN BẢN CUỐI CÙNG (KHÔNG REDECLARE) ======================
+// ====================== QUẢN LÝ QUYỀN LA BÀN iOS - PHIÊN BẢN TỐI ƯU 2026 ======================
 let permissionDenied = false;
 
-// Sử dụng biến đã khai báo sẵn ở trên (dòng 1351)
+// Sử dụng biến đã khai báo sẵn ở dòng 1351
 function requestPermission() {
     const permBtn = document.getElementById('permission-btn');
     
@@ -1744,6 +1744,8 @@ function requestPermission() {
         DeviceOrientationEvent.requestPermission()
             .then(permissionState => {
                 closePermissionModal();
+                console.log("Permission state:", permissionState);
+                
                 if (permissionState === 'granted') {
                     localStorage.setItem('ios_compass_granted', 'true');
                     permissionDenied = false;
@@ -1756,12 +1758,13 @@ function requestPermission() {
                 }
             })
             .catch(err => {
-                console.error(err);
+                console.error("Permission error:", err);
                 permissionDenied = true;
                 closePermissionModal();
                 showPermissionResetGuide();
             });
     } else {
+        // Android / Chrome
         closePermissionModal();
         addOrientationListener();
         if (permBtn) permBtn.style.display = 'none';
@@ -1795,25 +1798,25 @@ function showPermissionResetGuide() {
     if (!modal) return;
 
     modal.innerHTML = `
-        <div style="background:#1c1c1e; padding:25px; border-radius:20px; text-align:center; width:88%; max-width:400px; border:2px solid #ff9500;">
-            <div style="font-size:3.2rem; margin-bottom:15px;">⚠️</div>
-            <h3 style="color:#ff9500; margin-bottom:12px;">Không Kích Hoạt Được La Bàn</h3>
+        <div style="background:#1c1c1e; padding:28px; border-radius:20px; text-align:center; width:90%; max-width:420px; border:2px solid #ff9500; box-shadow:0 0 30px rgba(255,149,0,0.4);">
+            <div style="font-size:3.5rem; margin-bottom:15px;">🔒</div>
+            <h3 style="color:#ff9500; margin-bottom:15px;">Quyền La Bàn Bị Khóa</h3>
             <p style="color:#ccc; line-height:1.6; margin-bottom:20px;">
-                Safari đã chặn quyền vì bạn từng từ chối.
+                Safari đã chặn quyền cảm biến vì lần trước bạn từ chối.
             </p>
-            <div style="background:#2c2c2e; padding:15px; border-radius:12px; text-align:left; margin-bottom:20px; font-size:0.9rem; line-height:1.55;">
-                <strong>Hướng dẫn reset quyền:</strong><br><br>
-                1. Vào <strong>Cài Đặt</strong> → <strong>Safari</strong><br>
-                2. Chọn <strong>Cài đặt cho Trang web</strong><br>
-                3. Tìm ứng dụng này<br>
+            <div style="background:#2c2c2e; padding:18px; border-radius:12px; text-align:left; margin-bottom:25px; font-size:0.92rem; line-height:1.6;">
+                <strong>Cách mở lại quyền:</strong><br><br>
+                1. Mở <strong>Cài Đặt</strong> → <strong>Safari</strong><br>
+                2. Cuộn xuống → <strong>Cài đặt cho Trang web</strong><br>
+                3. Tìm và chọn trang này<br>
                 4. Bật <strong>Motion &amp; Orientation</strong><br>
-                5. Đóng Safari hoàn toàn rồi mở lại.
+                5. Đóng Safari hoàn toàn (vuốt lên App Switcher) → Mở lại.
             </div>
-            <button onclick="resetPermissionFlag()" style="width:100%; padding:14px; background:#ff9500; color:#000; border:none; border-radius:10px; font-weight:bold; margin-bottom:10px;">
-                ✅ ĐÃ LÀM - THỬ LẠI
+            <button onclick="resetPermissionFlag()" style="width:100%; padding:16px; background:#ff9500; color:#000; border:none; border-radius:12px; font-weight:bold; font-size:1.05rem; margin-bottom:12px;">
+                ✅ ĐÃ LÀM THEO - THỬ LẠI NGAY
             </button>
-            <button onclick="closePermissionModal()" style="width:100%; padding:12px; background:#444; color:#fff; border:none; border-radius:10px;">
-                Dùng xoay tay
+            <button onclick="closePermissionModal()" style="width:100%; padding:14px; background:#38383a; color:#fff; border:none; border-radius:12px;">
+                Dùng chế độ xoay tay
             </button>
         </div>
     `;
@@ -1824,7 +1827,7 @@ function resetPermissionFlag() {
     localStorage.removeItem('ios_compass_granted');
     permissionDenied = false;
     closePermissionModal();
-    setTimeout(() => location.reload(), 400);
+    setTimeout(() => location.reload(), 500);
 }
 
 function closePermissionModal() {
@@ -1863,6 +1866,12 @@ window.onload = function() {
         addOrientationListener();
     }
 };
+
+function handleModalClick() {
+    const modal = document.getElementById('iosPermissionModal');
+    if (modal) modal.style.display = 'none';
+    requestPermission();
+}
 
 function handleModalClick() {
     const modal = document.getElementById('iosPermissionModal');
