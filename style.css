@@ -29,7 +29,7 @@ body {
   position: relative;
 }
 
-/* ==================== TỐI ƯU HIỆU SUẤT LA BÀN ==================== */
+/* ==================== TỐI ƯU HIỆU SUẤT ==================== */
 .compass-dial,
 .center-needle,
 .ghost-needle,
@@ -71,7 +71,7 @@ body {
   text-shadow: 0 0 5px rgba(223,183,108,0.4);
 }
 
-/* ==================== INPUT PANEL ==================== */
+/* ==================== PANELS CHUNG ==================== */
 .user-input-panel,
 .status-panel,
 .saved-list-panel,
@@ -81,7 +81,6 @@ body {
   max-width: 430px;
   margin: 12px auto;
   background: var(--panel);
-  border: 1px solid #443322;
   border-radius: 8px;
   padding: 12px;
   position: relative;
@@ -90,27 +89,46 @@ body {
 
 .user-input-panel {
   background: #1a1510;
-  border-color: #443322;
+  border: 1px solid #443322;
+  margin-top: 12px;
 }
 
 .saved-list-panel {
   background: #111;
   border: 1px dashed #332211;
-  padding: 6px;
   margin-top: 8px;
+  padding: 6px;
 }
 
-/* Form */
+.status-panel {
+  background: var(--panel);
+  border: 1px solid var(--gold);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.directions-list-panel {
+  border: 1px solid #282828;
+  margin-bottom: 12px;
+}
+
+.explanation-panel {
+  border: 1px solid #252525;
+}
+
+/* ==================== FORM & INPUT ==================== */
 .form-row {
   display: flex;
   gap: 8px;
   margin-bottom: 8px;
+  width: 100%;
 }
 
 .form-group {
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .form-group label {
@@ -118,6 +136,9 @@ body {
   color: var(--gold);
   margin-bottom: 4px;
   font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .form-group input,
@@ -130,15 +151,18 @@ body {
   font-size: 0.85rem;
   outline: none;
   height: 38px;
+  width: 100%;
 }
 
 .date-input-container {
   display: flex;
   gap: 6px;
+  width: 100%;
 }
 
 .date-input-container input {
   flex: 1;
+  min-width: 0;
 }
 
 /* Buttons */
@@ -172,6 +196,7 @@ body {
   cursor: pointer;
   text-transform: uppercase;
   box-shadow: 0 4px 10px rgba(255,102,0,0.3);
+  transition: all 0.2s ease;
 }
 
 .btn-reset.executing {
@@ -208,9 +233,10 @@ body {
 .saved-chip .del-btn {
   color: var(--red);
   font-weight: bold;
+  margin-left: 4px;
 }
 
-/* ==================== COMPASS ==================== */
+/* ==================== COMPASS STYLES ==================== */
 .compass-container {
   position: relative;
   width: 85vw;
@@ -225,6 +251,7 @@ body {
   z-index: 10;
   touch-action: manipulation;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .compass-dial {
@@ -235,10 +262,37 @@ body {
   border-radius: 50%;
   background: radial-gradient(circle, #1a1a1a 0%, #050505 65%, #111 100%);
   box-shadow: 0 0 20px rgba(223,183,108,0.2);
+  z-index: 1;
   will-change: transform;
+  transition: transform 0.2s ease-out;
 }
 
-/* North Pointer */
+.cross-line-v {
+  position: absolute;
+  width: 1.5px;
+  height: 92%;
+  left: 50%;
+  top: 4%;
+  background: var(--red);
+  z-index: 10;
+  pointer-events: none;
+  transform: translateX(-50%);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 43%, 0% 43%, 0% 57%, 100% 57%, 100% 100%, 0% 100%);
+}
+
+.cross-line-h {
+  position: absolute;
+  width: 92%;
+  height: 1px;
+  top: 50%;
+  left: 4%;
+  background: rgba(255,59,48,0.3);
+  z-index: 2;
+  pointer-events: none;
+  transform: translateY(-50%);
+  clip-path: polygon(0% 0%, 43% 0%, 43% 100%, 57% 100%, 57% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
 .north-pointer {
   position: absolute;
   top: 8px;
@@ -251,71 +305,59 @@ body {
   pointer-events: none;
   clip-path: polygon(50% 0%, 100% 100%, 50% 82%, 0% 100%);
   box-shadow: 0 0 12px #ff3b30, 0 0 25px #ff3b30, 0 0 40px rgba(255,59,48,0.7);
+  border-radius: 3px;
   filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
 }
 
-/* Cross lines */
-.cross-line-v, .cross-line-h {
+/* Kim & Ghost Needle */
+.center-needle, .ghost-needle {
   position: absolute;
-  background: rgba(255,59,48,0.3);
-  z-index: 8;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  transform-origin: 50% 50%;
   pointer-events: none;
 }
 
-.cross-line-v {
-  width: 1.5px;
-  height: 92%;
-  left: 50%;
-  top: 4%;
-  transform: translateX(-50%);
-  clip-path: polygon(0% 0%, 100% 0%, 100% 43%, 0% 43%, 0% 57%, 100% 57%, 100% 100%, 0% 100%);
-}
-
-.cross-line-h {
-  height: 1px;
-  width: 92%;
-  top: 50%;
-  left: 4%;
-  transform: translateY(-50%);
-  clip-path: polygon(0% 0%, 43% 0%, 43% 100%, 57% 100%, 57% 0%, 100% 0%, 100% 100%, 0% 100%);
-}
-
-/* Needles */
 .center-needle {
-  position: absolute;
-  left: 50%;
-  top: 50%;
   width: 7px;
   height: 90%;
   background: linear-gradient(to bottom, rgba(255,30,30,0.9) 48%, rgba(255,80,80,0.9) 52%);
   clip-path: polygon(50% 0%, 100% 20%, 65% 20%, 65% 85%, 100% 100%, 50% 92%, 0% 100%, 35% 85%, 35% 20%, 0% 20%);
-  transform: translate(-50%, -50%) rotate(0deg);
-  transform-origin: 50% 50%;
   z-index: 9;
   box-shadow: 0 0 5px #ff2222, 0 0 10px rgba(255,34,34,0.4);
 }
 
 .ghost-needle {
-  position: absolute;
-  left: 50%;
-  top: 50%;
   width: 5.5px;
   height: 86%;
   background: linear-gradient(to bottom, #d4af37 0%, #f1c40f 50%, #d4af37 100%);
   clip-path: polygon(50% 0%, 100% 15%, 65% 15%, 65% 100%, 35% 100%, 35% 15%, 0% 15%);
-  transform: translate(-50%, -50%) rotate(0deg);
-  transform-origin: 50% 50%;
   z-index: 7;
   opacity: 0;
+  transition: opacity 0.4s ease, transform 0.15s ease-out;
   box-shadow: 0 0 6px #d4af37, 0 0 12px rgba(212,175,55,0.3);
 }
 
-/* ==================== STATUS & JUDGMENT ==================== */
+/* Direction Labels & Son Ring (giữ nguyên) */
+.direction-label, .lbl-kham, .lbl-ly, .lbl-chan, .lbl-doai, 
+.lbl-can, .lbl-can2, .lbl-ton, .lbl-khon,
+.son-ring-text, .son-item, .compass-watermark, .center-pin {
+  /* Giữ nguyên tất cả styles gốc */
+  position: absolute;
+  font-weight: 900;
+  font-size: 0.72rem;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  z-index: 15;
+  pointer-events: none;
+}
+
+/* ==================== STATUS, DIRECTIONS, EXPLANATION ==================== */
 .degree-display {
   font-size: 1rem;
   color: var(--gold);
   font-weight: bold;
-  text-align: center;
 }
 
 .fate-display {
@@ -335,6 +377,7 @@ body {
   border-radius: 15px;
   font-weight: bold;
   font-size: 0.85rem;
+  margin-top: 2px;
   text-transform: uppercase;
 }
 
@@ -350,7 +393,7 @@ body {
   border: 1px solid var(--red);
 }
 
-/* ==================== DIRECTIONS LIST ==================== */
+/* Directions List */
 .list-title {
   color: var(--gold);
   font-size: 0.8rem;
@@ -378,7 +421,7 @@ body {
 .direction-item.good { border-left-color: var(--green); }
 .direction-item.bad  { border-left-color: var(--red); }
 
-/* ==================== EXPLANATION PANEL ==================== */
+/* Explanation */
 .detail-content {
   background: #080808;
   border-left: 4px solid var(--gold);
@@ -388,7 +431,7 @@ body {
   color: #ffffff;
 }
 
-/* ==================== FULLSCREEN MODE ==================== */
+/* ==================== FULLSCREEN & MISC ==================== */
 .fullscreen-mode {
   position: fixed;
   top: 0; left: 0;
@@ -432,78 +475,25 @@ body {
   color: #fff;
 }
 
-/* ==================== MODALS & ALERT ==================== */
-.custom-alert-overlay {
+/* Modal & Alert */
+.custom-alert-overlay, #infoModal {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 99999;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.custom-alert-overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.custom-alert-box {
-  background: #1a1410;
-  border: 2px solid var(--gold);
-  border-radius: 10px;
-  width: 88%;
-  max-width: 340px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-}
-
-.custom-alert-title {
-  color: var(--red);
-  font-weight: bold;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-
-.custom-alert-btn {
-  background: linear-gradient(180deg, #ff8833, var(--orange-bright));
-  color: white;
-  border: none;
-  padding: 8px 24px;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-/* Info Modal */
-#infoModal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+}
+
+.custom-alert-box, .modal-content {
+  background: #1a1410;
+  border: 2px solid var(--gold);
+  border-radius: 10px;
   padding: 20px;
 }
 
-.modal-content {
-  background: #1c1c1e;
-  color: #fff;
-  border-radius: 15px;
-  width: 100%;
-  max-width: 500px;
-  max-height: 85vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-/* ==================== PURPOSE SELECT ==================== */
+/* Purpose Select */
 .purpose-select {
   width: 100%;
   padding: 11px 14px;
@@ -512,22 +502,24 @@ body {
   color: #fff;
   border-radius: 6px;
   font-size: 0.9rem;
-  outline: none;
-  cursor: pointer;
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23dfb76c' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.025 2.345 4 3.204 4h9.592c.858 0 1.319 1.025.753 1.659l-4.796 5.48a1 1 0 01-1.506 0z'/%3E%3C/svg%3E");
   background-position: right 14px center;
   background-repeat: no-repeat;
-  background-size: 12px;
 }
 
-.purpose-select:hover,
-.purpose-select:focus {
-  border-color: #f1c40f;
-  box-shadow: 0 0 8px rgba(223,183,108,0.3);
+/* Control box - đã bỏ !important */
+.control-box {
+  display: none;
+  width: 92%;
+  max-width: 430px;
+  background: #111;
+  padding: 6px;
+  border-radius: 6px;
+  margin-bottom: 10px;
 }
 
-/* ==================== MISC & MEDIA ==================== */
+/* Misc */
 #permission-btn {
   display: none;
   background: var(--red);
@@ -541,6 +533,10 @@ body {
   max-width: 430px;
 }
 
+body.fullscreen-active {
+  overflow: hidden;
+}
+
 @media (max-width: 480px) {
   .fs-icon {
     top: 14px;
@@ -549,13 +545,4 @@ body {
     width: 38px;
     height: 38px;
   }
-}
-
-/* Fix khi thoát fullscreen */
-.compass-container {
-  transition: width 0.3s ease, height 0.3s ease;
-}
-
-body.fullscreen-active {
-  overflow: hidden;
 }
