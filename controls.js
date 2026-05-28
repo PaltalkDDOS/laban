@@ -1873,47 +1873,50 @@ function handleModalClick() {
     requestPermission();
 }
 
-function handleModalClick() {
-    const modal = document.getElementById('iosPermissionModal');
-    if (modal) modal.style.display = 'none';
-    requestPermission();
-}
+// 1. Dành cho Máy tính (Chuột)
+document.addEventListener('dblclick', handleInteraction);
 
-let isFullScreen = false;
-let originalCompassParent = null;
-let lastTapTime = 0;
+// 2. Dành cho Điện thoại/Tablet (Cảm ứng)
+let touchStartTime = 0;
+let touchStartX = 0;
+let touchStartY = 0;
 
-/**
- * HÀM XỬ LÝ SỰ KIỆN GỘP (Thông minh hơn)
- * Dùng e.target để biết chính xác người dùng đang bấm vào cái gì
- */
+document.addEventListener('touchstart', (e) => {
+    touchStartTime = new Date().getTime();
+    if (e.touches.length === 1) { // Chỉ lưu tọa độ nếu là 1 ngón
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }
+});
+
+document.addEventListener('touchend', (e) => {
+    // Nếu có nhiều hơn 1 ngón tay chạm (thao tác zoom), thoát ngay
+    if (e.changedTouches.length !== 1) return;
+
+    const currentTime = new Date().getTime();
+    const distX = Math.abs(e.changedTouches[0].clientX - touchStartX);
+    const distY = Math.abs(e.changedTouches[0].clientY - touchStartY);
+
+    // Chỉ kích hoạt nếu chạm nhanh (<300ms) và không kéo ngón tay đi quá xa (<10px)
+    if (currentTime - touchStartTime < 300 && distX < 10 && distY < 10) {
+        if (currentTime - lastTapTime < 450) {
+            handleInteraction(e);
+        }
+        lastTapTime = currentTime;
+    }
+});
+
+// Hàm xử lý chung
 function handleInteraction(e) {
-    // Tìm phần tử .compass-container gần nhất từ điểm bạn chạm
     const isCompass = e.target.closest('.compass-container');
     const isFullScreenDiv = document.getElementById('fullscreenMode');
     
-    // Nếu chạm vào vùng la bàn (và đang ở chế độ thường)
     if (isCompass && !isFullScreen) {
-        e.preventDefault(); // Ngăn chặn các sự kiện hệ thống khác
         toggleFullScreenMode();
-    } 
-    // Nếu chạm vào vùng fullscreen (và đang ở chế độ full)
-    else if (isFullScreen && isFullScreenDiv) {
+    } else if (isFullScreen && isFullScreenDiv) {
         exitFullScreenMode();
     }
 }
-
-// 1. Lắng nghe Double Click (Máy tính)
-document.addEventListener('dblclick', handleInteraction);
-
-// 2. Lắng nghe Double Tap (Điện thoại) - Tối ưu bằng cách kiểm tra thời gian
-document.addEventListener('touchend', (e) => {
-    const currentTime = new Date().getTime();
-    if (currentTime - lastTapTime < 450) {
-        handleInteraction(e);
-    }
-    lastTapTime = currentTime;
-});
 
 function toggleFullScreenMode() {
     if (isFullScreen) return;
