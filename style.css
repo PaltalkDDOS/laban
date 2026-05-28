@@ -882,38 +882,22 @@ body {
     color: #fff;
     padding: 10px;
 }
-/* ====================== TỐI ƯU HÓA FULL SCREEN & HIỆU SUẤT ====================== */
-
-/* 1. Tối ưu hóa render cho di động/máy yếu */
-body {
-    backface-visibility: hidden;
-    will-change: transform;
-    /* Giữ nguyên các thuộc tính khác của bạn */
-}
-
-.compass-container {
-    touch-action: manipulation; 
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    transform: translateZ(0); 
-    will-change: transform;
-}
-
-/* 2. Class Icon Fullscreen (Đã gộp và xử lý triệt để) */
+/* ====================== FULL SCREEN MODE & ICON ====================== */
+/* ICON FULLSCREEN NHỎ GỌN - 4 GÓC */
 .fs-icon {
     position: absolute;
     top: 12px;
     right: 12px;
     z-index: 160;
     cursor: pointer;
-    color: #ffeb3b !important; /* Ép màu vàng chuẩn */
-    font-size: 24px;
-    width: 40px;
-    height: 40px;
+    color: #ffeb3b;
+    font-size: 22px;
+    width: 34px;
+    height: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.25s ease;
     user-select: none;
     opacity: 0.85;
     text-shadow: 0 0 8px rgba(255, 235, 59, 0.6);
@@ -926,31 +910,30 @@ body {
     text-shadow: 0 0 12px rgba(255, 235, 59, 0.9);
 }
 
-.fs-icon:active {
-    transform: scale(0.85) !important;
-}
-
-/* Hiệu ứng nhấp nháy 3 lần */
+/* Animation nhấp nháy */
 @keyframes blink-fade {
     0%, 100% { opacity: 0.3; }
     50% { opacity: 1; }
 }
-
 .fs-icon.blink {
-    animation: blink-fade 1.5s ease-in-out 3;
+    animation: blink-fade 1.5s ease-in-out 3; /* Nháy 3 lần */
+}
+.fs-icon:active {
+    transform: scale(0.85); /* Hiệu ứng nhấn */
+    opacity: 1;
 }
 
-/* Responsive */
+/* Mobile */
 @media (max-width: 480px) {
     .fs-icon {
         top: 14px;
         right: 14px;
+        font-size: 24px;
         width: 38px;
         height: 38px;
     }
 }
-
-/* 3. Fullscreen Mode */
+/* Fullscreen Mode - Mượt mà */
 .fullscreen-mode {
     position: fixed;
     top: 0;
@@ -959,19 +942,21 @@ body {
     height: 100vh;
     background: #0a0a0a;
     z-index: 99999;
-    display: none;
+    overflow: hidden;
+    display: none; /* Mặc định ẩn */
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-top: 10px;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
-    cursor: zoom-out;
 }
 
 .fullscreen-mode.active {
     display: flex;
     opacity: 1;
 }
+
 /* Wrapper trong fullscreen */
 #fs-compass-wrapper {
     width: 96vw;
@@ -995,3 +980,6 @@ body {
     width: 100% !important;
 }
 
+.fullscreen-mode {
+    cursor: zoom-out; /* Con trỏ chuột đổi thành dấu trừ khi vào FS */
+}
