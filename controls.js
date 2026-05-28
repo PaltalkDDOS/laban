@@ -1968,3 +1968,93 @@ function exitFullScreenMode() {
         if (typeof updateCompassUI === 'function') updateCompassUI(lastHeading);
     }, 300);
 }
+// ====================== PURPOSE POPUP MODAL ======================
+let currentPurposeValue = "";
+
+function showPurposeModal() {
+    let modal = document.getElementById('purpose-modal');
+   
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'purpose-modal';
+        modal.innerHTML = `
+            <div id="purpose-modal-content">
+                <div id="purpose-modal-header">Chọn Mục Đích Tầm Phương Vị</div>
+                <div id="purpose-modal-body"></div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    const body = document.getElementById('purpose-modal-body');
+    
+    body.innerHTML = `
+        <div class="purpose-modal-group">🏛️ DƯƠNG TRẠCH CHỦ CỤC (Nhà Ở & Sinh Hoạt)</div>
+        <div class="purpose-modal-option" data-value="house">Hướng Nhà / Cửa Chính (Đại Môn)</div>
+        <div class="purpose-modal-option" data-value="gate">Hướng Cổng Chính (Lộ Khẩu)</div>
+        <div class="purpose-modal-option" data-value="altar">Hướng Bàn Thờ / Ban Thần Tài</div>
+        <div class="purpose-modal-option" data-value="bed">Hướng Đầu Giường Ngủ (Sàng Vị)</div>
+        <div class="purpose-modal-option" data-value="livingroom">Hướng Phòng Khách (Trung Đường)</div>
+        <div class="purpose-modal-option" data-value="bedroom_master">Hướng Phòng Ngủ Chính (Chủ Khang)</div>
+        <div class="purpose-modal-option" data-value="balcony">Hướng Ban Công / Cửa Sổ Lớn</div>
+
+        <div class="purpose-modal-group">📚 VĂN XƯƠNG KHOA DANH (Học Hành & Sự Nghiệp)</div>
+        <div class="purpose-modal-option" data-value="workspace">Hướng Bàn Làm Việc (Quyền Lực Vị)</div>
+        <div class="purpose-modal-option" data-value="ceo_office">Hướng Phòng Sếp / Bàn Lãnh Đạo</div>
+        <div class="purpose-modal-option" data-value="study_desk">Hướng Bàn Học / Văn Xương Vị</div>
+
+        <div class="purpose-modal-group">💰 ĐẮC TÀI MẬU DỊCH (Kinh Doanh Thương Mại)</div>
+        <div class="purpose-modal-option" data-value="signboard">Hướng Biển Hiệu (Minh Đường Lộ)</div>
+        <div class="purpose-modal-option" data-value="counter">Hướng Quầy Thu Ngân (Tài Khố Vị)</div>
+        <div class="purpose-modal-option" data-value="safe">Vị trí Két Sắt (Tụ Tài Bảo Khố)</div>
+        <div class="purpose-modal-option" data-value="bakery">Hướng Quầy Bánh Mì / Tiệm Bánh</div>
+        <div class="purpose-modal-option" data-value="coffee">Hướng Quán Cà Phê / Trà Sữa</div>
+        <div class="purpose-modal-option" data-value="restaurant">Hướng Quán Ăn / Nhà Hàng</div>
+        <div class="purpose-modal-option" data-value="shop">Hướng Cửa Hàng / Tạp Hóa / Showroom</div>
+        <div class="purpose-modal-option" data-value="salon">Hướng Salon Tóc / Nail / Spa</div>
+
+        <div class="purpose-modal-group">🛠️ TỌA VỊ TRẤN SÁT (Hệ Thống Đè Hung)</div>
+        <div class="purpose-modal-option" data-value="kitchen">Vị trí Đặt Bếp Nấu (Táo Vị)</div>
+        <div class="purpose-modal-option" data-value="toilet">Vị trí Nhà Vệ Sinh (Huyền Vũ Tiêu Sát)</div>
+        <div class="purpose-modal-option" data-value="septic_tank">Vị trí Hầm Tự Hoại / Bể Phốt</div>
+        <div class="purpose-modal-option" data-value="storage">Vị trí Kho Hàng / Tủ Đồ</div>
+        <div class="purpose-modal-option" data-value="trash_area">Vị trí Thùng Rác / Khu Phế Liệu</div>
+    `;
+
+    // Xử lý click chọn option
+    body.querySelectorAll('.purpose-modal-option').forEach(item => {
+        item.addEventListener('click', () => {
+            const value = item.getAttribute('data-value');
+            const text = item.textContent.trim();
+
+            // Cập nhật text hiển thị
+            document.getElementById('purpose-selected-text').textContent = text;
+            
+            // Cập nhật giá trị vào input ẩn (quan trọng nhất)
+            const hiddenInput = document.getElementById('purpose');
+            if (hiddenInput) {
+                hiddenInput.value = value;
+            }
+
+            currentPurposeValue = value;
+
+            hidePurposeModal();
+            recalculateFate();        // Gọi lại hàm tính toán
+        });
+    });
+
+    modal.style.display = 'flex';
+}
+
+function hidePurposeModal() {
+    const modal = document.getElementById('purpose-modal');
+    if (modal) modal.style.display = 'none';
+}
+
+// Đóng modal khi click vào nền tối
+document.addEventListener('click', (e) => {
+    const modal = document.getElementById('purpose-modal');
+    if (modal && e.target === modal) {
+        hidePurposeModal();
+    }
+});
