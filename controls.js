@@ -1894,50 +1894,36 @@ function toggleFullScreenMode() {
     if (!compassContainer) return;
     if (!originalCompassParent) originalCompassParent = compassContainer.parentElement;
 
-    // Ẩn phần giải thích
+    // Ẩn các phần thừa
     const giaiThich = document.getElementById('dien-giai-bo-sung');
     if (giaiThich) giaiThich.style.display = 'none';
 
-    // --- NÂNG CẤP: ẨN CÁC DÒNG THỪA TRONG STATUS PANEL ---
-    if (statusPanel) {
-        const allElements = statusPanel.querySelectorAll('*');
-        allElements.forEach(el => {
-            // Tìm các dòng chứa nội dung "Người Tầm Phương" hoặc nội dung dài của bản mệnh
-            const text = el.textContent;
-            if (text.includes('Người Tầm Phương') || text.includes('Bản Mệnh Cung Phi')) {
-                el.style.display = 'none';
-                el.dataset.wasHidden = 'true'; // Đánh dấu để lát thoát ra còn hiện lại
-            }
-        });
-    }
-
+    // Tạo màn hình đen
     const fsDiv = document.createElement('div');
     fsDiv.id = 'fullscreenMode';
-    fsDiv.className = 'fullscreen-mode active';
-    fsDiv.style.cssText = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.9); z-index:99999; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:opacity 0.3s; opacity:0;";
+    fsDiv.className = 'fullscreen-mode'; // Dùng class để quản lý CSS
     
-    const fsCompassWrapper = document.createElement('div');
-    fsCompassWrapper.id = 'fs-compass-wrapper';
-    
-    const fsStatusWrapper = document.createElement('div');
-    fsStatusWrapper.id = 'fs-status-wrapper';
-    
-    fsDiv.appendChild(fsCompassWrapper);
-    fsDiv.appendChild(fsStatusWrapper);
+    fsDiv.innerHTML = `
+        <div id="fs-compass-wrapper"></div>
+        <div id="fs-status-wrapper"></div>
+    `;
     document.body.appendChild(fsDiv);
 
-    fsCompassWrapper.appendChild(compassContainer);
-    if (statusPanel) fsStatusWrapper.appendChild(statusPanel);
+    // Chuyển la bàn và status vào
+    document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
+    if (statusPanel) document.getElementById('fs-status-wrapper').appendChild(statusPanel);
 
-    applyDynamicScaling();
+    // KÍCH HOẠT HIỆU ỨNG VÀ TÍNH TOÁN KÍCH THƯỚC NGAY LẬP TỨC
+    setTimeout(() => {
+        fsDiv.classList.add('active');
+        applyDynamicScaling(); // Gọi hàm này để co giãn theo thiết bị (iPad/Phone)
+    }, 10);
 
-    setTimeout(() => { fsDiv.style.opacity = '1'; }, 10);
     if (fsIcon) fsIcon.style.opacity = '0';
-
     isFullScreen = true;
-    if (typeof recalculateFate === 'function') recalculateFate();
 }
 
+// Giữ nguyên hàm exitFullScreenMode của bạn, chỉ cần sửa lại logic trả về status
 function exitFullScreenMode() {
     const fs = document.getElementById('fullscreenMode');
     if (!fs) return;
@@ -1949,50 +1935,30 @@ function exitFullScreenMode() {
         const fsIcon = document.querySelector('.fs-icon');
         const giaiThich = document.getElementById('dien-giai-bo-sung');
 
-        // 1. Hiện lại các dòng đã ẩn
-        if (status) {
-            const hiddenElements = status.querySelectorAll('[data-was-hidden="true"]');
-            hiddenElements.forEach(el => {
-                el.style.display = ''; 
-                el.removeAttribute('data-was-hidden');
-            });
-        }
-
-        // 2. Trả la bàn về chỗ cũ và XÓA SẠCH inline style
         if (compass && originalCompassParent) {
             originalCompassParent.appendChild(compass);
-            // Xóa tận gốc các giá trị width/height đã gán bởi JS
-            compass.style.removeProperty('width');
-            compass.style.removeProperty('height');
+            // RESET lại kích thước la bàn về mặc định khi thoát full
+            compass.style.width = ''; 
+            compass.style.height = '';
         }
         
-        // 3. Trả status về vị trí cũ
-        if (status && originalCompassParent) {
-            originalCompassParent.appendChild(status);
-        }
-
+        if (status) document.body.appendChild(status); // Đưa về vị trí gốc hoặc vị trí cũ
         if (giaiThich) giaiThich.style.display = '';
-        
-        // 4. Xóa màn hình đen
+
         fs.remove();
         isFullScreen = false;
-        
         if (fsIcon) fsIcon.style.opacity = '1';
-        
-        if (typeof updateCompassUI === 'function') updateCompassUI(lastHeading);
     }, 300);
 }
 function applyDynamicScaling() {
-    // Chỉ thực thi nếu đang ở chế độ fullscreen
-    if (!isFullScreen) return; 
-
     const compassContainer = document.querySelector('.compass-container');
-    if (!compassContainer) return;
-    
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
     
+    // Tính kích thước tối ưu: lấy 90% chiều rộng hoặc 70% chiều cao (tránh bị tràn khi xoay ngang)
     let size = Math.min(viewportWidth * 0.9, viewportHeight * 0.7);
+    
+    // Đặt ngưỡng giới hạn để không bị quá to trên iPad (ví dụ: tối đa 500px)
     if (size > 500) size = 500;
     
     compassContainer.style.width = size + 'px';
