@@ -49,45 +49,14 @@
     <label style="display: block; font-size: 0.85rem; color: var(--gold); margin-bottom: 5px; font-weight: bold;">
         Mục đích tầm phương vị:
     </label>
-    <select id="purpose" onchange="recalculateFate()" 
-            class="purpose-select">
-        <option value="">-- Chọn mục đích tầm phương vị --</option>
-        
-        <optgroup label="🏛️ DƯƠNG TRẠCH CHỦ CỤC (Nhà Ở & Sinh Hoạt)">
-            <option value="house">Hướng Nhà / Cửa Chính (Đại Môn)</option>
-            <option value="gate">Hướng Cổng Chính (Lộ Khẩu)</option>
-            <option value="altar">Hướng Bàn Thờ / Ban Thần Tài</option>
-            <option value="bed">Hướng Đầu Giường Ngủ (Sàng Vị)</option>
-            <option value="livingroom">Hướng Phòng Khách (Trung Đường)</option>
-            <option value="bedroom_master">Hướng Phòng Ngủ Chính (Chủ Khang)</option>
-            <option value="balcony">Hướng Ban Công / Cửa Sổ Lớn</option>
-        </optgroup>
-        
-        <optgroup label="📚 VĂN XƯƠNG KHOA DANH (Học Hành & Sự Nghiệp)">
-            <option value="workspace">Hướng Bàn Làm Việc (Quyền Lực Vị)</option>
-            <option value="ceo_office">Hướng Phòng Sếp / Bàn Lãnh Đạo</option>
-            <option value="study_desk">Hướng Bàn Học / Văn Xương Vị</option>
-        </optgroup>
-        
-        <optgroup label="💰 ĐẮC TÀI MẬU DỊCH (Kinh Doanh Thương Mại)">
-            <option value="signboard">Hướng Biển Hiệu (Minh Đường Lộ)</option>
-            <option value="counter">Hướng Quầy Thu Ngân (Tài Khố Vị)</option>
-            <option value="safe">Vị trí Két Sắt (Tụ Tài Bảo Khố)</option>
-            <option value="bakery">Hướng Quầy Bánh Mì / Tiệm Bánh</option>
-            <option value="coffee">Hướng Quán Cà Phê / Trà Sữa</option>
-            <option value="restaurant">Hướng Quán Ăn / Nhà Hàng</option>
-            <option value="shop">Hướng Cửa Hàng / Tạp Hóa / Showroom</option>
-            <option value="salon">Hướng Salon Tóc / Nail / Spa</option>
-        </optgroup>
-        
-        <optgroup label="🛠️ TỌA VỊ TRẤN SÁT (Hệ Thống Đè Hung)">
-            <option value="kitchen">Vị trí Đặt Bếp Nấu (Táo Vị)</option>
-            <option value="toilet">Vị trí Nhà Vệ Sinh (Huyền Vũ Tiêu Sát)</option>
-            <option value="septic_tank">Vị trí Hầm Tự Hoại / Bể Phốt</option>
-            <option value="storage">Vị trí Kho Hàng / Tủ Đồ</option>
-            <option value="trash_area">Vị trí Thùng Rác / Khu Phế Liệu</option>
-        </optgroup>
-    </select>
+   
+    <div onclick="showPurposeModal()" class="purpose-btn" id="purpose-display">
+        <span id="purpose-selected-text">-- Chọn mục đích tầm phương vị --</span>
+        <span style="color:var(--gold); font-size:1.1rem;">›</span>
+    </div>
+    
+    <!-- Input ẩn để giữ giá trị cho recalculateFate() -->
+    <input type="hidden" id="purpose" value="">
 </div>
 
             <div class="btn-action-row">
