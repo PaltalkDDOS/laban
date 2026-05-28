@@ -1733,55 +1733,98 @@ function closeModal() {
         }
     }
 	
-// ====================== XỬ LÝ CẤP QUYỀN VÀ TRUY CẬP CẢM BIẾN TIÊU CHUẨN ======================
+// ====================== QUẢN LÝ QUYỀN LA BÀN iOS - PHIÊN BẢN CUỐI CÙNG (KHÔNG REDECLARE) ======================
+let permissionDenied = false;
+
+// Sử dụng biến đã khai báo sẵn ở trên (dòng 1351)
 function requestPermission() {
     const permBtn = document.getElementById('permission-btn');
-
+    
     if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-        // iOS / Safari cần requestPermission
         DeviceOrientationEvent.requestPermission()
             .then(permissionState => {
                 closePermissionModal();
                 if (permissionState === 'granted') {
                     localStorage.setItem('ios_compass_granted', 'true');
+                    permissionDenied = false;
                     addOrientationListener();
                     if (permBtn) permBtn.style.display = 'none';
-                    // KHÔNG hiện alert thành công (theo yêu cầu mới)
                 } else {
-                    if (typeof showCustomAlert === 'function') {
-                        showCustomAlert("Bạn đã từ chối quyền truy cập cảm biến.\nBạn vẫn có thể xoay la bàn thủ công.", "Thông báo");
-                    }
+                    permissionDenied = true;
+                    localStorage.setItem('ios_compass_granted', 'false');
+                    showPermissionResetGuide();
                 }
             })
             .catch(err => {
                 console.error(err);
+                permissionDenied = true;
                 closePermissionModal();
-                let errMsg = "Không thể kích hoạt cảm biến la bàn!\n\nSafari trên iOS yêu cầu trang web phải chạy trên HTTPS.";
-                if (typeof showCustomAlert === 'function') showCustomAlert(errMsg);
-                else alert(errMsg);
+                showPermissionResetGuide();
             });
     } else {
-        // Android, Chrome, Firefox... không cần requestPermission
         closePermissionModal();
         addOrientationListener();
         if (permBtn) permBtn.style.display = 'none';
-        // KHÔNG hiện alert "thành công" trên Android nữa
     }
 }
 
 function addOrientationListener() {
     if (orientationListenerAdded) return;
 
+    const handler = (e) => {
+        if (e.webkitCompassHeading !== undefined || e.alpha !== null) {
+            handleOrientation(e);
+        }
+    };
+
     if ('ondeviceorientationabsolute' in window) {
-        window.addEventListener('deviceorientationabsolute', handleOrientation, true);
+        window.addEventListener('deviceorientationabsolute', handler, true);
     } else if ('ondeviceorientation' in window) {
-        window.addEventListener('deviceorientation', handleOrientation, true);
+        window.addEventListener('deviceorientation', handler, true);
     } else {
-        let noSensorMsg = "Thiết bị hoặc cấu hình trình duyệt hiện tại không hỗ trợ tính năng cảm biến la bàn.";
-        if (typeof showCustomAlert === 'function') showCustomAlert(noSensorMsg);
+        if (typeof showCustomAlert === 'function') {
+            showCustomAlert("Thiết bị không hỗ trợ la bàn tự động.\nBạn có thể xoay thủ công.", "Thông báo");
+        }
         return;
     }
     orientationListenerAdded = true;
+}
+
+function showPermissionResetGuide() {
+    const modal = document.getElementById('iosPermissionModal');
+    if (!modal) return;
+
+    modal.innerHTML = `
+        <div style="background:#1c1c1e; padding:25px; border-radius:20px; text-align:center; width:88%; max-width:400px; border:2px solid #ff9500;">
+            <div style="font-size:3.2rem; margin-bottom:15px;">⚠️</div>
+            <h3 style="color:#ff9500; margin-bottom:12px;">Không Kích Hoạt Được La Bàn</h3>
+            <p style="color:#ccc; line-height:1.6; margin-bottom:20px;">
+                Safari đã chặn quyền vì bạn từng từ chối.
+            </p>
+            <div style="background:#2c2c2e; padding:15px; border-radius:12px; text-align:left; margin-bottom:20px; font-size:0.9rem; line-height:1.55;">
+                <strong>Hướng dẫn reset quyền:</strong><br><br>
+                1. Vào <strong>Cài Đặt</strong> → <strong>Safari</strong><br>
+                2. Chọn <strong>Cài đặt cho Trang web</strong><br>
+                3. Tìm ứng dụng này<br>
+                4. Bật <strong>Motion &amp; Orientation</strong><br>
+                5. Đóng Safari hoàn toàn rồi mở lại.
+            </div>
+            <button onclick="resetPermissionFlag()" style="width:100%; padding:14px; background:#ff9500; color:#000; border:none; border-radius:10px; font-weight:bold; margin-bottom:10px;">
+                ✅ ĐÃ LÀM - THỬ LẠI
+            </button>
+            <button onclick="closePermissionModal()" style="width:100%; padding:12px; background:#444; color:#fff; border:none; border-radius:10px;">
+                Dùng xoay tay
+            </button>
+        </div>
+    `;
+    modal.style.display = 'flex';
+}
+
+function resetPermissionFlag() {
+    localStorage.removeItem('ios_compass_granted');
+    permissionDenied = false;
+    closePermissionModal();
+    setTimeout(() => location.reload(), 400);
 }
 
 function closePermissionModal() {
@@ -1791,57 +1834,36 @@ function closePermissionModal() {
 
 // ====================== KHỞI TẠO ======================
 window.onload = function() {
-    // Khởi tạo các chức năng chính của app
     if (typeof render24SonRing === 'function') render24SonRing();
     if (typeof loadSavedMembers === 'function') loadSavedMembers();
     if (typeof recalculateFate === 'function') recalculateFate();
 
-    const permBtn = document.getElementById('permission-btn');
     const modal = document.getElementById('iosPermissionModal');
-
-    // Kiểm tra iOS
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
                   (navigator.platform === 'MacIntel' && 'ontouchend' in document) ||
                   (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function');
 
     if (isIOS && modal) {
-        // === iOS: Luôn hiện modal đẹp ===
         modal.style.display = 'flex';
-
         const hasGranted = localStorage.getItem('ios_compass_granted') === 'true';
-        const modalTitle = modal.querySelector('h3');
-        const modalText = modal.querySelector('p');
-        const modalButton = modal.querySelector('button');
 
         if (hasGranted) {
-            // Lần sau
-            if (modalTitle) modalTitle.textContent = "KÍCH HOẠT LA BÀN";
-            if (modalText) modalText.innerHTML = `Cảm biến la bàn đã được cấp quyền trước đó.<br><br>Nhấn để kích hoạt la bàn tự động.`;
-            if (modalButton) {
-                modalButton.textContent = "KÍCH HOẠT NGAY";
-                modalButton.onclick = () => {
-                    closePermissionModal();
-                    addOrientationListener();
-                };
-            }
+            closePermissionModal();
+            addOrientationListener();
         } else {
-            // Lần đầu
-            if (modalTitle) modalTitle.textContent = "KÍCH HOẠT LA BÀN";
-            if (modalText) modalText.innerHTML = `Để la bàn xoay tự động theo hướng điện thoại,<br>vui lòng cho phép truy cập cảm biến chuyển động.`;
-            if (modalButton) modalButton.onclick = handleModalClick;
-        }
+            const title = modal.querySelector('h3');
+            const text = modal.querySelector('p');
+            const btn = modal.querySelector('button');
 
-        // Ẩn nút dự phòng
-        if (permBtn) permBtn.style.display = 'none';
-    } 
-    else {
-        // Android, Chrome, Firefox... → Tự động kích hoạt
+            if (title) title.textContent = "KÍCH HOẠT LA BÀN";
+            if (text) text.innerHTML = `Để la bàn xoay tự động theo hướng điện thoại,<br>vui lòng cho phép truy cập cảm biến chuyển động.`;
+            if (btn) btn.onclick = handleModalClick;
+        }
+    } else {
         addOrientationListener();
-        if (permBtn) permBtn.style.display = 'none';
     }
 };
 
-// Hàm xử lý cho lần đầu (gọi request của Safari)
 function handleModalClick() {
     const modal = document.getElementById('iosPermissionModal');
     if (modal) modal.style.display = 'none';
