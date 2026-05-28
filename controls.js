@@ -1894,17 +1894,13 @@ function toggleFullScreenMode() {
     if (!compassContainer) return;
     if (!originalCompassParent) originalCompassParent = compassContainer.parentElement;
 
-    // --- NÂNG CẤP: TÌM VÀ ẨN CÁC PHẦN GIẢI THÍCH ---
-    // Giả sử phần giải thích của bạn có ID là 'dien-giai-bo-sung'
-    const giaiThichThuatNgu = document.getElementById('dien-giai-bo-sung');
-    if (giaiThichThuatNgu) {
-        giaiThichThuatNgu.style.display = 'none'; // Ẩn nó đi khi vào Fullscreen
-    }
+    // 1. Kiểm tra xem đã có dữ liệu chưa (giả sử kiểm tra xem có độ số không)
+    const hasData = statusPanel && statusPanel.innerText.includes("°"); 
 
     const fsDiv = document.createElement('div');
     fsDiv.id = 'fullscreenMode';
     fsDiv.className = 'fullscreen-mode active';
-    fsDiv.style.cssText = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.9); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:opacity 0.3s;";
+    fsDiv.style.cssText = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.95); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:opacity 0.3s;";
     
     fsDiv.innerHTML = `
         <div id="fs-compass-wrapper" style="width: 96vw; max-width: 460px; height: 96vw; max-height: 460px;"></div>
@@ -1913,12 +1909,47 @@ function toggleFullScreenMode() {
     document.body.appendChild(fsDiv);
 
     document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
-    if (statusPanel) document.getElementById('fs-status-wrapper').appendChild(statusPanel);
+    
+    // 2. Chỉ add status-panel nếu có dữ liệu, nếu chưa có thì ẩn hoặc hiện trạng thái chờ
+    if (statusPanel) {
+        if (hasData) {
+            document.getElementById('fs-status-wrapper').appendChild(statusPanel);
+        } else {
+            // Nếu chưa add ngày tháng, chúng ta không add vào fs-status-wrapper 
+            // để tránh khung trống gây xấu giao diện
+            statusPanel.style.display = 'none'; 
+        }
+    }
 
     if (fsIcon) fsIcon.style.opacity = '0';
-
     isFullScreen = true;
-    if (typeof recalculateFate === 'function') recalculateFate();
+}
+
+// Hàm exit cần trả lại trạng thái hiển thị cho status-panel
+function exitFullScreenMode() {
+    const fs = document.getElementById('fullscreenMode');
+    if (!fs) return;
+
+    fs.style.opacity = '0';
+    setTimeout(() => {
+        const compass = document.querySelector('.compass-container');
+        const status = document.querySelector('.status-panel');
+        const fsIcon = document.querySelector('.fs-icon');
+
+        if (compass && originalCompassParent) {
+            originalCompassParent.appendChild(compass);
+            if (status) {
+                status.style.display = ''; // Đảm bảo hiện lại panel
+                originalCompassParent.insertBefore(status, compass.nextSibling);
+            }
+        }
+
+        fs.remove();
+        isFullScreen = false;
+        if (fsIcon) fsIcon.style.opacity = '1';
+        
+        if (typeof updateCompassUI === 'function') updateCompassUI(lastHeading);
+    }, 300);
 }
 
 function exitFullScreenMode() {
