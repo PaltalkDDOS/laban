@@ -1894,33 +1894,36 @@ function toggleFullScreenMode() {
     if (!compassContainer) return;
     if (!originalCompassParent) originalCompassParent = compassContainer.parentElement;
 
-    // --- NÂNG CẤP: TÌM VÀ ẨN CÁC PHẦN GIẢI THÍCH ---
-    // Giả sử phần giải thích của bạn có ID là 'dien-giai-bo-sung'
-    const giaiThichThuatNgu = document.getElementById('dien-giai-bo-sung');
-    if (giaiThichThuatNgu) {
-        giaiThichThuatNgu.style.display = 'none'; // Ẩn nó đi khi vào Fullscreen
-    }
+    // Ẩn các phần thừa
+    const giaiThich = document.getElementById('dien-giai-bo-sung');
+    if (giaiThich) giaiThich.style.display = 'none';
 
+    // Tạo màn hình đen
     const fsDiv = document.createElement('div');
     fsDiv.id = 'fullscreenMode';
-    fsDiv.className = 'fullscreen-mode active';
-    fsDiv.style.cssText = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.9); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:opacity 0.3s;";
+    fsDiv.className = 'fullscreen-mode'; // Dùng class để quản lý CSS
     
     fsDiv.innerHTML = `
-        <div id="fs-compass-wrapper" style="width: 96vw; max-width: 460px; height: 96vw; max-height: 460px;"></div>
-        <div id="fs-status-wrapper" style="width: 92%; max-width: 460px; margin-top:20px;"></div>
+        <div id="fs-compass-wrapper"></div>
+        <div id="fs-status-wrapper"></div>
     `;
     document.body.appendChild(fsDiv);
 
+    // Chuyển la bàn và status vào
     document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
     if (statusPanel) document.getElementById('fs-status-wrapper').appendChild(statusPanel);
 
-    if (fsIcon) fsIcon.style.opacity = '0';
+    // KÍCH HOẠT HIỆU ỨNG VÀ TÍNH TOÁN KÍCH THƯỚC NGAY LẬP TỨC
+    setTimeout(() => {
+        fsDiv.classList.add('active');
+        applyDynamicScaling(); // Gọi hàm này để co giãn theo thiết bị (iPad/Phone)
+    }, 10);
 
+    if (fsIcon) fsIcon.style.opacity = '0';
     isFullScreen = true;
-    if (typeof recalculateFate === 'function') recalculateFate();
 }
 
+// Giữ nguyên hàm exitFullScreenMode của bạn, chỉ cần sửa lại logic trả về status
 function exitFullScreenMode() {
     const fs = document.getElementById('fullscreenMode');
     if (!fs) return;
@@ -1930,22 +1933,34 @@ function exitFullScreenMode() {
         const compass = document.querySelector('.compass-container');
         const status = document.querySelector('.status-panel');
         const fsIcon = document.querySelector('.fs-icon');
-        const giaiThichThuatNgu = document.getElementById('dien-giai-bo-sung');
+        const giaiThich = document.getElementById('dien-giai-bo-sung');
 
         if (compass && originalCompassParent) {
             originalCompassParent.appendChild(compass);
-            if (status) originalCompassParent.insertBefore(status, compass.nextSibling);
+            // RESET lại kích thước la bàn về mặc định khi thoát full
+            compass.style.width = ''; 
+            compass.style.height = '';
         }
-
-        // --- NÂNG CẤP: HIỆN LẠI PHẦN GIẢI THÍCH KHI THOÁT ---
-        if (giaiThichThuatNgu) {
-            giaiThichThuatNgu.style.display = ''; // Quay về trạng thái mặc định (có thể là block hoặc flex)
-        }
+        
+        if (status) document.body.appendChild(status); // Đưa về vị trí gốc hoặc vị trí cũ
+        if (giaiThich) giaiThich.style.display = '';
 
         fs.remove();
         isFullScreen = false;
         if (fsIcon) fsIcon.style.opacity = '1';
-        
-        if (typeof updateCompassUI === 'function') updateCompassUI(lastHeading);
     }, 300);
+}
+function applyDynamicScaling() {
+    const compassContainer = document.querySelector('.compass-container');
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    
+    // Tính kích thước tối ưu: lấy 90% chiều rộng hoặc 70% chiều cao (tránh bị tràn khi xoay ngang)
+    let size = Math.min(viewportWidth * 0.9, viewportHeight * 0.7);
+    
+    // Đặt ngưỡng giới hạn để không bị quá to trên iPad (ví dụ: tối đa 500px)
+    if (size > 500) size = 500;
+    
+    compassContainer.style.width = size + 'px';
+    compassContainer.style.height = size + 'px';
 }
