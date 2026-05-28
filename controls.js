@@ -1878,11 +1878,11 @@ let isPinching = false;
 
 // ====================== FULLSCREEN + PINCH ZOOM THÔNG MINH ======================
 function handleInteraction(e) {
+    // Bỏ qua nếu đang pinch zoom
+    if (isPinching) return;
+
     const isCompass = e.target.closest('.compass-container');
     const isFullScreenDiv = document.getElementById('fullscreenMode');
-
-    // Nếu đang pinch zoom thì bỏ qua toggle fullscreen
-    if (isPinching) return;
 
     if (isCompass && !isFullScreen) {
         e.preventDefault();
@@ -1899,29 +1899,22 @@ document.addEventListener('dblclick', handleInteraction);
 
 document.addEventListener('touchend', (e) => {
     const currentTime = new Date().getTime();
-    if (currentTime - lastTapTime < 450 && e.touches.length === 0) {
+    if (currentTime - lastTapTime < 450 && !isPinching) {
         handleInteraction(e);
     }
     lastTapTime = currentTime;
 });
 
-// ====================== PINCH ZOOM DETECTION ======================
+// ====================== PINCH ZOOM (Cho phép zoom tự nhiên) ======================
 document.addEventListener('touchmove', (e) => {
     if (e.touches.length === 2) {
         isPinching = true;
-        
         const touch1 = e.touches[0];
         const touch2 = e.touches[1];
-        const currentDistance = Math.hypot(
+        lastTouchDistance = Math.hypot(
             touch2.pageX - touch1.pageX, 
             touch2.pageY - touch1.pageY
         );
-
-        if (lastTouchDistance > 0) {
-            const scale = currentDistance / lastTouchDistance;
-            // Cho phép zoom tự nhiên của trình duyệt
-        }
-        lastTouchDistance = currentDistance;
     }
 }, { passive: true });
 
@@ -1941,13 +1934,13 @@ function toggleFullScreenMode() {
     if (!compassContainer) return;
     if (!originalCompassParent) originalCompassParent = compassContainer.parentElement;
 
-    // Ẩn thông tin không cần thiết trong fullscreen
+    // Ẩn thông tin thừa
     if (statusPanel) {
         const elements = statusPanel.querySelectorAll('*');
         elements.forEach(el => {
             const text = el.textContent || "";
-            if (text.includes('Người Tầm Phương') || text.includes('Đo hướng') || 
-                text.includes('Cung Phi') || text.includes('Năm Âm') || 
+            if (text.includes('Người Tầm Phương') || text.includes('Đo hướng') ||
+                text.includes('Cung Phi') || text.includes('Năm Âm') ||
                 text.includes('Trung Cung') || text.includes('Xem giải thích')) {
                 el.style.display = 'none';
                 el.setAttribute('data-fs-hidden', 'true');
@@ -1966,22 +1959,33 @@ function toggleFullScreenMode() {
     fsDiv.className = 'fullscreen-mode active';
     fsDiv.style.cssText = `
         position:fixed; top:0; left:0; width:100vw; height:100vh; 
-        background:rgba(0,0,0,0.95); z-index:9999; 
+        background:#000; z-index:99999; 
         display:flex; flex-direction:column; align-items:center; 
-        justify-content:center; transition:opacity 0.3s;
+        justify-content:center; overflow:hidden;
     `;
 
     fsDiv.innerHTML = `
-        <div id="fs-compass-wrapper" style="width: 98vw; max-width: 520px; height: 98vw; max-height: 520px; display:flex; align-items:center; justify-content:center;"></div>
-        <div id="fs-status-wrapper" style="width: 92%; max-width: 460px; margin-top:20px;"></div>
+        <div id="fs-compass-wrapper" style="width:100vw; height:100vh; display:flex; align-items:center; justify-content:center; overflow:hidden;"></div>
+        <div id="fs-status-wrapper" style="width:92%; max-width:460px; margin-top:15px; position:absolute; bottom:20px;"></div>
     `;
 
     document.body.appendChild(fsDiv);
-    document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
-    if (statusPanel) document.getElementById('fs-status-wrapper').appendChild(statusPanel);
+
+    const wrapper = document.getElementById('fs-compass-wrapper');
+    wrapper.appendChild(compassContainer);
+
+    if (statusPanel) {
+        document.getElementById('fs-status-wrapper').appendChild(statusPanel);
+    }
 
     if (fsIcon) fsIcon.style.opacity = '0';
     isFullScreen = true;
+
+    // Cho phép zoom trong fullscreen
+    compassContainer.style.maxWidth = 'none';
+    compassContainer.style.maxHeight = 'none';
+    compassContainer.style.width = '95vw';
+    compassContainer.style.height = '95vw';
 
     if (typeof recalculateFate === 'function') recalculateFate();
 }
@@ -1996,7 +2000,6 @@ function exitFullScreenMode() {
         const status = document.querySelector('.status-panel');
         const fsIcon = document.querySelector('.fs-icon');
 
-        // Khôi phục lại các phần tử bị ẩn
         document.querySelectorAll('[data-fs-hidden="true"]').forEach(el => {
             el.style.display = '';
             el.removeAttribute('data-fs-hidden');
@@ -2010,6 +2013,14 @@ function exitFullScreenMode() {
         fs.remove();
         isFullScreen = false;
         if (fsIcon) fsIcon.style.opacity = '1';
+
+        // Reset kích thước compass về mặc định
+        if (compass) {
+            compass.style.width = '';
+            compass.style.height = '';
+            compass.style.maxWidth = '';
+            compass.style.maxHeight = '';
+        }
 
         if (typeof updateCompassUI === 'function') updateCompassUI(lastHeading || 0);
     }, 300);
