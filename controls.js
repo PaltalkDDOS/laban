@@ -1733,15 +1733,14 @@ function closeModal() {
         }
     }
 	
-// ====================== QUẢN LÝ QUYỀN LA BÀN - PHIÊN BẢN TỐI ƯU (iOS + Android) ======================
+// ====================== QUẢN LÝ QUYỀN LA BÀN iOS - PHIÊN BẢN CUỐI CÙNG (KHÔNG REDECLARE) ======================
 let permissionDenied = false;
 
-// Sử dụng biến đã khai báo sẵn ở trên cùng file
+// Sử dụng biến đã khai báo sẵn ở trên (dòng 1351)
 function requestPermission() {
     const permBtn = document.getElementById('permission-btn');
     
     if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-        // Chỉ iOS Safari mới cần requestPermission
         DeviceOrientationEvent.requestPermission()
             .then(permissionState => {
                 closePermissionModal();
@@ -1756,12 +1755,13 @@ function requestPermission() {
                     showPermissionResetGuide();
                 }
             })
-            .catch(() => {
+            .catch(err => {
+                console.error(err);
+                permissionDenied = true;
                 closePermissionModal();
                 showPermissionResetGuide();
             });
     } else {
-        // Android, Chrome, Kiwi, Firefox... không cần request
         closePermissionModal();
         addOrientationListener();
         if (permBtn) permBtn.style.display = 'none';
@@ -1799,10 +1799,10 @@ function showPermissionResetGuide() {
             <div style="font-size:3.2rem; margin-bottom:15px;">⚠️</div>
             <h3 style="color:#ff9500; margin-bottom:12px;">Không Kích Hoạt Được La Bàn</h3>
             <p style="color:#ccc; line-height:1.6; margin-bottom:20px;">
-                Safari đã chặn quyền cảm biến.
+                Safari đã chặn quyền vì bạn từng từ chối.
             </p>
             <div style="background:#2c2c2e; padding:15px; border-radius:12px; text-align:left; margin-bottom:20px; font-size:0.9rem; line-height:1.55;">
-                <strong>Cách khắc phục (iOS):</strong><br><br>
+                <strong>Hướng dẫn reset quyền:</strong><br><br>
                 1. Vào <strong>Cài Đặt</strong> → <strong>Safari</strong><br>
                 2. Chọn <strong>Cài đặt cho Trang web</strong><br>
                 3. Tìm ứng dụng này<br>
@@ -1813,7 +1813,7 @@ function showPermissionResetGuide() {
                 ✅ ĐÃ LÀM - THỬ LẠI
             </button>
             <button onclick="closePermissionModal()" style="width:100%; padding:12px; background:#444; color:#fff; border:none; border-radius:10px;">
-                Dùng chế độ xoay tay
+                Dùng xoay tay
             </button>
         </div>
     `;
@@ -1843,15 +1843,14 @@ window.onload = function() {
                   (navigator.platform === 'MacIntel' && 'ontouchend' in document) ||
                   (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function');
 
-    // Chỉ hiển thị modal trên iOS khi chưa từng cấp quyền
     if (isIOS && modal) {
+        modal.style.display = 'flex';
         const hasGranted = localStorage.getItem('ios_compass_granted') === 'true';
-        
+
         if (hasGranted) {
             closePermissionModal();
             addOrientationListener();
         } else {
-            modal.style.display = 'flex';
             const title = modal.querySelector('h3');
             const text = modal.querySelector('p');
             const btn = modal.querySelector('button');
@@ -1861,7 +1860,6 @@ window.onload = function() {
             if (btn) btn.onclick = handleModalClick;
         }
     } else {
-        // Android, Kiwi, Chrome... tự động kích hoạt
         addOrientationListener();
     }
 };
