@@ -1894,18 +1894,23 @@ function toggleFullScreenMode() {
     if (!compassContainer) return;
     if (!originalCompassParent) originalCompassParent = compassContainer.parentElement;
 
-    // --- MỚI: ẨN 2 DÒNG THÔNG TIN KHI VÀO FULLSCREEN ---
+    // --- NÂNG CẤP: ẨN CÁC DÒNG THÔNG TIN CỤ THỂ TRONG STATUS PANEL ---
     if (statusPanel) {
-        // Tìm tất cả các phần tử con trong statusPanel
-        const allElements = statusPanel.querySelectorAll('*');
-        allElements.forEach(el => {
-            // Kiểm tra nội dung text của phần tử
-            if (el.textContent.includes('Cung Cấn') || el.textContent.includes('Tam Bích')) {
+        // Duyệt qua tất cả các phần tử con (b, span, div) trong statusPanel
+        const elements = statusPanel.querySelectorAll('*');
+        elements.forEach(el => {
+            const text = el.textContent || "";
+            // Kiểm tra các cụm từ đặc trưng của 2 dòng bạn muốn ẩn
+            if (text.includes('Người Tầm Phương') || text.includes('Đo hướng')) {
                 el.style.display = 'none';
-                el.dataset.isHidden = 'true'; // Đánh dấu để lát sau biết đường hiện lại
+                el.setAttribute('data-fs-hidden', 'true'); // Đánh dấu để hiện lại sau
             }
         });
     }
+
+    // Ẩn thêm phần giải thích (nếu có)
+    const giaiThich = document.getElementById('detail-box');
+    if (giaiThich) giaiThich.style.display = 'none';
 
     const fsDiv = document.createElement('div');
     fsDiv.id = 'fullscreenMode';
@@ -1936,13 +1941,14 @@ function exitFullScreenMode() {
         const compass = document.querySelector('.compass-container');
         const status = document.querySelector('.status-panel');
         const fsIcon = document.querySelector('.fs-icon');
+        const giaiThich = document.getElementById('detail-box');
 
-        // --- MỚI: HIỆN LẠI 2 DÒNG ĐÃ ẨN ---
+        // --- HIỆN LẠI CÁC DÒNG ĐÃ ẨN ---
         if (status) {
-            const hiddenElements = status.querySelectorAll('[data-isHidden="true"]');
+            const hiddenElements = status.querySelectorAll('[data-fs-hidden="true"]');
             hiddenElements.forEach(el => {
-                el.style.display = ''; // Quay về mặc định
-                el.removeAttribute('data-isHidden'); // Xóa dấu
+                el.style.display = ''; // Quay về trạng thái gốc
+                el.removeAttribute('data-fs-hidden');
             });
         }
 
@@ -1950,6 +1956,8 @@ function exitFullScreenMode() {
             originalCompassParent.appendChild(compass);
             if (status) originalCompassParent.insertBefore(status, compass.nextSibling);
         }
+
+        if (giaiThich) giaiThich.style.display = '';
 
         fs.remove();
         isFullScreen = false;
