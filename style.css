@@ -987,3 +987,147 @@ body {
 .fullscreen-mode {
     cursor: zoom-out; /* Con trỏ chuột đổi thành dấu trừ khi vào FS */
 }
+/* ====================== PURPOSE BUTTON ====================== */
+.purpose-btn {
+    background: linear-gradient(145deg, #2a2218, #32291f);
+    border: 2px solid var(--gold);
+    color: #fff;
+    padding: 13px 16px;
+    border-radius: 12px;
+    font-size: 0.91rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.35s ease;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+    min-height: 50px;
+    position: relative;
+    overflow: hidden;
+}
+
+.purpose-btn:hover {
+    border-color: #f1c40f;
+    box-shadow: 0 0 22px rgba(241, 196, 15, 0.45);
+    transform: translateY(-3px);
+    background: linear-gradient(145deg, #32291f, #3a3126);
+}
+
+.purpose-btn:active {
+    transform: scale(0.985);
+}
+
+/* Text hiển thị */
+#purpose-selected-text {
+    flex: 1;
+    padding-right: 10px;
+    line-height: 1.45;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+/* Icon mũi tên */
+.purpose-btn > span:last-child {
+    color: var(--gold);
+    font-size: 1.25rem;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.purpose-btn:hover > span:last-child {
+    transform: rotate(90deg);
+}
+
+/* ====================== PURPOSE POPUP MODAL ====================== */
+#purpose-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.94);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(12px);
+}
+
+#purpose-modal-content {
+    background: #1a1510;
+    border: 2px solid var(--gold);
+    border-radius: 20px;
+    width: 92%;
+    max-width: 445px;
+    max-height: 88vh;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+}
+
+#purpose-modal-header {
+    padding: 22px 24px;
+    text-align: center;
+    color: var(--gold);
+    font-size: 1.22rem;
+    font-weight: 700;
+    border-bottom: 1px solid #443322;
+    background: #221b14;
+    letter-spacing: 0.5px;
+}
+
+/* Body */
+#purpose-modal-body {
+    max-height: 68vh;
+    overflow-y: auto;
+    padding: 10px 0;
+    scrollbar-width: thin;
+    scrollbar-color: #554433 #221b14;
+}
+
+/* Nhóm (Group) */
+.purpose-modal-group {
+    padding: 16px 24px 8px 24px;
+    color: #f1c40f;
+    font-weight: 700;
+    background: #221b14;
+    font-size: 0.96rem;
+    border-top: 1px solid #443322;
+    letter-spacing: 0.4px;
+}
+
+.purpose-modal-group:first-child {
+    border-top: none;
+}
+
+/* Option */
+.purpose-modal-option {
+    padding: 15.5px 24px;
+    cursor: pointer;
+    border-bottom: 1px solid #332922;
+    transition: all 0.3s ease;
+    font-size: 0.935rem;
+    line-height: 1.45;
+}
+
+.purpose-modal-option:hover {
+    background: #3a2f24;
+    color: #fff;
+    padding-left: 34px;
+    transform: translateX(6px);
+}
+
+.purpose-modal-option:last-child {
+    border-bottom: none;
+}
+
+/* Scrollbar */
+#purpose-modal-body::-webkit-scrollbar {
+    width: 7px;
+}
+#purpose-modal-body::-webkit-scrollbar-thumb {
+    background: #554433;
+    border-radius: 10px;
+}
+#purpose-modal-body::-webkit-scrollbar-thumb:hover {
+    background: #665544;
+}
