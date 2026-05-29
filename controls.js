@@ -1595,18 +1595,16 @@ const SMOOTH_MIN = 0.08;
 const SMOOTH_MAX = 0.55;
 const THROTTLE_MS = 16; // ~60fps
 
-// ====================== HANDLE ORIENTATION - ĐÃ NÂNG CẤP ======================
+// ====================== HANDLE ORIENTATION - ĐÃ NÂNG CẤP (Hiển thị Hậu) ======================
 function handleOrientation(event) {
     let rawHeading = null;
-
-    // Ưu tiên webkitCompassHeading cho iOS (chính xác nhất)
+    // Ưu tiên webkitCompassHeading cho iOS
     if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
         rawHeading = event.webkitCompassHeading;
-    } 
+    }
     else if (event.alpha !== undefined && event.alpha !== null) {
         rawHeading = (360 - event.alpha) % 360;
     }
-
     if (rawHeading === null) return;
 
     // Khóa khi đang kéo slider thủ công
@@ -1614,7 +1612,7 @@ function handleOrientation(event) {
 
     const now = Date.now();
     if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) {
-        return; // Throttle để tránh update quá nhanh
+        return;
     }
     lastUpdateTime = now;
 
@@ -1630,16 +1628,13 @@ function handleOrientation(event) {
     let diff = rawHeading - lastHeading;
     if (diff > 180) diff -= 360;
     if (diff < -180) diff += 360;
-
     const absDiff = Math.abs(diff);
     let dynamicFactor = SMOOTH_MIN;
-
     if (absDiff > 12) {
         dynamicFactor = SMOOTH_MAX;
     } else if (absDiff > 1.5) {
         dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
     }
-
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
 
@@ -1647,7 +1642,80 @@ function handleOrientation(event) {
     if (rafId) cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(() => {
         updateCompassUI(lastHeading);
+        
+        // === THÊM: Cập nhật hiển thị độ + Hậu ===
+        if (typeof updateDegreeDisplay === 'function') {
+            updateDegreeDisplay(lastHeading);
+        }
     });
+}
+// ====================== CẬP NHẬT HIỂN THỊ ĐỘ + SƠN + HẬU (NÂNG CẤP MỚI) ======================
+function updateDegreeDisplay(degree) {
+    const normalized = ((degree % 360) + 360) % 360;
+  
+    let sonName = "—";
+    let hauFullName = "—";
+    let qualityText = "";
+    let qualityEmoji = "";
+
+    // Tìm Sơn
+    SON_24_CONFIG.forEach(son => {
+        let min = son.min;
+        let max = son.max;
+        if (min > max) {
+            if (normalized >= min || normalized <= max) sonName = son.name;
+        } else if (normalized >= min && normalized < max) {
+            sonName = son.name;
+        }
+    });
+
+    // Tìm Hậu gần nhất
+    let minDiff = Infinity;
+    Object.keys(Data72Hau).forEach(key => {
+        const d = parseFloat(key);
+        const diff = Math.min(Math.abs(normalized - d), 360 - Math.abs(normalized - d));
+        if (diff < minDiff) {
+            minDiff = diff;
+            const hau = Data72Hau[key];
+            hauFullName = hau.ten;                    // Ví dụ: "Nhâm Hậu 3"
+            
+            // Chất lượng
+            if (hau.chatLuong.includes("Đại Cát") || hau.chatLuong.includes("Cát")) {
+                qualityEmoji = " 🟢";
+                qualityText = hau.chatLuong;
+            } else if (hau.chatLuong.includes("Đại Hung") || hau.chatLuong.includes("Hung")) {
+                qualityEmoji = " 🔴";
+                qualityText = hau.chatLuong;
+            } else {
+                qualityEmoji = " 🟡";
+                qualityText = hau.chatLuong;
+            }
+        }
+    });
+
+    // Cập nhật giao diện
+    const degreeTxt = document.getElementById('degree-txt');
+    if (degreeTxt) {
+        degreeTxt.innerHTML = `
+            ${normalized.toFixed(1)}° 
+            - CUNG <strong>${getCungName(normalized)}</strong><br>
+            SƠN <strong>${sonName}</strong> 
+            - HẬU <strong>${hauFullName}${qualityEmoji}</strong>
+        `;
+    }
+}
+
+// ====================== HÀM HỖ TRỢ LẤY TÊN CUNG ======================
+function getCungName(deg) {
+    if (deg >= 337.5 || deg < 22.5) return "KHẢM (BẮC)";
+    if (deg >= 22.5 && deg < 67.5) return "CẤN (Đ.BẮC)";
+    if (deg >= 67.5 && deg < 112.5) return "CHẤN (ĐÔNG)";
+    if (deg >= 112.5 && deg < 157.5) return "TỐN (Đ.NAM)";
+    if (deg >= 157.5 && deg < 202.5) return "LY (NAM)";
+    if (deg >= 202.5 && deg < 247.5) return "KHÔN (T.NAM)";
+    if (deg >= 247.5 && deg < 292.5) return "ĐOÀI (TÂY)";
+    if (deg >= 292.5 && deg < 337.5) return "CÀN (T.BẮC)";
+    return "KHẢM (BẮC)";
 }
 
 // ====================== MANUAL ROTATE (KÉO SLIDER) ======================
