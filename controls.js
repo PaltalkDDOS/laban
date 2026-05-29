@@ -795,6 +795,7 @@ function getHanhByHeading(heading) {
 
     return "Chưa xác định";
 }
+// ====================== HÀM CHÍNH recalculateFate() - ĐÃ NÂNG CẤP (Thêm giải thích Hậu) ======================
 function recalculateFate() {
     const name = document.getElementById('userName').value.trim() || "Chủ mệnh";
     const gender = document.getElementById('gender').value;
@@ -824,7 +825,7 @@ function recalculateFate() {
         return;
     }
 
-    // Tính toán thông tin cơ bản
+    // Tính toán
     chủMệnh = tínhCungPhi(y, m, d, gender);
     const namAm = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
     const nguHoangInfo = getNguHoangInfo(namAm);
@@ -834,32 +835,33 @@ function recalculateFate() {
     fateTxt.innerText = `${name}: Cung ${chủMệnh} (${nhomMenh}) - Bản Mệnh Cung Phi: ${hanhCungPhi} | Năm Âm: ${namAm} | ${nguHoangInfo}`;
 
     // Xử lý góc đang xem
-    let headingToCalculate = isDetailOpen && lockedHeadingAtOpen !== null ? lockedHeadingAtOpen : currentHeading;
+    let headingToCalculate = isDetailOpen && lockedHeadingAtOpen !== null
+                            ? lockedHeadingAtOpen
+                            : currentHeading;
 
-    // === TÍNH TOÁN ĐA TẦNG ===
     const hanhPhuongVi = getHanhByHeading(headingToCalculate);
-    const currentHauInfo = getCurrentHauInfo(headingToCalculate);
-    // Tính toán Đại/Tiểu vận
-  const vanInfo = tinhDaiTieuVan(headingToCalculate, y, chủMệnh, hanhCungPhi);
-    // === GIẢI THÍCH SAO NGŨ HOÀNG ===
+
+    // === LẤY THÔNG TIN HẬU HIỆN TẠI ===
+    let currentHauInfo = getCurrentHauInfo(headingToCalculate);
+
+    // === GIẢI THÍCH SAO NGŨ HOÀNG (GIỮ NGUYÊN) ===
     let saoChuQuan = null;
     const match = nguHoangInfo.match(/Sao (\d+)/);
     if (match) saoChuQuan = match[1];
-    
     let giaiThichSao = "";
     if (saoChuQuan === '5') {
-        giaiThichSao = `Năm sinh này phạm sao <b>Ngũ Hoàng</b>, mang sát khí hành Thổ rất mạnh. Cần giữ trung tâm nhà yên tĩnh, tránh đập phá, sửa chữa lớn.`;
+        giaiThichSao = `Năm sinh này phạm sao xấu <b>Ngũ Hoàng</b> đóng tại giữa nhà, mang sát khí hành Thổ rất mạnh. Cần giữ trung tâm nhà yên tĩnh, tránh đập phá, sửa chữa lớn ở khu vực này trong năm.`;
     } else if (saoChuQuan === '2') {
-        giaiThichSao = `Năm sinh này gặp sao <b>Nhị Hắc</b>, dễ ảnh hưởng sức khỏe. Nên đặt Hồ lô đồng hoặc vật phẩm hành Kim để hóa giải.`;
-    } else if (['3', '4'].includes(saoChuQuan)) {
-        giaiThichSao = `Năng lượng Mộc quản năm gây lệch khí nhẹ ở trung tâm nhà. Giữ khu vực này sạch sẽ là tự động hóa giải.`;
-    } else if (['1', '6', '8', '9'].includes(saoChuQuan)) {
-        giaiThichSao = `Năm nay gặp sao Cát, năng lượng Trung Cung tốt, tài lộc và quý nhân hỗ trợ.`;
+        giaiThichSao = `Năm sinh âm lịch này gặp sao <b>Nhị Hắc</b>, dễ ảnh hưởng sức khỏe. Nên đặt Hồ lô đồng hoặc thạch anh trắng ở trung tâm nhà để hóa giải.`;
+    } else if (nguHoangInfo.includes("Tam Bích") || nguHoangInfo.includes("Tứ Lục") || saoChuQuan === '3' || saoChuQuan === '4') {
+        giaiThichSao = `Năm sinh âm lịch này gặp sao mang năng lượng Mộc quản năm, khi đóng ở giữa tâm nhà (vốn thuộc Thổ) sẽ gây ra sự lệch khí nhẹ ở mức <b>Trung bình</b>. Chỉ cần giữ khu vực giữa nhà hoặc giữa cửa hàng luôn sạch sẽ, thoáng đãng là tự động hóa giải.`;
+    } else if (['1','6','8','9'].includes(saoChuQuan)) {
+        giaiThichSao = `Năm nay gặp sao Cát, năng lượng Trung Cung tốt, tài lộc, quý nhân hỗ trợ, gia đạo tương đối thuận lợi.`;
     } else {
-        giaiThichSao = `Năng lượng chủ quản ổn định, không có biến động xấu lớn.`;
+        giaiThichSao = `Năng lượng chủ quản năm sinh tại trung tâm nhà ở trạng thái ổn định, an lành, không có biến động xấu lớn.`;
     }
 
-    // === RENDER GIAO DIỆN ===
+    // === RENDER PHẦN GIẢI THÍCH THUẬT NGỮ (ĐÃ THÊM GIẢI THÍCH HẬU) ===
     let targetContainer = document.getElementById('dien-giai-bo-sung');
     if (!targetContainer) {
         targetContainer = document.createElement('div');
@@ -873,77 +875,42 @@ function recalculateFate() {
     const btnBkg = isDetailOpen ? 'rgba(223, 183, 108, 0.15)' : 'transparent';
     const config = ConfigPhongThuy[mucDich];
     const tenMucDichBinhDan = config ? config.title : "Vị trí / Hướng đang chọn";
-
-    targetContainer.innerHTML = `
-    <div style="text-align: center; margin: 10px 0;">
-        <button id="btn-toggle-fengshui" onclick="toggleDienGiaiChiTiet()"
-                style="background: ${btnBkg}; border: 1px solid var(--gold); color: var(--gold);
-                       padding: 8px 16px; font-size: 0.85rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
-            ${btnText}
-        </button>
-    </div>
-
-    <div id="content-dien-giai-chi-tiet" style="display: ${displayStyle}; margin: 10px 0; padding: 16px;
-         background: rgba(223, 183, 108, 0.06); border: 1.5px solid var(--gold); border-radius: 10px;
-         font-size: 0.87rem; line-height: 1.65; text-align: left; color: #fff;">
-
-        <p style="margin:0 0 12px 0; color:var(--gold); font-weight:bold; border-bottom:1px solid var(--gold); padding-bottom:8px;">
-            📖 GIẢI NGHĨA CÁC THUẬT NGỮ
-        </p>
-
-        <!-- Phương vị -->
-        <p style="margin:8px 0;">
-            📍 <b>Phương vị:</b> Hướng <b>${Math.round(headingToCalculate)}°</b> — Hành <b>${hanhPhuongVi}</b>
-        </p>
-
-        <!-- Mệnh Cung Phi -->
-        <p style="margin:8px 0;">
-            🎯 <b>Mệnh Cung Phi:</b> Cung <b>${chủMệnh}</b> (${nhomMenh}, hành ${hanhCungPhi})
-        </p>
-
-        <!-- Đại Vận -->
-        <div style="margin:12px 0; padding:12px; background:rgba(255,215,0,0.08); border-radius:8px;">
-            🌌 <b>Đại Vận (${vanInfo.namPhongThuy}):</b> ${vanInfo.daiVan}<br>
-            <small style="color:#ccc;">Ảnh hưởng vĩ mô trong 20 năm theo lịch pháp Phong Thủy.</small>
-        </div>
-
-        <!-- Tiểu Vận - Phi Tinh (Phần nổi bật) -->
-        <div style="margin:14px 0; padding:16px; background:rgba(30,144,255,0.12); border-radius:10px; border-left:5px solid ${vanInfo.mauSac};">
-            <b>◆ TIỂU VẬN ${vanInfo.namPhongThuy} — HUYỀN KHÔNG PHI TINH</b><br>
-            <span style="font-size:1.1rem; color:${vanInfo.mauSac}; font-weight:bold;">
-                ${vanInfo.tieuVan}
-            </span><br>
-            <span style="color:${vanInfo.mauSac}; font-size:1.05rem; font-weight:bold;">
-                ${vanInfo.tongKet} (${vanInfo.capDo})
-            </span><br><br>
-            
-            <span style="color:#ddd; line-height:1.6;">
-                ${vanInfo.moTa}
-            </span><br><br>
-            
-            <small style="color:#aaa;">💡 ${vanInfo.khuyenNghi}</small><br>
-            ${vanInfo.vatPham ? `<small style="color:#ffd700;">🛠 Vật phẩm khuyên dùng: ${vanInfo.vatPham}</small>` : ''}
-        </div>
-
-        <!-- Hậu Hiện Tại -->
-        <p style="margin:12px 0;">
-            🌟 <b>Hậu hiện tại:</b> ${vanInfo.hauHienTai}<br>
-            <small style="color:#ccc;">Khí trường chi tiết trong phạm vi 5° của hướng đang đo.</small>
-        </p>
-
-        <!-- Vận khí tâm nhà -->
-        <p style="margin:8px 0;">
-            ⚠️ <b>Vận khí tâm nhà (Trung Cung):</b> ${giaiThichSao}
-        </p>
-
-        <!-- Mục đích -->
-        <p style="margin:8px 0;">
-            🚪 <b>Mục đích xem:</b> <b>${tenMucDichBinhDan}</b>
-        </p>
-
-    </div>
+// Trong recalculateFate(), sau khi tìm currentHauInfo
+const vanInfo = `
+    <p style="margin:8px 0; color:#ffd700;">
+        🌟 <b>Hậu hiện tại:</b> ${currentHauInfo.ten} — ${currentHauInfo.chatLuong}<br>
+        <small>Đây là khí trường 5° của Sơn ${currentHauInfo.sonName}. 
+        ${currentHauInfo.chatLuong.includes("Cát") ? "Thuận lợi cho Đại Vận." : "Cần hóa giải trong Tiểu Vận."}</small>
+    </p>
 `;
-
+    targetContainer.innerHTML = `
+        <div style="text-align: center; margin: 10px 0;">
+            <button id="btn-toggle-fengshui" onclick="toggleDienGiaiChiTiet()"
+                    style="background: ${btnBkg}; border: 1px solid var(--gold); color: var(--gold);
+                           padding: 8px 16px; font-size: 0.85rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                ${btnText}
+            </button>
+        </div>
+        <div id="content-dien-giai-chi-tiet" style="display: ${displayStyle}; margin: 10px 0; padding: 14px;
+             background: rgba(223, 183, 108, 0.06); border: 1.5px solid var(--gold); border-radius: 8px;
+             font-size: 0.86rem; line-height: 1.65; text-align: left; color: #fff;">
+            
+            <p style="margin:0 0 10px 0; color:var(--gold); font-weight:bold; border-bottom:1px solid var(--gold); padding-bottom:6px;">
+                📖 GIẢI NGHĨA CÁC THUẬT NGỮ
+            </p>
+            
+            <p style="margin:8px 0;">📍 <b>Phương vị:</b> Là hướng thực tế mà đầu điện thoại/la bàn của bạn đang chĩa vào. Hướng này tương ứng với năng lượng hành <b>${hanhPhuongVi}</b> (Góc xoay la bàn hiện tại: <b>${Math.round(headingToCalculate)}°</b>).</p>
+            
+            <p style="margin:8px 0;">🎯 <b>Mệnh Cung Phi (Hành ${hanhCungPhi}):</b> Quẻ mệnh phong thủy cốt lõi được tính toán dựa trên năm sinh và giới tính của bạn (Bạn thuộc cung <b>${chủMệnh}</b>, nhóm tuổi <b>${nhomMenh}</b>). Mệnh này dùng để đối chiếu trực tiếp với la bàn Bát Trạch phía dưới.</p>
+            
+            <p style="margin:8px 0;">🌟 <b>Hậu hiện tại (${currentHauInfo.ten}):</b> ${currentHauInfo.chatLuong} ${currentHauInfo.emoji}<br>
+            <span style="color:#ccc;">Đây là chi tiết 5° của Sơn ${currentHauInfo.sonName}. ${currentHauInfo.ynghia}</span></p>
+            
+            <p style="margin:8px 0;">⚠️ <b>Vận khí tâm nhà (Trung Cung):</b> ${giaiThichSao}</p>
+            
+            <p style="margin:8px 0;">🚪 <b>Mục đích xem:</b> Bạn đang tiến hành đo đạc vị trí cho <b>${tenMucDichBinhDan}</b>. Hãy cuộn xuống phía dưới để xem kết quả Cát/Hung chính xác theo hệ Bát Trạch Minh Châu và mật pháp hóa giải.</p>
+        </div>
+    `;
 
     generateDirectionsList();
     updateCompassUI(currentHeading);
@@ -977,153 +944,7 @@ function getCurrentHauInfo(degree) {
     return result;
 }
 
-// ====================== HÀM TÍNH TIẾT KHÍ (LẬP XUÂN) ======================
-function getPhongThuyYear() {
-    const now = new Date();
-    const year = now.getFullYear();
-    
-    // Ngày Lập Xuân thường rơi vào 3-5 tháng 2
-    const lapXuanApprox = new Date(year, 1, 4); // 4/2
-    
-    // Điều chỉnh nếu hôm nay chưa qua Lập Xuân
-    if (now < lapXuanApprox) {
-        return year - 1;   // Vẫn còn năm cũ theo phong thủy
-    }
-    return year;
-}
 
-function tinhDaiTieuVan(degree, namSinh, cungPhi, hanhCungPhi) {
-    const namHienTai = new Date().getFullYear();
-    const normalized = ((degree % 360) + 360) % 360;
-
-    // 1. Đại Vận
-    const baseYear = 1864;
-    let vanNumber = ((Math.floor((namHienTai - baseYear) / 20)) % 9) + 1;
-    const hanhMap = {1:"Thủy",2:"Thổ",3:"Mộc",4:"Mộc",5:"Thổ",6:"Kim",7:"Kim",8:"Thổ",9:"Hỏa"};
-
-    // 2. Tiểu Vận - Sao bay vào hướng (SỬA LẠI - ĐÚNG)
-    let saoTrungCung = (11 - (namHienTai % 9)) % 9;
-    if (saoTrungCung === 0) saoTrungCung = 9;
-
-    // Tính sao bay vào hướng theo quy tắc Huyền Không (rất quan trọng)
-    const huongIndex = Math.floor(((normalized + 22.5) % 360) / 40);  // Điều chỉnh offset
-    let saoBayVaoHuong = (saoTrungCung + (8 - huongIndex)) % 9;
-    if (saoBayVaoHuong === 0) saoBayVaoHuong = 9;
-
-    const tenSao = ["Nhất Bạch","Nhị Hắc","Tam Bích","Tứ Lục","Ngũ Hoàng","Lục Bạch","Thất Xích","Bát Bạch","Cửu Tử"];
-    const saoInfo = {
-        so: saoBayVaoHuong,
-        ten: tenSao[saoBayVaoHuong-1],
-        hanh: hanhMap[saoBayVaoHuong]
-    };
-
-    // 3. 72 Hậu
-    let currentHau = null;
-    let minDiff = Infinity;
-    Object.keys(Data72Hau).forEach(key => {
-        const d = parseFloat(key);
-        const diff = Math.min(Math.abs(normalized - d), 360 - Math.abs(normalized - d));
-        if (diff < minDiff) {
-            minDiff = diff;
-            currentHau = Data72Hau[key];
-        }
-    });
-
-    const hanhHuong = getHanhByHeading(degree);
-
-    // 4. Đánh giá (giữ logic pro)
-    const sinhMenh = isSinh(saoInfo.hanh, hanhCungPhi);
-    const khacMenh = isKhac(saoInfo.hanh, hanhCungPhi);
-    const hauTot = currentHau?.chatLuong?.toLowerCase().includes("cát") || false;
-
-    let tongKet = "Trung bình";
-    let capDo = "Trung";
-    let mauSac = "#FFD700";
-    let moTa = "";
-    let khuyenNghi = "";
-    let vatPham = "";
-
-    if (sinhMenh && hauTot) {
-        capDo = "Cường"; tongKet = "Đại Cát"; mauSac = "#00FF88";
-        moTa = `${saoInfo.ten} sinh vượng Mệnh.`;
-        khuyenNghi = "Năm thuận lợi cho gia chủ.";
-    } else if (khacMenh) {
-        capDo = "Nhược"; tongKet = "Đại Hung"; mauSac = "#FF3333";
-        moTa = `${saoInfo.ten} khắc Mệnh. Hung khí nặng.`;
-        khuyenNghi = "Cần hóa giải mạnh.";
-        vatPham = "Hồ Lô Đồng, Gương Bát Quái";
-    } else if (hauTot) {
-        capDo = "Trung"; tongKet = "Tiểu Cát"; mauSac = "#90EE90";
-        moTa = `Hậu hiện tại tốt.`;
-    } else {
-        capDo = "Trung"; tongKet = "Bình Hòa"; 
-        moTa = "Trạng thái cân bằng.";
-    }
-
-    return {
-        daiVan: `Vận ${vanNumber} - ${hanhMap[vanNumber]} Vận (${1864 + (vanNumber-1)*20}-${1864 + vanNumber*20 - 1})`,
-        tieuVan: `${saoInfo.ten} • Hành ${saoInfo.hanh}`,
-        hauHienTai: currentHau ? `${currentHau.ten} - ${currentHau.chatLuong}` : "—",
-        tongKet: tongKet,
-        capDo: capDo,
-        moTa: moTa,
-        mauSac: mauSac,
-        khuyenNghi: khuyenNghi,
-        vatPham: vatPham,
-        nam: namHienTai
-    };
-}
-
-// Hai hàm hỗ trợ nhỏ (thêm vào code)
-function isSinh(hanh1, hanh2) {
-    const sinh = { "Mộc":"Hỏa", "Hỏa":"Thổ", "Thổ":"Kim", "Kim":"Thủy", "Thủy":"Mộc" };
-    return sinh[hanh1] === hanh2;
-}
-
-function isKhac(hanh1, hanh2) {
-    const khac = { "Mộc":"Thổ", "Thổ":"Thủy", "Thủy":"Hỏa", "Hỏa":"Kim", "Kim":"Mộc" };
-    return khac[hanh1] === hanh2;
-}
-
-// === THÊM HÀM TÍNH ĐẠI VẬN TỰ ĐỘNG ===
-function getDaiVanInfo() {
-    const currentYear = new Date().getFullYear();
-    
-    // Tính Đại Vận Huyền Không
-    const baseYear = 1864;                    // Năm bắt đầu Vận 1
-    const yearsPassed = currentYear - baseYear;
-    const vanNumber = ((Math.floor(yearsPassed / 20)) % 9) + 1;
-    
-    const startYear = baseYear + (vanNumber - 1) * 20;
-    const endYear = startYear + 19;
-    
-    // Hành của từng Vận
-    const hanhMap = {
-        1: "Thủy",
-        2: "Thổ",
-        3: "Mộc",
-        4: "Mộc",
-        5: "Thổ",
-        6: "Kim",
-        7: "Kim",
-        8: "Thổ",
-        9: "Hỏa"
-    };
-    
-    const hanh = hanhMap[vanNumber] || "Hỏa";
-    
-    return {
-        van: vanNumber,
-        hanh: hanh,
-        period: `${startYear}-${endYear}`,
-        year: currentYear
-    };
-}
-
-// ====================== TRONG HÀM recalculateFate() ======================
-
-// Thêm dòng này sau khi tính toán các biến khác
-const daiVan = getDaiVanInfo();
 // --- CẤU HÌNH PHONG THỦY ĐÃ NÂNG CẤP TOÀN DIỆN DIỆN RỘNG ---
 const ConfigPhongThuy = {
     // Hướng (Ưu tiên các cung Cát để đón sinh khí, tài lộc)
