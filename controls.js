@@ -1650,12 +1650,12 @@ function handleOrientation(event) {
     });
 }
 // ====================== CẬP NHẬT HIỂN THỊ ĐỘ + SƠN + HẬU (NÂNG CẤP MỚI) ======================
+// ====================== CẬP NHẬT HIỂN THỊ ĐỘ + SƠN + HẬU (GỌN & ĐẸP) ======================
 function updateDegreeDisplay(degree) {
     const normalized = ((degree % 360) + 360) % 360;
   
     let sonName = "—";
-    let hauFullName = "—";
-    let qualityText = "";
+    let hauName = "—";
     let qualityEmoji = "";
 
     // Tìm Sơn
@@ -1669,7 +1669,7 @@ function updateDegreeDisplay(degree) {
         }
     });
 
-    // Tìm Hậu gần nhất
+    // Tìm Hậu
     let minDiff = Infinity;
     Object.keys(Data72Hau).forEach(key => {
         const d = parseFloat(key);
@@ -1677,30 +1677,26 @@ function updateDegreeDisplay(degree) {
         if (diff < minDiff) {
             minDiff = diff;
             const hau = Data72Hau[key];
-            hauFullName = hau.ten;                    // Ví dụ: "Nhâm Hậu 3"
+            hauName = hau.ten.replace(" Hậu", "");
             
-            // Chất lượng
             if (hau.chatLuong.includes("Đại Cát") || hau.chatLuong.includes("Cát")) {
                 qualityEmoji = " 🟢";
-                qualityText = hau.chatLuong;
             } else if (hau.chatLuong.includes("Đại Hung") || hau.chatLuong.includes("Hung")) {
                 qualityEmoji = " 🔴";
-                qualityText = hau.chatLuong;
             } else {
                 qualityEmoji = " 🟡";
-                qualityText = hau.chatLuong;
             }
         }
     });
 
-    // Cập nhật giao diện
+    // Hiển thị gọn trên 1 dòng
     const degreeTxt = document.getElementById('degree-txt');
     if (degreeTxt) {
         degreeTxt.innerHTML = `
             ${normalized.toFixed(1)}° 
-            - CUNG <strong>${getCungName(normalized)}</strong><br>
-            SƠN <strong>${sonName}</strong> 
-            - HẬU <strong>${hauFullName}${qualityEmoji}</strong>
+            - CUNG <strong>${getCungName(normalized)}</strong> 
+            - SƠN <strong>${sonName}</strong> 
+            - HẬU <strong>${hauName}${qualityEmoji}</strong>
         `;
     }
 }
