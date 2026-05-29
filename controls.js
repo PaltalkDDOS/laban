@@ -646,11 +646,15 @@ function render24SonRing() {
         });
     }
 
-    // 4. Vòng 24 Sao Phúc Đức
+    // 4. Vòng 24 Sao Phúc Đức (ĐÃ CẬP NHẬT ĐỂ CÓ MÀU SẮC)
     const phucDucRingSvg = document.getElementById('phucDucRingSvg');
     if (phucDucRingSvg) {
         phucDucRingSvg.innerHTML = "";
-        const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
+        const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", 
+                              "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", 
+                              "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", 
+                              "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
+        
         phucDucNames.forEach((name, index) => {
             const goc = (index * 15) % 360;
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -658,7 +662,17 @@ function render24SonRing() {
             textNode.setAttribute("text-anchor", "middle");
             textNode.setAttribute("font-size", "6.5");
             textNode.setAttribute("font-weight", "600");
-            textNode.setAttribute("fill", "#7a623c");
+            
+            // LOGIC MÀU CHO SAO (Bạn có thể điều chỉnh danh sách tên ở đây)
+            let saoColor = "#7a623c"; // Mặc định
+            if (["Phúc Đức", "Tấn Tài", "Quan Quý", "Vượng Trang", "Hưng Phước", "Vượng Tài", "Đăng Doanh", "Vượng Tâm", "Vinh Phước"].includes(name)) {
+                saoColor = "#00FF41"; // Cát
+            } else if (["Trường Bệnh", "Tố Tụng", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Khóc Khấp", "Cô Quả", "Xương Dâm"].includes(name)) {
+                saoColor = "#FF3131"; // Hung
+            }
+            
+            textNode.setAttribute("fill", saoColor);
+            textNode.setAttribute("data-original-fill", saoColor); // Để hàm quét dùng
             textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
             textNode.setAttribute("data-sao-goc", goc.toString());
             textNode.setAttribute("data-base-size", "6.5");
