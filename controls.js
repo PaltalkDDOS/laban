@@ -347,15 +347,31 @@ function getNguHoangInfo(year) {
 
     return `Năm ${year}: Sao ${info[sao]}`;
 }
-// 1. Hàm tính toán chỉ số (Phải làm tròn đúng chuẩn 5 độ/hậu)
-function get72HauByDegree(degree) {
-    const norm = ((degree % 360) + 360) % 360; // Đưa về 0-360
-    const index = Math.round(norm / 5) * 5;     // Làm tròn về bội số 5
-    const finalIndex = (index === 360) ? 0 : index;
-    const key = finalIndex.toFixed(1);
+
+// ====================== HÀM RIÊNG CẢNH BÁO NGŨ HOÀNG ======================
+function getNguHoangAlert(currentHuong) {
+    const nam = new Date().getFullYear();
+    // Danh sách Ngũ Hoàng theo năm (Cần cập nhật hoặc dùng công thức tính)
+    // Công thức Ngũ Hoàng: (5 - (nam - 2024) % 9 + 9) % 9
+    const cacHuong = ["Trung Cung", "Tây Bắc", "Tây", "Đông Bắc", "Nam", "Bắc", "Tây Nam", "Đông", "Đông Nam"];
+    const viTriNguHoang = cacHuong[(5 - (nam - 2024) % 9 + 9) % 9];
+
+    // Cảnh báo nếu hướng người dùng đang xem trùng với vị trí Ngũ Hoàng
+    if (currentHuong.toLowerCase() === viTriNguHoang.toLowerCase()) {
+        return `<div style="background:#ff3b30; color:#fff; padding:15px; border-radius:10px; margin:15px 0; font-weight:bold; border: 2px solid #ffd700;">
+            ⚠️ <b>CẢNH BÁO ĐẠI SÁT:</b> Hướng ${currentHuong} năm nay phạm <b>NGŨ HOÀNG ĐẠI SÁT</b>.<br>
+            <span style="font-weight: normal; font-size: 0.9rem;">Tuyệt đối không động thổ, khoan đục, hoặc sửa chữa lớn tại phương vị này trong năm ${nam}.</span>
+        </div>`;
+    }
     
-    // Trả về dữ liệu hoặc mặc định nếu lỗi
-    return Data72Hau[key] || { ten: "Trung Tính", chatLuong: "Bình", ynghia: "Khí trường ổn định." };
+    // Nếu Ngũ Hoàng nằm Trung Cung (giữa nhà) thì luôn báo vì đây là hung tinh toàn cục
+    if (viTriNguHoang === "Trung Cung") {
+        return `<div style="background:#8b0000; color:#fff; padding:12px; border-radius:8px; margin:12px 0;">
+            ⚠️ <b>LƯU Ý CỐ ĐỊNH:</b> Năm nay Ngũ Hoàng nhập Trung Cung. Tránh động chạm khu vực giữa nhà.
+        </div>`;
+    }
+
+    return "";
 }
 
 // ====================== GLOBAL ELEMENTS ======================
@@ -1047,23 +1063,45 @@ const VAN_DATA = {
 
 function sinhLuanGiaiThienThoi(code) {
     const currentYear = new Date().getFullYear();
+    // Tính vận dựa trên năm hiện tại
     let vanSo = Math.floor((currentYear - 1864) / 20) % 9 + 1;
     const item = VAN_DATA[vanSo] ? VAN_DATA[vanSo][code] : null;
 
-    if (!item) return `<p style="color: #666;">Dữ liệu chưa được thiết lập.</p>`;
+    if (!item) return `<p style="color: #666; padding: 10px;">Chưa có dữ liệu cho phương vị này.</p>`;
+
+    // --- LỜI KHUYÊN HÀNH ĐỘNG ---
+    const getAdvice = (loai) => {
+        const adviceMap = {
+            best: "👉 Cát khí vượng, ưu tiên việc quan trọng, khai trương, nhập trạch.",
+            good: "👉 Vận khí hanh thông, thích hợp để phát triển công việc, học tập.",
+            neutral: "👉 Bình hòa, giữ ổn định và cẩn trọng trong các quyết định.",
+            bad: "👉 Cẩn thận trong lời ăn tiếng nói và các mối quan hệ xã hội.",
+            worst: "⚠️ ĐẠI HUNG: Tuyệt đối không động thổ, sửa chữa tại phương vị này."
+        };
+        return adviceMap[loai] || "";
+    };
 
     const colorMap = { best: "#00ff00", good: "#aaff00", neutral: "#e0e0e0", bad: "#ffaa00", worst: "#ff0000" };
     const colorStar = colorMap[item.loai] || "#fff";
 
     return `
-        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border-left: 5px solid ${colorStar}; margin-top: 20px;">
-            <span style="font-weight: bold; font-size: 0.95rem; color: #0a84ff;">
-                ◆ HUYỀN KHÔNG PHI TINH VẬN ${vanSo} (${currentYear})
-            </span><br>
-            <span style="color: ${colorStar}; font-weight: 800; font-size: 1.1rem; display: block; margin: 5px 0;">
-                ${item.sao} (${item.hanh})
-            </span>
-            <span style="color: #cfcfcf; line-height: 1.6;">${item.y_nghia}</span>
+        <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; border: 1px solid #555; margin-top: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+            <div style="color: #0a84ff; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 5px;">
+                ◆ HUYỀN KHÔNG VẬN ${vanSo} (${currentYear})
+            </div>
+            
+            <div style="margin: 5px 0 10px 0; border-bottom: 1px solid #444; padding-bottom: 10px;">
+                <span style="color: ${colorStar}; font-size: 1.3rem; font-weight: 800;">${item.sao}</span>
+                <span style="color: #aaa; font-size: 0.9rem; margin-left: 8px;">• Hành: ${item.hanh}</span>
+            </div>
+            
+            <div style="color: #eee; font-size: 0.95rem; line-height: 1.5; margin-bottom: 12px;">
+                ${item.y_nghia}
+            </div>
+            
+            <div style="color: ${colorStar}; font-size: 0.85rem; font-style: italic; background: rgba(255,255,255,0.06); padding: 10px; border-radius: 6px; border-left: 3px solid ${colorStar};">
+                ${getAdvice(item.loai)}
+            </div>
         </div>`;
 }
 
@@ -1120,40 +1158,54 @@ function sinhMatPhapHoaGiai(mucDich, cungSat, hanhChu, phuongHuong, code) {
         thuyetMinhViTri = `Khu vực xả uế đặt đè lên cát tinh làm tổn hại tài lộc. Chiếu theo mật pháp đối sánh: ${phuongPhapBaoQuoc}`;
     }
 
-    return `<br><br>
-        <span style="font-weight: bold; font-size: 0.95rem; display: inline-block; margin-bottom: 6px; color: var(--red);">
-            ◆ MẬT PHÁP ĐẠI THUẬT HÓA GIẢI LIÊN HOÀN (HUNG TINH × PHƯƠNG VỊ × MỆNH CHỦ):
-        </span><br>
-        <span style="color: #ffffff;"><strong style="color: var(--red);">[Phân Tích Bản Chất]:</strong> ${thuyetMinhViTri}</span><br><br>
-        <span style="color: #ffffff;"><strong style="color: var(--red);">[Mật Pháp Vật Phẩm Tối Thượng]:</strong> ${vatPhamToiThuong}</span>`;
+return `
+    <div style="background: rgba(255,255,255,0.03); border: 1px solid #444; border-radius: 12px; padding: 15px; margin-top: 15px;">
+        <h4 style="color: #0a84ff; margin: 0 0 10px 0; font-size: 0.9rem; text-transform: uppercase;">◆ Mật Pháp Hóa Giải</h4>
+        <div style="margin-bottom: 15px; font-size: 0.9rem; color: #ddd; line-height: 1.5;">
+            <strong style="color: #faad14;">[Phân Tích]:</strong> ${thuyetMinhViTri}
+        </div>
+        <div style="padding: 10px; background: rgba(250, 173, 20, 0.1); border-left: 4px solid #faad14; border-radius: 4px; font-size: 0.9rem;">
+            <strong style="color: #faad14;">[Vật Phẩm Tối Thượng]:</strong> ${vatPhamToiThuong}
+        </div>
+    </div>`;
 }
 
 function getLuanDoanChiTiet(huong, son) {
-    var dataHuong = MaTranMinhChau[huong];
-    var info = (dataHuong && dataHuong[son]) ? dataHuong[son] : null;
+    const dataHuong = MaTranMinhChau[huong];
+    const info = (dataHuong && dataHuong[son]) ? dataHuong[son] : null;
 
     if (!info) {
-        return '<div style="padding: 10px; color: #888; font-style: italic;">Chưa có dữ liệu chi tiết cho sơn này.</div>';
+        return `<div style="padding: 12px; color: #888; font-style: italic; border: 1px dashed #444; border-radius: 8px;">
+                    Chưa có dữ liệu chi tiết cho sơn này.
+                </div>`;
     }
 
-    var isCat = (info.loai === "Cát");
-    var color = isCat ? "#30d158" : "#ff3b30";
-    var bgColor = isCat ? "rgba(48, 209, 88, 0.1)" : "rgba(255, 59, 48, 0.1)";
+    const isCat = (info.loai === "Cát");
+    // Sử dụng màu sắc hài hòa hơn với chế độ Dark Mode
+    const color = isCat ? "#30d158" : "#ff3b30";
+    const bgColor = isCat ? "rgba(48, 209, 88, 0.08)" : "rgba(255, 59, 48, 0.08)";
 
-    // Dùng dấu nháy đơn hoặc kép để nối chuỗi thủ công, KHÔNG dùng dấu ` ở đây
-    var html = '<div style="background: ' + bgColor + '; padding: 12px; border-radius: 8px; border: 1px solid ' + color + '; margin-top: 10px;">';
-    html += '<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">';
-    html += '<b style="color: ' + color + '; font-size: 0.95rem;">' + info.loai + ' Tinh: ' + info.cap_do + ' (' + info.nhom + ')</b>';
-    html += '<span style="color: ' + color + '; font-weight: bold;">' + info.diem + '/100</span></div>';
-    html += '<div style="font-size: 0.88rem; color: #fff; line-height: 1.4;">' + info.text + '</div>';
-    
-    if (info.giaiphap) {
-        html += '<div style="margin-top: 8px; font-size: 0.82rem; color: #ccc; border-top: 1px dashed ' + color + '; padding-top: 5px;">';
-        html += '<b>Giải pháp:</b> ' + info.giaiphap + '</div>';
-    }
-    
-    html += '</div>';
-    return html;
+    return `
+    <div style="background: ${bgColor}; padding: 15px; border-radius: 12px; border: 1px solid ${color}; margin-top: 15px; transition: all 0.3s ease;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <b style="color: ${color}; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                ${info.loai} Tinh: ${info.cap_do}
+            </b>
+            <span style="color: #fff; font-size: 0.9rem; background: ${color}; padding: 2px 10px; border-radius: 15px; font-weight: bold;">
+                ${info.diem}/100
+            </span>
+        </div>
+        
+        <div style="font-size: 0.9rem; color: #fff; line-height: 1.5; margin-bottom: 12px;">
+            ${info.text}
+        </div>
+        
+        ${info.giaiphap ? `
+            <div style="font-size: 0.85rem; color: #bbb; border-top: 1px dashed ${color}; padding-top: 10px; font-style: italic;">
+                <span style="color: ${color}; font-weight: bold;">💡 Giải pháp:</span> ${info.giaiphap}
+            </div>
+        ` : ''}
+    </div>`;
 }
 
 function updateCompassUI(heading) {
@@ -1182,23 +1234,7 @@ function updateCompassUI(heading) {
     } else if (currentHeading >= 293 && currentHeading < 338) {
         currentCung = "CÀN (TÂY BẮC)"; currentCode = "NW";
     }
-// ==================== 4. TÍCH HỢP 72 HẬU (THÊM VÀO HÀM UPDATE) ====================
-const hauData = get72HauByDegree(currentHeading); // Gọi hàm lấy data
-const hauDisplayContainer = document.getElementById('hau-display-container');
 
-if (hauDisplayContainer) {
-    hauDisplayContainer.style.display = 'block';
-    hauDisplayContainer.innerHTML = `
-        <div style="padding:10px; background:rgba(223,183,108,0.15); border-left:4px solid var(--gold); border-radius:4px; margin-bottom:10px;">
-            <div style="font-weight:bold; color:var(--gold); font-size:0.95rem; margin-bottom:4px;">
-                🌟 72 HẬU: ${hauData.ten} (${hauData.chatLuong})
-            </div>
-            <div style="font-size:0.85rem; color:#eee; line-height:1.4;">
-                ${hauData.ynghia}
-            </div>
-        </div>
-    `;
-}
 // ==================== 2. 24 SƠN (ĐÃ TỐI ƯU HÓA) ====================
     let gockim = (currentHeading % 360 + 360) % 360;
     
@@ -1737,54 +1773,52 @@ const DATA_THANSAT = {
     }
 };
 
+/**
+ * Nâng cấp hàm luận giải vận hạn năm (Full Version)
+ * Tự động hóa tính toán, tối ưu hóa so sánh dữ liệu
+ */
 function tinhHanCuuTinhTheoNam(huong, namHienTai) {
     const nam = namHienTai || new Date().getFullYear();
-    const diaChiIndex = nam % 12; // 0: Thân, 1: Dậu...
+    if (!huong) return { thongTinSao: "Chưa chọn phương vị", meoGiaiHan: "" };
 
-    // 1. TÍNH NGŨ HOÀNG (Trung Cung theo năm)
     const cacHuong = ["Trung Cung", "Tây Bắc", "Tây", "Đông Bắc", "Nam", "Bắc", "Tây Nam", "Đông", "Đông Nam"];
-    const viTriNguHoang = cacHuong[(5 - ((nam - 2024) % 9) + 9) % 9];
+    const viTriNguHoang = cacHuong[(5 - (nam - 2024) % 9 + 9) % 9];
 
-    // 2. TÍNH THÁI TUẾ & TUẾ PHÁ
+    const diaChiIndex = nam % 12;
     const tenChi = DATA_THANSAT.thaiTue[diaChiIndex];
-    const huongThaiTue = getHuongByChi(tenChi); // Hàm phụ trợ bên dưới
+    
+    // Đã tối ưu: Dùng trực tiếp phuongVi trong DATA_THANSAT
+    const huongThaiTue = DATA_THANSAT.phuongVi[tenChi]; 
     const huongTuePha = getHuongDoiXung(huongThaiTue);
 
-    // 3. TÍNH TAM SÁT (Chính xác theo Tam Hợp)
-    const tamHợp = nam % 12 >= 9 || nam % 12 <= 2 ? "Thân Tý Thìn" : 
-                   nam % 12 <= 5 ? "Tỵ Dậu Sửu" : 
-                   nam % 12 <= 8 ? "Hợi Mão Mùi" : "Dần Ngọ Tuất";
-    const viTriTamSat = DATA_THANSAT.tamSat[tamHợp];
+    const tamHợpKey = nam % 12 >= 9 || nam % 12 <= 2 ? "Thân Tý Thìn" :
+                      nam % 12 <= 5 ? "Tỵ Dậu Sửu" :
+                      nam % 12 <= 8 ? "Hợi Mão Mùi" : "Dần Ngọ Tuất";
+    
+    const viTriTamSat = DATA_THANSAT.tamSat[tamHợpKey];
 
-    // 4. LUẬN GIẢI TỰ ĐỘNG
+    const h = huong.trim().toLowerCase();
     let warnings = [];
-    if (huong === viTriNguHoang) warnings.push("⚠️ [Ngũ Hoàng]: Kỵ động thổ, sửa chữa, dễ sinh tai họa.");
-    if (huong === huongThaiTue) warnings.push("⚠️ [Thái Tuế]: Phương vị chủ quản, không nên xung phạm.");
-    if (huong === huongTuePha) warnings.push("⚠️ [Tuế Phá]: Phương vị xung chiếu, dễ vướng thị phi, hao tài.");
-    if (huong === viTriTamSat) warnings.push("⚠️ [Tam Sát]: Hạn về tai nạn, bệnh tật, tranh chấp.");
+
+    if (h === viTriNguHoang.toLowerCase()) warnings.push("⚠️ [Ngũ Hoàng]: Kỵ động thổ.");
+    if (h === huongThaiTue.toLowerCase()) warnings.push("⚠️ [Thái Tuế]: Chủ quản năm, không nên xung phạm.");
+    if (h === huongTuePha.toLowerCase()) warnings.push("⚠️ [Tuế Phá]: Xung chiếu, dễ thị phi.");
+    if (h === viTriTamSat.toLowerCase()) warnings.push("⚠️ [Tam Sát]: Hạn về tai nạn, tranh chấp.");
 
     if (warnings.length === 0) {
-        return { 
-            thongTinSao: `✅ Vận hạn năm ${nam}: Hướng ${huong} bình hòa, không bị đại hung tinh xung chiếu.`, 
-            meoGiaiHan: "Gia đạo an lành, cát tường như ý." 
-        };
+        return { thongTinSao: `✅ Năm ${nam}: Hướng ${huong} bình hòa.`, meoGiaiHan: "Gia đạo an lành." };
     }
 
     return {
-        thongTinSao: `⚠️ CẢNH BÁO NĂM ${nam}: Hướng ${huong} phạm vào: ${warnings.join(" ")}`,
-        meoGiaiHan: "👉 Hóa giải: Tránh động thổ. Sử dụng vật phẩm phong thủy (Hồ lô đồng, Kỳ lân hoặc chuông gió 6 thanh) để hóa giải sát khí tùy theo từng hạn."
+        thongTinSao: `⚠️ CẢNH BÁO NĂM ${nam}: Hướng ${huong} phạm:<br>• ${warnings.join("<br>• ")}`,
+        meoGiaiHan: "👉 Hóa giải: Tránh động thổ. Dùng Hồ lô hoặc Chuông gió hóa giải."
     };
 }
 
-// --- HÀM PHỤ TRỢ (Để xác định phương vị chính xác) ---
-function getHuongByChi(chi) {
-    const map = { "Tý": "Bắc", "Ngọ": "Nam", "Mão": "Đông", "Dậu": "Tây", "Dần": "Đông Bắc", "Thân": "Tây Nam", "Tỵ": "Đông Nam", "Hợi": "Tây Bắc", "Thìn": "Đông Nam", "Tuất": "Tây Bắc", "Sửu": "Đông Bắc", "Mùi": "Tây Nam" };
-    return map[chi];
-}
-
+// Giữ lại hàm logic đối xứng
 function getHuongDoiXung(huong) {
     const map = { "Bắc": "Nam", "Nam": "Bắc", "Đông": "Tây", "Tây": "Đông", "Đông Bắc": "Tây Nam", "Tây Nam": "Đông Bắc", "Đông Nam": "Tây Bắc", "Tây Bắc": "Đông Nam" };
-    return map[huong];
+    return map[huong] || huong;
 }
 
 function showExplanation(sonName, textInfo, solInfo) {
@@ -2336,13 +2370,4 @@ function renderMultiLayerDetail(mc, van, hau72, tongDiem, sonName, degree) {
     </div>`;
 
     detailBox.innerHTML = html;
-}
-function renderHauRingOnCompass() {
-    const ring = document.getElementById('hauRingSvg'); // Bạn cần thêm thẻ <g id="hauRingSvg"></g> vào SVG của bạn
-    let g = "";
-    Object.keys(Data72Hau).forEach((angle) => {
-        const deg = parseFloat(angle);
-        g += `<line x1="250" y1="110" x2="250" y2="120" stroke="#dfb76c" stroke-width="0.5" transform="rotate(${deg}, 250, 250)" />`;
-    });
-    ring.innerHTML = g;
 }
