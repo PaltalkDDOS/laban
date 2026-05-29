@@ -645,41 +645,44 @@ function render24SonRing() {
             sonRingSvg.appendChild(textNode);
         });
     }
+// 4. Vòng 24 Sao Phúc Đức (Đã nâng cấp để tương thích hiệu ứng quét)
+const phucDucRingSvg = document.getElementById('phucDucRingSvg');
+if (phucDucRingSvg) {
+    phucDucRingSvg.innerHTML = "";
+    
+    const phucDucNames = [
+        "Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước",
+        "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng",
+        "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất",
+        "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"
+    ];
 
-// 4. Vòng 24 Sao Phúc Đức (ĐÃ BỔ SUNG ĐỂ HÀM QUÉT HOẠT ĐỘNG CHUẨN)
-    const phucDucRingSvg = document.getElementById('phucDucRingSvg');
-    if (phucDucRingSvg) {
-        phucDucRingSvg.innerHTML = "";
-        const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", 
-                              "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", 
-                              "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", 
-                              "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
+    const baseColor = "#7a623c"; // Màu trầm sang như trong ảnh bạn gửi
+    const baseFontSize = "6.5";
+
+    phucDucNames.forEach((name, index) => {
+        const goc = (index * 15) % 360;
+        const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
         
-        phucDucNames.forEach((name, index) => {
-            const goc = (index * 15) % 360;
-            const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250"); 
-            textNode.setAttribute("y", "72");
-            textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "6.5");
-            textNode.setAttribute("font-weight", "600");
-            
-            // Màu gốc
-            const originalColor = "#7a623c";
-            textNode.setAttribute("fill", originalColor);
-            
-            // QUAN TRỌNG: Gán thuộc tính này để hàm quét biết màu gốc để quay về
-            textNode.setAttribute("data-original-fill", originalColor); 
-            
-            textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
-            textNode.setAttribute("data-sao-goc", goc.toString());
-            textNode.setAttribute("data-base-size", "6.5");
-            textNode.textContent = name;
-            
-            phucDucRingSvg.appendChild(textNode);
-        });
-    }
-
+        textNode.setAttribute("x", "250");
+        textNode.setAttribute("y", "72");
+        textNode.setAttribute("text-anchor", "middle");
+        textNode.setAttribute("font-family", "sans-serif");
+        textNode.setAttribute("font-size", baseFontSize);
+        textNode.setAttribute("font-weight", "600");
+        
+        // Thiết lập màu sắc và thuộc tính hỗ trợ hiệu ứng
+        textNode.setAttribute("fill", baseColor);
+        textNode.setAttribute("data-original-fill", baseColor); // Để hàm quét phục hồi màu gốc
+        textNode.setAttribute("data-base-size", baseFontSize);  // Để hàm quét phục hồi kích thước
+        
+        textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
+        textNode.setAttribute("data-sao-goc", goc.toString());
+        
+        textNode.textContent = name;
+        phucDucRingSvg.appendChild(textNode);
+    });
+}
     // 5. Vòng 72 Hậu
     const hauRing = document.getElementById('hau72RingSvg');
     if (hauRing) {
