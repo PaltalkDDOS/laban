@@ -1524,14 +1524,25 @@ let huongLonTextsCache = null;
 let saoTextsCache = null;
 
 function cacheCompassElements() {
-    if (sonTextsCache) return; // Chỉ cache 1 lần
+    if (sonTextsCache && sonTextsCache.length > 0) return; // Chỉ cache 1 lần
 
+    // Cache các vòng cũ
     sonTextsCache = document.querySelectorAll("#sonRingSvg text");
     huongLonTextsCache = document.querySelectorAll("#chuHuongLonG text");
     saoTextsCache = document.querySelectorAll("#phucDucRingSvg text");
+
+    // === Cache 72 Hậu (MỚI THÊM) ===
+    hau72TextsCache = document.querySelectorAll("#hau72RingSvg text");
+
+    // Lưu màu gốc của 72 Hậu để khôi phục sau khi highlight
+    hau72TextsCache.forEach(txt => {
+        if (!txt.hasAttribute("data-original-fill")) {
+            txt.setAttribute("data-original-fill", txt.getAttribute("fill") || "#ffcc77");
+        }
+    });
 }
 
-/// ====================== HÀM CHÍNH - ĐÃ NÂNG CẤP (Hỗ trợ 72 Hậu) ======================
+// ====================== HÀM LÀM SÁNG LED QUÉT (ĐÃ NÂNG CẤP - THÊM 72 HẬU) ======================
 function kichHoatDenLedQuet(heading) {
     const ledTargetAngle = ((heading % 360) + 360) % 360;
     cacheCompassElements();
@@ -1598,21 +1609,22 @@ function kichHoatDenLedQuet(heading) {
     });
 
     // ====================== 4. LÀM SÁNG 72 HẬU (MỚI THÊM) ======================
-    if (typeof hau72TextsCache !== 'undefined' && hau72TextsCache) {
+    if (typeof hau72TextsCache !== 'undefined' && hau72TextsCache.length > 0) {
         hau72TextsCache.forEach(txt => {
             const hauGoc = parseFloat(txt.getAttribute("data-hau-goc")) || 0;
             let phanSai = Math.abs(ledTargetAngle - hauGoc);
             if (phanSai > 180) phanSai = 360 - phanSai;
 
-            if (phanSai <= 3.0) {                    // Ngưỡng sáng cho 5° (hẹp hơn Sơn)
+            if (phanSai <= 3.0) {                    // Ngưỡng sáng hẹp vì 72 Hậu cách nhau 5°
                 txt.style.opacity = "1";
-                txt.style.fontSize = "4.0";
+                txt.style.fontSize = "4.2";          // To hơn khi trúng
                 txt.style.fill = "#ffff00";          // Màu vàng nổi bật
+                txt.style.fontWeight = "900";
             } else {
                 txt.style.opacity = "0.65";
                 txt.style.fontSize = "3.1";
-                // Giữ màu gốc
-                txt.style.fill = txt.getAttribute("data-original-fill") || txt.getAttribute("fill");
+                txt.style.fontWeight = "700";
+                txt.style.fill = txt.getAttribute("data-original-fill") || "#ffcc77";
             }
         });
     }
@@ -1685,12 +1697,13 @@ function handleOrientation(event) {
 }
 // ====================== CẬP NHẬT HIỂN THỊ ĐỘ + SƠN + HẬU (NÂNG CẤP MỚI) ======================
 // ====================== CẬP NHẬT HIỂN THỊ ĐỘ + SƠN + HẬU (GỌN & ĐẸP) ======================
+// ====================== CẬP NHẬT HIỂN THỊ ĐỘ + SƠN + HẬU (CHỈ MÀU - KHÔNG ICON) ======================
 function updateDegreeDisplay(degree) {
     const normalized = ((degree % 360) + 360) % 360;
-  
+ 
     let sonName = "—";
     let hauName = "—";
-    let qualityEmoji = "";
+    let hauColor = "#ffffff";     // Mặc định trắng
 
     // Tìm Sơn
     SON_24_CONFIG.forEach(son => {
@@ -1712,25 +1725,26 @@ function updateDegreeDisplay(degree) {
             minDiff = diff;
             const hau = Data72Hau[key];
             hauName = hau.ten.replace(" Hậu", "");
-            
+
+            // Xác định màu theo chất lượng
             if (hau.chatLuong.includes("Đại Cát") || hau.chatLuong.includes("Cát")) {
-                qualityEmoji = " 🟢";
+                hauColor = "#00ff99";      // Xanh sáng = Tốt
             } else if (hau.chatLuong.includes("Đại Hung") || hau.chatLuong.includes("Hung")) {
-                qualityEmoji = " 🔴";
+                hauColor = "#ff6666";      // Đỏ = Xấu
             } else {
-                qualityEmoji = " 🟡";
+                hauColor = "#ffdd77";      // Vàng = Bình
             }
         }
     });
 
-    // Hiển thị gọn trên 1 dòng
+    // Cập nhật giao diện
     const degreeTxt = document.getElementById('degree-txt');
     if (degreeTxt) {
         degreeTxt.innerHTML = `
             ${normalized.toFixed(1)}° 
             - CUNG <strong>${getCungName(normalized)}</strong> 
-            - SƠN <strong>${sonName}</strong> 
-            - HẬU <strong>${hauName}${qualityEmoji}</strong>
+            - SƠN <strong style="color:#ffcc00;">${sonName}</strong> 
+            - HẬU <strong style="color:${hauColor};">${hauName}</strong>
         `;
     }
 }
