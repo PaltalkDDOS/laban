@@ -1689,17 +1689,15 @@ function handleOrientation(event) {
         }
     });
 }
-// ====================== CẬP NHẬT HIỂN THỊ ĐỘ + SƠN + HẬU (NÂNG CẤP MỚI) ======================
-// ====================== CẬP NHẬT HIỂN THỊ ĐỘ + SƠN + HẬU (GỌN & ĐẸP) ======================
-// ====================== CẬP NHẬT HIỂN THỊ ĐỘ + SƠN + HẬU (CHỈ MÀU - KHÔNG ICON) ======================
+// ====================== CẬP NHẬT HIỂN THỊ ĐỘ + SƠN + HẬU (MÀU RỰC RỠ) ======================
 function updateDegreeDisplay(degree) {
     const normalized = ((degree % 360) + 360) % 360;
  
     let sonName = "—";
     let hauName = "—";
-    let hauColor = "#ffffff"; // Mặc định trắng
+    let hauColor = "#ffffff"; 
 
-    // 1. Tìm Sơn
+    // Tìm Sơn
     SON_24_CONFIG.forEach(son => {
         let min = son.min;
         let max = son.max;
@@ -1710,7 +1708,7 @@ function updateDegreeDisplay(degree) {
         }
     });
 
-    // 2. Tìm Hậu (Dùng ngưỡng 2.5 độ để khớp với vòng 72 Hậu)
+    // Tìm Hậu
     let minDiff = Infinity;
     let foundHau = null;
 
@@ -1723,32 +1721,28 @@ function updateDegreeDisplay(degree) {
         }
     });
 
-    // Cập nhật tên và màu sắc nếu tìm thấy hậu trong khoảng hợp lý
-    if (foundHau && minDiff <= 2.5) {
+    if (foundHau) {
         hauName = foundHau.ten.replace(" Hậu", "");
         
-        // Xác định màu theo chất lượng
+        // BẢNG MÀU MỚI: Đậm đà, độ tương phản cao, không bị nhạt
         const cl = foundHau.chatLuong;
         if (cl.includes("Đại Cát") || cl.includes("Cát")) {
-            hauColor = "#00ff99"; // Xanh lá
+            hauColor = "#00FF41"; // Xanh lá cây cực tươi (Lime Green)
         } else if (cl.includes("Đại Hung") || cl.includes("Hung")) {
-            hauColor = "#ff6666"; // Đỏ
+            hauColor = "#FF3131"; // Đỏ rực (Bright Red)
         } else {
-            hauColor = "#ffdd77"; // Vàng
+            hauColor = "#FFD700"; // Vàng ròng (Gold) - Rực rỡ hơn #ffdd77
         }
-    } else {
-        hauName = "---";
-        hauColor = "#ffffff";
     }
 
-    // 3. Cập nhật giao diện
+    // Cập nhật giao diện
     const degreeTxt = document.getElementById('degree-txt');
     if (degreeTxt) {
         degreeTxt.innerHTML = `
             ${normalized.toFixed(1)}° 
             - CUNG <strong>${getCungName(normalized)}</strong> 
-            - SƠN <strong style="color:#ffcc00;">${sonName}</strong> 
-            - HẬU <strong style="color:${hauColor}; text-shadow: 0 0 5px ${hauColor};">${hauName}</strong>
+            - SƠN <strong style="color:#FFD700;">${sonName}</strong> 
+            - HẬU <strong style="color:${hauColor}; text-shadow: 0 0 8px ${hauColor}80; font-weight: 800;">${hauName}</strong>
         `;
     }
 }
