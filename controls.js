@@ -1850,45 +1850,61 @@ let lastTapTime = 0;
 let tapCount = 0;
 let tapTimer = null;
 
-// ====================== FULLSCREEN MODE - PHIÊN BẢN TỐI ƯU ======================
+// ====================== FULLSCREEN MODE - TỐI ƯU CAO ======================
 function handleInteraction(e) {
     const compassContainer = e.target.closest('.compass-container');
     if (!compassContainer) return;
 
-    // Nếu đang fullscreen → tap bất kỳ chỗ nào cũng thoát
+    // Nếu đang ở fullscreen → tap bất kỳ là thoát
     if (isFullScreen) {
         exitFullScreenMode();
         return;
     }
 
-    // Double Tap logic
-    e.preventDefault();
-    tapCount++;
+    // Chỉ xử lý khi là 1 ngón tay
+    if (e.touches && e.touches.length > 1) return;
 
+    e.preventDefault();
+
+    tapCount++;
+    
     if (tapCount === 1) {
         tapTimer = setTimeout(() => {
             tapCount = 0; // Reset nếu chỉ tap 1 lần
-        }, 420);
-    } else if (tapCount === 2) {
+        }, 400); // Thời gian double tap
+    } 
+    else if (tapCount === 2) {
         clearTimeout(tapTimer);
         tapCount = 0;
         toggleFullScreenMode();
     }
 }
 
-// Lắng nghe sự kiện
+// ====================== LẮNG NGHE SỰ KIỆN ======================
 document.addEventListener('dblclick', handleInteraction);
 
+// Double Tap trên mobile - Tối ưu
 document.addEventListener('touchend', (e) => {
-    // Chỉ xử lý double tap khi là 1 ngón tay
+    // Quan trọng: Bỏ qua nếu đang pinch zoom (2 ngón)
     if (e.touches && e.touches.length > 1) return;
+    
     handleInteraction(e);
 });
 
-// Ngăn xung đột với pinch zoom
-document.addEventListener('gesturestart', e => {
-    if (isFullScreen) e.preventDefault();
+// Ngăn xung đột pinch zoom
+document.addEventListener('gesturestart', (e) => {
+    if (isFullScreen) {
+        e.preventDefault();
+    }
 });
+
+// Cho phép pinch zoom mượt mà
+document.addEventListener('touchmove', (e) => {
+    if (e.touches.length > 1 && isFullScreen) {
+        // Cho phép zoom khi đang fullscreen
+        return;
+    }
+}, { passive: true });
 
 // ====================== VÀO FULLSCREEN ======================
 function toggleFullScreenMode() {
@@ -1900,18 +1916,16 @@ function toggleFullScreenMode() {
 
     originalCompassParent = compassContainer.parentElement;
 
-    // Ẩn các phần không cần thiết
     hideNonEssentialElements();
 
     const fsDiv = document.createElement('div');
     fsDiv.id = 'fullscreenMode';
     fsDiv.style.cssText = `
-        position: fixed; 
-        top: 0; left: 0; 
-        width: 100vw; height: 100vh; 
+        position: fixed; top: 0; left: 0; 
+        width: 100vw; height: 100vh;
         background: rgba(0,0,0,0.94); 
         z-index: 9999; 
-        display: flex; 
+        display: flex;
         flex-direction: column; 
         align-items: center; 
         justify-content: center;
@@ -1920,24 +1934,12 @@ function toggleFullScreenMode() {
     `;
 
     fsDiv.innerHTML = `
-        <div id="fs-compass-wrapper" 
-             style="width: min(94vw, 94vh); 
-                    max-width: 560px; 
-                    height: min(94vw, 94vh); 
-                    max-height: 560px; 
-                    display: flex; 
-                    align-items: center; 
-                    justify-content: center;
-                    margin: 0 auto;">
-        </div>
-        <div id="fs-status-wrapper" 
-             style="width: 92%; max-width: 480px; margin-top: 28px; text-align: center;">
-        </div>
+        <div id="fs-compass-wrapper" style="width: min(94vw, 94vh); max-width: 560px; height: min(94vw, 94vh); max-height: 560px; display:flex; align-items:center; justify-content:center;"></div>
+        <div id="fs-status-wrapper" style="width: 92%; max-width: 480px; margin-top: 28px; text-align:center;"></div>
     `;
 
     document.body.appendChild(fsDiv);
 
-    // Chuyển nội dung vào fullscreen
     document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
     if (statusPanel) {
         document.getElementById('fs-status-wrapper').appendChild(statusPanel);
@@ -1945,11 +1947,10 @@ function toggleFullScreenMode() {
 
     isFullScreen = true;
 
-    // Cập nhật lại la bàn cho vừa khít
     setTimeout(() => {
         if (typeof recalculateFate === 'function') recalculateFate();
         if (typeof updateCompassUI === 'function') updateCompassUI(window.lastHeading || 0);
-    }, 50);
+    }, 80);
 }
 
 // ====================== THOÁT FULLSCREEN ======================
@@ -1963,7 +1964,6 @@ function exitFullScreenMode() {
         const compass = document.querySelector('.compass-container');
         const status = document.querySelector('.status-panel');
 
-        // Hiện lại các phần đã ẩn
         showHiddenElements();
 
         if (compass && originalCompassParent) {
@@ -1974,18 +1974,17 @@ function exitFullScreenMode() {
         fs.remove();
         isFullScreen = false;
 
-        // Cập nhật lại UI
         setTimeout(() => {
             if (typeof updateCompassUI === 'function') updateCompassUI(window.lastHeading || 0);
         }, 100);
-    }, 300);
+    }, 320);
 }
 
 // ====================== HÀM HỖ TRỢ ======================
 function hideNonEssentialElements() {
-    const elements = document.querySelectorAll('.status-panel *, #detail-box, .fs-icon');
+    const elements = document.querySelectorAll('.status-panel *, #detail-box');
     elements.forEach(el => {
-        const text = el.textContent || "";
+        const text = (el.textContent || "").trim();
         if (text.includes('Người Tầm Phương') || 
             text.includes('Đo hướng') || 
             text.includes('Cung Phi') || 
@@ -1995,29 +1994,6 @@ function hideNonEssentialElements() {
             el.style.display = 'none';
             el.setAttribute('data-fs-hidden', 'true');
         }
-    });
-}
-
-function showHiddenElements() {
-    document.querySelectorAll('[data-fs-hidden="true"]').forEach(el => {
-        el.style.display = '';
-        el.removeAttribute('data-fs-hidden');
-    });
-}
-
-// ====================== ẨN / HIỆN PHẦN TỐI ƯU ======================
-function hideNonEssentialElements() {
-    const selectorsToHide = [
-        '#detail-box',
-        '.explanation-btn',
-        'button[onclick*="giaiThich"]'
-    ];
-
-    selectorsToHide.forEach(sel => {
-        document.querySelectorAll(sel).forEach(el => {
-            el.style.display = 'none';
-            el.setAttribute('data-fs-hidden', 'true');
-        });
     });
 }
 
