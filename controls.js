@@ -795,7 +795,7 @@ function getHanhByHeading(heading) {
 
     return "Chưa xác định";
 }
-// ====================== HÀM CHÍNH recalculateFate() - ĐẦY ĐỦ ======================
+// ====================== HÀM CHÍNH recalculateFate() - ĐÃ NÂNG CẤP (Thêm giải thích Hậu) ======================
 function recalculateFate() {
     const name = document.getElementById('userName').value.trim() || "Chủ mệnh";
     const gender = document.getElementById('gender').value;
@@ -811,7 +811,6 @@ function recalculateFate() {
             Vui lòng nhập đủ Ngày, Tháng, Năm sinh để xem phân tích Cát/Hung chi tiết
         </div>`;
         listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
-
         const oldPanel = document.getElementById('dien-giai-bo-sung');
         if (oldPanel) oldPanel.remove();
         updateCompassUI(currentHeading);
@@ -821,7 +820,6 @@ function recalculateFate() {
     let d = parseInt(dayStr);
     let m = parseInt(monthStr);
     let y = parseInt(yearStr);
-
     if (!validateFullDate(d, m, y)) {
         fateTxt.innerText = `${name}: Lỗi ngày tháng năm sinh (Kiểm tra lại)`;
         return;
@@ -831,24 +829,25 @@ function recalculateFate() {
     chủMệnh = tínhCungPhi(y, m, d, gender);
     const namAm = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
     const nguHoangInfo = getNguHoangInfo(namAm);
-
     const hanhCungPhi = bátTrạchMap[chủMệnh]?.element || "Thổ";
     const nhomMenh = bátTrạchMap[chủMệnh]?.group || "Tây Tứ Mệnh";
 
     fateTxt.innerText = `${name}: Cung ${chủMệnh} (${nhomMenh}) - Bản Mệnh Cung Phi: ${hanhCungPhi} | Năm Âm: ${namAm} | ${nguHoangInfo}`;
 
     // Xử lý góc đang xem
-    let headingToCalculate = isDetailOpen && lockedHeadingAtOpen !== null 
-                            ? lockedHeadingAtOpen 
+    let headingToCalculate = isDetailOpen && lockedHeadingAtOpen !== null
+                            ? lockedHeadingAtOpen
                             : currentHeading;
 
     const hanhPhuongVi = getHanhByHeading(headingToCalculate);
 
-    // === GIẢI THÍCH SAO NGŨ HOÀNG (GIỮ PHONG CÁCH CHI TIẾT NHƯ GỐC) ===
+    // === LẤY THÔNG TIN HẬU HIỆN TẠI ===
+    let currentHauInfo = getCurrentHauInfo(headingToCalculate);
+
+    // === GIẢI THÍCH SAO NGŨ HOÀNG (GIỮ NGUYÊN) ===
     let saoChuQuan = null;
     const match = nguHoangInfo.match(/Sao (\d+)/);
     if (match) saoChuQuan = match[1];
-
     let giaiThichSao = "";
     if (saoChuQuan === '5') {
         giaiThichSao = `Năm sinh này phạm sao xấu <b>Ngũ Hoàng</b> đóng tại giữa nhà, mang sát khí hành Thổ rất mạnh. Cần giữ trung tâm nhà yên tĩnh, tránh đập phá, sửa chữa lớn ở khu vực này trong năm.`;
@@ -862,7 +861,7 @@ function recalculateFate() {
         giaiThichSao = `Năng lượng chủ quản năm sinh tại trung tâm nhà ở trạng thái ổn định, an lành, không có biến động xấu lớn.`;
     }
 
-    // === RENDER PHẦN GIẢI THÍCH THUẬT NGỮ (GIỮ NGUYÊN PHONG CÁCH GỐC) ===
+    // === RENDER PHẦN GIẢI THÍCH THUẬT NGỮ (ĐÃ THÊM GIẢI THÍCH HẬU) ===
     let targetContainer = document.getElementById('dien-giai-bo-sung');
     if (!targetContainer) {
         targetContainer = document.createElement('div');
@@ -874,7 +873,6 @@ function recalculateFate() {
     const displayStyle = isDetailOpen ? 'block' : 'none';
     const btnText = isDetailOpen ? '🙈 Đóng giải thích thuật ngữ' : '👁️ Xem giải thích thuật ngữ hiển thị';
     const btnBkg = isDetailOpen ? 'rgba(223, 183, 108, 0.15)' : 'transparent';
-
     const config = ConfigPhongThuy[mucDich];
     const tenMucDichBinhDan = config ? config.title : "Vị trí / Hướng đang chọn";
 
@@ -889,18 +887,54 @@ function recalculateFate() {
         <div id="content-dien-giai-chi-tiet" style="display: ${displayStyle}; margin: 10px 0; padding: 14px;
              background: rgba(223, 183, 108, 0.06); border: 1.5px solid var(--gold); border-radius: 8px;
              font-size: 0.86rem; line-height: 1.65; text-align: left; color: #fff;">
+            
             <p style="margin:0 0 10px 0; color:var(--gold); font-weight:bold; border-bottom:1px solid var(--gold); padding-bottom:6px;">
                 📖 GIẢI NGHĨA CÁC THUẬT NGỮ
             </p>
+            
             <p style="margin:8px 0;">📍 <b>Phương vị:</b> Là hướng thực tế mà đầu điện thoại/la bàn của bạn đang chĩa vào. Hướng này tương ứng với năng lượng hành <b>${hanhPhuongVi}</b> (Góc xoay la bàn hiện tại: <b>${Math.round(headingToCalculate)}°</b>).</p>
+            
             <p style="margin:8px 0;">🎯 <b>Mệnh Cung Phi (Hành ${hanhCungPhi}):</b> Quẻ mệnh phong thủy cốt lõi được tính toán dựa trên năm sinh và giới tính của bạn (Bạn thuộc cung <b>${chủMệnh}</b>, nhóm tuổi <b>${nhomMenh}</b>). Mệnh này dùng để đối chiếu trực tiếp với la bàn Bát Trạch phía dưới.</p>
+            
+            <p style="margin:8px 0;">🌟 <b>Hậu hiện tại (${currentHauInfo.ten}):</b> ${currentHauInfo.chatLuong} ${currentHauInfo.emoji}<br>
+            <span style="color:#ccc;">Đây là chi tiết 5° của Sơn ${currentHauInfo.sonName}. ${currentHauInfo.ynghia}</span></p>
+            
             <p style="margin:8px 0;">⚠️ <b>Vận khí tâm nhà (Trung Cung):</b> ${giaiThichSao}</p>
+            
             <p style="margin:8px 0;">🚪 <b>Mục đích xem:</b> Bạn đang tiến hành đo đạc vị trí cho <b>${tenMucDichBinhDan}</b>. Hãy cuộn xuống phía dưới để xem kết quả Cát/Hung chính xác theo hệ Bát Trạch Minh Châu và mật pháp hóa giải.</p>
         </div>
     `;
 
     generateDirectionsList();
     updateCompassUI(currentHeading);
+}
+
+// ====================== HÀM HỖ TRỢ LẤY THÔNG TIN HẬU ======================
+function getCurrentHauInfo(degree) {
+    const normalized = ((degree % 360) + 360) % 360;
+    let minDiff = Infinity;
+    let result = { ten: "—", chatLuong: "", emoji: "", ynghia: "", sonName: "—" };
+
+    Object.keys(Data72Hau).forEach(key => {
+        const d = parseFloat(key);
+        const diff = Math.min(Math.abs(normalized - d), 360 - Math.abs(normalized - d));
+        if (diff < minDiff) {
+            minDiff = diff;
+            const hau = Data72Hau[key];
+            result.ten = hau.ten;
+            result.chatLuong = hau.chatLuong;
+            result.ynghia = hau.ynghia;
+            
+            if (hau.chatLuong.includes("Đại Cát") || hau.chatLuong.includes("Cát")) {
+                result.emoji = "🟢";
+            } else if (hau.chatLuong.includes("Đại Hung") || hau.chatLuong.includes("Hung")) {
+                result.emoji = "🔴";
+            } else {
+                result.emoji = "🟡";
+            }
+        }
+    });
+    return result;
 }
 
 // --- CẤU HÌNH PHONG THỦY ĐÃ NÂNG CẤP TOÀN DIỆN DIỆN RỘNG ---
