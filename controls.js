@@ -1,4 +1,4 @@
-let debounceTimer;
+ let debounceTimer;
 
 // Ma trận Bát Trạch Minh Châu - HOÀN CHỈNH 192 CẶP (8 Mệnh x 24 Sơn)
 const MaTranMinhChau = {
@@ -2063,5 +2063,3 @@ document.addEventListener('click', (e) => {
         hidePurposeModal();
     }
 });
-HAM NAY ZOOM DC TOT, NANG CAP THEM CHO ICON FULL MAN HINH BIEN MAT LUON KO CAN NUA, 
-THEM CHUC NANG KHI FULL MAN HINH LA BAN TU LON DUNG KICK THUOC MN HINH CUA TUNG THIET BI NHU IPAD GARAZY
