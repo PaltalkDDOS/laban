@@ -1131,3 +1131,9 @@ body {
 #purpose-modal-body::-webkit-scrollbar-thumb:hover {
     background: #665544;
 }
+#fs-compass-wrapper canvas, #fs-compass-wrapper svg {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100%;
+    max-height: 100%;
+}
