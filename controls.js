@@ -1847,8 +1847,10 @@ function handleModalClick() {
 let isFullScreen = false;
 let originalCompassParent = null;
 let lastTapTime = 0;
+let touchStartX = 0;
+let touchStartY = 0;
 
-// ====================== FULLSCREEN THÔNG MINH - ĐÃ TỐI ƯU ======================
+// ====================== FULLSCREEN THÔNG MINH ======================
 function handleInteraction(e) {
     const compassContainer = document.querySelector('.compass-container');
     if (!compassContainer) return;
@@ -1859,7 +1861,7 @@ function handleInteraction(e) {
         return;
     }
 
-    // Chỉ full khi chạm vào la bàn (1 ngón tay)
+    // Chỉ kích hoạt full khi tap/double tap vào vùng la bàn
     if (e.target.closest('.compass-container')) {
         e.preventDefault();
         toggleFullScreenMode();
@@ -1869,12 +1871,14 @@ function handleInteraction(e) {
 // Double Click - Máy tính
 document.addEventListener('dblclick', handleInteraction);
 
-// Double Tap Mobile (chỉ 1 ngón)
+// Double Tap trên mobile (450ms)
 document.addEventListener('touchend', (e) => {
-    if (e.touches && e.touches.length > 1) return; // Cho phép pinch zoom
-
     const currentTime = Date.now();
-    if (currentTime - lastTapTime < 420) {
+    
+    // Chỉ tính double tap nếu là 1 ngón tay
+    if (e.touches && e.touches.length > 0) return;
+    
+    if (currentTime - lastTapTime < 450) {
         handleInteraction(e);
     }
     lastTapTime = currentTime;
@@ -1890,35 +1894,26 @@ function toggleFullScreenMode() {
 
     originalCompassParent = compassContainer.parentElement;
 
+    // Ẩn các phần không cần thiết khi full
     hideNonEssentialElements();
 
     const fsDiv = document.createElement('div');
     fsDiv.id = 'fullscreenMode';
     fsDiv.style.cssText = `
         position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-        background: rgba(0,0,0,0.96); z-index: 9999; display: flex;
+        background: rgba(0,0,0,0.95); z-index: 9999; display: flex;
         flex-direction: column; align-items: center; justify-content: center;
         transition: opacity 0.4s ease;
     `;
 
     fsDiv.innerHTML = `
-        <div style="position: absolute; top: 20px; right: 20px; z-index: 10001;">
-            <button onclick="exitFullScreenMode()" 
-                    style="background: rgba(0,0,0,0.6); color: var(--gold); border: 1px solid var(--gold); 
-                           padding: 10px 16px; border-radius: 50px; font-size: 0.95rem; cursor: pointer;">
-                ✕ Thoát Fullscreen
-            </button>
-        </div>
-
-        <div id="fs-compass-wrapper" style="width: 96vw; max-width: 560px; height: 96vw; max-height: 560px; 
-                                           display: flex; align-items: center; justify-content: center; margin-bottom: 10px;"></div>
-        
-        <div id="fs-status-wrapper" style="width: 92%; max-width: 500px; margin-top: 16px;"></div>
+        <div id="fs-compass-wrapper" style="width: 94vw; max-width: 520px; height: 94vw; max-height: 520px; display: flex; align-items: center; justify-content: center;"></div>
+        <div id="fs-status-wrapper" style="width: 92%; max-width: 480px; margin-top: 24px;"></div>
     `;
 
     document.body.appendChild(fsDiv);
 
-    // Chuyển nội dung vào fullscreen
+    // Chuyển la bàn và status vào fullscreen
     document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
     if (statusPanel) {
         document.getElementById('fs-status-wrapper').appendChild(statusPanel);
@@ -1926,8 +1921,8 @@ function toggleFullScreenMode() {
 
     isFullScreen = true;
 
-    // Refresh la bàn
-    if (typeof recalculateFate === 'function') setTimeout(recalculateFate, 100);
+    // Gọi lại hàm vẽ la bàn sau khi chuyển
+    if (typeof recalculateFate === 'function') recalculateFate();
     if (typeof updateCompassUI === 'function') updateCompassUI(window.lastHeading || 0);
 }
 
@@ -1941,6 +1936,7 @@ function exitFullScreenMode() {
         const compass = document.querySelector('.compass-container');
         const status = document.querySelector('.status-panel');
 
+        // Hiện lại các phần đã ẩn
         showHiddenElements();
 
         if (compass && originalCompassParent) {
@@ -1952,24 +1948,21 @@ function exitFullScreenMode() {
         isFullScreen = false;
 
         if (typeof updateCompassUI === 'function') updateCompassUI(window.lastHeading || 0);
-    }, 300);
+    }, 350);
 }
 
-// ====================== ẨN / HIỆN ======================
+// ====================== ẨN / HIỆN PHẦN TỐI ƯU ======================
 function hideNonEssentialElements() {
     const selectorsToHide = [
         '#detail-box',
         '.explanation-btn',
-        'button[onclick*="giaiThich"]',
-        '.fs-icon'  // Ẩn icon fullscreen khi đã vào full
+        'button[onclick*="giaiThich"]'
     ];
 
     selectorsToHide.forEach(sel => {
         document.querySelectorAll(sel).forEach(el => {
-            if (el) {
-                el.style.display = 'none';
-                el.setAttribute('data-fs-hidden', 'true');
-            }
+            el.style.display = 'none';
+            el.setAttribute('data-fs-hidden', 'true');
         });
     });
 }
