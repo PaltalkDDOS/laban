@@ -646,40 +646,35 @@ function render24SonRing() {
         });
     }
 
-    // 4. Vòng 24 Sao Phúc Đức (ĐÃ CẬP NHẬT ĐỂ CÓ MÀU SẮC)
+    // 4. Vòng 24 Sao Phúc Đức (Đã đưa về góc chuẩn tâm ô lý tưởng)
     const phucDucRingSvg = document.getElementById('phucDucRingSvg');
-    if (phucDucRingSvg) {
-        phucDucRingSvg.innerHTML = "";
-        const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", 
-                              "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", 
-                              "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", 
-                              "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
-        
-        phucDucNames.forEach((name, index) => {
-            const goc = (index * 15) % 360;
-            const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250"); textNode.setAttribute("y", "72");
-            textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "6.5");
-            textNode.setAttribute("font-weight", "600");
-            
-            // LOGIC MÀU CHO SAO (Bạn có thể điều chỉnh danh sách tên ở đây)
-            let saoColor = "#7a623c"; // Mặc định
-            if (["Phúc Đức", "Tấn Tài", "Quan Quý", "Vượng Trang", "Hưng Phước", "Vượng Tài", "Đăng Doanh", "Vượng Tâm", "Vinh Phước"].includes(name)) {
-                saoColor = "#00FF41"; // Cát
-            } else if (["Trường Bệnh", "Tố Tụng", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Khóc Khấp", "Cô Quả", "Xương Dâm"].includes(name)) {
-                saoColor = "#FF3131"; // Hung
-            }
-            
-            textNode.setAttribute("fill", saoColor);
-            textNode.setAttribute("data-original-fill", saoColor); // Để hàm quét dùng
-            textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
-            textNode.setAttribute("data-sao-goc", goc.toString());
-            textNode.setAttribute("data-base-size", "6.5");
-            textNode.textContent = name;
-            phucDucRingSvg.appendChild(textNode);
-        });
-    }
+    if (!phucDucRingSvg) return;
+    phucDucRingSvg.innerHTML = "";
+
+    const phucDucNames = [
+        "Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước",
+        "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng",
+        "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất",
+        "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"
+    ];
+
+    phucDucNames.forEach((name, index) => {
+        const goc = (index * 15) % 360; // Trả về góc gốc để sao khớp vị trí với Sơn hướng
+        const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        textNode.setAttribute("x", "250");
+        textNode.setAttribute("y", "72");
+        textNode.setAttribute("text-anchor", "middle");
+        textNode.setAttribute("font-family", "sans-serif");
+        textNode.setAttribute("font-size", "6.5");
+        textNode.setAttribute("font-weight", "600");
+        textNode.setAttribute("fill", "#7a623c");
+        textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
+        textNode.setAttribute("data-sao-goc", goc.toString());
+        textNode.textContent = name;
+        phucDucRingSvg.appendChild(textNode);
+    });
+}
+
 
     // 5. Vòng 72 Hậu
     const hauRing = document.getElementById('hau72RingSvg');
