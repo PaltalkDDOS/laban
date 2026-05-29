@@ -559,7 +559,46 @@ function handleDateInput(currentInput, nextInputId) {
         debounceRecalculate();
     }
 }
+// ====================== RENDER 72 HẬU RING (ĐÃ CHỈNH) ======================
+function render72HauRing() {
+    const hauRing = document.getElementById('hau72RingSvg');
+    if (!hauRing) return;
+    hauRing.innerHTML = "";
 
+    const radius = 155;
+    const offset = 3.0;        // ← Tăng lên 3.0 như bạn yêu cầu
+
+    Object.keys(Data72Hau).forEach(degStr => {
+        let deg = parseFloat(degStr);
+        const hau = Data72Hau[degStr];
+        
+        deg += offset;   // Dịch chuyển theo chiều kim đồng hồ
+        
+        const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        textNode.setAttribute("x", "250");
+        textNode.setAttribute("y", (250 - radius).toString());
+        textNode.setAttribute("text-anchor", "middle");
+        textNode.setAttribute("font-family", "sans-serif");
+        textNode.setAttribute("font-size", "3.1");
+        textNode.setAttribute("font-weight", "700");
+        textNode.setAttribute("transform", `rotate(${deg}, 250, 250)`);
+        
+        // Màu
+        if (hau.chatLuong.includes("Đại Cát") || hau.chatLuong.includes("Cát")) {
+            textNode.setAttribute("fill", "#00ff99");
+        } else if (hau.chatLuong.includes("Đại Hung") || hau.chatLuong.includes("Hung")) {
+            textNode.setAttribute("fill", "#ff6666");
+        } else {
+            textNode.setAttribute("fill", "#ffcc77");
+        }
+
+        let shortName = hau.ten.replace(" Hậu", "");
+        shortName = shortName.replace(/(\D+)(\d)/, (m, p1, p2) => p1.substring(0,1) + p2);
+        textNode.textContent = shortName;
+        
+        hauRing.appendChild(textNode);
+    });
+}
 // ====================== RENDER 24 SƠN RING - CHUẨN XÁC TUYỆT ĐỐI ======================
 function render24SonRing() {
     // 1. Vạch độ ngoài cùng
@@ -616,7 +655,7 @@ function render24SonRing() {
         }
         sonRingSvg.appendChild(textNode);
     });
-
+   
     // 4. Vòng 24 Sao Phúc Đức (Đã đưa về góc chuẩn tâm ô lý tưởng)
     const phucDucRingSvg = document.getElementById('phucDucRingSvg');
     if (!phucDucRingSvg) return;
@@ -644,6 +683,7 @@ function render24SonRing() {
         textNode.textContent = name;
         phucDucRingSvg.appendChild(textNode);
     });
+	 if (typeof render72HauRing === 'function') render72HauRing();
 }
 
 function tínhCungPhi(năm, tháng, ngày, giớiTính) {
@@ -1457,18 +1497,16 @@ function cacheCompassElements() {
     saoTextsCache = document.querySelectorAll("#phucDucRingSvg text");
 }
 
-// ====================== HÀM CHÍNH - ĐÃ TỐI ƯU MÀ VẪN GIỐNG HỆT BẢN GỐC ======================
+/// ====================== HÀM CHÍNH - ĐÃ NÂNG CẤP (Hỗ trợ 72 Hậu) ======================
 function kichHoatDenLedQuet(heading) {
     const ledTargetAngle = ((heading % 360) + 360) % 360;
-
     cacheCompassElements();
 
-    // 1. Làm sáng chữ 8 Hướng Lớn
+    // 1. Làm sáng chữ 8 Hướng Lớn (Giữ nguyên)
     huongLonTextsCache.forEach(txt => {
         const textGoc = parseFloat(txt.getAttribute("data-goc")) || 0;
         let phanSai = Math.abs(ledTargetAngle - textGoc);
         if (phanSai > 180) phanSai = 360 - phanSai;
-
         if (phanSai <= 22.5) {
             txt.style.opacity = "1";
             txt.style.fontWeight = "900";
@@ -1480,36 +1518,28 @@ function kichHoatDenLedQuet(heading) {
         } else {
             txt.style.opacity = "0.5";
             txt.style.fontWeight = "normal";
-            
             if (txt.parentNode.getAttribute("id") === "textChinhPhuong") {
                 const transform = txt.getAttribute("transform") || "";
-                txt.style.fill = (transform.includes("rotate(90") || transform.includes("rotate(270")) 
-                    ? "#00a525" 
-                    : "#ff3b30";
+                txt.style.fill = (transform.includes("rotate(90") || transform.includes("rotate(270"))
+                    ? "#00a525" : "#ff3b30";
             } else {
                 txt.style.fill = "#6b4e18";
             }
         }
     });
 
-    // 2. Làm sáng chữ 24 Sơn
+    // 2. Làm sáng chữ 24 Sơn (Giữ nguyên)
     sonTextsCache.forEach(txt => {
         const sonGoc = parseFloat(txt.getAttribute("data-son-goc")) || 0;
         let phanSai = Math.abs(ledTargetAngle - sonGoc);
         if (phanSai > 180) phanSai = 360 - phanSai;
-
         if (phanSai <= 7.5) {
             txt.style.opacity = "1";
             txt.style.fontSize = "13px";
             const origColor = txt.getAttribute("data-color");
-            
-            if (origColor === "#5c4314") {
-                txt.style.fill = "#ffcc00";
-            } else if (origColor === "#ff3b30") {
-                txt.style.fill = "#ff0000";
-            } else {
-                txt.style.fill = "#00ff00";
-            }
+            if (origColor === "#5c4314") txt.style.fill = "#ffcc00";
+            else if (origColor === "#ff3b30") txt.style.fill = "#ff0000";
+            else txt.style.fill = "#00ff00";
         } else {
             txt.style.opacity = "0.5";
             txt.style.fontSize = "10px";
@@ -1517,12 +1547,11 @@ function kichHoatDenLedQuet(heading) {
         }
     });
 
-    // 3. Làm sáng Sao Phúc Đức
+    // 3. Làm sáng Sao Phúc Đức (Giữ nguyên)
     saoTextsCache.forEach(txt => {
         const saoGoc = parseFloat(txt.getAttribute("data-sao-goc")) || 0;
         let phanSai = Math.abs(ledTargetAngle - saoGoc);
         if (phanSai > 180) phanSai = 360 - phanSai;
-
         if (phanSai <= 7.5) {
             txt.style.fill = "#ff4500";
             txt.style.opacity = "1";
@@ -1533,6 +1562,26 @@ function kichHoatDenLedQuet(heading) {
             txt.style.fontSize = "6.5px";
         }
     });
+
+    // ====================== 4. LÀM SÁNG 72 HẬU (MỚI THÊM) ======================
+    if (typeof hau72TextsCache !== 'undefined' && hau72TextsCache) {
+        hau72TextsCache.forEach(txt => {
+            const hauGoc = parseFloat(txt.getAttribute("data-hau-goc")) || 0;
+            let phanSai = Math.abs(ledTargetAngle - hauGoc);
+            if (phanSai > 180) phanSai = 360 - phanSai;
+
+            if (phanSai <= 3.0) {                    // Ngưỡng sáng cho 5° (hẹp hơn Sơn)
+                txt.style.opacity = "1";
+                txt.style.fontSize = "4.0";
+                txt.style.fill = "#ffff00";          // Màu vàng nổi bật
+            } else {
+                txt.style.opacity = "0.65";
+                txt.style.fontSize = "3.1";
+                // Giữ màu gốc
+                txt.style.fill = txt.getAttribute("data-original-fill") || txt.getAttribute("fill");
+            }
+        });
+    }
 }
 // ==========================================================================
 // THUẬT TOÁN KIM QUAY LA BÀN - PHIÊN BẢN TỐI ƯU (MƯỢT + ỔN ĐỊNH)
