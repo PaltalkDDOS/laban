@@ -1,4 +1,4 @@
- let debounceTimer;
+let debounceTimer;
 
 // Ma trận Bát Trạch Minh Châu - HOÀN CHỈNH 192 CẶP (8 Mệnh x 24 Sơn)
 const MaTranMinhChau = {
@@ -1849,96 +1849,129 @@ let originalCompassParent = null;
 let lastTapTime = 0;
 let touchStartX = 0;
 let touchStartY = 0;
+
 // ====================== FULLSCREEN THÔNG MINH ======================
 function handleInteraction(e) {
-    const compassContainer = document.querySelector('.compass-container');
-    if (!compassContainer) return;
-    // Nếu đang full thì thoát
-    if (isFullScreen) {
-        exitFullScreenMode();
-        return;
-    }
-    // Chỉ kích hoạt full khi tap/double tap vào vùng la bàn
-    if (e.target.closest('.compass-container')) {
-        e.preventDefault();
-        toggleFullScreenMode();
-    }
+    const compassContainer = document.querySelector('.compass-container');
+    if (!compassContainer) return;
+
+    // Nếu đang full thì thoát
+    if (isFullScreen) {
+        exitFullScreenMode();
+        return;
+    }
+
+    // Chỉ kích hoạt full khi tap/double tap vào vùng la bàn
+    if (e.target.closest('.compass-container')) {
+        e.preventDefault();
+        toggleFullScreenMode();
+    }
 }
+
 // Double Click - Máy tính
 document.addEventListener('dblclick', handleInteraction);
+
 // Double Tap trên mobile (450ms)
 document.addEventListener('touchend', (e) => {
-    const currentTime = Date.now();
-    
-    // Chỉ tính double tap nếu là 1 ngón tay
-    if (e.touches && e.touches.length > 0) return;
-    
-    if (currentTime - lastTapTime < 450) {
-        handleInteraction(e);
-    }
-    lastTapTime = currentTime;
+    const currentTime = Date.now();
+    
+    // Chỉ tính double tap nếu là 1 ngón tay
+    if (e.touches && e.touches.length > 0) return;
+    
+    if (currentTime - lastTapTime < 450) {
+        handleInteraction(e);
+    }
+    lastTapTime = currentTime;
 });
+
 // ====================== TOGGLE FULLSCREEN ======================
 function toggleFullScreenMode() {
-    if (isFullScreen) return;
-    const compassContainer = document.querySelector('.compass-container');
-    const statusPanel = document.querySelector('.status-panel');
-    if (!compassContainer) return;
-    originalCompassParent = compassContainer.parentElement;
-    // Ẩn các phần không cần thiết khi full
-    hideNonEssentialElements();
-    const fsDiv = document.createElement('div');
-    fsDiv.id = 'fullscreenMode';
-    fsDiv.style.cssText =  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background: rgba(0,0,0,0.95); z-index: 9999; display: flex; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flex-direction: column; align-items: center; justify-content: center; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;transition: opacity 0.4s ease; &nbsp;&nbsp;&nbsp;&nbsp;;
-    fsDiv.innerHTML =  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div id="fs-compass-wrapper" style="width: 94vw; max-width: 520px; height: 94vw; max-height: 520px; display: flex; align-items: center; justify-content: center;"></div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div id="fs-status-wrapper" style="width: 92%; max-width: 480px; margin-top: 24px;"></div> &nbsp;&nbsp;&nbsp;&nbsp;;
-    document.body.appendChild(fsDiv);
-    // Chuyển la bàn và status vào fullscreen
-    document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
-    if (statusPanel) {
-        document.getElementById('fs-status-wrapper').appendChild(statusPanel);
-    }
-    isFullScreen = true;
-    // Gọi lại hàm vẽ la bàn sau khi chuyển
-    if (typeof recalculateFate === 'function') recalculateFate();
-    if (typeof updateCompassUI === 'function') updateCompassUI(window.lastHeading || 0);
+    if (isFullScreen) return;
+
+    const compassContainer = document.querySelector('.compass-container');
+    const statusPanel = document.querySelector('.status-panel');
+    if (!compassContainer) return;
+
+    originalCompassParent = compassContainer.parentElement;
+
+    // Ẩn các phần không cần thiết khi full
+    hideNonEssentialElements();
+
+    const fsDiv = document.createElement('div');
+    fsDiv.id = 'fullscreenMode';
+    fsDiv.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+        background: rgba(0,0,0,0.95); z-index: 9999; display: flex;
+        flex-direction: column; align-items: center; justify-content: center;
+        transition: opacity 0.4s ease;
+    `;
+
+    fsDiv.innerHTML = `
+        <div id="fs-compass-wrapper" style="width: 94vw; max-width: 520px; height: 94vw; max-height: 520px; display: flex; align-items: center; justify-content: center;"></div>
+        <div id="fs-status-wrapper" style="width: 92%; max-width: 480px; margin-top: 24px;"></div>
+    `;
+
+    document.body.appendChild(fsDiv);
+
+    // Chuyển la bàn và status vào fullscreen
+    document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
+    if (statusPanel) {
+        document.getElementById('fs-status-wrapper').appendChild(statusPanel);
+    }
+
+    isFullScreen = true;
+
+    // Gọi lại hàm vẽ la bàn sau khi chuyển
+    if (typeof recalculateFate === 'function') recalculateFate();
+    if (typeof updateCompassUI === 'function') updateCompassUI(window.lastHeading || 0);
 }
+
 function exitFullScreenMode() {
-    const fs = document.getElementById('fullscreenMode');
-    if (!fs) return;
-    fs.style.opacity = '0';
-    setTimeout(() => {
-        const compass = document.querySelector('.compass-container');
-        const status = document.querySelector('.status-panel');
-        // Hiện lại các phần đã ẩn
-        showHiddenElements();
-        if (compass && originalCompassParent) {
-            originalCompassParent.appendChild(compass);
-            if (status) originalCompassParent.insertBefore(status, compass.nextSibling);
-        }
-        fs.remove();
-        isFullScreen = false;
-        if (typeof updateCompassUI === 'function') updateCompassUI(window.lastHeading || 0);
-    }, 350);
+    const fs = document.getElementById('fullscreenMode');
+    if (!fs) return;
+
+    fs.style.opacity = '0';
+
+    setTimeout(() => {
+        const compass = document.querySelector('.compass-container');
+        const status = document.querySelector('.status-panel');
+
+        // Hiện lại các phần đã ẩn
+        showHiddenElements();
+
+        if (compass && originalCompassParent) {
+            originalCompassParent.appendChild(compass);
+            if (status) originalCompassParent.insertBefore(status, compass.nextSibling);
+        }
+
+        fs.remove();
+        isFullScreen = false;
+
+        if (typeof updateCompassUI === 'function') updateCompassUI(window.lastHeading || 0);
+    }, 350);
 }
+
 // ====================== ẨN / HIỆN PHẦN TỐI ƯU ======================
 function hideNonEssentialElements() {
-    const selectorsToHide = [
-        '#detail-box',
-        '.explanation-btn',
-        'button[onclick*="giaiThich"]'
-    ];
-    selectorsToHide.forEach(sel => {
-        document.querySelectorAll(sel).forEach(el => {
-            el.style.display = 'none';
-            el.setAttribute('data-fs-hidden', 'true');
-        });
-    });
+    const selectorsToHide = [
+        '#detail-box',
+        '.explanation-btn',
+        'button[onclick*="giaiThich"]'
+    ];
+
+    selectorsToHide.forEach(sel => {
+        document.querySelectorAll(sel).forEach(el => {
+            el.style.display = 'none';
+            el.setAttribute('data-fs-hidden', 'true');
+        });
+    });
 }
+
 function showHiddenElements() {
-    document.querySelectorAll('[data-fs-hidden="true"]').forEach(el => {
-        el.style.display = '';
-        el.removeAttribute('data-fs-hidden');
-    });
+    document.querySelectorAll('[data-fs-hidden="true"]').forEach(el => {
+        el.style.display = '';
+        el.removeAttribute('data-fs-hidden');
+    });
 }
 // ====================== PURPOSE POPUP MODAL ======================
 let currentPurposeValue = "";
@@ -2030,3 +2063,5 @@ document.addEventListener('click', (e) => {
         hidePurposeModal();
     }
 });
+HAM NAY ZOOM DC TOT, NANG CAP THEM CHO ICON FULL MAN HINH BIEN MAT LUON KO CAN NUA, 
+THEM CHUC NANG KHI FULL MAN HINH LA BAN TU LON DUNG KICK THUOC MN HINH CUA TUNG THIET BI NHU IPAD GARAZY
