@@ -599,7 +599,6 @@ function render72HauRing() {
         hauRing.appendChild(textNode);
     });
 }
-// ====================== RENDER 24 SƠN RING - CHUẨN XÁC TUYỆT ĐỐI ======================
 function render24SonRing() {
     // 1. Vạch độ ngoài cùng
     const vachDoRing = document.getElementById('vachDoRing');
@@ -623,67 +622,77 @@ function render24SonRing() {
         khe24SonRing.innerHTML = lines24Html;
     }
 
-    // 3. Chữ 24 Sơn (Đã đưa về góc chuẩn tâm ô lý tưởng)
+    // 3. Chữ 24 Sơn
     const sonRingSvg = document.getElementById('sonRingSvg');
-    if (!sonRingSvg) return;
-    sonRingSvg.innerHTML = "";
-    const rSon = 136;
+    if (sonRingSvg) {
+        sonRingSvg.innerHTML = "";
+        const rSon = 136;
+        SON_24_CONFIG.forEach((son, index) => {
+            const goc = (index * 15) % 360;
+            const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            textNode.setAttribute("x", "250");
+            textNode.setAttribute("y", (250 - rSon).toString());
+            textNode.setAttribute("text-anchor", "middle");
+            textNode.setAttribute("font-family", "sans-serif");
+            textNode.setAttribute("font-size", "10");
+            textNode.setAttribute("font-weight", "900");
+            textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
+            textNode.setAttribute("data-son-goc", goc.toString());
+            textNode.textContent = son.name;
 
-    SON_24_CONFIG.forEach((son, index) => {
-        const goc = (index * 15) % 360; // Trả về góc gốc để chữ nằm chính giữa ô
-
-        const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        textNode.setAttribute("x", "250");
-        textNode.setAttribute("y", (250 - rSon).toString());
-        textNode.setAttribute("text-anchor", "middle");
-        textNode.setAttribute("font-family", "sans-serif");
-        textNode.setAttribute("font-size", "10");
-        textNode.setAttribute("font-weight", "900");
-        textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
-        textNode.setAttribute("data-son-goc", goc.toString());
-        textNode.textContent = son.name;
-
-        if (["Cấn", "Tốn", "Khôn", "Càn"].includes(son.name)) {
-            textNode.setAttribute("fill", "#ff3b30");
-            textNode.setAttribute("data-color", "#ff3b30");
-        } else if (["Tý", "Mão", "Ngọ", "Dậu"].includes(son.name)) {
-            textNode.setAttribute("fill", "#00a525");
-            textNode.setAttribute("data-color", "#00a525");
-        } else {
-            textNode.setAttribute("fill", "#5c4314");
-            textNode.setAttribute("data-color", "#5c4314");
-        }
-        sonRingSvg.appendChild(textNode);
-    });
-   
-    // 4. Vòng 24 Sao Phúc Đức (Đã đưa về góc chuẩn tâm ô lý tưởng)
+            const color = ["Cấn", "Tốn", "Khôn", "Càn"].includes(son.name) ? "#ff3b30" : 
+                          ["Tý", "Mão", "Ngọ", "Dậu"].includes(son.name) ? "#00a525" : "#5c4314";
+            textNode.setAttribute("fill", color);
+            textNode.setAttribute("data-color", color);
+            sonRingSvg.appendChild(textNode);
+        });
+    }
+    
+    // 4. Vòng 24 Sao Phúc Đức
     const phucDucRingSvg = document.getElementById('phucDucRingSvg');
-    if (!phucDucRingSvg) return;
-    phucDucRingSvg.innerHTML = "";
+    if (phucDucRingSvg) {
+        phucDucRingSvg.innerHTML = "";
+        const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
+        phucDucNames.forEach((name, index) => {
+            const goc = (index * 15) % 360;
+            const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            textNode.setAttribute("x", "250");
+            textNode.setAttribute("y", "72");
+            textNode.setAttribute("text-anchor", "middle");
+            textNode.setAttribute("font-family", "sans-serif");
+            textNode.setAttribute("font-size", "6.5");
+            textNode.setAttribute("font-weight", "600");
+            textNode.setAttribute("fill", "#7a623c");
+            textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
+            textNode.setAttribute("data-sao-goc", goc.toString());
+            phucDucRingSvg.appendChild(textNode);
+        });
+    }
 
-    const phucDucNames = [
-        "Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước",
-        "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng",
-        "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất",
-        "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"
-    ];
-
-    phucDucNames.forEach((name, index) => {
-        const goc = (index * 15) % 360; // Trả về góc gốc để sao khớp vị trí với Sơn hướng
-        const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        textNode.setAttribute("x", "250");
-        textNode.setAttribute("y", "72");
-        textNode.setAttribute("text-anchor", "middle");
-        textNode.setAttribute("font-family", "sans-serif");
-        textNode.setAttribute("font-size", "6.5");
-        textNode.setAttribute("font-weight", "600");
-        textNode.setAttribute("fill", "#7a623c");
-        textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
-        textNode.setAttribute("data-sao-goc", goc.toString());
-        textNode.textContent = name;
-        phucDucRingSvg.appendChild(textNode);
-    });
-	 if (typeof render72HauRing === 'function') render72HauRing();
+    // 5. Vòng 72 Hậu (Đã gộp vào đây)
+    const hauRing = document.getElementById('hau72RingSvg');
+    if (hauRing) {
+        hauRing.innerHTML = "";
+        const radius = 155;
+        Object.keys(Data72Hau).forEach(degStr => {
+            let deg = parseFloat(degStr) + 3.0;
+            const hau = Data72Hau[degStr];
+            const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            textNode.setAttribute("x", "250");
+            textNode.setAttribute("y", (250 - radius).toString());
+            textNode.setAttribute("text-anchor", "middle");
+            textNode.setAttribute("font-size", "3.1");
+            textNode.setAttribute("font-weight", "700");
+            textNode.setAttribute("transform", `rotate(${deg}, 250, 250)`);
+            textNode.setAttribute("data-hau-goc", degStr); // Lưu góc gốc để so sánh
+            
+            const color = hau.chatLuong.includes("Cát") ? "#00ff99" : (hau.chatLuong.includes("Hung") ? "#ff6666" : "#ffcc77");
+            textNode.setAttribute("fill", color);
+            textNode.setAttribute("data-original-fill", color);
+            textNode.textContent = hau.ten.replace(" Hậu", "").replace(/(\D+)(\d)/, (m, p1, p2) => p1.substring(0,1) + p2);
+            hauRing.appendChild(textNode);
+        });
+    }
 }
 
 function tínhCungPhi(năm, tháng, ngày, giớiTính) {
@@ -1616,23 +1625,27 @@ function kichHoatDenLedQuet(heading) {
         }
     });
 
-    // ====================== 4. LÀM SÁNG 72 HẬU (MỚI THÊM) ======================
-    if (typeof hau72TextsCache !== 'undefined' && hau72TextsCache.length > 0) {
+    // LÀM SÁNG 72 HẬU
+    if (typeof hau72TextsCache !== 'undefined') {
         hau72TextsCache.forEach(txt => {
             const hauGoc = parseFloat(txt.getAttribute("data-hau-goc")) || 0;
             let phanSai = Math.abs(ledTargetAngle - hauGoc);
             if (phanSai > 180) phanSai = 360 - phanSai;
 
-            if (phanSai <= 3.0) {                    // Ngưỡng sáng hẹp vì 72 Hậu cách nhau 5°
+            if (phanSai <= 2.5) { // Ngưỡng nhỏ để chính xác
                 txt.style.opacity = "1";
-                txt.style.fontSize = "4.2";          // To hơn khi trúng
-                txt.style.fill = "#ffff00";          // Màu vàng nổi bật
+                txt.style.fontSize = "4.0"; // Phóng to font
+                txt.style.fill = "#ffff00";
                 txt.style.fontWeight = "900";
+                // Hiệu ứng phóng to nhẹ
+                txt.setAttribute("transform", txt.getAttribute("transform").replace(/rotate\((.*?)\)/, "rotate($1) scale(1.2)"));
             } else {
-                txt.style.opacity = "0.65";
+                txt.style.opacity = "0.6";
                 txt.style.fontSize = "3.1";
+                txt.style.fill = txt.getAttribute("data-original-fill");
                 txt.style.fontWeight = "700";
-                txt.style.fill = txt.getAttribute("data-original-fill") || "#ffcc77";
+                // Reset scale
+                txt.setAttribute("transform", txt.getAttribute("transform").replace(" scale(1.2)", ""));
             }
         });
     }
