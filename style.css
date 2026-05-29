@@ -959,7 +959,14 @@ body {
     width: 500px !important; /* Giá trị này sẽ được JS override linh hoạt */
     height: 500px !important;
 }
-
+/* 3. Wrapper trong Fullscreen (Sẽ được JS điều khiển kích thước qua hàm applyDynamicScaling) */
+#fs-compass-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
 
 /* 4. Panel thông số trong Fullscreen */
 #fs-status-wrapper {
@@ -1123,10 +1130,4 @@ body {
 }
 #purpose-modal-body::-webkit-scrollbar-thumb:hover {
     background: #665544;
-}
-#fs-compass-wrapper canvas, #fs-compass-wrapper svg {
-    width: 100% !important;
-    height: 100% !important;
-    max-width: 100%;
-    max-height: 100%;
 }
