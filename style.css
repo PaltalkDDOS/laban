@@ -959,14 +959,7 @@ body {
     width: 500px !important; /* Giá trị này sẽ được JS override linh hoạt */
     height: 500px !important;
 }
-/* 3. Wrapper trong Fullscreen (Sẽ được JS điều khiển kích thước qua hàm applyDynamicScaling) */
-#fs-compass-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 20px;
-}
+
 
 /* 4. Panel thông số trong Fullscreen */
 #fs-status-wrapper {
