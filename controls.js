@@ -795,7 +795,6 @@ function getHanhByHeading(heading) {
 
     return "Chưa xác định";
 }
-// ====================== HÀM CHÍNH recalculateFate() - ĐÃ NÂNG CẤP (Thêm giải thích Hậu) ======================
 function recalculateFate() {
     const name = document.getElementById('userName').value.trim() || "Chủ mệnh";
     const gender = document.getElementById('gender').value;
@@ -825,7 +824,7 @@ function recalculateFate() {
         return;
     }
 
-    // Tính toán
+    // Tính toán thông tin cơ bản
     chủMệnh = tínhCungPhi(y, m, d, gender);
     const namAm = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
     const nguHoangInfo = getNguHoangInfo(namAm);
@@ -835,33 +834,33 @@ function recalculateFate() {
     fateTxt.innerText = `${name}: Cung ${chủMệnh} (${nhomMenh}) - Bản Mệnh Cung Phi: ${hanhCungPhi} | Năm Âm: ${namAm} | ${nguHoangInfo}`;
 
     // Xử lý góc đang xem
-    let headingToCalculate = isDetailOpen && lockedHeadingAtOpen !== null
-                            ? lockedHeadingAtOpen
-                            : currentHeading;
+    let headingToCalculate = isDetailOpen && lockedHeadingAtOpen !== null ? lockedHeadingAtOpen : currentHeading;
 
+    // === TÍNH TOÁN ĐA TẦNG ===
     const hanhPhuongVi = getHanhByHeading(headingToCalculate);
+    const currentHauInfo = getCurrentHauInfo(headingToCalculate);
+    // Tính toán Đại/Tiểu vận
+    const vanInfo = tinhDaiTieuVan(headingToCalculate, y); 
 
-    // === LẤY THÔNG TIN HẬU HIỆN TẠI ===
-    let currentHauInfo = getCurrentHauInfo(headingToCalculate);
-
-    // === GIẢI THÍCH SAO NGŨ HOÀNG (GIỮ NGUYÊN) ===
+    // === GIẢI THÍCH SAO NGŨ HOÀNG ===
     let saoChuQuan = null;
     const match = nguHoangInfo.match(/Sao (\d+)/);
     if (match) saoChuQuan = match[1];
+    
     let giaiThichSao = "";
     if (saoChuQuan === '5') {
-        giaiThichSao = `Năm sinh này phạm sao xấu <b>Ngũ Hoàng</b> đóng tại giữa nhà, mang sát khí hành Thổ rất mạnh. Cần giữ trung tâm nhà yên tĩnh, tránh đập phá, sửa chữa lớn ở khu vực này trong năm.`;
+        giaiThichSao = `Năm sinh này phạm sao <b>Ngũ Hoàng</b>, mang sát khí hành Thổ rất mạnh. Cần giữ trung tâm nhà yên tĩnh, tránh đập phá, sửa chữa lớn.`;
     } else if (saoChuQuan === '2') {
-        giaiThichSao = `Năm sinh âm lịch này gặp sao <b>Nhị Hắc</b>, dễ ảnh hưởng sức khỏe. Nên đặt Hồ lô đồng hoặc thạch anh trắng ở trung tâm nhà để hóa giải.`;
-    } else if (nguHoangInfo.includes("Tam Bích") || nguHoangInfo.includes("Tứ Lục") || saoChuQuan === '3' || saoChuQuan === '4') {
-        giaiThichSao = `Năm sinh âm lịch này gặp sao mang năng lượng Mộc quản năm, khi đóng ở giữa tâm nhà (vốn thuộc Thổ) sẽ gây ra sự lệch khí nhẹ ở mức <b>Trung bình</b>. Chỉ cần giữ khu vực giữa nhà hoặc giữa cửa hàng luôn sạch sẽ, thoáng đãng là tự động hóa giải.`;
-    } else if (['1','6','8','9'].includes(saoChuQuan)) {
-        giaiThichSao = `Năm nay gặp sao Cát, năng lượng Trung Cung tốt, tài lộc, quý nhân hỗ trợ, gia đạo tương đối thuận lợi.`;
+        giaiThichSao = `Năm sinh này gặp sao <b>Nhị Hắc</b>, dễ ảnh hưởng sức khỏe. Nên đặt Hồ lô đồng hoặc vật phẩm hành Kim để hóa giải.`;
+    } else if (['3', '4'].includes(saoChuQuan)) {
+        giaiThichSao = `Năng lượng Mộc quản năm gây lệch khí nhẹ ở trung tâm nhà. Giữ khu vực này sạch sẽ là tự động hóa giải.`;
+    } else if (['1', '6', '8', '9'].includes(saoChuQuan)) {
+        giaiThichSao = `Năm nay gặp sao Cát, năng lượng Trung Cung tốt, tài lộc và quý nhân hỗ trợ.`;
     } else {
-        giaiThichSao = `Năng lượng chủ quản năm sinh tại trung tâm nhà ở trạng thái ổn định, an lành, không có biến động xấu lớn.`;
+        giaiThichSao = `Năng lượng chủ quản ổn định, không có biến động xấu lớn.`;
     }
 
-    // === RENDER PHẦN GIẢI THÍCH THUẬT NGỮ (ĐÃ THÊM GIẢI THÍCH HẬU) ===
+    // === RENDER GIAO DIỆN ===
     let targetContainer = document.getElementById('dien-giai-bo-sung');
     if (!targetContainer) {
         targetContainer = document.createElement('div');
@@ -887,21 +886,35 @@ function recalculateFate() {
         <div id="content-dien-giai-chi-tiet" style="display: ${displayStyle}; margin: 10px 0; padding: 14px;
              background: rgba(223, 183, 108, 0.06); border: 1.5px solid var(--gold); border-radius: 8px;
              font-size: 0.86rem; line-height: 1.65; text-align: left; color: #fff;">
-            
+           
             <p style="margin:0 0 10px 0; color:var(--gold); font-weight:bold; border-bottom:1px solid var(--gold); padding-bottom:6px;">
                 📖 GIẢI NGHĨA CÁC THUẬT NGỮ
             </p>
-            
+           
             <p style="margin:8px 0;">📍 <b>Phương vị:</b> Là hướng thực tế mà đầu điện thoại/la bàn của bạn đang chĩa vào. Hướng này tương ứng với năng lượng hành <b>${hanhPhuongVi}</b> (Góc xoay la bàn hiện tại: <b>${Math.round(headingToCalculate)}°</b>).</p>
-            
+           
             <p style="margin:8px 0;">🎯 <b>Mệnh Cung Phi (Hành ${hanhCungPhi}):</b> Quẻ mệnh phong thủy cốt lõi được tính toán dựa trên năm sinh và giới tính của bạn (Bạn thuộc cung <b>${chủMệnh}</b>, nhóm tuổi <b>${nhomMenh}</b>). Mệnh này dùng để đối chiếu trực tiếp với la bàn Bát Trạch phía dưới.</p>
-            
-            <p style="margin:8px 0;">🌟 <b>Hậu hiện tại (${currentHauInfo.ten}):</b> ${currentHauInfo.chatLuong} ${currentHauInfo.emoji}<br>
-            <span style="color:#ccc;">Đây là chi tiết 5° của Sơn ${currentHauInfo.sonName}. ${currentHauInfo.ynghia}</span></p>
-            
+           
+            <p style="margin:8px 0;">
+                🌌 <b>Vận khí (2026):</b> Vận 9 - Hỏa Vận (2024-2043)<br>
+                <small style="color:#ccc;">Đây là Đại Vận 20 năm hiện tại (Hành Hỏa). Nó ảnh hưởng tổng thể đến cả thế giới và không gian sống.</small>
+            </p>
+
+            <p style="margin:8px 0;">
+                🌟 <b>Hậu hiện tại (${currentHauInfo.ten}):</b> ${currentHauInfo.chatLuong} ${currentHauInfo.emoji}<br>
+                <span style="color:#ccc;">Đây là khí trường chi tiết trong phạm vi 5° của Sơn ${currentHauInfo.sonName}. ${currentHauInfo.ynghia}<br>
+                <b>Lưu ý:</b> Hậu hiện tại phản ánh khí cụ thể của hướng bạn đang đo trong Tiểu Vận, không phải Đại Vận.</span>
+            </p>
+
             <p style="margin:8px 0;">⚠️ <b>Vận khí tâm nhà (Trung Cung):</b> ${giaiThichSao}</p>
-            
+           
             <p style="margin:8px 0;">🚪 <b>Mục đích xem:</b> Bạn đang tiến hành đo đạc vị trí cho <b>${tenMucDichBinhDan}</b>. Hãy cuộn xuống phía dưới để xem kết quả Cát/Hung chính xác theo hệ Bát Trạch Minh Châu và mật pháp hóa giải.</p>
+
+            <p style="margin:12px 0 8px 0; padding:10px; background:rgba(255,215,0,0.08); border-radius:6px; border-left:4px solid #ffd700;">
+                <b>◆ HUYỀN KHÔNG VẬN 9 (2026)</b><br>
+                Nhất Bạch • Hành: Thủy<br>
+                <span style="color:#90EE90;">Trí tuệ, quý nhân tương trợ. Vận khí hanh thông, thích hợp phát triển công việc, học tập, mở rộng mối quan hệ.</span>
+            </p>
         </div>
     `;
 
@@ -935,6 +948,43 @@ function getCurrentHauInfo(degree) {
         }
     });
     return result;
+}
+
+// ====================== TÍNH ĐẠI VẬN - TIỂU VẬN DỰA TRÊN 72 HẬU ======================
+function tinhDaiTieuVan(degree, namSinh) {
+    const normalized = ((degree % 360) + 360) % 360;
+    const namHienTai = new Date().getFullYear();
+
+    // Tìm Hậu hiện tại
+    let currentHau = null;
+    let minDiff = Infinity;
+    Object.keys(Data72Hau).forEach(key => {
+        const d = parseFloat(key);
+        const diff = Math.min(Math.abs(normalized - d), 360 - Math.abs(normalized - d));
+        if (diff < minDiff) {
+            minDiff = diff;
+            currentHau = Data72Hau[key];
+        }
+    });
+
+    // Tính Đại Vận (Vận 9 hiện tại 2024-2043)
+    const van9 = (namHienTai >= 2024 && namHienTai <= 2043) ? "Vận 9 - Hỏa Vận" : "Vận cũ";
+
+    // Tiểu Vận (theo năm hiện tại)
+    let tieuVan = "Trung bình";
+    if (currentHau) {
+        if (currentHau.chatLuong.includes("Đại Cát")) tieuVan = "Đại Cát - Thời cơ lớn";
+        else if (currentHau.chatLuong.includes("Cát")) tieuVan = "Tiểu Cát - Thuận lợi";
+        else if (currentHau.chatLuong.includes("Đại Hung")) tieuVan = "Đại Hung - Tránh động thổ";
+        else if (currentHau.chatLuong.includes("Hung")) tieuVan = "Tiểu Hung - Cẩn trọng";
+    }
+
+    return {
+        daiVan: van9 + " (2024-2043)",
+        tieuVan: tieuVan,
+        hau: currentHau ? currentHau.ten : "—",
+        chatLuong: currentHau ? currentHau.chatLuong : "—"
+    };
 }
 
 // --- CẤU HÌNH PHONG THỦY ĐÃ NÂNG CẤP TOÀN DIỆN DIỆN RỘNG ---
