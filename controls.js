@@ -1847,44 +1847,50 @@ function handleModalClick() {
 let isFullScreen = false;
 let originalCompassParent = null;
 let lastTapTime = 0;
-let touchStartX = 0;
-let touchStartY = 0;
+let tapCount = 0;
+let tapTimer = null;
 
-// ====================== FULLSCREEN THÔNG MINH ======================
+// ====================== FULLSCREEN MODE - PHIÊN BẢN TỐI ƯU ======================
 function handleInteraction(e) {
-    const compassContainer = document.querySelector('.compass-container');
+    const compassContainer = e.target.closest('.compass-container');
     if (!compassContainer) return;
 
-    // Nếu đang full thì thoát
+    // Nếu đang fullscreen → tap bất kỳ chỗ nào cũng thoát
     if (isFullScreen) {
         exitFullScreenMode();
         return;
     }
 
-    // Chỉ kích hoạt full khi tap/double tap vào vùng la bàn
-    if (e.target.closest('.compass-container')) {
-        e.preventDefault();
+    // Double Tap logic
+    e.preventDefault();
+    tapCount++;
+
+    if (tapCount === 1) {
+        tapTimer = setTimeout(() => {
+            tapCount = 0; // Reset nếu chỉ tap 1 lần
+        }, 420);
+    } else if (tapCount === 2) {
+        clearTimeout(tapTimer);
+        tapCount = 0;
         toggleFullScreenMode();
     }
 }
 
-// Double Click - Máy tính
+// Lắng nghe sự kiện
 document.addEventListener('dblclick', handleInteraction);
 
-// Double Tap trên mobile (450ms)
 document.addEventListener('touchend', (e) => {
-    const currentTime = Date.now();
-    
-    // Chỉ tính double tap nếu là 1 ngón tay
-    if (e.touches && e.touches.length > 0) return;
-    
-    if (currentTime - lastTapTime < 450) {
-        handleInteraction(e);
-    }
-    lastTapTime = currentTime;
+    // Chỉ xử lý double tap khi là 1 ngón tay
+    if (e.touches && e.touches.length > 1) return;
+    handleInteraction(e);
 });
 
-// ====================== TOGGLE FULLSCREEN ======================
+// Ngăn xung đột với pinch zoom
+document.addEventListener('gesturestart', e => {
+    if (isFullScreen) e.preventDefault();
+});
+
+// ====================== VÀO FULLSCREEN ======================
 function toggleFullScreenMode() {
     if (isFullScreen) return;
 
@@ -1894,26 +1900,44 @@ function toggleFullScreenMode() {
 
     originalCompassParent = compassContainer.parentElement;
 
-    // Ẩn các phần không cần thiết khi full
+    // Ẩn các phần không cần thiết
     hideNonEssentialElements();
 
     const fsDiv = document.createElement('div');
     fsDiv.id = 'fullscreenMode';
     fsDiv.style.cssText = `
-        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-        background: rgba(0,0,0,0.95); z-index: 9999; display: flex;
-        flex-direction: column; align-items: center; justify-content: center;
-        transition: opacity 0.4s ease;
+        position: fixed; 
+        top: 0; left: 0; 
+        width: 100vw; height: 100vh; 
+        background: rgba(0,0,0,0.94); 
+        z-index: 9999; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        justify-content: center;
+        touch-action: pinch-zoom pan-y;
+        user-select: none;
     `;
 
     fsDiv.innerHTML = `
-        <div id="fs-compass-wrapper" style="width: 94vw; max-width: 520px; height: 94vw; max-height: 520px; display: flex; align-items: center; justify-content: center;"></div>
-        <div id="fs-status-wrapper" style="width: 92%; max-width: 480px; margin-top: 24px;"></div>
+        <div id="fs-compass-wrapper" 
+             style="width: min(94vw, 94vh); 
+                    max-width: 560px; 
+                    height: min(94vw, 94vh); 
+                    max-height: 560px; 
+                    display: flex; 
+                    align-items: center; 
+                    justify-content: center;
+                    margin: 0 auto;">
+        </div>
+        <div id="fs-status-wrapper" 
+             style="width: 92%; max-width: 480px; margin-top: 28px; text-align: center;">
+        </div>
     `;
 
     document.body.appendChild(fsDiv);
 
-    // Chuyển la bàn và status vào fullscreen
+    // Chuyển nội dung vào fullscreen
     document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
     if (statusPanel) {
         document.getElementById('fs-status-wrapper').appendChild(statusPanel);
@@ -1921,11 +1945,14 @@ function toggleFullScreenMode() {
 
     isFullScreen = true;
 
-    // Gọi lại hàm vẽ la bàn sau khi chuyển
-    if (typeof recalculateFate === 'function') recalculateFate();
-    if (typeof updateCompassUI === 'function') updateCompassUI(window.lastHeading || 0);
+    // Cập nhật lại la bàn cho vừa khít
+    setTimeout(() => {
+        if (typeof recalculateFate === 'function') recalculateFate();
+        if (typeof updateCompassUI === 'function') updateCompassUI(window.lastHeading || 0);
+    }, 50);
 }
 
+// ====================== THOÁT FULLSCREEN ======================
 function exitFullScreenMode() {
     const fs = document.getElementById('fullscreenMode');
     if (!fs) return;
@@ -1947,8 +1974,35 @@ function exitFullScreenMode() {
         fs.remove();
         isFullScreen = false;
 
-        if (typeof updateCompassUI === 'function') updateCompassUI(window.lastHeading || 0);
-    }, 350);
+        // Cập nhật lại UI
+        setTimeout(() => {
+            if (typeof updateCompassUI === 'function') updateCompassUI(window.lastHeading || 0);
+        }, 100);
+    }, 300);
+}
+
+// ====================== HÀM HỖ TRỢ ======================
+function hideNonEssentialElements() {
+    const elements = document.querySelectorAll('.status-panel *, #detail-box, .fs-icon');
+    elements.forEach(el => {
+        const text = el.textContent || "";
+        if (text.includes('Người Tầm Phương') || 
+            text.includes('Đo hướng') || 
+            text.includes('Cung Phi') || 
+            text.includes('Năm Âm') || 
+            text.includes('Trung Cung') || 
+            text.includes('Xem giải thích thuật ngữ')) {
+            el.style.display = 'none';
+            el.setAttribute('data-fs-hidden', 'true');
+        }
+    });
+}
+
+function showHiddenElements() {
+    document.querySelectorAll('[data-fs-hidden="true"]').forEach(el => {
+        el.style.display = '';
+        el.removeAttribute('data-fs-hidden');
+    });
 }
 
 // ====================== ẨN / HIỆN PHẦN TỐI ƯU ======================
