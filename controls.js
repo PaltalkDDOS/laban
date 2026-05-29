@@ -326,16 +326,6 @@ const Data72Hau = {
     "332.5": { ten: "Hợi Hậu 3", chatLuong: "Bình", hanh: "Thủy", ynghia: "Giữ cân bằng, tránh thay đổi lớn." }
 };
 
-function get72HauByDegree(degree) {
-    const norm = ((degree % 360) + 360) % 360;
-    // Làm tròn về bội số của 5
-    const index = Math.round(norm / 5) * 5;
-    // Nếu kết quả là 360, chuyển thành 0 để khớp với object
-    const finalIndex = (index === 360) ? 0 : index;
-    const key = finalIndex.toFixed(1);
-    
-    return Data72Hau[key] || { ten: "Hậu Trung Bình", chatLuong: "Bình", ynghia: "Khí trung hòa." };
-}
 // ====================== CỬU TINH NHẬP TRUNG CUNG - CHUẨN ======================
 function getNguHoangInfo(year) {
     // Công thức phi tinh nghịch hành chuẩn
@@ -356,6 +346,16 @@ function getNguHoangInfo(year) {
     };
 
     return `Năm ${year}: Sao ${info[sao]}`;
+}
+// 1. Hàm tính toán chỉ số (Phải làm tròn đúng chuẩn 5 độ/hậu)
+function get72HauByDegree(degree) {
+    const norm = ((degree % 360) + 360) % 360; // Đưa về 0-360
+    const index = Math.round(norm / 5) * 5;     // Làm tròn về bội số 5
+    const finalIndex = (index === 360) ? 0 : index;
+    const key = finalIndex.toFixed(1);
+    
+    // Trả về dữ liệu hoặc mặc định nếu lỗi
+    return Data72Hau[key] || { ten: "Trung Tính", chatLuong: "Bình", ynghia: "Khí trường ổn định." };
 }
 
 // ====================== GLOBAL ELEMENTS ======================
@@ -739,7 +739,7 @@ function getHanhByHeading(heading) {
 
     return "Chưa xác định";
 }
-// ====================== HÀM CHÍNH recalculateFate() - PHIÊN BẢN ĐẠI THUẬT THÁI THÔNG ======================
+// ====================== HÀM CHÍNH recalculateFate() - ĐẦY ĐỦ ======================
 function recalculateFate() {
     const name = document.getElementById('userName').value.trim() || "Chủ mệnh";
     const gender = document.getElementById('gender').value;
@@ -747,7 +747,6 @@ function recalculateFate() {
     const monthStr = document.getElementById('birthMonth').value;
     const yearStr = document.getElementById('birthYear').value;
     const mucDich = document.getElementById('purpose').value;
-    const selectedYear = parseInt(document.getElementById('selectedYear')?.value) || new Date().getFullYear();
 
     // Chưa nhập đủ thông tin
     if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
@@ -756,6 +755,7 @@ function recalculateFate() {
             Vui lòng nhập đủ Ngày, Tháng, Năm sinh để xem phân tích Cát/Hung chi tiết
         </div>`;
         listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
+
         const oldPanel = document.getElementById('dien-giai-bo-sung');
         if (oldPanel) oldPanel.remove();
         updateCompassUI(currentHeading);
@@ -771,57 +771,42 @@ function recalculateFate() {
         return;
     }
 
-    // Tính toán cung mệnh
+    // Tính toán
     chủMệnh = tínhCungPhi(y, m, d, gender);
     const namAm = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
     const nguHoangInfo = getNguHoangInfo(namAm);
+
     const hanhCungPhi = bátTrạchMap[chủMệnh]?.element || "Thổ";
     const nhomMenh = bátTrạchMap[chủMệnh]?.group || "Tây Tứ Mệnh";
 
-    fateTxt.innerText = `${name}: Cung ${chủMệnh} (${nhomMenh}) - Bản Mệnh: ${hanhCungPhi} | Năm Âm: ${namAm} | ${nguHoangInfo}`;
+    fateTxt.innerText = `${name}: Cung ${chủMệnh} (${nhomMenh}) - Bản Mệnh Cung Phi: ${hanhCungPhi} | Năm Âm: ${namAm} | ${nguHoangInfo}`;
 
     // Xử lý góc đang xem
     let headingToCalculate = isDetailOpen && lockedHeadingAtOpen !== null 
                             ? lockedHeadingAtOpen 
                             : currentHeading;
 
-    // Xác định Sơn hiện tại
-    const sonObj = SON_24_CONFIG.find(s => {
-        if (s.min > s.max) return headingToCalculate >= s.min || headingToCalculate < s.max;
-        return headingToCalculate >= s.min && headingToCalculate < s.max;
-    }) || SON_24_CONFIG[0];
-
-    const sonName = sonObj.name;
     const hanhPhuongVi = getHanhByHeading(headingToCalculate);
 
-    // === Layer 1: Minh Châu (Bát Trạch cá nhân hóa) ===
-    const mcInfo = MaTranMinhChau[chủMệnh] ? MaTranMinhChau[chủMệnh][sonName] : null;
-
-    // === Layer 2: 72 Hậu (Địa khí chi tiết 5°) ===
-    const hauInfo = get72HauByDegree(headingToCalculate);
-
-    // === Layer 3: Thiên Thời (Đại Vận + Niên Tinh) ===
-    const vanInfo = getCurrentVanInfo(selectedYear);
-
-    // === GIẢI THÍCH NGŨ HOÀNG (GIỮ NGUYÊN) ===
+    // === GIẢI THÍCH SAO NGŨ HOÀNG (GIỮ PHONG CÁCH CHI TIẾT NHƯ GỐC) ===
     let saoChuQuan = null;
     const match = nguHoangInfo.match(/Sao (\d+)/);
     if (match) saoChuQuan = match[1];
 
     let giaiThichSao = "";
     if (saoChuQuan === '5') {
-        giaiThichSao = `Năm sinh này phạm sao xấu <b>Ngũ Hoàng</b> đóng tại giữa nhà...`;
+        giaiThichSao = `Năm sinh này phạm sao xấu <b>Ngũ Hoàng</b> đóng tại giữa nhà, mang sát khí hành Thổ rất mạnh. Cần giữ trung tâm nhà yên tĩnh, tránh đập phá, sửa chữa lớn ở khu vực này trong năm.`;
     } else if (saoChuQuan === '2') {
-        giaiThichSao = `Năm sinh âm lịch này gặp sao <b>Nhị Hắc</b>...`;
+        giaiThichSao = `Năm sinh âm lịch này gặp sao <b>Nhị Hắc</b>, dễ ảnh hưởng sức khỏe. Nên đặt Hồ lô đồng hoặc thạch anh trắng ở trung tâm nhà để hóa giải.`;
     } else if (nguHoangInfo.includes("Tam Bích") || nguHoangInfo.includes("Tứ Lục") || saoChuQuan === '3' || saoChuQuan === '4') {
-        giaiThichSao = `Năm sinh âm lịch này gặp sao mang năng lượng Mộc...`;
+        giaiThichSao = `Năm sinh âm lịch này gặp sao mang năng lượng Mộc quản năm, khi đóng ở giữa tâm nhà (vốn thuộc Thổ) sẽ gây ra sự lệch khí nhẹ ở mức <b>Trung bình</b>. Chỉ cần giữ khu vực giữa nhà hoặc giữa cửa hàng luôn sạch sẽ, thoáng đãng là tự động hóa giải.`;
     } else if (['1','6','8','9'].includes(saoChuQuan)) {
-        giaiThichSao = `Năm nay gặp sao Cát...`;
+        giaiThichSao = `Năm nay gặp sao Cát, năng lượng Trung Cung tốt, tài lộc, quý nhân hỗ trợ, gia đạo tương đối thuận lợi.`;
     } else {
-        giaiThichSao = `Năng lượng chủ quản năm sinh tại trung tâm nhà ở trạng thái ổn định...`;
+        giaiThichSao = `Năng lượng chủ quản năm sinh tại trung tâm nhà ở trạng thái ổn định, an lành, không có biến động xấu lớn.`;
     }
 
-    // === RENDER ĐA TẦNG - CHI TIẾT (ĐẠI THUẬT) ===
+    // === RENDER PHẦN GIẢI THÍCH THUẬT NGỮ (GIỮ NGUYÊN PHONG CÁCH GỐC) ===
     let targetContainer = document.getElementById('dien-giai-bo-sung');
     if (!targetContainer) {
         targetContainer = document.createElement('div');
@@ -831,24 +816,15 @@ function recalculateFate() {
     }
 
     const displayStyle = isDetailOpen ? 'block' : 'none';
-    const btnText = isDetailOpen ? '🙈 Đóng giải thích' : '👁️ Xem giải thích chi tiết';
+    const btnText = isDetailOpen ? '🙈 Đóng giải thích thuật ngữ' : '👁️ Xem giải thích thuật ngữ hiển thị';
     const btnBkg = isDetailOpen ? 'rgba(223, 183, 108, 0.15)' : 'transparent';
 
     const config = ConfigPhongThuy[mucDich];
     const tenMucDichBinhDan = config ? config.title : "Vị trí / Hướng đang chọn";
 
-    // Kết hợp Minh Châu + 72 Hậu
-    let tongKetLuan = "";
-    if (mcInfo && hauInfo) {
-        const ketHop = (mcInfo.loai === "Cát" && hauInfo.chatLuong.includes("Cát")) ? "ĐẠI CÁT - Khí trường cực thịnh" :
-                       (mcInfo.loai === "Hung" && hauInfo.chatLuong.includes("Cát")) ? "Cát Hung đan xen - Cần hóa giải" : 
-                       mcInfo.loai + " + " + hauInfo.chatLuong;
-        tongKetLuan = `<b>${ketHop}</b><br>${mcInfo.text}<br><span style="color:#dfb76c;">72 Hậu: ${hauInfo.ten} - ${hauInfo.ynghia}</span>`;
-    }
-
     targetContainer.innerHTML = `
         <div style="text-align: center; margin: 10px 0;">
-            <button id="btn-toggle-fengshui" onclick="toggleDienGiaiChiTiet()" 
+            <button id="btn-toggle-fengshui" onclick="toggleDienGiaiChiTiet()"
                     style="background: ${btnBkg}; border: 1px solid var(--gold); color: var(--gold);
                            padding: 8px 16px; font-size: 0.85rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
                 ${btnText}
@@ -857,13 +833,13 @@ function recalculateFate() {
         <div id="content-dien-giai-chi-tiet" style="display: ${displayStyle}; margin: 10px 0; padding: 14px;
              background: rgba(223, 183, 108, 0.06); border: 1.5px solid var(--gold); border-radius: 8px;
              font-size: 0.86rem; line-height: 1.65; text-align: left; color: #fff;">
-            
-            <p style="margin:0 0 12px 0; color:var(--gold); font-weight:bold;">📍 PHƯƠNG VỊ: ${sonName} (${Math.round(headingToCalculate)}°)</p>
-            <p><b>Minh Châu:</b> ${mcInfo ? mcInfo.nhom + " - " + mcInfo.cap_do : "Chưa xác định"}</p>
-            <p style="color:#30d158;">${tongKetLuan}</p>
-            <p><b>Thiên Thời ${vanInfo.vanName}:</b> Niên Tinh <b>${vanInfo.nienTinhName}</b></p>
-            <p style="margin:8px 0;">⚠️ <b>Vận khí tâm nhà:</b> ${giaiThichSao}</p>
-            <p style="margin:8px 0;">🚪 <b>Mục đích:</b> ${tenMucDichBinhDan}</p>
+            <p style="margin:0 0 10px 0; color:var(--gold); font-weight:bold; border-bottom:1px solid var(--gold); padding-bottom:6px;">
+                📖 GIẢI NGHĨA CÁC THUẬT NGỮ
+            </p>
+            <p style="margin:8px 0;">📍 <b>Phương vị:</b> Là hướng thực tế mà đầu điện thoại/la bàn của bạn đang chĩa vào. Hướng này tương ứng với năng lượng hành <b>${hanhPhuongVi}</b> (Góc xoay la bàn hiện tại: <b>${Math.round(headingToCalculate)}°</b>).</p>
+            <p style="margin:8px 0;">🎯 <b>Mệnh Cung Phi (Hành ${hanhCungPhi}):</b> Quẻ mệnh phong thủy cốt lõi được tính toán dựa trên năm sinh và giới tính của bạn (Bạn thuộc cung <b>${chủMệnh}</b>, nhóm tuổi <b>${nhomMenh}</b>). Mệnh này dùng để đối chiếu trực tiếp với la bàn Bát Trạch phía dưới.</p>
+            <p style="margin:8px 0;">⚠️ <b>Vận khí tâm nhà (Trung Cung):</b> ${giaiThichSao}</p>
+            <p style="margin:8px 0;">🚪 <b>Mục đích xem:</b> Bạn đang tiến hành đo đạc vị trí cho <b>${tenMucDichBinhDan}</b>. Hãy cuộn xuống phía dưới để xem kết quả Cát/Hung chính xác theo hệ Bát Trạch Minh Châu và mật pháp hóa giải.</p>
         </div>
     `;
 
@@ -901,12 +877,17 @@ const ConfigPhongThuy = {
     'safe':           { title: "Vị trí Két Sắt / Tài Lộc (Tọa Hung)", isCat: false }
 };
 
-// ====================== DANH SÁCH HƯỚNG GỢI Ý - ĐÃ NÂNG CẤP 72 HẬU ======================
+// ====================== HÀM generateDirectionsList() - ĐẦY ĐỦ ======================
 function generateDirectionsList() {
     const mucDich = document.getElementById('purpose').value;
     const config = ConfigPhongThuy[mucDich];
+
     if (!mucDich || !config) {
-        directionsContainer.innerHTML = `<div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:15px;'>Chọn mục đích để xem gợi ý</div>`;
+        directionsContainer.innerHTML = `
+            <div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>
+                Chọn mục đích Khí Cục hoặc Trấn Sát để hiển thị đồ hình gợi ý tương ứng
+            </div>`;
+        listPanelTitle.innerText = "Danh Sách Phương Vị Gợi Ý";
         return;
     }
 
@@ -915,45 +896,77 @@ function generateDirectionsList() {
         const cungTrạch = bátTrạchMap[chủMệnh][dir.code];
         const isCat = cungPhầnTrăm[cungTrạch].cát;
         const hopPhongThuy = config.isCat ? isCat : !isCat;
-
-        // Lấy thông tin 72 Hậu cho hướng chính
-        const mainDegree = dir.angle;
-        const hauInfo = get72HauByDegree(mainDegree);
-
+        
         listDirections.push({
             ...dir,
             cungTrạch: cungTrạch,
             isCat: isCat,
-            hopPhongThuy: hopPhongThuy,
-            hau: hauInfo
+            hopPhongThuy: hopPhongThuy
         });
     });
 
     listDirections.sort((a, b) => b.hopPhongThuy - a.hopPhongThuy);
-    listPanelTitle.innerText = config.title + " (Đã tích hợp 72 Hậu)";
-
+    listPanelTitle.innerText = config.title;
     directionsContainer.innerHTML = "";
 
     listDirections.forEach(item => {
-        const color = item.hopPhongThuy ? '#30d158' : '#ff3b30';
-        const statusText = item.hopPhongThuy 
-            ? '🟢 TỐT - Đón Cát Khí' 
-            : '❌ XẤU - Cần Hóa Giải';
+        const textColorStyle = item.hopPhongThuy
+            ? 'color: #30d158; font-weight: bold;'
+            : 'color: #ff3b30; font-weight: bold;';
+       
+        let statusText = "";
+        if (config.isCat) {
+            statusText = item.hopPhongThuy ? '🟢 ĐÓN CÁT KHÍ (HƯỚNG TỐT)' : '❌ PHẠM HUNG PHƯƠNG (HƯỚNG XẤU)';
+        } else {
+            statusText = item.hopPhongThuy ? '🟢 TỌA HUNG TRẤN SÁT (ĐẮC VỊ)' : '❌ SAI VỊ: TỌA CÁT TIÊU HAO';
+        }
+
+        const sonGroup = getSonGroupForDirection(item.code);
+        let sonHTML = "";
+        
+        sonGroup.forEach((son, index) => {
+            const dataSon = MaTranMinhChau[chủMệnh] ? MaTranMinhChau[chủMệnh][son] : null;
+            const score = dataSon ? dataSon.diem : 0;
+            const nhom = dataSon ? dataSon.nhom : "";
+            
+            // Xử lý dữ liệu text để tránh lỗi dấu nháy đơn trong JS
+            const titleInfo = `${son} (${nhom})`;
+            const textInfo = dataSon ? dataSon.text.replace(/'/g, "\\'") : "Chưa có thông tin.";
+            const solInfo = dataSon ? dataSon.giaiphap.replace(/'/g, "\\'") : "Chưa có giải pháp.";
+            
+            const color = score >= 80 ? "#30d158" : (score >= 50 ? "#dfb76c" : "#ff3b30");
+            
+            // Thêm onclick gọi hàm showExplanation (hàm này bạn để ở thẻ script chính)
+            sonHTML += `<span style="display:inline-block; white-space:nowrap; cursor:pointer;" 
+                              onclick="showExplanation('${titleInfo}', '${textInfo}', '${solInfo}')">` +
+                       `<span style="color:${color}; font-weight:700;">${son}</span>` + 
+                       `<span style="color:#ffffff;"> (</span>` +
+                       `<span style="color:${color}; font-weight:400;">${score}%</span>`;
+            
+            if (nhom) {
+                sonHTML += `<span style="color:#8e8e93; font-size:0.6rem; margin-left:3px; text-transform:uppercase;">${nhom}</span>`;
+            }
+            
+            sonHTML += `<span style="color:#ffffff;">)</span></span>`;
+            
+            if (index < sonGroup.length - 1) sonHTML += ` • `;
+        });
 
         const div = document.createElement('div');
         div.className = `direction-item ${item.hopPhongThuy ? 'good' : 'bad'}`;
         div.innerHTML = `
             <div class="item-info" style="flex:1;">
-                <div class="item-name" style="color:#fff; font-size:0.95rem;">
-                    ${item.name} <span style="color:${color}; font-weight:bold;">(${item.cungTrạch})</span>
+                <div class="item-name" style="color:#fff; font-size:0.92rem; margin-bottom: 2px;">
+                    ${item.name} ➔ <span style="${textColorStyle}">${item.cungTrạch}</span>
                 </div>
-                <div style="font-size:0.78rem; margin:6px 0; color:#dfb76c;">
-                    72 Hậu: <strong>${item.hau.ten}</strong> - ${item.hau.chatLuong}
+                <div style="margin:4px 0 5px 0; font-size:0.76rem; line-height:1.3;">
+                    <span style="color:#dfb76c; font-weight:600;">SƠN VỊ:</span> ${sonHTML}
                 </div>
-                <div style="font-size:0.82rem; color:#ccc;">${item.hau.ynghia.substring(0, 85)}...</div>
-                <div style="margin-top:6px; color:${color}; font-weight:600;">${statusText}</div>
+                <div class="item-cung" style="${textColorStyle}; font-size:0.82rem; letter-spacing: 0.3px;">
+                    ${statusText}
+                </div>
             </div>
-            <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})" style="font-size:0.78rem; padding:6px 12px;">Xoay thử</button>
+            <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})" style="font-size:0.78rem; padding:4px 9px;">Xoay thử</button>
         `;
         directionsContainer.appendChild(div);
     });
@@ -1143,26 +1156,6 @@ function getLuanDoanChiTiet(huong, son) {
     return html;
 }
 
-// ====================== HÀM RIÊNG CẢNH BÁO NGŨ HOÀNG ======================
-function getNguHoangAlert() {
-    const currentYear = new Date().getFullYear();
-    const nguHoangInfo = typeof getNguHoangInfo === 'function' ? getNguHoangInfo(currentYear) : "";
-    const match = nguHoangInfo.match(/Sao (\d+)/);
-    const saoChuQuan = match ? match[1] : "";
-
-    if (saoChuQuan === '5') {
-        return `<div style="background:#ff3b30; color:#fff; padding:12px; border-radius:8px; margin:12px 0; font-weight:bold; text-align:center;">
-            ⚠️ CẢNH BÁO NGŨ HOÀNG ĐẠI SÁT!<br>
-            Năm nay Ngũ Hoàng đóng giữa nhà. Tuyệt đối KHÔNG được đập phá, sửa chữa, đào móng, động thổ ở trung tâm nhà.
-        </div>`;
-    } else if (saoChuQuan === '2') {
-        return `<div style="background:#ff9500; color:#fff; padding:10px; border-radius:8px; margin:10px 0;">
-            ⚠️ Nhị Hắc Bệnh Phù - Cẩn thận sức khỏe người lớn tuổi.
-        </div>`;
-    }
-    return ""; // Không có cảnh báo
-}
-
 function updateCompassUI(heading) {
     currentHeading = Math.round(heading);
     compass.style.transform = `rotate(${-heading}deg)`;
@@ -1189,17 +1182,38 @@ function updateCompassUI(heading) {
     } else if (currentHeading >= 293 && currentHeading < 338) {
         currentCung = "CÀN (TÂY BẮC)"; currentCode = "NW";
     }
+// ==================== 4. TÍCH HỢP 72 HẬU (THÊM VÀO HÀM UPDATE) ====================
+const hauData = get72HauByDegree(currentHeading); // Gọi hàm lấy data
+const hauDisplayContainer = document.getElementById('hau-display-container');
 
-    // ==================== 2. 24 SƠN ====================
+if (hauDisplayContainer) {
+    hauDisplayContainer.style.display = 'block';
+    hauDisplayContainer.innerHTML = `
+        <div style="padding:10px; background:rgba(223,183,108,0.15); border-left:4px solid var(--gold); border-radius:4px; margin-bottom:10px;">
+            <div style="font-weight:bold; color:var(--gold); font-size:0.95rem; margin-bottom:4px;">
+                🌟 72 HẬU: ${hauData.ten} (${hauData.chatLuong})
+            </div>
+            <div style="font-size:0.85rem; color:#eee; line-height:1.4;">
+                ${hauData.ynghia}
+            </div>
+        </div>
+    `;
+}
+// ==================== 2. 24 SƠN (ĐÃ TỐI ƯU HÓA) ====================
     let gockim = (currentHeading % 360 + 360) % 360;
+    
+    // Tìm kiếm trực tiếp trên biến toàn cục SON_24_CONFIG
     let sơnHiệnTạiObj = SON_24_CONFIG.find(s => {
         if (s.min > s.max) return gockim >= s.min || gockim < s.max;
         return gockim >= s.min && gockim < s.max;
-    }) || SON_24_CONFIG[0];
+    }) || SON_24_CONFIG[0]; // Fallback về phần tử đầu tiên nếu không tìm thấy
 
-    let sơnHiệnTại = sơnHiệnTạiObj.name;
-
+    // Lưu ý: SON_24_CONFIG của chúng ta đang dùng thuộc tính .name thay vì .son
+    // Hãy đổi .son thành .name để khớp với cấu trúc mới
+    let sơnHiệnTại = sơnHiệnTạiObj.name; 
+    
     degreeTxt.innerText = `${currentHeading}° - Phương ${currentCung} - Sơn ${sơnHiệnTại}`;
+
 
     // ==================== 3. LẤY DỮ LIỆU ====================
     const dayStr = document.getElementById('birthDay').value;
@@ -1208,30 +1222,6 @@ function updateCompassUI(heading) {
     const mụcĐích = document.getElementById('purpose').value;
     const adviceBox = document.getElementById('pro-advice-box');
     const adviceContent = document.getElementById('advice-content');
-
-    // ==================== PHẦN MỚI: 72 HẬU + MINH CHÂU + NGŨ HOÀNG ====================
-    const mcInfo = MaTranMinhChau?.[chủMệnh]?.[sơnHiệnTại] || null;
-    const hauInfo = get72HauByDegree(currentHeading);
-    const vanInfo = typeof getCurrentVanInfo === 'function' ? getCurrentVanInfo() : { vanName: "Vận 9", nienTinhName: "Cửu Tử" };
-
-    // Cảnh báo Ngũ Hoàng
-    let nguHoangAlert = "";
-    const currentYear = new Date().getFullYear();
-    const nguHoangInfo = typeof getNguHoangInfo === 'function' ? getNguHoangInfo(currentYear) : "";
-    const match = nguHoangInfo.match(/Sao (\d+)/);
-    const saoChuQuan = match ? match[1] : "";
-
-    if (saoChuQuan === '5') {
-        nguHoangAlert = `<div style="background:#ff3b30; color:#fff; padding:12px; border-radius:8px; margin:12px 0; font-weight:bold; text-align:center;">
-            ⚠️ CẢNH BÁO NGŨ HOÀNG ĐẠI SÁT!<br>
-            Năm nay Ngũ Hoàng đóng giữa nhà. Tuyệt đối KHÔNG được đập phá, sửa chữa, đào móng, động thổ ở trung tâm nhà.
-        </div>`;
-    } else if (saoChuQuan === '2') {
-        nguHoangAlert = `<div style="background:#ff9500; color:#fff; padding:10px; border-radius:8px; margin:10px 0;">
-            ⚠️ Nhị Hắc Bệnh Phù - Cẩn thận sức khỏe người lớn tuổi.
-        </div>`;
-    }
-
 
     // ==================== KHO TÀNG PHÁP BẢO ====================
     const advices = { "Sinh Khí": "<strong>[CÁT TINH ĐẠI LỢI] Cách kích hoạt vượng khí tối đa trong Vận 9:</strong> Hướng này chủ về nhân đinh hưng vượng, thu hút tài lộc mạnh mẽ, giúp công danh sự nghiệp phát đạt.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt chậu cây xanh lớn đại diện cho hành Mộc (Thiết Mộc Lan, Kim Tiền) tại cửa ra vào để kéo khí trường.<br>2. Treo tranh mộc sinh hỏa hoặc đặt Tháp Văn Xương bằng gỗ chín tầng tại góc phương vị này để tăng tiến đường học hành, quan lộ.", "Thiên Y": "<strong>[CÁT TINH SỨC KHỎE] Cách gia tăng năng lượng hộ thân, trừ bệnh:</strong> Hướng chủ trì sức khỏe, tiêu bệnh trừ tai, giúp gia đạo bình an, trường thọ.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt một quả Hồ lô bằng đồng hoặc Hồ lô đá thạch anh vàng ngay đầu giường ngủ hoặc trước cửa phòng.<br>2. Bố trí bình gốm sứ cao cấp, đĩa ngọc thạch anh hành Thổ để bồi bổ sinh khí, giúp tạng phủ khỏe mạnh, ngủ ngon giác.", "Diên Niên": "<strong>[CÁT TINH GIA ĐẠO] Cách củng cố hòa khí, kết nối lương duyên bền vững:</strong> Hướng chủ về sự hòa thuận, củng cố quan hệ ngoại giao, gia đình êm ấm, vợ chồng đồng lòng.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt các vật phẩm chế tác bằng kim loại quý hành Kim như: Đôi uyên ương bằng đồng, hồ lô đồng nạp phúc.<br>2. Sử dụng thảm trải sàn màu trắng, xám ghi hoặc thạch anh trắng để thu hút năng lượng cát tường, gia đạo yên vui.", "Phục Vị": "<strong>[CÁT TINH TĨNH TÂM] Kích hoạt sự vững chãi, thi cử đỗ đạt:</strong> Hướng mang lại bình an, củng cố sức mạnh tinh thần, bản lĩnh, rất có lợi cho ban thờ và bàn làm việc.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt tháp nước phong thủy luận chuyển tuần hoàn (hành Thủy) hoặc quả cầu thủy tinh màu xanh biển sâu.<br>2. Đặt một chiếc gương nhỏ nhìn ra hướng cát hoặc bài trí biểu tượng cột buồm đón gió để duy trì năng lượng tiến thủ.", "Tuyệt Mệnh": "<strong>[ĐẠI HUNG TINH NGUY HIỂM] Phương án Hóa Giải Sát Khí tối thượng:</strong> Phương vị mang sát khí cực mạnh, dễ tổn hại đoản thọ, phá sản, bệnh tật nghiêm trọng.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. <b>Bảo pháp Kim khí:</b> Treo một chuông gió bằng đồng 6 thanh (Lục đế) hoặc đặt một cặp Tỳ Hưu bằng đồng nguyên chất để dùng hành Kim làm suy yếu tuyệt đối hung tinh.<br>2. <b>Trấn trạch chế sát:</b> Treo gương Bát Quái Gỗ Đào Lồi chính tông hướng ra ngoài cửa để phản xạ sát khí.<br>3. <b>Màu sắc điều hòa:</b> Sử dụng thảm trải màu xám tro hoặc màu trắng đặt ngay thềm cửa ra vào để thanh lọc tà khí.", "Ngũ Quỷ": "<strong>[HUNG TINH THỊ PHI] Phương án khắc chế hỏa khí, trừ tiểu nhân quấy phá:</strong> Dễ gây nóng nảy, kiện tụng, tổn hao tài sản, bị tiểu nhân đâm sau lưng.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. <b>Thủy pháp hóa sát:</b> Áp dụng nguyên lý 'Khôi phục bình hòa' - Đặt một lu nước sạch, bình thủy tinh chứa nước an nhẫn (nước muối loãng) hoặc quả cầu thạch anh đen tại vị trí này để dập tắt lửa Ngũ Quỷ.<br>2. Treo chuỗi tiền cổ Ngũ Đế bằng đồng ở ngạch cửa để dùng Kim sinh Thủy tiêu hao ác tính.", "Lục Sát": "<strong>[HUNG TINH TRỤC TRẶC] Cách hóa giải bất hòa gia đạo và mâu thuẫn tình cảm:</strong> Gây tranh chấp xích mích tai tiếng, tinh thần u uất, tình duyên lận đận.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. Đặt một bể cá phong thủy hoặc phong thủy luân (hành Thủy khí tốt) tại phương vị này để chuyển hóa năng lượng xung khắc thành dòng chảy êm dịu.<br>2. Sử dụng các đồ vật trang trí mang sắc xanh dương, đen hoặc treo rèm cửa màu tối để hấp thụ tà khí.", "Họa Hại": "<strong>[HUNG TINH HAO TÀI VỤN VẶN] Tiêu trừ năng lượng tiêu cực, xua đuổi rủi ro:</strong> Khiến công việc hay gặp trắc trở vụn vặt, muộn phiền, tiểu nhân quấy rầy.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. Đặt các vật phẩm chế tác từ đá tự nhiên thuộc hành Thổ hoặc Kim như: Gậy Như Ý bằng đồng, thạch anh trắng cát tường.<br>2. Treo một dải ruy băng đỏ phối đồng xu may mắn hoặc đặt các bức tượng chiêu tài bằng đồng để biến hung thành cát." };
@@ -1380,23 +1370,7 @@ detailBox.innerHTML = noiDungDetail;
         adviceBox.style.display = advices[cungTrạch] ? 'block' : 'none';
         if (advices[cungTrạch]) adviceContent.innerHTML = advices[cungTrạch];
     }
-// === PHẦN QUAN TRỌNG: THÊM 72 HẬU + MINH CHÂU VÀO CUỐI DETAIL ===
-    let extraContent = "";
-    if (mcInfo) {
-        const color = mcInfo.loai === "Cát" ? "#30d158" : "#ff3b30";
-        extraContent += `<p><strong style="color:${color};">MINH CHÂU: ${mcInfo.nhom} - ${mcInfo.cap_do}</strong></p>
-                         <p style="color:#fff;">${mcInfo.text}</p>`;
-    }
-    extraContent += `
-        <p style="margin-top:12px; color:#30d158;"><strong>🌟 72 HẬU:</strong> ${hauInfo.ten} (${hauInfo.chatLuong})</p>
-        <p style="color:#ccc;">${hauInfo.ynghia}</p>
-        <p style="color:#ffd700;">⏳ Thiên Thời: ${vanInfo.vanName} - ${vanInfo.nienTinhName}</p>`;
 
-    // Thêm vào cuối noiDungDetail
-    noiDungDetail += extraContent;
-
-    // Thêm Ngũ Hoàng Alert
-    detailBox.innerHTML = nguHoangAlert + noiDungDetail;
     // ==================== 8. HIỆU ỨNG ====================
     kichHoatDenLedQuet(currentHeading);
 
@@ -2302,57 +2276,73 @@ document.addEventListener('click', (e) => {
         hidePurposeModal();
     }
 });
-// ====================== THIÊN THỜI - ĐẠI VẬN + NIÊN TINH ======================
-function getCurrentVanInfo(selectedYear = null) {
-    const y = selectedYear || new Date().getFullYear();
-    
-    // Tính Đại Vận (20 năm/lần)
-    let van = Math.floor((y - 1864) / 20) % 9;
-    if (van === 0) van = 9;
 
-    // Tính Niên Tinh
-    const nien = (11 - (y % 9)) % 9 || 9;
-    const mapNienTinh = ["", "Nhất Bạch", "Nhị Hắc", "Tam Bích", "Tứ Lục", "Ngũ Hoàng", 
-                        "Lục Bạch", "Thất Xích", "Bát Bạch", "Cửu Tử"];
+function renderMultiLayerDetail(mc, van, hau72, tongDiem, sonName, degree) {
+    let html = `<div style="font-size:0.9rem; line-height:1.55;">`;
 
-    return {
-        van: van,
-        vanName: `Vận ${van} (${2024 + (van-9)*20} - ${2043 + (van-9)*20})`,
-        nienTinh: nien,
-        nienTinhName: mapNienTinh[nien]
-    };
-}
-// ====================== LOAN ĐẦU - HÌNH THẾ THỰC ĐỊA ======================
-function showLoanDauModal() {
-    const modal = document.getElementById('loanDauModal');
-    const content = document.getElementById('loanDauContent');
-    
-    content.innerHTML = `
-        <div style="margin:15px 0; line-height:1.7;">
-            <p><strong>📍 Mô tả hình thế xung quanh nhà:</strong></p>
-            <textarea id="loanDauInput" rows="6" style="width:100%; background:#2c2c2e; color:#fff; border:1px solid #dfb76c; border-radius:8px; padding:12px; font-size:0.9rem;" 
-                placeholder="Ví dụ: Phía trước có đường cái đâm thẳng vào cửa chính, bên trái có sông chảy, phía sau cao hơn nhà..."></textarea>
-            
-            <div style="margin-top:15px;">
-                <button onclick="saveLoanDau()" style="background:#30d158; color:#000; padding:10px 20px; border:none; border-radius:8px; font-weight:bold; margin-right:8px;">Lưu & Phân Tích</button>
-                <button onclick="closeLoanDauModal()" style="background:#ff3b30; color:#fff; padding:10px 20px; border:none; border-radius:8px;">Đóng</button>
-            </div>
-        </div>
-    `;
-    modal.style.display = 'flex';
-}
-
-function saveLoanDau() {
-    const input = document.getElementById('loanDauInput').value.trim();
-    if (input) {
-        localStorage.setItem('loanDauNote', input);
-        showCustomAlert("✅ Đã lưu hình thế Loan Đầu. Hệ thống sẽ tham khảo khi phân tích.", "success");
+    // Layer 1 - Minh Châu
+    if (mc) {
+        const color = mc.loai === "Cát" ? "#30d158" : "#ff3b30";
+        html += `<div style="background:rgba(255,255,255,0.08);padding:12px;border-radius:8px;border-left:4px solid ${color};margin-bottom:12px;">
+            <strong style="color:${color}">[MINH CHÂU ${mc.loai.toUpperCase()}] ${sonName} - ${mc.cap_do}</strong><br>
+            ${mc.text}<br>
+            <span style="color:#dfb76c">💡 ${mc.giaiphap}</span>
+        </div>`;
     }
-    closeLoanDauModal();
-}
 
-function closeLoanDauModal() {
-    document.getElementById('loanDauModal').style.display = 'none';
-}
+    // Layer 2 - Thiên Thời (Đại + Tiểu vận)
+    html += `<div style="background:rgba(223,183,108,0.1);padding:10px;border-radius:8px;margin-bottom:10px;">
+        <strong>⏳ THIÊN THỜI - VẬN ${van.van} (${van.vanName})</strong><br>
+        <span style="color:#ffd700">${van.nienTinhName}</span>
+    </div>`;
 
-// Thêm nút mở modal vào HTML (bạn có thể đặt ở user-input-panel)
+    // Layer 3 - 72 Hậu
+    html += `<div style="background:rgba(0,255,100,0.08);padding:10px;border-radius:8px;">
+        <strong>🌟 72 HẬU CHI TIẾT (${degree}°)</strong><br>
+        <span style="color:#00ffaa">${hau72.ten} - ${hau72.chatLuong}</span><br>
+        ${hau72.ynghia}
+    </div>`;
+
+    detailBox.innerHTML = html;
+}
+// ====================== RENDER ĐA TẦNG ======================
+function renderMultiLayerDetail(mc, van, hau72, tongDiem, sonName, degree) {
+    let html = `<div style="font-size:0.92rem; line-height:1.6;">`;
+
+    // Layer 1: Minh Châu
+    if (mc) {
+        const color = mc.loai === "Cát" ? "#30d158" : "#ff3b30";
+        html += `
+        <div style="background:rgba(255,255,255,0.08); padding:14px; border-radius:10px; border-left:5px solid ${color}; margin-bottom:14px;">
+            <strong style="color:${color};">【MINH CHÂU】 ${sonName} - ${mc.cap_do} (${mc.nhom})</strong><br>
+            <span style="color:#fff;">${mc.text}</span><br><br>
+            <span style="color:#dfb76c;">💡 Giải pháp: ${mc.giaiphap}</span>
+        </div>`;
+    }
+
+    // Layer 2: Thiên Thời
+    html += `
+    <div style="background:rgba(223,183,108,0.12); padding:12px; border-radius:10px; margin-bottom:12px;">
+        <strong>⏳ THIÊN THỜI ${van.vanName}</strong><br>
+        Niên Tinh: <span style="color:#ffd700; font-weight:bold;">${van.nienTinhName}</span>
+    </div>`;
+
+    // Layer 3: 72 Hậu
+    html += `
+    <div style="background:rgba(0,255,120,0.1); padding:12px; border-radius:10px;">
+        <strong>🌟 72 HẬU (${degree}°)</strong><br>
+        <span style="color:#00ffaa;">${hau72.ten} — ${hau72.chatLuong}</span><br>
+        ${hau72.ynghia}
+    </div>`;
+
+    detailBox.innerHTML = html;
+}
+function renderHauRingOnCompass() {
+    const ring = document.getElementById('hauRingSvg'); // Bạn cần thêm thẻ <g id="hauRingSvg"></g> vào SVG của bạn
+    let g = "";
+    Object.keys(Data72Hau).forEach((angle) => {
+        const deg = parseFloat(angle);
+        g += `<line x1="250" y1="110" x2="250" y2="120" stroke="#dfb76c" stroke-width="0.5" transform="rotate(${deg}, 250, 250)" />`;
+    });
+    ring.innerHTML = g;
+}
