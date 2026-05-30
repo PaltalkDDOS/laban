@@ -277,23 +277,30 @@
     <div class="fate-display" id="fate-txt">Mệnh chủ: ...</div>
     <div id="judgment-box" class="judgment-badge bg-good">...</div>
 </div>
-<div style="margin:15px 0; padding:12px; background:rgba(0,0,0,0.3); border-radius:8px;">
-    <label style="display:block; margin-bottom:6px; color:#ffd700;">
-        <strong>Độ lệch từ (Magnetic Declination)</strong>
-    </label>
+<div style="text-align: right; padding: 0 15px; margin-bottom: -10px;">
+    <button onclick="toggleDeclinationPanel()" style="background:none; border:1px solid #dfb76c; color:#dfb76c; border-radius:4px; font-size:10px; padding:2px 8px; cursor:pointer; opacity:0.7;">
+        ⚙️ CHỈNH SAI SỐ (DECLINATION)
+    </button>
+</div>
+
+<div id="declination-panel" style="display:none; margin:10px auto; width:90%; padding:12px; background:rgba(28,28,30,0.95); border:1px solid #dfb76c; border-radius:12px; backdrop-filter: blur(10px); position:relative; z-index:99;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <strong style="color:#ffd700; font-size:0.9rem;">Độ lệch từ (Magnetic Declination)</strong>
+        <span onclick="toggleDeclinationPanel()" style="color:#aaa; cursor:pointer; font-size:1.2rem;">×</span>
+    </div>
     
     <div style="display:flex; gap:10px; align-items:center;">
         <input type="number" id="declination-input" value="0" step="0.1" 
-               style="width:90px; padding:8px; background:#222; color:white; border:1px solid #ffd700; border-radius:4px;">
+               style="width:70px; padding:6px; background:#000; color:#fff; border:1px solid #dfb76c; border-radius:4px; text-align:center;">
         <span style="color:#ccc;">°</span>
         
-        <button onclick="autoDetectDeclination()" 
-                style="padding:8px 14px; background:#ffd700; color:black; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">
+        <button id="auto-detect-btn" onclick="autoDetectDeclination()" 
+                style="flex:1; padding:8px; background:#dfb76c; color:black; border:none; border-radius:4px; cursor:pointer; font-weight:bold; font-size:0.85rem;">
             Tự động Detect
         </button>
     </div>
-    <small style="color:#aaa; display:block; margin-top:6px;">
-        Mặc định: 0° | Khanh Hòa ≈ +0.5° ~ +1.0°
+    <small style="color:#888; display:block; margin-top:8px; font-size:0.75rem; font-style:italic;">
+        * Giúp la bàn chuẩn theo Bắc Địa Lý (True North). Khánh Hòa: +0.5°
     </small>
 </div>
     <!-- Thanh kéo tay la bàn - Đã ẩn vì không cần thiết -->
