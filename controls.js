@@ -825,7 +825,7 @@ function recalculateFate() {
     const dayStr = document.getElementById('birthDay').value;
     const monthStr = document.getElementById('birthMonth').value;
     const yearStr = document.getElementById('birthYear').value;
-    const mucDich = document.getElementById('purpose').value;
+    const mucDich = document.getElementById('purpose').value; // Nhận key ví dụ 'toilet', 'house'
 
     // Chưa nhập đủ thông tin
     if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
@@ -849,7 +849,7 @@ function recalculateFate() {
         return;
     }
 
-    // Tính toán
+    // Tính toán cốt lõi mệnh quẻ
     chủMệnh = tínhCungPhi(y, m, d, gender);
     const namAm = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
     const nguHoangInfo = getNguHoangInfo(namAm);
@@ -858,7 +858,7 @@ function recalculateFate() {
 
     fateTxt.innerText = `${name}: Cung ${chủMệnh} (${nhomMenh}) - Bản Mệnh Cung Phi: ${hanhCungPhi} | Năm Âm: ${namAm} | ${nguHoangInfo}`;
 
-    // Xử lý góc đang xem + Điều chỉnh Declination
+    // Xử lý góc xoay máy la bàn
     let headingToCalculate = isDetailOpen && lockedHeadingAtOpen !== null
                             ? lockedHeadingAtOpen
                             : currentHeading;
@@ -866,17 +866,15 @@ function recalculateFate() {
     const realHeading = headingToCalculate + magneticDeclination;
     const hanhPhuongVi = getHanhByHeading(realHeading);
 
-    // === LẤY THÔNG TIN HẬU HIỆN TẠI ===
+    // Lấy thông tin phụ thuộc tọa độ
     let currentHauInfo = getCurrentHauInfo(realHeading);
-
-    // === LẤY THÔNG TIN 24 SƠN ===
     const sonInfo = layThongTin24Son(realHeading, chủMệnh, namAm);
     const currentSonHuong = sonInfo.huong;
 
-    // === TÍNH ĐIỂM TỔNG HỢP ===
-    const tongHop = tinhDiemTongHop(chủMệnh, realHeading, namAm);
+    // === TÍNH ĐIỂM TỔNG HỢP (Truyền thêm tham số mục đích để kích hoạt bộ não thông minh) ===
+    const tongHop = tinhDiemTongHop(chủMệnh, realHeading, namAm, mucDich);
 
-    // === GIẢI THÍCH SAO NGŨ HOÀNG (GIỮ NGUYÊN) ===
+    // Giải thích vận khí trung cung
     let saoChuQuan = null;
     const match = nguHoangInfo.match(/Sao (\d+)/);
     if (match) saoChuQuan = match[1];
@@ -894,10 +892,9 @@ function recalculateFate() {
         giaiThichSao = `Năng lượng chủ quản năm sinh tại trung tâm nhà ở trạng thái ổn định, an lành, không có biến động xấu lớn.`;
     }
 
-    // === CẢNH BÁO NGŨ HOÀNG THEO HƯỚNG ===
     const nguHoangAlert = getNguHoangAlert(currentSonHuong);
 
-    // === RENDER PHẦN GIẢI THÍCH THUẬT NGỮ ===
+    // Tạo hộp container render
     let targetContainer = document.getElementById('dien-giai-bo-sung');
     if (!targetContainer) {
         targetContainer = document.createElement('div');
@@ -909,8 +906,10 @@ function recalculateFate() {
     const displayStyle = isDetailOpen ? 'block' : 'none';
     const btnText = isDetailOpen ? '🙈 Đóng giải thích thuật ngữ' : '👁️ Xem giải thích thuật ngữ hiển thị';
     const btnBkg = isDetailOpen ? 'rgba(223, 183, 108, 0.15)' : 'transparent';
-    const config = ConfigPhongThuy[mucDich];
-    const tenMucDichBinhDan = config ? config.title : "Vị trí / Hướng đang chọn";
+    
+    // Đọc cấu hình tiêu đề bình dân thân thiện trực tiếp từ ConfigPhongThuy của bạn
+    const currentConfig = ConfigPhongThuy[mucDich] || { title: "Vị trí / Hướng đang chọn", isCat: true };
+    const tenMucDichBinhDan = currentConfig.title;
 
     const vanInfo = `
         <p style="margin:8px 0; color:#ffd700;">
@@ -931,34 +930,33 @@ function recalculateFate() {
         <div id="content-dien-giai-chi-tiet" style="display: ${displayStyle}; margin: 10px 0; padding: 14px;
              background: rgba(223, 183, 108, 0.06); border: 1.5px solid var(--gold); border-radius: 8px;
              font-size: 0.86rem; line-height: 1.65; text-align: left; color: #fff;">
-           
+            
             <p style="margin:0 0 10px 0; color:var(--gold); font-weight:bold; border-bottom:1px solid var(--gold); padding-bottom:6px;">
-                📖 GIẢI NGHĨA CÁC THUẬT NGỮ
+                📖 GIẢI NGHĨA THEO HẠNG MỤC SỬ DỤNG
             </p>
-           
+            
             <p style="margin:8px 0;">📍 <b>Phương vị thực tế (sau hiệu chỉnh):</b> ${realHeading.toFixed(1)}° (Độ lệch từ: ${magneticDeclination}°)</p>
-           
-            <p style="margin:8px 0;">📍 <b>Phương vị la bàn:</b> Là hướng thực tế... Hướng này tương ứng với năng lượng hành <b>${hanhPhuongVi}</b> (Góc xoay: <b>${Math.round(headingToCalculate)}°</b>).</p>
-           
-            <p style="margin:8px 0;">🎯 <b>Mệnh Cung Phi (Hành ${hanhCungPhi}):</b> Quẻ mệnh phong thủy cốt lõi được tính toán dựa trên năm sinh và giới tính của bạn (Bạn thuộc cung <b>${chủMệnh}</b>, nhóm tuổi <b>${nhomMenh}</b>).</p>
-           
+            
+            <p style="margin:8px 0;">📍 <b>Phương vị la bàn:</b> Năng lượng la bàn hành <b>${hanhPhuongVi}</b> (Góc xoay: <b>${Math.round(headingToCalculate)}°</b>).</p>
+            
+            <p style="margin:8px 0;">🎯 <b>Mệnh Cung Phi (Hành ${hanhCungPhi}):</b> Quẻ mệnh cốt lõi <b>${chủMệnh}</b> (${nhomMenh}).</p>
+            
             ${vanInfo}
-           
-            <!-- GIẢI THÍCH ĐIỂM TỔNG HỢP NGẮN GỌN -->
+            
+            <!-- ĐIỂM SỐ ĐÃ ĐƯỢC TỐI ƯU HÓA HOÀN TOÀN TRỰC QUAN -->
             <p style="margin:12px 0; padding:10px; background:rgba(255,215,0,0.1); border-radius:6px; border-left:4px solid #ffd700;">
-                <strong>📊 Điểm Tổng Hợp (${tongHop.diem}pt):</strong> 
-                <span style="color:${tongHop.diem >= 75 ? '#00ff41' : '#ff6666'}">${tongHop.level}</span><br>
-                <small style="color:#ccc;">(Kết hợp Minh Châu + Bát Trạch + 72 Hậu + Ngũ Hoàng)</small>
+                <strong>📊 Điểm Phù Hợp Cho [${tenMucDichBinhDan}]: <span style="color:${tongHop.diem >= 72 ? '#30d158' : '#ff3b30'}">${tongHop.diem}pt</span></strong><br>
+                Đánh giá vị trí: <span style="font-weight:bold; color:${tongHop.diem >= 72 ? '#30d158' : '#ff3b30'}">${tongHop.level}</span><br>
+                <small style="color:#ccc;">(Hệ thống tự động chấm điểm dựa trên cơ chế: ${currentConfig.isCat ? "Ưu tiên hướng sinh khí" : "Ưu tiên tọa hung trấn sát"})</small>
             </p>
-           
-            <p style="margin:8px 0;">🌟 <b>Hậu hiện tại (${currentHauInfo.ten}):</b> ${currentHauInfo.chatLuong} ${currentHauInfo.emoji}<br>
-            <span style="color:#ccc;">Đây là chi tiết 5° của Sơn ${currentHauInfo.sonName}. ${currentHauInfo.ynghia}</span></p>
-           
+            
+            <p style="margin:8px 0;">🌟 <b>Luận đoán chi tiết:</b> ${tongHop.message}</p>
+            
             <p style="margin:8px 0;">⚠️ <b>Vận khí tâm nhà (Trung Cung):</b> ${giaiThichSao}</p>
-           
+            
             ${nguHoangAlert ? `<p style="margin:8px 0; color:#ff4444; font-weight:bold;">${nguHoangAlert}</p>` : ''}
-           
-            <p style="margin:8px 0;">🚪 <b>Mục đích xem:</b> Bạn đang tiến hành đo đạc vị trí cho <b>${tenMucDichBinhDan}</b>. Hãy cuộn xuống phía dưới để xem kết quả Cát/Hung chính xác theo hệ Bát Trạch Minh Châu và mật pháp hóa giải.</p>
+            
+            <p style="margin:8px 0; color:#dfb76c;">💡 <b>Giải pháp phong thủy khuyên dùng:</b> ${tongHop.hoaGiai}</p>
         </div>
     `;
 
@@ -2769,33 +2767,88 @@ function kiemTraKhongVong(degree) {
 
     return null; // Không rơi vào Không Vong
 }
-function tinhDiemTongHop(cungPhi, degree, namHienTai) {
+function tinhDiemTongHop(cungPhi, degree, namHienTai, mucDich) {
     const sonInfo = layThongTin24Son(degree, cungPhi, namHienTai);
     const hauInfo = getCurrentHauInfo(degree);
     const nguHoang = getNguHoangInfo(namHienTai);
     const khongVong = kiemTraKhongVong(degree);
 
-    let diem = 68; // Điểm khởi đầu hợp lý hơn
+    // Lấy cấu hình của hạng mục đang chọn
+    const config = ConfigPhongThuy[mucDich] || { title: "Vị trí / Hướng đang chọn", isCat: true };
+    const isCatPurpose = config.isCat; // true: cần Cát (nhà, cửa, giường...), false: cần Hung để trấn (toilet, bể phốt, kho...)
 
-    // Layer 1: Minh Châu + Bát Trạch (trọng số cao)
-    if (sonInfo.luanDoan.includes("Sinh Khí") || sonInfo.luanDoan.includes("Thiên Y")) diem += 22;
-    else if (sonInfo.luanDoan.includes("Diên Niên") || sonInfo.luanDoan.includes("Phục Vị")) diem += 14;
-    else if (sonInfo.luanDoan.includes("Tuyệt Mệnh") || sonInfo.luanDoan.includes("Ngũ Quỷ")) diem -= 30;
+    // --- BƯỚC 1: TÍNH ĐIỂM GỐC CỦA KHÍ TRƯỜNG ĐỊA LÝ (Thô) ---
+    let diemBatTrachMinhChau = 68; 
+    let isCungCatBatTrach = false;
+    let isCungHungBatTrach = false;
 
-    // Layer 2: 72 Hậu (sử dụng điểm sẵn có trong Data72Hau)
-    diem += (hauInfo.diem - 60);   // Điều chỉnh theo điểm thực của Hậu
+    if (sonInfo.luanDoan.includes("Sinh Khí") || sonInfo.luanDoan.includes("Thiên Y")) {
+        diemBatTrachMinhChau += 22;
+        isCungCatBatTrach = true;
+    } else if (sonInfo.luanDoan.includes("Diên Niên") || sonInfo.luanDoan.includes("Phục Vị")) {
+        diemBatTrachMinhChau += 14;
+        isCungCatBatTrach = true;
+    } else if (sonInfo.luanDoan.includes("Tuyệt Mệnh") || sonInfo.luanDoan.includes("Ngũ Quỷ")) {
+        diemBatTrachMinhChau -= 30;
+        isCungHungBatTrach = true;
+    } else {
+        // Các cung xấu nhẹ như Họa Hại, Lục Sát
+        diemBatTrachMinhChau -= 15;
+        isCungHungBatTrach = true;
+    }
 
-    // Layer 3: Ngũ Hoàng
-    if (nguHoang.includes("Sao 5") || nguHoang.includes("Ngũ Hoàng")) diem -= 28;
+    // Điểm biến thiên của 72 Hậu
+    let diemHau72Modifier = (hauInfo.diem - 60); 
 
-    // === OVERRIDE FATAL (Chí mạng) ===
+    // --- BƯỚC 2: BỘ NÃO THÔNG MINH - ĐẢO CHIỀU ĐIỂM THEO HẠNG MỤC ---
+    let messageGhiChu = sonInfo.luanDoan;
+    let hoaGiaiGợiÝ = hauInfo.giaiphap || sonInfo.hoaGiai;
+
+    if (!isCatPurpose) { 
+        // ĐÂY LÀ NHÓM TỌA HUNG TRẤN SÁT (Toilet, Bể phốt, Thùng rác, Kho, Bếp)
+        
+        if (isCungHungBatTrach) {
+            // Thực tế phong thủy: Phương vị xấu + Đặt công trình uế tạp/đè nén vào = ĐẮC CÁCH
+            diemBatTrachMinhChau = 90; // Thưởng điểm cao vì đặt đúng chỗ xấu
+            diemHau72Modifier = -diemHau72Modifier; // Hậu đất xấu đặt uế vào lại tốt
+            messageGhiChu += ` 🌟 Vị trí này có trường khí xấu, cực kỳ thích hợp đặt ${config.title} để áp chế hung tinh, lấy độc trị độc (Tọa Hung Trấn Sát thành công).`;
+            hoaGiaiGợiÝ = "Vị trí đắc cách trấn sát hoàn hảo. Không cần hóa giải.";
+        } else {
+            // Ngược lại: Phương vị đang tốt lành (Sinh khí/Thiên y) mà lại đem Toilet/Bể phốt đặt vào -> Phá cung cát lành -> ĐẠI HUNG
+            diemBatTrachMinhChau = 35; // Phạt điểm nặng
+            diemHau72Modifier = -diemHau72Modifier; // Hậu tốt bị uế bẩn biến thành xấu
+            messageGhiChu += ` ⚠️ Đại kỵ! Phương vị này có cát khí tốt của bạn, tuyệt đối không đặt các công trình uế tạp phá hoại sinh khí.`;
+            hoaGiaiGợiÝ = `Nên di dời ${config.title} sang khu vực cung xấu (Tuyệt Mệnh, Ngũ Quỷ) để giải phóng sinh khí cho ngôi nhà.`;
+        }
+
+        // BIỆN PHÁP ĐẶC BIỆT CHO BẾP VÀ KÉT SẮT
+        if (mucDich === 'kitchen') {
+            messageGhiChu += " (Lưu ý: Bếp cần Tọa Hung nhưng Miệng bếp phải quay về hướng Cát để đón lành).";
+        }
+        if (mucDich === 'safe') {
+            // Két sắt trong thực tế có thầy chọn vị trí hung để trấn tài, có thầy chọn vị trí cát để tụ tài. 
+            // Cấu hình của bạn đang để isCat: false (Tọa hung), hệ thống sẽ tối ưu hóa theo hướng tìm góc hung trấn sát này.
+            messageGhiChu += " (Vị trí Két sắt đặt tại cung hung giúp trấn giữ tài lộc không bị thất thoát).";
+        }
+    }
+
+    // Tính tổng điểm sau khi lọc bộ xử lý thông minh
+    let diem = diemBatTrachMinhChau + diemHau72Modifier;
+
+    // Tác động lưu niên của Ngũ Hoàng Đại Sát
+    if (nguHoang.includes("Sao 5") || nguHoang.includes("Ngũ Hoàng")) {
+        // Ngũ Hoàng là sát tinh động thổ, dù là nhóm nào lọt vào cung này năm đó cũng bị ảnh hưởng xấu đi
+        diem -= 28;
+    }
+
+    // --- BƯỚC 3: OVERRIDE FATAL (Các lỗi chí mạng - Giữ nguyên tuyệt đối an toàn) ---
     if (khongVong) {
         if (khongVong.loai === "ĐẠI KHÔNG VONG") {
             return { 
                 diem: 12, 
                 level: "ĐẠI HUNG - KHÔNG VONG", 
                 message: "🚫 " + khongVong.message,
-                hoaGiai: "Tuyệt đối không lập hướng tại góc này.",
+                hoaGiai: "Tuyệt đối không xây dựng, đặt để hoặc lập hướng tại góc giao tuyến đại kỵ này.",
                 khongVong: khongVong 
             };
         }
@@ -2807,20 +2860,21 @@ function tinhDiemTongHop(cungPhi, degree, namHienTai) {
         diem = Math.min(diem, 25);
     }
 
-    // Chuẩn hóa điểm
+    // Chuẩn hóa điểm trong biên độ an toàn
     diem = Math.max(10, Math.min(98, Math.round(diem)));
 
+    // Phân cấp danh hiệu hiển thị dựa trên điểm số thông minh mới
     let level = "TRUNG BÌNH";
-    if (diem >= 85) level = "ĐẠI CÁT";
-    else if (diem >= 72) level = "CÁT";
-    else if (diem >= 50) level = "TRUNG BÌNH - CẦN HÓA GIẢI";
-    else level = "HUNG - KHÔNG NÊN DÙNG";
+    if (diem >= 85) level = isCatPurpose ? "ĐẠI CÁT - ĐÓN KHÍ" : "ĐẠI CÁT - TRẤN SÁT";
+    else if (diem >= 72) level = "CÁT VỊ (HỢP CÁCH)";
+    else if (diem >= 50) level = "TRUNG BÌNH (CẦN LƯU Ý)";
+    else level = isCatPurpose ? "HUNG - KHÔNG NÊN DÙNG" : "ĐẠI HUNG (SAI VỊ TRÍ TRẤN)";
 
     return {
         diem: diem,
         level: level,
-        message: sonInfo.luanDoan,
-        hoaGiai: hauInfo.giaiphap || sonInfo.hoaGiai,
+        message: messageGhiChu,
+        hoaGiai: hoaGiaiGợiÝ,
         khongVong: khongVong,
         hauDiem: hauInfo.diem,
         interactionLevel: hauInfo.interactionLevel
