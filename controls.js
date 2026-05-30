@@ -559,46 +559,7 @@ function handleDateInput(currentInput, nextInputId) {
         debounceRecalculate();
     }
 }
-// ====================== RENDER 72 HẬU RING (ĐÃ CHỈNH) ======================
-function render72HauRing() {
-    const hauRing = document.getElementById('hau72RingSvg');
-    if (!hauRing) return;
-    hauRing.innerHTML = "";
 
-    const radius = 155;
-    const offset = 3.0;        // ← Tăng lên 3.0 như bạn yêu cầu
-
-    Object.keys(Data72Hau).forEach(degStr => {
-        let deg = parseFloat(degStr);
-        const hau = Data72Hau[degStr];
-        
-        deg += offset;   // Dịch chuyển theo chiều kim đồng hồ
-        
-        const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        textNode.setAttribute("x", "250");
-        textNode.setAttribute("y", (250 - radius).toString());
-        textNode.setAttribute("text-anchor", "middle");
-        textNode.setAttribute("font-family", "sans-serif");
-        textNode.setAttribute("font-size", "3.1");
-        textNode.setAttribute("font-weight", "700");
-        textNode.setAttribute("transform", `rotate(${deg}, 250, 250)`);
-        
-        // Màu
-        if (hau.chatLuong.includes("Đại Cát") || hau.chatLuong.includes("Cát")) {
-            textNode.setAttribute("fill", "#00ff99");
-        } else if (hau.chatLuong.includes("Đại Hung") || hau.chatLuong.includes("Hung")) {
-            textNode.setAttribute("fill", "#ff6666");
-        } else {
-            textNode.setAttribute("fill", "#ffcc77");
-        }
-
-        let shortName = hau.ten.replace(" Hậu", "");
-        shortName = shortName.replace(/(\D+)(\d)/, (m, p1, p2) => p1.substring(0,1) + p2);
-        textNode.textContent = shortName;
-        
-        hauRing.appendChild(textNode);
-    });
-}
 function render24SonRing() {
     // 1. Vạch độ ngoài cùng
     const vachDoRing = document.getElementById('vachDoRing');
