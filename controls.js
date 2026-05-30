@@ -2668,6 +2668,12 @@ function showPurposeModal() {
 
             hidePurposeModal();
             recalculateFate();        // Gọi lại hàm tính toán
+			// ==========================================
+        // 🔥 CHÈN THÊM DÒNG NÀY VÀO ĐÂY LÀ ĂN TIỀN:
+        // ==========================================
+        if (typeof generateDirectionsList === 'function') {
+            generateDirectionsList(); // Ép danh sách tính toán và đảo Hung/Cát lại ngay lập tức
+        }
         });
     });
 
