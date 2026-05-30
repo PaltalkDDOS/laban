@@ -690,7 +690,7 @@ function render24SonRing() {
         hauRing.innerHTML = "";
         Object.keys(Data72Hau).forEach(degStr => {
             const hau = Data72Hau[degStr];
-            const deg = parseFloat(degStr) + 3.0;
+            const deg = parseFloat(degStr) + 2.5;
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
             textNode.setAttribute("x", "250"); textNode.setAttribute("y", "95"); // 250 - 155
             textNode.setAttribute("text-anchor", "middle");
@@ -863,9 +863,7 @@ function recalculateFate() {
                             ? lockedHeadingAtOpen
                             : currentHeading;
 
-    // Áp dụng Magnetic Declination
     const realHeading = headingToCalculate + magneticDeclination;
-
     const hanhPhuongVi = getHanhByHeading(realHeading);
 
     // === LẤY THÔNG TIN HẬU HIỆN TẠI ===
@@ -899,7 +897,7 @@ function recalculateFate() {
     // === CẢNH BÁO NGŨ HOÀNG THEO HƯỚNG ===
     const nguHoangAlert = getNguHoangAlert(currentSonHuong);
 
-    // === RENDER PHẦN GIẢI THÍCH THUẬT NGỮ (ĐÃ BỔ SUNG ĐIỂM TỔNG HỢP + DECLINATION) ===
+    // === RENDER PHẦN GIẢI THÍCH THUẬT NGỮ ===
     let targetContainer = document.getElementById('dien-giai-bo-sung');
     if (!targetContainer) {
         targetContainer = document.createElement('div');
@@ -933,30 +931,33 @@ function recalculateFate() {
         <div id="content-dien-giai-chi-tiet" style="display: ${displayStyle}; margin: 10px 0; padding: 14px;
              background: rgba(223, 183, 108, 0.06); border: 1.5px solid var(--gold); border-radius: 8px;
              font-size: 0.86rem; line-height: 1.65; text-align: left; color: #fff;">
-            
+           
             <p style="margin:0 0 10px 0; color:var(--gold); font-weight:bold; border-bottom:1px solid var(--gold); padding-bottom:6px;">
                 📖 GIẢI NGHĨA CÁC THUẬT NGỮ
             </p>
-            
+           
             <p style="margin:8px 0;">📍 <b>Phương vị thực tế (sau hiệu chỉnh):</b> ${realHeading.toFixed(1)}° (Độ lệch từ: ${magneticDeclination}°)</p>
-            
+           
             <p style="margin:8px 0;">📍 <b>Phương vị la bàn:</b> Là hướng thực tế... Hướng này tương ứng với năng lượng hành <b>${hanhPhuongVi}</b> (Góc xoay: <b>${Math.round(headingToCalculate)}°</b>).</p>
-            
-            <p style="margin:8px 0;">🎯 <b>Mệnh Cung Phi (Hành ${hanhCungPhi}):</b> ... (giữ nguyên phần cũ của bạn)</p>
-            
+           
+            <p style="margin:8px 0;">🎯 <b>Mệnh Cung Phi (Hành ${hanhCungPhi}):</b> Quẻ mệnh phong thủy cốt lõi được tính toán dựa trên năm sinh và giới tính của bạn (Bạn thuộc cung <b>${chủMệnh}</b>, nhóm tuổi <b>${nhomMenh}</b>).</p>
+           
             ${vanInfo}
-            
-            <p style="margin:8px 0; font-weight:bold; color:#ffd700;">
-                📊 ĐIỂM TỔNG HỢP: <span style="color:${tongHop.diem >= 75 ? '#00ff41' : '#ff6666'}">${tongHop.diem}/100 (${tongHop.level})</span>
+           
+            <!-- GIẢI THÍCH ĐIỂM TỔNG HỢP NGẮN GỌN -->
+            <p style="margin:12px 0; padding:10px; background:rgba(255,215,0,0.1); border-radius:6px; border-left:4px solid #ffd700;">
+                <strong>📊 Điểm Tổng Hợp (${tongHop.diem}pt):</strong> 
+                <span style="color:${tongHop.diem >= 75 ? '#00ff41' : '#ff6666'}">${tongHop.level}</span><br>
+                <small style="color:#ccc;">(Kết hợp Minh Châu + Bát Trạch + 72 Hậu + Ngũ Hoàng)</small>
             </p>
-            
+           
             <p style="margin:8px 0;">🌟 <b>Hậu hiện tại (${currentHauInfo.ten}):</b> ${currentHauInfo.chatLuong} ${currentHauInfo.emoji}<br>
             <span style="color:#ccc;">Đây là chi tiết 5° của Sơn ${currentHauInfo.sonName}. ${currentHauInfo.ynghia}</span></p>
-            
+           
             <p style="margin:8px 0;">⚠️ <b>Vận khí tâm nhà (Trung Cung):</b> ${giaiThichSao}</p>
-            
+           
             ${nguHoangAlert ? `<p style="margin:8px 0; color:#ff4444; font-weight:bold;">${nguHoangAlert}</p>` : ''}
-            
+           
             <p style="margin:8px 0;">🚪 <b>Mục đích xem:</b> Bạn đang tiến hành đo đạc vị trí cho <b>${tenMucDichBinhDan}</b>. Hãy cuộn xuống phía dưới để xem kết quả Cát/Hung chính xác theo hệ Bát Trạch Minh Châu và mật pháp hóa giải.</p>
         </div>
     `;
@@ -2093,21 +2094,21 @@ function getHuongDoiXung(huong) {
 
 function showExplanation(sonName, textInfo, solInfo) {
     const modal = document.getElementById('infoModal');
-    
+   
     modal.innerHTML = `
         <div class="modal-content" style="background:#1c1c1e; color:#fff; border-radius:15px; width:90%; max-width:500px; max-height:85vh; display:flex; flex-direction:column; margin:auto; overflow:hidden; position:relative;">
             <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 15px; border-bottom:1px solid #444;">
                 <span style="font-weight:bold; font-size:1.1rem; color:#dfb76c;">Giải Thích: ${sonName}</span>
                 <button onclick="event.stopPropagation(); closeModal();" style="background:transparent; border:none; color:#ff3b30; font-size:2rem; font-weight:bold; cursor:pointer; line-height:1; padding:0 5px; outline:none;">&times;</button>
             </div>
-            
+           
             <div id="modalBody" style="overflow-y:auto; padding:15px;">
                 <div style="background:#2a2a2a; padding:15px; border-radius:10px; margin-bottom:20px;">
                     <p style="margin:0 0 10px 0; color:#dfb76c; font-weight:bold;">📍 THÔNG TIN SƠN VỊ:</p>
                     <p style="margin:0 0 5px 0;"><strong>Ý nghĩa:</strong> ${textInfo}</p>
                     <p style="margin:0; color:#30d158;"><strong>Giải pháp:</strong> ${solInfo}</p>
                 </div>
-
+                
                 <div style="border-top:1px solid #444; padding-top:15px;">
                     <p style="margin:0 0 10px 0; color:#dfb76c; font-weight:bold;">📖 KIẾN THỨC PHONG THỦY:</p>
                     <p style="margin:5px 0; line-height:1.5;"><strong>1. Cung (Hướng) vs Sơn (Chi tiết):</strong><br>
@@ -2118,11 +2119,19 @@ function showExplanation(sonName, textInfo, solInfo) {
                     - <strong>Bình/Cô Quả:</strong> Trạng thái trung tính hoặc xấu nhẹ.</p>
                     <p style="margin:5px 0; font-style:italic; color:#8e8e93; line-height:1.5;">* Ví dụ: Hướng Tây là Diên Niên, nhưng Sơn Dậu lại là Sinh Khí. Nếu đặt vật phẩm đúng Sơn Dậu, bạn vừa được hưởng hòa thuận (Diên Niên), vừa kích hoạt tài lộc (Sinh Khí).</p>
                 </div>
+
+                <!-- === PHẦN GIẢI THÍCH ĐIỂM TỔNG HỢP (THÊM NGẮN GỌN) === -->
+                <div style="margin-top:20px; padding:12px; background:#2a2a2e; border-radius:8px; border-left:4px solid #ffd700;">
+                    <p style="margin:0 0 8px 0; color:#ffd700; font-weight:bold;">📊 Điểm Tổng Hợp (pt) là gì?</p>
+                    <p style="margin:0; font-size:0.9rem; line-height:1.5; color:#ccc;">
+                        Đây là <strong>điểm kết hợp nhiều tầng</strong>: Minh Châu + Bát Trạch + 72 Hậu + Ngũ Hoàng.<br>
+                        Nếu Hậu Hung mạnh → điểm tổng hợp sẽ bị kéo xuống dù Sơn/Bát Trạch tốt.
+                    </p>
+                </div>
             </div>
         </div>
     `;
 
-    // Khi bấm ra ngoài nền tối thì đóng
     modal.onclick = function(e) { if (e.target === modal) closeModal(); };
     modal.style.display = 'flex';
 }
@@ -2731,12 +2740,62 @@ function tinhDiemTongHop(cungPhi, degree, namHienTai) {
         interactionLevel: hauInfo.interactionLevel
     };
 }
-// ====================== MAGNETIC DECLINATION (ĐỘ LỆCH TỪ) ======================
-let magneticDeclination = 0; // Mặc định 0° (có thể thay đổi theo khu vực VN)
+// ====================== MAGNETIC DECLINATION ======================
+let magneticDeclination = 0;
 
-// Hàm cập nhật độ lệch từ
-function updateMagneticDeclination(value) {
-    magneticDeclination = parseFloat(value) || 0;
+// Cập nhật khi người dùng thay đổi
+function updateMagneticDeclination() {
+    const input = document.getElementById('declination-input');
+    magneticDeclination = parseFloat(input.value) || 0;
     console.log(`Đã cập nhật độ lệch từ: ${magneticDeclination}°`);
-    updateCompassUI(currentHeading); // Cập nhật lại la bàn
+    updateCompassUI(currentHeading);   // Cập nhật la bàn ngay
 }
+
+// Tự động detect (dùng Geolocation + approximate)
+async function autoDetectDeclination() {
+    const btn = event.target;
+    btn.innerText = "Đang detect...";
+    btn.disabled = true;
+
+    if (!navigator.geolocation) {
+        alert("Trình duyệt không hỗ trợ định vị.");
+        btn.innerText = "Tự động Detect";
+        btn.disabled = false;
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(async (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        
+        // Approximate cho Việt Nam (có thể cải tiến sau)
+        let decl = 0.5; // Giá trị mặc định
+        
+        if (lat > 20) decl = 0.8;           // Miền Bắc
+        else if (lat < 12) decl = 0.3;      // Miền Nam
+        
+        magneticDeclination = decl;
+        document.getElementById('declination-input').value = decl.toFixed(1);
+        
+        console.log(`Đã detect vị trí ≈ ${lat}, ${lon} → Độ lệch từ: ${decl}°`);
+        updateCompassUI(currentHeading);
+        
+        btn.innerText = "Đã Detect ✓";
+        setTimeout(() => {
+            btn.innerText = "Tự động Detect";
+            btn.disabled = false;
+        }, 2000);
+    }, () => {
+        alert("Không thể lấy vị trí. Vui lòng kiểm tra quyền truy cập GPS.");
+        btn.innerText = "Tự động Detect";
+        btn.disabled = false;
+    });
+}
+
+// Gắn sự kiện cho input
+document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('declination-input');
+    if (input) {
+        input.addEventListener('input', updateMagneticDeclination);
+    }
+});
