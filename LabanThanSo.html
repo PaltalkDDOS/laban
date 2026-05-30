@@ -271,12 +271,31 @@
     <div id="element-box"></div>
     
     <!-- Dòng mới hiển thị chi tiết Hậu -->
-    <div class="hau-display" id="hau-txt" style="font-size:0.85rem; margin:4px 0; font-weight:700;"></div>
+    <div class="hau-display" id="hau-txt" style="font-size:0.85rem; color:#ffdd88; margin:4px 0; font-weight:500;">
+    </div>
     
     <div class="fate-display" id="fate-txt">Mệnh chủ: ...</div>
     <div id="judgment-box" class="judgment-badge bg-good">...</div>
 </div>
-
+<div style="margin:15px 0; padding:12px; background:rgba(0,0,0,0.3); border-radius:8px;">
+    <label style="display:block; margin-bottom:6px; color:#ffd700;">
+        <strong>Độ lệch từ (Magnetic Declination)</strong>
+    </label>
+    
+    <div style="display:flex; gap:10px; align-items:center;">
+        <input type="number" id="declination-input" value="0" step="0.1" 
+               style="width:90px; padding:8px; background:#222; color:white; border:1px solid #ffd700; border-radius:4px;">
+        <span style="color:#ccc;">°</span>
+        
+        <button onclick="autoDetectDeclination()" 
+                style="padding:8px 14px; background:#ffd700; color:black; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">
+            Tự động Detect
+        </button>
+    </div>
+    <small style="color:#aaa; display:block; margin-top:6px;">
+        Mặc định: 0° | Khanh Hòa ≈ +0.5° ~ +1.0°
+    </small>
+</div>
     <!-- Thanh kéo tay la bàn - Đã ẩn vì không cần thiết -->
   <div class="control-box" style="display: none;">
     <input type="range" min="0" max="360" value="0" class="slider" id="compassSlider" oninput="manualRotate(this.value)">
