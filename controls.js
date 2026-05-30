@@ -1728,59 +1728,132 @@ const SMOOTH_MIN = 0.08;
 const SMOOTH_MAX = 0.55;
 const THROTTLE_MS = 16; // ~60fps
 
-// ====================== HANDLE ORIENTATION - ĐÃ NÂNG CẤP (Hiển thị Hậu) ======================
+// Thêm 2 biến toàn cục này vào đầu file nếu chưa có
+let lastAccuracy = 0; 
+let isMagneticWarningActive = false;
+
 function handleOrientation(event) {
     let rawHeading = null;
-    // Ưu tiên webkitCompassHeading cho iOS
+    
+    // 1. LẤY DỮ LIỆU VÀ GIÁM SÁT NHIỄU
+    // iOS cung cấp webkitCompassAccuracy (độ sai số)
+    const accuracy = event.webkitCompassAccuracy;
+    if (accuracy !== undefined && accuracy !== null) {
+        lastAccuracy = accuracy;
+        // Cập nhật đèn báo hoặc Toast nếu nhiễu > 25 độ
+        updateMagneticStatus(accuracy); 
+    }
+
     if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
         rawHeading = event.webkitCompassHeading;
-    }
-    else if (event.alpha !== undefined && event.alpha !== null) {
+    } else if (event.alpha !== undefined && event.alpha !== null) {
         rawHeading = (360 - event.alpha) % 360;
     }
+    
     if (rawHeading === null) return;
 
-    // Khóa khi đang kéo slider thủ công
+    // 2. CỘNG ĐỘ LỆCH TỪ (MAGNETIC DECLINATION)
+    // Đây là bước quan trọng nhất để tính toán Phong Thủy chính xác
+    // magneticDeclination là biến chúng ta đã tính từ GPS/IP hoặc nhập tay
+    rawHeading = (rawHeading + (magneticDeclination || 0) + 360) % 360;
+
+    // 3. CƠ CHẾ KHÓA & THROTTLE
     if (document.activeElement?.id === 'compassSlider') return;
 
     const now = Date.now();
-    if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) {
-        return;
-    }
+    if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
     lastUpdateTime = now;
 
     // Khởi tạo lần đầu
     if (lastHeading === null) {
         lastHeading = rawHeading;
-        updateCompassUI(lastHeading);
-        if (typeof recalculateFate === 'function') recalculateFate();
+        executeUIUpdate(lastHeading);
         return;
     }
 
-    // === Thuật toán lọc mượt động ===
+    // 4. THUẬT TOÁN LỌC MƯỢT ĐỘNG (GIỮ NGUYÊN VÌ ĐÃ TỐT)
     let diff = rawHeading - lastHeading;
     if (diff > 180) diff -= 360;
     if (diff < -180) diff += 360;
+    
     const absDiff = Math.abs(diff);
     let dynamicFactor = SMOOTH_MIN;
+    
     if (absDiff > 12) {
         dynamicFactor = SMOOTH_MAX;
     } else if (absDiff > 1.5) {
         dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
     }
+    
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
 
-    // Sử dụng requestAnimationFrame để update UI mượt mà
+    // 5. CẬP NHẬT GIAO DIỆN QUA RAF
     if (rafId) cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(() => {
-        updateCompassUI(lastHeading);
-        
-        // === THÊM: Cập nhật hiển thị độ + Hậu ===
-        if (typeof updateDegreeDisplay === 'function') {
-            updateDegreeDisplay(lastHeading);
-        }
+        executeUIUpdate(lastHeading);
     });
+}
+
+// Hàm phụ trợ để đóng gói các lệnh cập nhật UI
+function executeUIUpdate(heading) {
+    if (typeof updateCompassUI === 'function') updateCompassUI(heading);
+    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(heading);
+    if (typeof recalculateFate === 'function') recalculateFate();
+}
+
+// Hàm cập nhật trạng thái nhiễu (Hiển thị đèn báo)
+function updateMagneticStatus(acc) {
+    const dot = document.getElementById('accuracy-dot');
+    const text = document.getElementById('accuracy-text');
+    if (!dot || !text) return;
+
+    if (acc <= 15) {
+        dot.style.background = '#4caf50'; // Xanh
+        text.innerText = "TÍN HIỆU TỐT";
+    } else if (acc <= 30) {
+        dot.style.background = '#ff9800'; // Vàng
+        text.innerText = "NHIỄU NHẸ";
+    } else {
+        dot.style.background = '#f44336'; // Đỏ
+        text.innerText = "NHIỄU NẶNG";
+        // Chỉ hiện Toast một lần để không gây phiền
+        if (typeof showToast === 'function' && !isMagneticWarningActive) {
+            showToast("⚠️ Nhiễu từ trường! Hãy tránh xa sắt thép", true);
+            isMagneticWarningActive = true;
+            setTimeout(() => { isMagneticWarningActive = false; }, 10000);
+        }
+    }
+}
+function updateAccuracyDisplay(acc) {
+    const dot = document.getElementById('accuracy-dot');
+    const text = document.getElementById('accuracy-text');
+    if (!dot || !text) return;
+
+    // Nếu acc = -1 hoặc chưa có dữ liệu, coi như đang chờ tín hiệu
+    if (acc < 0) {
+        dot.style.background = '#888';
+        text.innerText = "ĐANG QUÉT TÍN HIỆU...";
+        return;
+    }
+
+    if (acc <= 15) {
+        dot.style.background = '#4caf50'; 
+        text.innerText = "TÍN HIỆU TỐT";
+    } else if (acc <= 30) {
+        dot.style.background = '#ff9800'; 
+        text.innerText = "NHIỄU NHẸ";
+    } else {
+        dot.style.background = '#f44336'; 
+        text.innerText = "NHIỄU NẶNG - HÃY XOAY MÁY";
+        
+        if (typeof showToast === 'function' && !window.isToastShowing) {
+             showToast("⚠️ Nhiễu từ trường! Hãy tránh xa vật kim loại", true);
+             // Gắn cờ để không hiện Toast liên tục gây phiền
+             window.isToastShowing = true;
+             setTimeout(() => { window.isToastShowing = false; }, 5000);
+        }
+    }
 }
 // ====================== CẬP NHẬT HIỂN THỊ ĐỘ + SƠN + HẬU (MÀU RỰC RỠ) ======================
 function updateDegreeDisplay(degree) {
