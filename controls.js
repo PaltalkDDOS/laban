@@ -1366,50 +1366,63 @@ function getLuanDoanChiTiet(huong, son) {
 }
 
 function updateCompassUI(heading) {
-	currentHeading = Math.round(heading);
-	compass.style.transform = `rotate(${-heading}deg)`;
-	needle.style.transform = `rotate(0deg)`;
-	compassSlider.value = currentHeading;
-	// ==================== 1. XÁC ĐỊNH 8 CUNG ====================
-	let currentCung = "";
-	let currentCode = "";
-	if (currentHeading >= 338 || currentHeading < 23) {
-		currentCung = "KHẢM (BẮC)";
-		currentCode = "N";
-	} else if (currentHeading >= 23 && currentHeading < 68) {
-		currentCung = "CẤN (ĐÔNG BẮC)";
-		currentCode = "NE";
-	} else if (currentHeading >= 68 && currentHeading < 113) {
-		currentCung = "CHẤN (ĐÔNG)";
-		currentCode = "E";
-	} else if (currentHeading >= 113 && currentHeading < 158) {
-		currentCung = "TỐN (ĐÔNG NAM)";
-		currentCode = "SE";
-	} else if (currentHeading >= 158 && currentHeading < 203) {
-		currentCung = "LY (NAM)";
-		currentCode = "S";
-	} else if (currentHeading >= 203 && currentHeading < 248) {
-		currentCung = "KHÔN (TÂY NAM)";
-		currentCode = "SW";
-	} else if (currentHeading >= 248 && currentHeading < 293) {
-		currentCung = "ĐOÀI (TÂY)";
-		currentCode = "W";
-	} else if (currentHeading >= 293 && currentHeading < 338) {
-		currentCung = "CÀN (TÂY BẮC)";
-		currentCode = "NW";
-	}
-	// ==================== 2. 24 SƠN + 72 HẬU ====================
-	let gockim = (currentHeading % 360 + 360) % 360;
-	let sơnHiệnTạiObj = SON_24_CONFIG.find(s => {
-		if (s.min > s.max) return gockim >= s.min || gockim < s.max;
-		return gockim >= s.min && gockim < s.max;
-	}) || SON_24_CONFIG[0];
-	let sơnHiệnTại = sơnHiệnTạiObj.name;
-	// Lấy thông tin Hậu chi tiết
-	const currentHauInfo = getCurrentHauInfo(currentHeading);
-	const tongHop = tinhDiemTongHop(chủMệnh || "Khảm", currentHeading, new Date()
-		.getFullYear());
-	degreeTxt.innerHTML = `
+    // 1. TÍNH GÓC THỰC TẾ (Đã bù trừ độ lệch từ - Magnetic Declination)
+    // Giữ cho góc luôn nằm trong khoảng từ 0 đến 359 độ
+    let trueHeading = (heading + magneticDeclination % 360 + 360) % 360;
+    
+    // Lưu góc thực tế đã làm tròn để hiển thị công cụ khác nếu cần
+    currentHeading = Math.round(trueHeading);
+    
+    // Xoay la bàn theo góc THỰC TẾ
+    compass.style.transform = `rotate(${-trueHeading}deg)`;
+    needle.style.transform = `rotate(0deg)`;
+    compassSlider.value = currentHeading;
+
+    // ==================== 1. XÁC ĐỊNH 8 CUNG ====================
+    let currentCung = "";
+    let currentCode = "";
+    // Thay toàn bộ currentHeading ở đây bằng trueHeading để tính Cung chuẩn địa lý
+    if (trueHeading >= 338 || trueHeading < 23) {
+        currentCung = "KHẢM (BẮC)";
+        currentCode = "N";
+    } else if (trueHeading >= 23 && trueHeading < 68) {
+        currentCung = "CẤN (ĐÔNG BẮC)";
+        currentCode = "NE";
+    } else if (trueHeading >= 68 && trueHeading < 113) {
+        currentCung = "CHẤN (ĐÔNG)";
+        currentCode = "E";
+    } else if (trueHeading >= 113 && trueHeading < 158) {
+        currentCung = "TỐN (ĐÔNG NAM)";
+        currentCode = "SE";
+    } else if (trueHeading >= 158 && trueHeading < 203) {
+        currentCung = "LY (NAM)";
+        currentCode = "S";
+    } else if (trueHeading >= 203 && trueHeading < 248) {
+        currentCung = "KHÔN (TÂY NAM)";
+        currentCode = "SW";
+    } else if (trueHeading >= 248 && trueHeading < 293) {
+        currentCung = "ĐOÀI (TÂY)";
+        currentCode = "W";
+    } else if (trueHeading >= 293 && trueHeading < 338) {
+        currentCung = "CÀN (TÂY BẮC)";
+        currentCode = "NW";
+    }
+
+    // ==================== 2. 24 SƠN + 72 HẬU ====================
+    // Sử dụng trueHeading để tìm Sơn chính xác
+    let gockim = (trueHeading % 360 + 360) % 360;
+    let sơnHiệnTạiObj = SON_24_CONFIG.find(s => {
+        if (s.min > s.max) return gockim >= s.min || gockim < s.max;
+        return gockim >= s.min && gockim < s.max;
+    }) || SON_24_CONFIG[0];
+    let sơnHiệnTại = sơnHiệnTạiObj.name;
+
+    // Lấy thông tin Hậu và Điểm tổng hợp dựa trên góc THỰC TẾ
+    const currentHauInfo = getCurrentHauInfo(trueHeading);
+    const tongHop = tinhDiemTongHop(chủMệnh || "Khảm", trueHeading, new Date().getFullYear());
+
+    // Hiển thị ra màn hình số độ THỰC TẾ sau khi đã bù trừ sai lệch từ trường
+    degreeTxt.innerHTML = `
         ${currentHeading}° - Phương ${currentCung} - Sơn <strong>${sơnHiệnTại}</strong><br>
         <span style="color:${currentHauInfo.emoji === '🟢' ? '#00ff41' : (currentHauInfo.emoji === '🔴' ? '#ff4444' : '#ffd700')}">
             Hậu: ${currentHauInfo.ten} ${currentHauInfo.emoji} (${currentHauInfo.chatLuong})
@@ -2799,3 +2812,11 @@ document.addEventListener('DOMContentLoaded', () => {
         input.addEventListener('input', updateMagneticDeclination);
     }
 });
+function toggleDeclinationPanel() {
+    const panel = document.getElementById('declination-panel');
+    if (panel.style.display === 'none') {
+        panel.style.display = 'block';
+    } else {
+        panel.style.display = 'none';
+    }
+}
