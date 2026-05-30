@@ -2812,9 +2812,39 @@ document.addEventListener('DOMContentLoaded', () => {
         input.addEventListener('input', updateMagneticDeclination);
     }
 });
+// Hàm đóng mở panel ổn định
 function toggleDeclinationPanel(show) {
     const modal = document.getElementById('declination-modal');
     if (modal) {
         modal.style.display = show ? 'flex' : 'none';
     }
 }
+
+// Lắng nghe sự kiện khi trang đã tải xong
+document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('declination-input');
+    
+    if (input) {
+        // 1. Nhập dữ liệu đến đâu - nhận trực tiếp đến đấy
+        input.addEventListener('input', () => {
+            if (typeof updateMagneticDeclination === 'function') {
+                updateMagneticDeclination();
+            }
+        });
+
+        // 2. Bấm nút OK/Hoàn tất trên bàn phím điện thoại là tự đóng luôn
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Ngăn hành vi mặc định
+                
+                input.blur(); // Ẩn bàn phím điện thoại xuống
+                
+                if (typeof updateMagneticDeclination === 'function') {
+                    updateMagneticDeclination(); // Chạy cập nhật lần cuối
+                }
+                
+                toggleDeclinationPanel(false); // Đóng cửa sổ bong bóng ngay lập tức
+            }
+        });
+    }
+});
