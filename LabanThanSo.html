@@ -265,18 +265,6 @@
         </button>
     </div>
 </div>
-
-<div class="status-panel">
-    <div class="degree-display" id="degree-txt">0° - CUNG KHẢM (BẮC)</div>
-    <div id="element-box"></div>
-    
-    <!-- Dòng mới hiển thị chi tiết Hậu -->
-    <div class="hau-display" id="hau-txt" style="font-size:0.85rem; color:#ffdd88; margin:4px 0; font-weight:500;">
-    </div>
-    
-    <div class="fate-display" id="fate-txt">Mệnh chủ: ...</div>
-    <div id="judgment-box" class="judgment-badge bg-good">...</div>
-</div>
 <div style="text-align: right; padding: 0 15px; margin-top: 10px;">
     <button onclick="toggleDeclinationPanel(true)" style="background:rgba(0,0,0,0.5); border:1px solid #dfb76c; color:#dfb76c; border-radius:20px; font-size:10px; padding:4px 12px; cursor:pointer; font-weight:bold; letter-spacing:0.5px;">
         ⚙️ LỆCH TỪ
@@ -311,6 +299,18 @@
         </button>
     </div>
 </div>
+<div class="status-panel">
+    <div class="degree-display" id="degree-txt">0° - CUNG KHẢM (BẮC)</div>
+    <div id="element-box"></div>
+    
+    <!-- Dòng mới hiển thị chi tiết Hậu -->
+    <div class="hau-display" id="hau-txt" style="font-size:0.85rem; color:#ffdd88; margin:4px 0; font-weight:500;">
+    </div>
+    
+    <div class="fate-display" id="fate-txt">Mệnh chủ: ...</div>
+    <div id="judgment-box" class="judgment-badge bg-good">...</div>
+</div>
+
     <!-- Thanh kéo tay la bàn - Đã ẩn vì không cần thiết -->
   <div class="control-box" style="display: none;">
     <input type="range" min="0" max="360" value="0" class="slider" id="compassSlider" oninput="manualRotate(this.value)">
