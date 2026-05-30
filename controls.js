@@ -2753,114 +2753,183 @@ function tinhDiemTongHop(cungPhi, degree, namHienTai) {
         interactionLevel: hauInfo.interactionLevel
     };
 }
-// ====================== MAGNETIC DECLINATION ======================
+// ====================== TRÌNH ĐIỀU KHIỂN ĐỊA TỪ SIÊU CẤP 2026 ======================
 let magneticDeclination = 0;
 
-// 1. Cập nhật khi người dùng thay đổi (Đã sửa lỗi gõ dở dang)
+/**
+ * HÀM HIỂN THỊ THÔNG BÁO SANG TRỌNG (THAY ALERT)
+ */
+function showToast(message, isError = false) {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.style.cssText = `
+        background: ${isError ? '#721c24' : 'rgba(0, 0, 0, 0.85)'};
+        color: ${isError ? '#f8d7da' : '#dfb76c'};
+        border: 1px solid ${isError ? '#f5c6cb' : '#dfb76c'};
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        white-space: nowrap;
+        backdrop-filter: blur(5px);
+        animation: toastIn 0.3s ease-out, toastOut 0.3s ease-in 2.7s forwards;
+    `;
+    toast.innerText = message;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
+
+// Thêm keyframes cho hiệu ứng Toast vào đầu file hoặc CSS
+const styleSheet = document.createElement("style");
+styleSheet.innerText = `
+    @keyframes toastIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes toastOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
+`;
+document.head.appendChild(styleSheet);
+
+/**
+ * THUẬT TOÁN WMM-LITE 2026
+ */
+function calculateGlobalDeclination(lat, lon) {
+    try {
+        const phi = lat * Math.PI / 180;
+        const lambda = lon * Math.PI / 180;
+        const latPole = 86.6 * Math.PI / 180; 
+        const lonPole = -165.2 * Math.PI / 180;
+
+        const psi = Math.atan2(
+            Math.sin(lonPole - lambda),
+            Math.cos(phi) * Math.tan(latPole) - Math.sin(phi) * Math.cos(lonPole - lambda)
+        );
+
+        let declination = psi * 180 / Math.PI;
+        const coreAnomaly = 1.62 * Math.sin(2 * phi) * Math.cos(lambda - (10 * Math.PI / 180));
+        declination += coreAnomaly;
+
+        if (declination > 180) declination -= 360;
+        if (declination < -180) declination += 360;
+
+        return declination;
+    } catch (e) { return 0; }
+}
+
+/**
+ * CƠ CHẾ PHÒNG THỦ IP
+ */
+async function fallbackIPGeolocation() {
+    try {
+        const response = await fetch('https://ip-api.com/json/?fields=status,lat,lon');
+        const data = await response.json();
+        if (data && data.status === 'success') return { lat: data.lat, lon: data.lon, src: "NETWORK" };
+    } catch (e) {}
+
+    try {
+        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        if (timeZone.includes("Saigon") || timeZone.includes("Bangkok")) return { lat: 14.05, lon: 108.27, src: "ZONE_VN" };
+    } catch (e) {}
+
+    return { lat: 14.05, lon: 108.27, src: "DEFAULT" };
+}
+
 function updateMagneticDeclination() {
     const input = document.getElementById('declination-input');
     if (!input) return;
 
     let val = input.value;
-
-    // Nếu mới chỉ gõ "-" hoặc "." hoặc trống thì coi như bằng 0 để la bàn không lỗi
-    if (val === '-' || val === '.' || val.trim() === '') {
-        magneticDeclination = 0;
-    } else {
-        magneticDeclination = parseFloat(val) || 0;
-    }
+    magneticDeclination = (val === '-' || val === '.' || val.trim() === '') ? 0 : parseFloat(val) || 0;
     
-    console.log(`Đã cập nhật độ lệch từ: ${magneticDeclination}°`);
-    
-    // Cập nhật giao diện la bàn (Kiểm tra hàm tồn tại trước khi gọi)
     if (typeof updateCompassUI === 'function' && typeof currentHeading !== 'undefined') {
         updateCompassUI(currentHeading);
     }
 }
 
-// 2. Tự động detect (Sửa lỗi biến event)
 async function autoDetectDeclination(e) {
-    // Lấy button từ event hoặc ID
-    const btn = e ? e.target : document.getElementById('auto-detect-btn');
-    if (btn) {
-        btn.innerText = "Đang detect...";
-        btn.disabled = true;
-    }
+    const btn = document.getElementById('auto-detect-btn');
+    if (btn) { btn.innerText = "⚡ ĐANG QUÉT..."; btn.disabled = true; }
+
+    const apply = (lat, lon, label) => {
+        const decl = calculateGlobalDeclination(lat, lon);
+        magneticDeclination = decl;
+        const input = document.getElementById('declination-input');
+        if (input) input.value = decl.toFixed(2);
+        updateMagneticDeclination();
+        showToast(`Đã cập nhật từ ${label}: ${decl.toFixed(2)}°`);
+        if (btn) {
+            btn.innerText = `XÁC ĐỊNH: ${label} ✓`;
+            setTimeout(() => { btn.innerText = "🛰️ TỰ ĐỘNG XÁC ĐỊNH"; btn.disabled = false; }, 2000);
+        }
+    };
 
     if (!navigator.geolocation) {
-        alert("Trình duyệt không hỗ trợ định vị.");
-        if (btn) { btn.innerText = "TỰ ĐỘNG DETECT"; btn.disabled = false; }
+        const ip = await fallbackIPGeolocation();
+        apply(ip.lat, ip.lon, ip.src);
         return;
     }
 
-    navigator.geolocation.getCurrentPosition(async (position) => {
-        const lat = position.coords.latitude;
-        
-        let decl = 0.5; // Mặc định
-        if (lat > 20) decl = 0.8;      // Miền Bắc
-        else if (lat < 12) decl = 0.3; // Miền Nam
-        
-        magneticDeclination = decl;
-        const input = document.getElementById('declination-input');
-        if (input) input.value = decl.toFixed(1);
-        
-        updateMagneticDeclination(); // Đồng bộ giá trị
-        
-        if (btn) {
-            btn.innerText = "Đã Detect ✓";
-            setTimeout(() => {
-                btn.innerText = "TỰ ĐỘNG DETECT";
-                btn.disabled = false;
-            }, 2000);
-        }
-    }, () => {
-        alert("Không thể lấy vị trí. Vui lòng bật GPS.");
-        if (btn) { btn.innerText = "TỰ ĐỘNG DETECT"; btn.disabled = false; }
-    });
+    navigator.geolocation.getCurrentPosition(
+        (pos) => apply(pos.coords.latitude, pos.coords.longitude, "GPS"),
+        async () => {
+            const ip = await fallbackIPGeolocation();
+            apply(ip.lat, ip.lon, ip.src);
+        },
+        { timeout: 5000 }
+    );
 }
 
-// 3. Hàm đóng mở cửa sổ
+function calculateRemoteDeclination() {
+    const latV = parseFloat(document.getElementById('remote-lat').value);
+    const lonV = parseFloat(document.getElementById('remote-lon').value);
+    const rBtn = document.getElementById('remote-calc-btn');
+
+    if (isNaN(latV) || isNaN(lonV)) {
+        showToast("⚠️ Vui lòng nhập đủ tọa độ!", true);
+        return;
+    }
+
+    const decl = calculateGlobalDeclination(latV, lonV);
+    magneticDeclination = decl;
+    document.getElementById('declination-input').value = decl.toFixed(2);
+    
+    updateMagneticDeclination();
+    showToast(`Đã tính tọa độ từ xa: ${decl.toFixed(2)}°`);
+    
+    if (rBtn) {
+        rBtn.innerText = "ĐÃ TÍNH TOÁN ✓";
+        rBtn.style.borderColor = "#4caf50";
+        setTimeout(() => { rBtn.innerText = "🧮 TÍNH ĐỘ LỆCH TỪ XA"; rBtn.style.borderColor = "#dfb76c"; }, 2000);
+    }
+}
+
 function toggleDeclinationPanel(show) {
-    const modal = document.getElementById('declination-modal');
-    if (modal) modal.style.display = show ? 'flex' : 'none';
+    const m = document.getElementById('declination-modal');
+    if (m) m.style.display = show ? 'flex' : 'none';
 }
 
-// 4. Quản lý nhập liệu và bàn phím khi trang đã sẵn sàng
 document.addEventListener('DOMContentLoaded', () => {
-    const input = document.getElementById('declination-input');
-    if (!input) return;
+    const mainInp = document.getElementById('declination-input');
+    if (!mainInp) return;
 
-    // Xử lý khi đang gõ: Chặn ký tự lạ, cho phép dấu trừ
-    input.addEventListener('input', () => {
-        let val = input.value;
-        
-        // Chỉ cho phép số, dấu chấm, dấu trừ
-        val = val.replace(/[^0-9.-]/g, '');
-        
-        // Dấu trừ chỉ được ở đầu
-        if (val.indexOf('-') > 0) val = val.replace(/-/g, '');
-        
-        // Chỉ cho phép 1 dấu chấm
-        const parts = val.split('.');
-        if (parts.length > 2) val = parts[0] + '.' + parts.slice(1).join('');
-        
-        input.value = val;
-        updateMagneticDeclination();
-    });
+    const filter = (el) => {
+        if (!el) return;
+        el.addEventListener('input', () => {
+            let v = el.value.replace(/[^0-9.-]/g, '');
+            if (v.indexOf('-') > 0) v = v.replace(/-/g, '');
+            const p = v.split('.');
+            if (p.length > 2) v = p[0] + '.' + p.slice(1).join('');
+            el.value = v;
+            if (el.id === 'declination-input') updateMagneticDeclination();
+        });
+    };
 
-    // Xử lý nút ENTER/DONE trên bàn phím điện thoại
-    input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            input.blur(); // Ẩn bàn phím ngay lập tức
-            
-            // Làm sạch giá trị dở dang lần cuối
-            if (input.value === '-' || input.value === '.' || input.value === '') {
-                input.value = '0';
-            }
-            
-            updateMagneticDeclination();
-            toggleDeclinationPanel(false); // Đóng luôn cửa sổ bong bóng
-        }
+    filter(mainInp);
+    filter(document.getElementById('remote-lat'));
+    filter(document.getElementById('remote-lon'));
+
+    mainInp.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { mainInp.blur(); toggleDeclinationPanel(false); }
     });
 });
