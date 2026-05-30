@@ -1040,104 +1040,117 @@ const ConfigPhongThuy = {
     'safe':           { title: "Vị trí Két Sắt / Tài Lộc (Tọa Hung)", isCat: false }
 };
 
-// ====================== HÀM generateDirectionsList() - ĐẦY ĐỦ + TÍCH HỢP 72 HẬU ======================
+// ====================== HÀM generateDirectionsList() - PHIÊN BẢN ĐA TẦNG THÔNG MINH ======================
 function generateDirectionsList() {
     const mucDich = document.getElementById('purpose').value;
     const config = ConfigPhongThuy[mucDich];
+    
     if (!mucDich || !config) {
         directionsContainer.innerHTML = `
-            <div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:10px;'>
+            <div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:15px;'>
                 Chọn mục đích Khí Cục hoặc Trấn Sát để hiển thị đồ hình gợi ý tương ứng
             </div>`;
         listPanelTitle.innerText = "Danh Sách Phương Vị Gợi Ý";
         return;
     }
 
+    const isCatPurpose = config.isCat; // true: cần Cát, false: cần Hung
     let listDirections = [];
+    const currentYear = new Date().getFullYear();
+
     directionMeta.forEach(dir => {
         const cungTrạch = bátTrạchMap[chủMệnh][dir.code];
-        const isCat = cungPhầnTrăm[cungTrạch].cát;
-        const hopPhongThuy = config.isCat ? isCat : !isCat;
-       
+        
+        // --- ĐIỂM NHẤN: Gọi hàm tính điểm tổng hợp có truyền mucDich ---
+        // Hàm này sẽ tự đảo điểm dựa trên isCat của mục đích
+        const tongHopDir = tinhDiemTongHop(chủMệnh, dir.angle, currentYear, mucDich);
+        const hauInfo = getCurrentHauInfo(dir.angle);
+
         listDirections.push({
             ...dir,
             cungTrạch: cungTrạch,
-            isCat: isCat,
-            hopPhongThuy: hopPhongThuy
+            diemTongHop: tongHopDir.diem,
+            level: tongHopDir.level,
+            hau: hauInfo,
+            // Sắp xếp dựa trên điểm đã được xử lý (Điểm cao = Hợp phong thủy nhất)
+            priority: tongHopDir.diem 
         });
     });
 
-    listDirections.sort((a, b) => b.hopPhongThuy - a.hopPhongThuy);
-    listPanelTitle.innerText = config.title;
+    // Sắp xếp: Ai điểm cao nhất (hợp mục đích nhất) lên đầu
+    listDirections.sort((a, b) => b.priority - a.priority);
+    
+    listPanelTitle.innerText = `Gợi ý vị trí: ${config.title}`;
     directionsContainer.innerHTML = "";
 
     listDirections.forEach(item => {
-        const textColorStyle = item.hopPhongThuy
-            ? 'color: #30d158; font-weight: bold;'
-            : 'color: #ff3b30; font-weight: bold;';
-     
+        // Màu sắc nhãn dựa trên điểm số đã qua bộ lọc thông minh
+        const isHợp = item.diemTongHop >= 72;
+        const colorStyle = isHợp ? '#30d158' : '#ff3b30';
+
+        // Đảo nhãn trạng thái cực kỳ trực quan
         let statusText = "";
-        if (config.isCat) {
-            statusText = item.hopPhongThuy ? '🟢 ĐÓN CÁT KHÍ (HƯỚNG TỐT)' : '❌ PHẠM HUNG PHƯƠNG (HƯỚNG XẤU)';
+        if (isCatPurpose) {
+            statusText = isHợp ? '🟢 ĐÓN CÁT KHÍ (HƯỚNG TỐT)' : '❌ PHẠM HUNG PHƯƠNG (HƯỚNG XẤU)';
         } else {
-            statusText = item.hopPhongThuy ? '🟢 TỌA HUNG TRẤN SÁT (ĐẮC VỊ)' : '❌ SAI VỊ: TỌA CÁT TIÊU HAO';
+            statusText = isHợp ? '🏆 TỌA HUNG TRẤN SÁT (ĐẮC VỊ)' : '⚠️ SAI VỊ: TỌA CÁT TIÊU HAO';
         }
 
         const sonGroup = getSonGroupForDirection(item.code);
         let sonHTML = "";
-       
+        
         sonGroup.forEach((son, index) => {
             const dataSon = MaTranMinhChau[chủMệnh] ? MaTranMinhChau[chủMệnh][son] : null;
             const score = dataSon ? dataSon.diem : 0;
             const nhom = dataSon ? dataSon.nhom : "";
-           
+            
+            // Xử lý tooltip cho Sơn
             const titleInfo = `${son} (${nhom})`;
             const textInfo = dataSon ? dataSon.text.replace(/'/g, "\\'") : "Chưa có thông tin.";
             const solInfo = dataSon ? dataSon.giaiphap.replace(/'/g, "\\'") : "Chưa có giải pháp.";
-           
-            const color = score >= 80 ? "#30d158" : (score >= 50 ? "#dfb76c" : "#ff3b30");
-           
+            
+            // Màu sắc cho từng sơn nhỏ (vẫn giữ nguyên màu gốc của nó để người dùng biết sơn nào xấu)
+            const sonColor = score >= 80 ? "#30d158" : (score >= 50 ? "#dfb76c" : "#ff3b30");
+            
             sonHTML += `<span style="display:inline-block; white-space:nowrap; cursor:pointer;"
                             onclick="showExplanation('${titleInfo}', '${textInfo}', '${solInfo}')">` +
-                     `<span style="color:${color}; font-weight:700;">${son}</span>` +
-                     `<span style="color:#ffffff;"> (</span>` +
-                     `<span style="color:${color}; font-weight:400;">${score}%</span>`;
-           
-            if (nhom) {
-                sonHTML += `<span style="color:#8e8e93; font-size:0.6rem; margin-left:3px; text-transform:uppercase;">${nhom}</span>`;
-            }
-           
-            sonHTML += `<span style="color:#ffffff;">)</span></span>`;
-           
+                       `<span style="color:${sonColor}; font-weight:700;">${son}</span>` +
+                       `<span style="color:#ffffff;"> (${score}%)</span></span>`;
+            
             if (index < sonGroup.length - 1) sonHTML += ` • `;
         });
 
-        // === TÍNH ĐIỂM TỔNG HỢP + THÔNG TIN HẬU ===
-        const tongHopDir = tinhDiemTongHop(chủMệnh, item.angle, new Date().getFullYear());
-        const hauInfo = getCurrentHauInfo(item.angle);   // Lấy thêm thông tin Hậu cho từng hướng gợi ý
-
-        const diemTag = `<span style="font-size:0.78rem; padding:2px 6px; border-radius:3px; background:${tongHopDir.diem >= 75 ? '#1a3c1a' : '#3c1a1a'}; color:${tongHopDir.diem >= 75 ? '#00ff41' : '#ff6666'}">
-            ${tongHopDir.diem}pt ${hauInfo.emoji}
-        </span>`;
+        // Thẻ điểm tổng hợp (Badge)
+        const diemTag = `
+            <span style="font-size:0.75rem; padding:2px 7px; border-radius:4px; font-weight:bold;
+                  background:${isHợp ? 'rgba(48,209,88,0.2)' : 'rgba(255,59,48,0.2)'}; 
+                  color:${colorStyle}; border:1px solid ${colorStyle}">
+                ${item.diemTongHop}pt ${item.hau.emoji}
+            </span>`;
 
         const div = document.createElement('div');
-        div.className = `direction-item ${item.hopPhongThuy ? 'good' : 'bad'}`;
+        div.className = `direction-item ${isHợp ? 'good' : 'bad'}`;
+        div.style.cssText = `border-left: 4px solid ${colorStyle}; background: rgba(255,255,255,0.03); margin-bottom:8px; padding:12px; border-radius:8px;`;
+        
         div.innerHTML = `
             <div class="item-info" style="flex:1;">
-                <div class="item-name" style="color:#fff; font-size:0.92rem; margin-bottom: 2px;">
-                    ${item.name} ➔ <span style="${textColorStyle}">${item.cungTrạch}</span> ${diemTag}
+                <div class="item-name" style="color:#fff; font-size:0.95rem; margin-bottom: 5px; font-weight:bold;">
+                    ${item.name} ➔ <span style="color:${isCatPurpose ? colorStyle : '#fff'}">${item.cungTrạch}</span> ${diemTag}
                 </div>
-                <div style="margin:4px 0 5px 0; font-size:0.76rem; line-height:1.3;">
-                    <span style="color:#dfb76c; font-weight:600;">SƠN VỊ:</span> ${sonHTML}
+                <div style="margin:6px 0; font-size:0.78rem;">
+                    <span style="color:#dfb76c; font-weight:600;">PHÂN TÍCH SƠN:</span> ${sonHTML}
                 </div>
-                <div style="font-size:0.78rem; color:#ccc;">
-                    Hậu: <strong>${hauInfo.ten}</strong> — ${hauInfo.chatLuong}
+                <div style="font-size:0.8rem; color:#aaa; margin-bottom:6px;">
+                    Cung 5°: <strong>${item.hau.ten}</strong> — <span style="color:${item.hau.chatLuong.includes('Cát') ? '#30d158' : '#ff3b30'}">${item.hau.chatLuong}</span>
                 </div>
-                <div class="item-cung" style="${textColorStyle}; font-size:0.82rem; letter-spacing: 0.3px;">
+                <div style="color: ${colorStyle}; font-size:0.85rem; font-weight:bold; letter-spacing:0.5px; border-top:1px solid rgba(255,255,255,0.1); padding-top:6px;">
                     ${statusText}
                 </div>
             </div>
-            <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})" style="font-size:0.78rem; padding:4px 9px;">Xoay thử</button>
+            <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})" 
+                style="background:${colorStyle}; color:#000; border:none; padding:6px 12px; border-radius:5px; font-weight:bold; cursor:pointer; align-self:center; margin-left:10px;">
+                Xoay thử
+            </button>
         `;
         directionsContainer.appendChild(div);
     });
