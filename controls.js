@@ -2756,14 +2756,15 @@ function tinhDiemTongHop(cungPhi, degree, namHienTai) {
 // ====================== MAGNETIC DECLINATION ======================
 let magneticDeclination = 0;
 
-// Cập nhật khi người dùng thay đổi
+// 1. Cập nhật khi người dùng thay đổi (Đã sửa lỗi gõ dở dang)
 function updateMagneticDeclination() {
     const input = document.getElementById('declination-input');
     if (!input) return;
 
     let val = input.value;
-    // Phòng hờ nếu đang gõ dở dấu trừ hoặc chấm thì coi như bằng 0 để không lỗi NaN
-    if (val === '-' || val === '.' || val === '') {
+
+    // Nếu mới chỉ gõ "-" hoặc "." hoặc trống thì coi như bằng 0 để la bàn không lỗi
+    if (val === '-' || val === '.' || val.trim() === '') {
         magneticDeclination = 0;
     } else {
         magneticDeclination = parseFloat(val) || 0;
@@ -2771,14 +2772,15 @@ function updateMagneticDeclination() {
     
     console.log(`Đã cập nhật độ lệch từ: ${magneticDeclination}°`);
     
-    // Chỉ cập nhật UI nếu các hàm và biến la bàn đã sẵn sàng
+    // Cập nhật giao diện la bàn (Kiểm tra hàm tồn tại trước khi gọi)
     if (typeof updateCompassUI === 'function' && typeof currentHeading !== 'undefined') {
         updateCompassUI(currentHeading);
     }
 }
 
-// Tự động detect (Nên truyền 'e' để lấy đúng button)
+// 2. Tự động detect (Sửa lỗi biến event)
 async function autoDetectDeclination(e) {
+    // Lấy button từ event hoặc ID
     const btn = e ? e.target : document.getElementById('auto-detect-btn');
     if (btn) {
         btn.innerText = "Đang detect...";
@@ -2787,13 +2789,12 @@ async function autoDetectDeclination(e) {
 
     if (!navigator.geolocation) {
         alert("Trình duyệt không hỗ trợ định vị.");
-        if (btn) { btn.innerText = "Tự động Detect"; btn.disabled = false; }
+        if (btn) { btn.innerText = "TỰ ĐỘNG DETECT"; btn.disabled = false; }
         return;
     }
 
     navigator.geolocation.getCurrentPosition(async (position) => {
         const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
         
         let decl = 0.5; // Mặc định
         if (lat > 20) decl = 0.8;      // Miền Bắc
@@ -2803,58 +2804,63 @@ async function autoDetectDeclination(e) {
         const input = document.getElementById('declination-input');
         if (input) input.value = decl.toFixed(1);
         
-        console.log(`Đã detect vị trí → Độ lệch từ: ${decl}°`);
-        
-        if (typeof updateCompassUI === 'function' && typeof currentHeading !== 'undefined') {
-            updateCompassUI(currentHeading);
-        }
+        updateMagneticDeclination(); // Đồng bộ giá trị
         
         if (btn) {
             btn.innerText = "Đã Detect ✓";
             setTimeout(() => {
-                btn.innerText = "Tự động Detect";
+                btn.innerText = "TỰ ĐỘNG DETECT";
                 btn.disabled = false;
             }, 2000);
         }
     }, () => {
-        alert("Không thể lấy vị trí. Vui lòng kiểm tra GPS.");
-        if (btn) { btn.innerText = "Tự động Detect"; btn.disabled = false; }
+        alert("Không thể lấy vị trí. Vui lòng bật GPS.");
+        if (btn) { btn.innerText = "TỰ ĐỘNG DETECT"; btn.disabled = false; }
     });
 }
 
-// Hàm đóng mở cửa sổ
+// 3. Hàm đóng mở cửa sổ
 function toggleDeclinationPanel(show) {
     const modal = document.getElementById('declination-modal');
     if (modal) modal.style.display = show ? 'flex' : 'none';
 }
 
+// 4. Quản lý nhập liệu và bàn phím khi trang đã sẵn sàng
 document.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById('declination-input');
     if (!input) return;
 
-    // 1. Xử lý khi đang gõ
+    // Xử lý khi đang gõ: Chặn ký tự lạ, cho phép dấu trừ
     input.addEventListener('input', () => {
         let val = input.value;
+        
+        // Chỉ cho phép số, dấu chấm, dấu trừ
         val = val.replace(/[^0-9.-]/g, '');
+        
+        // Dấu trừ chỉ được ở đầu
         if (val.indexOf('-') > 0) val = val.replace(/-/g, '');
+        
+        // Chỉ cho phép 1 dấu chấm
         const parts = val.split('.');
         if (parts.length > 2) val = parts[0] + '.' + parts.slice(1).join('');
+        
         input.value = val;
-
         updateMagneticDeclination();
     });
 
-    // 2. Nút Enter/OK trên bàn phím điện thoại
+    // Xử lý nút ENTER/DONE trên bàn phím điện thoại
     input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            input.blur(); 
+            input.blur(); // Ẩn bàn phím ngay lập tức
             
+            // Làm sạch giá trị dở dang lần cuối
             if (input.value === '-' || input.value === '.' || input.value === '') {
                 input.value = '0';
             }
+            
             updateMagneticDeclination();
-            toggleDeclinationPanel(false); 
+            toggleDeclinationPanel(false); // Đóng luôn cửa sổ bong bóng
         }
     });
 });
