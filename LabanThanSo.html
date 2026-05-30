@@ -277,45 +277,32 @@
     <div class="fate-display" id="fate-txt">Mệnh chủ: ...</div>
     <div id="judgment-box" class="judgment-badge bg-good">...</div>
 </div>
-<div id="declination-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 1000000; justify-content: center; align-items: center;">
-    
-    <div style="width: 85%; max-width: 300px; background: #1a1a1a; border: 1px solid #ffd700; border-radius: 16px; padding: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.7); animation: slideUp 0.3s ease-out;">
-        
-        <div style="text-align: center; margin-bottom: 15px;">
-            <strong style="color:#ffd700; font-size:1rem; text-transform: uppercase;">Hiệu Chỉnh Địa Từ</strong>
-        </div>
-
-        <div style="background:rgba(255,255,255,0.05); padding:12px; border-radius:10px;">
-            <label style="display:block; margin-bottom:10px; color:#ccc; font-size: 0.8rem; text-align: center;">
-                Bù trừ sai số giữa Bắc Từ Trường và Bắc Địa Lý
-            </label>
-            
-            <div style="display:flex; gap:10px; align-items:center; justify-content: center; margin-bottom: 15px;">
-                <!-- Thêm enterkeyhint="done" để đổi nút bàn phím điện thoại thành nút OK/Hoàn tất -->
-                <input type="number" id="declination-input" value="0" step="0.1" enterkeyhint="done"
-                       style="width:80px; padding:10px; background:#000; color:white; border:1px solid #ffd700; border-radius:6px; font-size: 1.2rem; text-align: center; font-weight: bold;">
-                <span style="color:#ffd700; font-size: 1.2rem; font-weight: bold;">°</span>
-            </div>
-            
-            <button onclick="autoDetectDeclination()" 
-                    style="width: 100%; padding:12px; background:#ffd700; color:black; border:none; border-radius:8px; cursor:pointer; font-weight:bold; font-size: 0.9rem;">
-                🛰️ TỰ ĐỘNG XÁC ĐỊNH
-            </button>
-        </div>
-
-        <button onclick="toggleDeclinationPanel(false)" 
-                style="width: 100%; margin-top: 15px; background: transparent; color: #888; border: none; cursor: pointer; font-size: 0.8rem; text-decoration: underline;">
-            Đóng cửa sổ
-        </button>
-    </div>
+<div style="text-align: right; padding: 0 15px; margin-bottom: -10px;">
+    <button onclick="toggleDeclinationPanel()" style="background:none; border:1px solid #dfb76c; color:#dfb76c; border-radius:4px; font-size:10px; padding:2px 8px; cursor:pointer; opacity:0.7;">
+        ⚙️ CHỈNH SAI SỐ (DECLINATION)
+    </button>
 </div>
 
-<style>
-@keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-</style>
+<div id="declination-panel" style="display:none; margin:10px auto; width:90%; padding:12px; background:rgba(28,28,30,0.95); border:1px solid #dfb76c; border-radius:12px; backdrop-filter: blur(10px); position:relative; z-index:99;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <strong style="color:#ffd700; font-size:0.9rem;">Độ lệch từ (Magnetic Declination)</strong>
+        <span onclick="toggleDeclinationPanel()" style="color:#aaa; cursor:pointer; font-size:1.2rem;">×</span>
+    </div>
+    
+    <div style="display:flex; gap:10px; align-items:center;">
+        <input type="number" id="declination-input" value="0" step="0.1" 
+               style="width:70px; padding:6px; background:#000; color:#fff; border:1px solid #dfb76c; border-radius:4px; text-align:center;">
+        <span style="color:#ccc;">°</span>
+        
+        <button id="auto-detect-btn" onclick="autoDetectDeclination()" 
+                style="flex:1; padding:8px; background:#dfb76c; color:black; border:none; border-radius:4px; cursor:pointer; font-weight:bold; font-size:0.85rem;">
+            Tự động Detect
+        </button>
+    </div>
+    <small style="color:#888; display:block; margin-top:8px; font-size:0.75rem; font-style:italic;">
+        * Giúp la bàn chuẩn theo Bắc Địa Lý (True North). Khánh Hòa: +0.5°
+    </small>
+</div>
     <!-- Thanh kéo tay la bàn - Đã ẩn vì không cần thiết -->
   <div class="control-box" style="display: none;">
     <input type="range" min="0" max="360" value="0" class="slider" id="compassSlider" oninput="manualRotate(this.value)">
