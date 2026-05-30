@@ -690,7 +690,7 @@ function render24SonRing() {
         hauRing.innerHTML = "";
         Object.keys(Data72Hau).forEach(degStr => {
             const hau = Data72Hau[degStr];
-            const deg = parseFloat(degStr) + 2.5;
+            const deg = parseFloat(degStr) + 2.4;
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
             textNode.setAttribute("x", "250"); textNode.setAttribute("y", "95"); // 250 - 155
             textNode.setAttribute("text-anchor", "middle");
