@@ -2812,11 +2812,9 @@ document.addEventListener('DOMContentLoaded', () => {
         input.addEventListener('input', updateMagneticDeclination);
     }
 });
-function toggleDeclinationPanel() {
-    const panel = document.getElementById('declination-panel');
-    if (panel.style.display === 'none') {
-        panel.style.display = 'block';
-    } else {
-        panel.style.display = 'none';
+function toggleDeclinationPanel(show) {
+    const modal = document.getElementById('declination-modal');
+    if (modal) {
+        modal.style.display = show ? 'flex' : 'none';
     }
 }
