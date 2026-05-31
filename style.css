@@ -1384,8 +1384,8 @@ mjx-container {
     border: 1px solid #444;
     border-radius: 8px;
     padding: 3px;
-    margin-top: 6px;
-    height: 38px;
+    margin-top: 2px;
+    height: 35px;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
 }
 
@@ -1395,7 +1395,7 @@ mjx-container {
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 5px 12px;
+    padding: 1px 1px;
     font-size: 0.70rem;
     font-weight: 500;
     border-radius: 6px;
@@ -1411,7 +1411,7 @@ mjx-container {
     box-shadow: 0 2px 6px rgba(223, 183, 108, 0.4);
     
     /* === Phần quan trọng để nền vàng to hơn === */
-    padding: 5px 12px;              /* Tăng padding khi active */
+    padding: 1px 1px;              /* Tăng padding khi active */
     margin: -4px;                    /* Ăn vào padding của container */
     border-radius: 6px;
 }
