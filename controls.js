@@ -1119,15 +1119,17 @@ function generateDirectionsList() {
             
             if (index < sonGroup.length - 1) sonHTML += ` • `;
         });
+        // Thẻ điểm tổng hợp (Badge) - HIỂN THỊ MÀU DỰA TRÊN ĐIỂM SỐ
+const isDiemCao = item.diemTongHop >= 60; // Điểm từ 60 trở lên là Xanh, dưới 60 là Đỏ
+const bgDiem = isDiemCao ? 'rgba(48,209,88,0.2)' : 'rgba(255,59,48,0.2)';
+const colorDiem = isDiemCao ? '#28a745' : '#ff3b30'; // Xanh lá hoặc Đỏ
 
-        // Thẻ điểm tổng hợp (Badge)
-        const diemTag = `
-            <span style="font-size:0.75rem; padding:2px 7px; border-radius:4px; font-weight:bold;
-                  background:${isHợp ? 'rgba(48,209,88,0.2)' : 'rgba(255,59,48,0.2)'}; 
-                  color:${colorStyle}; border:1px solid ${colorStyle}">
-                ${item.diemTongHop}pt ${item.hau.emoji}
-            </span>`;
-
+const diemTag = `
+    <span style="font-size:0.75rem; padding:2px 7px; border-radius:4px; font-weight:bold;
+          background:${bgDiem}; 
+          color:${colorDiem}; border:1px solid ${colorDiem}">
+        ${item.diemTongHop}pt ${item.hau ? item.hau.emoji : ''}
+    </span>`;
         const div = document.createElement('div');
         div.className = `direction-item ${isHợp ? 'good' : 'bad'}`;
         div.style.cssText = `border-left: 4px solid ${colorStyle}; background: rgba(255,255,255,0.03); margin-bottom:8px; padding:12px; border-radius:8px;`;
@@ -1312,10 +1314,11 @@ function sinhMatPhapHoaGiai(mucDich, cungSat, hanhChu, phuongHuong, code) {
     let data = DATA_HOA_GIAI[cungSat] ? DATA_HOA_GIAI[cungSat][hanhChu] : null;
     if (!data) return "Dữ liệu hóa giải chưa được thiết lập cho cung này.";
 
-    // Thay thế biến trong văn bản gốc
-    let phuongPhapBaoQuoc = data.phap.replace("${phuongHuong}", phuongHuong).replace("${hanhPhuongVi}", hanhPhuongVi);
-    let vatPhamToiThuong = data.vat;
+	// Thay thế biến trong văn bản gốc
+    let phuongPhapBaoQuoc = data.phap.replace(/\${phuongHuong}/g, phuongHuong).replace(/\${hanhPhuongVi}/g, hanhPhuongVi);
 
+    let vatPhamToiThuong = data.vat;
+    
     // Logic thuyết minh ngữ cảnh
     let thuyetMinhViTri = "";
     if (['house', 'altar', 'bed', 'workspace'].includes(mucDich)) {
@@ -1378,9 +1381,8 @@ function getLuanDoanChiTiet(huong, son) {
 
 function updateCompassUI(heading) {
     // 1. TÍNH GÓC THỰC TẾ (Đã bù trừ độ lệch từ - Magnetic Declination)
-    // Giữ cho góc luôn nằm trong khoảng từ 0 đến 359 độ
-    let trueHeading = (heading + magneticDeclination % 360 + 360) % 360;
-    
+
+    let trueHeading = (heading + (magneticDeclination % 360) + 360) % 360;
     // Lưu góc thực tế đã làm tròn để hiển thị công cụ khác nếu cần
     currentHeading = Math.round(trueHeading);
     
@@ -2668,12 +2670,11 @@ function showPurposeModal() {
 
             hidePurposeModal();
             recalculateFate();        // Gọi lại hàm tính toán
-			// ==========================================
-        // 🔥 CHÈN THÊM DÒNG NÀY VÀO ĐÂY LÀ ĂN TIỀN:
-        // ==========================================
-        if (typeof generateDirectionsList === 'function') {
-            generateDirectionsList(); // Ép danh sách tính toán và đảo Hung/Cát lại ngay lập tức
-        }
+
+            // 🔥 Tự động cập nhật lại danh sách phương vị gợi ý ngay lập tức
+            if (typeof generateDirectionsList === 'function') {
+                generateDirectionsList(); 
+            }
         });
     });
 
@@ -2694,32 +2695,55 @@ document.addEventListener('click', (e) => {
 });
 
 function renderMultiLayerDetail(mc, van, hau72, tongDiem, sonName, degree) {
-    let html = `<div style="font-size:0.9rem; line-height:1.55;">`;
+    // Xác định màu sắc dựa trên điểm số
+    let colorStatus = "#30d158"; // Xanh (Tốt)
+    if (tongDiem < 50) colorStatus = "#ff3b30"; // Đỏ (Xấu)
+    else if (tongDiem < 75) colorStatus = "#dfb76c"; // Vàng (Khá)
 
-    // Layer 1 - Minh Châu
+    let html = `<div style="font-size:0.92rem; line-height:1.6; color:#e0e0e0;">`;
+
+    // --- PHẦN MỚI: HIỂN THỊ TỔNG ĐIỂM (Cái này bạn đang thiếu) ---
+    html += `
+    <div style="text-align:center; padding:15px; background:rgba(255,255,255,0.05); border-radius:12px; margin-bottom:15px; border:1px solid ${colorStatus}44">
+        <div style="font-size:0.8rem; color:#888; text-transform:uppercase;">Tổng Điểm Phong Thủy</div>
+        <div style="font-size:2.5rem; font-weight:bold; color:${colorStatus}; line-height:1;">${tongDiem}<span style="font-size:1rem;">đ</span></div>
+        <div style="margin-top:5px; font-weight:bold; color:${colorStatus}">${tongDiem >= 80 ? '🔥 ĐẠI CÁT' : tongDiem >= 50 ? '✅ TRUNG CÁT' : '⚠️ ĐẠI HUNG'}</div>
+    </div>`;
+
+    // Layer 1: Minh Châu (Sơn đạo)
     if (mc) {
         const color = mc.loai === "Cát" ? "#30d158" : "#ff3b30";
-        html += `<div style="background:rgba(255,255,255,0.08);padding:12px;border-radius:8px;border-left:4px solid ${color};margin-bottom:12px;">
-            <strong style="color:${color}">[MINH CHÂU ${mc.loai.toUpperCase()}] ${sonName} - ${mc.cap_do}</strong><br>
-            ${mc.text}<br>
-            <span style="color:#dfb76c">💡 ${mc.giaiphap}</span>
+        html += `
+        <div style="background:rgba(255,255,255,0.08); padding:14px; border-radius:10px; border-left:5px solid ${color}; margin-bottom:14px;">
+            <strong style="color:${color};">【MINH CHÂU】 ${sonName} - ${mc.cap_do}</strong><br>
+            <span style="color:#fff;">${mc.text}</span><br>
+            <div style="margin-top:8px; color:#dfb76c; font-size:0.85rem; border-top:1px solid rgba(223,183,108,0.2); padding-top:5px;">
+                💡 <b>Hóa giải:</b> ${mc.giaiphap}
+            </div>
         </div>`;
     }
 
-    // Layer 2 - Thiên Thời (Đại + Tiểu vận)
-    html += `<div style="background:rgba(223,183,108,0.1);padding:10px;border-radius:8px;margin-bottom:10px;">
-        <strong>⏳ THIÊN THỜI - VẬN ${van.van} (${van.vanName})</strong><br>
-        <span style="color:#ffd700">${van.nienTinhName}</span>
+    // Layer 2: Thiên Thời (Lưu niên)
+    html += `
+    <div style="background:rgba(223,183,108,0.12); padding:12px; border-radius:10px; margin-bottom:12px; border:1px solid rgba(223,183,108,0.2);">
+        <strong style="color:#dfb76c;">⏳ THIÊN THỜI & VẬN KHÍ</strong><br>
+        Đương vận: <span style="color:#fff;">Vận ${van.van} (${van.vanName})</span><br>
+        Niên tinh chủ quản: <span style="color:#ffd700; font-weight:bold;">${van.nienTinhName}</span>
     </div>`;
 
-    // Layer 3 - 72 Hậu
-    html += `<div style="background:rgba(0,255,100,0.08);padding:10px;border-radius:8px;">
-        <strong>🌟 72 HẬU CHI TIẾT (${degree}°)</strong><br>
-        <span style="color:#00ffaa">${hau72.ten} - ${hau72.chatLuong}</span><br>
-        ${hau72.ynghia}
+    // Layer 3: 72 Hậu (Long mạch)
+    html += `
+    <div style="background:rgba(0,255,120,0.1); padding:12px; border-radius:10px; border:1px solid rgba(0,255,120,0.2);">
+        <strong style="color:#00ffaa;">🌟 ĐỊA LỢI - 72 HẬU (${degree}°)</strong><br>
+        <span style="color:#fff; font-weight:bold;">${hau72.ten}</span> — <span style="color:#00ffaa;">${hau72.chatLuong}</span><br>
+        <div style="font-size:0.85rem; color:#bbb; margin-top:4px;">${hau72.ynghia}</div>
     </div>`;
 
-    detailBox.innerHTML = html;
+    html += `</div>`;
+    
+    // Gán vào hộp chi tiết
+    const detailBox = document.getElementById('detailBox');
+    if(detailBox) detailBox.innerHTML = html;
 }
 // ====================== RENDER ĐA TẦNG ======================
 function renderMultiLayerDetail(mc, van, hau72, tongDiem, sonName, degree) {
@@ -3104,4 +3128,35 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'Enter') { el.blur(); toggleDeclinationPanel(false); }
         });
     });
+});
+
+/**
+ * KÍCH HOẠT ĐÓNG MỞ POPUP MƯỢT MÀ Cam Nang
+ */
+document.addEventListener("DOMContentLoaded", function() {
+    const modal = document.getElementById("guideModal");
+    const openBtn = document.getElementById("openGuideBtn");
+    const closeBtn = document.getElementById("closeGuideBtn");
+
+    if (openBtn && modal) {
+        openBtn.onclick = function() { 
+            modal.style.display = "block"; 
+            document.body.style.overflow = "hidden"; // Khóa cuộn trang chủ khi xem cẩm năng
+            
+            // Ép hệ thống vẽ lại các ký hiệu toán học đẹp mắt bằng thư viện MathJax
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+        closeBtn.onclick = function() { 
+            modal.style.display = "none"; 
+            document.body.style.overflow = "auto"; 
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) { 
+                modal.style.display = "none"; 
+                document.body.style.overflow = "auto"; 
+            }
+        }
+    }
 });
