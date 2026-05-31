@@ -80,13 +80,34 @@
 
 <!-- PHẦN 5: BỘ NÃO THUẬT TOÁN ĐA TẦNG -->
 <div class="lk-guide-card" style="border-left: 4px solid #00f2c9 !important; background: #1a1a1b !important;">
-    <div class="lk-guide-card-title" style="color: #00f2c9 !important;">🧠 THUẬT TOÁN ĐIỂM TỔNG HỢP (PT) CÓ CHUẨN KHÔNG?</div>
-    <p><strong>KHÔNG SAI!</strong> Thuật toán giải quyết triệt để tử huyệt "Đồng thanh tương ứng" nhưng thiếu độ tinh vi của thực địa, đóng vai trò như một <strong>Hệ thống Nhất Thể Đa Tầng</strong> sâu sắc:</p>
+    <div class="lk-guide-card-title" style="color: #00f2c9 !important;">🧠 THUẬT TOÁN ĐIỂM TỔNG HỢP (PT)</div>
+    <p>Thuật toán giải quyết triệt để tử huyệt "Đồng thanh tương ứng" nhưng thiếu độ tinh vi của thực địa, đóng vai trò như một <strong>Hệ thống Nhất Thể Đa Tầng</strong> sâu sắc:</p>
     
-    <div class="lk-guide-formula">
-        <div style="font-size: 0.8rem; color: #888; margin-bottom: 5px;">PHÉP TOÁN ĐỊNH ĐOẠT CÁT HUNG</div>
-        \[ PT = BT + S_{24} + H_{72} - \sum \text{Sát Tinh} \]
+<div class="lk-guide-formula">
+    <div style="font-size: 0.82rem; color: #888; margin-bottom: 8px;">THUẬT TOÁN TÍNH ĐIỂM TỔNG HỢP ĐA TẦNG</div>
+    $$
+    \text{Điểm Tổng Kết} = 
+    \Big[ BT_{68} + \Delta_{\text{Cát Hung}}^{BT + 24Sơn} \Big] 
+    + \Delta_{H_{72}} 
+    \pm \Delta_{\text{Trấn Sát}} 
+    - \text{Ngũ Hoàng} 
+    - \text{Không Vong} 
+    - \text{Vận Tinh} 
+    - \text{Sát Tinh Khác}
+    $$
+   
+    <div style="margin-top:12px; padding:12px; background:rgba(0,0,0,0.3); border-radius:8px; font-size:0.84rem; line-height:1.55;">
+        <strong style="color:#00f2c9;">Logic cốt lõi:</strong><br>
+        • <strong>BT<sub>68</sub></strong>: Điểm nền Bát Trạch + 24 Sơn (Vĩ mô & Trung mô)<br>
+        • <strong>72 Hậu</strong>: Tầng vi mô (chia đến 5°)<br>
+        • <span style="color:#ff3b30;">± Δ Trấn Sát</span>: Đảo điểm theo Mục Đích (rất quan trọng)<br>
+        • <strong>Ngũ Hoàng, Không Vong, Vận Tinh</strong>: Các sát tinh trừ điểm nặng
     </div>
+    
+    <small style="display:block; margin-top:10px; color:#777; font-size:0.78rem;">
+        BT = Bát Trạch (8 hướng + 24 Sơn) • H₇₂ = 72 Hậu
+    </small>
+</div>
 
     <p>Nó giống như tầm sư học đạo: Không chỉ nhìn hình thế đại thể bên ngoài (Bát Trạch) mà phải soi xét từng thớ đất (24 Sơn), lắng nghe hơi thở của khí mạch (72 Hậu) rồi mới định đoạt cát hung. Cụ thể quy trình quét 3 màng lọc:</p>
     
