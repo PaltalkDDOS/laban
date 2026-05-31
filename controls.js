@@ -664,30 +664,30 @@ function render24SonRing() {
         });
     }
 
-    // 4. Vòng 24 Sao Phúc Đức - ĐÃ NÂNG CẤP (màu đẹp hơn, đồng bộ phong thủy)
-    const phucDucRingSvg = document.getElementById('phucDucRingSvg');
-    if (phucDucRingSvg) {
-        phucDucRingSvg.innerHTML = "";
-        const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
-        
-        phucDucNames.forEach((name, index) => {
-            const goc = (index * 15) % 360;
-            const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250"); 
-            textNode.setAttribute("y", "72");
-            textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "6.5");
-            textNode.setAttribute("font-weight", "700");
-            textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
-            textNode.setAttribute("data-sao-goc", goc.toString());
-            textNode.setAttribute("data-base-size", "6.5");
-            textNode.textContent = name;
+    // 4. Vòng 24 Sao Phúc Đức - Chỉ dùng 1 màu cố định, tối giản
+const phucDucRingSvg = document.getElementById('phucDucRingSvg');
+if (phucDucRingSvg) {
+    phucDucRingSvg.innerHTML = "";
+    const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
+    
+    phucDucNames.forEach((name, index) => {
+        const goc = (index * 15) % 360;
+        const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        textNode.setAttribute("x", "250"); 
+        textNode.setAttribute("y", "72");
+        textNode.setAttribute("text-anchor", "middle");
+        textNode.setAttribute("font-size", "6.5");
+        textNode.setAttribute("font-weight", "600");
+        textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
+        textNode.setAttribute("data-sao-goc", goc.toString());
+        textNode.setAttribute("data-base-size", "6.5");
+        textNode.textContent = name;
 
-            // Nâng cấp màu: Dùng tone vàng đồng phong thủy, có chút phân biệt nhẹ
-            textNode.setAttribute("fill", "#d4af37");  // Màu vàng đồng chính
-            phucDucRingSvg.appendChild(textNode);
-        });
-    }
+        // Chỉ dùng 1 màu cố định, không neon mạnh
+        textNode.setAttribute("fill", "#8c6f3f");   // Màu đồng tối, sang trọng, không chói
+        phucDucRingSvg.appendChild(textNode);
+    });
+}
 
     // 5. Vòng 72 Hậu - ĐÃ NÂNG CẤP (màu rõ hơn + chuẩn bị cho highlight mạnh)
     const hauRing = document.getElementById('hau72RingSvg');
