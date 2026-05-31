@@ -1377,3 +1377,34 @@ mjx-container {
 .button-row.left   { justify-content: flex-start; }
 .button-row.center { justify-content: center; }
 .button-row.right  { justify-content: flex-end; }
+/* Gender Toggle - Thiết kế chuyên nghiệp */
+.gender-toggle {
+    display: flex;
+    background: #252525;
+    border-radius: 10px;
+    padding: 4px;
+    border: 1px solid #333;
+    margin-top: 6px;
+}
+
+.gender-option {
+    flex: 1;
+    padding: 10px 14px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.gender-option.active {
+    background: #dfb76c;
+    color: #161616 !important;
+    box-shadow: 0 2px 8px rgba(223, 183, 108, 0.3);
+}
+
+.gender-option:hover:not(.active) {
+    background: #333;
+    color: #fff;
+}
