@@ -1148,7 +1148,7 @@ body {
 /* ĐỊNH VỊ NÚT CẨM NANG LÊN GÓC TRÊN BÊN PHẢI */
 .lk-guide-trigger-icon {
     position: absolute;
-    top: 78px; /* Đưa lên trên */
+    top: 80px; /* Đưa lên trên */
     left:20px;
     background: rgba(223, 183, 108, 0.1);
     border: 1px solid #dfb76c;
