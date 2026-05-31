@@ -1146,24 +1146,41 @@ body {
 }
 
 /* ĐỊNH VỊ NÚT CẨM NANG LÊN GÓC TRÊN BÊN PHẢI */
+/* NÚT CẨM NANG & ỦNG HỘ */
 .lk-guide-trigger-icon {
-    position: relative;
-    top: 0px; /* Đưa lên trên */
-    right: 375px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: rgba(223, 183, 108, 0.1);
     border: 1px solid #dfb76c;
     color: #dfb76c !important;
-    border-radius: 6px;
-    padding: 4px 10px;
-    font-size: 10px;
+    border-radius: 8px;
+    padding: 9px 16px;
+    font-size: 13px;
     font-weight: bold;
     cursor: pointer;
     z-index: 999;
-    box-shadow: 0 0 10px rgba(223, 183, 108, 0.2);
+    box-shadow: 0 0 10px rgba(223, 183, 108, 0.25);
+    transition: all 0.25s ease;
+    white-space: nowrap;
 }
+
 .lk-guide-trigger-icon:hover {
     background: #dfb76c;
     color: #161616 !important;
+    transform: translateY(-1px);
+}
+
+/* Nút Ủng hộ (màu đỏ riêng) */
+#openDonateBtn {
+    background: rgba(255, 59, 48, 0.15) !important;
+    border-color: #ff3b30 !important;
+    color: #ff3b30 !important;
+}
+
+#openDonateBtn:hover {
+    background: #ff3b30 !important;
+    color: #fff !important;
 }
 
 /* Lớp phủ mờ background toàn màn hình */
@@ -1317,3 +1334,46 @@ mjx-container {
     from { transform: translateY(30px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
+/* Scrollbar đẹp cho danh sách lưu */
+.saved-container::-webkit-scrollbar {
+    width: 6px;
+}
+.saved-container::-webkit-scrollbar-thumb {
+    background: #dfb76c;
+    border-radius: 10px;
+}
+.saved-container::-webkit-scrollbar-track {
+    background: #252525;
+    border-radius: 10px;
+}
+
+/* Tăng độ cao tối đa cho danh sách */
+.saved-list-panel {
+    background: #1a1a1a;
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #333;
+    margin-bottom: 10px;
+}
+/* Đảm bảo 2 nút nằm ngang hàng đẹp */
+#openGuideBtn, #openDonateBtn {
+    padding: 9px 16px;
+    font-size: 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+}
+
+/* Tùy chỉnh vị trí 2 nút (dễ chỉnh) */
+.button-row {
+    display: flex;
+    justify-content: flex-end;     /* flex-end = phải, center = giữa, flex-start = trái */
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid #333;
+}
+
+/* Nếu muốn thay đổi vị trí nhanh */
+.button-row.left   { justify-content: flex-start; }
+.button-row.center { justify-content: center; }
+.button-row.right  { justify-content: flex-end; }
