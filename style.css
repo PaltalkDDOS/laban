@@ -1397,7 +1397,7 @@ mjx-container {
     gap: 6px;
     padding: 9px 12px;
     font-size: 0.83rem;
-    font-weight: 600;
+    font-weight: 500;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.25s ease;
@@ -1408,54 +1408,11 @@ mjx-container {
 .gender-option.active {
     background: #dfb76c;
     color: #161616 !important;
-    box-shadow: 0 3px 8px rgba(223, 183, 108, 0.5);
-    padding: 19px 9px;        /* Tăng nhẹ khi active */
-    border-radius: 5px;
-    /* Không dùng margin âm nữa */
-}
-.lk-guide-formula {
-    background: #000000;
-    color: #00f2c9;
-    padding: 18px 14px;
-    border-radius: 12px;
-    margin: 15px 0;
-    border: 1px solid #2d2d2d;
-    box-shadow: inset 0 0 15px rgba(0, 242, 201, 0.08);
-    font-size: 0.87rem;
-    line-height: 1.65;
+    box-shadow: 0 2px 6px rgba(223, 183, 108, 0.4);
+    
+    /* === Phần quan trọng để nền vàng to hơn === */
+    padding: 19px 9px;              /* Tăng padding khi active */
+    margin: -6px;                    /* Ăn vào padding của container */
+    border-radius: 6px;
 }
 
-.formula-title {
-    font-size: 0.82rem;
-    color: #888;
-    margin-bottom: 10px;
-    text-align: center;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-}
-
-.formula-main {
-    background: rgba(255,255,255,0.03);
-    padding: 14px;
-    border-radius: 8px;
-    margin-bottom: 12px;
-    font-size: 0.9rem;
-    color: #ddd;
-    border-left: 3px solid #00f2c9;
-}
-
-.formula-logic {
-    background: rgba(0,0,0,0.4);
-    padding: 12px;
-    border-radius: 8px;
-    margin: 12px 0;
-    font-size: 0.84rem;
-    line-height: 1.7;
-}
-
-.formula-note {
-    display: block;
-    color: #777;
-    font-size: 0.78rem;
-    margin-top: 8px;
-}
