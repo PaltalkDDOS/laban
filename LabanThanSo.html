@@ -186,28 +186,33 @@
     <p>Thuật toán giải quyết triệt để tử huyệt "Đồng thanh tương ứng" nhưng thiếu độ tinh vi của thực địa, đóng vai trò như một <strong>Hệ thống Nhất Thể Đa Tầng</strong> sâu sắc:</p>
     
 <div class="lk-guide-formula">
-    <div style="font-size: 0.82rem; color: #888; margin-bottom: 8px;">THUẬT TOÁN TÍNH ĐIỂM TỔNG HỢP ĐA TẦNG</div>
-    $$
-    \text{Điểm Tổng Kết} = 
-    \Big[ BT_{68} + \Delta_{\text{Cát Hung}}^{BT + 24Sơn} \Big] 
-    + \Delta_{H_{72}} 
-    \pm \Delta_{\text{Trấn Sát}} 
-    - \text{Ngũ Hoàng} 
-    - \text{Không Vong} 
-    - \text{Vận Tinh} 
-    - \text{Sát Tinh Khác}
-    $$
-   
-    <div style="margin-top:12px; padding:12px; background:rgba(0,0,0,0.3); border-radius:8px; font-size:0.84rem; line-height:1.55;">
+    <div class="formula-title">THUẬT TOÁN TÍNH ĐIỂM TỔNG HỢP ĐA TẦNG</div>
+    
+    <div class="formula-main">
+        Điểm Tổng Kết = [ BT<sub>68</sub> + Δ Cát Hung<sup>(BT + 24 Sơn)</sup> ] 
+        + Δ H<sub>72</sub> 
+        ± Δ Trấn Sát 
+        - Ngũ Hoàng 
+        - Không Vong 
+        - Vận Tinh 
+        - Sát Tinh Khác
+    </div>
+
+    <div class="formula-logic">
         <strong style="color:#00f2c9;">Logic cốt lõi:</strong><br>
         • <strong>BT<sub>68</sub></strong>: Điểm nền Bát Trạch + 24 Sơn (Vĩ mô & Trung mô)<br>
-        • <strong>72 Hậu</strong>: Tầng vi mô (chia đến 5°)<br>
+        • <strong>H<sub>72</sub></strong>: Tầng vi mô 72 Hậu (chia đến 5°)<br>
         • <span style="color:#ff3b30;">± Δ Trấn Sát</span>: Đảo điểm theo Mục Đích (rất quan trọng)<br>
-        • <strong>Ngũ Hoàng, Không Vong, Vận Tinh</strong>: Các sát tinh trừ điểm nặng
+        • <strong>Ngũ Hoàng, Không Vong, Vận Tinh...</strong>: Các sát tinh trừ điểm nặng
     </div>
-    
-    <small style="display:block; margin-top:10px; color:#777; font-size:0.78rem;">
+
+    <small class="formula-note">
         BT = Bát Trạch (8 hướng + 24 Sơn) • H₇₂ = 72 Hậu
+    </small>
+
+    <small style="color:#777; display:block; margin-top:8px; font-size:0.78rem;">
+        Trong đó: BT = Bát Trạch • S₂₄ = 24 Sơn • H₇₂ = 72 Hậu • MC = Minh Châu Thần Sát<br>
+        Δ<sub>Trấn Sát</sub> = Biến thiên ± theo mục đích (đảo Âm Dương khi đặt hung vị)
     </small>
 </div>
 
