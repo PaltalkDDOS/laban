@@ -22,50 +22,70 @@
 
     <div id="panelContent">
 
-        <!-- Phần nhập liệu -->
-        <div class="user-input-panel">
-            <div class="form-row">
-                <div class="form-group" style="flex: 1.2;">
-                    <label>Họ tên chủ mệnh:</label>
-                    <input type="text" id="userName" value="Người Tầm Phương" onfocus="if(this.value==='Người Tầm Phương') { this.value=''; this.style.color='#fff'; }" onblur="if(this.value.trim()==='') { this.value='Người Tầm Phương'; this.style.color='#aaa'; }" oninput="recalculateFate()">
-                </div>
-                <div class="form-group" style="flex: 0.8;">
-                    <label>Giới tính:</label>
-                    <select id="gender" onchange="recalculateFate()">
-                        <option value="male">Nam Mạng</option>
-                        <option value="female">Nữ Mạng</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Ngày tháng năm sinh (Dương lịch):</label>
-                    <div class="date-input-container">
-                        <input type="text" id="birthDay" placeholder="DD" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthMonth')" style="text-align: center;">
-                        <input type="text" id="birthMonth" placeholder="MM" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthYear')" style="text-align: center;">
-                        <input type="text" id="birthYear" placeholder="YYYY" maxlength="4" inputmode="numeric" oninput="handleDateInput(this, null)" style="text-align: center;">
-                    </div>
-                </div>
-            </div>
+ <!-- Phần nhập liệu -->
+<div class="user-input-panel">
 
-            <div class="form-group" style="margin-bottom: 12px;">
-                <label style="display: block; font-size: 0.85rem; color: var(--gold); margin-bottom: 5px; font-weight: bold;">Mục đích tầm phương vị:</label>
-                <div onclick="showPurposeModal()" class="purpose-btn" id="purpose-display">
-                    <span id="purpose-selected-text">-- Chọn mục đích tầm phương vị --</span>
-                    <span style="color:var(--gold); font-size:1.1rem;">›</span>
+    <!-- Hàng 1: Họ tên + Giới tính -->
+    <div class="form-row">
+        <div class="form-group" style="flex: 1.2;">
+            <label>Họ tên chủ mệnh:</label>
+            <input type="text" id="userName" value="Người Tầm Phương" 
+                   onfocus="if(this.value==='Người Tầm Phương') { this.value=''; this.style.color='#fff'; }" 
+                   onblur="if(this.value.trim()==='') { this.value='Người Tầm Phương'; this.style.color='#aaa'; }" 
+                   oninput="recalculateFate()">
+        </div>
+        
+        <div class="form-group" style="flex: 0.8;">
+            <label>Giới tính:</label>
+            <div class="gender-toggle">
+                <div id="gender-male" class="gender-option active" onclick="selectGender('male')">
+                    👨 Nam Mạng
                 </div>
-                <input type="hidden" id="purpose" value="">
+                <div id="gender-female" class="gender-option" onclick="selectGender('female')">
+                    👩 Nữ Mạng
+                </div>
             </div>
+            <input type="hidden" id="gender" value="male">
+        </div>
+    </div>
 
-            <div class="btn-action-row">
-                <button class="btn-main" onclick="saveCurrentMember()">Lưu Tuổi</button>
-                <button class="btn-reset" id="btnReset" onclick="clearAllData()">Làm mới</button>
+    <!-- Hàng 2: Ngày tháng năm sinh -->
+    <div class="form-row">
+        <div class="form-group">
+            <label>Ngày tháng năm sinh (Dương lịch):</label>
+            <div class="date-input-container">
+                <input type="text" id="birthDay" placeholder="DD" maxlength="2" inputmode="numeric" 
+                       oninput="handleDateInput(this, 'birthMonth')" style="text-align: center;">
+                <input type="text" id="birthMonth" placeholder="MM" maxlength="2" inputmode="numeric" 
+                       oninput="handleDateInput(this, 'birthYear')" style="text-align: center;">
+                <input type="text" id="birthYear" placeholder="YYYY" maxlength="4" inputmode="numeric" 
+                       oninput="handleDateInput(this, null)" style="text-align: center;">
             </div>
         </div>
+    </div>
 
- <!-- Saved list - Phiên bản nâng cấp -->
+    <!-- Mục đích tầm phương vị -->
+    <div class="form-group" style="margin-bottom: 12px;">
+        <label style="display: block; font-size: 0.85rem; color: var(--gold); margin-bottom: 5px; font-weight: bold;">
+            Mục đích tầm phương vị:
+        </label>
+        <div onclick="showPurposeModal()" class="purpose-btn" id="purpose-display">
+            <span id="purpose-selected-text">-- Chọn mục đích tầm phương vị --</span>
+            <span style="color:var(--gold); font-size:1.1rem;">›</span>
+        </div>
+        <input type="hidden" id="purpose" value="">
+    </div>
+
+    <!-- Nút hành động -->
+    <div class="btn-action-row">
+        <button class="btn-main" onclick="saveCurrentMember()">Lưu Tuổi</button>
+        <button class="btn-reset" id="btnReset" onclick="clearAllData()">Làm mới</button>
+    </div>
+
+</div>
+
+<!-- Saved list - Phiên bản nâng cấp -->
 <div class="saved-list-panel" id="savedPanel" style="display: none; margin-top: 15px;">
-    
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
         <h3 style="margin: 0; color: #dfb76c; font-size: 1.05rem;">
             📋 Danh sách tuổi đã lưu
@@ -73,12 +93,12 @@
         <small id="savedCount" style="color: #888; font-size: 0.85rem;"></small>
     </div>
     
-    <div class="saved-container" id="savedContainer" 
-         style="max-height: 380px; overflow-y: auto; padding-right: 8px; 
+    <div class="saved-container" id="savedContainer"
+         style="max-height: 380px; overflow-y: auto; padding-right: 8px;
                 scrollbar-width: thin; scrollbar-color: #dfb76c #333;">
     </div>
     
-    <!-- Thông báo khi chưa có dữ liệu -->
+    <!-- Thông báo khi trống -->
     <div id="emptySavedMessage" style="text-align: center; padding: 40px 20px; color: #666; display: none;">
         <p style="font-size: 1.4rem; margin-bottom: 8px;">📭</p>
         <p>Chưa có tuổi nào được lưu</p>
@@ -86,20 +106,19 @@
     </div>
 </div>
 
-<!-- ICON CẨM NANG + ỦNG HỘ - Ngang hàng đẹp -->
-<div style="margin-top: 18px; padding-top: 12px; border-top: 1px solid #333; 
+<!-- ICON CẨM NANG + ỦNG HỘ -->
+<div style="margin-top: 18px; padding-top: 12px; border-top: 1px solid #333;
             display: flex; justify-content: flex-end; gap: 12px; flex-wrap: wrap;">
-    
+   
     <div id="openGuideBtn" class="lk-guide-trigger-icon">
         🧭 Cẩm Nang
     </div>
-    
+   
     <div id="openDonateBtn" class="lk-guide-trigger-icon">
         ❤️ Ủng hộ
     </div>
-    
-</div></div>
-</div>
+   
+</div></div></div>
 <!-- ====================== MODAL CẨM NANG ====================== -->
 <div id="guideModal" class="lk-guide-modal">
     <div class="lk-guide-modal-content">
