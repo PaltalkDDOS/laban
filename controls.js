@@ -3138,17 +3138,25 @@ document.addEventListener("DOMContentLoaded", function() {
     const openBtn = document.getElementById("openGuideBtn");
     const closeBtn = document.getElementById("closeGuideBtn");
 
-    if (openBtn) {
-        openBtn.onclick = function() {
-            modal.style.display = "block";
-            // Lệnh quan trọng để MathJax quét và hiển thị công thức
+    if (openBtn && modal) {
+        openBtn.onclick = function() { 
+            modal.style.display = "block"; 
+            document.body.style.overflow = "hidden"; // Khóa cuộn trang chủ khi xem cẩm năng
+            
+            // Ép hệ thống vẽ lại các ký hiệu toán học đẹp mắt bằng thư viện MathJax
             if (window.MathJax) {
                 MathJax.typesetPromise();
             }
-        };
+        }
+        closeBtn.onclick = function() { 
+            modal.style.display = "none"; 
+            document.body.style.overflow = "auto"; 
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) { 
+                modal.style.display = "none"; 
+                document.body.style.overflow = "auto"; 
+            }
+        }
     }
-    if (closeBtn) {
-        closeBtn.onclick = function() { modal.style.display = "none"; };
-    }
-    window.onclick = function(e) { if (e.target == modal) modal.style.display = "none"; };
 });
