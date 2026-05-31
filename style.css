@@ -30,22 +30,16 @@ body {
 }
 
 /* ==================== TỐI ƯU HIỆU SUẤT LA BÀN & ANIMATION ==================== */
-/* Sửa lại thành thế này (chỉ tập trung vào phần động) */
 .compass-dial,
-#compass,
-.north-pointer,
 .center-needle,
-.ghost-needle {
-    will-change: transform;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-}
-
-/* Giảm bớt cho text */
+.ghost-needle,
 #sonRingSvg text,
 #chuHuongLonG text,
 #phucDucRingSvg text {
-    will-change: none;   /* text không cần will-change */
+  will-change: transform, opacity, fill;
+  transition: all 0.08s ease-out;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* Giao diện dạng lưới sang trọng phong cách App chuyên nghiệp */
@@ -1415,7 +1409,7 @@ mjx-container {
     background: #dfb76c;
     color: #161616 !important;
     box-shadow: 0 3px 8px rgba(223, 183, 108, 0.5);
-    padding: 17px 9px;        /* Tăng nhẹ khi active */
+    padding: 19px 9px;        /* Tăng nhẹ khi active */
     border-radius: 5px;
     /* Không dùng margin âm nữa */
 }
