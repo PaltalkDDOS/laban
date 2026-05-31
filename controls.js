@@ -1759,60 +1759,63 @@ function kichHoatDenLedQuet(heading) {
             let phanSai = Math.abs(ledTargetAngle - goc);
             if (phanSai > 180) phanSai = 360 - phanSai;
 
-            // Lấy size gốc từ attribute (nếu chưa có thì lấy theo mặc định)
             const baseSize = parseFloat(txt.getAttribute("data-base-size")) || parseFloat(txt.style.fontSize) || 10;
-            
+           
             if (phanSai <= range) {
-                // Khi trúng: Phóng to, đổi màu vàng/nổi bật, độ đậm cao
+                // Khi trúng: Phóng to + Neon trầm sang trọng
                 txt.style.opacity = "1";
                 txt.style.fontSize = (baseSize * zoomScale) + "px";
                 txt.style.fontWeight = "900";
-                // Nếu có data-original-fill, chuyển sang màu vàng nổi bật khi trúng
-                if (txt.hasAttribute("data-original-fill")) {
-                    txt.style.fill = "#ffff00";
-                } else if (txt.getAttribute("data-color")) {
-                     // Nếu là các vòng cũ (Sơn/Sao)
-                    const color = txt.getAttribute("data-color");
-                    txt.style.fill = (color === "#5c4314") ? "#ffcc00" : (color === "#ff3b30" ? "#ff0000" : "#00ff00");
-                }
+                
+                // Neon trầm cho vòng Phúc Đức (vàng đồng neon nhẹ)
+                txt.style.fill = "#ffeb99";           // Vàng neon trầm
+                txt.style.filter = "drop-shadow(0 0 4px #ffeb99) drop-shadow(0 0 8px #d4af37)";
             } else {
                 // Trở về trạng thái bình thường
-                txt.style.opacity = "0.6";
+                txt.style.opacity = "0.75";
                 txt.style.fontSize = baseSize + "px";
                 txt.style.fontWeight = "700";
-                // Phục hồi màu gốc
-                txt.style.fill = txt.getAttribute("data-original-fill") || txt.getAttribute("data-color") || "#8a8a8f";
+                
+                // Phục hồi màu gốc (đồng bộ với render)
+                txt.style.fill = txt.getAttribute("data-original-fill") || 
+                                 txt.getAttribute("data-color") || 
+                                 "#8c6f3f";               // Màu đồng cố định
+                txt.style.filter = ""; 
             }
         });
     };
 
-    // 1. Xử lý 8 Hướng Lớn (Giữ logic cũ của bạn)
+    // 1. Xử lý 8 Hướng Lớn (Giữ nguyên logic cũ)
     huongLonTextsCache.forEach(txt => {
         const textGoc = parseFloat(txt.getAttribute("data-goc")) || 0;
         let phanSai = Math.abs(ledTargetAngle - textGoc);
         if (phanSai > 180) phanSai = 360 - phanSai;
         if (phanSai <= 22.5) {
-            txt.style.opacity = "1"; txt.style.fontWeight = "900";
-            txt.style.fill = (txt.getAttribute("fill") === "#00a525") ? "#00ff37" : "#ff1a00";
+            txt.style.opacity = "1"; 
+            txt.style.fontWeight = "900";
+            txt.style.fill = "#ffeb99";
         } else {
-            txt.style.opacity = "0.5"; txt.style.fontWeight = "normal";
+            txt.style.opacity = "0.5"; 
+            txt.style.fontWeight = "normal";
             const transform = txt.getAttribute("transform") || "";
             if (txt.parentNode.getAttribute("id") === "textChinhPhuong") {
                 txt.style.fill = (transform.includes("rotate(90") || transform.includes("rotate(270")) ? "#00a525" : "#ff3b30";
-            } else { txt.style.fill = "#6b4e18"; }
+            } else { 
+                txt.style.fill = "#6b4e18"; 
+            }
         }
     });
 
-    // 2. Xử lý 24 Sơn (Phóng to 1.3 lần)
+    // 2. Xử lý 24 Sơn
     applyEffect(sonTextsCache, "data-son-goc", 7.5, 1.3);
 
-    // 3. Xử lý Sao Phúc Đức (Phóng to 1.2 lần)
-    applyEffect(saoTextsCache, "data-sao-goc", 7.5, 1.2);
+    // 3. Xử lý Sao Phúc Đức (Đã tối ưu neon trầm)
+    applyEffect(saoTextsCache, "data-sao-goc", 7.5, 1.25);
 
-    // 4. Xử lý 72 Hậu (tăng phóng to)
-if (typeof hau72TextsCache !== 'undefined') {
-    applyEffect(hau72TextsCache, "data-hau-goc", 3.0, 1.65);  // Tăng từ 1.5 lên 1.65
-}
+    // 4. Xử lý 72 Hậu
+    if (typeof hau72TextsCache !== 'undefined') {
+        applyEffect(hau72TextsCache, "data-hau-goc", 3.0, 1.65);
+    }
 }
 // ==========================================================================
 // THUẬT TOÁN KIM QUAY LA BÀN - PHIÊN BẢN TỐI ƯU (MƯỢT + ỔN ĐỊNH)
