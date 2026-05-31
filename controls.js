@@ -3169,17 +3169,28 @@ document.getElementById('closeDonateBtn').addEventListener('click', function() {
     document.getElementById('donateModal').style.display = 'none';
 });
 function selectGender(gender) {
-    // Xóa active tất cả
-    document.querySelectorAll('.gender-option').forEach(el => {
-        el.classList.remove('active');
-    });
+    // Reset cả hai
+    document.getElementById('gender-male').classList.remove('active');
+    document.getElementById('gender-female').classList.remove('active');
     
-    // Thêm active cho cái được chọn
+    // Active cái được chọn
     document.getElementById('gender-' + gender).classList.add('active');
     
-    // Cập nhật giá trị hidden input
+    // Cập nhật giá trị hidden
     document.getElementById('gender').value = gender;
     
-    // Gọi hàm tính lại (đã có sẵn của bạn)
-    recalculateFate();
+    // Tính lại kết quả
+    if (typeof recalculateFate === 'function') {
+        recalculateFate();
+    }
 }
+
+// Khởi tạo ban đầu (để tránh lỗi khi load lại)
+document.addEventListener('DOMContentLoaded', function() {
+    // Đảm bảo Nam được active mặc định
+    const currentGender = document.getElementById('gender').value;
+    if (currentGender === 'female') {
+        document.getElementById('gender-female').classList.add('active');
+        document.getElementById('gender-male').classList.remove('active');
+    }
+});
