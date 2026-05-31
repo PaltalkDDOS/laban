@@ -3160,3 +3160,26 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 });
+// Donate Modal
+document.getElementById('openDonateBtn').addEventListener('click', function() {
+    document.getElementById('donateModal').style.display = 'flex';
+});
+
+document.getElementById('closeDonateBtn').addEventListener('click', function() {
+    document.getElementById('donateModal').style.display = 'none';
+});
+function selectGender(gender) {
+    // Xóa active tất cả
+    document.querySelectorAll('.gender-option').forEach(el => {
+        el.classList.remove('active');
+    });
+    
+    // Thêm active cho cái được chọn
+    document.getElementById('gender-' + gender).classList.add('active');
+    
+    // Cập nhật giá trị hidden input
+    document.getElementById('gender').value = gender;
+    
+    // Gọi hàm tính lại (đã có sẵn của bạn)
+    recalculateFate();
+}
