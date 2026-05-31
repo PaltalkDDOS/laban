@@ -1416,3 +1416,7 @@ mjx-container {
     border-radius: 6px;
 }
 
+.gender-option:hover:not(.active) {
+    background: #333333;
+    color: #fff;
+}
