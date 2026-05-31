@@ -1149,7 +1149,7 @@ body {
 .lk-guide-trigger-icon {
     position: absolute;
     top: 78px; /* Đưa lên trên */
-    left:17px;
+    left:19px;
     background: rgba(223, 183, 108, 0.1);
     border: 1px solid #dfb76c;
     color: #dfb76c !important;
