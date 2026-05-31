@@ -1,1379 +1,581 @@
-:root {
-  --gold: #dfb76c;
-  --dark: #070707;
-  --panel: #161616;
-  --text: #e0e0e0;
-  --red: #ff3b30;
-  --green: #30d158;
-  --blue: #0a84ff;
-  --gray: #8e8e93;
-  --orange-bright: #ff6600;
-}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Đại Thuật La Kinh Phong Thủy Tối Thượng - Thái Thông</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="header">
+    <h1>ĐẠI THUẬT LA KINH PHONG THỦY</h1>
+    <div class="header-copyright">&copy; BẢN QUYỀN HỆ THỐNG: THÁI THÔNG</div>
+</div>
+<!-- ====================== MAIN PANEL WRAPPER ====================== -->
+<div id="mainPanelWrapper" style="position: relative; border: 1px solid #333; background: #161616; padding: 15px; border-radius: 12px; margin: 10px auto; width: 90%; max-width: 500px; transition: all 0.3s ease;">
+    
+    <!-- Mũi tên thu gọn -->
+    <div id="toggleArrow" onclick="togglePanel()" 
+         style="position: absolute; top: 10px; right: 15px; cursor: pointer; color: #dfb76c; font-size: 12px; font-weight: bold; z-index: 100;">
+        ▲
+    </div>
 
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
+    <div id="panelContent">
 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: var(--dark);
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  padding-bottom: 30px;
-  position: relative;
-}
+        <!-- Phần nhập liệu -->
+        <div class="user-input-panel">
+            <div class="form-row">
+                <div class="form-group" style="flex: 1.2;">
+                    <label>Họ tên chủ mệnh:</label>
+                    <input type="text" id="userName" value="Người Tầm Phương" onfocus="if(this.value==='Người Tầm Phương') { this.value=''; this.style.color='#fff'; }" onblur="if(this.value.trim()==='') { this.value='Người Tầm Phương'; this.style.color='#aaa'; }" oninput="recalculateFate()">
+                </div>
+                <div class="form-group" style="flex: 0.8;">
+                    <label>Giới tính:</label>
+                    <select id="gender" onchange="recalculateFate()">
+                        <option value="male">Nam Mạng</option>
+                        <option value="female">Nữ Mạng</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Ngày tháng năm sinh (Dương lịch):</label>
+                    <div class="date-input-container">
+                        <input type="text" id="birthDay" placeholder="DD" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthMonth')" style="text-align: center;">
+                        <input type="text" id="birthMonth" placeholder="MM" maxlength="2" inputmode="numeric" oninput="handleDateInput(this, 'birthYear')" style="text-align: center;">
+                        <input type="text" id="birthYear" placeholder="YYYY" maxlength="4" inputmode="numeric" oninput="handleDateInput(this, null)" style="text-align: center;">
+                    </div>
+                </div>
+            </div>
 
-/* ==================== TỐI ƯU HIỆU SUẤT LA BÀN & ANIMATION ==================== */
-.compass-dial,
-.center-needle,
-.ghost-needle,
-#sonRingSvg text,
-#chuHuongLonG text,
-#phucDucRingSvg text {
-  will-change: transform, opacity, fill;
-  transition: all 0.08s ease-out;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
+            <div class="form-group" style="margin-bottom: 12px;">
+                <label style="display: block; font-size: 0.85rem; color: var(--gold); margin-bottom: 5px; font-weight: bold;">Mục đích tầm phương vị:</label>
+                <div onclick="showPurposeModal()" class="purpose-btn" id="purpose-display">
+                    <span id="purpose-selected-text">-- Chọn mục đích tầm phương vị --</span>
+                    <span style="color:var(--gold); font-size:1.1rem;">›</span>
+                </div>
+                <input type="hidden" id="purpose" value="">
+            </div>
 
-/* Giao diện dạng lưới sang trọng phong cách App chuyên nghiệp */
-.status-panel-grid {
-  width: 92%;
-  max-width: 430px;
-  background: #111111;
-  border: 1px solid var(--gold);
-  border-radius: 12px;
-  padding: 12px;
-  margin: 15px auto;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.7);
-}
+            <div class="btn-action-row">
+                <button class="btn-main" onclick="saveCurrentMember()">Lưu Tuổi</button>
+                <button class="btn-reset" id="btnReset" onclick="clearAllData()">Làm mới</button>
+            </div>
+        </div>
 
-.info-header-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-bottom: 1px solid #2a2a2a;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  gap: 5px;
-}
+ <!-- Saved list - Phiên bản nâng cấp -->
+<div class="saved-list-panel" id="savedPanel" style="display: none; margin-top: 15px;">
+    
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+        <h3 style="margin: 0; color: #dfb76c; font-size: 1.05rem;">
+            📋 Danh sách tuổi đã lưu
+        </h3>
+        <small id="savedCount" style="color: #888; font-size: 0.85rem;"></small>
+    </div>
+    
+    <div class="saved-container" id="savedContainer" 
+         style="max-height: 380px; overflow-y: auto; padding-right: 8px; 
+                scrollbar-width: thin; scrollbar-color: #dfb76c #333;">
+    </div>
+    
+    <!-- Thông báo khi chưa có dữ liệu -->
+    <div id="emptySavedMessage" style="text-align: center; padding: 40px 20px; color: #666; display: none;">
+        <p style="font-size: 1.4rem; margin-bottom: 8px;">📭</p>
+        <p>Chưa có tuổi nào được lưu</p>
+        <small style="color: #888;">Nhấn "Lưu Tuổi" để thêm vào danh sách</small>
+    </div>
+</div>
 
-.info-grid-item {
-  text-align: center;
-}
+<!-- ICON CẨM NANG + ỦNG HỘ - Ngang hàng đẹp -->
+<div style="margin-top: 18px; padding-top: 12px; border-top: 1px solid #333; 
+            display: flex; justify-content: flex-end; gap: 12px; flex-wrap: wrap;">
+    
+    <div id="openGuideBtn" class="lk-guide-trigger-icon">
+        🧭 Cẩm Nang
+    </div>
+    
+    <div id="openDonateBtn" class="lk-guide-trigger-icon">
+        ❤️ Ủng hộ
+    </div>
+    
+</div></div>
+</div>
+<!-- ====================== MODAL CẨM NANG ====================== -->
+<div id="guideModal" class="lk-guide-modal">
+    <div class="lk-guide-modal-content">
+        <div class="lk-guide-modal-header">
+            <h2 class="lk-guide-modal-title">🧭 CẨM NANG LA BÀN ĐA TẦNG</h2>
+            <span class="lk-guide-close-btn" id="closeGuideBtn">&times;</span>
+        </div>
+        <div class="lk-guide-modal-body">
+            <p class="lk-guide-intro">Chào mừng bạn đến với <strong>La Bàn Phong Thủy Đa Tầng</strong>. Khác với la bàn thông thường chỉ xem 8 hướng cơ bản, hệ thống này chia nhỏ không gian đến từng lớp cắt vi mô 5° kết hợp Bát Trạch, Thần Sát và Thời vận để tính toán độ chính xác tuyệt đối cho từng cá nhân.</p>
 
-.info-grid-item:not(:last-child) {
-  border-right: 1px solid #2a2a2a;
-}
+            <!-- PHẦN 1 -->
+            <div class="lk-guide-card">
+                <div class="lk-guide-card-title">👤 PHẦN 1: THÔNG TIN CHỦ MỆNH & MỤC ĐÍCH</div>
+                <ul>
+                    <li><strong>Ngày sinh & Giới tính:</strong> Ứng dụng dùng ngày Dương lịch để tự động quy đổi ra <strong>Năm Âm lịch (Can Chi) theo Lập Xuân</strong> để lập lá số Bát Trạch. <br><small><i>Ví dụ: Sinh ngày 22/01/1984 (chưa qua Lập Xuân), hệ thống sẽ tính bạn thuộc tuổi Quý Hợi 1983.</i></small></li>
+                    <li><strong>Mục đích tầm phương vị:</strong> Cực kỳ quan trọng! Tùy vào việc chọn xây vị trí cát lành như "Bàn Thờ", "Giường Ngủ" hay uế tạp như "Bể Phốt / Nhà Vệ Sinh", hệ thống sẽ <strong>tự động đảo ngược thuật toán tính điểm</strong> để phù hợp thiết kế.</li>
+                </ul>
+            </div>
 
-.info-grid-item span {
-  display: block;
-  font-size: 0.72rem;
-  color: #8e8e93;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 4px;
-}
+            <!-- PHẦN 2 -->
+            <div class="lk-guide-card">
+                <div class="lk-guide-card-title">🎯 PHẦN 2: GIẢI MÃ 4 VÒNG LA BÀN ĐA TẦNG</div>
+                <p>Mặt la bàn mô phỏng cấu trúc thu nhỏ của một chiếc La bàn Phong thủy chuyên nghiệp từ ngoài vào trong:</p>
+                <div class="lk-guide-badge-list">
+                    <p>🔹 <strong>Vòng 8 Hướng (Bát Trạch):</strong> Bắc (Khảm), Nam (Ly)... chia vòng tròn thành 8 hướng lớn (Mỗi hướng 45°).</p>
+                    <p>🔹 <strong>Vòng 24 Sơn:</strong> Mỗi hướng lớn chia làm 3 Sơn nhỏ (Mỗi Sơn 15°: Tý, Quý, Sửu, Cấn...) giúp định vị chi tiết phương vị.</p>
+                    <p>🔹 <strong>Vòng 24 Thần Sát (Minh Châu):</strong> Cảnh báo cát hung mang tính "Sự kiện" (Phúc Đức, Ôn Hoàng, Tấn Tài...). Quay vào Ôn Hoàng dễ sinh bệnh tật, quay vào Tấn Tài dễ phát lộc.</p>
+                    <p>🔹 <strong>Vòng 72 Hậu (Xuyên Sơn 72 Long):</strong> Tầng vi mô nhất! Mỗi Sơn (15°) chia làm 3 Hậu (Mỗi Hậu chỉ 5°: N1, N2, T1...). Giúp lọc chính xác tia năng lượng tốt hay mang sát khí để tránh hướng kim la bàn vào đó.</p>
+                </div>
+            </div>
 
-.info-grid-item b {
-  color: var(--gold);
-  font-size: 0.95rem;
-  font-weight: 600;
-}
+            <!-- PHẦN 3 -->
+            <div class="lk-guide-card">
+                <div class="lk-guide-card-title">📊 PHẦN 3: ĐỌC HIỂU THÔNG SỐ HIỆN TẠI (GIỮA MÀN HÌNH)</div>
+                <p>Khi bạn cầm điện thoại xoay trên thực địa, thông số sẽ nhảy liên tục theo thời gian thực:</p>
+                <ul>
+                    <li><strong>⚙️ Lệch Từ & Tín hiệu:</strong> Tự động bù trừ "Độ lệch từ thiên" (giữa Bắc từ trường và Bắc địa lý). Hãy đảm bảo "Tín hiệu tốt" (Tránh xa nam châm, kim loại).</li>
+                    <li><strong>Độ số hiện tại:</strong> Ví dụ: <code>0° - Phương KHẢM (BẮC) - Sơn Tý</code>.</li>
+                    <li><strong>72 Hậu:</strong> Ví dụ: <code>Tý Hậu 2 <span class="g-txt-green" style="color: #4caf50; font-weight:bold;">🟢 (Đại Cát)</span></code>. Báo hiệu hướng điện thoại đang chỉ vào cung 5 độ cực kỳ tốt lành.</li>
+                    <li><strong>Phân tích Mệnh & Cung Phi:</strong> Đối chiếu "Bản Mệnh" (Ví dụ: Thổ) với "Hành của Phương Vị" (Ví dụ: Thủy) xem sinh khắc, kết hợp cùng Sao Cửu Tinh của năm để tính cát hung.</li>
+                </ul>
+            </div>
 
-.main-result-box {
-  background: #161616;
-  border-left: 4px solid var(--gold);
-  padding: 12px;
-  border-radius: 4px;
-  text-align: left;
-  font-size: 0.88rem;
-  line-height: 1.6;
-}
+            <!-- PHẦN 4 -->
+            <div class="lk-guide-cardHighlight">
+                <div class="lk-guide-card-title" style="color: #ff3b30 !important;">🏆 PHẦN 4: DANH SÁCH GỢI Ý & LOGIC CHẤM ĐIỂM SỐ (PT)</div>
+                <p>Đây là trái tim của hệ thống, tổng hợp hàng triệu phép tính để xếp hạng hướng tốt nhất ở trên cùng.</p>
+                
+                <div class="lk-guide-qa">
+                    <strong style="color: #ff3b30;">❓ Tại sao có sự "ngược đời" giữa Điểm số (pt) và Chấm màu (🔴/🟢)?</strong>
+                    <p>Có lúc bạn sẽ thấy: <span class="lk-guide-tag-red">ĐÔNG NAM ➔ 98pt 🔴</span> và <span class="lk-guide-tag-green">TÂY ➔ 23pt 🟢</span>. Đừng hoang mang, đây là sự thông minh của thuật toán:</p>
+                    <ul>
+                        <li><strong>Dấu Chấm (🔴/🟢):</strong> Đại diện cho bản chất gốc của vùng đất (🟢 Xanh là Đất Tốt như Sinh Khí, Diên Niên; 🔴 Đỏ là Đất Xấu như Tuyệt Mệnh, Ngũ Quỷ).</li>
+                        <li><strong>Điểm số (pt):</strong> Thể hiện mức độ phù hợp với <strong>MỤC ĐÍCH</strong> của bạn!</li>
+                    </ul>
+                    <p>👉 <strong>Ví dụ bạn đặt Hầm Cầu / Bể Phốt / Nhà Vệ Sinh:</strong> Phong thủy bắt buộc <i>"Đồ dơ bẩn phải đặt ở chỗ Xấu để lấy độc trị độc"</i>. Do đó, cung Đông Nam (Đất Xấu 🔴) lại là nơi hoàn hảo nhất ➔ Hệ thống thưởng điểm lên <strong>98pt</strong> và gắn mác 👑 <b>TỌA HUNG TRẤN SÁT (ĐẮC VỊ)</b>.</p>
+                    <p>Ngược lại, nếu đem đặt vào cung Tây (Đất Tốt 🟢), nó sẽ làm ô uế đất lành ➔ Hệ thống phạt điểm xuống còn <strong>23pt</strong> và cảnh báo ⚠️ <b>SAI VỊ: TỌA CÁT TIÊU HAO</b>.</p>
+                    <p><strong>Tóm lại:</strong> Chỉ cần nhìn vào Điểm Số (pt). Điểm càng cao, chứng tỏ bạn đang đặt đúng đồ vật vào đúng chỗ!</p>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem;">📊 <strong>Phân Tích Sơn (Ví dụ: Thìn 35% • Tốn 33% • Tỵ 32%):</strong> Tỷ lệ % giúp bạn biết nên xoay la bàn lệch về Sơn nào trong hướng lớn để đón khí an toàn nhất.</p>
+            </div>
 
-.star-warning-box {
-  margin-top: 8px;
-  padding: 6px 10px;
-  background: rgba(255,102,0,0.1);
-  border: 1px solid rgba(255,102,0,0.3);
-  border-radius: 4px;
-  font-size: 0.82rem;
-  color: #ff6600;
-}
+<!-- PHẦN 5: BỘ NÃO THUẬT TOÁN ĐA TẦNG -->
+<div class="lk-guide-card" style="border-left: 4px solid #00f2c9 !important; background: #1a1a1b !important;">
+    <div class="lk-guide-card-title" style="color: #00f2c9 !important;">🧠 THUẬT TOÁN ĐIỂM TỔNG HỢP (PT)</div>
+    <p>Thuật toán giải quyết triệt để tử huyệt "Đồng thanh tương ứng" nhưng thiếu độ tinh vi của thực địa, đóng vai trò như một <strong>Hệ thống Nhất Thể Đa Tầng</strong> sâu sắc:</p>
+    
+<div class="lk-guide-formula">
+    <div style="font-size: 0.82rem; color: #888; margin-bottom: 8px;">THUẬT TOÁN TÍNH ĐIỂM TỔNG HỢP ĐA TẦNG</div>
+    $$
+    \text{Điểm Tổng Kết} = 
+    \Big[ BT_{68} + \Delta_{\text{Cát Hung}}^{BT + 24Sơn} \Big] 
+    + \Delta_{H_{72}} 
+    \pm \Delta_{\text{Trấn Sát}} 
+    - \text{Ngũ Hoàng} 
+    - \text{Không Vong} 
+    - \text{Vận Tinh} 
+    - \text{Sát Tinh Khác}
+    $$
+   
+    <div style="margin-top:12px; padding:12px; background:rgba(0,0,0,0.3); border-radius:8px; font-size:0.84rem; line-height:1.55;">
+        <strong style="color:#00f2c9;">Logic cốt lõi:</strong><br>
+        • <strong>BT<sub>68</sub></strong>: Điểm nền Bát Trạch + 24 Sơn (Vĩ mô & Trung mô)<br>
+        • <strong>72 Hậu</strong>: Tầng vi mô (chia đến 5°)<br>
+        • <span style="color:#ff3b30;">± Δ Trấn Sát</span>: Đảo điểm theo Mục Đích (rất quan trọng)<br>
+        • <strong>Ngũ Hoàng, Không Vong, Vận Tinh</strong>: Các sát tinh trừ điểm nặng
+    </div>
+    
+    <small style="display:block; margin-top:10px; color:#777; font-size:0.78rem;">
+        BT = Bát Trạch (8 hướng + 24 Sơn) • H₇₂ = 72 Hậu
+    </small>
+</div>
 
-.header {
-  text-align: center;
-  padding: 12px;
-  border-bottom: 2px solid var(--gold);
-  width: 100%;
-  background: linear-gradient(180deg, #1f1a10 0%, var(--dark) 100%);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-  position: relative;
-  z-index: 10;
-}
+    <p>Nó giống như tầm sư học đạo: Không chỉ nhìn hình thế đại thể bên ngoài (Bát Trạch) mà phải soi xét từng thớ đất (24 Sơn), lắng nghe hơi thở của khí mạch (72 Hậu) rồi mới định đoạt cát hung. Cụ thể quy trình quét 3 màng lọc:</p>
+    
+    <ul class="lk-guide-steps-list">
+        <li>
+            <strong>Màng lọc 1 - Bát Trạch & Minh Châu (Phần GỐC):</strong>
+            Xác định điểm nền gốc ban đầu là 68 điểm. Nếu hướng thuộc cung Cát (Sinh Khí, Thiên Y) cộng ngay 22 điểm; Diên Niên, Phục Vị cộng 14 điểm. Nếu rơi vào cung Hung (Tuyệt Mệnh, Ngũ Quỷ) trừ thẳng 30 điểm; Họa Hại, Lục Sát trừ 15 điểm.
+        </li>
+        <li>
+            <strong>Màng lọc 2 - Bộ não Đảo Chuyển Trấn Sát (Phần THÂN):</strong>
+            Nếu hạng mục thuộc khu vực uế tạp (như nhà vệ sinh, bể phốt, nhà kho, thùng rác), hệ thống tự động <strong>Nghịch Đảo Âm Dương</strong>. Đặt ở cung hung Bát Trạch lập tức được nâng lên 90 điểm đắc cách. Thuật ngữ phong thủy gọi là "Lấy độc trị độc". Đồng thời, biên độ biến thiên của 72 Hậu cũng được đảo dấu âm dương tương ứng để tối ưu hóa việc hóa giải sát khí.
+            <br><small>📌 <i>Biện pháp đặc biệt:</i> <b>Bếp</b> cần Tọa Hung hướng Cát. <b>Két sắt</b> đặt tại cung hung giúp trấn giữ tài lộc, tránh thất thoát.</small>
+        </li>
+        <li>
+            <strong>Màng lọc 3 - Lưu niên Sát Tinh & Tuyệt Lộ (Phần NGỌN):</strong>
+            Quét sạch các lỗi phong thủy cao cấp và cập nhật vận hạn trực tiếp:
+            <br>🔥 <b>Ngũ Hoàng Đại Sát:</b> Tự động kiểm tra theo lưu niên hàng năm. Nếu hướng phạm vào cung bay đến của sao Ngũ Hoàng, hệ thống khấu trừ thẳng 28 điểm.
+            <br>🚫 <b>Đại Không Vong & Tiểu Không Vong:</b> Đây là các <i>Đường Ranh Giới Tử Thần</i> trên la bàn (nơi giao nhau hỗn loạn giữa các luồng khí). Nếu dính <b>Đại Không Vong</b>, hệ thống lập tức kích hoạt bộ ngắt tối cao, <strong>hạ sập điểm về cố định 12 điểm (Đại Hung)</strong> và khóa chết hướng. Nếu dính <b>Tiểu Không Vong</b>, trừ nặng 22 điểm.
+        </li>
+    </ul>
+</div>
 
-.header h1 {
-  color: var(--gold);
-  font-size: 1.1rem;
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
+            <!-- PHẦN 6: VÍ DỤ GIƯỜNG NGỦ -->
+            <div class="lk-guide-card">
+                <div class="lk-guide-card-title">🛏️ ĐỐI VỚI GIƯỜNG NGỦ: THÊM SƠN VÀ HẬU CÓ THỪA THÃI?</div>
+                <p><strong>KHÔNG HỀ THỪA!</strong> Đối với giường ngủ (Sàng vị) hay Bàn thờ, thêm Sơn và Hậu là <strong>TỐI CẦN THIẾT</strong> để tránh hiện tượng <strong>"Tuyệt mệnh trong Sinh khí"</strong>.</p>
+                <p>👉 <b>Ví tế thực tế:</b> Một người cung Cấn chọn hướng Tây Nam (Sinh Khí) để đặt đầu giường. Theo Bát Trạch thông thường, góc này là 100 điểm, quá đẹp! Nhưng hướng Tây Nam rộng tới 45°, bao gồm 3 Sơn nhỏ: Mùi - Khôn - Thân.</p>
+                <ul>
+                    <li>Nếu đặt giường lệch vào <strong>Sơn Mùi:</strong> Dính ngay thần sát <span class="lk-guide-tag-red">Trường Bệnh / Cô Quả</span>. Hậu quả: Ngủ ở hướng Sinh Khí tốt lành nhưng sáng dậy vẫn đau đầu, bóng đè, gia đạo lạnh nhạt.</li>
+                    <li>Nếu đặt giường lệch vào <strong>Sơn Thân:</strong> Dính ngay thần sát <span class="lk-guide-tag-green">Quan Quý / Vinh Phước</span>. Hậu quả: Ngủ ngon, tinh thần minh mẫn, công việc thăng tiến vượt bậc.</li>
+                </ul>
+                <p>💡 <b>Kết luận:</b> Bát Trạch giúp bạn chọn đúng cái Phòng ngủ (Vùng không gian lớn), còn 24 Sơn và 72 Hậu mới là thứ giúp định vị chính xác **tọa độ đặt Gối nằm** để tránh tia sát khí vi mô dưới lòng đất.</p>
+            </div>
 
-.header-copyright {
-  color: var(--gold);
-  font-size: 0.75rem;
-  margin-top: 6px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-shadow: 0 0 5px rgba(223,183,108,0.4);
-}
+            <!-- PHẦN 7: PHÂN TÍCH CHUYÊN SÂU -->
+            <div class="lk-guide-card">
+                <div class="lk-guide-card-title">🔍 PHẦN 5: PHÂN TÍCH CHUYÊN SÂU (DÀNH CHO CHUYÊN GIA)</div>
+                <p>Nếu cuộn xuống dưới cùng, hệ thống cung cấp các cảnh báo chiều sâu vĩ mô:</p>
+                <ul>
+                    <li><strong>Thần Sát Độ Số:</strong> Cảnh báo vi mô. Dù hướng lớn có tốt, nhưng nếu xoay nhầm vào tia "Cô Quả" hay "Tự Diệu", ứng dụng sẽ cảnh báo đỏ để bạn nhích nhẹ điện thoại sang góc khác.</li>
+                    <li><strong>Vận Hạn Cửu Tinh:</strong> Cảnh báo nếu hướng nhà năm nay có Sao Xấu (Thái Tuế, Ngũ Hoàng, Nhị Hắc) bay đến kèm cách hóa giải cụ thể (chuông gió, tỳ hưu...).</li>
+                    <li><strong>Huyền Không Đại Vận 9 (2024 - 2043):</strong> Cho biết hướng này có hợp với dòng chảy năng lượng vĩ mô của trời đất trong chu kỳ 20 năm hiện tại hay không.</li>
+                </ul>
+            </div>
 
-.user-input-panel {
-  width: 92%;
-  max-width: 430px;
-  background: #1a1510;
-  border: 1px solid #443322;
-  padding: 12px;
-  border-radius: 8px;
-  margin-top: 12px;
-  position: relative;
-  z-index: 10;
-}
+            <!-- LỜI KHUYÊN -->
+            <div class="lk-guide-card" style="border-left: 4px solid #fac123 !important; background: #2c2514 !important;">
+                <div class="lk-guide-card-title" style="color: #fac123 !important;">💡 LỜI KHUYÊN TỪ CHUYÊN GIA</div>
+                <ul>
+                    <li><strong>Khi chọn hướng Nhà, hướng Cổng (Công trình lớn):</strong> Bắt buộc phải chọn hướng có Điểm Tổng Hợp trên 80pt và ưu tiên Bát Trạch (Chấm màu) phải chuẩn xanh 🟢 để lấy cái Khí tổng thể tốt cho cả nhà.</li>
+                    <li><strong>Khi đặt Giường Ngủ, Bàn Thờ, Két Sắt (Vật dụng nhỏ):</strong> Bát Trạch chỉ cần không phạm đại hung, nhưng <strong>Điểm số pt phải thật cao</strong>. Vì vị trí nhỏ cần sự chính xác tuyệt đối của Sơn vị và Thần sát để bảo vệ trường năng lượng trực tiếp khi sử dụng.</li>
+                </ul>
+            </div>
 
-.form-row {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
-  width: 100%;
-}
+            <!-- 3 BƯỚC -->
+            <div class="lk-guide-card" style="border-left: 4px solid #28a745 !important; background: #142518 !important;">
+                <div class="lk-guide-card-title" style="color: #28a745 !important;">📝 3 BƯỚC SỬ DỤNG NHANH CHÓNG</div>
+                <ol style="margin: 0; padding-left: 20px; line-height: 1.6;">
+                    <li><strong>Khởi tạo:</strong> Nhập đúng năm sinh và Mục đích thiết lập (Bàn thờ, két sắt hay Nhà vệ sinh...).</li>
+                    <li><strong>Chọn Hướng Điểm Cao:</strong> Cuộn xuống danh sách, chọn hướng có Điểm số (pt) cao nhất ở trên cùng và bấm vào "Xoay thử".</li>
+                    <li><strong>Chốt Tọa Độ:</strong> Cầm điện thoại ra thực địa, xoay người cho kim la bàn khớp với độ số vừa chọn. Kiểm tra dòng "Thần Sát / Hậu" ở giữa màn hình báo Xanh (🟢) là cắm mốc hoàn thành!</li>
+                </ol>
+        </div>
+    </div>
+</div></div>
+<!-- MODAL DONATE / QR CODE -->
+<div id="donateModal" class="lk-guide-modal" style="display: none;">
+    <div class="lk-guide-modal-content" style="max-width: 380px; height: auto; padding: 20px;">
+        <div class="lk-guide-modal-header">
+            <h2 class="lk-guide-modal-title">❤️ ỦNG HỘ DỰ ÁN</h2>
+            <span class="lk-guide-close-btn" id="closeDonateBtn">&times;</span>
+        </div>
+        <div style="text-align: center; padding: 15px 0;">
+            <img src="ungho.png" alt="QR Donate" style="width: 100%; max-width: 280px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+            <p style="margin: 15px 0 5px; color: #dfb76c; font-weight: bold;">NGUYEN NGOC THAI THONG</p>
+            <p style="margin: 5px 0; color: #ccc;">9898661918 • Vietcombank</p>
+            <small style="color: #888;">Quét mã QR để ủng hộ dự án La Bàn Phong Thủy</small>
+        </div>
+    </div>
+</div>
+<div id="compass-wrapper-origin">
+<div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 45px auto 20px; ...">
+<div onclick="toggleFullScreenMode()" class="fs-icon">⛶</div>
+<div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 20px auto; background: #1a1a1a; border-radius: 50%; box-shadow: 0 12px 35px rgba(0,0,0,0.5); border: 6px solid #b58e4b; overflow: hidden; color-scheme: light !important;">
 
-.form-group {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
+<!-- Đường dọc -->
+<div class="cross-line-v" style="
+  position: absolute; 
+  width: 1px; 
+  height: 92%; 
+  left: 50%; 
+  top: 4%; 
+  background: rgba(255, 59, 48, 0.28); 
+  z-index: 8; 
+  pointer-events: none; 
+  transform: translateX(-50%);
+  /* Cắt bỏ đoạn giữa (từ 43% đến 57%) */
+  clip-path: polygon(0% 0%, 100% 0%, 100% 43%, 0% 43%, 0% 57%, 100% 57%, 100% 100%, 0% 100%);
+"></div>
 
-.form-group label {
-  font-size: 0.75rem;
-  color: var(--gold);
-  margin-bottom: 4px;
-  font-weight: bold;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+<!-- Đường ngang -->
+<div class="cross-line-h" style="
+  position: absolute; 
+  height: 1px; 
+  width: 92%; 
+  top: 50%; 
+  left: 4%; 
+  background: rgba(255, 59, 48, 0.28); 
+  z-index: 8; 
+  pointer-events: none; 
+  transform: translateY(-50%);
+  /* Cắt bỏ đoạn giữa (từ 43% đến 57%) */
+  clip-path: polygon(0% 0%, 43% 0%, 43% 100%, 57% 100%, 57% 0%, 100% 0%, 100% 100%, 0% 100%);
+"></div>
 
-.form-group input,
-.form-group select {
-  background: #2a2218;
-  border: 1px solid var(--gold);
-  color: #fff;
-  padding: 8px;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  outline: none;
-  height: 38px;
-  width: 100%;
-}
-
-.date-input-container {
-  display: flex;
-  gap: 6px;
-  width: 100%;
-}
-
-.date-input-container input {
-  flex: 1;
-  min-width: 0;
-}
-
-.btn-action-row {
-  display: flex;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.btn-main {
-  flex: 1;
-  background: linear-gradient(180deg, #c5a059, #9a7b3e);
-  color: #000;
-  border: none;
-  padding: 8px;
-  border-radius: 4px;
-  font-weight: bold;
-  font-size: 0.8rem;
-  cursor: pointer;
-  text-transform: uppercase;
-}
-
-.btn-reset {
-  background: linear-gradient(180deg, var(--orange-bright), #cc5200);
-  color: #fff;
-  border: 1px solid #ffaa66;
-  padding: 8px 12px;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  font-weight: bold;
-  cursor: pointer;
-  text-transform: uppercase;
-  box-shadow: 0 4px 10px rgba(255,102,0,0.3);
-  transition: all 0.2s ease;
-}
-
-.saved-list-panel {
-  width: 92%;
-  max-width: 430px;
-  background: #111;
-  margin-top: 8px;
-  border-radius: 6px;
-  padding: 6px;
-  border: 1px dashed #332211;
-  position: relative;
-  z-index: 10;
-}
-
-.saved-container {
-  display: flex;
-  gap: 6px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-}
-
-.saved-chip {
-  background: #252018;
-  border: 1px solid #554433;
-  padding: 4px 8px;
-  border-radius: 15px;
-  font-size: 0.75rem;
-  color: #ddd;
-  cursor: pointer;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.saved-chip:hover {
-  border-color: var(--gold);
-}
-
-.saved-chip .del-btn {
-  color: var(--red);
-  font-weight: bold;
-  margin-left: 4px;
-}
-
-.cross-line-v {
-  position: absolute;
-  width: 1.5px;
-  height: 100%;
-  background: var(--red);
-  z-index: 10;
+  <div class="north-pointer" style="
+  position: absolute; 
+  top: 4px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  width: 12px; 
+  height: 24px; 
+  background: #ff3b30; 
+  z-index: 12; 
   pointer-events: none;
-}
-
-.cross-line-h {
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  background: rgba(255,59,48,0.3);
-  z-index: 2;
-  pointer-events: none;
-}
-
-.compass-dial {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 4px double var(--gold);
-  border-radius: 50%;
-  background: radial-gradient(circle, #1a1a1a 0%, #050505 65%, #111 100%);
-  box-shadow: 0 0 20px rgba(223,183,108,0.2);
-  z-index: 1;
-  will-change: transform;
-  transition: transform 0.2s ease-out;
-}
-
-.compass-watermark {
-  position: absolute;
-  bottom: 25%;
-  width: 100%;
-  text-align: center;
-  font-size: 0.6rem;
-  color: rgba(223,183,108,0.3);
-  font-weight: bold;
-  z-index: 2;
-  pointer-events: none;
-  letter-spacing: 2px;
-}
-
-/* === KIM ĐỎ CHÍNH - MŨI TÊN SẮC BÉN,TINH TẾ HƠN === */
-.center-needle {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 7px;
-  height: 90%;
-  background: linear-gradient(to bottom, rgba(255,30,30,0.9) 48%, rgba(255,80,80,0.9) 52%);
-  clip-path: polygon(50% 0%, 100% 20%, 65% 20%, 65% 85%, 100% 100%, 50% 92%, 0% 100%, 35% 85%, 35% 20%, 0% 20%);
-  transform: translate(-50%, -50%) rotate(0deg);
-  transform-origin: 50% 50%;
-  z-index: 9;
-  pointer-events: none;
-  box-shadow: 0 0 5px #ff2222, 0 0 10px rgba(255,34,34,0.4);
-  filter: brightness(1.05);
-}
-
-/* === KIM VÀNG GHOST - VÀNG KIM LOẠI/VÀNG NGHỆ NEON === */
-.ghost-needle {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 5.5px;
-  height: 86%;
-  background: linear-gradient(to bottom, #d4af37 0%, #f1c40f 50%, #d4af37 100%);
-  clip-path: polygon(50% 0%, 100% 15%, 65% 15%, 65% 100%, 35% 100%, 35% 15%, 0% 15%);
-  transform: translate(-50%, -50%) rotate(0deg);
-  transform-origin: 50% 50%;
-  z-index: 7;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s ease, transform 0.15s ease-out;
-  box-shadow: 0 0 6px #d4af37, 0 0 12px rgba(212,175,55,0.3);
-  filter: brightness(1.1);
-}
-
-/* ====================== LA BÀN - NÂNG CẤP CAO CẤP 2026 ====================== */
-
-
-/* === MŨI TÊN BẮC (North Pointer) === */
-.north-pointer {
-    position: absolute;
-    top: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 22px;
-    height: 38px;
-    background: linear-gradient(180deg, #ff3b30, #c8102e);
-    z-index: 25;
-    pointer-events: none;
-    clip-path: polygon(50% 0%, 100% 100%, 50% 82%, 0% 100%);
-    box-shadow: 
-        0 0 12px #ff3b30,
-        0 0 25px #ff3b30,
-        0 0 40px rgba(255, 59, 48, 0.7);
-    border-radius: 3px;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
-}
-
-/* === CENTER PIN === */
-.center-pin {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 18px;
-    height: 18px;
-    background: radial-gradient(circle at 40% 40%, #f5d76e, var(--gold), #b38b2e);
-    border: 2px solid #fff;
-    border-radius: 50%;
-    z-index: 30;
-    box-shadow: 
-        0 0 8px rgba(223, 183, 108, 0.9),
-        inset 0 3px 6px rgba(255,255,255,0.6),
-        0 4px 12px rgba(0,0,0,0.7);
-}
-
-/* === NHÃN HƯỚNG === */
-.direction-label {
-    position: absolute;
-    font-weight: 900;
-    font-size: 0.72rem;
-    text-align: center;
-    width: 52px;
-    line-height: 1.1;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-    z-index: 15;
-    pointer-events: none;
-}
-
-.lbl-kham {
-    color: #ff3b30;
-    top: 18px;
-    left: calc(50% - 26px);
-}
-
-.lbl-ly {
-    color: #ffcc00;
-    bottom: 18px;
-    left: calc(50% - 26px);
-    transform: rotate(180deg);
-}
-
-.lbl-chan {
-    color: #00c853;
-    right: 12px;
-    top: calc(50% - 18px);
-    transform: rotate(90deg);
-}
-
-.lbl-doai {
-    color: #00c853;
-    left: 12px;
-    top: calc(50% - 18px);
-    transform: rotate(-90deg);
-}
-
-.lbl-can, .lbl-can2 {
-    color: #ffb300;
-    font-size: 0.68rem;
-}
-
-.lbl-can  { top: 42px; right: 38px; transform: rotate(45deg); }
-.lbl-can2 { top: 42px; left: 38px;  transform: rotate(-45deg); }
-
-.lbl-ton {
-    color: #ffb300;
-    bottom: 42px;
-    right: 38px;
-    transform: rotate(135deg);
-}
-
-.lbl-khon {
-    color: #ffb300;
-    bottom: 42px;
-    left: 38px;
-    transform: rotate(-135deg);
-}
-
-/* === SON RING TEXT === */
-.son-ring-text {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-}
-
-.son-item {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 20px;
-    margin-left: -10px;
-    height: 50%;
-    transform-origin: bottom center;
-    font-size: 0.5rem;
-    color: #8a8a8f;
-    text-align: center;
-    padding-top: 45px;
-}
-
-/* ====================== STATUS PANEL ====================== */
-.status-panel {
-    width: 92%;
-    max-width: 430px;
-    background: var(--panel);
-    border: 1px solid var(--gold);
-    padding: 12px;
-    border-radius: 8px;
-    text-align: center;
-    margin-bottom: 8px;
-    position: relative;
-    z-index: 10;
-}
-
-.degree-display {
-    font-size: 1rem;
-    color: var(--gold);
-    font-weight: bold;
-}
-
-.element-badge {
-    display: inline-block;
-    font-size: 0.7rem;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-top: 4px;
-    font-weight: bold;
-}
-
-.fate-display {
-    font-size: 0.8rem;
-    color: #fff;
-    background: #222;
-    padding: 6px;
-    margin: 6px 0;
-    border-radius: 4px;
-    border-left: 4px solid var(--gold);
-    text-align: left;
-}
-
-.judgment-badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 15px;
-    font-weight: bold;
-    font-size: 0.85rem;
-    margin-top: 2px;
-    text-transform: uppercase;
-}
-
-.bg-good {
-    background-color: rgba(48,209,88,0.15);
-    color: var(--green);
-    border: 1px solid var(--green);
-}
-
-.bg-bad {
-    background-color: rgba(255,59,48,0.15);
-    color: var(--red);
-    border: 1px solid var(--red);
-}
-
-/* ====================== CONTROL & PERMISSION ====================== */
-.control-box {
-    display: none !important;
-    width: 92%;
-    max-width: 430px;
-    background: #111;
-    padding: 6px;
-    border-radius: 6px;
-    margin-bottom: 10px;
-    position: relative;
-    z-index: 10;
-}
-
-.slider {
-    width: 100%;
-    accent-color: var(--gold);
-    height: 20px;
-}
-
-#permission-btn {
-    display: none;
-    background: var(--red);
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 0.85rem;
-    cursor: pointer;
-    margin-bottom: 12px;
-    width: 92%;
-    max-width: 430px;
-    position: relative;
-    z-index: 10;
-}
-
-/* ====================== DIRECTIONS LIST ====================== */
-.directions-list-panel {
-    width: 92%;
-    max-width: 430px;
-    background: var(--panel);
-    border: 1px solid #282828;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 12px;
-    position: relative;
-    z-index: 10;
-}
-
-.list-title {
-    color: var(--gold);
-    font-size: 0.8rem;
-    font-weight: bold;
-    margin: 0 0 10px 0;
-    text-transform: uppercase;
-    border-bottom: 1px solid #333;
-    padding-bottom: 6px;
-    text-align: center;
-}
-
-.direction-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #0d0d0d;
-    padding: 6px 10px;
-    margin-bottom: 6px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    border-left: 4px solid #333;
-}
-
-.direction-item.good {
-    border-left-color: var(--green);
-}
-
-.direction-item.bad {
-    border-left-color: var(--red);
-}
-
-.item-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.item-name {
-    font-weight: bold;
-    color: #fff;
-}
-
-.item-cung {
-    font-size: 0.7rem;
-}
-
-.btn-rotate {
-    background: #2a2218;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-/* ====================== EXPLANATION PANEL ====================== */
-.explanation-panel {
-    width: 92%;
-    max-width: 430px;
-    background: var(--panel);
-    border: 1px solid #252525;
-    border-radius: 8px;
-    padding: 12px;
-    position: relative;
-    z-index: 10;
-}
-
-.detail-content {
-    background: #080808;
-    border-left: 4px solid var(--gold);
-    padding: 10px;
-    font-size: 0.85rem;
-    line-height: 1.6;
-    color: #ffffff;
-    transition: border-left-color 0.3s ease;
-}
-
-.gold-text {
-    color: var(--gold);
-    font-weight: bold;
-}
-
-/* ====================== CUSTOM ALERT ====================== */
-.custom-alert-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.85);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 99999;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
-.custom-alert-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.custom-alert-box {
-    background: #1a1410;
-    border: 2px solid var(--gold);
-    border-radius: 10px;
-    width: 88%;
-    max-width: 340px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 15px rgba(223,183,108,0.2);
-    transform: scale(0.8);
-    transition: transform 0.3s ease;
-}
-
-.custom-alert-overlay.active .custom-alert-box {
-    transform: scale(1);
-}
-
-.custom-alert-title {
-    color: var(--red);
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-}
-
-.custom-alert-msg {
-    color: #f0f0f0;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    margin-bottom: 20px;
-}
-
-.custom-alert-btn {
-    background: linear-gradient(180deg, #ff8833, var(--orange-bright));
-    color: white;
-    border: none;
-    padding: 8px 24px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    cursor: pointer;
-    text-transform: uppercase;
-    box-shadow: 0 4px 10px rgba(255,102,0,0.3);
-}
-
-/* ====================== MISC ====================== */
-.btn-reset.executing {
-    opacity: 0.7;
-    transform: scale(0.95);
-}
-
-.user-input-panel {
-    font-size: 12px;
-}
-
-.form-group label {
-    font-size: 11px;
-    margin-bottom: 2px;
-}
-
-.form-group input,
-.form-group select {
-    padding: 4px;
-    height: 30px;
-}
-
-.fengshui-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid #444;
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-}
-
-/* ====================== INFO MODAL ====================== */
-#infoModal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.85);
-    display: none;
-    flex-direction: column;
-    z-index: 9999;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.modal-content {
-    background: #1c1c1e;
-    color: #fff;
-    border-radius: 15px;
-    width: 100%;
-    max-width: 500px;
-    max-height: 85vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    margin: auto;
-}
-
-#modalBody {
-    overflow-y: auto;
-    padding: 15px;
-    flex: 1;
-}
-
-/* Directions Panel Toggle */
-.directions-list-panel[open] .list-title::after {
-    content: ' ▴';
-}
-
-.directions-list-panel:not([open]) .list-title::after {
-    content: ' ▾';
-}
-
-#list-panel-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #dfb76c;
-    color: #dfb76c;
-}
-/* ====================== BEAUTIFUL SELECT ====================== */
-.purpose-select {
-    width: 100%;
-    padding: 11px 14px;
-    background: #2a2218;
-    border: 1px solid var(--gold);
-    color: #fff;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-family: 'Times New Roman', Times, serif;
-    outline: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23dfb76c' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.025 2.345 4 3.204 4h9.592c.858 0 1.319 1.025.753 1.659l-4.796 5.48a1 1 0 01-1.506 0z'/%3E%3C/svg%3E");
-    background-position: right 14px center;
-    background-repeat: no-repeat;
-    background-size: 12px;
-}
-
-.purpose-select:hover {
-    border-color: #f1c40f;
-    box-shadow: 0 0 8px rgba(223, 183, 108, 0.3);
-}
-
-.purpose-select:focus {
-    border-color: #f1c40f;
-    box-shadow: 0 0 12px rgba(223, 183, 108, 0.5);
-}
-
-/* Tùy chỉnh option trên mobile */
-.purpose-select option {
-    background: #1f1a14;
-    color: #fff;
-    padding: 10px;
-}
-/* ====================== FULL SCREEN MODE & ICON ====================== */
-/* ICON FULLSCREEN NHỎ GỌN - 4 GÓC */
-.fs-icon {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    z-index: 160;
-    cursor: pointer;
-    color: #ffeb3b;
-    font-size: 22px;
-    width: 34px;
-    height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.25s ease;
-    user-select: none;
-    opacity: 0.85;
-    text-shadow: 0 0 8px rgba(255, 235, 59, 0.6);
-}
-
-.fs-icon:hover {
-    opacity: 1;
-    transform: scale(1.25);
-    color: #fff;
-    text-shadow: 0 0 12px rgba(255, 235, 59, 0.9);
-}
-
-/* Animation nhấp nháy */
-@keyframes blink-fade {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 1; }
-}
-.fs-icon.blink {
-    animation: blink-fade 1.5s ease-in-out 3; /* Nháy 3 lần */
-}
-.fs-icon:active {
-    transform: scale(0.85); /* Hiệu ứng nhấn */
-    opacity: 1;
-}
-
-/* Mobile */
-@media (max-width: 480px) {
-    .fs-icon {
-        top: 14px;
-        right: 14px;
-        font-size: 24px;
-        width: 38px;
-        height: 38px;
-    }
-}
-.compass-container {
-  position: relative;
-  /* Sử dụng đơn vị tương đối để tự co giãn theo màn hình */
-  width: 85vw; 
-  height: 85vw;
-  max-width: 350px; /* Không quá to trên màn hình lớn */
-  max-height: 350px;
-  margin: 15px auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  z-index: 10;
-  touch-action: manipulation;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* 2. Fullscreen Mode - Đã xử lý căn giữa tuyệt đối */
-.fullscreen-mode {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #0a0a0a;
-    z-index: 99999;
-    /* Dùng Flexbox để ép mọi thứ vào giữa màn hình */
-    display: none; 
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.fullscreen-mode.active {
-    display: flex;
-    opacity: 1;
-}
-/* Class này chỉ áp dụng khi Fullscreen */
-.fullscreen-mode .compass-container.fs-scaled {
-    width: 500px !important; /* Giá trị này sẽ được JS override linh hoạt */
-    height: 500px !important;
-}
-/* 3. Wrapper trong Fullscreen (Sẽ được JS điều khiển kích thước qua hàm applyDynamicScaling) */
-#fs-compass-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-/* 4. Panel thông số trong Fullscreen */
-#fs-status-wrapper {
-    width: 90%;
-    max-width: 450px;
-    display: flex;
-    justify-content: center;
-}
-
-/* Đảm bảo khi statusPanel trở về vị trí mặc định không bị lỗi layout */
-.status-panel {
-    display: block !important; 
-    position: relative !important;
-    margin-top: 20px !important;
-    width: 100% !important;
-}
-
-.fullscreen-mode {
-    cursor: zoom-out; /* Con trỏ chuột đổi thành dấu trừ khi vào FS */
-}
-/* ====================== PURPOSE BUTTON ====================== */
-.purpose-btn {
-    background: linear-gradient(145deg, #2a2218, #32291f);
-    border: 2px solid var(--gold);
-    color: #fff;
-    padding: 13px 16px;
-    border-radius: 12px;
-    font-size: 0.91rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.35s ease;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
-    min-height: 50px;
-    position: relative;
-    overflow: hidden;
-}
-
-.purpose-btn:hover {
-    border-color: #f1c40f;
-    box-shadow: 0 0 22px rgba(241, 196, 15, 0.45);
-    transform: translateY(-3px);
-    background: linear-gradient(145deg, #32291f, #3a3126);
-}
-
-.purpose-btn:active {
-    transform: scale(0.985);
-}
-
-/* Text hiển thị */
-#purpose-selected-text {
-    flex: 1;
-    padding-right: 10px;
-    line-height: 1.45;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-weight: 500;
-}
-
-/* Icon mũi tên */
-.purpose-btn > span:last-child {
-    color: var(--gold);
-    font-size: 1.25rem;
-    transition: transform 0.3s ease;
-    flex-shrink: 0;
-}
-
-.purpose-btn:hover > span:last-child {
-    transform: rotate(90deg);
-}
-
-/* ====================== PURPOSE POPUP MODAL ====================== */
-#purpose-modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.94);
-    z-index: 10000;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(12px);
-}
-
-#purpose-modal-content {
-    background: #1a1510;
-    border: 2px solid var(--gold);
-    border-radius: 20px;
-    width: 92%;
-    max-width: 445px;
-    max-height: 88vh;
-    overflow: hidden;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
-}
-
-#purpose-modal-header {
-    padding: 22px 24px;
-    text-align: center;
-    color: var(--gold);
-    font-size: 1.22rem;
-    font-weight: 700;
-    border-bottom: 1px solid #443322;
-    background: #221b14;
-    letter-spacing: 0.5px;
-}
-
-/* Body */
-#purpose-modal-body {
-    max-height: 68vh;
-    overflow-y: auto;
-    padding: 10px 0;
-    scrollbar-width: thin;
-    scrollbar-color: #554433 #221b14;
-}
-
-/* Nhóm (Group) */
-.purpose-modal-group {
-    padding: 16px 24px 8px 24px;
-    color: #f1c40f;
-    font-weight: 700;
-    background: #221b14;
-    font-size: 0.96rem;
-    border-top: 1px solid #443322;
-    letter-spacing: 0.4px;
-}
-
-.purpose-modal-group:first-child {
-    border-top: none;
-}
-
-/* Option */
-.purpose-modal-option {
-    padding: 15.5px 24px;
-    cursor: pointer;
-    border-bottom: 1px solid #332922;
-    transition: all 0.3s ease;
-    font-size: 0.935rem;
-    line-height: 1.45;
-}
-
-.purpose-modal-option:hover {
-    background: #3a2f24;
-    color: #fff;
-    padding-left: 34px;
-    transform: translateX(6px);
-}
-
-.purpose-modal-option:last-child {
-    border-bottom: none;
-}
-
-/* Scrollbar */
-#purpose-modal-body::-webkit-scrollbar {
-    width: 7px;
-}
-#purpose-modal-body::-webkit-scrollbar-thumb {
-    background: #554433;
-    border-radius: 10px;
-}
-#purpose-modal-body::-webkit-scrollbar-thumb:hover {
-    background: #665544;
-}
-
-@keyframes popIn {
-    0% { transform: scale(0.8); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-@keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-/* Khóa chống xê dịch khung hình và thiết lập chuẩn box-sizing */
-.lk-guide-modal, .lk-guide-modal *, .lk-guide-modal *::before, .lk-guide-modal *::after {
-    box-sizing: border-box !important;
-}
-
-/* ĐỊNH VỊ NÚT CẨM NANG LÊN GÓC TRÊN BÊN PHẢI */
-/* NÚT CẨM NANG & ỦNG HỘ */
-.lk-guide-trigger-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(223, 183, 108, 0.1);
-    border: 1px solid #dfb76c;
-    color: #dfb76c !important;
-    border-radius: 8px;
-    padding: 9px 16px;
-    font-size: 13px;
-    font-weight: bold;
-    cursor: pointer;
-    z-index: 999;
-    box-shadow: 0 0 10px rgba(223, 183, 108, 0.25);
-    transition: all 0.25s ease;
-    white-space: nowrap;
-}
-
-.lk-guide-trigger-icon:hover {
-    background: #dfb76c;
-    color: #161616 !important;
-    transform: translateY(-1px);
-}
-
-/* Nút Ủng hộ (màu đỏ riêng) */
-#openDonateBtn {
-    background: rgba(255, 59, 48, 0.15) !important;
-    border-color: #ff3b30 !important;
-    color: #ff3b30 !important;
-}
-
-#openDonateBtn:hover {
-    background: #ff3b30 !important;
-    color: #fff !important;
-}
-
-/* Lớp phủ mờ background toàn màn hình */
-.lk-guide-modal {
-    display: none;
-    position: fixed;
-    z-index: 999999 !important;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-}
-
-/* Nội dung khung Modal - Tuyệt đối không xê dịch và tự co giãn theo Mobile */
-.lk-guide-modal-content {
-    background-color: #161616 !important;
-    margin: 4vh auto;
-    width: 92%;
-    max-width: 480px;
-    height: 88vh;
-    border-radius: 14px;
-    border: 1px solid #dfb76c;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.7);
-    animation: lkGuideSlideUp 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-/* Sửa lỗi tiêu đề bị tối - Ép cứng màu vàng Gold sang trọng của ứng dụng */
-.lk-guide-modal-header {
-    background: #222222 !important;
-    padding: 14px 18px;
-    border-bottom: 1px solid #333333;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-shrink: 0;
-}
-.lk-guide-modal-title {
-    margin: 0 !important;
-    font-size: 1.05rem !important;
-    color: #dfb76c !important; 
-    font-weight: bold !important;
-    letter-spacing: 0.5px;
-}
-.lk-guide-close-btn {
-    color: #888 !important;
-    font-size: 26px;
-    font-weight: bold;
-    cursor: pointer;
-    line-height: 1;
-}
-.lk-guide-close-btn:hover {
-    color: #ff3b30 !important;
-}
-
-/* Vùng nội dung cuộn mượt mà bên trong */
-.lk-guide-modal-body {
-    padding: 16px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    color: #dddddd !important;
-    font-size: 1.0rem;
-    line-height: 1.5;
-    flex-grow: 1;
-    background: #161616 !important;
-}
-
-.lk-guide-intro {
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: #ccc;
-}
-
-/* Các thẻ card thông tin */
-.lk-guide-card {
-    background: #1d1d1f !important;
-    border-radius: 8px;
-    padding: 14px;
-    margin-bottom: 14px;
-    border-left: 3px solid #dfb76c;
-}
-.lk-guide-cardHighlight {
-    background: rgba(255, 59, 48, 0.08) !important;
-    border-radius: 8px;
-    padding: 14px;
-    margin-bottom: 14px;
-    border: 1px solid rgba(255, 59, 48, 0.3);
-}
-
-.lk-guide-card-title {
-    font-weight: bold !important;
-    font-size: 0.88rem !important;
-    margin-bottom: 10px;
-    color: #dfb76c !important;
-    letter-spacing: 0.3px;
-}
-
-/* Danh sách text nội dung */
-.lk-guide-modal-body ul, .lk-guide-modal-body ol {
-    margin: 0;
-    padding-left: 18px;
-}
-.lk-guide-modal-body li {
-    margin-bottom: 8px;
-    color: #dddddd;
-}
-.lk-guide-badge-list p {
-    margin: 0 0 10px 0;
-    padding-bottom: 4px;
-    border-bottom: 1px solid #252525;
-}
-
-/* KHUNG CÔNG THỨC PHONG THỦY CHUYÊN NGHIỆP */
-.lk-guide-formula {
-    background: #000000 !important;
-    color: #00f2c9 !important;
-    padding: 20px 10px;
-    border-radius: 12px;
-    text-align: center;
-    margin: 15px 0;
-    border: 1px double #2d2d2d;
-    box-shadow: inset 0 0 15px rgba(0, 242, 201, 0.1);
-    position: relative;
-	overflow-x: auto;
-}
-
-/* Làm đẹp ký hiệu toán học hiển thị qua MathJax */
-mjx-container {
-    font-size: 1.1rem !important;
-    color: #00f2c9 !important;
-}
-
-.lk-guide-qa {
-    background: rgba(0,0,0,0.2);
-    padding: 10px;
-    border-radius: 6px;
-    margin-top: 8px;
-}
-
-.lk-guide-tag-red { background: rgba(255, 59, 48, 0.2); color: #ff3b30; padding: 1px 5px; border-radius: 4px; font-weight: bold; }
-.lk-guide-tag-green { background: rgba(76, 175, 80, 0.2); color: #4caf50; padding: 1px 5px; border-radius: 4px; font-weight: bold; }
-.lk-guide-steps-list { padding-left: 16px !important; }
-.lk-guide-steps-list li { margin-bottom: 12px !important; }
-
-@keyframes lkGuideSlideUp {
-    from { transform: translateY(30px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-/* Scrollbar đẹp cho danh sách lưu */
-.saved-container::-webkit-scrollbar {
-    width: 6px;
-}
-.saved-container::-webkit-scrollbar-thumb {
-    background: #dfb76c;
-    border-radius: 10px;
-}
-.saved-container::-webkit-scrollbar-track {
-    background: #252525;
-    border-radius: 10px;
-}
-
-/* Tăng độ cao tối đa cho danh sách */
-.saved-list-panel {
-    background: #1a1a1a;
-    border-radius: 10px;
-    padding: 12px;
-    border: 1px solid #333;
-    margin-bottom: 10px;
-}
-/* Đảm bảo 2 nút nằm ngang hàng đẹp */
-#openGuideBtn, #openDonateBtn {
-    padding: 9px 16px;
-    font-size: 10px;
-    border-radius: 8px;
-    white-space: nowrap;
-}
-
-/* Tùy chỉnh vị trí 2 nút (dễ chỉnh) */
-.button-row {
-    display: flex;
-    justify-content: flex-end;     /* flex-end = phải, center = giữa, flex-start = trái */
-    gap: 10px;
-    margin-top: 15px;
-    padding-top: 12px;
-    border-top: 1px solid #333;
-}
-
-/* Nếu muốn thay đổi vị trí nhanh */
-.button-row.left   { justify-content: flex-start; }
-.button-row.center { justify-content: center; }
-.button-row.right  { justify-content: flex-end; }
+  /* Cắt hình mũi tên thon gọn */
+  clip-path: polygon(50% 0%, 100% 100%, 50% 85%, 0% 100%);
+  /* Hiệu ứng Neon */
+  box-shadow: 0 0 10px #ff3b30, 0 0 20px #ff3b30;
+"></div>
+
+  <div id="needle" style="display: none;"></div>
+  <div id="ghostNeedle" class="ghost-needle" style="display: none;"></div>
+  
+
+
+  <div class="compass-dial" id="compass" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform-origin: center center; transition: transform 0.1s ease-out;">
+    <svg viewBox="0 0 500 500" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; color-scheme: light !important; background: transparent;">
+      
+      <circle cx="250" cy="250" r="244" fill="#fdfaf2" stroke="#b58e4b" stroke-width="3" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="226" fill="#fffcf7" stroke="#b58e4b" stroke-width="1.2" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="185" fill="#fffdfa" stroke="#b58e4b" stroke-width="1.2" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="148" fill="#f7f2e8" stroke="#b58e4b" stroke-width="1.2" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="110" fill="#fdfaf2" stroke="#b58e4b" stroke-width="1.5" style="mix-blend-mode: normal !important;" />
+      <circle cx="250" cy="250" r="70" fill="#fffdfa" stroke="#b58e4b" stroke-width="2.5" style="mix-blend-mode: normal !important;" />
+
+      <g stroke="rgba(181, 142, 75, 0.6)" stroke-width="1" id="vachDoRing"></g>
+
+      <g stroke="#b58e4b" stroke-width="1.8" opacity="0.85">
+        <line x1="250" y1="6" x2="250" y2="110" transform="rotate(22.5, 250, 250)" />
+        <line x1="250" y1="6" x2="250" y2="110" transform="rotate(67.5, 250, 250)" />
+        <line x1="250" y1="6" x2="250" y2="110" transform="rotate(112.5, 250, 250)" />
+        <line x1="250" y1="6" x2="250" y2="110" transform="rotate(157.5, 250, 250)" />
+        <line x1="250" y1="6" x2="250" y2="110" transform="rotate(202.5, 250, 250)" />
+        <line x1="250" y1="6" x2="250" y2="110" transform="rotate(247.5, 250, 250)" />
+        <line x1="250" y1="6" x2="250" y2="110" transform="rotate(292.5, 250, 250)" />
+        <line x1="250" y1="6" x2="250" y2="110" transform="rotate(337.5, 250, 250)" />
+      </g>
+
+      <g stroke="rgba(181, 142, 75, 0.7)" stroke-width="1.5" id="khe24SonRing"></g>
+
+      <g id="sonRingSvg"></g>
+      <g id="phucDucRingSvg"></g>
+      <g id="hau72RingSvg"></g>
+      <g id="tamBatQuaiMau" style="mix-blend-mode: normal !important;">
+  <!-- Vòng tròn nền -->
+  <circle cx="250" cy="250" r="36" fill="#fff" stroke="#ff3b30" stroke-width="1.5" />
+  
+  <!-- Nửa ĐEN (Phía trên/Phải) -->
+  <path d="M250,214 A36,36 0 0,1 250,286 A18,18 0 0,0 250,250 A18,18 0 0,1 250,214" fill="#333" />
+  
+  <!-- Nửa TRẮNG (Phía dưới/Trái) -->
+  <path d="M250,286 A36,36 0 0,1 250,214 A18,18 0 0,0 250,250 A18,18 0 0,1 250,286" fill="#fff" />
+  
+  <!-- Mắt (Đảm bảo nằm đúng vị trí trong vùng của nó) -->
+  <circle cx="250" cy="232" r="6" fill="#fff" /> <!-- Mắt trắng nằm trong nền Đen -->
+  <circle cx="250" cy="268" r="6" fill="#333" />  <!-- Mắt đen nằm trong nền Trắng -->
+</g>
+
+      <g stroke-width="2.2" fill="none" stroke-linecap="square" style="mix-blend-mode: normal !important;">
+        <g transform="rotate(0, 250, 250)" stroke="#c01108">
+          <line x1="239" y1="192" x2="245" y2="192" /><line x1="255" y1="192" x2="261" y2="192" />
+          <line x1="239" y1="198" x2="261" y2="198" />
+          <line x1="239" y1="204" x2="245" y2="204" /><line x1="255" y1="204" x2="261" y2="204" />
+        </g>
+        <g transform="rotate(45, 250, 250)" stroke="#4a320c">
+          <line x1="239" y1="192" x2="261" y2="192" />
+          <line x1="239" y1="198" x2="245" y2="198" /><line x1="255" y1="198" x2="261" y2="198" />
+          <line x1="239" y1="204" x2="245" y2="204" /><line x1="255" y1="204" x2="261" y2="204" />
+        </g>
+        <g transform="rotate(90, 250, 250)" stroke="#c01108">
+          <line x1="239" y1="192" x2="245" y2="192" /><line x1="255" y1="192" x2="261" y2="192" />
+          <line x1="239" y1="198" x2="245" y2="198" /><line x1="255" y1="198" x2="261" y2="198" />
+          <line x1="239" y1="204" x2="261" y2="204" />
+        </g>
+        <g transform="rotate(135, 250, 250)" stroke="#4a320c">
+          <line x1="239" y1="192" x2="261" y2="192" />
+          <line x1="239" y1="198" x2="261" y2="198" />
+          <line x1="239" y1="204" x2="245" y2="204" /><line x1="255" y1="204" x2="261" y2="204" />
+        </g>
+        <g transform="rotate(180, 250, 250)" stroke="#c01108">
+          <line x1="239" y1="192" x2="261" y2="192" />
+          <line x1="239" y1="198" x2="245" y2="198" /><line x1="255" y1="198" x2="261" y2="198" />
+          <line x1="239" y1="204" x2="261" y2="204" />
+        </g>
+        <g transform="rotate(225, 250, 250)" stroke="#4a320c">
+          <line x1="239" y1="192" x2="245" y2="192" /><line x1="255" y1="192" x2="261" y2="192" />
+          <line x1="239" y1="198" x2="245" y2="198" /><line x1="255" y1="198" x2="261" y2="198" />
+          <line x1="239" y1="204" x2="245" y2="204" /><line x1="255" y1="204" x2="261" y2="204" />
+        </g>
+        <g transform="rotate(270, 250, 250)" stroke="#c01108">
+          <line x1="239" y1="192" x2="245" y2="192" /><line x1="255" y1="192" x2="261" y2="192" />
+          <line x1="239" y1="198" x2="261" y2="198" />
+          <line x1="239" y1="204" x2="261" y2="204" />
+        </g>
+        <g transform="rotate(315, 250, 250)" stroke="#4a320c">
+          <line x1="239" y1="192" x2="261" y2="192" />
+          <line x1="239" y1="198" x2="261" y2="198" />
+          <line x1="239" y1="204" x2="261" y2="204" />
+        </g>
+      </g>
+
+      <g font-family="sans-serif" text-anchor="middle" id="chuHuongLonG">
+        <g font-weight="900" font-size="20">
+          <text x="250" y="34" fill="#ff3b30" data-goc="0">BẮC</text>
+          <text x="250" y="52" font-size="12" font-weight="bold" fill="#ff3b30" data-goc="0">KHẢM</text>
+          
+          <text x="250" y="34" fill="#ff3b30" transform="rotate(180, 250, 250)" data-goc="180">NAM</text>
+          <text x="250" y="52" font-size="12" font-weight="bold" fill="#ff3b30" transform="rotate(180, 250, 250)" data-goc="180">LY</text>
+          
+          <text x="250" y="34" fill="#00a525" transform="rotate(90, 250, 250)" data-goc="90">ĐÔNG</text>
+          <text x="250" y="52" font-size="12" font-weight="bold" fill="#00a525" transform="rotate(90, 250, 250)" data-goc="90">CHẤN</text>
+          
+          <text x="250" y="34" fill="#00a525" transform="rotate(270, 250, 250)" data-goc="270">TÂY</text>
+          <text x="250" y="52" font-size="12" font-weight="bold" fill="#00a525" transform="rotate(270, 250, 250)" data-goc="270">ĐOÀI</text>
+        </g>
+        
+        <g font-weight="800" font-size="14" fill="#6b4e18">
+          <text x="250" y="34" transform="rotate(45, 250, 250)" data-goc="45">Đ.BẮC</text>
+          <text x="250" y="49" font-size="11" font-weight="bold" transform="rotate(45, 250, 250)" data-goc="45">CẤN</text>
+          
+          <text x="250" y="34" transform="rotate(135, 250, 250)" data-goc="135">Đ.NAM</text>
+          <text x="250" y="49" font-size="11" font-weight="bold" transform="rotate(135, 250, 250)" data-goc="135">TỐN</text>
+          
+          <text x="250" y="34" transform="rotate(225, 250, 250)" data-goc="225">T.NAM</text>
+          <text x="250" y="49" font-size="11" font-weight="bold" transform="rotate(225, 250, 250)" data-goc="225">KHÔN</text>
+          
+          <text x="250" y="34" transform="rotate(315, 250, 250)" data-goc="315">T.BẮC</text>
+          <text x="250" y="49" font-size="11" font-weight="bold" transform="rotate(315, 250, 250)" data-goc="315">CÀN</text>
+        </g>
+      </g>
+
+      <text x="250" y="286" font-family="sans-serif" font-size="8" font-weight="bold" fill="rgba(181, 142, 75, 0.45)" text-anchor="middle" letter-spacing="1.5">THÁI THÔNG</text>
+    </svg>
+    <div id="sonRing" style="display: none;"></div>
+  </div>
+</div>
+</div>
+</div>
+<div style="text-align: right; padding: 0 15px; margin-top: 10px; box-sizing: border-box; display: flex; justify-content: flex-end; align-items: center;">
+    
+    <button onclick="toggleDeclinationPanel(true)" style="background: rgba(0, 0, 0, 0.6); border: 1px solid #dfb76c; color: #dfb76c; border-radius: 20px; font-size: 11px; padding: 5px 14px; cursor: pointer; font-weight: bold; letter-spacing: 0.5px; transition: all 0.2s ease; margin-right: 12px;">
+        ⚙️ LỆCH TỪ
+    </button>
+
+    <div id="magnetic-status" style="display: inline-flex; align-items: center;">
+        <span id="accuracy-dot" style="width: 7px; height: 7px; background: #4caf50; border-radius: 50%; margin-right: 5px; box-shadow: 0 0 4px #4caf50;"></span>
+        <span id="accuracy-text" style="font-size: 9px; color: #888; font-weight: bold; text-transform: uppercase;">Tín hiệu tốt</span>
+    </div>
+</div>
+
+<div id="declination-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 1000000; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box;" onclick="if(event.target === this) toggleDeclinationPanel(false)">
+    <div style="width: 100%; max-width: 310px; background: #141414; border: 1px solid #dfb76c; border-radius: 16px; padding: 20px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); position: relative; box-sizing: border-box;">
+        
+        <div style="text-align: center; margin-bottom: 18px; box-sizing: border-box;">
+            <div style="font-size: 1.6rem; margin-bottom: 4px;">🧭</div>
+            <strong style="color: #dfb76c; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.5px; display: block;">Hiệu Chỉnh Lệch Từ</strong>
+        </div>
+
+        <div style="background: rgba(255, 255, 255, 0.04); padding: 12px; border-radius: 10px; margin-bottom: 14px; box-sizing: border-box;">
+            <div style="display: flex; align-items: center; justify-content: center; background: #000; padding: 8px 12px; border-radius: 8px; border: 1px solid #2d2d2d; box-sizing: border-box;">
+                <input type="text" id="declination-input" value="0" 
+                    inputmode="text" placeholder="0.0"
+                    style="width: 100%; background: transparent; color: #fff; border: none; text-align: center; font-size: 1.6rem; font-weight: bold; outline: none; padding: 0; margin: 0; box-sizing: border-box;">
+                <span style="color: #dfb76c; font-weight: bold; font-size: 1.3rem; margin-left: 4px; user-select: none;">°</span>
+            </div>
+            <p style="color: #777; font-size: 9.5px; text-align: center; margin: 6px 0 0 0; font-weight: 500; letter-spacing: 0.2px;">(Dương: Đông +, Âm: Tây -)</p>
+        </div>
+        
+        <button id="auto-detect-btn" onclick="autoDetectDeclination(event)" 
+                style="width: 100%; padding: 12px; background: #dfb76c; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 0.85rem; margin-bottom: 16px; box-sizing: border-box; transition: opacity 0.2s; text-transform: uppercase; letter-spacing: 0.3px;">
+            🛰️ TỰ ĐỘNG XÁC ĐỊNH
+        </button>
+
+        <div style="border-top: 1px solid #2a2a2a; padding-top: 14px; margin-top: 4px; box-sizing: border-box;">
+            <p style="color: #dfb76c; font-size: 10px; font-weight: bold; margin: 0 0 10px 0; text-align: center; opacity: 0.9; letter-spacing: 0.5px; text-transform: uppercase;">Xem Từ Xa (Nhập Tọa Độ Đất)</p>
+            
+            <div style="display: flex; gap: 8px; margin-bottom: 10px; box-sizing: border-box;">
+                <div style="flex: 1; box-sizing: border-box;">
+                    <input type="text" id="remote-lat" placeholder="Vĩ độ" inputmode="text" 
+                        style="width: 100%; background: #000; color: #fff; border: 1px solid #2d2d2d; padding: 9px 4px; text-align: center; border-radius: 6px; font-size: 0.85rem; outline: none; box-sizing: border-box;">
+                </div>
+                <div style="flex: 1; box-sizing: border-box;">
+                    <input type="text" id="remote-lon" placeholder="Kinh độ" inputmode="text" 
+                        style="width: 100%; background: #000; color: #fff; border: 1px solid #2d2d2d; padding: 9px 4px; text-align: center; border-radius: 6px; font-size: 0.85rem; outline: none; box-sizing: border-box;">
+                </div>
+            </div>
+            
+            <button id="remote-calc-btn" onclick="calculateRemoteDeclination()" 
+                    style="width: 100%; padding: 10px; background: transparent; color: #dfb76c; border: 1px solid #dfb76c; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.8rem; box-sizing: border-box; transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 0.3px;">
+                🧮 TÍNH ĐỘ LỆCH TỪ XA
+            </button>
+        </div>
+
+        <button onclick="toggleDeclinationPanel(false)" 
+                style="width: 100%; padding: 12px 0 0 0; background: transparent; color: #666; border: none; cursor: pointer; font-size: 0.75rem; text-decoration: underline; font-weight: 500; box-sizing: border-box; transition: color 0.2s;">
+            ĐÓNG CỬA SỔ
+        </button>
+    </div>
+</div>
+<button id="permission-btn" onclick="document.getElementById('iosPermissionModal').style.display = 'flex'" style="display:none; margin: 10px auto; padding: 10px 20px; background: #dfb76c; border: none; border-radius: 5px; font-weight: bold; color: #000;">
+    KÍCH HOẠT SENSOR ĐIỆN THOẠI
+</button>
+
+<div id="iosPermissionModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:10000; justify-content:center; align-items:center; backdrop-filter: blur(5px);">
+    <div style="background:#1c1c1e; padding:30px; border-radius:20px; text-align:center; width:80%; max-width:400px; border:1px solid #dfb76c;">
+        <div style="font-size:3rem; margin-bottom:15px;">🧭</div>
+        <h3 style="color:#dfb76c; margin-bottom:15px;">KÍCH HOẠT LA BÀN</h3>
+        <p style="color:#ccc; font-size:0.95rem; line-height:1.5; margin-bottom:25px;">
+            Để sử dụng tính năng La Bàn xoay tự động, vui lòng nhấn "ĐỒNG Ý" ở thông báo tiếp theo từ trình duyệt.
+        </p>
+        <button onclick="handleModalClick()" style="width:100%; padding:15px; background:#dfb76c; border:none; border-radius:10px; font-weight:bold; color:#000; cursor:pointer; font-size:1rem;">
+            ĐỒNG Ý KÍCH HOẠT
+        </button>
+    </div>
+</div>
+
+<div class="status-panel">
+    <div class="degree-display" id="degree-txt">0° - CUNG KHẢM (BẮC)</div>
+    <div id="element-box"></div>
+    
+    <!-- Dòng mới hiển thị chi tiết Hậu -->
+    <div class="hau-display" id="hau-txt" style="font-size:0.85rem; color:#ffdd88; margin:4px 0; font-weight:500;">
+    </div>
+    
+    <div class="fate-display" id="fate-txt">Mệnh chủ: ...</div>
+    <div id="judgment-box" class="judgment-badge bg-good">...</div>
+</div>
+
+    <!-- Thanh kéo tay la bàn - Đã ẩn vì không cần thiết -->
+  <div class="control-box" style="display: none;">
+    <input type="range" min="0" max="360" value="0" class="slider" id="compassSlider" oninput="manualRotate(this.value)">
+  </div>
+
+<details class="directions-list-panel" open>
+    <summary class="list-title" id="list-panel-title" 
+             style="cursor: pointer; list-style: none; padding: 10px; background: #161616; border-radius: 8px; text-align: center; display: block;">
+        Danh Sách Hướng Gợi Ý ▾
+    </summary>
+    <div id="directions-container">
+        </div>
+</details>
+
+  <div class="explanation-panel">
+    <div class="detail-content" id="detail-box">Đang khởi tạo mật pháp dữ liệu...</div>   
+  </div>
+
+  <div class="custom-alert-overlay" id="customAlert">
+    <div class="custom-alert-box">
+      <div class="custom-alert-title">⚠️ Sai Lệch Dữ Liệu</div>
+      <div class="custom-alert-msg" id="customAlertMsg">Nội dung cảnh báo phong thủy tại đây.</div>
+      <button class="custom-alert-btn" onclick="closeCustomAlert()">Đã Hiểu</button>
+    </div>
+  </div>
+<div id="infoModal" onclick="this.style.display='none'" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; padding:20px; align-items:center; justify-content:center;">
+    <div style="background:#1c1c1e; max-width:450px; padding:25px; border-radius:15px; color:#fff; border:1px solid #dfb76c;">
+        <h3 id="modalTitle" style="color:#dfb76c; margin-top:0;"></h3>
+        <div id="modalBody" style="font-size:0.95rem; line-height:1.6; color:#ccc;"></div>
+        <button style="width:100%; margin-top:20px; padding:10px; background:#dfb76c; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">ĐÓNG</button>
+    </div>
+</div>
+<script src="controls.js"></script>
+
+<script src="tex-mml-chtml.js"></script>
+</body>
+
+</html>
