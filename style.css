@@ -1395,8 +1395,8 @@ mjx-container {
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 9px 12px;
-    font-size: 0.83rem;
+    padding: 5px 12px;
+    font-size: 0.70rem;
     font-weight: 500;
     border-radius: 6px;
     cursor: pointer;
@@ -1411,12 +1411,8 @@ mjx-container {
     box-shadow: 0 2px 6px rgba(223, 183, 108, 0.4);
     
     /* === Phần quan trọng để nền vàng to hơn === */
-    padding: 19px 9px;              /* Tăng padding khi active */
-    margin: -6px;                    /* Ăn vào padding của container */
+    padding: 5px 12px;              /* Tăng padding khi active */
+    margin: -4px;                    /* Ăn vào padding của container */
     border-radius: 6px;
 }
 
-.gender-option:hover:not(.active) {
-    background: #333333;
-    color: #fff;
-}
