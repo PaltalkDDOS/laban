@@ -1147,15 +1147,15 @@ body {
 
 /* ĐỊNH VỊ NÚT CẨM NANG LÊN GÓC TRÊN BÊN PHẢI */
 .lk-guide-trigger-icon {
-    position: absolute;
-    top: 80px; /* Đưa lên trên */
-    left:30px;
+    position: relative;
+    top: 0px; /* Đưa lên trên */
+    right: 375px;
     background: rgba(223, 183, 108, 0.1);
     border: 1px solid #dfb76c;
     color: #dfb76c !important;
     border-radius: 6px;
     padding: 4px 10px;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: bold;
     cursor: pointer;
     z-index: 999;
