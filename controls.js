@@ -1573,50 +1573,44 @@ function updateDegreeDisplay(degree) {
     }
 
     if (foundHau) {
+        // Tước bỏ chữ " Hậu" và các icon emoji theo đúng yêu cầu tinh giản
         hauName = foundHau.ten.replace(" Hậu", "");
         const cl = foundHau.chatLuong;
-        if (cl.includes("Cát")) hauColor = "#30d158"; // Xanh công nghệ Cát khí
-        else if (cl.includes("Hung")) hauColor = "#ff3b30"; // Đỏ rực Hung sát
-        else hauColor = "#ff9f0a"; // Vàng hổ phách bình hòa
+        if (cl.includes("Cát")) hauColor = "#00FF41"; // Lime Green rực rỡ
+        else if (cl.includes("Hung")) hauColor = "#FF3131"; // Bright Red sát khí
+        else hauColor = "#FFD700"; // Gold bình hòa
     }
 
     // === KIỂM TRA KHÔNG VONG ===
     const khongVongInfo = kiemTraKhongVong(normalized);
-    // Thiết kế lại dạng nhãn cảnh báo thu gọn để không chiếm không gian hiển thị chính
     const khongVongHTML = khongVongInfo 
-        ? `<span style="color:#ff3b30; font-weight:bold; text-shadow: 0 0 6px rgba(255,59,48,0.5); margin-left: 8px; font-size:0.8rem;">[⚠️ ${khongVongInfo.loai}]</span>` 
+        ? `<span style="color:#ff4444; font-weight:bold; text-shadow: 0 0 6px #ff0000; margin-left: 6px;">— ⚠️ ${khongVongInfo.loai}</span>` 
         : "";
 
-    // === TÍNH ĐIỂM TỔNG HỢP (PT - VẬN 9) ===
-    let tongDiemHTML = "—";
+    // === TÍNH ĐIỂM TỔNG HỢP (PT - VẬN 9) CHÈN THẲNG VÀO DÒNG TRẠNG THÁI ===
+    let tongDiemHTML = "";
     if (typeof chủMệnh !== 'undefined' && chủMệnh) {
         const mucDichHienTai = document.getElementById('purpose')?.value || 'house';
         const tongHop = tinhDiemTongHop(chủMệnh, normalized, new Date().getFullYear(), mucDichHienTai);
         
-        const diemColor = tongHop.diem >= 72 ? "#30d158" : "#ff3b30";
-        tongDiemHTML = `<span style="color:${diemColor}; font-weight:800;">${tongHop.diem}pt (${tongHop.level})</span>`;
+        const diemColor = tongHop.diem >= 80 ? "#00FF41" : (tongHop.diem >= 60 ? "#FFD700" : "#ff4444");
+        // Quăng gọn số điểm pt vào mạch chữ, xóa bỏ toàn bộ khối nền div đen thô kệch cũ
+        tongDiemHTML = `<span style="color:${diemColor}; font-weight:800; margin-left: 6px;">— PT: ${tongHop.diem}pt</span>`;
     }
 
-    // CẬP NHẬT GIAO DIỆN KHÓA CỨNG CHỐNG RUNG LẮC KHUNG HÌNH
+    // CẬP NHẬT KIẾN TRÚC GIAO DIỆN SIÊU PHẲNG CHỐNG LAYOUT THRASHING
     const degreeTxt = document.getElementById('degree-txt');
     if (degreeTxt) {
-        // Ép cố định cấu trúc hiển thị flexbox để la bàn quay mượt mà không nhảy dòng
-        degreeTxt.style.minHeight = "65px";
-        degreeTxt.style.display = "flex";
-        degreeTxt.style.flexDirection = "column";
-        degreeTxt.style.justifyContent = "center";
-        degreeTxt.style.boxSizing = "border-box";
-
         degreeTxt.innerHTML = `
-            <div style="font-size:1rem; color:#fff; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.4;">
-                <span style="font-size:1.3rem; color:#ffd700; font-family:monospace; font-weight:900; padding-right:4px;">${normalized.toFixed(1)}°</span> 
-                - Phương <span>${getCungName(normalized)}</span> 
-                - Sơn <span style="color:#dfb76c; text-shadow: 0 0 6px rgba(223,183,108,0.5); font-weight:800;">${sonName}</span>
+            <div style="display:flex; align-items:center; justify-content:center; white-space:nowrap; font-size:1rem; color:#fff; font-weight:700; line-height:1.2;">
+                <span style="font-size:2.5rem; font-weight:900; color:#ffffff; font-family:monospace; margin-right:6px; letter-spacing:-1px;">${normalized.toFixed(1)}°</span>
+                <span>- Hướng ${getCungName(normalized)}</span>
+                <span style="margin-left:5px;">- Sơn <strong style="color:#ffd700; text-shadow: 0 0 8px rgba(255,215,0,0.5); font-style:normal; font-weight:800;">${sonName}</strong></span>
             </div>
-            
-            <div style="font-size:0.85rem; color:#aaa; margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.4; display:flex; align-items:center; flex-wrap:nowrap;">
-                <span style="overflow:hidden; text-overflow:ellipsis;">Hậu: <span style="color:${hauColor}; font-weight:700;">${hauName} (${foundHau ? foundHau.chatLuong : '—'})</span></span>
-                <span style="margin-left:auto; padding-left:10px; flex-shrink:0;">PT: ${tongDiemHTML}</span>
+
+            <div style="height:26px; display:flex; align-items:center; justify-content:center; white-space:nowrap; font-size:0.82rem; color:#bbb; overflow:hidden; width:100%; box-sizing:border-box; margin-top:2px;">
+                <span>Hậu: <span style="color:${hauColor}; font-weight:700;">${hauName} (${foundHau ? foundHau.chatLuong : '—'})</span></span>
+                ${tongDiemHTML}
                 ${khongVongHTML}
             </div>
         `;
