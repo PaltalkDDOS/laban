@@ -1218,19 +1218,18 @@ function getLuanDoanChiTiet(huong, son) {
     </div>`;
 }
 function updateCompassUI(heading) {
-    // ==================== TOÁN HỌC KHÍ TRƯỜNG ====================
+    // ==================== TOÁN HỌC KHÍ TRƯỜNG ĐỊA LÝ LÀM TRÒN GÓC THỰC TẾ ====================
     let trueHeading = (heading + (magneticDeclination % 360) + 360) % 360;
     currentHeading = Math.round(trueHeading);
-
-    // Xoay la bàn
+    
+    // Xoay đồ hình mặt la bàn theo góc thực tế thực địa
     compass.style.transform = `rotate(${-trueHeading}deg)`;
     needle.style.transform = `rotate(0deg)`;
     compassSlider.value = currentHeading;
 
-    // ==================== 1. XÁC ĐỊNH 8 CUNG (Giữ logic gốc của bạn) ====================
+    // ==================== 1. XÁC ĐỊNH LƯỚI TỌA ĐỘ BÁT CUNG CHÍNH TÔNG ====================
     let currentCung = "";
     let currentCode = "";
-
     if (trueHeading >= 337.5 || trueHeading < 22.5) {
         currentCung = "KHẢM (BẮC)";
         currentCode = "N";
@@ -1257,24 +1256,22 @@ function updateCompassUI(heading) {
         currentCode = "NW";
     }
 
-    // ==================== 2. 24 SƠN + 72 HẬU ====================
+    // ==================== 2. ĐỊNH VỊ 24 SƠN VÀ 72 HẬU LONG MẠCH ====================
     let gockim = (trueHeading % 360 + 360) % 360;
     let sơnHiệnTạiObj = SON_24_CONFIG.find(s => {
         if (s.min > s.max) return gockim >= s.min || gockim < s.max;
         return gockim >= s.min && gockim < s.max;
     }) || SON_24_CONFIG[0];
-
     let sơnHiệnTại = sơnHiệnTạiObj.name;
 
-    // === QUAN TRỌNG: DÙNG trueHeading để lấy Hậu ===
     const currentHauInfo = getCurrentHauInfo(trueHeading);
-
-    // === GỌI THUẬT TOÁN MỚI - GIỮ NGUYÊN HOÀN TOÀN ===
+    
+    // Đọc trạng thái mục đích sử dụng để kích hoạt bộ não chấm điểm đa tầng thời vận
     const mụcĐích = document.getElementById('purpose').value;
     const namHienTai = new Date().getFullYear();
     const tongHop = tinhDiemTongHop(chủMệnh || "Khảm", trueHeading, namHienTai, mụcĐích);
 
-    // Hiển thị
+    // Hiển thị thông số góc thực địa lên màn hình chính la bàn
     degreeTxt.innerHTML = `
         ${currentHeading}° - Phương ${currentCung} - Sơn <strong>${sơnHiệnTại}</strong><br>
         <span style="color:${currentHauInfo.emoji === '🟢' ? '#00ff41' : (currentHauInfo.emoji === '🔴' ? '#ff4444' : '#ffd700')}">
@@ -1283,7 +1280,7 @@ function updateCompassUI(heading) {
         <span style="margin-left:8px; color:#ffd700;">${tongHop.diem}pt</span>
     `;
 
-    // ==================== Phần còn lại GIỮ NGUYÊN từ hàm gốc của bạn ====================
+    // ==================== 3. TRUY XUẤT DỮ LIỆU INPUT BIỂU MẪU ====================
     const dayStr = document.getElementById('birthDay').value;
     const monthStr = document.getElementById('birthMonth').value;
     const yearStr = document.getElementById('birthYear').value;
@@ -1374,10 +1371,10 @@ function updateCompassUI(heading) {
         luanDoanSonChiTiet = `<span style="color:#a0a0a0; font-style:italic;">Tọa độ: ${currentHeading}° | Sơn ${sơnHiệnTại} | Phương ${sơnHiệnTạiObj?.huong}.</span>`;
     }
 
-    // ==================== 6. ĐỒNG BỘ MÀU SẮC GIAO DIỆN THEO HỆ THỐNG ĐIỂM PT MỚI ====================
+        // ==================== 6. ĐỒNG BỘ MÀU SẮC GIAO DIỆN THEO HỆ THỐNG ĐIỂM PT MỚI ====================
     const currentConfig = ConfigPhongThuy[mụcĐích] || { title: "Cung vị", isCat: true };
-    
-    // Đảo ngược điều kiện đánh giá màu sắc: Nếu điểm PT đạt mốc hợp cách >= 72 thì là Cát Cách
+   
+    // === SỬA LỖI Ở ĐÂY: Giữ logic điểm mới nhưng đảm bảo hiển thị pháp hóa giải đúng ===
     const isGood = tongHop.diem >= 72;
     const activeColor = isGood ? '#30d158' : '#ff3b30';
 
@@ -1387,7 +1384,8 @@ function updateCompassUI(heading) {
     detailBox.style.borderLeftColor = activeColor;
 
     let noiDungDetail = "";
-    // Phần 1: Tiêu đề trạng thái và điểm số khí cục hành độ
+
+    // Phần 1: Tiêu đề trạng thái và điểm số
     noiDungDetail += `<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,255,255,0.05); border-left: 4px solid ${activeColor}">`;
     noiDungDetail += `<strong style="color: ${activeColor}; font-size: 1.05rem; display:block; margin-bottom:5px;">`;
     noiDungDetail += `◆ ${!mụcĐích ? (isGood ? 'CÁT TINH' : 'HUNG TINH') : (isGood ? 'CÁT CÁCH' : 'HUNG CÁCH')} (${cungTrạch.toUpperCase()}) — Chỉ số PT: <span style="color:#ffd700;">${tongHop.diem}pt</span> [${tongHop.level}]:</strong>`;
@@ -1397,7 +1395,7 @@ function updateCompassUI(heading) {
     }
     noiDungDetail += thôngTinCung.ý_nghĩa + '</span></div>';
 
-    // Phần 2: Hộp mật pháp điều hòa khí trường tổng hợp
+    // Phần 2: Hộp mật pháp điều hòa khí trường tổng hợp  ===> ĐÃ SỬA Ở ĐÂY
     if (!isGood) {
         const matPhap = (typeof sinhMatPhapHoaGiai === 'function') ? sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung, currentCode) : "";
         const camNang = advices[cungTrạch] || "";
@@ -1416,7 +1414,7 @@ function updateCompassUI(heading) {
     noiDungDetail += '<b style="color:var(--gold); font-size: 0.95rem;">🎯 THẦN SÁT ĐỘ SỐ (24 SƠN CHI TIẾT):</b>';
     noiDungDetail += '<div style="margin-top:8px; color:#fff; font-size: 0.95rem; line-height: 1.6;">' + luanDoanSonChiTiet + '</div>';
     noiDungDetail += '</div>';
-    
+   
     // Vận hạn dịch chuyển cửu tinh lưu niên
     noiDungDetail += '<div style="border-top: 1px dashed #444; padding-top: 10px;">';
     noiDungDetail += '<b style="color:var(--gold); font-size: 0.95rem;">⏳ VẬN HẠN CỬU TINH (NĂM ' + namHienTai + '):</b>';
