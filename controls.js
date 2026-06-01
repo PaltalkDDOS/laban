@@ -1557,13 +1557,12 @@ function getHuongBySon(tenSon) {
 function updateDegreeDisplay(degree) {
     const normalized = ((degree % 360) + 360) % 360;
     const sonName = tìmSơnHướng(normalized);
-    
-    // Tìm Hậu
     let hauName = "—";
     let hauColor = "#ffffff";
-    let hauQuality = "";
+
+    // Tìm Hậu
     let minDiff = Infinity;
-    
+    let foundHau = null;
     for (const key in Data72Hau) {
         const d = parseFloat(key);
         const diff = Math.min(Math.abs(normalized - d), 360 - Math.abs(normalized - d));
@@ -1572,23 +1571,15 @@ function updateDegreeDisplay(degree) {
             foundHau = Data72Hau[key];
         }
     }
-    
     if (foundHau) {
         hauName = foundHau.ten.replace(" Hậu", "");
         const cl = foundHau.chatLuong;
-        if (cl.includes("Cát")) {
-            hauColor = "#00FF41";
-            hauQuality = "🟢 (Đại Cát)";
-        } else if (cl.includes("Hung")) {
-            hauColor = "#FF3131";
-            hauQuality = "🔴 (Hung)";
-        } else {
-            hauColor = "#FFD700";
-            hauQuality = "🟡";
-        }
+        if (cl.includes("Cát")) hauColor = "#00FF41";
+        else if (cl.includes("Hung")) hauColor = "#FF3131";
+        else hauColor = "#FFD700";
     }
 
-    // Không vong
+    // Không Vong
     const khongVongInfo = kiemTraKhongVong(normalized);
     const khongVongHTML = khongVongInfo 
         ? `<span style="color:#ff4444; font-weight:bold; text-shadow: 0 0 6px #ff0000;">⚠️ ${khongVongInfo.loai}</span>` 
@@ -1601,32 +1592,24 @@ function updateDegreeDisplay(degree) {
         const tongHop = tinhDiemTongHop(chủMệnh, normalized, new Date().getFullYear(), mucDichHienTai);
         
         const diemColor = tongHop.diem >= 80 ? "#00FF41" : (tongHop.diem >= 60 ? "#FFD700" : "#ff4444");
-        tongDiemHTML = `<span style="color:${diemColor}; font-weight:bold;">${tongHop.diem}pt</span>`;
+        tongDiemHTML = `<strong style="color:${diemColor}; font-size: 1.05em;">${tongHop.diem}pt (${tongHop.level})</strong>`;
     }
 
+    // === CẬP NHẬT HIỂN THỊ ===
     const degreeTxt = document.getElementById('degree-txt');
     if (degreeTxt) {
         degreeTxt.innerHTML = `
-            <div style="font-size: 2.1em; font-weight: bold; color: #ffffff; text-shadow: 0 0 8px rgba(255,255,255,0.6); margin-bottom: 4px;">
+            <span style="font-size: 2.1em; font-weight: bold; color: #FFD700;">
                 ${normalized.toFixed(1)}°
-            </div>
+            </span>
+            <span style="font-size: 1.05em; color: #ccc;"> - Phương ${getCungName(normalized)} (${getPhuongVi(normalized)})</span><br>
             
-            <div style="font-size: 1.05em; margin-bottom: 6px; line-height: 1.3;">
-                <strong style="color:#a0d8ff;">${getCungName(normalized)}</strong> 
-                <span style="color:#ffd700; font-weight:bold;">- Sơn ${sonName}</span>
-            </div>
-
-            <!-- Khung Hậu cố định -->
-            <div style="background: rgba(0,0,0,0.45); border: 1px solid rgba(255,215,0,0.3); 
-                        border-radius: 8px; padding: 6px 10px; margin: 6px 0; min-height: 52px; 
-                        display: flex; align-items: center; flex-wrap: wrap; gap: 6px;">
-                <strong style="color:#ffd700;">Hậu:</strong>
-                <span style="color:${hauColor}; font-weight:bold; text-shadow: 0 0 6px ${hauColor}80;">
-                    ${hauName} ${hauQuality}
-                </span>
-                ${tongDiemHTML ? ` • ${tongDiemHTML}` : ''}
-                ${khongVongHTML}
-            </div>
+            <span style="color:#FFD700; font-weight:500;">Sơn ${sonName}</span> 
+            <span style="color:${hauColor}; font-weight:600; text-shadow: 0 0 8px ${hauColor}80;">
+                • Hậu: ${hauName}
+            </span> 
+            ${khongVongHTML}
+            ${tongDiemHTML}
         `;
     }
 }
