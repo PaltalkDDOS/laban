@@ -1584,7 +1584,7 @@ function updateDegreeDisplay(degree) {
     let hauName = "—";
     let hauColor = "#ffffff";
 
-    // Tìm Hậu nhanh hơn bằng tìm kiếm trực tiếp
+    // Tìm Hậu
     let minDiff = Infinity;
     let foundHau = null;
     for (const key in Data72Hau) {
@@ -1595,40 +1595,43 @@ function updateDegreeDisplay(degree) {
             foundHau = Data72Hau[key];
         }
     }
-
     if (foundHau) {
         hauName = foundHau.ten.replace(" Hậu", "");
         const cl = foundHau.chatLuong;
-        if (cl.includes("Cát")) hauColor = "#00FF41"; // Lime Green
-        else if (cl.includes("Hung")) hauColor = "#FF3131"; // Bright Red
-        else hauColor = "#FFD700"; // Gold
+        if (cl.includes("Cát")) hauColor = "#00FF41";
+        else if (cl.includes("Hung")) hauColor = "#FF3131";
+        else hauColor = "#FFD700";
     }
 
-    // === KIỂM TRA KHÔNG VONG ===
+    // Không Vong
     const khongVongInfo = kiemTraKhongVong(normalized);
     const khongVongHTML = khongVongInfo 
-        ? `<span style="color:#ff4444; font-weight:bold; text-shadow: 0 0 6px #ff0000; margin-left: 10px;">⚠️ ${khongVongInfo.loai}</span>` 
+        ? `<span style="color:#ff4444; font-weight:bold; text-shadow: 0 0 6px #ff0000;">⚠️ ${khongVongInfo.loai}</span>` 
         : "";
 
-    // === TÍNH ĐIỂM TỔNG HỢP (PT - Vận 9) TRỰC TIẾP TRÊN LA BÀN ===
+    // Điểm tổng hợp
     let tongDiemHTML = "";
     if (typeof chủMệnh !== 'undefined' && chủMệnh) {
-        // Mặc định là 'house' (Hướng Cát) khi đang cầm la bàn đi vòng quanh
         const mucDichHienTai = document.getElementById('purpose')?.value || 'house';
         const tongHop = tinhDiemTongHop(chủMệnh, normalized, new Date().getFullYear(), mucDichHienTai);
         
         const diemColor = tongHop.diem >= 80 ? "#00FF41" : (tongHop.diem >= 60 ? "#FFD700" : "#ff4444");
-        tongDiemHTML = `<div style="margin-top: 5px;"><strong style="color:${diemColor}; font-size: 1.1em; background: rgba(0,0,0,0.5); padding: 2px 8px; border-radius: 4px;">PT: ${tongHop.diem}đ (${tongHop.level})</strong></div>`;
+        tongDiemHTML = `<strong style="color:${diemColor}; font-size: 1.05em;">${tongHop.diem}pt (${tongHop.level})</strong>`;
     }
 
-    // Cập nhật DOM
+    // === CẬP NHẬT HIỂN THỊ ===
     const degreeTxt = document.getElementById('degree-txt');
     if (degreeTxt) {
         degreeTxt.innerHTML = `
-            ${normalized.toFixed(1)}°
-            - CUNG <strong>${getCungName(normalized)}</strong>
-            - SƠN <strong style="color:#FFD700;">${sonName}</strong>
-            - HẬU <strong style="color:${hauColor}; text-shadow: 0 0 8px ${hauColor}80;">${hauName}</strong>
+            <span style="font-size: 2.1em; font-weight: bold; color: #FFD700;">
+                ${normalized.toFixed(1)}°
+            </span>
+            <span style="font-size: 1.05em; color: #ccc;"> - Phương ${getCungName(normalized)} (${getPhuongVi(normalized)})</span><br>
+            
+            <span style="color:#FFD700; font-weight:500;">Sơn ${sonName}</span> 
+            <span style="color:${hauColor}; font-weight:600; text-shadow: 0 0 8px ${hauColor}80;">
+                • Hậu: ${hauName}
+            </span> 
             ${khongVongHTML}
             ${tongDiemHTML}
         `;
