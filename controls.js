@@ -1126,7 +1126,7 @@ const DATA_HOA_GIAI = {
         'Kim': { phap: 'Ngũ Quỷ Hỏa tinh thiêu đốt trực diện Cung Mệnh Kim của gia chủ, tạo thế trận "Lửa Thiêu Cốt Tủy", sinh ra tai họa hoạn nạn ập đến bất ngờ, thị phi quấy phá khốc liệt và hao tán tài sản thần tốc.', vat: 'Đặt một <strong>Đĩa Thất Tinh Thạch Anh Vàng</strong> hoặc <strong>Tượng Tỳ Hưu Ngọc Hoàng Long Nguyên Khối</strong> (thuộc hành Thổ). Thổ đóng vai trò lá chắn tối thượng hút hết hỏa khí hung tàn của Ngũ Quỷ, sau đó Thổ lại quay sang tương sinh chuyển hóa bồi bổ năng lượng cường đại cho mệnh Kim của chủ nhà.' },
         'Mộc': { phap: 'Ngũ Quỷ Hỏa tinh rút cạn tinh huyết năng lượng của Cung Mệnh Mộc (Mộc phải sinh xuất cho Hỏa sát), khiến gia chủ hao mòn trí lực, kinh doanh thua lỗ, gia đạo lục đục không yên.', vat: 'Treo <strong>Chuông Gió Đồng Pháp Khí 6 Thanh</strong> kết hợp đặt <strong>Tháp Văn Xương Bằng Đồng Nguyên Khối</strong> (thuộc hành Kim). Kim lực mạnh mẽ sẽ chặt đứt mạch liên kết tà tính của Hỏa tinh tại phương vị này, giải phóng bản mệnh Mộc khỏi thế kiệt quệ.' },
         'Thủy': { phap: 'Cung Mệnh Thủy xung đột trực diện kịch liệt với Ngũ Quỷ Hỏa tinh, hình thành cục diện đại kỵ "Thủy Hỏa Vị Tế", làm dòng khí trong nhà đảo điên, vợ chồng ly tán, tinh thần bất an.', vat: 'Sử dụng vật phẩm chứa linh khí Mộc cao như <strong>Hồ Lô Gỗ Đào Tự Nhiên Thần Chú</strong> hoặc <strong>Tranh Trúc Chỉ Phong Thủy</strong> tại phương vị này để chuyển hóa tương khắc thành thế sinh sát thuần khiết: Thủy sinh Mộc - Mộc sinh Hỏa (thuần hóa thuần thục ác tính Ngũ Quỷ thành ngọn lửa sinh hoạt lành tính).' },
-        'Hỏa': { phap: 'Ngũ Quỷ Hỏa kết hợp với bản mệnh Hỏa tạo thành ngọn lửa hung tàn thiêu rụi toàn bộ hậu vận, khiến tính khí thành viên gia đình nóng nảy thất thường, dễ vướng vào tranh chấp luật pháp bĩ cực.', vat: 'Bố trí một <strong>Lu Nước Phong Thủy Tuần Hoàn Màu Đen</strong> hoặc đặt <strong>Quả Cầu Thạch Anh Tím trên Đế Thạch Anh Thô</strong> (thuộc hành Thổ) giúp hấp thu toàn bộ nhiệt lượng tiêu cực dư thừa, bình ổn hoàn toàn trật tự năng lượng.' },
+        'Hỏa': { phap: 'Ngũ Quỷ Hỏa kết hợp with bản mệnh Hỏa tạo thành ngọn lửa hung tàn thiêu rụi toàn bộ hậu vận, khiến tính khí thành viên gia đình nóng nảy thất thường, dễ vướng vào tranh chấp luật pháp bĩ cực.', vat: 'Bố trí một <strong>Lu Nước Phong Thủy Tuần Hoàn Màu Đen</strong> hoặc đặt <strong>Quả Cầu Thạch Anh Tím trên Đế Thạch Anh Thô</strong> (thuộc hành Thổ) giúp hấp thu toàn bộ nhiệt lượng tiêu cực dư thừa, bình ổn hoàn toàn trật tự năng lượng.' },
         'Thổ': { phap: 'Mệnh Thổ vô tình hấp thụ năng lượng Hỏa từ Ngũ Quỷ tinh. Dù là mối quan hệ sinh nhưng do nạp phải dòng khí độc hại của sát tinh, gia chủ dễ rơi vào trạng thái trì trệ, suy nghĩ tiêu cực, chịu nhiều u uất.', vat: 'Sử dụng <strong>Gương Bát Quái Gỗ Đào</strong> ở cửa hoặc đặt <strong>Cặp Kỳ Lân Bằng Đồng</strong> (thuộc hành Kim) tại phương vị này nhằm tiết giảm triệt để Thổ khí đã bị nhiễm độc tà khí, trả lại sự thanh tịnh cho dương trạch.' }
     },
     'Lục Sát': {
@@ -1846,140 +1846,69 @@ function kiemTraKhongVong(degree) {
 }
 
 function tinhDiemTongHop(cungPhi, degree, namHienTai, mucDich) {
+    // 1. Dữ liệu đầu vào (Giữ nguyên để đảm bảo tính liên kết)
     const sonName = tìmSơnHướng(degree);
     const sonInfo = layThongTin24Son(degree, cungPhi, namHienTai);
     const hauInfo = getCurrentHauInfo(degree);
-    const nguHoang = getNguHoangInfo(namHienTai);
-    const khongVong = kiemTraKhongVong(degree);
     const satTinhs = getPhongThuySatTinh(sonName, namHienTai);
-
-    // Lấy cấu hình hạng mục
-    const config = ConfigPhongThuy[mucDich] || { title: "Vị trí / Hướng đang chọn", isCat: true };
+    const khongVong = kiemTraKhongVong(degree);
+    const config = ConfigPhongThuy[mucDich] || { title: "Vị trí", isCat: true };
     const isCatPurpose = config.isCat;
 
-    // --- BƯỚC 1: ĐIỂM GỐC BÁT TRẠCH MINH CHÂU ---
-    let diemBatTrachMinhChau = 68;
-    let isCungCatBatTrach = false;
-    let isCungHungBatTrach = false;
-
-    if (sonInfo.luanDoan.includes("Sinh Khí") || sonInfo.luanDoan.includes("Thiên Y")) {
-        diemBatTrachMinhChau += 22;
-        isCungCatBatTrach = true;
-    } else if (sonInfo.luanDoan.includes("Diên Niên") || sonInfo.luanDoan.includes("Phục Vị")) {
-        diemBatTrachMinhChau += 14;
-        isCungCatBatTrach = true;
-    } else if (sonInfo.luanDoan.includes("Tuyệt Mệnh") || sonInfo.luanDoan.includes("Ngũ Quỷ")) {
-        diemBatTrachMinhChau -= 30;
-        isCungHungBatTrach = true;
-    } else {
-        diemBatTrachMinhChau -= 15;
-        isCungHungBatTrach = true;
-    }
-
-    // --- BƯỚC 2: TƯƠNG TÁC LONG MẠCH VÀ ĐẢO CHIỀU HẠNG MỤC ---
-    let diemHau72Modifier = (hauInfo.diem - 60);
-    let messageGhiChu = sonInfo.luanDoan;
-    let hoaGiaiGợiÝ = hauInfo.giaiphap || sonInfo.hoaGiai;
-
-    if (!isCatPurpose) {
-        // Hạng mục hung (Bếp, Hố ga, Toilet, Két sắt trấn hung)
-        if (isCungHungBatTrach) {
-            diemBatTrachMinhChau = 90; 
-            diemHau72Modifier = -diemHau72Modifier; // Long mạch xấu đặt uế tạp làm suy giảm hung tính
-            messageGhiChu += ` 🌟 Thiết kế đắc cách! Phương vị này có trường khí xấu, cực kỳ thích hợp đặt ${config.title} để lấy độc trị độc, áp chế hung tinh (Tọa Hung Trấn Sát thành công).`;
-            hoaGiaiGợiÝ = "Vị trí đắc cách trấn sát hoàn hảo. Không cần hóa giải.";
-        } else {
-            diemBatTrachMinhChau = 35;
-            diemHau72Modifier = -diemHau72Modifier; // Long mạch tốt bị uế tạp làm ô uế
-            messageGhiChu += ` ⚠️ Đại kỵ! Phương vị này có cát khí Đại Cát của bạn, tuyệt đối không đặt các công trình uế tạp phá hoại sinh khí.`;
-            hoaGiaiGợiÝ = `Nên di dời ${config.title} sang khu vực cung xấu (Tuyệt Mệnh, Ngũ Quỷ) để giải phóng cát khí cho ngôi nhà.`;
-        }
-
-        if (mucDich === 'kitchen') {
-            messageGhiChu += " (Lưu ý: Bếp cần Tọa Hung nhưng Miệng bếp phải quay về hướng Cát để đón lành).";
-        }
-        if (mucDich === 'safe') {
-            messageGhiChu += " (Vị trí Két sắt đặt tại cung hung giúp trấn giữ tài lộc không bị thất thoát).";
-        }
-    } else {
-        // Hạng mục cát (Cửa chính, Ban thờ, Giường ngủ)
-        if (isCungCatBatTrach) {
-            messageGhiChu += ` 🌟 Phương vị Cát tinh hội tụ, mở cửa, đặt ban thờ hoặc giường ngủ tại đây giúp nghênh tài đón lộc, gia đạo an khang.`;
-        } else {
-            messageGhiChu += ` ⚠️ Vị trí mang năng lượng xấu, không phù hợp cho các hạng mục đón khí tĩnh tụ như ${config.title}.`;
-        }
-    }
-
-    // Tính tổng điểm cơ bản
-    let diem = diemBatTrachMinhChau + diemHau72Modifier;
-
-    // --- BƯỚC 3: TƯƠNG TÁC LƯU NIÊN SÁT TINH (Cực mạnh) ---
-    let hasNguHoang = nguHoang.includes("Sao 5") || nguHoang.includes("Ngũ Hoàng");
+    // 2. Tầng 1: ĐIỂM NỀN (BT68) + Δ Cát Hung
+    let diemBT = 68;
+    let isCungCat = sonInfo.luanDoan.includes("Sinh Khí") || sonInfo.luanDoan.includes("Thiên Y") || 
+                   sonInfo.luanDoan.includes("Diên Niên") || sonInfo.luanDoan.includes("Phục Vị");
     
+    diemBT += isCungCat ? 20 : -20; // Điểm nền biến thiên theo cung
+    
+    // 3. Tầng 2: BIẾN THIÊN 72 HẬU (Δ H72)
+    // HauInfo.diem thường nằm trong khoảng 50-90. Ta lấy lệch so với 60 làm Δ.
+    let diemHau = (hauInfo.diem - 60); 
+
+    // 4. Tầng 3: HỆ SỐ VẬN TINH (K_Van - Dành riêng cho Vận 9)
+    // Gọi hàm lấy sao năm hiện tại để nhân hệ số
+    const vanSo = Math.floor((namHienTai - 1864) / 20) % 9 + 1;
+    const saoNam = VAN_DATA[vanSo] ? VAN_DATA[vanSo][getHuongBySon(sonName)] : { loai: "neutral" };
+    const kVan = (saoNam.loai === "best") ? 1.2 : (saoNam.loai === "worst" ? 0.6 : 1.0);
+
+    // 5. TÍNH ĐIỂM TỔNG HỢP THEO CÔNG THỨC: (BT + ΔH) * K
+    let diem = ((diemBT + diemHau) * kVan);
+
+    // 6. Tầng 4: SÁT TINH PHẠT (Σ Ψ_Sat) & ĐẢO CHIỀU MỤC ĐÍCH
+    let satPenalty = 0;
     satTinhs.forEach(sat => {
-        if (sat.ten === "NGŨ HOÀNG ĐẠI SÁT" || sat.ten === "THÁI TUẾ") {
-            diem -= 28;
-            hasNguHoang = (sat.ten === "NGŨ HOÀNG ĐẠI SÁT") ? true : hasNguHoang;
-        } else if (sat.ten === "TAM SÁT" || sat.ten === "TUẾ PHÁ") {
-            diem -= 18;
-        }
+        satPenalty += (sat.ten === "NGŨ HOÀNG ĐẠI SÁT" || sat.ten === "THÁI TUẾ") ? 28 : 18;
     });
 
-    if (hasNguHoang && !satTinhs.some(s => s.ten === "NGŨ HOÀNG ĐẠI SÁT")) {
-        diem -= 28; // Tránh trừ điểm 2 lần nếu trùng lặp logic cũ
+    // Áp dụng Đảo chiều Âm Dương (Trấn Sát)
+    if (!isCatPurpose) {
+        diem = (100 - diem) + 20; // Nghịch đảo điểm nếu là khu vực cần Tọa Hung
     }
 
-    // --- BƯỚC 4: FATAL OVERRIDE (CÁC ĐẠI KỴ TRIỆT TIÊU TRƯỜNG KHÍ) ---
+    diem -= satPenalty;
+
+    // 7. FATAL OVERRIDE (Bộ ngắt mạch Không Vong)
     if (khongVong) {
-        if (khongVong.loai === "ĐẠI KHÔNG VONG") {
-            return {
-                diem: 12,
-                level: "ĐẠI HUNG - ĐẠI KHÔNG VONG",
-                message: "🚫 Tuyến độ nằm chính giữa ranh giới 2 cung lớn. Khí trường hỗn loạn, lạc hướng tâm linh, vạn sự bất thành.",
-                hoaGiai: "Không thể hóa giải bằng vật phẩm. Bắt buộc phải xoay lại hướng cửa hoặc thay đổi vị trí thiết kế từ 2 đến 3 độ để thoát tuyến Không Vong.",
-                khongVong: khongVong,
-                satTinhs: satTinhs,
-                sonName: sonName,
-                sonInfo: sonInfo,
-                hauInfo: hauInfo
-            };
-        }
-        if (khongVong.loai === "TIỂU KHÔNG VONG") {
-            diem -= 22;
-        }
+        diem = (khongVong.loai === "ĐẠI KHÔNG VONG") ? 12 : (diem - 22);
     }
 
-    // Bẫy lỗi sập mạch từ 72 Hậu dính Ngũ Hoàng
-    if (hauInfo.overrideIf && hauInfo.overrideIf.includes("Ngũ Hoàng") && hasNguHoang) {
-        diem = Math.min(diem, 25);
-    }
-
-    // Chuẩn hóa điểm số trong khoảng chuẩn [10 - 98]
+    // Chuẩn hóa
     diem = Math.max(10, Math.min(98, Math.round(diem)));
 
-    // Phân cấp level thông minh theo mục đích Cát/Hung
-    let level = "TRUNG BÌNH";
-    if (diem >= 85) {
-        level = isCatPurpose ? "ĐẠI CÁT - ĐÓN KHÍ" : "ĐẠI CÁT - TRẤN SÁT";
-    } else if (diem >= 72) {
-        level = "CÁT VỊ (HỢP CÁCH)";
-    } else if (diem >= 50) {
-        level = "TRUNG BÌNH (CẦN LƯU Ý)";
-    } else {
-        level = isCatPurpose ? "HUNG - KHÔNG NÊN DÙNG" : "ĐẠI HUNG (SAI VỊ TRÍ TRẤN)";
-    }
+    // Phân cấp Level
+    let level = diem >= 85 ? "ĐẠI CÁT" : (diem >= 70 ? "CÁT VỊ" : (diem >= 50 ? "TRUNG BÌNH" : "HUNG"));
 
-    // Trả về một object đồng bộ tối thượng chứa toàn bộ linh hồn dữ liệu
     return {
         diem: diem,
         level: level,
-        message: messageGhiChu,
-        hoaGiai: hoaGiaiGợiÝ,
+        message: sonInfo.luanDoan,
+        hoaGiai: hauInfo.giaiphap,
         khongVong: khongVong,
         satTinhs: satTinhs,
         sonName: sonName,
-        sonInfo: sonInfo,   // Giữ lại bản gốc cho render
-        hauInfo: hauInfo    // Giữ lại trọn vẹn mạch 72 hậu
+        sonInfo: sonInfo,
+        hauInfo: hauInfo
     };
 }
 
