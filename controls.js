@@ -1218,45 +1218,48 @@ function getLuanDoanChiTiet(huong, son) {
     </div>`;
 }
 function updateCompassUI(heading) {
-    // ==================== TOÁN HỌC KHÍ TRƯỜNG ĐỊA LÝ LÀM TRÒN GÓC THỰC TẾ ====================
+    // 1. TÍNH GÓC THỰC TẾ (Đã bù trừ độ lệch từ - Magnetic Declination)
     let trueHeading = (heading + (magneticDeclination % 360) + 360) % 360;
+    // Lưu góc thực tế đã làm tròn để hiển thị công cụ khác nếu cần
     currentHeading = Math.round(trueHeading);
     
-    // Xoay đồ hình mặt la bàn theo góc thực tế thực địa
+    // Xoay la bàn theo góc THỰC TẾ
     compass.style.transform = `rotate(${-trueHeading}deg)`;
     needle.style.transform = `rotate(0deg)`;
     compassSlider.value = currentHeading;
 
-    // ==================== 1. XÁC ĐỊNH LƯỚI TỌA ĐỘ BÁT CUNG CHÍNH TÔNG ====================
+    // ==================== 1. XÁC ĐỊNH 8 CUNG ====================
     let currentCung = "";
     let currentCode = "";
-    if (trueHeading >= 337.5 || trueHeading < 22.5) {
+    // Thay toàn bộ currentHeading ở đây bằng trueHeading để tính Cung chuẩn địa lý
+    if (trueHeading >= 338 || trueHeading < 23) {
         currentCung = "KHẢM (BẮC)";
         currentCode = "N";
-    } else if (trueHeading >= 22.5 && trueHeading < 67.5) {
+    } else if (trueHeading >= 23 && trueHeading < 68) {
         currentCung = "CẤN (ĐÔNG BẮC)";
         currentCode = "NE";
-    } else if (trueHeading >= 67.5 && trueHeading < 112.5) {
+    } else if (trueHeading >= 68 && trueHeading < 113) {
         currentCung = "CHẤN (ĐÔNG)";
         currentCode = "E";
-    } else if (trueHeading >= 112.5 && trueHeading < 157.5) {
+    } else if (trueHeading >= 113 && trueHeading < 158) {
         currentCung = "TỐN (ĐÔNG NAM)";
         currentCode = "SE";
-    } else if (trueHeading >= 157.5 && trueHeading < 202.5) {
+    } else if (trueHeading >= 158 && trueHeading < 203) {
         currentCung = "LY (NAM)";
         currentCode = "S";
-    } else if (trueHeading >= 202.5 && trueHeading < 247.5) {
+    } else if (trueHeading >= 203 && trueHeading < 248) {
         currentCung = "KHÔN (TÂY NAM)";
         currentCode = "SW";
-    } else if (trueHeading >= 247.5 && trueHeading < 292.5) {
+    } else if (trueHeading >= 248 && trueHeading < 293) {
         currentCung = "ĐOÀI (TÂY)";
         currentCode = "W";
-    } else if (trueHeading >= 292.5 && trueHeading < 337.5) {
+    } else if (trueHeading >= 293 && trueHeading < 338) {
         currentCung = "CÀN (TÂY BẮC)";
         currentCode = "NW";
     }
 
-    // ==================== 2. ĐỊNH VỊ 24 SƠN VÀ 72 HẬU LONG MẠCH ====================
+    // ==================== 2. 24 SƠN + 72 HẬU ====================
+    // Sử dụng trueHeading để tìm Sơn chính xác
     let gockim = (trueHeading % 360 + 360) % 360;
     let sơnHiệnTạiObj = SON_24_CONFIG.find(s => {
         if (s.min > s.max) return gockim >= s.min || gockim < s.max;
@@ -1264,14 +1267,13 @@ function updateCompassUI(heading) {
     }) || SON_24_CONFIG[0];
     let sơnHiệnTại = sơnHiệnTạiObj.name;
 
+    // Lấy thông tin Hậu và Điểm tổng hợp dựa trên góc THỰC TẾ và mục đích động
     const currentHauInfo = getCurrentHauInfo(trueHeading);
-    
-    // Đọc trạng thái mục đích sử dụng để kích hoạt bộ não chấm điểm đa tầng thời vận
-    const mụcĐích = document.getElementById('purpose').value;
     const namHienTai = new Date().getFullYear();
+    const mụcĐích = document.getElementById('purpose').value;
     const tongHop = tinhDiemTongHop(chủMệnh || "Khảm", trueHeading, namHienTai, mụcĐích);
 
-    // Hiển thị thông số góc thực địa lên màn hình chính la bàn
+    // Hiển thị ra màn hình số độ THỰC TẾ sau khi đã bù trừ sai lệch từ trường
     degreeTxt.innerHTML = `
         ${currentHeading}° - Phương ${currentCung} - Sơn <strong>${sơnHiệnTại}</strong><br>
         <span style="color:${currentHauInfo.emoji === '🟢' ? '#00ff41' : (currentHauInfo.emoji === '🔴' ? '#ff4444' : '#ffd700')}">
@@ -1280,14 +1282,14 @@ function updateCompassUI(heading) {
         <span style="margin-left:8px; color:#ffd700;">${tongHop.diem}pt</span>
     `;
 
-    // ==================== 3. TRUY XUẤT DỮ LIỆU INPUT BIỂU MẪU ====================
+    // ==================== 3. LẤY DỮ LIỆU ====================
     const dayStr = document.getElementById('birthDay').value;
     const monthStr = document.getElementById('birthMonth').value;
     const yearStr = document.getElementById('birthYear').value;
     const adviceBox = document.getElementById('pro-advice-box');
     const adviceContent = document.getElementById('advice-content');
 
-    // ==================== KHO TÀNG CẨM NĂNG PHÁP BẢO PHONG THỦY NGUYÊN BẢN ====================
+    // ==================== KHO TÀNG PHÁP BẢO ====================
     const advices = {
         "Sinh Khí": "<strong>[CÁT TINH ĐẠI LỢI] Cách kích hoạt vượng khí tối đa trong Vận 9:</strong> Hướng này chủ về nhân đinh hưng vượng, thu hút tài lộc mạnh mẽ, giúp công danh sự nghiệp phát đạt.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt chậu cây xanh lớn đại diện cho hành Mộc (Thiết Mộc Lan, Kim Tiền) tại cửa ra vào để kéo khí trường.<br>2. Treo tranh mộc sinh hỏa hoặc đặt Tháp Văn Xương bằng gỗ chín tầng tại góc phương vị này để tăng tiến đường học hành, quan lộ.",
         "Thiên Y": "<strong>[CÁT TINH SỨC KHỎE] Cách gia tăng năng lượng hộ thân, trừ bệnh:</strong> Hướng chủ trì sức khỏe, tiêu bệnh trừ tai, giúp gia đạo bình an, trường thọ.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt một quả Hồ lô bằng đồng hoặc Hồ lô đá thạch anh vàng ngay đầu giường ngủ hoặc trước cửa phòng.<br>2. Bố trí bình gốm sứ cao cấp, đĩa ngọc thạch anh hành Thổ để bồi bổ sinh khí, giúp tạng phủ khỏe mạnh, ngủ ngon giác.",
@@ -1299,7 +1301,7 @@ function updateCompassUI(heading) {
         "Họa Hại": "<strong>[HUNG TINH HAO TÀI VỤN VẶN] Tiêu trừ năng lượng tiêu cực, xua đuổi rủi ro:</strong> Khiến công việc hay gặp trắc trở vụn vặt, muộn phiền, tiểu nhân quấy rầy.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. Đặt các vật phẩm chế tác từ đá tự nhiên thuộc hành Thổ hoặc Kim như: Gậy Như Ý bằng đồng, thạch anh trắng cát tường.<br>2. Treo một dải ruy băng đỏ phối đồng xu may mắn hoặc đặt các bức tượng chiêu tài bằng đồng để biến hung thành cát."
     };
 
-    // ==================== 4. CHẾ ĐỘ ĐO ĐẠC LA BÀN THÔ THỰC ĐỊA ====================
+    // ==================== 4. CHẾ ĐỘ THÔ ====================
     if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
         elementBox.innerHTML = `<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${phươngVịThiếtLập[currentCode]?.ngũHành || 'Không xác định'}</span>`;
         judgmentBox.innerText = "ĐO HƯỚNG CHÍNH XÁC";
@@ -1318,7 +1320,7 @@ function updateCompassUI(heading) {
         return;
     }
 
-    // ==================== 5. CHẾ ĐỘ PHÂN TÍCH CAO CẤP TÍCH HỢP PT VẬN 9 ====================
+    // ==================== 5. CHẾ ĐỘ CAO CẤP (BẢN HOÀN THIỆN - ĐÚNG TEXT GỐC) ====================
     const hànhPhươngVị = phươngVịThiếtLập?.[currentCode]?.ngũHành || "N/A";
     const hànhMệnhChủ = bátTrạchMap?.[chủMệnh]?.element || "N/A";
     elementBox.innerHTML = `
@@ -1329,18 +1331,20 @@ function updateCompassUI(heading) {
     const cungTrạch = bátTrạchMap?.[chủMệnh]?.[currentCode] || "Khác";
     const thôngTinCung = cungPhầnTrăm?.[cungTrạch] || { cát: true, ý_nghĩa: "Thông tin không xác định." };
 
-    // Gọi hàm đối soát dữ liệu vận hạn lưu niên chiếu hướng
-    const ketQua = typeof tinhHanCuuTinhTheoNam === 'function' 
-        ? tinhHanCuuTinhTheoNam(sơnHiệnTạiObj?.huong || "Trung Cung", namHienTai) 
-        : { thongTinSao: "Chưa có dữ liệu", meoGiaiHan: "" };
-        
+    // Đảm bảo hàm tinhHanCuuTinhTheoNam luôn trả về object hợp lệ
+    const ketQua = typeof tinhHanCuuTinhTheoNam === 'function' ? tinhHanCuuTinhTheoNam(sơnHiệnTạiObj?.huong || "Trung Cung", namHienTai) : {
+        thongTinSao: "Chưa có dữ liệu",
+        meoGiaiHan: ""
+    };
+    
     let canhBaoCuuTinh = "";
     let giaiHanCuuTinh = "";
     const boxStyle = "margin-top:10px; padding:10px; border-radius:6px; font-size:0.85rem; line-height:1.4;";
 
+    // Xử lý logic cảnh báo
     if (ketQua.thongTinSao.includes("⚠️")) {
         canhBaoCuuTinh = `<div style="${boxStyle} background:rgba(255,59,48,0.1); border:1px solid #ff3b30; color:#ff3b30;">
-            <b style="display:block; margin-bottom:4px;">⚠️ CẢNH BÁO NĂM ${namHienTai}:</b>
+            <b style="display:block; margin-bottom:4px;">⚠️ CẢNH BÁO ${namHienTai}:</b>
             ${ketQua.thongTinSao.replace(/⚠️/g, '•')}
         </div>`;
         if (ketQua.meoGiaiHan) {
@@ -1354,7 +1358,7 @@ function updateCompassUI(heading) {
         </div>`;
     }
 
-    // --- LUẬN ĐOÁN MINH CHÂU KHÔNG GIAN SƠN ĐẠO ---
+    // --- LUẬN ĐOÁN MINH CHÂU (DẠNG TEXT THUẦN TÚY - CÓ GIẢI PHÁP ĐẸP) ---
     let luanDoanSonChiTiet = "";
     if (typeof MaTranMinhChau !== 'undefined' && MaTranMinhChau[chủMệnh]?.[sơnHiệnTại]) {
         const mc = MaTranMinhChau[chủMệnh][sơnHiệnTại];
@@ -1363,7 +1367,6 @@ function updateCompassUI(heading) {
         const label = isCat ? '[MINH CHÂU CÁT SƠN]' : '[MINH CHÂU HUNG SƠN]';
         const thongSo = `<span style="color:#a0a0a0; font-style:italic;">Sơn ${sơnHiệnTại} (${sơnHiệnTạiObj?.huong}):</span>`;
         luanDoanSonChiTiet = `<b style="color:${color};">${label}</b> ${thongSo} ${mc.text}`;
-        
         if (mc.giaiphap) {
             luanDoanSonChiTiet += `<br><br><span style="color:${color}; font-weight:bold;">💡 Giải pháp:</span> <span style="color:#ffffff;">${mc.giaiphap}</span>`;
         }
@@ -1371,76 +1374,72 @@ function updateCompassUI(heading) {
         luanDoanSonChiTiet = `<span style="color:#a0a0a0; font-style:italic;">Tọa độ: ${currentHeading}° | Sơn ${sơnHiệnTại} | Phương ${sơnHiệnTạiObj?.huong}.</span>`;
     }
 
-    // ==================== 6. ĐỒNG BỘ MÀU SẮC GIAO DIỆN THEO HỆ THỐNG ĐIỂM PT MỚI ====================
-    const currentConfig = ConfigPhongThuy[mụcĐích] || { title: "Cung vị", isCat: true };
+    // ==================== 6. XỬ LÝ THEO MỤC ĐÍCH (KHÔI PHỤC TUYỆT ĐỐI THEO HÀM GỐC) ====================
+    const config = ConfigPhongThuy[mụcĐích] || { title: "Cung vị", isCat: true };
     
-    // Tách biệt logic: Đánh giá tốt/xấu theo bản thể gốc Bát Trạch để ép xuất hiện box Hóa Giải
-    const isGoodCung = currentConfig.isCat ? thôngTinCung.cát : !thôngTinCung.cát;
-    const isGoodScore = tongHop.diem >= 72;
-    const activeColor = isGoodScore ? '#30d158' : '#ff3b30';
-
+    // Giữ nguyên logic tính toán cát/hung cách nguyên bản để ko làm vỡ hiển thị màu sắc và ẩn hiện
+    const isGood = config.isCat ? thôngTinCung.cát : !thôngTinCung.cát;
+    
     judgmentBox.removeAttribute("style");
-    judgmentBox.innerText = `${currentConfig.title}: ${cungTrạch}`;
-    judgmentBox.className = isGoodScore ? "judgment-badge bg-good" : "judgment-badge bg-bad";
-    detailBox.style.borderLeftColor = activeColor;
+    judgmentBox.innerText = `${config.title}: ${cungTrạch}`;
+    judgmentBox.className = isGood ? "judgment-badge bg-good" : "judgment-badge bg-bad";
+    detailBox.style.borderLeftColor = isGood ? "var(--green)" : "var(--red)";
 
+    // --- LOGIC GỐC: TỰ ĐỘNG TRÍCH XUẤT VĂN BẢN CHI TIẾT ---
     let noiDungDetail = "";
-    // Phần 1: Tiêu đề trạng thái và điểm số khí cục hành độ
-    noiDungDetail += `<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,255,255,0.05); border-left: 4px solid ${activeColor}">`;
-    noiDungDetail += `<strong style="color: ${activeColor}; font-size: 1.05rem; display:block; margin-bottom:5px;">`;
-    noiDungDetail += `◆ ${!mụcĐích ? (isGoodScore ? 'CÁT TINH' : 'HUNG TINH') : (isGoodScore ? 'CÁT CÁCH' : 'HUNG CÁCH')} (${cungTrạch.toUpperCase()}) — Chỉ số PT: <span style="color:#ffd700;">${tongHop.diem}pt</span> [${tongHop.level}]:</strong>`;
+    // Phần 1: Thông tin chính
+    noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,255,255,0.05); border-left: 4px solid ' + (isGood ? '#30d158' : '#ff3b30') + '">';
+    noiDungDetail += '<strong style="color: ' + (isGood ? '#30d158' : '#ff3b30') + '; font-size: 1.05rem; display:block; margin-bottom:5px;">';
+    // Chèn thêm chỉ số điểm phong thủy mới vào tiêu đề gốc để tăng tính hiện đại
+    noiDungDetail += '◆ ' + (!mụcĐích ? (isGood ? 'CÁT TINH' : 'HUNG TINH') : (isGood ? 'CÁT CÁCH' : 'HUNG CÁCH')) + ' (' + cungTrạch.toUpperCase() + ') — Chỉ số PT: <span style="color:#ffd700;">' + tongHop.diem + 'pt</span> [' + tongHop.level + ']:</strong>';
     noiDungDetail += '<span style="color:#ffffff; font-size:0.9rem;">';
     if (!mụcĐích) {
-        noiDungDetail += `Góc xoay <span class="gold-text">${currentHeading}°</span> đối chiếu mệnh cung <strong>${chủMệnh}</strong> gặp cung tinh <strong>${cungTrạch}</strong>.<br>`;
+        noiDungDetail += 'Góc xoay <span class="gold-text">' + currentHeading + '°</span> đối chiếu mệnh cung <strong>' + chủMệnh + '</strong> gặp cung tinh <strong>' + cungTrạch + '</strong>.<br>';
     }
     noiDungDetail += thôngTinCung.ý_nghĩa + '</span></div>';
 
-    // Phần 2: Hộp mật pháp điều hòa khí trường tổng hợp
-    if (!isGoodCung || !isGoodScore) {
+    // Phần 2: Hóa giải (KHÔI PHỤC HOÀN TOÀN ĐIỀU KIỆN ẨN HIỆN CỦA HÀM GỐC)
+    if (!isGood) {
         const matPhap = (typeof sinhMatPhapHoaGiai === 'function') ? sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung, currentCode) : "";
         const camNang = advices[cungTrạch] || "";
-        
         noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,159,10,0.08); border:1px solid #ff9f0a;">';
         noiDungDetail += '<h4 style="color:#ff9f0a; margin:0 0 8px 0; font-size: 0.9rem;">🛠 PHÁP HÓA GIẢI TỔNG HỢP</h4>';
         noiDungDetail += '<div style="color:#fff; font-size:0.85rem; line-height:1.5;">' + matPhap;
-        
-        // CHỐT CHẶN AN TOÀN: Kiểm tra biến camNang tồn tại và hợp lệ trước khi sử dụng hàm xử lý chuỗi .replace()
-        if (camNang && typeof camNang === 'string') {
+        if (camNang) {
             noiDungDetail += '<br><b style="color:#dfb76c;">Danh mục vật phẩm bổ trợ:</b><div style="color:#ccc;">' + camNang.replace(/👉 <em>.*?<\/em>:<br>/, '') + '</div>';
         }
         noiDungDetail += '</div></div>';
     }
 
-    // Phần 3: Thần sát độ số dương trạch 24 Sơn
+    // Phần 3: Thần sát (KHÔI PHỤC ĐẦY ĐỦ VĂN BẢN CHI TIẾT)
     noiDungDetail += '<div style="margin-top:15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.2); border: 1px solid #d4af37;">';
     noiDungDetail += '<div style="margin-bottom:12px;">';
     noiDungDetail += '<b style="color:var(--gold); font-size: 0.95rem;">🎯 THẦN SÁT ĐỘ SỐ (24 SƠN CHI TIẾT):</b>';
     noiDungDetail += '<div style="margin-top:8px; color:#fff; font-size: 0.95rem; line-height: 1.6;">' + luanDoanSonChiTiet + '</div>';
     noiDungDetail += '</div>';
     
-    // Vận hạn dịch chuyển cửu tinh lưu niên
+    // Vận hạn cửu tinh
     noiDungDetail += '<div style="border-top: 1px dashed #444; padding-top: 10px;">';
     noiDungDetail += '<b style="color:var(--gold); font-size: 0.95rem;">⏳ VẬN HẠN CỬU TINH (NĂM ' + namHienTai + '):</b>';
     noiDungDetail += '<div style="margin-top:5px; color:#fff; font-size: 0.9rem; line-height: 1.5;">' + canhBaoCuuTinh + giaiHanCuuTinh + '</div>';
     noiDungDetail += '</div>';
     noiDungDetail += '</div>';
 
-    // Phần 4: Huyền không học luận giải thiên thời hạ nguyên
+    // Phần 4: Thiên thời
     if (typeof sinhLuanGiaiThienThoi === 'function') {
         noiDungDetail += '<div style="margin-top:10px; font-size:0.85rem; color:#aaa; font-style:italic;">' + sinhLuanGiaiThienThoi(currentCode) + '</div>';
     }
     detailBox.innerHTML = noiDungDetail;
 
-    // ==================== 7. ADVICE BOX CAM NĂNG ====================
+    // ==================== 7. ADVICE BOX ====================
     if (adviceBox && adviceContent) {
         adviceBox.style.display = advices[cungTrạch] ? 'block' : 'none';
         if (advices[cungTrạch]) adviceContent.innerHTML = advices[cungTrạch];
     }
 
-    // ==================== 8. KÍCH HOẠT HIỆU ỨNG LED QUÈT ĐỒ HỌA ====================
+    // ==================== 8. HIỆU ỨNG ====================
     kichHoatDenLedQuet(currentHeading);
-    
-    // Căn chỉnh kim ảo mô phỏng tuyến tính Ghost Needle
+    // Ghost Needle - CHỈ 1 LẦN
     if (targetAngle !== null && document.getElementById('ghostNeedle')) {
         const ghost = document.getElementById('ghostNeedle');
         ghost.style.opacity = "1";
