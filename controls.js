@@ -1112,7 +1112,7 @@ const DATA_HOA_GIAI = {
         'Kim': { phap: 'Ngũ Quỷ Hỏa tinh thiêu đốt trực diện Cung Mệnh Kim của gia chủ, tạo thế trận "Lửa Thiêu Cốt Tủy", sinh ra tai họa hoạn nạn ập đến bất ngờ, thị phi quấy phá khốc liệt và hao tán tài sản thần tốc.', vat: 'Đặt một <strong>Đĩa Thất Tinh Thạch Anh Vàng</strong> hoặc <strong>Tượng Tỳ Hưu Ngọc Hoàng Long Nguyên Khối</strong> (thuộc hành Thổ). Thổ đóng vai trò lá chắn tối thượng hút hết hỏa khí hung tàn của Ngũ Quỷ, sau đó Thổ lại quay sang tương sinh chuyển hóa bồi bổ năng lượng cường đại cho mệnh Kim của chủ nhà.' },
         'Mộc': { phap: 'Ngũ Quỷ Hỏa tinh rút cạn tinh huyết năng lượng của Cung Mệnh Mộc (Mộc phải sinh xuất cho Hỏa sát), khiến gia chủ hao mòn trí lực, kinh doanh thua lỗ, gia đạo lục đục không yên.', vat: 'Treo <strong>Chuông Gió Đồng Pháp Khí 6 Thanh</strong> kết hợp đặt <strong>Tháp Văn Xương Bằng Đồng Nguyên Khối</strong> (thuộc hành Kim). Kim lực mạnh mẽ sẽ chặt đứt mạch liên kết tà tính của Hỏa tinh tại phương vị này, giải phóng bản mệnh Mộc khỏi thế kiệt quệ.' },
         'Thủy': { phap: 'Cung Mệnh Thủy xung đột trực diện kịch liệt với Ngũ Quỷ Hỏa tinh, hình thành cục diện đại kỵ "Thủy Hỏa Vị Tế", làm dòng khí trong nhà đảo điên, vợ chồng ly tán, tinh thần bất an.', vat: 'Sử dụng vật phẩm chứa linh khí Mộc cao như <strong>Hồ Lô Gỗ Đào Tự Nhiên Thần Chú</strong> hoặc <strong>Tranh Trúc Chỉ Phong Thủy</strong> tại phương vị này để chuyển hóa tương khắc thành thế sinh sát thuần khiết: Thủy sinh Mộc - Mộc sinh Hỏa (thuần hóa thuần thục ác tính Ngũ Quỷ thành ngọn lửa sinh hoạt lành tính).' },
-        'Hỏa': { phap: 'Ngũ Quỷ Hỏa kết hợp với bản mệnh Hỏa tạo thành ngọn lửa hung tàn thiêu rụi toàn bộ hậu vận, khiến tính khí thành viên gia đình nóng nảy thất thường, dễ vướng vào tranh chấp luật pháp bĩ cực.', vat: 'Bố trí một <strong>Lu Nước Phong Thủy Tuần Hoàn Màu Đen</strong> hoặc đặt <strong>Quả Cầu Thạch Anh Tím trên Đế Thạch Anh Thô</strong> (thuộc hành Thổ) giúp hấp thu toàn bộ nhiệt lượng tiêu cực dư thừa, bình ổn hoàn toàn trật tự năng lượng.' },
+        'Hỏa': { phap: 'Ngũ Quỷ Hỏa kết hợp with bản mệnh Hỏa tạo thành ngọn lửa hung tàn thiêu rụi toàn bộ hậu vận, khiến tính khí thành viên gia đình nóng nảy thất thường, dễ vướng vào tranh chấp luật pháp bĩ cực.', vat: 'Bố trí một <strong>Lu Nước Phong Thủy Tuần Hoàn Màu Đen</strong> hoặc đặt <strong>Quả Cầu Thạch Anh Tím trên Đế Thạch Anh Thô</strong> (thuộc hành Thổ) giúp hấp thu toàn bộ nhiệt lượng tiêu cực dư thừa, bình ổn hoàn toàn trật tự năng lượng.' },
         'Thổ': { phap: 'Mệnh Thổ vô tình hấp thụ năng lượng Hỏa từ Ngũ Quỷ tinh. Dù là mối quan hệ sinh nhưng do nạp phải dòng khí độc hại của sát tinh, gia chủ dễ rơi vào trạng thái trì trệ, suy nghĩ tiêu cực, chịu nhiều u uất.', vat: 'Sử dụng <strong>Gương Bát Quái Gỗ Đào</strong> ở cửa hoặc đặt <strong>Cặp Kỳ Lân Bằng Đồng</strong> (thuộc hành Kim) tại phương vị này nhằm tiết giảm triệt để Thổ khí đã bị nhiễm độc tà khí, trả lại sự thanh tịnh cho dương trạch.' }
     },
     'Lục Sát': {
@@ -1131,29 +1131,27 @@ const DATA_HOA_GIAI = {
     }
 };
 
+// ====================== MẬT PHÁP HÓA GIẢI THEO NGỮ CẢNH CẤU TRÚC ======================
 function sinhMatPhapHoaGiai(mucDich, cungSat, hanhChu, phuongHuong, code) {
-    // Lấy hành phương vị an toàn từ cấu hình thực địa
     let hanhPhuongVi = (typeof phươngVịThiếtLập !== 'undefined' && phươngVịThiếtLập[code]) 
                        ? phươngVịThiếtLập[code].ngũHành : "Thổ";
     
-    // Tra cứu ma trận dữ liệu mật pháp hóa sát
     let data = DATA_HOA_GIAI[cungSat] ? DATA_HOA_GIAI[cungSat][hanhChu] : null;
     if (!data) return `<div style="padding:10px; color:#777; font-style:italic;">Dữ liệu pháp bảo điều tiết chưa được thiết lập cho cung vị này.</div>`;
 
-    // Khớp động nội dung văn bản pháp khí bảo quốc
+    // Thay thế các biến động trong văn bản gốc một cách an toàn chống vỡ HTML
     let phuongPhapBaoQuoc = data.phap.replace(/\${phuongHuong}/g, phuongHuong).replace(/\${hanhPhuongVi}/g, hanhPhuongVi);
     let vatPhamToiThuong = data.vat;
     
-    // Đọc cấu hình để thuyết minh ngữ cảnh thiết kế một cách thông minh
     const currentConfig = ConfigPhongThuy[mucDich] || { title: "Vị trí hạng mục", isCat: true };
     let thuyetMinhViTri = "";
     
     if (currentConfig.isCat) {
-        thuyetMinhViTri = `Cấu trúc đang thiết lập nhìn về phương vị bị phạm đại kỵ Sát tinh <strong>${cungSat}</strong>. Phương án điều hòa: ${phuongPhapBaoQuoc}`;
+        thuyetMinhViTri = `Cấu trúc đang thiết lập nhìn về phương vị bị phạm đại kỵ Sát tinh <strong>${cungSat}</strong>. Phương án điều hòa khí trường: ${phuongPhapBaoQuoc}`;
     } else if (mucDich === 'kitchen') {
         thuyetMinhViTri = `Bếp nấu đang tọa đè sai cung vị, thiêu rụi phước báu cát lành của trạch đất. Đồng thời nếu rơi vào thế hung tinh bị kích động nghịch chiều: ${phuongPhapBaoQuoc}`;
     } else {
-        thuyetMinhViTri = `Khu vực xả uế uế tạp đặt đè lên cát tinh làm tổn hao tài lộc, ô uế long mạch. Chiếu theo mật pháp đối đối sánh ngũ hành: ${phuongPhapBaoQuoc}`;
+        thuyetMinhViTri = `Khu vực xả uế uế tạp đặt đè lên cát tinh làm tổn hao tài lộc, ô uế long mạch. Chiếu theo mật pháp đối sánh ngũ hành: ${phuongPhapBaoQuoc}`;
     }
 
     return `
@@ -1168,13 +1166,14 @@ function sinhMatPhapHoaGiai(mucDich, cungSat, hanhChu, phuongHuong, code) {
     </div>`;
 }
 
+// ====================== TRÍCH XUẤT MA TRẬN MINH CHÂU QUY QUYẾT ======================
 function getLuanDoanChiTiet(huong, son) {
     const dataHuong = MaTranMinhChau[huong];
     const info = (dataHuong && dataHuong[son]) ? dataHuong[son] : null;
 
     if (!info) {
         return `<div style="padding: 12px; color: #888; font-style: italic; border: 1px dashed #444; border-radius: 8px;">
-                    Chưa có dữ liệu chi tiết cho sơn này trong hệ thống.
+                    Chưa có dữ liệu chi tiết cho sơn này trong hệ thống dương trạch.
                 </div>`;
     }
 
@@ -1444,19 +1443,26 @@ function updateCompassUI(heading) {
  * @param {number} nam - Năm hiện tại
  * @returns {Array} Mảng các sát tinh
  */
+// ====================== HÀM QUÈN QUÉT THẦN SÁT LƯU NIÊN CHIẾU HƯỚNG (FULL VERSION) ======================
 function getPhongThuySatTinh(tenSon, nam) {
     const results = [];
+    if (!tenSon || !nam) return results;
 
-    // ====================== 1. NGŨ HOÀNG ======================
-    const indexNguHoang = (5 - ((nam - 2024) % 9) + 9) % 9;
-    const huongNguHoang = ["Trung Cung", "Tây Bắc", "Tây", "Đông Bắc", "Nam", "Bắc", "Tây Nam", "Đông", "Đông Nam"][indexNguHoang];
+    // ====================== 1. NGŨ HOÀNG ĐẠI SÁT ======================
+    // Trục chuẩn lịch pháp: Năm 2024 có tuế sai diff = 0, Cửu tinh nghịch hành, Ngũ hoàng dịch chuyển thuận trên 8 hướng địa lý
+    let diff = (nam - 2024) % 9;
+    if (diff < 0) diff += 9;
+    
+    // Ma trận chu kỳ chuyển dịch chuẩn xác hành Thổ của Ngũ Hoàng qua các năm
+    const mapNguHoang = ["Tây", "Đông Bắc", "Nam", "Bắc", "Tây Nam", "Đông", "Đông Nam", "Trung Cung", "Tây Bắc"];
+    const viTriNguHoang = mapNguHoang[diff];
 
-    if (getHuongBySon(tenSon) === huongNguHoang) {
+    if (getHuongBySon(tenSon) === viTriNguHoang) {
         results.push({
             ten: "NGŨ HOÀNG ĐẠI SÁT",
             color: "#ff3b30",
             level: "Đại Hung",
-            giaiPhap: "Treo chuông gió đồng 6 thanh, hồ lô đồng, tránh động thổ lớn."
+            giaiPhap: "Treo chuông gió đồng 6 thanh (Lục đế) hoặc đặt hồ lô đồng nguyên chất để hóa sát hành Thổ, tránh động thổ hay đập phá tại phương vị này."
         });
     }
 
@@ -1468,7 +1474,7 @@ function getPhongThuySatTinh(tenSon, nam) {
             ten: "THÁI TUẾ",
             color: "#ff453a",
             level: "Đại Hung",
-            giaiPhap: "Không động thổ, đào móng, sửa chữa. Dùng gương lồi hoặc đá thạch anh trấn áp."
+            giaiPhap: "Không động thổ, đào móng, sửa chữa ở khu vực đương cai quản năm. Sử dụng gương Bát quái lồi gỗ đào hoặc đá thạch anh để trấn áp khí trường."
         });
     }
 
@@ -1477,7 +1483,7 @@ function getPhongThuySatTinh(tenSon, nam) {
             ten: "TUẾ PHÁ",
             color: "#ff9f0a",
             level: "Hung",
-            giaiPhap: "Tránh làm việc lớn, giữ không khí yên tĩnh, hóa giải bằng đèn sáng hoặc tinh thể."
+            giaiPhap: "Phương vị xung chiếu trực diện với Thái Tuế, dễ phát sinh thị phi biến động. Tránh làm việc lớn tại đây, giữ không khí yên tĩnh và tăng cường đèn sáng."
         });
     }
 
@@ -1490,14 +1496,14 @@ function getPhongThuySatTinh(tenSon, nam) {
             ten: "TAM SÁT",
             color: "#d63031",
             level: "Hung",
-            giaiPhap: "Đặt đôi Kỳ Lân đồng hoặc Tỳ Hưu hướng ra ngoài, tránh đập phá, đào bới."
+            giaiPhap: "Hạn lưu niên dồn về sơn vị gây tranh chấp hoặc rủi ro tai nạn. An vị đôi Kỳ Lân đồng hoặc cặp Tỳ Hưu hướng đầu ra ngoài để hóa sát, tránh đập phá."
         });
     }
 
     return results;
 }
 
-// ====================== CÁC HÀM HỖ TRỢ ======================
+// ====================== CÁC HÀM PHỤ TRỢ KHÔNG ĐƯỢC THIẾU ======================
 function getDoiXungDiaChi(chi) {
     const map = {
         "Tý":"Ngọ", "Ngọ":"Tý",
