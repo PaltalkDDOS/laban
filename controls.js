@@ -1554,7 +1554,7 @@ function getHuongBySon(tenSon) {
     return son ? son.huong : "Không xác định";
 }
 
-// ====================== CẬP NHẬT HIỂN THỊ ĐỘ + SƠN + HẬU (MƯỢT MÀ ÊM RU) ======================
+// ====================== CẬP NHẬT HIỂN THỊ ĐỘ + SƠN + HẬU (CHỐNG NHẢY GIẬT CỐ ĐỊNH KHUNG) ======================
 function updateDegreeDisplay(degree) {
     const normalized = ((degree % 360) + 360) % 360;
     const sonName = tìmSơnHướng(normalized);
@@ -1581,51 +1581,51 @@ function updateDegreeDisplay(degree) {
         else hauColor = "#FFD700"; // Gold
     }
 
-    // === KIỂM TRA KHÔNG VONG ===
+    // === KIỂM TRA KHÔNG VONG (Khóa phông nền cố định cấu trúc) ===
     const khongVongInfo = kiemTraKhongVong(normalized);
-    // Khóa cứng dòng Không Vong, dùng hiệu ứng đổ bóng neon cao cấp
     const khongVongHTML = khongVongInfo 
-        ? `<span style="color:#ff4444; font-weight:bold; text-shadow: 0 0 6px #ff0000; white-space:nowrap; flex-shrink:0;">⚠️ ${khongVongInfo.loai}</span>` 
-        : "";
+        ? `<span style="color:#ff4444; font-weight:bold; text-shadow: 0 0 6px #ff0000; font-size: 0.78rem; background: rgba(255,59,48,0.12); padding: 2px 6px; border-radius: 4px; border: 1px solid #ff3b30; white-space: nowrap; flex-shrink: 0;">⚠️ ${khongVongInfo.loai}</span>` 
+        : `<span style="color:#555; font-size: 0.78rem; border: 1px solid #2d2d2e; padding: 2px 6px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; opacity: 0.7;">✓ Khí trường an toàn</span>`;
 
-    // === TÍNH ĐIỂM TỔNG HỢP (PT - VẬN 9) ĐỒNG BỘ MẶT LA BÀN ===
+    // === TÍNH ĐIỂM TỔNG HỢP (PT - Vận 9) TRỰC TIẾP TRÊN LA BÀN ===
     let tongDiemHTML = "";
     if (typeof chủMệnh !== 'undefined' && chủMệnh) {
         const mucDichHienTai = document.getElementById('purpose')?.value || 'house';
         const tongHop = tinhDiemTongHop(chủMệnh, normalized, new Date().getFullYear(), mucDichHienTai);
         
         const diemColor = tongHop.diem >= 80 ? "#00FF41" : (tongHop.diem >= 60 ? "#FFD700" : "#ff4444");
-        // Bổ sung tabular-nums chống nhảy số điểm
-        tongDiemHTML = `
-            <div style="margin-top: 4px; display: flex; align-items: center; min-height: 24px;">
-                <strong style="color:${diemColor}; font-size: 1.05em; background: rgba(0,0,0,0.5); padding: 2px 8px; border-radius: 4px; white-space: nowrap; font-variant-numeric: tabular-nums;">
-                    PT: ${tongHop.diem}đ (${tongHop.level})
-                </strong>
-            </div>`;
+        const bgDiem = tongHop.diem >= 80 ? "rgba(48,209,88,0.12)" : (tongHop.diem >= 60 ? "rgba(255,215,0,0.12)" : "rgba(255,59,48,0.12)");
+        
+        tongDiemHTML = `<span style="color:${diemColor}; font-size: 0.8rem; font-weight: bold; background: ${bgDiem}; border: 1px solid ${diemColor}; padding: 2px 6px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;">PT: ${tongHop.diem}đ</span>`;
+    } else {
+        tongDiemHTML = `<span style="color:#666; font-size: 0.8rem; border: 1px solid #2d2d2e; padding: 2px 6px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;">Chờ đo mệnh</span>`;
     }
 
-    // Cập nhật DOM với cấu trúc đóng gói hộp chống giật dòng (Anti-Jitter Box)
+    // Cập nhật DOM
     const degreeTxt = document.getElementById('degree-txt');
     if (degreeTxt) {
+        // Thiết lập hộp chứa có chiều cao cố định tuyệt đối (82px), chống tràn và triệt tiêu giật lag khung hình
+        degreeTxt.style.cssText = "display: flex; flex-direction: column; justify-content: center; min-height: 82px; max-height: 82px; box-sizing: border-box; padding: 8px 12px; background: rgba(255,255,255,0.02); border-radius: 10px; border: 1px solid rgba(223,183,108,0.15); overflow: hidden; width: 100%; gap: 6px;";
+        
         degreeTxt.innerHTML = `
-            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; text-align: center; font-family: system-ui, -apple-system, sans-serif;">
-                
-                <div style="white-space: nowrap; font-size: 0.98rem; color: #fff; font-weight: 500; display: inline-flex; align-items: center; justify-content: center; gap: 4px;">
-                    <span style="color: var(--gold); font-weight: 800; font-variant-numeric: tabular-nums; min-width: 55px; display: inline-block; text-align: right;">
-                        ${normalized.toFixed(1)}°
-                    </span> 
-                    <span>- CUNG</span> <strong style="color: #fff;">${getCungName(normalized)}</strong> 
-                    <span>- SƠN</span> <strong style="color:#FFD700;">${sonName}</strong>
+            <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; height: 32px; flex-wrap: nowrap; gap: 8px;">
+                <div style="display: flex; align-items: center; gap: 4px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; flex: 1; min-width: 0;">
+                    <span style="font-size: 1.85rem; font-weight: 900; color: var(--gold, #dfb76c); text-shadow: 0 0 8px rgba(223,183,108,0.2); font-family: monospace; line-height: 1; flex-shrink: 0;">${normalized.toFixed(1)}°</span>
+                    <span style="color: #ffffff; font-size: 0.85rem; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">- Hướng ${getCungName(normalized)}</span>
                 </div>
-                
-                <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: nowrap; min-height: 22px; margin-top: 2px; font-size: 0.88rem;">
-                    <span style="white-space: nowrap; color: #eee;">
-                        HẬU <strong style="color:${hauColor}; text-shadow: 0 0 8px ${hauColor}80; font-variant-numeric: tabular-nums;">${hauName}</strong>
-                    </span>
-                    ${khongVongHTML ? `<span style="color: #444;">|</span> ${khongVongHTML}` : ''}
+                <div style="font-size: 0.88rem; color: #ffffff; white-space: nowrap; flex-shrink: 0;">
+                    Sơn: <strong style="color:#FFD700; font-size: 0.95rem; font-weight: 800;">${sonName}</strong>
                 </div>
-                
-                ${tongDiemHTML}
+            </div>
+            
+            <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; height: 24px; flex-wrap: nowrap; gap: 6px;">
+                <div style="font-size: 0.82rem; color: #b3b3b3; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; flex: 1; min-width: 0;">
+                    Hậu: <strong style="color:${hauColor}; text-shadow: 0 0 6px ${hauColor}50; font-weight: 700;">${hauName}</strong>
+                </div>
+                <div style="display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0;">
+                    ${khongVongHTML}
+                    ${tongDiemHTML}
+                </div>
             </div>
         `;
     }
