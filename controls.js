@@ -1554,7 +1554,7 @@ function getHuongBySon(tenSon) {
     return son ? son.huong : "Không xác định";
 }
 
-// ====================== CẬP NHẬT HIỂN THỊ ĐỘ + SƠN + HẬU (MÀU RỰC RỠ) ======================
+// ====================== CẬP NHẬT HIỂN THỊ ĐỘ + SƠN + HẬU (MƯỢT MÀ ÊM RU) ======================
 function updateDegreeDisplay(degree) {
     const normalized = ((degree % 360) + 360) % 360;
     const sonName = tìmSơnHướng(normalized);
@@ -1583,31 +1583,50 @@ function updateDegreeDisplay(degree) {
 
     // === KIỂM TRA KHÔNG VONG ===
     const khongVongInfo = kiemTraKhongVong(normalized);
+    // Khóa cứng dòng Không Vong, dùng hiệu ứng đổ bóng neon cao cấp
     const khongVongHTML = khongVongInfo 
-        ? `<span style="color:#ff4444; font-weight:bold; text-shadow: 0 0 6px #ff0000; margin-left: 10px;">⚠️ ${khongVongInfo.loai}</span>` 
+        ? `<span style="color:#ff4444; font-weight:bold; text-shadow: 0 0 6px #ff0000; white-space:nowrap; flex-shrink:0;">⚠️ ${khongVongInfo.loai}</span>` 
         : "";
 
-    // === TÍNH ĐIỂM TỔNG HỢP (PT - Vận 9) TRỰC TIẾP TRÊN LA BÀN ===
+    // === TÍNH ĐIỂM TỔNG HỢP (PT - VẬN 9) ĐỒNG BỘ MẶT LA BÀN ===
     let tongDiemHTML = "";
     if (typeof chủMệnh !== 'undefined' && chủMệnh) {
-        // Mặc định là 'house' (Hướng Cát) khi đang cầm la bàn đi vòng quanh
         const mucDichHienTai = document.getElementById('purpose')?.value || 'house';
         const tongHop = tinhDiemTongHop(chủMệnh, normalized, new Date().getFullYear(), mucDichHienTai);
         
         const diemColor = tongHop.diem >= 80 ? "#00FF41" : (tongHop.diem >= 60 ? "#FFD700" : "#ff4444");
-        tongDiemHTML = `<div style="margin-top: 5px;"><strong style="color:${diemColor}; font-size: 1.1em; background: rgba(0,0,0,0.5); padding: 2px 8px; border-radius: 4px;">PT: ${tongHop.diem}đ (${tongHop.level})</strong></div>`;
+        // Bổ sung tabular-nums chống nhảy số điểm
+        tongDiemHTML = `
+            <div style="margin-top: 4px; display: flex; align-items: center; min-height: 24px;">
+                <strong style="color:${diemColor}; font-size: 1.05em; background: rgba(0,0,0,0.5); padding: 2px 8px; border-radius: 4px; white-space: nowrap; font-variant-numeric: tabular-nums;">
+                    PT: ${tongHop.diem}đ (${tongHop.level})
+                </strong>
+            </div>`;
     }
 
-    // Cập nhật DOM
+    // Cập nhật DOM với cấu trúc đóng gói hộp chống giật dòng (Anti-Jitter Box)
     const degreeTxt = document.getElementById('degree-txt');
     if (degreeTxt) {
         degreeTxt.innerHTML = `
-            ${normalized.toFixed(1)}°
-            - CUNG <strong>${getCungName(normalized)}</strong>
-            - SƠN <strong style="color:#FFD700;">${sonName}</strong>
-            - HẬU <strong style="color:${hauColor}; text-shadow: 0 0 8px ${hauColor}80;">${hauName}</strong>
-            ${khongVongHTML}
-            ${tongDiemHTML}
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; text-align: center; font-family: system-ui, -apple-system, sans-serif;">
+                
+                <div style="white-space: nowrap; font-size: 0.98rem; color: #fff; font-weight: 500; display: inline-flex; align-items: center; justify-content: center; gap: 4px;">
+                    <span style="color: var(--gold); font-weight: 800; font-variant-numeric: tabular-nums; min-width: 55px; display: inline-block; text-align: right;">
+                        ${normalized.toFixed(1)}°
+                    </span> 
+                    <span>- CUNG</span> <strong style="color: #fff;">${getCungName(normalized)}</strong> 
+                    <span>- SƠN</span> <strong style="color:#FFD700;">${sonName}</strong>
+                </div>
+                
+                <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: nowrap; min-height: 22px; margin-top: 2px; font-size: 0.88rem;">
+                    <span style="white-space: nowrap; color: #eee;">
+                        HẬU <strong style="color:${hauColor}; text-shadow: 0 0 8px ${hauColor}80; font-variant-numeric: tabular-nums;">${hauName}</strong>
+                    </span>
+                    ${khongVongHTML ? `<span style="color: #444;">|</span> ${khongVongHTML}` : ''}
+                </div>
+                
+                ${tongDiemHTML}
+            </div>
         `;
     }
 }
