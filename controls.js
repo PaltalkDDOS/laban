@@ -1027,33 +1027,116 @@ function triggerGhostNeedle(angle) {
     updateCompassUI(currentHeading); // Đảm bảo hàm này được định nghĩa ở ngoài
 }
 
+// ====================== ĐỊNH VỊ 24 SƠN ĐỒNG BỘ TUYỆT ĐỐI THEO CONFIG TĨNH ======================
 function tìmSơnHướng(heading) {
-    // 1. Chuẩn hóa góc
+    // 1. Chuẩn hóa góc quay về dải an toàn 0 - 360 độ
     let gockim = ((heading % 360) + 360) % 360; 
 
-    // 2. Tìm Sơn trong SON_24_CONFIG
+    // 2. Truy xuất trực tiếp từ trục SON_24_CONFIG để đảm bảo mạch dữ liệu đồng nhất
     const sonObj = SON_24_CONFIG.find(s => {
-        if (s.min > s.max) { // Xử lý trường hợp vượt ngưỡng 360 độ (Nhâm, Tý)
+        // Xử lý chốt chặn toán học cho trường hợp sơn vượt ngưỡng ranh giới góc 0 (Nhâm, Tý)
+        if (s.min > s.max) { 
             return gockim >= s.min || gockim < s.max;
         }
         return gockim >= s.min && gockim < s.max;
     });
 
-    // 3. Trả về tên, khớp với logic cũ của bạn
+    // 3. Trả về tên sơn gốc, mặc định cứu vãn hệ thống là sơn Tý nếu xảy ra lỗi cảm biến
     return sonObj ? sonObj.name : "Tý";
 }
 
-// === DỮ LIỆU HUYỀN KHÔNG PHI TINH - FULL 9 VẬN (CÓ NGŨ HÀNH) ===
+// === DỮ LIỆU HUYỀN KHÔNG PHI TINH - CẬP NHẬT CHUẨN TRỌNG SỐ THỜI VẬN 9 (HOÀN CHỈNH) ===
 const VAN_DATA = {
-    1: { 'N': { sao: "Nhất Bạch", hanh: "Thủy", loai: "best", y_nghia: "Thủy khí vượng, đại cát về trí tuệ và tài lộc." }, 'NE': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Dễ bệnh tật, thị phi, bất lợi cho sức khỏe." }, 'E': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Năng lượng trung bình, công việc trí óc khá tốt." }, 'SE': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Tốt cho học hành, văn chương và sáng tạo." }, 'S': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Phạm Ngũ Hoàng Đại Sát, tuyệt đối tránh động thổ." }, 'SW': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Vượng quyền lực, công danh sự nghiệp ổn định." }, 'W': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Dễ bị lừa gạt, tranh chấp và hao hụt tài sản." }, 'NW': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Vượng tài lộc, gia đạo bình an, tích lũy tốt." } },
-    2: { 'N': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Dễ bệnh tật, cần chú ý tiêu hóa và phụ khoa." }, 'NE': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Dễ xung đột lời nói, cần thận trọng." }, 'E': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Sự nghiệp thăng tiến, học vấn phát triển." }, 'SE': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Đại hung, tránh tác động mạnh vào phương này." }, 'S': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Có quý nhân, quyền lực thăng hoa." }, 'SW': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Cẩn thận thị phi, trộm cắp, tai bay vạ gió." }, 'W': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài lộc vượng, kinh doanh thuận lợi." }, 'NW': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Đại cát, danh vọng cao, hỷ sự đến liên miên." } },
-    3: { 'N': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Cạnh tranh nhiều nhưng dễ khẳng định vị thế." }, 'NE': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Trí tuệ minh mẫn, văn chương xuất chúng." }, 'E': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Sát khí nặng, tránh mọi sửa chữa, xây dựng." }, 'SE': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Công danh, quyền lực củng cố vững chắc." }, 'S': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Dễ dính líu đến tranh chấp luật pháp, thị phi." }, 'SW': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài sản tăng trưởng, gia đạo hòa thuận." }, 'W': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Vượng khí cực đại, đại phú quý." }, 'NW': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Đào hoa, quý nhân, học vấn tốt." } },
-    4: { 'N': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Thông minh, học vấn hanh thông." }, 'NE': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Hung tinh cần tránh xa, không nên động thổ." }, 'E': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Vượng quý nhân, công việc thuận lợi." }, 'SE': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Cần đề phòng hao tài và thị phi." }, 'S': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài lộc, thịnh vượng, kinh tế phát triển." }, 'SW': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Hỷ sự, danh tiếng lan xa." }, 'W': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Trí tuệ, học vấn, quan lộc thăng tiến." }, 'NW': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Cẩn thận bệnh tật, sức khỏe suy yếu." } },
-    5: { 'N': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Đại hung, cần tĩnh không nên động." }, 'NE': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Quyền lực, công danh ổn định." }, 'E': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Cẩn thận hao tài và tiểu nhân quấy phá." }, 'SE': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài lộc vững, sự nghiệp tiến triển." }, 'S': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Đại cát, vượng danh, hỷ sự." }, 'SW': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Trí tuệ, quý nhân phù trợ." }, 'W': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Sức khỏe kém, cần chú ý." }, 'NW': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Năng lượng trung tính, cần sự kiên nhẫn." } },
-    6: { 'N': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Vượng quý nhân, quyền thế." }, 'NE': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Cần đề phòng tranh chấp, kiện tụng." }, 'E': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài lộc dồi dào, kinh doanh phát đạt." }, 'SE': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Danh vọng, vượng nhân duyên." }, 'S': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Trí tuệ, học hành, quan lộc." }, 'SW': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Sức khỏe không ổn định." }, 'W': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Trung tính, chú ý lời ăn tiếng nói." }, 'NW': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Tốt cho học hành, thi cử." } },
-    7: { 'N': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Dễ thất thoát tài sản, cẩn thận thị phi." }, 'NE': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài lộc vững chắc." }, 'E': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Danh vọng cao, hỷ sự dồi dào." }, 'SE': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Quý nhân, trí tuệ." }, 'S': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Sức khỏe cần chú ý." }, 'SW': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Cần cẩn thận trong giao tiếp." }, 'W': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Học tập tốt, tư duy tốt." }, 'NW': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Đại hung, không nên tác động." } },
-    8: { 'N': { sao: "Bát Bạch", hanh: "Thổ", loai: "best", y_nghia: "Vượng tài, gia đạo hưng thịnh." }, 'NE': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Danh tiếng, vận may đến." }, 'E': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Trí tuệ, sự nghiệp tốt." }, 'SE': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Chú ý bệnh tật." }, 'S': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Trung bình." }, 'SW': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Học hành, danh tiếng." }, 'W': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Đại hung." }, 'NW': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Quyền lực, công danh." } },
-    9: { 'N': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Trí tuệ, quý nhân tương trợ." }, 'NE': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Thị phi, tranh chấp." }, 'E': { sao: "Lục Bạch", hanh: "Kim", loai: "neutral", y_nghia: "Tài lộc chậm phát triển." }, 'SE': { sao: "Nhị Hắc", hanh: "Thổ", loai: "neutral", y_nghia: "Chú ý tiêu hóa." }, 'S': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Hoàng kim vận 9, đại phú quý." }, 'SW': { sao: "Bát Bạch", hanh: "Thổ", loai: "neutral", y_nghia: "Tài lộc thoái khí." }, 'W': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Đại hung, tránh động thổ." }, 'NW': { sao: "Tứ Lục", hanh: "Mộc", loai: "bad", y_nghia: "Trì trệ học hành." } }
+    1: { 
+        'N': { sao: "Nhất Bạch", hanh: "Thủy", loai: "best", y_nghia: "Thủy khí đương vượng, đại cát về đường trí tuệ, quan lộc và tài lộc tăng trưởng." }, 
+        'NE': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Phạm bệnh tinh, dễ phát sinh bệnh tật, thị phi, bất lợi cho sức khỏe gia đạo." }, 
+        'E': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Năng lượng bình hòa, thích hợp cho các công việc liên quan đến trí óc và sáng tạo." }, 
+        'SE': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Cát tinh văn xương, trợ lực rất tốt cho đường học hành, thi cử và danh tiếng." }, 
+        'S': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Phạm Ngũ Hoàng Đại Sát, đại hung tinh tích tụ tai họa, tuyệt đối tránh động thổ." }, 
+        'SW': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Vượng khí quyền lực, đường công danh sự nghiệp và địa vị xã hội ổn định." }, 
+        'W': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Thoái khí hung tinh, dễ gặp họa lừa gạt, tranh chấp lời nói và hao hụt của cải." }, 
+        'NW': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Cát tinh tích lũy tài lộc, gia đạo bình an, kinh tế phát triển ổn định." } 
+    },
+    2: { 
+        'N': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Bệnh phù tinh chiếu hướng, đề phòng các bệnh về hệ tiêu hóa và khí huyết." }, 
+        'NE': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Dễ phát sinh tranh chấp, mâu thuẫn lời nói, vận trình cần sự thận trọng." }, 
+        'E': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Văn xương tinh trợ lực, sự nghiệp có bước tiến mới, học vấn phát triển tốt." }, 
+        'SE': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Sát tinh đại hung độc hại, tránh mọi tác động lực hoặc sửa chữa tại phương vị này." }, 
+        'S': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Có cơ hội đón quý nhân trợ giúp, quyền lực nội tại được củng cố vững chắc." }, 
+        'SW': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Đề phòng tiểu nhân quấy phá, hao tổn tài sản ngoài ý muốn hoặc tai bay vạ gió." }, 
+        'W': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài lộc tích lũy tốt, các hoạt động kinh doanh buôn bán diễn ra thuận lợi." }, 
+        'NW': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Sinh khí tinh hướng về tương lai, đại cát tường, danh vọng cao, hỷ sự liên miên." } 
+    },
+    3: { 
+        'N': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Khí trường mang tính cạnh tranh cao nhưng dễ giúp chủ nhà khẳng định vị thế." }, 
+        'NE': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Đầu óc minh mẫn, tư duy sắc bén, có lợi cho việc nghiên cứu và văn chương." }, 
+        'E': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Phương vị tích tụ sát khí nặng, kỵ lập hướng công trình hoặc cải tạo đập phá." }, 
+        'SE': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Năng lượng củng cố công danh, giúp giữ vững tay chèo trong sự nghiệp." }, 
+        'S': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Khí trường bất ổn, dễ dính líu đến các rắc rối pháp lý hoặc thị phi tai tiếng." }, 
+        'SW': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Bình ổn dòng tài sản gia đình, vợ chồng hòa thuận, gia đạo êm ấm." }, 
+        'W': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Vượng khí lan tỏa mạnh mẽ, đại phú đại quý, mưu sự dễ thành công." }, 
+        'NW': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Gia tăng vận nhân duyên tốt đẹp, vượng quý nhân và đường học vấn." } 
+    },
+    4: { 
+        'N': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Khí trường thanh cao, chủ về thông minh, học vấn hanh thông, danh tài vẹn toàn." }, 
+        'NE': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Hung tinh sát khí cực độ, cần giữ phương vị này yên tĩnh, không nên động thổ." }, 
+        'E': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Vượng quý nhân tinh, công việc làm ăn có sự nâng đỡ, tiến triển thuận lợi." }, 
+        'SE': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Thất vận tinh chiếu, cần đề phòng hao tài tốn của và tiểu nhân dèm pha." }, 
+        'S': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài lộc dồi dào, kinh tế trạch đất phát triển ở mức ổn định, bền vững." }, 
+        'SW': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Đón nhận sinh khí cường đại, gia tăng hỷ sự và lan tỏa tiếng tăm đi xa." }, 
+        'W': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Trí tuệ phát tiết, quan lộc và đường công danh có cơ hội thăng tiến lớn." }, 
+        'NW': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Khí trường suy yếu, cẩn thận ảnh hưởng tiêu cực đến sức khỏe các thành viên." } 
+    },
+    5: { 
+        'N': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Chính vị đại hung tai họa, trường khí xung sát, cần giữ tĩnh tuyệt đối." }, 
+        'NE': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Năng lượng bổ trợ cho quyền lực, công danh sự nghiệp giữ được thế cân bằng." }, 
+        'E': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Đề phòng nội bộ phát sinh tranh chấp hoặc bị tiểu nhân quấy phá sau lưng." }, 
+        'SE': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Mạch tài lộc chạy đều, vận trình sự nghiệp có những bước tiến triển rõ rệt." }, 
+        'S': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Đón nhận đại cát khí, vượng đường danh tiếng, gia đạo có nhiều tin vui." }, 
+        'SW': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Kích hoạt trí tuệ phát triển, đón nhận quý nhân phù trợ lúc khó khăn." }, 
+        'W': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Sức khỏe trạch thể kém, cần bố trí cấu trúc không gian thông thoáng để hóa sát." }, 
+        'NW': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Trạng thái khí trường trung tính, mọi mưu sự lớn cần có lòng kiên nhẫn." } 
+    },
+    6: { 
+        'N': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Vượng khí cho người làm quản lý, gia tăng quyền thế và uy tín cá nhân." }, 
+        'NE': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Khí mạch tiềm ẩn nguy cơ tranh chấp lời nói, kiêng kị việc kiện tụng." }, 
+        'E': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài lộc dồi dào, tạo nền tảng tốt cho các hoạt động đầu tư lâu dài." }, 
+        'SE': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Đón nhận cát khí đương vượng, vượng nhân duyên và mở rộng mối quan hệ." }, 
+        'S': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Kích hoạt cung trí tuệ, có lợi cho đường học hành, thi cử và quan lộc." }, 
+        'SW': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Năng lượng sức khỏe thiếu ổn định, cần chú ý giữ gìn môi trường sống." }, 
+        'W': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Khí trường trung tính, chú ý lời ăn tiếng nói để tránh thị phi vô căn cứ." }, 
+        'NW': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Trường khí thanh tịnh, mang lại may mắn lớn cho đường học vấn và khoa bảng." } 
+    },
+    7: { 
+        'N': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Sát khí tiềm ẩn, dễ gây thất thoát tiền bạc hoặc vướng vào họa miệng lưỡi." }, 
+        'NE': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Giữ vững nền tảng tài chính, công việc diễn ra đều đặn, ít biến động." }, 
+        'E': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Danh vọng đỉnh cao, khí trường hanh thông mang lại nhiều tài lộc bất ngờ." }, 
+        'SE': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", "y_nghia": "Đón dòng sinh khí tốt về nhân sự, tư duy sáng suốt, có quý nhân vạch đường." }, 
+        'S': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Trạch khí âm hàn suy yếu, cần chú ý nâng cao sức đề kháng cho cơ thể." }, 
+        'SW': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Khí trường trung bình, cần khéo léo trong giao tiếp xã hội để tránh hiểu lầm." }, 
+        'W': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Tư duy nhạy bén, học tập và tiếp thu kiến thức mới đạt hiệu quả cao." }, 
+        'NW': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Phạm Ngũ Hoàng đại kỵ, tuyệt đối không được tác động lực mạnh phá vỡ khí trường." } 
+    },
+    8: { 
+        'N': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Dòng tài lộc duy trì ổn định, gia đạo nhìn chung êm ấm và hưng thịnh." }, 
+        'NE': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Đón nhận vận may lớn, danh tiếng vang xa, mưu cầu tài lộc dễ đắc ý." }, 
+        'E': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Trí tuệ mẫn tiệp, hỗ trợ rất tốt cho đường quan lộ và công việc thuận buồm xuôi gió." }, 
+        'SE': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Bệnh tinh đóng cung, chú ý phòng ngừa các chứng bệnh phát sinh đột ngột." }, 
+        'S': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Năng lượng ở mức trung bình, tiến trình công việc cần sự kiên trì ổn định." }, 
+        'SW': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Hỗ trợ tốt cho đường danh tiếng, học hành khoa bảng đạt kết quả như ý." }, 
+        'W': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Phương vị phạm sát khí Ngũ Hoàng, kỵ các hoạt động đào bới, sửa chữa." }, 
+        'NW': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Quyền lực nội tại tăng cao, củng cố vị thế vững vàng trong công việc." } 
+    },
+    9: { 
+        'N': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Trí tuệ đương vận, cát khí tăng trưởng, quý nhân tương trợ phát đạt mạnh mẽ." }, 
+        'NE': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Sao thất vận dồn tụ khí xấu, đề phòng phát sinh thị phi, tranh chấp hao tổn tài sản." }, 
+        'E': { sao: "Lục Bạch", hanh: "Kim", loai: "neutral", y_nghia: "Khí trường bình hòa, tài lộc và công danh tích lũy ở mức độ chậm nhưng chắc chắn." }, 
+        'SE': { sao: "Nhị Hắc", hanh: "Thổ", loai: "neutral", y_nghia: "Bệnh tinh gặp thời vận 9 làm giảm bớt tính hung độc, tuy nhiên cần lưu ý bảo vệ hệ tiêu hóa." }, 
+        'S': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Tôn quý tối thượng, Hoàng kim đại vượng khí Thời vận 9, chủ quản đại phú quý lâm môn." }, 
+        'SW': { sao: "Bát Bạch", hanh: "Thổ", loai: "neutral", y_nghia: "Sao thoái khí bước vào chu kỳ suy giảm năng lượng, tài vận chuyển sang trạng thái tích lũy chậm." }, 
+        'W': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Chính vị Ngũ Hoàng Đại Sát cực hung, tuyệt đối kỵ động thổ, khoan đục hay cải tạo cấu trúc lớn." }, 
+        'NW': { sao: "Tứ Lục", hanh: "Mộc", loai: "bad", y_nghia: "Sao suy thoái khí, cần đề phòng vận trình học hành thi cử xuất hiện dấu hiệu trì trệ." } 
+    }
 };
 
 function sinhLuanGiaiThienThoi(code) {
@@ -1205,49 +1288,45 @@ function getLuanDoanChiTiet(huong, son) {
 }
 
 function updateCompassUI(heading) {
-    // 1. TÍNH GÓC THỰC TẾ (Đã bù trừ độ lệch từ - Magnetic Declination)
-
+    // ==================== TOÁN HỌC KHÍ TRƯỜNG ĐỊA LÝ LÀM TRÒN GÓC THỰC TẾ ====================
     let trueHeading = (heading + (magneticDeclination % 360) + 360) % 360;
-    // Lưu góc thực tế đã làm tròn để hiển thị công cụ khác nếu cần
     currentHeading = Math.round(trueHeading);
     
-    // Xoay la bàn theo góc THỰC TẾ
+    // Xoay đồ hình mặt la bàn theo góc thực tế thực địa
     compass.style.transform = `rotate(${-trueHeading}deg)`;
     needle.style.transform = `rotate(0deg)`;
     compassSlider.value = currentHeading;
 
-    // ==================== 1. XÁC ĐỊNH 8 CUNG ====================
+    // ==================== 1. XÁC ĐỊNH LƯỚI TỌA ĐỘ BÁT CUNG CHÍNH TÔNG ====================
     let currentCung = "";
     let currentCode = "";
-    // Thay toàn bộ currentHeading ở đây bằng trueHeading để tính Cung chuẩn địa lý
-    if (trueHeading >= 338 || trueHeading < 23) {
+    if (trueHeading >= 337.5 || trueHeading < 22.5) {
         currentCung = "KHẢM (BẮC)";
         currentCode = "N";
-    } else if (trueHeading >= 23 && trueHeading < 68) {
+    } else if (trueHeading >= 22.5 && trueHeading < 67.5) {
         currentCung = "CẤN (ĐÔNG BẮC)";
         currentCode = "NE";
-    } else if (trueHeading >= 68 && trueHeading < 113) {
+    } else if (trueHeading >= 67.5 && trueHeading < 112.5) {
         currentCung = "CHẤN (ĐÔNG)";
         currentCode = "E";
-    } else if (trueHeading >= 113 && trueHeading < 158) {
+    } else if (trueHeading >= 112.5 && trueHeading < 157.5) {
         currentCung = "TỐN (ĐÔNG NAM)";
         currentCode = "SE";
-    } else if (trueHeading >= 158 && trueHeading < 203) {
+    } else if (trueHeading >= 157.5 && trueHeading < 202.5) {
         currentCung = "LY (NAM)";
         currentCode = "S";
-    } else if (trueHeading >= 203 && trueHeading < 248) {
+    } else if (trueHeading >= 202.5 && trueHeading < 247.5) {
         currentCung = "KHÔN (TÂY NAM)";
         currentCode = "SW";
-    } else if (trueHeading >= 248 && trueHeading < 293) {
+    } else if (trueHeading >= 247.5 && trueHeading < 292.5) {
         currentCung = "ĐOÀI (TÂY)";
         currentCode = "W";
-    } else if (trueHeading >= 293 && trueHeading < 338) {
+    } else if (trueHeading >= 292.5 && trueHeading < 337.5) {
         currentCung = "CÀN (TÂY BẮC)";
         currentCode = "NW";
     }
 
-    // ==================== 2. 24 SƠN + 72 HẬU ====================
-    // Sử dụng trueHeading để tìm Sơn chính xác
+    // ==================== 2. ĐỊNH VỊ 24 SƠN VÀ 72 HẬU LONG MẠCH ====================
     let gockim = (trueHeading % 360 + 360) % 360;
     let sơnHiệnTạiObj = SON_24_CONFIG.find(s => {
         if (s.min > s.max) return gockim >= s.min || gockim < s.max;
@@ -1255,11 +1334,14 @@ function updateCompassUI(heading) {
     }) || SON_24_CONFIG[0];
     let sơnHiệnTại = sơnHiệnTạiObj.name;
 
-    // Lấy thông tin Hậu và Điểm tổng hợp dựa trên góc THỰC TẾ
     const currentHauInfo = getCurrentHauInfo(trueHeading);
-    const tongHop = tinhDiemTongHop(chủMệnh || "Khảm", trueHeading, new Date().getFullYear());
+    
+    // Đọc trạng thái mục đích sử dụng để kích hoạt bộ não chấm điểm đa tầng thời vận
+    const mụcĐích = document.getElementById('purpose').value;
+    const namHienTai = new Date().getFullYear();
+    const tongHop = tinhDiemTongHop(chủMệnh || "Khảm", trueHeading, namHienTai, mụcĐích);
 
-    // Hiển thị ra màn hình số độ THỰC TẾ sau khi đã bù trừ sai lệch từ trường
+    // Hiển thị thông số góc thực địa lên màn hình chính la bàn
     degreeTxt.innerHTML = `
         ${currentHeading}° - Phương ${currentCung} - Sơn <strong>${sơnHiệnTại}</strong><br>
         <span style="color:${currentHauInfo.emoji === '🟢' ? '#00ff41' : (currentHauInfo.emoji === '🔴' ? '#ff4444' : '#ffd700')}">
@@ -1267,176 +1349,170 @@ function updateCompassUI(heading) {
         </span>
         <span style="margin-left:8px; color:#ffd700;">${tongHop.diem}pt</span>
     `;
-	// ==================== 3. LẤY DỮ LIỆU ====================
-	const dayStr = document.getElementById('birthDay')
-		.value;
-	const monthStr = document.getElementById('birthMonth')
-		.value;
-	const yearStr = document.getElementById('birthYear')
-		.value;
-	const mụcĐích = document.getElementById('purpose')
-		.value;
-	const adviceBox = document.getElementById('pro-advice-box');
-	const adviceContent = document.getElementById('advice-content');
-	// ==================== KHO TÀNG PHÁP BẢO ====================
-	const advices = {
-		"Sinh Khí": "<strong>[CÁT TINH ĐẠI LỢI] Cách kích hoạt vượng khí tối đa trong Vận 9:</strong> Hướng này chủ về nhân đinh hưng vượng, thu hút tài lộc mạnh mẽ, giúp công danh sự nghiệp phát đạt.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt chậu cây xanh lớn đại diện cho hành Mộc (Thiết Mộc Lan, Kim Tiền) tại cửa ra vào để kéo khí trường.<br>2. Treo tranh mộc sinh hỏa hoặc đặt Tháp Văn Xương bằng gỗ chín tầng tại góc phương vị này để tăng tiến đường học hành, quan lộ."
-		, "Thiên Y": "<strong>[CÁT TINH SỨC KHỎE] Cách gia tăng năng lượng hộ thân, trừ bệnh:</strong> Hướng chủ trì sức khỏe, tiêu bệnh trừ tai, giúp gia đạo bình an, trường thọ.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt một quả Hồ lô bằng đồng hoặc Hồ lô đá thạch anh vàng ngay đầu giường ngủ hoặc trước cửa phòng.<br>2. Bố trí bình gốm sứ cao cấp, đĩa ngọc thạch anh hành Thổ để bồi bổ sinh khí, giúp tạng phủ khỏe mạnh, ngủ ngon giác."
-		, "Diên Niên": "<strong>[CÁT TINH GIA ĐẠO] Cách củng cố hòa khí, kết nối lương duyên bền vững:</strong> Hướng chủ về sự hòa thuận, củng cố quan hệ ngoại giao, gia đình êm ấm, vợ chồng đồng lòng.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt các vật phẩm chế tác bằng kim loại quý hành Kim như: Đôi uyên ương bằng đồng, hồ lô đồng nạp phúc.<br>2. Sử dụng thảm trải sàn màu trắng, xám ghi hoặc thạch anh trắng để thu hút năng lượng cát tường, gia đạo yên vui."
-		, "Phục Vị": "<strong>[CÁT TINH TĨNH TÂM] Kích hoạt sự vững chãi, thi cử đỗ đạt:</strong> Hướng mang lại bình an, củng cố sức mạnh tinh thần, bản lĩnh, rất có lợi cho ban thờ và bàn làm việc.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt tháp nước phong thủy luận chuyển tuần hoàn (hành Thủy) hoặc quả cầu thủy tinh màu xanh biển sâu.<br>2. Đặt một chiếc gương nhỏ nhìn ra hướng cát hoặc bài trí biểu tượng cột buồm đón gió để duy trì năng lượng tiến thủ."
-		, "Tuyệt Mệnh": "<strong>[ĐẠI HUNG TINH NGUY HIỂM] Phương án Hóa Giải Sát Khí tối thượng:</strong> Phương vị mang sát khí cực mạnh, dễ tổn hại đoản thọ, phá sản, bệnh tật nghiêm trọng.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. <b>Bảo pháp Kim khí:</b> Treo một chuông gió bằng đồng 6 thanh (Lục đế) hoặc đặt một cặp Tỳ Hưu bằng đồng nguyên chất để dùng hành Kim làm suy yếu tuyệt đối hung tinh.<br>2. <b>Trấn trạch chế sát:</b> Treo gương Bát Quái Gỗ Đào Lồi chính tông hướng ra ngoài cửa để phản xạ sát khí.<br>3. <b>Màu sắc điều hòa:</b> Sử dụng thảm trải màu xám tro hoặc màu trắng đặt ngay thềm cửa ra vào để thanh lọc tà khí."
-		, "Ngũ Quỷ": "<strong>[HUNG TINH THỊ PHI] Phương án khắc chế hỏa khí, trừ tiểu nhân quấy phá:</strong> Dễ gây nóng nảy, kiện tụng, tổn hao tài sản, bị tiểu nhân đâm sau lưng.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. <b>Thủy pháp hóa sát:</b> Áp dụng nguyên lý 'Khôi phục bình hòa' - Đặt một lu nước sạch, bình thủy tinh chứa nước an nhẫn (nước muối loãng) hoặc quả cầu thạch anh đen tại vị trí này để dập tắt lửa Ngũ Quỷ.<br>2. Treo chuỗi tiền cổ Ngũ Đế bằng đồng ở ngạch cửa để dùng Kim sinh Thủy tiêu hao ác tính."
-		, "Lục Sát": "<strong>[HUNG TINH TRỤC TRẶC] Cách hóa giải bất hòa gia đạo và mâu thuẫn tình cảm:</strong> Gây tranh chấp xích mích tai tiếng, tinh thần u uất, tình duyên lận đận.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. Đặt một bể cá phong thủy hoặc phong thủy luân (hành Thủy khí tốt) tại phương vị này để chuyển hóa năng lượng xung khắc thành dòng chảy êm dịu.<br>2. Sử dụng các đồ vật trang trí mang sắc xanh dương, đen hoặc treo rèm cửa màu tối để hấp thụ tà khí."
-		, "Họa Hại": "<strong>[HUNG TINH HAO TÀI VỤN VẶN] Tiêu trừ năng lượng tiêu cực, xua đuổi rủi ro:</strong> Khiến công việc hay gặp trắc trở vụn vặt, muộn phiền, tiểu nhân quấy rầy.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. Đặt các vật phẩm chế tác từ đá tự nhiên thuộc hành Thổ hoặc Kim như: Gậy Như Ý bằng đồng, thạch anh trắng cát tường.<br>2. Treo một dải ruy băng đỏ phối đồng xu may mắn hoặc đặt các bức tượng chiêu tài bằng đồng để biến hung thành cát."
-	};
-	// ==================== 4. CHẾ ĐỘ THÔ ====================
-	if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
-		elementBox.innerHTML =
-			`<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${phươngVịThiếtLập[currentCode]?.ngũHành || 'Không xác định'}</span>`;
-		judgmentBox.innerText = "ĐO HƯỚNG CHÍNH XÁC";
-		judgmentBox.className = "judgment-badge";
-		judgmentBox.removeAttribute("style");
-		judgmentBox.style.backgroundColor = "#222";
-		judgmentBox.style.color = "var(--gold)";
-		judgmentBox.style.border = "1px solid var(--gold)";
-		detailBox.style.borderLeftColor = "var(--gold)";
-		detailBox.innerHTML = `
+
+    // ==================== 3. TRUY XUẤT DỮ LIỆU INPUT BIỂU MẪU ====================
+    const dayStr = document.getElementById('birthDay').value;
+    const monthStr = document.getElementById('birthMonth').value;
+    const yearStr = document.getElementById('birthYear').value;
+    const adviceBox = document.getElementById('pro-advice-box');
+    const adviceContent = document.getElementById('advice-content');
+
+    // ==================== KHO TÀNG CẨM NĂNG PHÁP BẢO PHONG THỦY NGUYÊN BẢN CỦA BẠN ====================
+    const advices = {
+        "Sinh Khí": "<strong>[CÁT TINH ĐẠI LỢI] Cách kích hoạt vượng khí tối đa trong Vận 9:</strong> Hướng này chủ về nhân đinh hưng vượng, thu hút tài lộc mạnh mẽ, giúp công danh sự nghiệp phát đạt.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt chậu cây xanh lớn đại diện cho hành Mộc (Thiết Mộc Lan, Kim Tiền) tại cửa ra vào để kéo khí trường.<br>2. Treo tranh mộc sinh hỏa hoặc đặt Tháp Văn Xương bằng gỗ chín tầng tại góc phương vị này để tăng tiến đường học hành, quan lộ.",
+        "Thiên Y": "<strong>[CÁT TINH SỨC KHỎE] Cách gia tăng năng lượng hộ thân, trừ bệnh:</strong> Hướng chủ trì sức khỏe, tiêu bệnh trừ tai, giúp gia đạo bình an, trường thọ.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt một quả Hồ lô bằng đồng hoặc Hồ lô đá thạch anh vàng ngay đầu giường ngủ hoặc trước cửa phòng.<br>2. Bố trí bình gốm sứ cao cấp, đĩa ngọc thạch anh hành Thổ để bồi bổ sinh khí, giúp tạng phủ khỏe mạnh, ngủ ngon giác.",
+        "Diên Niên": "<strong>[CÁT TINH GIA ĐẠO] Cách củng cố hòa khí, kết nối lương duyên bền vững:</strong> Hướng chủ về sự hòa thuận, củng cố quan hệ ngoại giao, gia đình êm ấm, vợ chồng đồng lòng.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt các vật phẩm chế tác bằng kim loại quý hành Kim như: Đôi uyên ương bằng đồng, hồ lô đồng nạp phúc.<br>2. Sử dụng thảm trải sàn màu trắng, xám ghi hoặc thạch anh trắng để thu hút năng lượng cát tường, gia đạo yên vui.",
+        "Phục Vị": "<strong>[CÁT TINH TĨNH TÂM] Kích hoạt sự vững chãi, thi cử đỗ đạt:</strong> Hướng mang lại bình an, củng cố sức mạnh tinh thần, bản lĩnh, rất có lợi cho ban thờ và bàn làm việc.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt tháp nước phong thủy luận chuyển tuần hoàn (hành Thủy) hoặc quả cầu thủy tinh màu xanh biển sâu.<br>2. Đặt một chiếc gương nhỏ nhìn ra hướng cát hoặc bài trí biểu tượng cột buồm đón gió để duy trì năng lượng tiến thủ.",
+        "Tuyệt Mệnh": "<strong>[ĐẠI HUNG TINH NGUY HIỂM] Phương án Hóa Giải Sát Khí tối thượng:</strong> Phương vị mang sát khí cực mạnh, dễ tổn hại đoản thọ, phá sản, bệnh tật nghiêm trọng.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. <b>Bảo pháp Kim khí:</b> Treo một chuông gió bằng đồng 6 thanh (Lục đế) hoặc đặt một cặp Tỳ Hưu bằng đồng nguyên chất để dùng hành Kim làm suy yếu tuyệt đối hung tinh.<br>2. <b>Trấn trạch chế sát:</b> Treo gương Bát Quái Gỗ Đào Lồi chính tông hướng ra ngoài cửa để phản xạ sát khí.<br>3. <b>Màu sắc điều hòa:</b> Sử dụng thảm trải màu xám tro hoặc màu trắng đặt ngay thềm cửa ra vào để thanh lọc tà khí.",
+        "Ngũ Quỷ": "<strong>[HUNG TINH THỊ PHI] Phương án khắc chế hỏa khí, trừ tiểu nhân quấy phá:</strong> Dễ gây nóng nảy, kiện tụng, tổn hao tài sản, bị tiểu nhân đâm sau lưng.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. <b>Thủy pháp hóa sát:</b> Áp dụng nguyên lý 'Khôi phục bình hòa' - Đặt một lu nước sạch, bình thủy tinh chứa nước an nhẫn (nước muối loãng) hoặc quả cầu thạch anh đen tại vị trí này để dập tắt lửa Ngũ Quỷ.<br>2. Treo chuỗi tiền cổ Ngũ Đế bằng đồng ở ngạch cửa để dùng Kim sinh Thủy tiêu hao ác tính.",
+        "Lục Sát": "<strong>[HUNG TINH TRỤC TRẶC] Cách hóa giải bất hòa gia đạo và mâu thuẫn tình cảm:</strong> Gây tranh chấp xích mích tai tiếng, tinh thần u uất, tình duyên lận đận.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. Đặt một bể cá phong thủy hoặc phong thủy luân (hành Thủy khí tốt) tại phương vị này để chuyển hóa năng lượng xung khắc thành dòng chảy êm dịu.<br>2. Sử dụng các đồ vật trang trí mang sắc xanh dương, đen hoặc treo rèm cửa màu tối để hấp thụ tà khí.",
+        "Họa Hại": "<strong>[HUNG TINH HAO TÀI VỤN VẶN] Tiêu trừ năng lượng tiêu cực, xua đuổi rủi ro:</strong> Khiến công việc hay gặp trắc trở vụn vặt, muộn phiền, tiểu nhân quấy rầy.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. Đặt các vật phẩm chế tác từ đá tự nhiên thuộc hành Thổ hoặc Kim như: Gậy Như Ý bằng đồng, thạch anh trắng cát tường.<br>2. Treo một dải ruy băng đỏ phối đồng xu may mắn hoặc đặt các bức tượng chiêu tài bằng đồng để biến hung thành cát."
+    };
+
+    // ==================== 4. CHẾ ĐỘ ĐO ĐẠC LA BÀN THÔ THỰC ĐỊA ====================
+    if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
+        elementBox.innerHTML = `<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${phươngVịThiếtLập[currentCode]?.ngũHành || 'Không xác định'}</span>`;
+        judgmentBox.innerText = "ĐO HƯỚNG CHÍNH XÁC";
+        judgmentBox.className = "judgment-badge";
+        judgmentBox.removeAttribute("style");
+        judgmentBox.style.backgroundColor = "#222";
+        judgmentBox.style.color = "var(--gold)";
+        judgmentBox.style.border = "1px solid var(--gold)";
+        detailBox.style.borderLeftColor = "var(--gold)";
+        detailBox.innerHTML = `
             <span style="color:#ffffff;">Hệ thống đang chạy ở chế độ la bàn thực địa độ phân giải cao.<br>
             Tọa độ: <span class="gold-text">${currentHeading}°</span> | Phương: <b>${currentCung}</b> | Sơn: <span style="color:var(--gold); font-weight:bold;">${sơnHiệnTại}</span>.<br>
             Thích hợp đo đạc kiểm tra thông số long mạch, địa hình đất đai dương trạch.</span>`;
-		if (adviceBox) adviceBox.style.display = 'none';
-		kichHoatDenLedQuet(currentHeading);
-		return;
-	}
-	// ==================== 5. CHẾ ĐỘ CAO CẤP (BẢN HOÀN THIỆN - ĐÚNG TEXT GỐC) ====================
-	// Kiểm tra an toàn trước khi truy cập đối tượng
-	const hànhPhươngVị = phươngVịThiếtLập?.[currentCode]?.ngũHành || "N/A";
-	const hànhMệnhChủ = bátTrạchMap?.[chủMệnh]?.element || "N/A";
-	elementBox.innerHTML = `
+        if (adviceBox) adviceBox.style.display = 'none';
+        kichHoatDenLedQuet(currentHeading);
+        return;
+    }
+
+    // ==================== 5. CHẾ ĐỘ PHÂN TÍCH CAO CẤP TÍCH HỢP PT VẬN 9 ====================
+    const hànhPhươngVị = phươngVịThiếtLập?.[currentCode]?.ngũHành || "N/A";
+    const hànhMệnhChủ = bátTrạchMap?.[chủMệnh]?.element || "N/A";
+    elementBox.innerHTML = `
         <span class="element-badge" style="background: #3a3a3c;">Phương vị: ${hànhPhươngVị}</span>
         <span class="element-badge" style="background: #2c2c2e; color: var(--gold)">Mệnh: ${hànhMệnhChủ}</span>
     `;
-	// Khai báo biến an toàn
-	const cungTrạch = bátTrạchMap?.[chủMệnh]?.[currentCode] || "Khác";
-	const thôngTinCung = cungPhầnTrăm?.[cungTrạch] || {
-		cát: true
-		, ý_nghĩa: "Thông tin không xác định."
-	};
-	const namHienTai = new Date()
-		.getFullYear();
-	// Đảm bảo hàm tinhHanCuuTinhTheoNam luôn trả về object hợp lệ
-	const ketQua = typeof tinhHanCuuTinhTheoNam === 'function' ? tinhHanCuuTinhTheoNam(sơnHiệnTạiObj?.huong || "Trung Cung", namHienTai) : {
-		thongTinSao: "Chưa có dữ liệu"
-		, meoGiaiHan: ""
-	};
-	let canhBaoCuuTinh = "";
-	let giaiHanCuuTinh = "";
-	const boxStyle = "margin-top:10px; padding:10px; border-radius:6px; font-size:0.85rem; line-height:1.4;";
-	// Xử lý logic cảnh báo
-	if (ketQua.thongTinSao.includes("⚠️")) {
-		canhBaoCuuTinh = `<div style="${boxStyle} background:rgba(255,59,48,0.1); border:1px solid #ff3b30; color:#ff3b30;">
-            <b style="display:block; margin-bottom:4px;">⚠️ CẢNH BÁO ${namHienTai}:</b>
+
+    const cungTrạch = bátTrạchMap?.[chủMệnh]?.[currentCode] || "Khác";
+    const thôngTinCung = cungPhầnTrăm?.[cungTrạch] || { cát: true, ý_nghĩa: "Thông tin không xác định." };
+
+    // Gọi hàm đối soát dữ liệu vận hạn lưu niên chiếu hướng
+    const ketQua = typeof tinhHanCuuTinhTheoNam === 'function' 
+        ? tinhHanCuuTinhTheoNam(sơnHiệnTạiObj?.huong || "Trung Cung", namHienTai) 
+        : { thongTinSao: "Chưa có dữ liệu", meoGiaiHan: "" };
+        
+    let canhBaoCuuTinh = "";
+    let giaiHanCuuTinh = "";
+    const boxStyle = "margin-top:10px; padding:10px; border-radius:6px; font-size:0.85rem; line-height:1.4;";
+
+    if (ketQua.thongTinSao.includes("⚠️")) {
+        canhBaoCuuTinh = `<div style="${boxStyle} background:rgba(255,59,48,0.1); border:1px solid #ff3b30; color:#ff3b30;">
+            <b style="display:block; margin-bottom:4px;">⚠️ CẢNH BÁO NĂM ${namHienTai}:</b>
             ${ketQua.thongTinSao.replace(/⚠️/g, '•')}
         </div>`;
-		if (ketQua.meoGiaiHan) {
-			giaiHanCuuTinh = `<div style="margin-top:5px; padding:8px 12px; background:rgba(255,159,10,0.1); border-left:3px solid #ff9f0a; color:#ff9f0a; font-size:0.82rem; border-radius:0 6px 6px 0;">
+        if (ketQua.meoGiaiHan) {
+            giaiHanCuuTinh = `<div style="margin-top:5px; padding:8px 12px; background:rgba(255,159,10,0.1); border-left:3px solid #ff9f0a; color:#ff9f0a; font-size:0.82rem; border-radius:0 6px 6px 0;">
                 <b>💡 Hóa giải:</b> ${ketQua.meoGiaiHan.replace('👉 Hóa giải: ', '')}
             </div>`;
-		}
-	} else {
-		canhBaoCuuTinh = `<div style="${boxStyle} background:rgba(48,209,88,0.1); border:1px solid #30d158; color:#30d158; text-align:center;">
+        }
+    } else {
+        canhBaoCuuTinh = `<div style="${boxStyle} background:rgba(48,209,88,0.1); border:1px solid #30d158; color:#30d158; text-align:center;">
             ✅ ${ketQua.thongTinSao}
         </div>`;
-	}
-	// --- LUẬN ĐOÁN MINH CHÂU (DẠNG TEXT THUẦN TÚY - CÓ GIẢI PHÁP ĐẸP) ---
-	if (typeof MaTranMinhChau !== 'undefined' && MaTranMinhChau[chủMệnh]?.[sơnHiệnTại]) {
-		const mc = MaTranMinhChau[chủMệnh][sơnHiệnTại];
-		const isCat = mc.loai === 'Cát';
-		const color = isCat ? '#30d158' : '#ff3b30';
-		const label = isCat ? '[MINH CHÂU CÁT SƠN]' : '[MINH CHÂU HUNG SƠN]';
-		// Phần thông tin Sơn/Hướng xám ghi, in nghiêng
-		const thongSo = `<span style="color:#a0a0a0; font-style:italic;">Sơn ${sơnHiệnTại} (${sơnHiệnTạiObj?.huong}):</span>`;
-		luanDoanSonChiTiet = `<b style="color:${color};">${label}</b> ${thongSo} ${mc.text}`;
-		// Cải tiến phần GIẢI PHÁP: Màu sắc đồng bộ với tiêu đề, thêm icon 💡
-		if (mc.giaiphap) {
-			luanDoanSonChiTiet += `<br><br><span style="color:${color}; font-weight:bold;">💡 Giải pháp:</span> 
-                                  <span style="color:#ffffff;">${mc.giaiphap}</span>`;
-		}
-	} else {
-		luanDoanSonChiTiet =
-			`<span style="color:#a0a0a0; font-style:italic;">Tọa độ: ${currentHeading}° | Sơn ${sơnHiệnTại} | Phương ${sơnHiệnTạiObj?.huong}.</span>`;
-	}
-	// ==================== 6. XỬ LÝ THEO MỤC ĐÍCH (ĐÃ KHÔI PHỤC CHI TIẾT) ====================
-	const config = ConfigPhongThuy[mụcĐích] || {
-		title: "Cung vị"
-		, isCat: true
-	};
-	const isGood = config.isCat ? thôngTinCung.cát : !thôngTinCung.cát;
-	judgmentBox.removeAttribute("style");
-	judgmentBox.innerText = `${config.title}: ${cungTrạch}`;
-	judgmentBox.className = isGood ? "judgment-badge bg-good" : "judgment-badge bg-bad";
-	detailBox.style.borderLeftColor = isGood ? "var(--green)" : "var(--red)";
-	// --- LOGIC GỐC: TỰ ĐỘNG TRÍCH XUẤT VĂN BẢN CHI TIẾT ---
-	let noiDungDetail = "";
-	// Phần 1: Thông tin chính
-	noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,255,255,0.05); border-left: 4px solid ' + (isGood ?
-		'#30d158' : '#ff3b30') + '">';
-	noiDungDetail += '<strong style="color: ' + (isGood ? '#30d158' : '#ff3b30') + '; font-size: 1.05rem; display:block; margin-bottom:5px;">';
-	noiDungDetail += '◆ ' + (!mụcĐích ? (isGood ? 'CÁT TINH' : 'HUNG TINH') : (isGood ? 'CÁT CÁCH' : 'HUNG CÁCH')) + ' (' + cungTrạch.toUpperCase() +
-		'):</strong>';
-	noiDungDetail += '<span style="color:#ffffff; font-size:0.9rem;">';
-	if (!mụcĐích) {
-		noiDungDetail += 'Góc xoay <span class="gold-text">' + currentHeading + '°</span> đối chiếu mệnh cung <strong>' + chủMệnh +
-			'</strong> gặp cung tinh <strong>' + cungTrạch + '</strong>.<br>';
-	}
-	noiDungDetail += thôngTinCung.ý_nghĩa + '</span></div>';
-	// Phần 2: Hóa giải
-	if (!isGood) {
-		const matPhap = (typeof sinhMatPhapHoaGiai === 'function') ? sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung, currentCode) : "";
-		const camNang = advices[cungTrạch] || "";
-		noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,159,10,0.08); border:1px solid #ff9f0a;">';
-		noiDungDetail += '<h4 style="color:#ff9f0a; margin:0 0 8px 0; font-size: 0.9rem;">🛠 PHÁP HÓA GIẢI TỔNG HỢP</h4>';
-		noiDungDetail += '<div style="color:#fff; font-size:0.85rem; line-height:1.5;">' + matPhap;
-		if (camNang) {
-			noiDungDetail += '<br><b style="color:#dfb76c;">Danh mục vật phẩm bổ trợ:</b><div style="color:#ccc;">' + camNang.replace(/👉 <em>.*?<\/em>:<br>/,
-				'') + '</div>';
-		}
-		noiDungDetail += '</div></div>';
-	}
-	// Phần 3: Thần sát (KHÔI PHỤC ĐẦY ĐỦ VĂN BẢN CHI TIẾT)
-	noiDungDetail += '<div style="margin-top:15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.2); border: 1px solid #d4af37;">';
-	noiDungDetail += '<div style="margin-bottom:12px;">';
-	noiDungDetail += '<b style="color:var(--gold); font-size: 0.95rem;">🎯 THẦN SÁT ĐỘ SỐ (24 SƠN CHI TIẾT):</b>';
-	// Đảm bảo dùng đúng biến luanDoanSonChiTiet mà bạn yêu thích
-	noiDungDetail += '<div style="margin-top:8px; color:#fff; font-size: 0.95rem; line-height: 1.6;">' + luanDoanSonChiTiet + '</div>';
-	noiDungDetail += '</div>';
-	// Vận hạn cửu tinh
-	noiDungDetail += '<div style="border-top: 1px dashed #444; padding-top: 10px;">';
-	noiDungDetail += '<b style="color:var(--gold); font-size: 0.95rem;">⏳ VẬN HẠN CỬU TINH (NĂM ' + namHienTai + '):</b>';
-	noiDungDetail += '<div style="margin-top:5px; color:#fff; font-size: 0.9rem; line-height: 1.5;">' + canhBaoCuuTinh + giaiHanCuuTinh + '</div>';
-	noiDungDetail += '</div>';
-	noiDungDetail += '</div>';
-	// Phần 4: Thiên thời
-	if (typeof sinhLuanGiaiThienThoi === 'function') {
-		noiDungDetail += '<div style="margin-top:10px; font-size:0.85rem; color:#aaa; font-style:italic;">' + sinhLuanGiaiThienThoi(currentCode) + '</div>';
-	}
-	detailBox.innerHTML = noiDungDetail;
-	// ==================== 7. ADVICE BOX ====================
-	if (adviceBox && adviceContent) {
-		adviceBox.style.display = advices[cungTrạch] ? 'block' : 'none';
-		if (advices[cungTrạch]) adviceContent.innerHTML = advices[cungTrạch];
-	}
-	// ==================== 8. HIỆU ỨNG ====================
-	kichHoatDenLedQuet(currentHeading);
-	// Ghost Needle - CHỈ 1 LẦN
-	if (targetAngle !== null && document.getElementById('ghostNeedle')) {
-		const ghost = document.getElementById('ghostNeedle');
-		ghost.style.opacity = "1";
-		ghost.style.transform = `translate(-50%, -50%) rotate(${targetAngle - currentHeading}deg)`;
-	}
+    }
+
+    // --- LUẬN ĐOÁN MINH CHÂU KHÔNG GIAN SƠN ĐẠO ---
+    let luanDoanSonChiTiet = "";
+    if (typeof MaTranMinhChau !== 'undefined' && MaTranMinhChau[chủMệnh]?.[sơnHiệnTại]) {
+        const mc = MaTranMinhChau[chủMệnh][sơnHiệnTại];
+        const isCat = mc.loai === 'Cát';
+        const color = isCat ? '#30d158' : '#ff3b30';
+        const label = isCat ? '[MINH CHÂU CÁT SƠN]' : '[MINH CHÂU HUNG SƠN]';
+        const thongSo = `<span style="color:#a0a0a0; font-style:italic;">Sơn ${sơnHiệnTại} (${sơnHiệnTạiObj?.huong}):</span>`;
+        luanDoanSonChiTiet = `<b style="color:${color};">${label}</b> ${thongSo} ${mc.text}`;
+        
+        if (mc.giaiphap) {
+            luanDoanSonChiTiet += `<br><br><span style="color:${color}; font-weight:bold;">💡 Giải pháp:</span> <span style="color:#ffffff;">${mc.giaiphap}</span>`;
+        }
+    } else {
+        luanDoanSonChiTiet = `<span style="color:#a0a0a0; font-style:italic;">Tọa độ: ${currentHeading}° | Sơn ${sơnHiệnTại} | Phương ${sơnHiệnTạiObj?.huong}.</span>`;
+    }
+
+    // ==================== 6. ĐỒNG BỘ MÀU SẮC GIAO DIỆN THEO HỆ THỐNG ĐIỂM PT MỚI ====================
+    const currentConfig = ConfigPhongThuy[mụcĐích] || { title: "Cung vị", isCat: true };
+    
+    // Đảo ngược điều kiện đánh giá màu sắc: Nếu điểm PT đạt mốc hợp cách >= 72 thì là Cát Cách
+    const isGood = tongHop.diem >= 72;
+    const activeColor = isGood ? '#30d158' : '#ff3b30';
+
+    judgmentBox.removeAttribute("style");
+    judgmentBox.innerText = `${currentConfig.title}: ${cungTrạch}`;
+    judgmentBox.className = isGood ? "judgment-badge bg-good" : "judgment-badge bg-bad";
+    detailBox.style.borderLeftColor = activeColor;
+
+    let noiDungDetail = "";
+    // Phần 1: Tiêu đề trạng thái và điểm số khí cục hành độ
+    noiDungDetail += `<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,255,255,0.05); border-left: 4px solid ${activeColor}">`;
+    noiDungDetail += `<strong style="color: ${activeColor}; font-size: 1.05rem; display:block; margin-bottom:5px;">`;
+    noiDungDetail += `◆ ${!mụcĐích ? (isGood ? 'CÁT TINH' : 'HUNG TINH') : (isGood ? 'CÁT CÁCH' : 'HUNG CÁCH')} (${cungTrạch.toUpperCase()}) — Chỉ số PT: <span style="color:#ffd700;">${tongHop.diem}pt</span> [${tongHop.level}]:</strong>`;
+    noiDungDetail += '<span style="color:#ffffff; font-size:0.9rem;">';
+    if (!mụcĐích) {
+        noiDungDetail += `Góc xoay <span class="gold-text">${currentHeading}°</span> đối chiếu mệnh cung <strong>${chủMệnh}</strong> gặp cung tinh <strong>${cungTrạch}</strong>.<br>`;
+    }
+    noiDungDetail += thôngTinCung.ý_nghĩa + '</span></div>';
+
+    // Phần 2: Hộp mật pháp điều hòa khí trường tổng hợp
+    if (!isGood) {
+        const matPhap = (typeof sinhMatPhapHoaGiai === 'function') ? sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung, currentCode) : "";
+        const camNang = advices[cungTrạch] || "";
+        noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,159,10,0.08); border:1px solid #ff9f0a;">';
+        noiDungDetail += '<h4 style="color:#ff9f0a; margin:0 0 8px 0; font-size: 0.9rem;">🛠 PHÁP HÓA GIẢI TỔNG HỢP</h4>';
+        noiDungDetail += '<div style="color:#fff; font-size:0.85rem; line-height:1.5;">' + matPhap;
+        if (camNang) {
+            noiDungDetail += '<br><b style="color:#dfb76c;">Danh mục vật phẩm bổ trợ:</b><div style="color:#ccc;">' + camNang.replace(/👉 <em>.*?<\/em>:<br>/, '') + '</div>';
+        }
+        noiDungDetail += '</div></div>';
+    }
+
+    // Phần 3: Thần sát độ số dương trạch 24 Sơn
+    noiDungDetail += '<div style="margin-top:15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.2); border: 1px solid #d4af37;">';
+    noiDungDetail += '<div style="margin-bottom:12px;">';
+    noiDungDetail += '<b style="color:var(--gold); font-size: 0.95rem;">🎯 THẦN SÁT ĐỘ SỐ (24 SƠN CHI TIẾT):</b>';
+    noiDungDetail += '<div style="margin-top:8px; color:#fff; font-size: 0.95rem; line-height: 1.6;">' + luanDoanSonChiTiet + '</div>';
+    noiDungDetail += '</div>';
+    
+    // Vận hạn dịch chuyển cửu tinh lưu niên
+    noiDungDetail += '<div style="border-top: 1px dashed #444; padding-top: 10px;">';
+    noiDungDetail += '<b style="color:var(--gold); font-size: 0.95rem;">⏳ VẬN HẠN CỬU TINH (NĂM ' + namHienTai + '):</b>';
+    noiDungDetail += '<div style="margin-top:5px; color:#fff; font-size: 0.9rem; line-height: 1.5;">' + canhBaoCuuTinh + giaiHanCuuTinh + '</div>';
+    noiDungDetail += '</div>';
+    noiDungDetail += '</div>';
+
+    // Phần 4: Huyền không học luận giải thiên thời hạ nguyên
+    if (typeof sinhLuanGiaiThienThoi === 'function') {
+        noiDungDetail += '<div style="margin-top:10px; font-size:0.85rem; color:#aaa; font-style:italic;">' + sinhLuanGiaiThienThoi(currentCode) + '</div>';
+    }
+    detailBox.innerHTML = noiDungDetail;
+
+    // ==================== 7. ADVICE BOX CAM NĂNG ====================
+    if (adviceBox && adviceContent) {
+        adviceBox.style.display = advices[cungTrạch] ? 'block' : 'none';
+        if (advices[cungTrạch]) adviceContent.innerHTML = advices[cungTrạch];
+    }
+
+    // ==================== 8. KÍCH HOẠT HIỆU ỨNG LED QUÈT ĐỒ HỌA ====================
+    kichHoatDenLedQuet(currentHeading);
+    
+    // Căn chỉnh kim ảo mô phỏng tuyến tính Ghost Needle
+    if (targetAngle !== null && document.getElementById('ghostNeedle')) {
+        const ghost = document.getElementById('ghostNeedle');
+        ghost.style.opacity = "1";
+        ghost.style.transform = `translate(-50%, -50%) rotate(${targetAngle - currentHeading}deg)`;
+    }
 }
-
-
 /**
  * Tính các sát tinh theo 24 Sơn - Phiên bản nâng cấp
  * @param {string} tenSon - Tên Sơn (ví dụ: "Tý", "Ngọ", "Nhâm"...)
