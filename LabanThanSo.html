@@ -180,40 +180,29 @@
                 <p style="margin-top: 10px; font-size: 0.9rem;">📊 <strong>Phân Tích Sơn (Ví dụ: Thìn 35% • Tốn 33% • Tỵ 32%):</strong> Tỷ lệ % giúp bạn biết nên xoay la bàn lệch về Sơn nào trong hướng lớn để đón khí an toàn nhất.</p>
             </div>
 
-<!-- PHẦN 5: BỘ NÃO THUẬT TOÁN ĐA TẦNG -->
-<div class="lk-guide-card" style="border-left: 4px solid #00f2c9 !important; background: #1a1a1b !important;">
-    <div class="lk-guide-card-title" style="color: #00f2c9 !important;">🧠 THUẬT TOÁN ĐIỂM TỔNG HỢP (PT)</div>
-    <p>Thuật toán giải quyết triệt để tử huyệt "Đồng thanh tương ứng" nhưng thiếu độ tinh vi của thực địa, đóng vai trò như một <strong>Hệ thống Nhất Thể Đa Tầng</strong> sâu sắc:</p>
+<div class="lk-guide-card" style="border-left: 4px solid #00f2c9 !important; background: #1a1a1b !important; color: #fff; padding: 20px; border-radius: 12px;">
+    <div class="lk-guide-card-title" style="color: #00f2c9 !important; font-size: 1.2rem; font-weight: bold; margin-bottom: 15px;">
+        🧠 THUẬT TOÁN ĐIỂM TỔNG HỢP (PT-MAX)
+    </div>
     
-<div class="lk-guide-formula">
-    <div class="formula-title">THUẬT TOÁN TÍNH ĐIỂM TỔNG HỢP ĐA TẦNG</div>
-    
-    <div class="formula-main">
-        Điểm Tổng Kết = [ BT<sub>68</sub> + Δ Cát Hung<sup>(BT + 24 Sơn)</sup> ] 
-        + Δ H<sub>72</sub> 
-        ± Δ Trấn Sát 
-        - Ngũ Hoàng 
-        - Không Vong 
-        - Vận Tinh 
-        - Sát Tinh Khác
+    <p>Hệ thống Nhất Thể Đa Tầng lọc khí trường qua 3 màng lọc chính xác đến từng 5 độ:</p>
+     <p>Thuật toán vận hành như một <strong>Hệ thống Nhất Thể Đa Tầng lọc khí trường qua 3 màng lọc chính xác đến từng 5 độ</strong>, không chỉ đo đạc vĩ mô mà còn thẩm thấu từng rung động của khí trường thực địa thông qua các tầng số học phong thủy chuyên sâu:</p>
+    <div style="font-family: monospace; font-size: 1.1rem; text-align: center; padding: 15px; background: rgba(223, 183, 108, 0.1); border: 1px solid #dfb76c; border-radius: 8px; margin: 20px 0;">
+        PT = [ ( BT<sub>68</sub> + ΔH<sub>72</sub> ) x K<sub>Van</sub> - ΣΨ<sub>Sat</sub> ] x Γ<sub>Khai</sub>
     </div>
 
-    <div class="formula-logic">
-        <strong style="color:#00f2c9;">Logic cốt lõi:</strong><br>
-        • <strong>BT<sub>68</sub></strong>: Điểm nền Bát Trạch + 24 Sơn (Vĩ mô & Trung mô)<br>
-        • <strong>H<sub>72</sub></strong>: Tầng vi mô 72 Hậu (chia đến 5°)<br>
-        • <span style="color:#ff3b30;">± Δ Trấn Sát</span>: Đảo điểm theo Mục Đích (rất quan trọng)<br>
-        • <strong>Ngũ Hoàng, Không Vong, Vận Tinh...</strong>: Các sát tinh trừ điểm nặng
+    <ul style="padding-left: 20px; line-height: 1.8;">
+        <li><strong>BT<sub>68</sub> (Điểm nền):</strong> Giá trị gốc từ Bát Trạch và 24 Sơn.</li>
+        <li><strong>ΔH<sub>72</sub> (Hậu 72):</strong> Tầng vi mô điều chỉnh độ chi tiết đến 5°.</li>
+        <li><strong>K<sub>Van</sub> (Hệ số Vận 9):</strong> Nhân hệ số vượng khí cho các hướng cát tinh hiện thời.</li>
+        <li><strong>ΣΨ<sub>Sat</sub> (Sát tinh):</strong> Tổng phạt điểm từ Ngũ Hoàng, Thái Tuế, Không Vong.</li>
+        <li><strong>Γ<sub>Khai</sub> (Hệ số ổn định):</strong> "Vũ khí bí mật" - Giảm độ tin cậy nếu thiết bị nhiễu hoặc rung.</li>
+    </ul>
+
+    <div style="margin-top: 15px; padding: 15px; background: rgba(0, 242, 201, 0.05); border-radius: 8px;">
+        <small style="color: #00f2c9;">💡 Logic cốt lõi:</small><br>
+        Hệ thống tự động <strong>Nghịch đảo Âm Dương</strong> cho các mục đích uế tạp (Bếp, WC). Khi đặt đúng cung Hung, điểm số sẽ tự động được nâng lên Đắc cách (Lấy độc trị độc).
     </div>
-
-    <small class="formula-note">
-        BT = Bát Trạch (8 hướng + 24 Sơn) • H₇₂ = 72 Hậu
-    </small>
-
-    <small style="color:#777; display:block; margin-top:8px; font-size:0.78rem;">
-        Trong đó: BT = Bát Trạch • S₂₄ = 24 Sơn • H₇₂ = 72 Hậu • MC = Minh Châu Thần Sát<br>
-        Δ<sub>Trấn Sát</sub> = Biến thiên ± theo mục đích (đảo Âm Dương khi đặt hung vị)
-    </small>
 </div>
 
     <p>Nó giống như tầm sư học đạo: Không chỉ nhìn hình thế đại thể bên ngoài (Bát Trạch) mà phải soi xét từng thớ đất (24 Sơn), lắng nghe hơi thở của khí mạch (72 Hậu) rồi mới định đoạt cát hung. Cụ thể quy trình quét 3 màng lọc:</p>
@@ -235,6 +224,7 @@
             <br>🚫 <b>Đại Không Vong & Tiểu Không Vong:</b> Đây là các <i>Đường Ranh Giới Tử Thần</i> trên la bàn (nơi giao nhau hỗn loạn giữa các luồng khí). Nếu dính <b>Đại Không Vong</b>, hệ thống lập tức kích hoạt bộ ngắt tối cao, <strong>hạ sập điểm về cố định 12 điểm (Đại Hung)</strong> và khóa chết hướng. Nếu dính <b>Tiểu Không Vong</b>, trừ nặng 22 điểm.
         </li>
     </ul>
+</div>
 </div>
 
             <!-- PHẦN 6: VÍ DỤ GIƯỜNG NGỦ -->
@@ -598,5 +588,4 @@
 </div>
 <script src="controls.js"></script>
 </body>
-
 </html>
