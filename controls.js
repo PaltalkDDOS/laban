@@ -876,32 +876,60 @@ function generateDirectionsList() {
 
         const diemTag = `
             <span style="font-size:0.75rem; padding:2px 7px; border-radius:4px; font-weight:bold;
-                  background:${bgDiem}; color:${colorStyle}; border:1px solid ${colorStyle}">
+                  background:${bgDiem}; color:${colorStyle}; border:1px solid ${colorStyle}; display:inline-block; white-space:nowrap; vertical-align:middle; margin-left:4px;">
                 ${item.diemTongHop}pt ${item.hau ? item.hau.emoji : ''}
             </span>`;
 
         const div = document.createElement('div');
         div.className = `direction-item ${isHợp ? 'good' : 'bad'}`;
-        div.style.cssText = `border-left: 4px solid ${colorStyle}; background: rgba(255,255,255,0.03); margin-bottom:8px; padding:12px; border-radius:8px;`;
         
-        // Render cấu trúc giao diện nguyên bản, đồng bộ màu nút bấm "Xoay thử" theo colorStyle
+        // TỐI ƯU KHUNG BAO: Kích hoạt flexbox bảo vệ, chống tràn nội dung trên mobile
+        div.style.cssText = `
+            border-left: 4px solid ${colorStyle}; 
+            background: rgba(255,255,255,0.03); 
+            margin-bottom:8px; 
+            padding:12px; 
+            border-radius:8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        `;
+        
+        // RENDER CẤU TRÚC GIAO DIỆN: Đóng gói hộp chữ độc lập, khóa cứng nút Xoay Thử màu Gold hoàng kim
         div.innerHTML = `
-            <div class="item-info" style="flex:1;">
-                <div class="item-name" style="color:#fff; font-size:0.95rem; margin-bottom: 5px; font-weight:bold;">
-                    ${item.name} ➔ <span style="color:${isCatPurpose ? colorStyle : '#fff'}">${item.cungTrạch}</span> ${diemTag}
+            <div class="item-info" style="flex:1; min-width:0;">
+                <div class="item-name" style="color:#fff; font-size:0.95rem; margin-bottom: 5px; font-weight:bold; display:flex; align-items:center; flex-wrap:wrap; gap:4px;">
+                    <span style="white-space:nowrap;">${item.name} ➔</span> 
+                    <span style="color:${isCatPurpose ? colorStyle : '#fff'}; white-space:nowrap;">${item.cungTrạch}</span> 
+                    ${diemTag}
                 </div>
-                <div style="margin:6px 0; font-size:0.78rem;">
-                    <span style="color:#dfb76c; font-weight:600;">SƠN Vị:</span> ${sonHTML}
+                <div style="margin:6px 0; font-size:0.78rem; line-height:1.4; color:#aaa;">
+                    <span style="color:#dfb76c; font-weight:600;">SƠN VỊ:</span> ${sonHTML}
                 </div>
-                <div style="font-size:0.8rem; color:#aaa; margin-bottom:6px;">
+                <div style="font-size:0.8rem; color:#aaa; margin-bottom:6px; white-space:normal; word-break:break-word;">
                     Cung 5°: <strong>${item.hau.ten}</strong> — <span style="color:${item.hau.chatLuong.includes('Cát') ? '#30d158' : '#ff3b30'}">${item.hau.chatLuong}</span>
                 </div>
-                <div style="color: ${colorStyle}; font-size:0.85rem; font-weight:bold; letter-spacing:0.5px; border-top:1px solid rgba(255,255,255,0.1); padding-top:6px;">
+                <div style="color: ${colorStyle}; font-size:0.85rem; font-weight:bold; letter-spacing:0.5px; border-top:1px solid rgba(255,255,255,0.1); padding-top:6px; margin-top:4px;">
                     ${statusText}
                 </div>
             </div>
+            
             <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})" 
-                style="background:${colorStyle}; color:#000; border:none; padding:6px 12px; border-radius:5px; font-weight:bold; cursor:pointer; align-self:center; margin-left:10px;">
+                style="background: rgba(223, 183, 108, 0.12); 
+                       color: #dfb76c; 
+                       border: 1px solid rgba(223, 183, 108, 0.6); 
+                       padding: 8px 14px; 
+                       border-radius: 6px; 
+                       font-weight: bold; 
+                       cursor: pointer; 
+                       font-size: 0.8rem;
+                       letter-spacing: 0.3px;
+                       white-space: nowrap; 
+                       flex-shrink: 0;
+                       align-self: center;
+                       transition: all 0.2s ease-in-out;
+                       box-shadow: 0 2px 6px rgba(0,0,0,0.3);">
                 Xoay thử
             </button>
         `;
