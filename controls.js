@@ -813,7 +813,7 @@ function generateDirectionsList() {
     directionMeta.forEach(dir => {
         const cungTrạch = bátTrạchMap[chủMệnh][dir.code];
         
-        // Gọi hàm tính điểm tổng hợp đa tầng theo Vận 9 chính xác
+        // Gọi hàm tính điểm tổng hợp đa tầng theo Vận 9 chính xác tuyệt đối
         const tongHopDir = tinhDiemTongHop(chủMệnh, dir.angle, currentYear, mucDich);
         const hauInfo = getCurrentHauInfo(dir.angle);
 
@@ -849,7 +849,7 @@ function generateDirectionsList() {
         const sonGroup = getSonGroupForDirection(item.code);
         let sonHTML = "";
         
-        // GIỮ NGUYÊN BẢN 100% LOGIC CLICK XEM GIẢI THÍCH SƠN VỊ CỦA BẠN
+        // GIỮ NGUYÊN BẢN 100% LOGIC CLICK XEM GIẢI THÍCH SƠN VỊ
         sonGroup.forEach((son, index) => {
             const dataSon = MaTranMinhChau[chủMệnh] ? MaTranMinhChau[chủMệnh][son] : null;
             const score = dataSon ? dataSon.diem : 0;
@@ -871,65 +871,42 @@ function generateDirectionsList() {
             if (index < sonGroup.length - 1) sonHTML += ` • `;
         });
 
-        // Thẻ điểm tổng hợp (Badge) - Phân loại màu sắc trực quan dựa trên mốc hợp cách 72pt mới
-        const bgDiem = isHợp ? 'rgba(48,209,88,0.2)' : 'rgba(255,59,48,0.2)';
-
+        // Thẻ điểm tổng hợp (Badge) - Khóa cứng không cho xuống hàng trên mobile
+        const bgDiem = isHợp ? 'rgba(48,209,88,0.15)' : 'rgba(255,59,48,0.15)';
         const diemTag = `
-            <span style="font-size:0.75rem; padding:2px 7px; border-radius:4px; font-weight:bold;
-                  background:${bgDiem}; color:${colorStyle}; border:1px solid ${colorStyle}; display:inline-block; white-space:nowrap; vertical-align:middle; margin-left:4px;">
+            <span style="font-size:0.75rem; padding:2px 6px; border-radius:4px; font-weight:bold;
+                  background:${bgDiem}; color:${colorStyle}; border:1px solid ${colorStyle}; 
+                  white-space:nowrap; flex-shrink:0; display:inline-flex; align-items:center; gap:3px;">
                 ${item.diemTongHop}pt ${item.hau ? item.hau.emoji : ''}
             </span>`;
 
         const div = document.createElement('div');
         div.className = `direction-item ${isHợp ? 'good' : 'bad'}`;
         
-        // TỐI ƯU KHUNG BAO: Kích hoạt flexbox bảo vệ, chống tràn nội dung trên mobile
-        div.style.cssText = `
-            border-left: 4px solid ${colorStyle}; 
-            background: rgba(255,255,255,0.03); 
-            margin-bottom:8px; 
-            padding:12px; 
-            border-radius:8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-        `;
+        // Thiết lập cấu trúc Flexbox tổng thể chống sập bố cục
+        div.style.cssText = `display:flex; justify-content:space-between; align-items:center; border-left:4px solid ${colorStyle}; background:rgba(255,255,255,0.03); margin-bottom:8px; padding:12px; border-radius:8px; box-sizing:border-box; width:100%; gap:10px;`;
         
-        // RENDER CẤU TRÚC GIAO DIỆN: Đóng gói hộp chữ độc lập, khóa cứng nút Xoay Thử màu Gold hoàng kim
+        // Render nội dung bên trong - Ứng dụng flex-layout tuyệt đối cho item-name
         div.innerHTML = `
             <div class="item-info" style="flex:1; min-width:0;">
-                <div class="item-name" style="color:#fff; font-size:0.95rem; margin-bottom: 5px; font-weight:bold; display:flex; align-items:center; flex-wrap:wrap; gap:4px;">
-                    <span style="white-space:nowrap;">${item.name} ➔</span> 
-                    <span style="color:${isCatPurpose ? colorStyle : '#fff'}; white-space:nowrap;">${item.cungTrạch}</span> 
+                <div class="item-name" style="color:#fff; font-size:0.95rem; margin-bottom:5px; font-weight:bold; display:flex; align-items:center; justify-content:space-between; gap:6px; flex-wrap:nowrap; width:100%;">
+                    <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1; min-width:0;">
+                        ${item.name} ➔ <span style="color:${isCatPurpose ? colorStyle : '#fff'}">${item.cungTrạch}</span>
+                    </span>
                     ${diemTag}
                 </div>
-                <div style="margin:6px 0; font-size:0.78rem; line-height:1.4; color:#aaa;">
-                    <span style="color:#dfb76c; font-weight:600;">SƠN VỊ:</span> ${sonHTML}
+                <div style="margin:6px 0; font-size:0.78rem; overflow-x:auto; white-space:nowrap;" class="no-scrollbar">
+                    <span style="color:#dfb76c; font-weight:600;">SƠN Vị:</span> ${sonHTML}
                 </div>
-                <div style="font-size:0.8rem; color:#aaa; margin-bottom:6px; white-space:normal; word-break:break-word;">
+                <div style="font-size:0.8rem; color:#aaa; margin-bottom:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
                     Cung 5°: <strong>${item.hau.ten}</strong> — <span style="color:${item.hau.chatLuong.includes('Cát') ? '#30d158' : '#ff3b30'}">${item.hau.chatLuong}</span>
                 </div>
-                <div style="color: ${colorStyle}; font-size:0.85rem; font-weight:bold; letter-spacing:0.5px; border-top:1px solid rgba(255,255,255,0.1); padding-top:6px; margin-top:4px;">
+                <div style="color:${colorStyle}; font-size:0.85rem; font-weight:bold; letter-spacing:0.5px; border-top:1px solid rgba(255,255,255,0.1); padding-top:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
                     ${statusText}
                 </div>
             </div>
-            
             <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})" 
-                style="background: rgba(223, 183, 108, 0.12); 
-                       color: #dfb76c; 
-                       border: 1px solid rgba(223, 183, 108, 0.6); 
-                       padding: 8px 14px; 
-                       border-radius: 6px; 
-                       font-weight: bold; 
-                       cursor: pointer; 
-                       font-size: 0.8rem;
-                       letter-spacing: 0.3px;
-                       white-space: nowrap; 
-                       flex-shrink: 0;
-                       align-self: center;
-                       transition: all 0.2s ease-in-out;
-                       box-shadow: 0 2px 6px rgba(0,0,0,0.3);">
+                style="background:#222; color:var(--gold); border:1px solid var(--gold); padding:6px 12px; border-radius:5px; font-weight:bold; cursor:pointer; flex-shrink:0; white-space:nowrap; align-self:center;">
                 Xoay thử
             </button>
         `;
@@ -1577,16 +1554,16 @@ function getHuongBySon(tenSon) {
     return son ? son.huong : "Không xác định";
 }
 
-// ====================== CẬP NHẬT HIỂN THỊ ĐỘ + SƠN + HẬU (MÀU RỰC RỠ) ======================
 function updateDegreeDisplay(degree) {
     const normalized = ((degree % 360) + 360) % 360;
     const sonName = tìmSơnHướng(normalized);
+    
+    // Tìm Hậu
     let hauName = "—";
     let hauColor = "#ffffff";
-
-    // Tìm Hậu
+    let hauQuality = "";
     let minDiff = Infinity;
-    let foundHau = null;
+    
     for (const key in Data72Hau) {
         const d = parseFloat(key);
         const diff = Math.min(Math.abs(normalized - d), 360 - Math.abs(normalized - d));
@@ -1595,15 +1572,23 @@ function updateDegreeDisplay(degree) {
             foundHau = Data72Hau[key];
         }
     }
+    
     if (foundHau) {
         hauName = foundHau.ten.replace(" Hậu", "");
         const cl = foundHau.chatLuong;
-        if (cl.includes("Cát")) hauColor = "#00FF41";
-        else if (cl.includes("Hung")) hauColor = "#FF3131";
-        else hauColor = "#FFD700";
+        if (cl.includes("Cát")) {
+            hauColor = "#00FF41";
+            hauQuality = "🟢 (Đại Cát)";
+        } else if (cl.includes("Hung")) {
+            hauColor = "#FF3131";
+            hauQuality = "🔴 (Hung)";
+        } else {
+            hauColor = "#FFD700";
+            hauQuality = "🟡";
+        }
     }
 
-    // Không Vong
+    // Không vong
     const khongVongInfo = kiemTraKhongVong(normalized);
     const khongVongHTML = khongVongInfo 
         ? `<span style="color:#ff4444; font-weight:bold; text-shadow: 0 0 6px #ff0000;">⚠️ ${khongVongInfo.loai}</span>` 
@@ -1616,24 +1601,32 @@ function updateDegreeDisplay(degree) {
         const tongHop = tinhDiemTongHop(chủMệnh, normalized, new Date().getFullYear(), mucDichHienTai);
         
         const diemColor = tongHop.diem >= 80 ? "#00FF41" : (tongHop.diem >= 60 ? "#FFD700" : "#ff4444");
-        tongDiemHTML = `<strong style="color:${diemColor}; font-size: 1.05em;">${tongHop.diem}pt (${tongHop.level})</strong>`;
+        tongDiemHTML = `<span style="color:${diemColor}; font-weight:bold;">${tongHop.diem}pt</span>`;
     }
 
-    // === CẬP NHẬT HIỂN THỊ ===
     const degreeTxt = document.getElementById('degree-txt');
     if (degreeTxt) {
         degreeTxt.innerHTML = `
-            <span style="font-size: 2.1em; font-weight: bold; color: #FFD700;">
+            <div style="font-size: 2.1em; font-weight: bold; color: #ffffff; text-shadow: 0 0 8px rgba(255,255,255,0.6); margin-bottom: 4px;">
                 ${normalized.toFixed(1)}°
-            </span>
-            <span style="font-size: 1.05em; color: #ccc;"> - Phương ${getCungName(normalized)} (${getPhuongVi(normalized)})</span><br>
+            </div>
             
-            <span style="color:#FFD700; font-weight:500;">Sơn ${sonName}</span> 
-            <span style="color:${hauColor}; font-weight:600; text-shadow: 0 0 8px ${hauColor}80;">
-                • Hậu: ${hauName}
-            </span> 
-            ${khongVongHTML}
-            ${tongDiemHTML}
+            <div style="font-size: 1.05em; margin-bottom: 6px; line-height: 1.3;">
+                <strong style="color:#a0d8ff;">${getCungName(normalized)}</strong> 
+                <span style="color:#ffd700; font-weight:bold;">- Sơn ${sonName}</span>
+            </div>
+
+            <!-- Khung Hậu cố định -->
+            <div style="background: rgba(0,0,0,0.45); border: 1px solid rgba(255,215,0,0.3); 
+                        border-radius: 8px; padding: 6px 10px; margin: 6px 0; min-height: 52px; 
+                        display: flex; align-items: center; flex-wrap: wrap; gap: 6px;">
+                <strong style="color:#ffd700;">Hậu:</strong>
+                <span style="color:${hauColor}; font-weight:bold; text-shadow: 0 0 6px ${hauColor}80;">
+                    ${hauName} ${hauQuality}
+                </span>
+                ${tongDiemHTML ? ` • ${tongDiemHTML}` : ''}
+                ${khongVongHTML}
+            </div>
         `;
     }
 }
