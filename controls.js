@@ -716,49 +716,68 @@ function recalculateFate() {
     updateCompassUI(currentHeading);
 }
 
-// ====================== TRÍCH XUẤT 72 HẬU LONG MẠCH ĐỒNG BỘ TUYỆT ĐỐI ======================
+// ====================== HÀM TRÍCH XUẤT HẬU LONG MẠCH TỐI ƯU (CÓ CACHE) ======================
+// Khởi tạo cache ở phạm vi ngoài hàm để dữ liệu được lưu trữ xuyên suốt quá trình chạy app
+const hauCache = new Map();
+
 function getCurrentHauInfo(degree) {
+    // 1. Chuẩn hóa góc về [0, 360)
     const normalized = ((degree % 360) + 360) % 360;
     
-    // Thuật toán định vị phân thùy thẳng: Mỗi hậu chiếm chính xác góc độ 360 / 72 = 5 độ
-    let indexHau = Math.floor(normalized / 5);
-    if (indexHau > 71) indexHau = 71; // Chốt chặn tràn mảng số liệu
+    // Làm tròn theo bước 5 độ
+    const keyHau = (Math.round(normalized / 5) * 5) % 360;
 
-    // Tạo mốc key động khớp với cấu trúc object Data72Hau của bạn (Ví dụ: "0", "5", "10",...)
-    let keyHau = (indexHau * 5).toString();
-    const hau = Data72Hau[keyHau] || { ten: "Xung Không", chatLuong: "Bình Hòa", diem: 50, ynghia: "Khí trường chuyển dịch luân hồi." };
+    // 2. KIỂM TRA CACHE (Nếu đã tính rồi thì trả về ngay lập tức)
+    if (hauCache.has(keyHau)) {
+        return hauCache.get(keyHau);
+    }
+    
+    // 3. Truy xuất an toàn
+    const hau = Data72Hau[keyHau.toString()] || { 
+        ten: "Xung Không", 
+        chatLuong: "Bình Hòa", 
+        diem: 50, 
+        ynghia: "Khí trường chuyển dịch luân hồi.",
+        giaiphap: "Chưa có dữ liệu.",
+        interactionLevel: "Trung bình"
+    };
 
+    // 4. Khởi tạo kết quả
     let result = {
-        ten: hau.ten,
-        chatLuong: hau.chatLuong,
-        ynghia: hau.ynghia,
-        diem: hau.diem || 50,
-        giaiphap: hau.giaiphap || "Chưa có giải pháp cụ thể.",
-        interactionLevel: hau.interactionLevel || "Trung bình",
+        ten: hau.ten ?? "Xung Không",
+        chatLuong: hau.chatLuong ?? "Bình Hòa",
+        ynghia: hau.ynghia ?? "Khí trường chuyển dịch luân hồi.",
+        diem: Number(hau.diem) || 50,
+        giaiphap: String(hau.giaiphap ?? "Chưa có giải pháp cụ thể."),
+        interactionLevel: hau.interactionLevel ?? "Trung bình",
         emoji: "🟡"
     };
 
-    // Chuẩn hóa bộ lọc nhãn Emoji năng lượng
+    // 5. Bộ lọc Emoji
     if (result.chatLuong.includes("Đại Cát") || result.chatLuong.includes("Cát")) {
         result.emoji = "🟢";
     } else if (result.chatLuong.includes("Đại Hung") || result.chatLuong.includes("Hung")) {
         result.emoji = "🔴";
     }
 
-    // === TÍCH HỢP BỘ LỌC CHỐT CHẶN KHÔNG VONG OVERRIDE ===
-    const khongVong = kiemTraKhongVong(normalized);
-    if (khongVong) {
-        if (khongVong.loai === "ĐẠI KHÔNG VONG") {
-            result.chatLuong = "ĐẠI HUNG (Không Vong)";
-            result.emoji = "☠️";
-            result.diem = Math.min(result.diem, 15); // Hạ gục điểm số xuống ngưỡng tử huyệt
-        } else {
-            result.chatLuong = "TIỂU KHÔNG VONG (Khí Suy)";
-            result.emoji = "⚠️";
-            result.diem = Math.max(10, result.diem - 25); // Trừ điểm năng lượng do rò rỉ tuyến phân giới
+    // 6. Tích hợp Không Vong
+    if (typeof kiemTraKhongVong === 'function') {
+        const khongVong = kiemTraKhongVong(normalized);
+        if (khongVong) {
+            if (khongVong.loai === "ĐẠI KHÔNG VONG") {
+                result.chatLuong = "ĐẠI HUNG (Không Vong)";
+                result.emoji = "☠️";
+                result.diem = Math.min(result.diem, 15);
+            } else {
+                result.chatLuong = "TIỂU KHÔNG VONG (Khí Suy)";
+                result.emoji = "⚠️";
+                result.diem = Math.max(10, result.diem - 25);
+            }
         }
     }
 
+    // 7. LƯU VÀO CACHE trước khi trả về
+    hauCache.set(keyHau, result);
     return result;
 }
 
