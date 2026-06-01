@@ -1218,18 +1218,19 @@ function getLuanDoanChiTiet(huong, son) {
     </div>`;
 }
 function updateCompassUI(heading) {
-    // ==================== TOÁN HỌC KHÍ TRƯỜNG ĐỊA LÝ LÀM TRÒN GÓC THỰC TẾ ====================
+    // ==================== TOÁN HỌC KHÍ TRƯỜNG ====================
     let trueHeading = (heading + (magneticDeclination % 360) + 360) % 360;
     currentHeading = Math.round(trueHeading);
-    
-    // Xoay đồ hình mặt la bàn theo góc thực tế thực địa
+
+    // Xoay la bàn
     compass.style.transform = `rotate(${-trueHeading}deg)`;
     needle.style.transform = `rotate(0deg)`;
     compassSlider.value = currentHeading;
 
-    // ==================== 1. XÁC ĐỊNH LƯỚI TỌA ĐỘ BÁT CUNG CHÍNH TÔNG ====================
+    // ==================== 1. XÁC ĐỊNH 8 CUNG (Giữ logic gốc của bạn) ====================
     let currentCung = "";
     let currentCode = "";
+
     if (trueHeading >= 337.5 || trueHeading < 22.5) {
         currentCung = "KHẢM (BẮC)";
         currentCode = "N";
@@ -1256,22 +1257,24 @@ function updateCompassUI(heading) {
         currentCode = "NW";
     }
 
-    // ==================== 2. ĐỊNH VỊ 24 SƠN VÀ 72 HẬU LONG MẠCH ====================
+    // ==================== 2. 24 SƠN + 72 HẬU ====================
     let gockim = (trueHeading % 360 + 360) % 360;
     let sơnHiệnTạiObj = SON_24_CONFIG.find(s => {
         if (s.min > s.max) return gockim >= s.min || gockim < s.max;
         return gockim >= s.min && gockim < s.max;
     }) || SON_24_CONFIG[0];
+
     let sơnHiệnTại = sơnHiệnTạiObj.name;
 
+    // === QUAN TRỌNG: DÙNG trueHeading để lấy Hậu ===
     const currentHauInfo = getCurrentHauInfo(trueHeading);
-    
-    // Đọc trạng thái mục đích sử dụng để kích hoạt bộ não chấm điểm đa tầng thời vận
+
+    // === GỌI THUẬT TOÁN MỚI - GIỮ NGUYÊN HOÀN TOÀN ===
     const mụcĐích = document.getElementById('purpose').value;
     const namHienTai = new Date().getFullYear();
     const tongHop = tinhDiemTongHop(chủMệnh || "Khảm", trueHeading, namHienTai, mụcĐích);
 
-    // Hiển thị thông số góc thực địa lên màn hình chính la bàn
+    // Hiển thị
     degreeTxt.innerHTML = `
         ${currentHeading}° - Phương ${currentCung} - Sơn <strong>${sơnHiệnTại}</strong><br>
         <span style="color:${currentHauInfo.emoji === '🟢' ? '#00ff41' : (currentHauInfo.emoji === '🔴' ? '#ff4444' : '#ffd700')}">
@@ -1280,7 +1283,7 @@ function updateCompassUI(heading) {
         <span style="margin-left:8px; color:#ffd700;">${tongHop.diem}pt</span>
     `;
 
-    // ==================== 3. TRUY XUẤT DỮ LIỆU INPUT BIỂU MẪU ====================
+    // ==================== Phần còn lại GIỮ NGUYÊN từ hàm gốc của bạn ====================
     const dayStr = document.getElementById('birthDay').value;
     const monthStr = document.getElementById('birthMonth').value;
     const yearStr = document.getElementById('birthYear').value;
