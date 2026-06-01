@@ -3084,12 +3084,54 @@ async function fallbackIPGeolocation() {
     return { lat: 14.05, lon: 108.27, src: "DEFAULT" };
 }
 
+/**
+ * BỘ LỌC DỮ LIỆU ĐỊA LÝ (Chống lỗi copy/paste, giữ dấu trừ, chặn ký tự rác)
+ */
+/**
+ * LÀM SẠCH DỮ LIỆU ĐỊA LÝ - ĐẢM BẢO CHÍNH XÁC TUYỆT ĐỐI
+ */
+function sanitizeGeoInput(val) {
+    if (typeof val !== 'string') val = String(val);
+    
+    // 1. Thay phẩy bằng chấm
+    let str = val.trim().replace(/,/g, '.');
+    
+    // 2. Tách dấu trừ (Nếu có ở đầu mới nhận, không thì loại bỏ hết)
+    const isNegative = str.startsWith('-');
+    
+    // 3. Chỉ giữ lại số và dấu chấm thập phân đầu tiên
+    let numbers = str.replace(/[^0-9.]/g, '');
+    const parts = numbers.split('.');
+    if (parts.length > 2) {
+        numbers = parts[0] + '.' + parts.slice(1).join('');
+    }
+    
+    // 4. Ghép lại: Dấu '-' ở đầu + các chữ số
+    const finalVal = parseFloat((isNegative ? '-' : '') + (numbers || '0'));
+    
+    return isNaN(finalVal) ? 0 : finalVal;
+}
+
+/**
+ * CẬP NHẬT ĐỘ LỆCH TỪ (Với cơ chế kiểm soát biên)
+ */
 function updateMagneticDeclination() {
     const input = document.getElementById('declination-input');
     if (!input) return;
 
-    let val = input.value;
-    magneticDeclination = (val === '-' || val === '.' || val.trim() === '') ? 0 : parseFloat(val) || 0;
+    // Làm sạch và ép kiểu
+    let val = sanitizeGeoInput(input.value);
+    
+    // Kiểm soát biên thực tế: Độ lệch từ không bao giờ quá 180 độ
+    if (val > 180) val = 180;
+    if (val < -180) val = -180;
+    
+    magneticDeclination = val;
+    
+    // Cập nhật lại UI để người dùng thấy giá trị đã được chuẩn hóa
+    if (parseFloat(input.value) !== val) {
+        input.value = val;
+    }
     
     if (typeof updateCompassUI === 'function' && typeof currentHeading !== 'undefined') {
         updateCompassUI(currentHeading);
@@ -3130,12 +3172,16 @@ async function autoDetectDeclination(e) {
 }
 
 function calculateRemoteDeclination() {
-    const latV = parseFloat(document.getElementById('remote-lat').value);
-    const lonV = parseFloat(document.getElementById('remote-lon').value);
-    const rBtn = document.getElementById('remote-calc-btn');
+    const latInput = document.getElementById('remote-lat');
+    const lonInput = document.getElementById('remote-lon');
+    
+    // Làm sạch đầu vào trước khi tính
+    const latV = sanitizeGeoInput(latInput.value);
+    const lonV = sanitizeGeoInput(lonInput.value);
 
-    if (isNaN(latV) || isNaN(lonV)) {
-        showToast("⚠️ Vui lòng nhập đủ tọa độ!", true);
+    // Kiểm tra tính hợp lệ của tọa độ địa lý
+    if (Math.abs(latV) > 90 || Math.abs(lonV) > 180) {
+        showToast("⚠️ Tọa độ không hợp lệ!", true);
         return;
     }
 
@@ -3144,13 +3190,7 @@ function calculateRemoteDeclination() {
     document.getElementById('declination-input').value = decl.toFixed(2);
     
     updateMagneticDeclination();
-    showToast(`Đã tính tọa độ từ xa: ${decl.toFixed(2)}°`);
-    
-    if (rBtn) {
-        rBtn.innerText = "ĐÃ TÍNH TOÁN ✓";
-        rBtn.style.borderColor = "#4caf50";
-        setTimeout(() => { rBtn.innerText = "🧮 TÍNH ĐỘ LỆCH TỪ XA"; rBtn.style.borderColor = "#dfb76c"; }, 2000);
-    }
+    showToast(`Đã tính: ${decl.toFixed(2)}°`);
 }
 
 function toggleDeclinationPanel(show) {
