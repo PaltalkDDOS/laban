@@ -2730,36 +2730,27 @@ function render24SonRing() {
         khe24SonRing.innerHTML = lines24Html;
     }
 
-    // 3. Chữ 24 Sơn - MÀU NEON TỐI SANG TRỌNG
+    // 3. Chữ 24 Sơn (giữ nguyên)
     const sonRingSvg = document.getElementById('sonRingSvg');
     if (sonRingSvg) {
         sonRingSvg.innerHTML = "";
         SON_24_CONFIG.forEach((son, index) => {
             const goc = (index * 15) % 360;
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250");
+            textNode.setAttribute("x", "250"); 
             textNode.setAttribute("y", "114");
             textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "10.5");
+            textNode.setAttribute("font-size", "10");
             textNode.setAttribute("font-weight", "900");
             textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
             textNode.setAttribute("data-son-goc", goc.toString());
-            textNode.setAttribute("data-base-size", "10.5");
+            textNode.setAttribute("data-base-size", "10");
             textNode.textContent = son.name;
-
-            // === MÀU NEON TỐI CAO CẤP ===
-            let color;
-            if (["Cấn", "Tốn", "Khôn", "Càn"].includes(son.name)) {
-                color = "#ff4d4d";        // Neon Red sang trọng
-            } else if (["Tý", "Mão", "Ngọ", "Dậu"].includes(son.name)) {
-                color = "#00ffaa";        // Neon Emerald
-            } else {
-                color = "#ffd700";        // Gold Neon
-            }
-
+            
+            const color = ["Cấn", "Tốn", "Khôn", "Càn"].includes(son.name) ? "#ff3b30" :
+                          ["Tý", "Mão", "Ngọ", "Dậu"].includes(son.name) ? "#00a525" : "#5c4314";
             textNode.setAttribute("fill", color);
             textNode.setAttribute("data-color", color);
-            textNode.setAttribute("filter", "drop-shadow(0 0 3px currentColor)");
             sonRingSvg.appendChild(textNode);
         });
     }
@@ -2790,7 +2781,7 @@ function render24SonRing() {
         });
     }
 
-    // 5. Vòng 72 Hậu (giữ nguyên logic nhưng đồng bộ màu neon)
+    // 5. Vòng 72 Hậu - ĐÃ NÂNG CẤP (màu rõ hơn + chuẩn bị cho highlight mạnh)
     const hauRing = document.getElementById('hau72RingSvg');
     if (hauRing) {
         hauRing.innerHTML = "";
@@ -2798,27 +2789,27 @@ function render24SonRing() {
             const hau = Data72Hau[degStr];
             const deg = parseFloat(degStr) + 2.4;
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250");
+            textNode.setAttribute("x", "250"); 
             textNode.setAttribute("y", "95");
             textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "3.3");
+            textNode.setAttribute("font-size", "3.2");        // Tăng nhẹ size gốc
             textNode.setAttribute("font-weight", "700");
             textNode.setAttribute("transform", `rotate(${deg}, 250, 250)`);
             textNode.setAttribute("data-hau-goc", degStr);
-            textNode.setAttribute("data-base-size", "3.3");
+            textNode.setAttribute("data-base-size", "3.2");
 
+            // Màu rõ ràng hơn
             let color;
             if (hau.chatLuong.includes("Cát")) {
-                color = "#7cff9b";           // Neon Green
+                color = "#a8c46f";      // Xanh ngọc nhạt
             } else if (hau.chatLuong.includes("Hung")) {
-                color = "#ff6b6b";           // Neon Red
+                color = "#e07a5f";      // Đỏ gạch
             } else {
-                color = "#ffd93d";           // Neon Gold
+                color = "#d4af37";      // Vàng đồng
             }
-           
+            
             textNode.setAttribute("fill", color);
             textNode.setAttribute("data-original-fill", color);
-            textNode.setAttribute("filter", "drop-shadow(0 0 2px currentColor)");
             textNode.textContent = hau.ten.replace(" Hậu", "").replace(/(\D+)(\d)/, (m, p1, p2) => p1.substring(0,1) + p2);
             hauRing.appendChild(textNode);
         });
