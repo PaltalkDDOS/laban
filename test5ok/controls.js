@@ -3120,27 +3120,32 @@ function executeUIUpdate(heading) {
     if (typeof recalculateFate === 'function') recalculateFate();
 }
 
-// Hàm cập nhật trạng thái nhiễu (Hiển thị đèn báo)
+// Cập nhật trạng thái nhiễu dành riêng cho phần cứng iOS (Đã tối ưu giảm tải DOM)
 function updateMagneticStatus(acc) {
     const dot = document.getElementById('accuracy-dot');
     const text = document.getElementById('accuracy-text');
     if (!dot || !text) return;
 
-    if (acc <= 15) {
-        dot.style.background = '#4caf50'; // Xanh
-        text.innerText = "TÍN HIỆU TỐT";
-    } else if (acc <= 30) {
-        dot.style.background = '#ff9800'; // Vàng
-        text.innerText = "NHIỄU NHẸ";
-    } else {
-        dot.style.background = '#f44336'; // Đỏ
-        text.innerText = "NHIỄU NẶNG";
-        // Chỉ hiện Toast một lần để không gây phiền
+    let bg = '#4caf50', txt = "TÍN HIỆU TỐT";
+    
+    if (acc > 15 && acc <= 30) {
+        bg = '#ff9800';
+        txt = "NHIỄU NHẸ";
+    } else if (acc > 30) {
+        bg = '#f44336';
+        txt = "NHIỄU NẶNG";
+        
         if (typeof showToast === 'function' && !isMagneticWarningActive) {
             showToast("⚠️ Nhiễu từ trường! Hãy tránh xa sắt thép", true);
             isMagneticWarningActive = true;
             setTimeout(() => { isMagneticWarningActive = false; }, 10000);
         }
+    }
+
+    // Cơ chế chặn ghi đè DOM trùng lặp
+    if (text.innerText !== txt) {
+        dot.style.background = bg;
+        text.innerText = txt;
     }
 }
 function updateAccuracyDisplay(acc) {
@@ -3177,9 +3182,6 @@ function updateAccuracyDisplay(acc) {
 // ====================== TRÌNH ĐIỀU KHIỂN ĐỊA TỪ SIÊU CẤP 2026 ======================
 let magneticDeclination = 0;
 
-/**
- * HÀM HIỂN THỊ THÔNG BÁO SANG TRỌNG (THAY ALERT)
- */
 function showToast(message, isError = false) {
     const container = document.getElementById('toast-container');
     if (!container) return;
@@ -3204,13 +3206,15 @@ function showToast(message, isError = false) {
     setTimeout(() => toast.remove(), 3000);
 }
 
-// Thêm keyframes cho hiệu ứng Toast vào đầu file hoặc CSS
-const styleSheet = document.createElement("style");
-styleSheet.innerText = `
-    @keyframes toastIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes toastOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
-`;
-document.head.appendChild(styleSheet);
+// Thêm keyframes cho hiệu ứng Toast vào tài liệu
+if (typeof window !== 'undefined') {
+    const styleSheet = document.createElement("style");
+    styleSheet.innerText = `
+        @keyframes toastIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes toastOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
+    `;
+    document.head.appendChild(styleSheet);
+}
 
 /**
  * THUẬT TOÁN WMM-LITE 2026
@@ -3242,15 +3246,23 @@ function calculateGlobalDeclination(lat, lon) {
  * CƠ CHẾ PHÒNG THỦ IP
  */
 async function fallbackIPGeolocation() {
-    try {
-        const response = await fetch('https://ip-api.com/json/?fields=status,lat,lon');
-        const data = await response.json();
-        if (data && data.status === 'success') return { lat: data.lat, lon: data.lon, src: "NETWORK" };
-    } catch (e) {}
+    if (navigator.onLine) {
+        try {
+            const response = await fetch('https://json.geoiplookup.io/', { timeout: 3000 });
+            const data = await response.json();
+            if (data && data.latitude && data.longitude) {
+                return { lat: data.latitude, lon: data.longitude, src: "NETWORK" };
+            }
+        } catch (e) {
+            // Đã ẩn log cảnh báo lỗi mạng
+        }
+    }
 
     try {
         const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        if (timeZone.includes("Saigon") || timeZone.includes("Bangkok")) return { lat: 14.05, lon: 108.27, src: "ZONE_VN" };
+        if (timeZone && (timeZone.includes("Saigon") || timeZone.includes("Bangkok") || timeZone.includes("Asia/Ho_Chi_Minh"))) {
+            return { lat: 14.05, lon: 108.27, src: "ZONE_VN" };
+        }
     } catch (e) {}
 
     return { lat: 14.05, lon: 108.27, src: "DEFAULT" };
@@ -3268,17 +3280,23 @@ function updateMagneticDeclination() {
     }
 }
 
-async function autoDetectDeclination(e) {
+async function autoDetectDeclination() {
     const btn = document.getElementById('auto-detect-btn');
     if (btn) { btn.innerText = "⚡ ĐANG QUÉT..."; btn.disabled = true; }
 
     const apply = (lat, lon, label) => {
+        if (!lat || !lon || (lat === 0 && lon === 0)) {
+            if (btn) { btn.innerText = "🛰️ TỰ ĐỘNG XÁC ĐỊNH"; btn.disabled = false; }
+            return;
+        }
+
         const decl = calculateGlobalDeclination(lat, lon);
         magneticDeclination = decl;
         const input = document.getElementById('declination-input');
         if (input) input.value = decl.toFixed(2);
         updateMagneticDeclination();
         showToast(`Đã cập nhật từ ${label}: ${decl.toFixed(2)}°`);
+        
         if (btn) {
             btn.innerText = `XÁC ĐỊNH: ${label} ✓`;
             setTimeout(() => { btn.innerText = "🛰️ TỰ ĐỘNG XÁC ĐỊNH"; btn.disabled = false; }, 2000);
@@ -3292,12 +3310,19 @@ async function autoDetectDeclination(e) {
     }
 
     navigator.geolocation.getCurrentPosition(
-        (pos) => apply(pos.coords.latitude, pos.coords.longitude, "GPS"),
-        async () => {
-            const ip = await fallbackIPGeolocation();
-            apply(ip.lat, ip.lon, ip.src);
+        (pos) => {
+            apply(pos.coords.latitude, pos.coords.longitude, "GPS");
         },
-        { timeout: 5000 }
+        async () => {
+            // Đã ẩn log cảnh báo GPS lỗi, lẳng lặng kích hoạt tầng dự phòng ngầm
+            try {
+                const ip = await fallbackIPGeolocation();
+                apply(ip.lat, ip.lon, ip.src);
+            } catch (err) {
+                apply(14.05, 108.27, "DEFAULT");
+            }
+        },
+        { timeout: 4000, enableHighAccuracy: false }
     );
 }
 
@@ -3329,54 +3354,105 @@ function toggleDeclinationPanel(show) {
     const m = document.getElementById('declination-modal');
     if (m) m.style.display = show ? 'flex' : 'none';
 }
+/**
+ * 4. THUẬT TOÁN ĐỊA TỪ TOÀN CẦU & LÀM SẠCH DỮ LIỆU ĐẦU VÀO
+ */
+function getCleanValue(raw) {
+    if (!raw) return ''; 
+    let str = String(raw).trim().replace(/,/g, '.'); 
+    let isNegative = str.startsWith('-');
+    let processStr = isNegative ? str.substring(1) : str;
+    
+    let numericPart = "";
+    let dotCount = 0;
+    
+    for (let i = 0; i < processStr.length; i++) {
+        let char = processStr[i];
+        if (char >= '0' && char <= '9') {
+            numericPart += char;
+        } else if (char === '.' && dotCount === 0) {
+            numericPart += char;
+            dotCount = 1;
+        } else {
+            break; 
+        }
+    }
+    
+    if (numericPart.endsWith('.')) numericPart = numericPart.slice(0, -1);
+    let res = (isNegative ? '-' : '') + (numericPart || '');
+    return (res === '-' || res === '') ? '' : res;
+}
+function parseSmartNumeric(val, maxVal) {
+    if (!val || val.trim() === '') return null;
 
+    let str = val.trim().replace(/,/g, '.');
+    let isNegative = str.startsWith('-');
+    let processStr = isNegative ? str.substring(1) : str;
+    let numericPart = "";
+    let dotCount = 0;
+
+    for (let i = 0; i < processStr.length; i++) {
+        let char = processStr[i];
+        if (char >= '0' && char <= '9') {
+            numericPart += char;
+        } else if (char === '.' && dotCount === 0) {
+            numericPart += char;
+            dotCount = 1;
+        } else {
+            break;
+        }
+    }
+    
+    if (numericPart.endsWith('.')) numericPart = numericPart.slice(0, -1);
+    const finalVal = parseFloat((isNegative ? '-' : '') + (numericPart || '0'));
+    
+    return isNaN(finalVal) ? null : finalVal;
+}
+/**
+ * 5. KHỞI TẠO BỘ LẮNG NGHE INPUT FORM ĐỊA TỪ
+ */
 document.addEventListener('DOMContentLoaded', () => {
-    const inputs = [
-        { id: 'declination-input', max: 180 },
-        { id: 'remote-lat', max: 90 },
-        { id: 'remote-lon', max: 180 }
-    ];
+    const configs = {
+        'declination-input': { max: 180, limit: 7 },
+        'remote-lat': { max: 90, limit: 10 },
+        'remote-lon': { max: 180, limit: 11 }
+    };
 
-    inputs.forEach(cfg => {
-        const el = document.getElementById(cfg.id);
+    Object.keys(configs).forEach(id => {
+        const el = document.getElementById(id);
         if (!el) return;
 
-        el.addEventListener('input', (e) => {
-            let val = el.value;
+        el.addEventListener('input', () => {
+            const cfg = configs[id];
+            let raw = el.value;
 
-            // 1. Chỉ cho phép các ký tự: số, dấu chấm, dấu trừ
-            // 2. Chống nhập nhiều dấu trừ, dấu trừ chỉ được ở đầu
-            val = val.replace(/[^0-9.-]/g, ''); 
-            if (val.split('-').length > 2) val = '-' + val.replace(/-/g, '');
-            if (val.indexOf('-') > 0) val = val.replace('-', '');
+            if (raw === '') return;
+
+            const clean = parseSmartNumeric(raw, cfg.max);
             
-            // 3. Chống nhập nhiều dấu chấm
-            const parts = val.split('.');
-            if (parts.length > 2) val = parts[0] + '.' + parts.slice(1).join('');
-
-            el.value = val;
-
-            // 4. Kiểm tra Logic khi người dùng nhập xong số
-            const num = parseFloat(val);
-            if (!isNaN(num)) {
-                if (Math.abs(num) > cfg.max) {
-                    showToast(`⚠️ Tối đa là ±${cfg.max}`, true);
-                    el.value = val.slice(0, -1); // Xóa ký tự cuối nếu vượt ngưỡng
-                }
+            if (/[a-zA-Z!@#$%^&*()_+={}\[\]:;"'<>?\/\\|]/.test(raw)) {
+                el.value = clean !== null ? clean.toString() : '';
             }
 
-            if (cfg.id === 'declination-input') updateMagneticDeclination();
+            if (el.value.length > cfg.limit) {
+                el.value = el.value.slice(0, cfg.limit);
+            }
+
+            if (id === 'declination-input') updateMagneticDeclination();
         });
 
-        // Tự động xóa số 0 thừa khi focus và trả về 0 nếu trống khi blur
-        el.addEventListener('focus', () => { if(el.value === '0') el.value = ''; });
-        el.addEventListener('blur', () => { 
-            if(el.value === '' || el.value === '-') el.value = '0'; 
-            updateMagneticDeclination();
-        });
-
-        el.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') { el.blur(); toggleDeclinationPanel(false); }
+        el.addEventListener('blur', () => {
+            const cfg = configs[id];
+            const clean = parseSmartNumeric(el.value, cfg.max);
+            
+            if (clean !== null) {
+                let clamped = Math.max(-cfg.max, Math.min(cfg.max, clean));
+                el.value = clamped.toString();
+            } else {
+                el.value = ''; 
+            }
+            
+            if (id === 'declination-input') updateMagneticDeclination();
         });
     });
 });
