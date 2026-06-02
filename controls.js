@@ -738,63 +738,48 @@ function recalculateFate() {
 const hauCache = new Map();
 
 function getCurrentHauInfo(degree) {
-    // 1. Chuẩn hóa góc về [0, 360)
+    // 1. Chuẩn hóa góc về dải an toàn [0, 360)
     const normalized = ((degree % 360) + 360) % 360;
     
-    // Làm tròn theo bước 5 độ
+    // Làm tròn chuẩn xác theo bước phân châm 5 độ cố định của hệ thống
     const keyHau = (Math.round(normalized / 5) * 5) % 360;
 
-    // 2. KIỂM TRA CACHE (Nếu đã tính rồi thì trả về ngay lập tức)
-    if (hauCache.has(keyHau)) {
+    // 2. KIỂM TRA CACHE (Nếu đã tính toán, trả về ngay lập tức để tối ưu O(1))
+    if (typeof hauCache !== 'undefined' && hauCache.has(keyHau)) {
         return hauCache.get(keyHau);
     }
     
-    // 3. Truy xuất an toàn
+    // 3. Truy xuất nguồn dữ liệu an toàn từ Data72Hau của bạn
     const hau = Data72Hau[keyHau.toString()] || { 
         ten: "Xung Không", 
         chatLuong: "Bình Hòa", 
         diem: 50, 
         ynghia: "Khí trường chuyển dịch luân hồi.",
-        giaiphap: "Chưa có dữ liệu.",
-        interactionLevel: "Trung bình"
+        giaiphap: "Chưa có dữ liệu trích xuất."
     };
 
-    // 4. Khởi tạo kết quả
+    // 4. Khởi tạo cấu trúc kết quả nguyên bản
     let result = {
         ten: hau.ten ?? "Xung Không",
         chatLuong: hau.chatLuong ?? "Bình Hòa",
         ynghia: hau.ynghia ?? "Khí trường chuyển dịch luân hồi.",
         diem: Number(hau.diem) || 50,
-        giaiphap: String(hau.giaiphap ?? "Chưa có giải pháp cụ thể."),
-        interactionLevel: hau.interactionLevel ?? "Trung bình",
+        giaiphap: String(hau.giaiphap ?? "Thiết kế phối hợp trạch pháp, định vị an lành."),
         emoji: "🟡"
     };
 
-    // 5. Bộ lọc Emoji
-    if (result.chatLuong.includes("Đại Cát") || result.chatLuong.includes("Cát")) {
+    // 5. Bộ lọc Emoji phân cấp chất lượng trực quan sạch sẽ
+    if (result.chatLuong.includes("Cát")) {
         result.emoji = "🟢";
-    } else if (result.chatLuong.includes("Đại Hung") || result.chatLuong.includes("Hung")) {
+    } else if (result.chatLuong.includes("Hung")) {
         result.emoji = "🔴";
     }
 
-    // 6. Tích hợp Không Vong
-    if (typeof kiemTraKhongVong === 'function') {
-        const khongVong = kiemTraKhongVong(normalized);
-        if (khongVong) {
-            if (khongVong.loai === "ĐẠI KHÔNG VONG") {
-                result.chatLuong = "ĐẠI HUNG (Không Vong)";
-                result.emoji = "☠️";
-                result.diem = Math.min(result.diem, 15);
-            } else {
-                result.chatLuong = "TIỂU KHÔNG VONG (Khí Suy)";
-                result.emoji = "⚠️";
-                result.diem = Math.max(10, result.diem - 25);
-            }
-        }
+    // 6. LƯU VÀO CACHE trước khi xuất dữ liệu ra mạch ngoài
+    if (typeof hauCache !== 'undefined') {
+        hauCache.set(keyHau, result);
     }
-
-    // 7. LƯU VÀO CACHE trước khi trả về
-    hauCache.set(keyHau, result);
+    
     return result;
 }
 
@@ -844,14 +829,14 @@ function generateDirectionsList() {
     const isCatPurpose = config.isCat; // true: cần Cát, false: cần Hung
     let listDirections = [];
     
-    // GIẢI PHÓNG TRỤC THỜI GIAN: Lấy niên độ từ form khảo sát động để tính Vận tinh chính xác
+    // Khai phá trục thời gian động dựa trên niên độ biểu mẫu thực tế
     const yearInput = document.getElementById('birthYear')?.value;
     const namKhaoSat = (yearInput && yearInput.length === 4) ? parseInt(yearInput) : new Date().getFullYear();
 
     directionMeta.forEach(dir => {
         const cungTrạch = bátTrạchMap[chủMệnh][dir.code];
         
-        // Gọi hàm tính điểm tổng hợp đa tầng truyền tham số namKhaoSat động
+        // Tính toán điểm số chính xác tuyệt đối theo cấu trúc lõi mới hàm 3
         const tongHopDir = tinhDiemTongHop(chủMệnh, dir.angle, namKhaoSat, mucDich);
         const hauInfo = getCurrentHauInfo(dir.angle);
 
@@ -865,18 +850,18 @@ function generateDirectionsList() {
         });
     });
 
-    // Sắp xếp: Ai điểm cao nhất (hợp mục đích nhất) lên đầu bảng khách quan
+    // Sắp xếp: Phương vị tối ưu trường khí nhất xếp lên đầu vị trí
     listDirections.sort((a, b) => b.priority - a.priority);
     
     listPanelTitle.innerText = `Gợi ý vị trí Vận 9: ${config.title}`;
     directionsContainer.innerHTML = "";
 
     listDirections.forEach(item => {
-        // Màu sắc nhãn dựa trên điểm số đã qua bộ lọc thông minh Vận 9 (Đạt cách >= 72pt)
+        // Đồng bộ mốc đạt cách học thuật đa tầng Vận 9 mới (>= 72pt)
         const isHợp = item.diemTongHop >= 72;
         const colorStyle = isHợp ? '#30d158' : '#ff3b30';
 
-        // Đảo nhãn trạng thái trực quan chuẩn bản chất cấu trúc
+        // Đảo nhãn trạng thái chuẩn xác cấu trúc
         let statusText = "";
         if (isCatPurpose) {
             statusText = isHợp ? '🟢 ĐÓN CÁT KHÍ (HƯỚNG TỐT)' : '❌ PHẠM HUNG PHƯƠNG (HƯỚNG XẤU)';
@@ -887,7 +872,6 @@ function generateDirectionsList() {
         const sonGroup = getSonGroupForDirection(item.code);
         let sonHTML = "";
         
-        // GIỮ NGUYÊN BẢN 100% LOGIC CLICK XEM GIẢI THÍCH SƠN VỊ TỪ FILE GỐC CỦA BẠN
         sonGroup.forEach((son, index) => {
             const dataSon = MaTranMinhChau[chủMệnh] ? MaTranMinhChau[chủMệnh][son] : null;
             const score = dataSon ? dataSon.diem : 0;
@@ -1593,47 +1577,47 @@ function getTamSat24Son(cuc) {
 function updateDegreeDisplay(degree) {
     const normalized = ((degree % 360) + 360) % 360;
     const sonName = tìmSơnHướng(normalized);
-    let hauName = "—";
+    
+    // SỬA LỖI LỆCH PHA: Đồng bộ cách lấy Hậu đồng nhất tuyệt đối với thuật toán lõi
+    const currentHau = getCurrentHauInfo(normalized);
+    
+    let hauName = currentHau.ten.replace(" Hậu", "");
     let hauColor = "#ffffff";
+    
+    // Ánh xạ màu sắc hiển thị cho văn bản Hậu thực địa
+    if (currentHau.chatLuong.includes("Cát")) hauColor = "#00FF41"; // Lime Green
+    else if (currentHau.chatLuong.includes("Hung")) hauColor = "#FF3131"; // Bright Red
+    else hauColor = "#FFD700"; // Vàng Gold
 
-    // Tìm Hậu nhanh hơn bằng tìm kiếm trực tiếp
-    let minDiff = Infinity;
-    let foundHau = null;
-    for (const key in Data72Hau) {
-        const d = parseFloat(key);
-        const diff = Math.min(Math.abs(normalized - d), 360 - Math.abs(normalized - d));
-        if (diff < minDiff) {
-            minDiff = diff;
-            foundHau = Data72Hau[key];
-        }
-    }
-
-    if (foundHau) {
-        hauName = foundHau.ten.replace(" Hậu", "");
-        const cl = foundHau.chatLuong;
-        if (cl.includes("Cát")) hauColor = "#00FF41"; // Lime Green
-        else if (cl.includes("Hung")) hauColor = "#FF3131"; // Bright Red
-        else hauColor = "#FFD700"; // Gold
-    }
-
-    // === KIỂM TRA KHÔNG VONG ===
+    // === KIỂM TRA KHÔNG VONG KHÁCH QUAN ===
     const khongVongInfo = kiemTraKhongVong(normalized);
     const khongVongHTML = khongVongInfo 
         ? `<span style="color:#ff4444; font-weight:bold; text-shadow: 0 0 6px #ff0000; margin-left: 10px;">⚠️ ${khongVongInfo.loai}</span>` 
         : "";
 
-    // === TÍNH ĐIỂM TỔNG HỢP (PT - Vận 9) TRỰC TIẾP TRÊN LA BÀN ===
+    // === TÍNH TOÁN ĐIỂM PT DYNAMIC THEO KHẢO SÁT THỰC THỜI ===
     let tongDiemHTML = "";
     if (typeof chủMệnh !== 'undefined' && chủMệnh) {
-        // Mặc định là 'house' (Hướng Cát) khi đang cầm la bàn đi vòng quanh
+        // B bốc dynamic mục đích hiện tại trên UI và năm khảo sát trên form
         const mucDichHienTai = document.getElementById('purpose')?.value || 'house';
-        const tongHop = tinhDiemTongHop(chủMệnh, normalized, new Date().getFullYear(), mucDichHienTai);
+        const yearInput = document.getElementById('birthYear')?.value;
+        const namKhaoSatRealtime = (yearInput && yearInput.length === 4) ? parseInt(yearInput) : new Date().getFullYear();
         
-        const diemColor = tongHop.diem >= 80 ? "#00FF41" : (tongHop.diem >= 60 ? "#FFD700" : "#ff4444");
+        // Gọi hàm lõi toán pháp đa tầng Vận 9 của bạn
+        const tongHop = tinhDiemTongHop(chủMệnh, normalized, namKhaoSatRealtime, mucDichHienTai);
+        
+        // Mốc màu sắc đồng bộ hoàn hảo với mốc Đạt cách 72pt mới
+        let diemColor = "#ff4444"; // Hung
+        if (tongHop.diem >= 72) {
+            diemColor = "#00FF41"; // Đạt cách Cát vị trở lên
+        } else if (tongHop.diem >= 50) {
+            diemColor = "#FFD700"; // Trung bình
+        }
+        
         tongDiemHTML = `<div style="margin-top: 5px;"><strong style="color:${diemColor}; font-size: 1.1em; background: rgba(0,0,0,0.5); padding: 2px 8px; border-radius: 4px;">PT: ${tongHop.diem}đ (${tongHop.level})</strong></div>`;
     }
 
-    // Cập nhật DOM
+    // Cập nhật DOM hiển thị chuẩn học thuật số đa tầng
     const degreeTxt = document.getElementById('degree-txt');
     if (degreeTxt) {
         degreeTxt.innerHTML = `
