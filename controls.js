@@ -2164,19 +2164,11 @@ function closeModal() {
     document.getElementById('infoModal').style.display = 'none';
 }
 
-function togglePanel(event) {
-    // Nếu event được truyền vào (khi bấm trực tiếp vào khung)
-    // Và đối tượng được bấm không phải là một nút bấm (button) hoặc input
-    if (event) {
-        const targetTag = event.target.tagName.toLowerCase();
-        if (targetTag === 'button' || targetTag === 'input' || targetTag === 'div' && event.target.classList.contains('gender-option')) {
-            return; // Không làm gì cả nếu bấm vào nút hoặc input
-        }
-    }
-
+function togglePanel() {
     const content = document.getElementById('panelContent');
     const arrow = document.getElementById('toggleArrow');
     
+    // Kiểm tra class để đóng/mở
     if (content.classList.contains('collapsed')) {
         content.classList.remove('collapsed');
         arrow.innerHTML = '▲';
