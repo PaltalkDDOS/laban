@@ -422,6 +422,23 @@ const SON_24_CONFIG = [
     { name: "Nhâm", min: 337.5, max: 352.5, huong: "Bắc" }
 ];
 
+// Bảng tra cứu bổ trợ chuẩn hóa trọng số và Ngũ Hành để chạy công thức PT Score O(1)
+const HOP_CACH_WEIGHT = {
+    'Sinh Khí':  { base: 68, element: 'Mộc' },
+    'Thiên Y':   { base: 56, element: 'Thổ' },
+    'Diên Niên': { base: 48, element: 'Kim' },
+    'Phục Vị':   { base: 32, element: 'Mộc' },
+    'Họa Hại':   { base: -24, element: 'Thổ' },
+    'Lục Sát':   { base: -36, element: 'Thủy' },
+    'Ngũ Quỷ':   { base: -52, element: 'Hỏa' },
+    'Tuyệt Mệnh':{ base: -68, element: 'Kim' }
+};
+
+const SINH_KHAC_HE_THONG = {
+    'Sinh': { 'Mộc': 'Hỏa', 'Hỏa': 'Thổ', 'Thổ': 'Kim', 'Kim': 'Thủy', 'Thủy': 'Mộc' },
+    'Khắc': { 'Mộc': 'Thổ', 'Thổ': 'Thủy', 'Thủy': 'Hỏa', 'Hỏa': 'Kim', 'Kim': 'Mộc' }
+};
+
 // ====================== 1. MA TRẬN BÁT TRẠCH PHỐI MỆNH CUNG PHI ======================
 const bátTrạchMap = {
     'Khảm': {
@@ -2110,43 +2127,56 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich) {
 // ==========================================================================
 // THUẬT TOÁN KIM QUAY LA BÀN - PHIÊN BẢN TỐI ƯU (MƯỢT + ỔN ĐỊNH)
 // ==========================================================================
-let lastHeading = null;
-let orientationListenerAdded = false;
+
 let rafId = null;
-let lastUpdateTime = 0;
-let lastAccuracy = 0; 
-let isMagneticWarningActive = false;
+
+
+
 let headingHistory = []; 
 const MAX_HISTORY = 12; // Tăng lên 12 để độ ổn định cao hơn trên Android
+
+
+
+
+// ==========================================================================
+// THUẬT TOÁN KIM QUAY LA BÀN - PHIÊN BẢN TỐI ƯU (MƯỢT + ỔN ĐỊNH)
+// ==========================================================================
+let lastHeading = null;
+let orientationListenerAdded = false;
+
+let lastUpdateTime = 0;
+
 const SMOOTH_MIN = 0.08;
 const SMOOTH_MAX = 0.55;
 const THROTTLE_MS = 16; // ~60fps
 
+// Thêm 2 biến toàn cục này vào đầu file nếu chưa có
+let lastAccuracy = 0; 
+let isMagneticWarningActive = false;
 
 function handleOrientation(event) {
     let rawHeading = null;
     
-    // 1. LẤY DỮ LIỆU VÀ GIÁM SÁT NHIỄU (iOS & Android)
+    // 1. LẤY DỮ LIỆU VÀ GIÁM SÁT NHIỄU
+    // iOS cung cấp webkitCompassAccuracy (độ sai số)
     const accuracy = event.webkitCompassAccuracy;
-    
-    // Đẩy dữ liệu vào lịch sử để thuật toán Android tính độ nhiễu
+    if (accuracy !== undefined && accuracy !== null) {
+        lastAccuracy = accuracy;
+        // Cập nhật đèn báo hoặc Toast nếu nhiễu > 25 độ
+        updateMagneticStatus(accuracy); 
+    }
+
     if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
         rawHeading = event.webkitCompassHeading;
     } else if (event.alpha !== undefined && event.alpha !== null) {
         rawHeading = (360 - event.alpha) % 360;
     }
-
+    
     if (rawHeading === null) return;
 
-    // LƯU LỊCH SỬ ĐỂ TÍNH NHIỄU (Dành cho Android không có Accuracy)
-    headingHistory.push(rawHeading);
-    if (headingHistory.length > MAX_HISTORY) headingHistory.shift();
-
-    // GỌI HÀM CẬP NHẬT ĐÈN BÁO (Sẽ tự chọn dùng accuracy iOS hoặc tính toán Android)
-    updateMagneticStatus(accuracy !== undefined ? accuracy : null);
-
     // 2. CỘNG ĐỘ LỆCH TỪ (MAGNETIC DECLINATION)
-    // Cực kỳ quan trọng: cộng thêm declination vào hướng gốc
+    // Đây là bước quan trọng nhất để tính toán Phong Thủy chính xác
+    // magneticDeclination là biến chúng ta đã tính từ GPS/IP hoặc nhập tay
     rawHeading = (rawHeading + (magneticDeclination || 0) + 360) % 360;
 
     // 3. CƠ CHẾ KHÓA & THROTTLE
@@ -2163,7 +2193,7 @@ function handleOrientation(event) {
         return;
     }
 
-    // 4. THUẬT TOÁN LỌC MƯỢT ĐỘNG
+    // 4. THUẬT TOÁN LỌC MƯỢT ĐỘNG (GIỮ NGUYÊN VÌ ĐÃ TỐT)
     let diff = rawHeading - lastHeading;
     if (diff > 180) diff -= 360;
     if (diff < -180) diff += 360;
@@ -2200,41 +2230,21 @@ function updateMagneticStatus(acc) {
     const text = document.getElementById('accuracy-text');
     if (!dot || !text) return;
 
-    // --- LỚP 1: Dữ liệu chuẩn từ iOS ---
-    if (acc !== null && acc >= 0) {
-        if (acc <= 15) {
-            dot.style.background = '#4caf50'; text.innerText = "TÍN HIỆU TỐT";
-        } else if (acc <= 30) {
-            dot.style.background = '#ff9800'; text.innerText = "NHIỄU NHẸ";
-        } else {
-            dot.style.background = '#f44336'; text.innerText = "NHIỄU NẶNG";
-        }
-        return;
-    }
-
-    // --- LỚP 2: Thuật toán đo nhiễu thông minh cho Android ---
-    if (headingHistory.length >= MAX_HISTORY) {
-        const min = Math.min(...headingHistory);
-        const max = Math.max(...headingHistory);
-        const variance = max - min; 
-
-        if (variance < 2) {
-            dot.style.background = '#4caf50'; text.innerText = "TÍN HIỆU ỔN ĐỊNH";
-        } else if (variance < 8) {
-            dot.style.background = '#ff9800'; text.innerText = "NHIỄU NHẸ";
-        } else {
-            dot.style.background = '#f44336'; text.innerText = "NHIỄU NẶNG - ĐANG CÂN CHỈNH";
-            
-            // Hiện cảnh báo nếu nhiễu
-            if (typeof showToast === 'function' && !isMagneticWarningActive) {
-                showToast("⚠️ Nhiễu từ trường! Hãy tránh xa vật kim loại", true);
-                isMagneticWarningActive = true;
-                setTimeout(() => { isMagneticWarningActive = false; }, 5000);
-            }
-        }
+    if (acc <= 15) {
+        dot.style.background = '#4caf50'; // Xanh
+        text.innerText = "TÍN HIỆU TỐT";
+    } else if (acc <= 30) {
+        dot.style.background = '#ff9800'; // Vàng
+        text.innerText = "NHIỄU NHẸ";
     } else {
-        dot.style.background = '#888';
-        text.innerText = "ĐANG QUÉT TÍN HIỆU...";
+        dot.style.background = '#f44336'; // Đỏ
+        text.innerText = "NHIỄU NẶNG";
+        // Chỉ hiện Toast một lần để không gây phiền
+        if (typeof showToast === 'function' && !isMagneticWarningActive) {
+            showToast("⚠️ Nhiễu từ trường! Hãy tránh xa sắt thép", true);
+            isMagneticWarningActive = true;
+            setTimeout(() => { isMagneticWarningActive = false; }, 10000);
+        }
     }
 }
 function updateAccuracyDisplay(acc) {
