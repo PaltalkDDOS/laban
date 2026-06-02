@@ -1429,31 +1429,39 @@ mjx-container {
     max-height: 0;
     opacity: 0;
 }
+/* ====================== ÉP KHUNG STATUS PANEL GỌN LẠI ====================== */
+.status-panel {
+    padding: 10px 8px !important;
+    margin-bottom: 8px !important;
+    min-height: auto !important;
+}
+
+/* Quan trọng nhất - Làm gọn phần hiển thị độ */
 .degree-display {
-    text-align: center;
-    margin-bottom: 6px;
+    padding: 4px 0 !important;
+    margin: 0 !important;
+    min-height: 20px !important;        /* Giảm mạnh chiều cao */
+    line-height: 1 !important;
 }
 
-.degree-number {
-    font-size: 3.6rem;        /* ← Con số to ở đây */
-    font-weight: 800;
-    color: #ffffff;
-    text-shadow: 0 0 20px rgba(255, 220, 100, 0.9);
-    line-height: 1;
+/* Con số độ to nhưng không làm khung phình to */
+.big-degree {
+    font-size: 5rem !important;
+    line-height: 0.92 !important;
+    margin-bottom: 2px !important;
+    display: block;
 }
 
-/* Ngăn Hậu nhảy lung tung */
+/* Phần chữ bên dưới (Cung, Sơn, Hậu...) */
+.degree-display strong,
+.degree-display span {
+    font-size: 1.02rem !important;
+    line-height: 1.25 !important;
+}
+
+/* Phần Hậu riêng - chống nhảy */
 .hau-display {
-    min-height: 2.2em;           /* ← Rất quan trọng */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    overflow: hidden;
-    padding: 2px 0;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-    .degree-number { font-size: 2.9rem; }
+    min-height: 2.1em !important;
+    padding: 4px 0 !important;
+    margin: 4px 0 6px 0 !important;
 }
