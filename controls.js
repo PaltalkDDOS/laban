@@ -828,7 +828,6 @@ const ConfigPhongThuy = {
     'trash_area':     { title: "Vị trí Thùng Rác / Phế Liệu (Tọa Hung)", isCat: false }
 };
 
-// ====================== HÀM generateDirectionsList() - BIỂU DIỄN DANH SÁCH GỢI Ý ======================
 function generateDirectionsList() {
     const mucDich = document.getElementById('purpose').value;
     const config = ConfigPhongThuy[mucDich];
@@ -844,13 +843,16 @@ function generateDirectionsList() {
 
     const isCatPurpose = config.isCat; // true: cần Cát, false: cần Hung
     let listDirections = [];
-    const currentYear = new Date().getFullYear();
+    
+    // GIẢI PHÓNG TRỤC THỜI GIAN: Lấy niên độ từ form khảo sát động để tính Vận tinh chính xác
+    const yearInput = document.getElementById('birthYear')?.value;
+    const namKhaoSat = (yearInput && yearInput.length === 4) ? parseInt(yearInput) : new Date().getFullYear();
 
     directionMeta.forEach(dir => {
         const cungTrạch = bátTrạchMap[chủMệnh][dir.code];
         
-        // Gọi hàm tính điểm tổng hợp đa tầng theo Vận 9 chính xác tuyệt đối
-        const tongHopDir = tinhDiemTongHop(chủMệnh, dir.angle, currentYear, mucDich);
+        // Gọi hàm tính điểm tổng hợp đa tầng truyền tham số namKhaoSat động
+        const tongHopDir = tinhDiemTongHop(chủMệnh, dir.angle, namKhaoSat, mucDich);
         const hauInfo = getCurrentHauInfo(dir.angle);
 
         listDirections.push({
@@ -863,10 +865,10 @@ function generateDirectionsList() {
         });
     });
 
-    // Sắp xếp: Ai điểm cao nhất (hợp mục đích nhất) lên đầu
+    // Sắp xếp: Ai điểm cao nhất (hợp mục đích nhất) lên đầu bảng khách quan
     listDirections.sort((a, b) => b.priority - a.priority);
     
-    listPanelTitle.innerText = `Gợi ý vị trí: ${config.title}`;
+    listPanelTitle.innerText = `Gợi ý vị trí Vận 9: ${config.title}`;
     directionsContainer.innerHTML = "";
 
     listDirections.forEach(item => {
@@ -874,7 +876,7 @@ function generateDirectionsList() {
         const isHợp = item.diemTongHop >= 72;
         const colorStyle = isHợp ? '#30d158' : '#ff3b30';
 
-        // Đảo nhãn trạng thái trực quan theo cấu trúc nguyên bản
+        // Đảo nhãn trạng thái trực quan chuẩn bản chất cấu trúc
         let statusText = "";
         if (isCatPurpose) {
             statusText = isHợp ? '🟢 ĐÓN CÁT KHÍ (HƯỚNG TỐT)' : '❌ PHẠM HUNG PHƯƠNG (HƯỚNG XẤU)';
@@ -885,18 +887,16 @@ function generateDirectionsList() {
         const sonGroup = getSonGroupForDirection(item.code);
         let sonHTML = "";
         
-        // GIỮ NGUYÊN BẢN 100% LOGIC CLICK XEM GIẢI THÍCH SƠN VỊ
+        // GIỮ NGUYÊN BẢN 100% LOGIC CLICK XEM GIẢI THÍCH SƠN VỊ TỪ FILE GỐC CỦA BẠN
         sonGroup.forEach((son, index) => {
             const dataSon = MaTranMinhChau[chủMệnh] ? MaTranMinhChau[chủMệnh][son] : null;
             const score = dataSon ? dataSon.diem : 0;
             const nhom = dataSon ? dataSon.nhom : "";
             
-            // Xử lý tooltip cho Sơn chống sập chuỗi khi render HTML
             const titleInfo = `${son} (${nhom})`;
             const textInfo = dataSon ? dataSon.text.replace(/'/g, "\\'") : "Chưa có thông tin.";
             const solInfo = dataSon ? dataSon.giaiphap.replace(/'/g, "\\'") : "Chưa có giải pháp.";
             
-            // Màu sắc cho từng sơn nhỏ theo chất lượng gốc
             const sonColor = score >= 80 ? "#30d158" : (score >= 50 ? "#dfb76c" : "#ff3b30");
             
             sonHTML += `<span style="display:inline-block; white-space:nowrap; cursor:pointer;"
@@ -907,19 +907,16 @@ function generateDirectionsList() {
             if (index < sonGroup.length - 1) sonHTML += ` • `;
         });
 
-        // Thẻ điểm tổng hợp (Badge) - Khóa cứng không cho xuống hàng trên mobile
         const bgDiem = isHợp ? 'rgba(48,209,88,0.15)' : 'rgba(255,59,48,0.15)';
         const diemTag = `
             <span style="font-size:0.75rem; padding:2px 6px; border-radius:4px; font-weight:bold;
                   background:${bgDiem}; color:${colorStyle}; border:1px solid ${colorStyle}; 
                   white-space:nowrap; flex-shrink:0; display:inline-flex; align-items:center; gap:3px;">
-                ${item.diemTongHop}pt ${item.hau ? item.hau.emoji : ''}
+                ${item.diemTongHop}pt ${item.hau ? (item.hau.emoji || '🟡') : '🟡'}
             </span>`;
 
-       const div = document.createElement('div');
+        const div = document.createElement('div');
         div.className = `direction-item ${isHợp ? 'good' : 'bad'}`;
-        
-        // Dùng flex-direction: column để nút bấm luôn nằm dưới nội dung
         div.style.cssText = `border-left:4px solid ${colorStyle}; background:rgba(255,255,255,0.03); margin-bottom:12px; padding:12px; border-radius:10px; width:100%; box-sizing:border-box; display:flex; flex-direction:column; gap:10px;`;
         
         div.innerHTML = `
@@ -1782,26 +1779,31 @@ function getHuongDoiXung(huong) {
 function renderMultiLayerDetail(result, van, degree) {
     if (!result) return;
 
-    // Phân rã dữ liệu từ object đã xử lý (đảm bảo tính toàn vẹn)
+    // Phân rã dữ liệu từ object đã xử lý (đảm bảo tính toàn vẹn hệ thống)
     const { diem, level, message, hoaGiai, khongVong, satTinhs, sonName, sonInfo, hauInfo } = result;
 
-    // Thiết lập màu sắc theo trạng thái điểm số
-    let colorStatus = "#30d158"; // Cát
-    if (diem < 50) colorStatus = "#ff3b30"; // Hung
-    else if (diem < 75) colorStatus = "#dfb76c"; // Trung bình
+    // ĐỒNG BỘ MỐC MÀU CHUẨN XÁC VỚI MỐC ĐẠT CÁCH VẬN 9 (72pt)
+    let colorStatus = "#ff3b30"; // Mặc định là Hung (< 50)
+    if (diem >= 85) {
+        colorStatus = "#30d158"; // Đại Cát (Xanh lá sáng)
+    } else if (diem >= 72) {
+        colorStatus = "#30d158"; // Cát Vị (Đạt cách)
+    } else if (diem >= 50) {
+        colorStatus = "#dfb76c"; // Trung Bình (Vàng gold)
+    }
 
     let html = `<div style="font-size:0.92rem; line-height:1.6; color:#e0e0e0; font-family: sans-serif;">`;
 
     // ==========================================
-    // TẦNG 1: THƯỢNG ĐỈNH TỔNG ĐIỂM (PT - PHONG THỦY SỐ)
+    // TẦNG 1: THƯỢNG ĐỈNH TỔNG ĐIỂM (PT - ĐỒNG BỘ TOÁN PHÁP CHÍNH TÔNG)
     // ==========================================
     html += `
     <div style="text-align:center; padding:20px; background:rgba(255,255,255,0.03); border-radius:16px; margin-bottom:20px; border: 1px solid ${colorStatus}40;">
-        <div style="font-size:0.7rem; color:#888; text-transform:uppercase; letter-spacing: 2px;">Chỉ số PT (Phong Thủy Số)</div>
+        <div style="font-size:0.7rem; color:#888; text-transform:uppercase; letter-spacing: 2px;">Chỉ số PT (Phong Thủy Số Vận 9)</div>
         <div style="font-size:3.5rem; font-weight:900; color:${colorStatus}; margin: 5px 0;">${diem}<span style="font-size:1.2rem; font-weight:400;">pt</span></div>
         <div style="font-weight:700; color:${colorStatus}; letter-spacing: 1px; padding: 4px 12px; background: ${colorStatus}20; display: inline-block; border-radius: 20px;">${level}</div>
-        <div style="margin-top:10px; font-size:0.75rem; color:#666; font-family: monospace;">
-            PT = ( [BT<sub>68</sub> + Δ<sub>Hau</sub>] × K<sub>Van</sub> ) - ΣΨ<sub>Sat</sub>
+        <div style="margin-top:10px; font-size:0.75rem; color:#8a8a8f; font-family: monospace; line-height: 1.4;">
+            PT = [ ( BT<sub>Gốc</sub> + Δ<sub>H72</sub> ) × K<sub>Van</sub> - ΣΨ<sub>Sat</sub> ] × Γ<sub>Khai</sub>
         </div>
     </div>`;
 
@@ -1813,45 +1815,45 @@ function renderMultiLayerDetail(result, van, degree) {
         if (khongVong) {
             html += `
             <div style="background:rgba(255,59,48,0.15); padding:15px; border-radius:12px; border:1px solid #ff3b30; margin-bottom:10px;">
-                <strong style="color:#ff3b30;">⚠️ ĐẠI KỴ: ${khongVong.loai}</strong><br>
-                <span style="font-size:0.85rem;">${khongVong.message}</span>
+                <strong style="color:#ff3b30;">⚠️ ĐẠI KỴ TỬ HUYỆT: ${khongVong.loai}</strong><br>
+                <span style="font-size:0.85rem;">${khongVong.message || 'Mạch khí rơi vào tuyến Không Vong, bẻ gãy trường khí.'}</span>
             </div>`;
         }
         satTinhs.forEach(sat => {
             html += `
             <div style="background:rgba(255,159,10,0.1); padding:10px 15px; border-radius:10px; border-left:4px solid ${sat.color || '#ff9f0a'}; margin-bottom:8px;">
-                <strong style="color:${sat.color || '#ff9f0a'}; font-size:0.9rem;">💀 CHIẾU HƯỚNG: ${sat.ten}</strong><br>
-                <span style="font-size:0.82rem; color:#ccc;">${sat.giaiPhap || "Cần tĩnh, không nên tu tạo tại khu vực này."}</span>
+                <strong style="color:${sat.color || '#ff9f0a'}; font-size:0.9rem;">💀 CHIẾU HƯỚNG SÁT TINH: ${sat.ten}</strong><br>
+                <span style="font-size:0.82rem; color:#ccc;">${sat.giaiPhap || "Khu vực chịu năng lượng xấu của hung tinh lưu niên, kỵ động thổ tu tạo sâu."}</span>
             </div>`;
         });
         html += `</div>`;
     }
 
     // ==========================================
-    // TẦNG 3: LUẬN GIẢI CHUYÊN SÂU (MINH CHÂU & HẬU)
+    // TẦNG 3: LUẬN GIẢI CHUYÊN SÂU (MINH CHÂU SƠN ĐẠO)
     // ==========================================
-    const isHung = diem < 60;
+    const isHung = diem < 72; // Đồng bộ mốc cát hung
     const accentColor = isHung ? "#ff3b30" : "#dfb76c";
 
     html += `
     <div style="background:rgba(255,255,255,0.03); padding:15px; border-radius:12px; border:1px solid #444;">
         <strong style="color:${accentColor}; display:block; margin-bottom:8px;">◆ MINH CHÂU SƠN ĐẠO: ${sonName} (${degree}°)</strong>
-        <div style="font-size: 0.88rem; color: #fff;">${message}</div>
+        <div style="font-size: 0.88rem; color: #fff; text-align: justify;">${message}</div>
         <div style="margin-top:10px; color:#dfb76c; font-size:0.85rem; border-top:1px solid #333; padding-top:8px;">
-            <b>💡 Mật pháp hóa giải:</b> ${hoaGiai}
+            <b>💡 Mật pháp quy hoạch / Hóa giải:</b> ${hoaGiai}
         </div>
     </div>`;
 
     // ==========================================
-    // TẦNG 4: VẬN KHÍ & LONG MẠCH (VẬN 9)
+    // TẦNG 4: VẬN KHÍ & LONG MẠCH (72 HẬU PHÂN CHÂM)
     // ==========================================
     if (hauInfo) {
         html += `
         <div style="margin-top:20px; padding:15px; background:rgba(0,255,120,0.05); border-radius:12px; border:1px solid #00ffaa33;">
-            <strong style="color:#00ffaa; font-size:0.9rem;">🌟 LONG MẠCH 72 HẬU PHÂN CHÂM</strong>
-            <div style="font-size:0.85rem; color:#bbb; margin-top:5px;">
-                Cấp độ khí trường: <b>${hauInfo.ten}</b> - Phẩm chất: <b>${hauInfo.chatLuong}</b><br>
-                Luận giải: <i>${hauInfo.ynghia}</i>
+            <strong style="color:#00ffaa; font-size:0.9rem;">🌟 LONG MẠCH 72 HẬU PHÂN CHÂM (VI CỤC 5°)</strong>
+            <div style="font-size:0.85rem; color:#bbb; margin-top:5px; line-height: 1.5;">
+                Khí mạch Tiết khí: <b>${hauInfo.ten}</b> — Phẩm chất: <span style="color:${hauInfo.chatLuong.includes('Cát') ? '#30d158' : '#ff3b30'}"><b>${hauInfo.chatLuong}</b></span><br>
+                Luận giải mạch khí: <i>${hauInfo.ynghia}</i>
             </div>
         </div>`;
     }
@@ -1892,95 +1894,118 @@ function kiemTraKhongVong(degree) {
 }
 
 /**
- * THUẬT TOÁN ĐIỂM TỔNG HỢP ĐA TẦNG (PT) - PHIÊN BẢN ĐỒNG BỘ TỐI THƯỢNG VẬN 9
- * Công thức: PT = [ ( BT68 + ΔCátHung ) + ΔH72 ] * K_Van - ΣΨ_Sat
+ * THUẬT TOÁN ĐIỂM TỔNG HỢP ĐA TẦNG (PT) - PHIÊN BẢN ĐỒNG BỘ TOÁN PHÁP TỐI THƯỢNG VẬN 9 (HÀM 3)
+ * Quy trình lập cực: Bát Trạch (45°) ➔ 24 Sơn (15°) ➔ 72 Hậu (5°)
+ * Công thức: PT = [ ( Điểm_Sơn_Gốc + ΔH72_Mạch ) * K_Van - ΣΨ_Sat ] * Γ_Khai
  */
 function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich) {
-    // 1. Chuẩn hóa góc độ nạp khí an toàn dải 0-360 độ trước khi trích xuất
+    // 1. Chuẩn hóa góc độ nạp khí an toàn tuyệt đối dải [0 - 360) độ
     const normalizedDegree = ((degree % 360) + 360) % 360;
 
-    // Chiết xuất nguồn dữ liệu thực địa từ các hàm nhánh O(1)
-    const sonName = tìmSơnHướng(normalizedDegree);
-    const sonInfo = layThongTin24Son(normalizedDegree, cungPhi, namKhảoSát);
-    const hauInfo = getCurrentHauInfo(normalizedDegree);
-    const khongVong = kiemTraKhongVong(normalizedDegree);
-    const satTinhs = getPhongThuySatTinh(sonName, namKhảoSát);
+    // Chiết xuất nguồn dữ liệu phân rã đa tầng O(1) từ hệ thống gốc
+    const sonName = tìmSơnHướng(normalizedDegree); // Xác định Sơn vị (15°)
+    const sonInfo = layThongTin24Son(normalizedDegree, cungPhi, namKhảoSát); // Bóc tách dữ liệu từ MaTranMinhChau
+    const hauInfo = getCurrentHauInfo(normalizedDegree); // Xác định vi mạch Long mạch (5°)
+    const khongVong = kiemTraKhongVong(normalizedDegree); // Chốt chặn tử huyệt Không Vong
+    const satTinhs = getPhongThuySatTinh(sonName, namKhảoSát); // Thần sát lưu niên bám theo Sơn
 
     const config = ConfigPhongThuy[mucDich] || { title: "Vị trí", isCat: true };
     const isCatPurpose = config.isCat;
 
-    // 2. BƯỚC 1: ĐIỂM NỀN KHÍ TRƯỜNG ĐẠI CỤC (BT68 + Δ Cát Hung)
-    let diemBT = 68;
-    // Bóc tách chuẩn xác quẻ dịch dựa trên thuộc tính cát tinh có sẵn từ hàm nguồn
-    let isCungCat = sonInfo.isCatBatTrach;
-    
-    // Áp dụng biến thiên biên độ Δ Cát Hung
-    diemBT += isCungCat ? 22 : -25; 
+    // =========================================================================
+    // LỚP 1 & 2: ĐIỂM NỀN SƠN VỊ GỐC (Kế thừa từ điểm số chi tiết của MaTranMinhChau)
+    // =========================================================================
+    // Điểm nền xuất phát trực tiếp từ MaTranMinhChau (đã phối hợp hoàn hảo Bát Trạch và Sơn vị)
+    // Không dùng con số 68 tù túng và cào bằng của các thuật toán cũ.
+    let diemGocSon = (sonInfo && typeof sonInfo.diem === 'number') ? sonInfo.diem : 68;
+    let isCungCat = sonInfo.loai === "Cát" || sonInfo.isCatBatTrach;
 
-    // 3. BƯỚC 2: BIÊN ĐỘ TƯƠNG TÁC LONG MẠCH HOÀN TIẾN (Δ H72)
-    let diemHau = (hauInfo.diem - 60);
+    // =========================================================================
+    // LỚP 3: BIÊN ĐỘ VI MẠCH 72 HẬU LONG MẠCH (Δ H72) - QUẢN 5 ĐỘ
+    // =========================================================================
+    // Điểm 72 Hậu đóng vai trò biến thiên vi điểm (co giãn biên độ khí mạch)
+    let bienDoMaoLong = (hauInfo.diem - 60); // Biên độ so với mốc bình hòa 60
 
-    // 4. BƯỚC 3: ĐỒNG BỘ TRỌNG SỐ VẬN TINH HUYỀN KHÔNG VẬN 9 (K_Van)
-    // Đảm bảo trục thời gian dynamic bám sát niên độ khảo sát thực tế (Năm hiện tại 2026)
-    const namThucTe = new Date().getFullYear();
-    const vanSo = Math.floor((namThucTe - 1864) / 20) % 9 + 1;
+    // =========================================================================
+    // LỚP 4: TRỌNG SỐ VẬN TINH HUYỀN KHÔNG VẬN 9 DYNAMIC (K_Van)
+    // =========================================================================
+    // Giải phóng trục thời gian: Chạy dynamic 100% theo niên độ khảo sát của người dùng
+    const namTinhVan = namKhảoSát ? parseInt(namKhảoSát) : new Date().getFullYear();
+    const vanSo = Math.floor((namTinhVan - 1864) / 20) % 9 + 1;
 
-    // Sửa lỗi lệch pha mã hướng: Ánh xạ chuẩn từ Tiếng Việt sang Code dữ liệu VAN_DATA
+    // Ánh xạ mã hướng Tiếng Việt sang Code hệ thống dữ liệu VAN_DATA
     const huongToCodeMap = {
         "Bắc": "N", "Đông Bắc": "NE", "Đông": "E", "Đông Nam": "SE",
         "Nam": "S", "Tây Nam": "SW", "Tây": "W", "Tây Bắc": "NW"
     };
     const codeChuan = huongToCodeMap[sonInfo.huong] || "N";
-    
     const saoNam = VAN_DATA[vanSo] && VAN_DATA[vanSo][codeChuan] ? VAN_DATA[vanSo][codeChuan] : { loai: "neutral" };
     
-    // Đòn bẩy hệ số nhân K_Van làm điểm số "biết thở" theo thời vận
+    // Đòn bẩy thời vận Vận 9 tác động trực tiếp lên toàn cục mạch khí trạch đất
     const kVan = (saoNam.loai === "best") ? 1.2 : (saoNam.loai === "worst" ? 0.7 : 1.0);
 
-    // 5. THỰC THI CÔNG THỨC TRUNG TÂM PHONG THỦY SỐ
-    let diem = ((diemBT + diemHau) * kVan);
-
-    // 6. BƯỚC 4: ĐẢO CHIỀU MỤC ĐÍCH SỬ DỤNG (Xử lý Tọa Hung Trấn Sát)
-    let messageGhiChu = sonInfo.luanDoan;
-    let hoaGiaiGợiÝ = sonInfo.hoaGiai || hauInfo.giaiphap;
-
-    if (!isCatPurpose) { 
-        // Nghịch đảo điểm số để tôn vinh cấu trúc hạ tầng xả uế đặt đè lên hung cung
-        diem = (100 - diem) + 15; 
-        messageGhiChu += " 🌟 Tọa Hung Trấn Sát: Vị trí đắc cách, hóa giải hoàn toàn hung khí trạch đất.";
-        hoaGiaiGợiÝ = "Thiết kế đắc cách, trường khí ổn định, không cần an vị vật phẩm hóa giải.";
+    // =========================================================================
+    // LỚP 5: HỆ SỐ THÔNG KHÍ KHAI MÔN TOÁN PHÁP (Γ_Khai)
+    // =========================================================================
+    let gKhai = 1.0;
+    // Nếu là hạng mục nạp cát khí (Cửa chính, Cổng) đặt đúng vào Sơn Cát vượng khí
+    if (isCatPurpose && isCungCat) {
+        gKhai = 1.15; // Kích hoạt đòn bẩy thông khí khai môn tăng cường 15% hiệu năng
     }
 
-    // 7. BƯỚC 5: KHẤU TRỪ TÁC ĐỘNG THẦN SÁT LƯU NIÊN (Σ Ψ_Sat)
-    // Chỉ phạt điểm sát tinh nếu hạng mục yêu cầu nạp cát khí (Cửa, Hướng nhà, Bàn thờ)
+    // =========================================================================
+    // THỰC THI CÔNG THỨC TOÁN PHÁP TRUNG TÂM PHONG THỦY SỐ ĐA TẦNG
+    // =========================================================================
+    // Khí mạch tích hợp chuỗi tính toán nền tảng
+    let diem = (diemGocSon + bienDoMaoLong) * kVan;
+
+    // Khấu trừ tác động Thần Sát Lưu Niên (Σ Ψ_Sat)
+    // GIỮ ĐÚNG CÁI TÂM HỌC THUẬT: Chỉ phạt điểm sát tinh nếu hạng mục yêu cầu nạp cát khí.
+    // Ngược lại, nếu là Tọa Hung Trấn Sát (WC, Bếp), Sát tinh đáo cung là "lấy độc trị độc", giữ nguyên không phạt điểm.
     if (isCatPurpose) {
         satTinhs.forEach(sat => {
             diem -= (sat.ten === "NGŨ HOÀNG ĐẠI SÁT" || sat.ten === "THÁI TUẾ") ? 28 : 18;
         });
     }
 
-    // 8. BƯỚC 6: CHỐT CHẶN TỬ HUYỆT KHÔNG VONG (Fatal Override)
+    // Áp dụng hệ số thông khí mở hướng ở cuối chuỗi phép nhân nạp cát
+    diem = diem * gKhai;
+
+    // =========================================================================
+    // BƯỚC 6: ĐẢO CHIỀU MỤC ĐÍCH SỬ DỤNG ĐẮC CÁCH (Xử lý Đảo chiều Âm Dương)
+    // =========================================================================
+    let messageGhiChu = sonInfo.text || sonInfo.luanDoan;
+    let hoaGiaiGợiÝ = sonInfo.giaiphap || sonInfo.hoaGiai || hauInfo.giaiphap;
+
+    if (!isCatPurpose) { 
+        // Nghịch đảo điểm số để tôn vinh cấu trúc hạ tầng xả uế đặt đè đúng lên hung cung
+        diem = (100 - diem) + 15; 
+        messageGhiChu = `🌟 Tọa Hung Trấn Sát Đắc Cách: Vị trí ${config.title} đặt đè lên hung cung giúp trấn áp, tiêu trừ hoàn toàn hung khí tà khí của trạch đất. ` + messageGhiChu;
+        hoaGiaiGợiÝ = "Thiết kế đắc cách chuẩn phong thủy số, khí trường ổn định an định, không cần an vị vật phẩm hóa giải.";
+    }
+
+    // =========================================================================
+    // BƯỚC 7: CHỐT CHẶN FATAL OVERRIDE (Tử huyệt Không Vong)
+    // =========================================================================
     if (khongVong) {
         if (khongVong.loai === "ĐẠI KHÔNG VONG") {
-            diem = 12; // Khóa chết điểm số, bẻ gãy mọi cách cục tốt
+            diem = 12; // Khóa chết điểm số ở mốc Đại Hung, bẻ gãy mọi cách cục tốt một cách khách quan
         } else {
-            diem -= 22; // Khấu trừ trực tiếp vào mạch nạp khí
+            diem -= 22; // Khấu trừ nặng vào mạch nạp khí của Tiểu Không Vong
         }
     }
 
-    // Gông chặn chuẩn hóa điểm số trong ngưỡng kỹ thuật [10 - 98]
+    // Gông chặn chuẩn hóa điểm số trong ngưỡng kỹ thuật an toàn [10 - 98]
     diem = Math.max(10, Math.min(98, Math.round(diem)));
 
-    // Phân cấp học thuật chuẩn xác tương thích đồng bộ với mốc Đạt cách 72pt mới
-    let level = "";
+    // Phân cấp học thuật chuẩn xác tương thích đồng bộ với mốc Đạt cách 72pt mới của Vận 9
+    let level = "HUNG";
     if (diem >= 85) {
         level = "ĐẠI CÁT";
     } else if (diem >= 72) {
         level = "CÁT VỊ";
     } else if (diem >= 50) {
         level = "TRUNG BÌNH";
-    } else {
-        level = "HUNG";
     }
 
     return {
