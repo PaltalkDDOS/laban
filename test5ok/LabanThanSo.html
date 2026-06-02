@@ -15,8 +15,8 @@
 <div id="mainPanelWrapper" style="position: relative; border: 1px solid #333; background: #161616; padding: 15px; border-radius: 12px; margin: 10px auto; width: 90%; max-width: 500px; transition: all 0.3s ease;">
     
     <!-- Mũi tên thu gọn -->
-   <div id="toggleArrow" onclick="togglePanel()" 
-         style="position: absolute; bottom: 10px; left: 15px; cursor: pointer; color: #dfb76c; font-size: 16px; font-weight: bold; z-index: 100; padding: 5px;">
+    <div id="toggleArrow" onclick="togglePanel()" 
+         style="position: absolute; top: 10px; right: 15px; cursor: pointer; color: #dfb76c; font-size: 12px; font-weight: bold; z-index: 100;">
         ▲
     </div>
 
@@ -39,7 +39,7 @@
     <label>Giới tính:</label>
     <div class="gender-toggle">
         <div id="gender-male" class="gender-option active" onclick="selectGender('male')">
-          🧑‍ Nam Mạng
+            👨 Nam Mạng
         </div>
         <div id="gender-female" class="gender-option" onclick="selectGender('female')">
             👩 Nữ Mạng
@@ -80,9 +80,18 @@
         <button class="btn-main" onclick="saveCurrentMember()">Lưu Tuổi</button>
         <button class="btn-reset" id="btnReset" onclick="clearAllData()">Làm mới</button>
     </div>
+
 </div>
+
 <!-- Saved list - Phiên bản nâng cấp -->
-<div class="saved-list-panel" id="savedPanel" style="display: none; margin-top: 15px;">    
+<div class="saved-list-panel" id="savedPanel" style="display: none; margin-top: 15px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+        <h3 style="margin: 0; color: #dfb76c; font-size: 1.05rem;">
+            📋 Danh sách tuổi đã lưu
+        </h3>
+        <small id="savedCount" style="color: #888; font-size: 0.85rem;"></small>
+    </div>
+    
     <div class="saved-container" id="savedContainer"
          style="max-height: 380px; overflow-y: auto; padding-right: 8px;
                 scrollbar-width: thin; scrollbar-color: #dfb76c #333;">
@@ -174,49 +183,48 @@
 <!-- PHẦN 5: BỘ NÃO THUẬT TOÁN ĐA TẦNG -->
 <div class="lk-guide-card" style="border-left: 4px solid #00f2c9 !important; background: #1a1a1b !important;">
     <div class="lk-guide-card-title" style="color: #00f2c9 !important;">🧠 THUẬT TOÁN ĐIỂM TỔNG HỢP (PT)</div>    
-<p>Thuật toán vận hành như một <strong>Hệ thống Nhất Thể Đa Tầng lọc khí trường qua 3 màng lọc toán pháp từ Vĩ mô đến Vi cục (Bát Trạch 45° ➔ 24 Sơn 15° ➔ 72 Hậu 5°)</strong>. Hệ thống không chỉ đo đạc đại thể mà còn thẩm thấu từng rung động vi mô của long mạch thông qua các tầng số học phong thủy chuyên sâu:</p>
+     <p>Thuật toán vận hành như một <strong>Hệ thống Nhất Thể Đa Tầng lọc khí trường qua 3 màng lọc chính xác đến từng 5 độ</strong>, không chỉ đo đạc vĩ mô mà còn thẩm thấu từng rung động của khí trường thực địa thông qua các tầng số học phong thủy chuyên sâu:</p>
     
 <div class="lk-guide-formula">
-    <div class="formula-title">THUẬT TOÁN TÍNH ĐIỂM TỔNG HỢP ĐA TẦNG (TỐI ƯU TOÀN DIỆN VẬN 9)</div>
+    <div class="formula-title">THUẬT TOÁN TÍNH ĐIỂM TỔNG HỢP ĐA TẦNG</div>
     
     <div style="font-family: monospace; font-size: 1.1rem; text-align: center; padding: 15px; background: rgba(223, 183, 108, 0.1); border: 1px solid #dfb76c; border-radius: 8px; margin: 20px 0;">
-        PT = [ ( BT<sub>Gốc</sub> + ΔH<sub>72</sub> ) x K<sub>Van</sub> - ΣΨ<sub>Sat</sub> ] x Γ<sub>Khai</sub>
+        PT = [ ( BT<sub>68</sub> + ΔH<sub>72</sub> ) x K<sub>Van</sub> - ΣΨ<sub>Sat</sub> ] x Γ<sub>Khai</sub>
     </div>
 
-    <ul style="padding-left: 20px; line-height: 1.8; color: #e0e0e0;">
-        <li><strong>BT<sub>Gốc</sub> (Điểm nền Đại cục & Trung cục):</strong> Trích xuất dynamic trực tiếp từ bản đồ 192 cặp tương tác giữa Mệnh Cung Phi và 24 Sơn vị (15°) trong Ma trận Bát Trạch Minh Châu.</li>
-        <li><strong>ΔH<sub>72</sub> (Biên độ Mạch khí 72 Hậu):</strong> Tầng vi cục quản lý biên độ khí trường chính xác đến từng bước nhảy 5° (Ví dụ: Sự khác biệt từ mốc 95 điểm của Tý Hậu 1 sang mốc 45 điểm suy khí của Quý Hậu 1).</li>
-        <li><strong>K<sub>Van</sub> (Trọng số Vận Tinh Huyền Không):</strong> Đòn bẩy thời vận dịch chuyển dynamic bám sát Niên độ khảo sát, kích hoạt xung lực vượng khí tối đa cho đương vận Vận 9 (2024 - 2043).</li>
-        <li><strong>ΣΨ<sub>Sat</sub> (Thần sát Lưu niên):</strong> Khấu trừ năng lượng chướng khí từ Ngũ Hoàng Đại Sát (trừ 28đ) và Thái Tuế đáo hướng (trừ 18đ) hàng năm (Hệ thống chỉ áp dụng hình phạt đối với Cát Cục nạp khí).</li>
-        <li><strong>Γ<sub>Khai</sub> (Hệ số Thông Khí Khai Môn):</strong> "Vũ khí bí mật" - Tự động nhân hiệu ứng đòn bẩy phát triển 1.15 (tăng 15% năng lực nạp cát) khi các cấu trúc hạ tầng mở hướng (Cửa chính, Cổng) đặt đắc cách vào Sơn vị vượng khí.</li>
+    <ul style="padding-left: 20px; line-height: 1.8;">
+        <li><strong>BT<sub>68</sub> (Điểm nền):</strong> Giá trị gốc từ Bát Trạch và 24 Sơn.</li>
+        <li><strong>ΔH<sub>72</sub> (Hậu 72):</strong> Tầng vi mô điều chỉnh độ chi tiết đến 5°.</li>
+        <li><strong>K<sub>Van</sub> (Hệ số Vận 9):</strong> Nhân hệ số vượng khí cho các hướng cát tinh hiện thời.</li>
+        <li><strong>ΣΨ<sub>Sat</sub> (Sát tinh):</strong> Tổng phạt điểm từ Ngũ Hoàng, Thái Tuế, Không Vong.</li>
+        <li><strong>Γ<sub>Khai</sub> (Hệ số ổn định):</strong> "Vũ khí bí mật" - Giảm độ tin cậy nếu thiết bị nhiễu hoặc rung.</li>
     </ul>
 
     <div style="margin-top: 15px; padding: 15px; background: rgba(0, 242, 201, 0.05); border-radius: 8px;">
-        <small style="color: #00f2c9;">💡 Logic cốt lõi - Đảo chuyển Âm Dương (Tọa Hung Trấn Sát):</small><br>
-        Hệ thống tự động nhận diện bản chất công năng hạ tầng. Đối với các khu vực uế tạp (Bếp, WC, Bể phốt, Nhà kho, Thùng rác), khi đặt đè đúng vào cung Hung Bát Trạch, điểm số sẽ tự động **Nghịch Đảo** để tôn vinh sự Đắc cách (Dùng hung trấn hung - Lấy độc trị độc). Biên độ biến thiên của 72 Hậu cũng được đảo dấu tương ứng để tối ưu hóa việc tiêu trừ tà khí.
+        <small style="color: #00f2c9;">💡 Logic cốt lõi:</small><br>
+        Hệ thống tự động <strong>Nghịch đảo Âm Dương</strong> cho các mục đích uế tạp (Bếp, WC). Khi đặt đúng cung Hung, điểm số sẽ tự động được nâng lên Đắc cách (Lấy độc trị độc).
     </div>
 </div>
 
-<p>Nó giống như quy trình tầm sư lập cực thực địa của bậc thầy địa lý: Không chỉ nhìn hình thế đại thể bên ngoài (Bát Trạch 45°) mà phải soi xét từng thớ đất để phân định ranh giới khí (24 Sơn 15°), lắng nghe hơi thở thấu địa của mạch khí (72 Hậu 5°) rồi mới định đoạt cát hung. Quy trình quét qua 3 màng lọc nghiêm ngặt:</p>
+    <p>Nó giống như tầm sư học đạo: Không chỉ nhìn hình thế đại thể bên ngoài (Bát Trạch) mà phải soi xét từng thớ đất (24 Sơn), lắng nghe hơi thở của khí mạch (72 Hậu) rồi mới định đoạt cát hung. Cụ thể quy trình quét 3 màng lọc:</p>
     
-<ul class="lk-guide-steps-list" style="color: #e0e0e0; line-height: 1.8;">
-    <li>
-        <strong>Màng lọc 1 - Bản Thể Địa Khí (Bát Trạch phối Ma trận Minh Châu 15°):</strong>
-        Thuật toán bứt phá khỏi các con số tĩnh tù túng. Điểm số xuất phát được trích xuất trực tiếp từ bản đồ tương tác Mệnh x Sơn vị trong hệ thống dữ liệu lõi mà bạn đã xây dựng, đảm bảo giữ vững tính khách quan và bản chất khí trường lâu dài của trạch đất.
-    </li>
-    <li>
-        <strong>Màng lọc 2 - Bộ não Điều Tiết Trấn Sát & Thiên Khí (Thời gian & Mục đích):</strong>
-        Giải phóng trục thời gian cho la bàn số, tự động tính toán Vận Tinh dịch chuyển dynamic theo từng năm khảo sát thay vì lấy năm tĩnh máy tính. Đồng thời kích hoạt cơ chế đảo chiều mục đích sử dụng: 
-        <br>🔸 Hạng mục nạp cát (Cửa, Cổng, Bàn thờ, Giường ngủ) cần đặt cung Cát hướng Cát để đón sinh khí vượng và kích hoạt hệ số thông khí <Gamma>Khai</Gamma>.
-        <br>🔸 Hạng mục xả uế (WC, Bể phốt, Thùng rác) cần đặt đè lên cung Hung để đạt cách cục <strong>Tọa Hung Trấn Sát</strong>, nâng tầm điểm số lên mức Đắc cách và bảo vệ mạch điểm không bị phạt trừ bởi Sát tinh lưu niên (lấy độc trị độc).
-    </li>
-    <li>
-        <strong>Màng lọc 3 - Tuyệt Lộ Tử Huyệt & Thần Sát (Không Vong & Thiên Tai):</strong>
-        Rà quét các lỗi phong thủy sát phạt nguy hiểm bậc nhất trên đồ hình la bàn:
-        <br>🔥 <b>Ngũ Hoàng Đại Sát & Lưu Niên Thần Sát:</b> Quét trục quay thiên văn hàng năm, tự động phạt trừ thẳng 28 điểm nếu hướng nạp cát phạm Ngũ Hoàng, trừ 18 điểm nếu phạm các hung tinh sát khí khác.
-        <br>🚫 <b>Đại Không Vong & Tiểu Không Vong:</b> Trục ranh giới tử thần giao thoa hỗn loạn giữa các khí trường đại cục. Nếu tiệm cận luồng khí hỗn loạn của <b>Đại Không Vong</b>, hệ thống kích hoạt chế độ ngắt tối cao, <strong>bẻ gãy toàn bộ cách cục tốt, hạ sập điểm về cố định 12 điểm (Đại Hung)</strong> để phát cảnh báo nguy hiểm. Nếu dính <b>Tiểu Không Vong</b>, mạch khí suy giảm, khấu trừ 22 điểm vào mạch nạp khí.
-    </li>
-</ul>
+    <ul class="lk-guide-steps-list">
+        <li>
+            <strong>Màng lọc 1 - Bát Trạch & Minh Châu (Phần GỐC):</strong>
+            Xác định điểm nền gốc ban đầu là 68 điểm. Nếu hướng thuộc cung Cát (Sinh Khí, Thiên Y) cộng ngay 22 điểm; Diên Niên, Phục Vị cộng 14 điểm. Nếu rơi vào cung Hung (Tuyệt Mệnh, Ngũ Quỷ) trừ thẳng 30 điểm; Họa Hại, Lục Sát trừ 15 điểm.
+        </li>
+        <li>
+            <strong>Màng lọc 2 - Bộ não Đảo Chuyển Trấn Sát (Phần THÂN):</strong>
+            Nếu hạng mục thuộc khu vực uế tạp (như nhà vệ sinh, bể phốt, nhà kho, thùng rác), hệ thống tự động <strong>Nghịch Đảo Âm Dương</strong>. Đặt ở cung hung Bát Trạch lập tức được nâng lên 90 điểm đắc cách. Thuật ngữ phong thủy gọi là "Lấy độc trị độc". Đồng thời, biên độ biến thiên của 72 Hậu cũng được đảo dấu âm dương tương ứng để tối ưu hóa việc hóa giải sát khí.
+            <br><small>📌 <i>Biện pháp đặc biệt:</i> <b>Bếp</b> cần Tọa Hung hướng Cát. <b>Két sắt</b> đặt tại cung hung giúp trấn giữ tài lộc, tránh thất thoát.</small>
+        </li>
+        <li>
+            <strong>Màng lọc 3 - Lưu niên Sát Tinh & Tuyệt Lộ (Phần NGỌN):</strong>
+            Quét sạch các lỗi phong thủy cao cấp và cập nhật vận hạn trực tiếp:
+            <br>🔥 <b>Ngũ Hoàng Đại Sát:</b> Tự động kiểm tra theo lưu niên hàng năm. Nếu hướng phạm vào cung bay đến của sao Ngũ Hoàng, hệ thống khấu trừ thẳng 28 điểm.
+            <br>🚫 <b>Đại Không Vong & Tiểu Không Vong:</b> Đây là các <i>Đường Ranh Giới Tử Thần</i> trên la bàn (nơi giao nhau hỗn loạn giữa các luồng khí). Nếu dính <b>Đại Không Vong</b>, hệ thống lập tức kích hoạt bộ ngắt tối cao, <strong>hạ sập điểm về cố định 12 điểm (Đại Hung)</strong> và khóa chết hướng. Nếu dính <b>Tiểu Không Vong</b>, trừ nặng 22 điểm.
+        </li>
+    </ul>
 </div>
 
             <!-- PHẦN 6: VÍ DỤ GIƯỜNG NGỦ -->
