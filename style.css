@@ -484,18 +484,28 @@ body {
     max-width: 430px;
     background: var(--panel);
     border: 1px solid var(--gold);
-    padding: 12px;
+    padding: 14px 10px;           /* ← Tăng padding để khung cao hơn */
     border-radius: 8px;
     text-align: center;
     margin-bottom: 8px;
     position: relative;
     z-index: 10;
+    min-height: 90px;            /* ← Thêm min-height để khung chắc chắn cao hơn */
 }
 
+/* Phần hiển thị độ */
 .degree-display {
     font-size: 1rem;
     color: var(--gold);
     font-weight: bold;
+    padding: 6px 0;               /* Tăng khoảng cách trong nếu cần */
+    margin-bottom: 6px;
+}
+
+/* Phần Hậu */
+.hau-display {
+    min-height: 2.4em;            /* Giữ ổn định không nhảy */
+    padding: 6px 0;
 }
 
 .element-badge {
@@ -1428,40 +1438,4 @@ mjx-container {
 #panelContent.collapsed {
     max-height: 0;
     opacity: 0;
-}
-/* ====================== ÉP KHUNG STATUS PANEL GỌN LẠI ====================== */
-.status-panel {
-    padding: 10px 8px !important;
-    margin-bottom: 8px !important;
-    min-height: auto !important;
-}
-
-/* Quan trọng nhất - Làm gọn phần hiển thị độ */
-.degree-display {
-    padding: 4px 0 !important;
-    margin: 0 !important;
-    min-height: 78px !important;        /* Giảm mạnh chiều cao */
-    line-height: 1 !important;
-}
-
-/* Con số độ to nhưng không làm khung phình to */
-.big-degree {
-    font-size: 10rem !important;
-    line-height: 10 !important;
-    margin-bottom: 10px !important;
-    display: block;
-}
-
-/* Phần chữ bên dưới (Cung, Sơn, Hậu...) */
-.degree-display strong,
-.degree-display span {
-    font-size: 1.02rem !important;
-    line-height: 1.25 !important;
-}
-
-/* Phần Hậu riêng - chống nhảy */
-.hau-display {
-    min-height: 2.1em !important;
-    padding: 4px 0 !important;
-    margin: 4px 0 6px 0 !important;
 }
