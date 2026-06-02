@@ -484,13 +484,13 @@ body {
     max-width: 430px;
     background: var(--panel);
     border: 1px solid var(--gold);
-    padding: 16px 12px;           /* ← Tăng padding để khung cao hơn */
+    padding: 12px 8px;           /* ← Tăng padding để khung cao hơn */
     border-radius: 8px;
     text-align: center;
     margin-bottom: 8px;
     position: relative;
     z-index: 10;
-    min-height: 125px;            /* ← Thêm min-height để khung chắc chắn cao hơn */
+    min-height: 100px;            /* ← Thêm min-height để khung chắc chắn cao hơn */
 }
 
 /* Phần hiển thị độ */
