@@ -1378,7 +1378,7 @@ mjx-container {
 .button-row.center { justify-content: center; }
 .button-row.right  { justify-content: flex-end; }
 /* ==================== GENDER TOGGLE - TỐI ƯU ==================== */
-
+/* ==================== GENDER TOGGLE - TỐI ƯU ==================== */
 .gender-toggle {
     display: flex;
     background: transparent;
