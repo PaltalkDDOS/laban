@@ -1440,15 +1440,15 @@ mjx-container {
 .degree-display {
     padding: 4px 0 !important;
     margin: 0 !important;
-    min-height: 20px !important;        /* Giảm mạnh chiều cao */
+    min-height: 78px !important;        /* Giảm mạnh chiều cao */
     line-height: 1 !important;
 }
 
 /* Con số độ to nhưng không làm khung phình to */
 .big-degree {
-    font-size: 5rem !important;
-    line-height: 0.92 !important;
-    margin-bottom: 2px !important;
+    font-size: 10rem !important;
+    line-height: 10 !important;
+    margin-bottom: 10px !important;
     display: block;
 }
 
