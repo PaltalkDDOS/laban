@@ -1380,13 +1380,11 @@ mjx-container {
 /* ==================== GENDER TOGGLE - TỐI ƯU ==================== */
 .gender-toggle {
     display: flex;
-    background: #252525;
-    border: 1px solid #444;
-    border-radius: 4px;
-    padding: 1px;
-    margin-top: 1px;
-    height: 30px;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+    background: transparent;
+    padding: 0;
+    margin-top: 5px;
+    height: 45px; /* Tăng nhẹ để có không gian cho hiệu ứng */
+    gap: 10px;
 }
 
 .gender-option {
@@ -1394,25 +1392,29 @@ mjx-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 4px;
-    padding: 1px 1px;
-    font-size: 0.70rem;
+    gap: 8px;
+    font-size: 0.85rem;
     font-weight: 500;
-    border-radius: 4px;
+    color: #555;
     cursor: pointer;
-    transition: all 0.25s ease;
-    user-select: none;
-    box-sizing: border-box;
+    transition: all 0.4s ease;
+    border: 1px solid transparent; /* Viền ẩn để khung không bị nhảy khi active */
+    border-radius: 10px;           /* Bo góc cho khung chọn */
+    position: relative;
 }
 
+/* Khi được chọn: Hiện viền sáng và hiệu ứng Glow */
 .gender-option.active {
-    background: #dfb76c;
-    color: #161616 !important;
-    box-shadow: 0 2px 6px rgba(223, 183, 108, 0.4);
+    color: #dfb76c !important;
+    background: rgba(223, 183, 108, 0.05); /* Nền vàng nhạt rất nhẹ */
+    border: 1px solid #dfb76c;            /* Hiện viền vàng */
     
-    /* === Phần quan trọng để nền vàng to hơn === */
-    padding: 1px 1px;              /* Tăng padding khi active */
-    margin: -1px;                    /* Ăn vào padding của container */
-    border-radius: 4px;
+    /* Hiệu ứng "sáng viền" óng ánh */
+    box-shadow: 0 0 10px rgba(223, 183, 108, 0.3), 
+                inset 0 0 5px rgba(223, 183, 108, 0.2);
 }
 
+/* Hiệu ứng Scale nhẹ khi click */
+.gender-option:active {
+    transform: scale(0.97);
+}
