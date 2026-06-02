@@ -15,8 +15,8 @@
 <div id="mainPanelWrapper" style="position: relative; border: 1px solid #333; background: #161616; padding: 15px; border-radius: 12px; margin: 10px auto; width: 90%; max-width: 500px; transition: all 0.3s ease;">
     
     <!-- Mũi tên thu gọn -->
-    <div id="toggleArrow" onclick="togglePanel()" 
-         style="position: absolute; top: 10px; right: 15px; cursor: pointer; color: #dfb76c; font-size: 12px; font-weight: bold; z-index: 100;">
+   <div id="toggleArrow" onclick="togglePanel()" 
+         style="position: absolute; bottom: 10px; left: 15px; cursor: pointer; color: #dfb76c; font-size: 16px; font-weight: bold; z-index: 100; padding: 5px;">
         ▲
     </div>
 
@@ -39,7 +39,7 @@
     <label>Giới tính:</label>
     <div class="gender-toggle">
         <div id="gender-male" class="gender-option active" onclick="selectGender('male')">
-            👨 Nam Mạng
+          🧑‍ Nam Mạng
         </div>
         <div id="gender-female" class="gender-option" onclick="selectGender('female')">
             👩 Nữ Mạng
@@ -80,18 +80,9 @@
         <button class="btn-main" onclick="saveCurrentMember()">Lưu Tuổi</button>
         <button class="btn-reset" id="btnReset" onclick="clearAllData()">Làm mới</button>
     </div>
-
 </div>
-
 <!-- Saved list - Phiên bản nâng cấp -->
-<div class="saved-list-panel" id="savedPanel" style="display: none; margin-top: 15px;">
-    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-        <h3 style="margin: 0; color: #dfb76c; font-size: 1.05rem;">
-            📋 Danh sách tuổi đã lưu
-        </h3>
-        <small id="savedCount" style="color: #888; font-size: 0.85rem;"></small>
-    </div>
-    
+<div class="saved-list-panel" id="savedPanel" style="display: none; margin-top: 15px;">    
     <div class="saved-container" id="savedContainer"
          style="max-height: 380px; overflow-y: auto; padding-right: 8px;
                 scrollbar-width: thin; scrollbar-color: #dfb76c #333;">
