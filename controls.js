@@ -2164,18 +2164,27 @@ function closeModal() {
     document.getElementById('infoModal').style.display = 'none';
 }
 
-   // Hàm này bắt buộc phải có để nút bấm hoạt động
-    function togglePanel() {
-        const content = document.getElementById('panelContent');
-        const arrow = document.getElementById('toggleArrow');
-        if (content.style.display === 'none') {
-            content.style.display = 'block';
-            arrow.innerHTML = '▲';
-        } else {
-            content.style.display = 'none';
-            arrow.innerHTML = '▼';
+function togglePanel(event) {
+    // Nếu event được truyền vào (khi bấm trực tiếp vào khung)
+    // Và đối tượng được bấm không phải là một nút bấm (button) hoặc input
+    if (event) {
+        const targetTag = event.target.tagName.toLowerCase();
+        if (targetTag === 'button' || targetTag === 'input' || targetTag === 'div' && event.target.classList.contains('gender-option')) {
+            return; // Không làm gì cả nếu bấm vào nút hoặc input
         }
     }
+
+    const content = document.getElementById('panelContent');
+    const arrow = document.getElementById('toggleArrow');
+    
+    if (content.classList.contains('collapsed')) {
+        content.classList.remove('collapsed');
+        arrow.innerHTML = '▲';
+    } else {
+        content.classList.add('collapsed');
+        arrow.innerHTML = '▼';
+    }
+}
 	
 // ====================== HÀM ĐÓNG MỞ GIẢI THÍCH CHI TIẾT ======================
 window.toggleDienGiaiChiTiet = function() {
