@@ -1360,6 +1360,37 @@ function updateCompassUI(heading) {
             <span style="color:#ffffff;">Hệ thống đang chạy ở chế độ la bàn thực địa độ phân giải cao Vận 9.<br>
             Tọa độ: <span class="gold-text">${currentHeading}°</span> | Phương: <b>${currentCung}</b> | Sơn: <span style="color:var(--gold); font-weight:bold;">${sơnHiệnTại}</span>.<br>
             Thích hợp đo đạc kiểm tra thông số long mạch thiết kế hạ tầng trạch đất. Vui lòng điền đầy đủ Ngày/Tháng/Năm sinh để bóc tách Cát/Hung gia trạch bản mệnh.</span>`;
+        
+        // THANH HIỂN THỊ ĐO TỰ DO: SỐ TO, CHỐNG NHẢY KHUNG, SƠN VỊ ÁNH KIM SANG TRỌNG
+        degreeTxt.innerHTML = `
+            <div style="display: grid; grid-template-rows: auto auto; gap: 6px; font-family: sans-serif; width: 100%; box-sizing: border-box; overflow: hidden;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; white-space: nowrap; overflow: hidden;">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <span style="font-size: 1.8rem; font-weight: 900; color: #ffca28; letter-spacing: -0.5px; line-height: 1;">${currentHeading}°</span>
+                        <span style="font-size: 0.9rem; color: #8a8a8f; margin-left: 4px;">Phương:</span>
+                        <span style="font-size: 0.95rem; font-weight: bold; color: #ffffff;">${currentCung}</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                        <span style="font-size: 0.9rem; color: #8a8a8f;">Sơn:</span>
+                        <span style="font-size: 0.9rem; font-weight: 800; padding: 2px 10px; border-radius: 5px; 
+                                     background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 40%, #3a3a3c 55%, #1c1c1e 100%); 
+                                     color: #e5e5ea; border: 1px solid #48484a; 
+                                     box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 3px rgba(0,0,0,0.5); 
+                                     text-shadow: -1px -1px 0 rgba(0,0,0,0.8); letter-spacing: 0.3px;">
+                            ${sơnHiệnTại}
+                        </span>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 5px;">
+                    <span style="color: #8a8a8f;">Hậu:</span>
+                    <strong style="color: #ffffff;">${currentHauInfo.ten}</strong>
+                    <span style="color: ${currentHauInfo.emoji === '🟢' ? '#00ff41' : (currentHauInfo.emoji === '🔴' ? '#ff4444' : '#ffd700')}; font-weight: 600;">
+                        (${currentHauInfo.chatLuong})
+                    </span>
+                </div>
+            </div>
+        `;
+
         if (adviceBox) adviceBox.style.display = 'none';
         kichHoatDenLedQuet(currentHeading);
         return;
@@ -1420,9 +1451,54 @@ function updateCompassUI(heading) {
     // ==================== 6. THIẾT LẬP MÀU SẮC GIAO DIỆN THEO MỐC 72PT ĐỒNG BỘ ====================
     const config = ConfigPhongThuy[mụcĐích] || { title: "Cung vị", isCat: true };
     
-    // Đồng bộ tuyệt đối màu sắc nhãn hiển thị theo số điểm của Hàm 3
+    // Đồng bộ khí trạch theo mốc đạt cách học thuật
     const isGoodRealtime = tongHop.diem >= 72; 
     
+    // SỬA LỖI TẬN GỐC: Ghi đè trực tiếp giá trị màu, KHÔNG DÙNG TỪ KHÓA "let" để tránh lỗi duplicate identifier
+    colorDiemRealtime = "#ff4444"; 
+    if (tongHop.diem >= 72) {
+        colorDiemRealtime = "#30d158"; 
+    } else if (tongHop.diem >= 50) {
+        colorDiemRealtime = "#ffd700"; 
+    }
+
+    // THANH HIỂN THỊ CAO CẤP: ĐỒNG BỘ LAYOUT GRID, SỐ ĐỘ SIÊU TO, BỎ ICON PT, CHỮ NHẢY MÀU THUẦN TÚY KHÔNG SẬP KHUNG
+    degreeTxt.innerHTML = `
+        <div style="display: grid; grid-template-rows: auto auto; gap: 6px; font-family: sans-serif; width: 100%; box-sizing: border-box; overflow: hidden;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; white-space: nowrap; overflow: hidden;">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                    <span style="font-size: 1.8rem; font-weight: 900; color: #ffca28; letter-spacing: -0.5px; line-height: 1;">${currentHeading}°</span>
+                    <span style="font-size: 0.9rem; color: #8a8a8f; margin-left: 4px;">Phương:</span>
+                    <span style="font-size: 0.95rem; font-weight: bold; color: #ffffff;">${currentCung}</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                    <span style="font-size: 0.9rem; color: #8a8a8f;">Sơn:</span>
+                    <span style="font-size: 0.9rem; font-weight: 800; padding: 2px 8px; border-radius: 5px; 
+                                 background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 40%, #3a3a3c 55%, #1c1c1e 100%); 
+                                 color: #e5e5ea; border: 1px solid #48484a; 
+                                 box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 3px rgba(0,0,0,0.5); 
+                                 text-shadow: -1px -1px 0 rgba(0,0,0,0.8); letter-spacing: 0.3px;">
+                        ${sơnHiệnTại}
+                    </span>
+                </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; white-space: nowrap; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 5px;">
+                <div style="overflow: hidden; text-overflow: ellipsis; font-size: 0.85rem; display: flex; align-items: center; gap: 4px;">
+                    <span style="color: #8a8a8f;">Hậu:</span>
+                    <strong style="color: #ffffff;">${currentHauInfo.ten}</strong>
+                    <span style="color: ${currentHauInfo.emoji === '🟢' ? '#00ff41' : (currentHauInfo.emoji === '🔴' ? '#ff4444' : '#ffd700')}; font-weight: 600;">
+                        (${currentHauInfo.chatLuong})
+                    </span>
+                </div>
+                
+                <div style="font-size: 0.95rem; font-weight: 850; color: ${colorDiemRealtime}; letter-spacing: 0.3px; background: rgba(0,0,0,0.35); padding: 2px 8px; border-radius: 5px; flex-shrink: 0;">
+                    PT: ${tongHop.diem}pt (${tongHop.level})
+                </div>
+            </div>
+        </div>
+    `;
+
     judgmentBox.removeAttribute("style");
     judgmentBox.innerText = `${config.title}: ${cungTrạch}`;
     judgmentBox.className = isGoodRealtime ? "judgment-badge bg-good" : "judgment-badge bg-bad";
@@ -1439,38 +1515,6 @@ function updateCompassUI(heading) {
         noiDungDetail += 'Góc xoay la bàn thực tế <span class="gold-text">' + currentHeading + '°</span> đối chiếu cung phi mệnh chủ <strong>' + chủMệnh + '</strong> gặp hệ khí trường du tinh <strong>' + cungTrạch + '</strong>.<br>';
     }
     noiDungDetail += thôngTinCung.ý_nghĩa + '</span></div>';
-
-    // Điều kiện ẩn hiện pháp bảo hóa giải đồng bộ (Nếu điểm dưới 72pt bắt buộc hiện hộp hóa giải)
-    if (!isGoodRealtime) {
-        const matPhap = (typeof sinhMatPhapHoaGiai === 'function') ? sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung, currentCode) : "";
-        const camNang = advices[cungTrạch] || "";
-        noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,159,10,0.08); border:1px solid #ff9f0a;">';
-        noiDungDetail += '<h4 style="color:#ff9f0a; margin:0 0 8px 0; font-size: 0.9rem;">🛠 MẬT PHÁP ĐIỀU TIẾT / HÓA GIẢI KHÍ TRƯỜNG</h4>';
-        noiDungDetail += '<div style="color:#fff; font-size:0.85rem; line-height:1.5;">' + matPhap;
-        if (camNang) {
-            noiDungDetail += '<br><b style="color:#dfb76c;">Danh mục pháp bảo phụ trợ khuyên dùng trong Vận 9:</b><div style="color:#ccc;">' + camNang.replace(/👉 <em>.*?<\/em>:<br>/, '') + '</div>';
-        }
-        noiDungDetail += '</div></div>';
-    }
-
-    // Thần sát đồ hình độ số và Cửu tinh vận hạn
-    noiDungDetail += '<div style="margin-top:15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.2); border: 1px solid #d4af37;">';
-    noiDungDetail += '<div style="margin-bottom:12px;">';
-    noiDungDetail += '<b style="color:var(--gold); font-size: 0.95rem;">🎯 THẦN SÁT ĐỘ SỐ PHÂN LAYER CHI TIẾT (24 SƠN):</b>';
-    noiDungDetail += '<div style="margin-top:8px; color:#fff; font-size: 0.95rem; line-height: 1.6;">' + luanDoanSonChiTiet + '</div>';
-    noiDungDetail += '</div>';
-    
-    noiDungDetail += '<div style="border-top: 1px dashed #444; padding-top: 10px;">';
-    noiDungDetail += '<b style="color:var(--gold); font-size: 0.95rem;">⏳ BIẾN THIÊN CỬU TINH NIÊN TRẠCH (NĂM KHẢO SÁT ' + namKhaoSatDong + '):</b>';
-    noiDungDetail += '<div style="margin-top:5px; color:#fff; font-size: 0.9rem; line-height: 1.5;">' + canhBaoCuuTinh + giaiHanCuuTinh + '</div>';
-    noiDungDetail += '</div>';
-    noiDungDetail += '</div>';
-
-    // Diễn giải thiên thời vi cục khí mạch
-    if (typeof sinhLuanGiaiThienThoi === 'function') {
-        noiDungDetail += '<div style="margin-top:10px; font-size:0.85rem; color:#aaa; font-style:italic;">' + sinhLuanGiaiThienThoi(currentCode) + '</div>';
-    }
-    detailBox.innerHTML = noiDungDetail;
 
     // ==================== 7. ADVICE BOX DISPLAY CONTROLLER ====================
     if (adviceBox && adviceContent) {
