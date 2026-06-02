@@ -422,6 +422,23 @@ const SON_24_CONFIG = [
     { name: "Nhâm", min: 337.5, max: 352.5, huong: "Bắc" }
 ];
 
+// Bảng tra cứu bổ trợ chuẩn hóa trọng số và Ngũ Hành để chạy công thức PT Score O(1)
+const HOP_CACH_WEIGHT = {
+    'Sinh Khí':  { base: 68, element: 'Mộc' },
+    'Thiên Y':   { base: 56, element: 'Thổ' },
+    'Diên Niên': { base: 48, element: 'Kim' },
+    'Phục Vị':   { base: 32, element: 'Mộc' },
+    'Họa Hại':   { base: -24, element: 'Thổ' },
+    'Lục Sát':   { base: -36, element: 'Thủy' },
+    'Ngũ Quỷ':   { base: -52, element: 'Hỏa' },
+    'Tuyệt Mệnh':{ base: -68, element: 'Kim' }
+};
+
+const SINH_KHAC_HE_THONG = {
+    'Sinh': { 'Mộc': 'Hỏa', 'Hỏa': 'Thổ', 'Thổ': 'Kim', 'Kim': 'Thủy', 'Thủy': 'Mộc' },
+    'Khắc': { 'Mộc': 'Thổ', 'Thổ': 'Thủy', 'Thủy': 'Hỏa', 'Hỏa': 'Kim', 'Kim': 'Mộc' }
+};
+
 // ====================== 1. MA TRẬN BÁT TRẠCH PHỐI MỆNH CUNG PHI ======================
 const bátTrạchMap = {
     'Khảm': {
