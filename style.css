@@ -484,13 +484,13 @@ body {
     max-width: 430px;
     background: var(--panel);
     border: 1px solid var(--gold);
-    padding: 14px 10px;           /* ← Tăng padding để khung cao hơn */
+    padding: 16px 12px;           /* ← Tăng padding để khung cao hơn */
     border-radius: 8px;
     text-align: center;
     margin-bottom: 8px;
     position: relative;
     z-index: 10;
-    min-height: 90px;            /* ← Thêm min-height để khung chắc chắn cao hơn */
+    min-height: 125px;            /* ← Thêm min-height để khung chắc chắn cao hơn */
 }
 
 /* Phần hiển thị độ */
@@ -498,14 +498,14 @@ body {
     font-size: 1rem;
     color: var(--gold);
     font-weight: bold;
-    padding: 6px 0;               /* Tăng khoảng cách trong nếu cần */
-    margin-bottom: 6px;
+    padding: 2px 0;               /* Tăng khoảng cách trong nếu cần */
+    margin-bottom: 2px;
 }
 
 /* Phần Hậu */
 .hau-display {
-    min-height: 2.4em;            /* Giữ ổn định không nhảy */
-    padding: 6px 0;
+    min-height: 1em;            /* Giữ ổn định không nhảy */
+    padding: 2px 0;
 }
 
 .element-badge {
@@ -1388,6 +1388,7 @@ mjx-container {
 .button-row.center { justify-content: center; }
 .button-row.right  { justify-content: flex-end; }
 /* ==================== GENDER TOGGLE - TỐI ƯU ==================== */
+
 .gender-toggle {
     display: flex;
     background: transparent;
