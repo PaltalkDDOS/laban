@@ -3034,6 +3034,146 @@ function clearAllData() {
     recalculateFate();
 }
 
+// ==========================================================================
+// THUẬT TOÁN KIM QUAY LA BÀN - PHIÊN BẢN TỐI ƯU (MƯỢT + ỔN ĐỊNH)
+// ==========================================================================
+let lastHeading = null;
+let orientationListenerAdded = false;
+let rafId = null;
+let lastUpdateTime = 0;
+
+const SMOOTH_MIN = 0.08;
+const SMOOTH_MAX = 0.55;
+const THROTTLE_MS = 16; // ~60fps
+
+// Thêm 2 biến toàn cục này vào đầu file nếu chưa có
+let lastAccuracy = 0; 
+let isMagneticWarningActive = false;
+
+function handleOrientation(event) {
+    let rawHeading = null;
+    
+    // 1. LẤY DỮ LIỆU VÀ GIÁM SÁT NHIỄU
+    // iOS cung cấp webkitCompassAccuracy (độ sai số)
+    const accuracy = event.webkitCompassAccuracy;
+    if (accuracy !== undefined && accuracy !== null) {
+        lastAccuracy = accuracy;
+        // Cập nhật đèn báo hoặc Toast nếu nhiễu > 25 độ
+        updateMagneticStatus(accuracy); 
+    }
+
+    if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
+        rawHeading = event.webkitCompassHeading;
+    } else if (event.alpha !== undefined && event.alpha !== null) {
+        rawHeading = (360 - event.alpha) % 360;
+    }
+    
+    if (rawHeading === null) return;
+
+    // 2. CỘNG ĐỘ LỆCH TỪ (MAGNETIC DECLINATION)
+    // Đây là bước quan trọng nhất để tính toán Phong Thủy chính xác
+    // magneticDeclination là biến chúng ta đã tính từ GPS/IP hoặc nhập tay
+    rawHeading = (rawHeading + (magneticDeclination || 0) + 360) % 360;
+
+    // 3. CƠ CHẾ KHÓA & THROTTLE
+    if (document.activeElement?.id === 'compassSlider') return;
+
+    const now = Date.now();
+    if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
+    lastUpdateTime = now;
+
+    // Khởi tạo lần đầu
+    if (lastHeading === null) {
+        lastHeading = rawHeading;
+        executeUIUpdate(lastHeading);
+        return;
+    }
+
+    // 4. THUẬT TOÁN LỌC MƯỢT ĐỘNG (GIỮ NGUYÊN VÌ ĐÃ TỐT)
+    let diff = rawHeading - lastHeading;
+    if (diff > 180) diff -= 360;
+    if (diff < -180) diff += 360;
+    
+    const absDiff = Math.abs(diff);
+    let dynamicFactor = SMOOTH_MIN;
+    
+    if (absDiff > 12) {
+        dynamicFactor = SMOOTH_MAX;
+    } else if (absDiff > 1.5) {
+        dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
+    }
+    
+    const newHeading = lastHeading + diff * dynamicFactor;
+    lastHeading = (newHeading % 360 + 360) % 360;
+
+    // 5. CẬP NHẬT GIAO DIỆN QUA RAF
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+        executeUIUpdate(lastHeading);
+    });
+}
+
+// Hàm phụ trợ để đóng gói các lệnh cập nhật UI
+function executeUIUpdate(heading) {
+    if (typeof updateCompassUI === 'function') updateCompassUI(heading);
+    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(heading);
+    if (typeof recalculateFate === 'function') recalculateFate();
+}
+
+// Hàm cập nhật trạng thái nhiễu (Hiển thị đèn báo)
+function updateMagneticStatus(acc) {
+    const dot = document.getElementById('accuracy-dot');
+    const text = document.getElementById('accuracy-text');
+    if (!dot || !text) return;
+
+    if (acc <= 15) {
+        dot.style.background = '#4caf50'; // Xanh
+        text.innerText = "TÍN HIỆU TỐT";
+    } else if (acc <= 30) {
+        dot.style.background = '#ff9800'; // Vàng
+        text.innerText = "NHIỄU NHẸ";
+    } else {
+        dot.style.background = '#f44336'; // Đỏ
+        text.innerText = "NHIỄU NẶNG";
+        // Chỉ hiện Toast một lần để không gây phiền
+        if (typeof showToast === 'function' && !isMagneticWarningActive) {
+            showToast("⚠️ Nhiễu từ trường! Hãy tránh xa sắt thép", true);
+            isMagneticWarningActive = true;
+            setTimeout(() => { isMagneticWarningActive = false; }, 10000);
+        }
+    }
+}
+function updateAccuracyDisplay(acc) {
+    const dot = document.getElementById('accuracy-dot');
+    const text = document.getElementById('accuracy-text');
+    if (!dot || !text) return;
+
+    // Nếu acc = -1 hoặc chưa có dữ liệu, coi như đang chờ tín hiệu
+    if (acc < 0) {
+        dot.style.background = '#888';
+        text.innerText = "ĐANG QUÉT TÍN HIỆU...";
+        return;
+    }
+
+    if (acc <= 15) {
+        dot.style.background = '#4caf50'; 
+        text.innerText = "TÍN HIỆU TỐT";
+    } else if (acc <= 30) {
+        dot.style.background = '#ff9800'; 
+        text.innerText = "NHIỄU NHẸ";
+    } else {
+        dot.style.background = '#f44336'; 
+        text.innerText = "NHIỄU NẶNG - HÃY XOAY MÁY";
+        
+        if (typeof showToast === 'function' && !window.isToastShowing) {
+             showToast("⚠️ Nhiễu từ trường! Hãy tránh xa vật kim loại", true);
+             // Gắn cờ để không hiện Toast liên tục gây phiền
+             window.isToastShowing = true;
+             setTimeout(() => { window.isToastShowing = false; }, 5000);
+        }
+    }
+}
+
 // ====================== TRÌNH ĐIỀU KHIỂN ĐỊA TỪ SIÊU CẤP 2026 ======================
 let magneticDeclination = 0;
 
@@ -3073,96 +3213,59 @@ styleSheet.innerText = `
 document.head.appendChild(styleSheet);
 
 /**
- * BỘ QUÉT DỮ LIỆU TỪ TRÁI SANG PHẢI (Global - Mọi hàm đều dùng được)
+ * THUẬT TOÁN WMM-LITE 2026
  */
-function getCleanValue(raw) {
-    if (!raw) return ''; // Trả về chuỗi rỗng để kiểm tra trống
-    let str = String(raw).trim().replace(/,/g, '.'); 
-    let isNegative = str.startsWith('-');
-    let processStr = isNegative ? str.substring(1) : str;
-    
-    let numericPart = "";
-    let dotCount = 0;
-    
-    for (let i = 0; i < processStr.length; i++) {
-        let char = processStr[i];
-        if (char >= '0' && char <= '9') {
-            numericPart += char;
-        } else if (char === '.' && dotCount === 0) {
-            numericPart += char;
-            dotCount = 1;
-        } else {
-            break; 
-        }
-    }
-    
-    if (numericPart.endsWith('.')) numericPart = numericPart.slice(0, -1);
-    // Nếu chỉ có dấu trừ hoặc rỗng, trả về chuỗi rỗng để báo "không có dữ liệu"
-    let res = (isNegative ? '-' : '') + (numericPart || '');
-    return (res === '-' || res === '') ? '' : res;
+function calculateGlobalDeclination(lat, lon) {
+    try {
+        const phi = lat * Math.PI / 180;
+        const lambda = lon * Math.PI / 180;
+        const latPole = 86.6 * Math.PI / 180; 
+        const lonPole = -165.2 * Math.PI / 180;
+
+        const psi = Math.atan2(
+            Math.sin(lonPole - lambda),
+            Math.cos(phi) * Math.tan(latPole) - Math.sin(phi) * Math.cos(lonPole - lambda)
+        );
+
+        let declination = psi * 180 / Math.PI;
+        const coreAnomaly = 1.62 * Math.sin(2 * phi) * Math.cos(lambda - (10 * Math.PI / 180));
+        declination += coreAnomaly;
+
+        if (declination > 180) declination -= 360;
+        if (declination < -180) declination += 360;
+
+        return declination;
+    } catch (e) { return 0; }
 }
 
 /**
- * THUẬT TOÁN WMM-LITE 2026
- */
-function calculateGlobalDeclination(lat, lon) {
-    try {
-        const phi = lat * Math.PI / 180;
-        const lambda = lon * Math.PI / 180;
-        const latPole = 86.6 * Math.PI / 180; 
-        const lonPole = -165.2 * Math.PI / 180;
-
-        const psi = Math.atan2(
-            Math.sin(lonPole - lambda),
-            Math.cos(phi) * Math.tan(latPole) - Math.sin(phi) * Math.cos(lonPole - lambda)
-        );
-
-        let declination = psi * 180 / Math.PI;
-        const coreAnomaly = 1.62 * Math.sin(2 * phi) * Math.cos(lambda - (10 * Math.PI / 180));
-        declination += coreAnomaly;
-
-        if (declination > 180) declination -= 360;
-        if (declination < -180) declination += 360;
-
-        return declination;
-    } catch (e) { return 0; }
-}
-
+ * CƠ CHẾ PHÒNG THỦ IP
+ */
 async function fallbackIPGeolocation() {
-    // 1. Nguồn chính (Online - Sử dụng API bền bỉ)
     try {
-        const response = await fetch('https://json.geoiplookup.io/');
+        const response = await fetch('https://ip-api.com/json/?fields=status,lat,lon');
         const data = await response.json();
-        if (data.latitude && data.longitude) {
-            return { lat: data.latitude, lon: data.longitude, src: "NETWORK" };
-        }
-    } catch (e) {
-        console.warn("Lỗi lấy vị trí từ mạng, đang dùng cấu hình dự phòng...");
-    }
-
-    // 2. Tầng dự phòng (Offline - Không bao giờ lỗi)
-    // Giữ lại tầng TimeZone vì nó là cách duy nhất để đoán vị trí mà không cần mạng
-    try {
-        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        if (timeZone && (timeZone.includes("Saigon") || timeZone.includes("Bangkok"))) {
-            return { lat: 14.05, lon: 108.27, src: "ZONE_VN" };
-        }
+        if (data && data.status === 'success') return { lat: data.lat, lon: data.lon, src: "NETWORK" };
     } catch (e) {}
 
-    // 3. Tầng cuối cùng (Mặc định)
+    try {
+        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        if (timeZone.includes("Saigon") || timeZone.includes("Bangkok")) return { lat: 14.05, lon: 108.27, src: "ZONE_VN" };
+    } catch (e) {}
+
     return { lat: 14.05, lon: 108.27, src: "DEFAULT" };
 }
 
 function updateMagneticDeclination() {
-    const input = document.getElementById('declination-input');
-    if (!input) return;
+    const input = document.getElementById('declination-input');
+    if (!input) return;
 
-    let val = input.value;
-    magneticDeclination = (val === '-' || val === '.' || val.trim() === '') ? 0 : parseFloat(val) || 0;
-    
-    if (typeof updateCompassUI === 'function' && typeof currentHeading !== 'undefined') {
-        updateCompassUI(currentHeading);
-    }
+    let val = input.value;
+    magneticDeclination = (val === '-' || val === '.' || val.trim() === '') ? 0 : parseFloat(val) || 0;
+    
+    if (typeof updateCompassUI === 'function' && typeof currentHeading !== 'undefined') {
+        updateCompassUI(currentHeading);
+    }
 }
 
 async function autoDetectDeclination(e) {
@@ -3170,9 +3273,6 @@ async function autoDetectDeclination(e) {
     if (btn) { btn.innerText = "⚡ ĐANG QUÉT..."; btn.disabled = true; }
 
     const apply = (lat, lon, label) => {
-        // CHỐT CHẶN: Nếu dữ liệu là 0,0 từ hệ thống thì không tính
-        if (lat === 0 && lon === 0) return;
-
         const decl = calculateGlobalDeclination(lat, lon);
         magneticDeclination = decl;
         const input = document.getElementById('declination-input');
@@ -3185,7 +3285,6 @@ async function autoDetectDeclination(e) {
         }
     };
 
-    // Tầng 1: GPS
     if (!navigator.geolocation) {
         const ip = await fallbackIPGeolocation();
         apply(ip.lat, ip.lon, ip.src);
@@ -3195,7 +3294,6 @@ async function autoDetectDeclination(e) {
     navigator.geolocation.getCurrentPosition(
         (pos) => apply(pos.coords.latitude, pos.coords.longitude, "GPS"),
         async () => {
-            // Tầng 2 & 3: IP Fallback
             const ip = await fallbackIPGeolocation();
             apply(ip.lat, ip.lon, ip.src);
         },
@@ -3204,25 +3302,12 @@ async function autoDetectDeclination(e) {
 }
 
 function calculateRemoteDeclination() {
-    const latEl = document.getElementById('remote-lat');
-    const lonEl = document.getElementById('remote-lon');
+    const latV = parseFloat(document.getElementById('remote-lat').value);
+    const lonV = parseFloat(document.getElementById('remote-lon').value);
     const rBtn = document.getElementById('remote-calc-btn');
-    
-    const latStr = latEl.value.trim();
-    const lonStr = lonEl.value.trim();
 
-    // CHỐT CHẶN 1: Kiểm tra rỗng
-    if (latStr === '' || lonStr === '') {
+    if (isNaN(latV) || isNaN(lonV)) {
         showToast("⚠️ Vui lòng nhập đủ tọa độ!", true);
-        return;
-    }
-
-    const latV = parseFloat(latStr);
-    const lonV = parseFloat(lonStr);
-
-    // CHỐT CHẶN 2: Kiểm tra NaN và tọa độ (0,0) vô nghĩa
-    if (isNaN(latV) || isNaN(lonV) || (latV === 0 && lonV === 0)) {
-        showToast("⚠️ Tọa độ không hợp lệ!", true);
         return;
     }
 
@@ -3241,91 +3326,57 @@ function calculateRemoteDeclination() {
 }
 
 function toggleDeclinationPanel(show) {
-    const m = document.getElementById('declination-modal');
-    if (m) m.style.display = show ? 'flex' : 'none';
-}
-
-function parseSmartNumeric(val, maxVal) {
-    if (!val || val.trim() === '') return null; // Trả về null nếu chưa nhập gì
-
-    // 1. Chuyển phẩy thành chấm
-    let str = val.trim().replace(/,/g, '.');
-    
-    // 2. Chỉ nhặt các ký tự hợp lệ từ trái sang phải cho đến khi gặp "rác"
-    let isNegative = str.startsWith('-');
-    let processStr = isNegative ? str.substring(1) : str;
-    let numericPart = "";
-    let dotCount = 0;
-
-    for (let i = 0; i < processStr.length; i++) {
-        let char = processStr[i];
-        if (char >= '0' && char <= '9') {
-            numericPart += char;
-        } else if (char === '.' && dotCount === 0) {
-            numericPart += char;
-            dotCount = 1;
-        } else {
-            break; // Gặp chữ hoặc ký tự lạ là dừng
-        }
-    }
-    
-    if (numericPart.endsWith('.')) numericPart = numericPart.slice(0, -1);
-    const finalVal = parseFloat((isNegative ? '-' : '') + (numericPart || '0'));
-    
-    return isNaN(finalVal) ? null : finalVal;
+    const m = document.getElementById('declination-modal');
+    if (m) m.style.display = show ? 'flex' : 'none';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const configs = {
-        'declination-input': { max: 180, limit: 7 },
-        'remote-lat': { max: 90, limit: 10 },
-        'remote-lon': { max: 180, limit: 11 }
-    };
+    const inputs = [
+        { id: 'declination-input', max: 180 },
+        { id: 'remote-lat', max: 90 },
+        { id: 'remote-lon', max: 180 }
+    ];
 
-    Object.keys(configs).forEach(id => {
-        const el = document.getElementById(id);
+    inputs.forEach(cfg => {
+        const el = document.getElementById(cfg.id);
         if (!el) return;
 
         el.addEventListener('input', (e) => {
-            const cfg = configs[id];
-            let raw = el.value;
+            let val = el.value;
 
-            // 1. Nếu trống thì cho nhập thoải mái
-            if (raw === '') return;
-
-            // 2. NHẬN DIỆN COPY/PASTE HOẶC NHẬP DỮ LIỆU CÓ RÁC
-            // Chúng ta không ép kiểu quá gắt ở input để người dùng gõ phím được
-            // Nhưng nếu phát hiện ký tự lạ "cố tình" hoặc paste từ ngoài vào:
-            const clean = parseSmartNumeric(raw, cfg.max);
+            // 1. Chỉ cho phép các ký tự: số, dấu chấm, dấu trừ
+            // 2. Chống nhập nhiều dấu trừ, dấu trừ chỉ được ở đầu
+            val = val.replace(/[^0-9.-]/g, ''); 
+            if (val.split('-').length > 2) val = '-' + val.replace(/-/g, '');
+            if (val.indexOf('-') > 0) val = val.replace('-', '');
             
-            // Xử lý thông minh: 
-            // Nếu người dùng đang gõ dấu trừ ở đầu hoặc dấu chấm, đừng làm sạch ngay
-            // Chỉ làm sạch khi chuỗi chứa ký tự thực sự sai lệch (ví dụ: chữ cái, dấu lạ)
-            if (/[a-zA-Z!@#$%^&*()_+={}\[\]:;"'<>?\/\\|]/.test(raw)) {
-                el.value = clean !== null ? clean.toString() : '';
+            // 3. Chống nhập nhiều dấu chấm
+            const parts = val.split('.');
+            if (parts.length > 2) val = parts[0] + '.' + parts.slice(1).join('');
+
+            el.value = val;
+
+            // 4. Kiểm tra Logic khi người dùng nhập xong số
+            const num = parseFloat(val);
+            if (!isNaN(num)) {
+                if (Math.abs(num) > cfg.max) {
+                    showToast(`⚠️ Tối đa là ±${cfg.max}`, true);
+                    el.value = val.slice(0, -1); // Xóa ký tự cuối nếu vượt ngưỡng
+                }
             }
 
-            // 3. Giới hạn độ dài
-            if (el.value.length > cfg.limit) {
-                el.value = el.value.slice(0, cfg.limit);
-            }
-
-            // Cập nhật ngay lập tức nếu là ô độ lệch từ
-            if (id === 'declination-input') updateMagneticDeclination();
+            if (cfg.id === 'declination-input') updateMagneticDeclination();
         });
 
-        el.addEventListener('blur', () => {
-            const cfg = configs[id];
-            const clean = parseSmartNumeric(el.value, cfg.max);
-            
-            if (clean !== null) {
-                let clamped = Math.max(-cfg.max, Math.min(cfg.max, clean));
-                el.value = clamped.toString();
-            } else {
-                el.value = ''; 
-            }
-            
-            if (id === 'declination-input') updateMagneticDeclination();
+        // Tự động xóa số 0 thừa khi focus và trả về 0 nếu trống khi blur
+        el.addEventListener('focus', () => { if(el.value === '0') el.value = ''; });
+        el.addEventListener('blur', () => { 
+            if(el.value === '' || el.value === '-') el.value = '0'; 
+            updateMagneticDeclination();
+        });
+
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { el.blur(); toggleDeclinationPanel(false); }
         });
     });
 });
