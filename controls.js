@@ -2730,57 +2730,67 @@ function render24SonRing() {
         khe24SonRing.innerHTML = lines24Html;
     }
 
-    // 3. Chữ 24 Sơn (giữ nguyên)
+    // 3. Chữ 24 Sơn - MÀU NEON TỐI SANG TRỌNG
     const sonRingSvg = document.getElementById('sonRingSvg');
     if (sonRingSvg) {
         sonRingSvg.innerHTML = "";
         SON_24_CONFIG.forEach((son, index) => {
             const goc = (index * 15) % 360;
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250"); 
+            textNode.setAttribute("x", "250");
             textNode.setAttribute("y", "114");
             textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "10");
+            textNode.setAttribute("font-size", "10.5");
             textNode.setAttribute("font-weight", "900");
             textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
             textNode.setAttribute("data-son-goc", goc.toString());
-            textNode.setAttribute("data-base-size", "10");
+            textNode.setAttribute("data-base-size", "10.5");
             textNode.textContent = son.name;
-            
-            const color = ["Cấn", "Tốn", "Khôn", "Càn"].includes(son.name) ? "#ff3b30" :
-                          ["Tý", "Mão", "Ngọ", "Dậu"].includes(son.name) ? "#00a525" : "#5c4314";
+
+            // === MÀU NEON TỐI CAO CẤP ===
+            let color;
+            if (["Cấn", "Tốn", "Khôn", "Càn"].includes(son.name)) {
+                color = "#ff4d4d";        // Neon Red sang trọng
+            } else if (["Tý", "Mão", "Ngọ", "Dậu"].includes(son.name)) {
+                color = "#00ffaa";        // Neon Emerald
+            } else {
+                color = "#ffd700";        // Gold Neon
+            }
+
             textNode.setAttribute("fill", color);
             textNode.setAttribute("data-color", color);
+            textNode.setAttribute("filter", "drop-shadow(0 0 3px currentColor)");
             sonRingSvg.appendChild(textNode);
         });
     }
 
-    // 4. Vòng 24 Sao Phúc Đức - ĐÃ NÂNG CẤP (màu đẹp hơn, đồng bộ phong thủy)
+    // 4. Vòng 24 Sao Phúc Đức - MÀU NEON LUXURY
     const phucDucRingSvg = document.getElementById('phucDucRingSvg');
     if (phucDucRingSvg) {
         phucDucRingSvg.innerHTML = "";
         const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
-        
+       
         phucDucNames.forEach((name, index) => {
             const goc = (index * 15) % 360;
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250"); 
+            textNode.setAttribute("x", "250");
             textNode.setAttribute("y", "72");
             textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "6.5");
+            textNode.setAttribute("font-size", "6.8");
             textNode.setAttribute("font-weight", "700");
             textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
             textNode.setAttribute("data-sao-goc", goc.toString());
-            textNode.setAttribute("data-base-size", "6.5");
+            textNode.setAttribute("data-base-size", "6.8");
             textNode.textContent = name;
 
-            // Nâng cấp màu: Dùng tone vàng đồng phong thủy, có chút phân biệt nhẹ
-            textNode.setAttribute("fill", "#d4af37");  // Màu vàng đồng chính
+            // Màu neon tối sang trọng cho Sao Phúc Đức
+            textNode.setAttribute("fill", "#b8a36f");        // Gold nhạt neon
+            textNode.setAttribute("filter", "drop-shadow(0 0 2.5px #d4af37)");
             phucDucRingSvg.appendChild(textNode);
         });
     }
 
-    // 5. Vòng 72 Hậu - ĐÃ NÂNG CẤP (màu rõ hơn + chuẩn bị cho highlight mạnh)
+    // 5. Vòng 72 Hậu (giữ nguyên logic nhưng đồng bộ màu neon)
     const hauRing = document.getElementById('hau72RingSvg');
     if (hauRing) {
         hauRing.innerHTML = "";
@@ -2788,27 +2798,27 @@ function render24SonRing() {
             const hau = Data72Hau[degStr];
             const deg = parseFloat(degStr) + 2.4;
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250"); 
+            textNode.setAttribute("x", "250");
             textNode.setAttribute("y", "95");
             textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "3.2");        // Tăng nhẹ size gốc
+            textNode.setAttribute("font-size", "3.3");
             textNode.setAttribute("font-weight", "700");
             textNode.setAttribute("transform", `rotate(${deg}, 250, 250)`);
             textNode.setAttribute("data-hau-goc", degStr);
-            textNode.setAttribute("data-base-size", "3.2");
+            textNode.setAttribute("data-base-size", "3.3");
 
-            // Màu rõ ràng hơn
             let color;
             if (hau.chatLuong.includes("Cát")) {
-                color = "#a8c46f";      // Xanh ngọc nhạt
+                color = "#7cff9b";           // Neon Green
             } else if (hau.chatLuong.includes("Hung")) {
-                color = "#e07a5f";      // Đỏ gạch
+                color = "#ff6b6b";           // Neon Red
             } else {
-                color = "#d4af37";      // Vàng đồng
+                color = "#ffd93d";           // Neon Gold
             }
-            
+           
             textNode.setAttribute("fill", color);
             textNode.setAttribute("data-original-fill", color);
+            textNode.setAttribute("filter", "drop-shadow(0 0 2px currentColor)");
             textNode.textContent = hau.ten.replace(" Hậu", "").replace(/(\D+)(\d)/, (m, p1, p2) => p1.substring(0,1) + p2);
             hauRing.appendChild(textNode);
         });
