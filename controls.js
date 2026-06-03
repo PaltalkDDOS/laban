@@ -3160,27 +3160,29 @@ function render24SonRing() {
         });
     }
 
-    // 4. Vòng 24 Sao Phúc Đức - ĐÃ NÂNG CẤP (màu đẹp hơn, đồng bộ phong thủy)
+    // 4. Vòng 24 Sao Phúc Đức - MÀU NEON LUXURY (ĐÃ TỐI ƯU CHỐNG GIẬT)
     const phucDucRingSvg = document.getElementById('phucDucRingSvg');
     if (phucDucRingSvg) {
         phucDucRingSvg.innerHTML = "";
         const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
-        
+       
         phucDucNames.forEach((name, index) => {
             const goc = (index * 15) % 360;
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250"); 
+            textNode.setAttribute("x", "250");
             textNode.setAttribute("y", "72");
             textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "6.5");
+            textNode.setAttribute("font-size", "6.8");
             textNode.setAttribute("font-weight", "700");
             textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
             textNode.setAttribute("data-sao-goc", goc.toString());
-            textNode.setAttribute("data-base-size", "6.5");
+            textNode.setAttribute("data-base-size", "6.8");
             textNode.textContent = name;
 
-            // Nâng cấp màu: Dùng tone vàng đồng phong thủy, có chút phân biệt nhẹ
-            textNode.setAttribute("fill", "#d4af37");  // Màu vàng đồng chính
+            // TỐI ƯU CHÍ MẠNG: Thêm class CSS thay vì nạp filter bằng JS
+            textNode.setAttribute("class", "neon-sao-phuc-duc");
+            textNode.setAttribute("fill", "#b8a36f"); // Màu vàng Gold nhạt nền ban đầu
+            
             phucDucRingSvg.appendChild(textNode);
         });
     }
