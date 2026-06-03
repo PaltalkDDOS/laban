@@ -3586,7 +3586,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // =================================================================================
-// 👑 HỆ THỐNG QUẢN LÝ PWA ĐA TRÌNH DUYỆT CHỐNG HIỆN LẠI NÚT - PREMIUM (THÁI THÔNG)
+// 👑 HỆ THỐNG QUẢN LÝ PWA ĐA TRÌNH DUYỆT - BẢN KHÓA NÚT TUYỆT ĐỐI (THÁI THÔNG)
 // =================================================================================
 
 if (typeof deferredPrompt === 'undefined') {
@@ -3594,29 +3594,23 @@ if (typeof deferredPrompt === 'undefined') {
 }
 
 /**
- * MÀNG LỌC HỆ ĐIỀU HÀNH CAO CẤP: Quét tận gốc thiết bị xem đã cài App la bàn chưa
+ * CHỐT CHẶN HÀNH QUYẾT: Quét toàn diện, thấy dấu vết là XÓA HẲN nút khỏi giao diện
  */
-async function kiemTraVaAnNutNeuDaCaiApp() {
+function kiemTraVaAnNutNeuDaCaiApp() {
     const installBtn = document.getElementById('btn-install-pwa');
     const manualGuide = document.getElementById('pwa-manual-guide');
 
-    // Chốt chặn 1: Nếu đang chạy chính thức trong giao diện App độc lập (Standalone)
+    // 1. Kiểm tra nếu đang mở bằng giao diện App (Standalone)
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
     
-    // Chốt chặn 2: Nếu trình duyệt có hỗ trợ hỏi trực tiếp Hệ điều hành Android
-    let isAppOnDevice = false;
-    if ('getInstalledRelatedApps' in navigator) {
-        try {
-            const relatedApps = await navigator.getInstalledRelatedApps();
-            // Nếu mảng trả về có dữ liệu nghĩa là máy đã cài đặt App la bàn rồi
-            if (relatedApps.length > 0) isAppOnDevice = true;
-        } catch (err) {
-            // Lỗi quét hệ thống (nếu có) sẽ bỏ qua để không gây lag app
-        }
-    }
+    // 2. Kiểm tra bộ nhớ máy (LocalStorage)
+    const isLocalSave = localStorage.getItem('pwa_la_ban_installed') === 'true';
+    
+    // 3. Kiểm tra Cookies (Phòng hờ bộ nhớ đệm trình duyệt bị lệch)
+    const isCookieSave = document.cookie.split(';').some((item) => item.trim().startsWith('pwa_la_ban_installed='));
 
-    // Nếu dính 1 trong 2 chốt chặn -> Hành quyết nhổ tận gốc nút bấm khỏi HTML
-    if (isStandalone || isAppOnDevice) {
+    // Nếu dính bất kỳ dấu hiệu nào chứng tỏ máy đã có App -> Xóa sổ vĩnh viễn nút bấm
+    if (isStandalone || isLocalSave || isCookieSave) {
         if (installBtn) installBtn.remove();
         if (manualGuide) manualGuide.remove();
         return true;
@@ -3625,32 +3619,32 @@ async function kiemTraVaAnNutNeuDaCaiApp() {
 }
 
 /**
- * KHỞI ĐỘNG HỆ THỐNG LÕI: Đăng ký Service Worker ngầm (Sạch bóng log rác thành công)
+ * LUỒNG KHỞI CHẠY (Tắt sạch bong các log rác thành công)
  */
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', async () => {
+    window.addEventListener('load', () => {
         if (window.location.protocol === 'file:') return; 
 
-        // Kiểm tra ẩn nút ngay khi vừa nạp trang xong
-        await kiemTraVaAnNutNeuDaCaiApp();
+        // Quét ẩn nút tức thì khi vừa nạp trang
+        kiemTraVaAnNutNeuDaCaiApp();
 
         const link = document.createElement('link');
         link.rel = 'manifest';
         link.href = './manifest.json';
         document.head.appendChild(link);
 
+        // Đăng ký im lặng, không in log bậy bạ
         navigator.serviceWorker.register('./sw.js')
             .catch(err => console.error('Lỗi kích hoạt PWA:', err));
     });
 }
 
 /**
- * BỘ BẮT SỰ KIỆN CÀI ĐẶT: Kiểm tra liên đới trước khi kích hoạt hiển thị nút vàng
+ * BỘ BẮT SỰ KIỆN CÀI ĐẶT
  */
-window.addEventListener('beforeinstallprompt', async (e) => {
-    // Ép hệ thống quét sâu vào hệ điều hành một lần nữa trước khi cho phép hiện nút
-    const daCaiApp = await kiemTraVaAnNutNeuDaCaiApp();
-    if (daCaiApp) {
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Nếu bộ quét báo đã cài ứng dụng rồi, khóa cứng luôn, không cho Chrome gọi banner
+    if (kiemTraVaAnNutNeuDaCaiApp()) {
         e.preventDefault();
         return;
     }
@@ -3659,8 +3653,6 @@ window.addEventListener('beforeinstallprompt', async (e) => {
     deferredPrompt = e;
     
     const installBtn = document.getElementById('btn-install-pwa');
-    const manualGuide = document.getElementById('pwa-manual-guide');
-    
     if (installBtn) {
         if (!window.matchMedia('(display-mode: standalone)').matches) {
             installBtn.style.display = 'flex';
@@ -3672,7 +3664,12 @@ window.addEventListener('beforeinstallprompt', async (e) => {
             
             const { outcome } = await deferredPrompt.userChoice;
             if (outcome === 'accepted') {
-                installBtn.remove();
+                // Đóng dấu vĩnh viễn vào LocalStorage và Cookies cho tất cả trình duyệt quét được
+                localStorage.setItem('pwa_la_ban_installed', 'true');
+                document.cookie = "pwa_la_ban_installed=true; max-age=31536000; path=/";
+                
+                if (installBtn) installBtn.remove();
+                const manualGuide = document.getElementById('pwa-manual-guide');
                 if (manualGuide) manualGuide.remove();
             }
             deferredPrompt = null;
@@ -3681,8 +3678,10 @@ window.addEventListener('beforeinstallprompt', async (e) => {
 });
 
 /**
- * ĐỒNG BỘ SAU CÀI ĐẶT
+ * ĐỒNG BỘ SAU CÀI ĐẶT (Tóm khoảnh khắc người dùng cài từ Menu trình duyệt)
  */
-window.addEventListener('appinstalled', async (evt) => {
-    await kiemTraVaAnNutNeuDaCaiApp();
+window.addEventListener('appinstalled', (evt) => {
+    localStorage.setItem('pwa_la_ban_installed', 'true');
+    document.cookie = "pwa_la_ban_installed=true; max-age=31536000; path=/";
+    kiemTraVaAnNutNeuDaCaiApp();
 });
