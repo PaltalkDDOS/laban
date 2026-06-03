@@ -3586,29 +3586,37 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // =================================================================================
-// 👑 HỆ THỐNG QUẢN LÝ PWA ĐA TRÌNH DUYỆT - PREMIUM VERSION (THÁI THÔNG)
+// 👑 HỆ THỐNG QUẢN LÝ PWA ĐA TRÌNH DUYỆT CHỐNG HIỆN LẠI NÚT - PREMIUM (THÁI THÔNG)
 // =================================================================================
 
-// Khai báo biến hứng sự kiện cài đặt (Chỉ dùng duy nhất một biến var chống sập luồng)
 if (typeof deferredPrompt === 'undefined') {
     var deferredPrompt; 
 }
 
 /**
- * MÀNG LỌC THÔNG MINH: Tự động quét kiểm tra và xóa sổ hoàn toàn nút cài đặt nếu đã cài App
+ * MÀNG LỌC HỆ ĐIỀU HÀNH CAO CẤP: Quét tận gốc thiết bị xem đã cài App la bàn chưa
  */
-function kiemTraVaAnNutNeuDaCaiApp() {
-    // 1. Kiểm tra chế độ độc lập standalone (Đang chạy bằng App)
+async function kiemTraVaAnNutNeuDaCaiApp() {
+    const installBtn = document.getElementById('btn-install-pwa');
+    const manualGuide = document.getElementById('pwa-manual-guide');
+
+    // Chốt chặn 1: Nếu đang chạy chính thức trong giao diện App độc lập (Standalone)
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
     
-    // 2. Kiểm tra dấu vết LocalStorage lưu trong bộ nhớ máy
-    const isAlreadyInstalled = localStorage.getItem('pwa_la_ban_installed') === 'true';
-    
-    // Nếu dính một trong hai chốt chặn, hành quyết xóa sạch nút để tránh Chrome/Samsung tự hiện lại
-    if (isStandalone || isAlreadyInstalled) {
-        const installBtn = document.getElementById('btn-install-pwa');
-        const manualGuide = document.getElementById('pwa-manual-guide');
-        
+    // Chốt chặn 2: Nếu trình duyệt có hỗ trợ hỏi trực tiếp Hệ điều hành Android
+    let isAppOnDevice = false;
+    if ('getInstalledRelatedApps' in navigator) {
+        try {
+            const relatedApps = await navigator.getInstalledRelatedApps();
+            // Nếu mảng trả về có dữ liệu nghĩa là máy đã cài đặt App la bàn rồi
+            if (relatedApps.length > 0) isAppOnDevice = true;
+        } catch (err) {
+            // Lỗi quét hệ thống (nếu có) sẽ bỏ qua để không gây lag app
+        }
+    }
+
+    // Nếu dính 1 trong 2 chốt chặn -> Hành quyết nhổ tận gốc nút bấm khỏi HTML
+    if (isStandalone || isAppOnDevice) {
         if (installBtn) installBtn.remove();
         if (manualGuide) manualGuide.remove();
         return true;
@@ -3617,62 +3625,53 @@ function kiemTraVaAnNutNeuDaCaiApp() {
 }
 
 /**
- * KHỞI ĐỘNG HỆ THỐNG LÕI: Đăng ký Service Worker và nạp Manifest thông minh
+ * KHỞI ĐỘNG HỆ THỐNG LÕI: Đăng ký Service Worker ngầm (Sạch bóng log rác thành công)
  */
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        // CHỐT CHẶN 1: Nếu test bằng file cục bộ (file:///) -> Thoát im lặng, chống lỗi CORS
-        if (window.location.protocol === 'file:') {
-            return; 
-        }
+    window.addEventListener('load', async () => {
+        if (window.location.protocol === 'file:') return; 
 
-        // CHỐT CHẶN 2: Nếu đã cài App từ trước -> Thoát hoàn toàn luồng kích hoạt nút
-        if (kiemTraVaAnNutNeuDaCaiApp()) return;
+        // Kiểm tra ẩn nút ngay khi vừa nạp trang xong
+        await kiemTraVaAnNutNeuDaCaiApp();
 
-        // Nếu chạy Online hợp lệ, tự động bơm thẻ manifest vào đầu trang HTML
         const link = document.createElement('link');
         link.rel = 'manifest';
         link.href = './manifest.json';
         document.head.appendChild(link);
 
-        // Đăng ký Service Worker chạy ngầm gác cổng (Im lặng tuyệt đối, không log rác Console)
         navigator.serviceWorker.register('./sw.js')
             .catch(err => console.error('Lỗi kích hoạt PWA:', err));
     });
 }
 
 /**
- * BỘ BẮT SỰ KIỆN CÀI ĐẶT: Xử lý hiển thị nút bấm Premium và ghi dấu vết thiết bị
+ * BỘ BẮT SỰ KIỆN CÀI ĐẶT: Kiểm tra liên đới trước khi kích hoạt hiển thị nút vàng
  */
-window.addEventListener('beforeinstallprompt', (e) => {
-    // Chốt chặn tối cao: Đã cài app rồi thì chặn đứng sự kiện, không cho nút có cơ hội hiện hình
-    if (kiemTraVaAnNutNeuDaCaiApp()) {
+window.addEventListener('beforeinstallprompt', async (e) => {
+    // Ép hệ thống quét sâu vào hệ điều hành một lần nữa trước khi cho phép hiện nút
+    const daCaiApp = await kiemTraVaAnNutNeuDaCaiApp();
+    if (daCaiApp) {
         e.preventDefault();
         return;
     }
 
     e.preventDefault();
-    deferredPrompt = e; // Lưu lại sự kiện kích hoạt hộp thoại hệ thống
+    deferredPrompt = e;
     
     const installBtn = document.getElementById('btn-install-pwa');
     if (installBtn) {
-        // Chỉ hiện nút khi người dùng đang lướt Web thông thường, không hiện trong chế độ App
         if (!window.matchMedia('(display-mode: standalone)').matches) {
-            installBtn.style.display = 'flex'; // Ép kiểu flex tương thích CSS hiệu ứng Pulse
+            installBtn.style.display = 'flex';
         }
         
-        // Khóa luồng tương tác Click
         installBtn.onclick = async () => {
             if (!deferredPrompt) return;
-            deferredPrompt.prompt(); // Gọi hộp thoại cài đặt mặc định của Chrome/Samsung
+            deferredPrompt.prompt();
             
             const { outcome } = await deferredPrompt.userChoice;
-            console.log(`Người dùng đã chọn: ${outcome}`);
-            
-            // Nếu người dùng đồng ý tải App về máy
             if (outcome === 'accepted') {
-                localStorage.setItem('pwa_la_ban_installed', 'true'); // Khóa dấu vết vĩnh viễn trên thiết bị này
-                installBtn.remove(); // Xóa sổ hoàn toàn nút bấm khỏi HTML
+                installBtn.remove();
+                if (manualGuide) manualGuide.remove();
             }
             deferredPrompt = null;
         };
@@ -3680,10 +3679,8 @@ window.addEventListener('beforeinstallprompt', (e) => {
 });
 
 /**
- * ĐỒNG BỘ SAU CÀI ĐẶT: Tóm khoảnh khắc cài app thành công từ bất kỳ nguồn nào (Kể cả menu 3 chấm của Chrome)
+ * ĐỒNG BỘ SAU CÀI ĐẶT
  */
-window.addEventListener('appinstalled', (evt) => {
-    console.log('Ứng dụng La Bàn Phong Thủy đã được cài đặt thành công!');
-    localStorage.setItem('pwa_la_ban_installed', 'true'); // Đóng dấu bộ nhớ máy tức thì
-    kiemTraVaAnNutNeuDaCaiApp(); // Ép hệ thống quét ẩn sạch nút bấm ngay lập tức
+window.addEventListener('appinstalled', async (evt) => {
+    await kiemTraVaAnNutNeuDaCaiApp();
 });
