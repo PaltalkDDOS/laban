@@ -3584,25 +3584,39 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('gender-male').classList.remove('active');
     }
 });
-// Bộ kích hoạt đăng ký PWA Service Worker chạy ngầm chuẩn đường dẫn GitHub
+
+// Bộ kích hoạt đăng ký PWA & Nạp Manifest thông minh (CHỐNG LỖI CORS & PROTOCOL OFFLINE)
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
+        // CHỐT CHẶN 1: Nếu đang nhấp đúp file chạy offline (file:///) -> Thoát hoàn toàn
+        if (window.location.protocol === 'file:') {
+            console.log('Chế độ test offline (file:///): Tự động tắt Service Worker và Manifest để tránh lỗi CORS.');
+            return; 
+        }
+
+        // CHỐT CHẶN 2: Chỉ khi chạy Online (https:// hoặc localhost), JS mới tự động nhúng thẻ Manifest vào HTML
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = './manifest.json';
+        document.head.appendChild(link);
+        console.log('Đã nạp file manifest.json hợp lệ từ máy chủ.');
+
+        // Tiến hành đăng ký Service Worker chạy ngầm bảo mật
         navigator.serviceWorker.register('./sw.js')
             .then(reg => console.log('PWA Service Worker đã kích hoạt thành công!', reg))
             .catch(err => console.error('Lỗi kích hoạt PWA:', err));
     });
 }
 
-// --- BỘ BẮT SỰ KIỆN CÀI ĐẶT DÀNH CHO ANDROID / PC ---
+// --- BỘ BẮT SỰ KIỆN CÀI ĐẶT DÀNH CHO ANDROID / PC (Giữ nguyên phần dưới của bạn) ---
 let deferredPrompt;
-
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     
     const installBtn = document.getElementById('btn-install-pwa');
     if (installBtn) {
-        installBtn.style.display = 'block'; // Trình duyệt duyệt xong PWA sẽ ép nút này hiện hình!
+        installBtn.style.display = 'block';
         
         installBtn.addEventListener('click', async () => {
             if (!deferredPrompt) return;
