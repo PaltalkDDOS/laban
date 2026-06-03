@@ -3585,71 +3585,73 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// =================================================================================
-// 👑 HỆ THỐNG PWA CHUẨN QUỐC TẾ - SIÊU NHẸ, KHÔNG LAG (THÁI THÔNG)
-// =================================================================================
+// ==================== PWA FLOATING BUTTON ====================
+let deferredPrompt;
 
-if (typeof deferredPrompt === 'undefined') {
-    var deferredPrompt; 
+function isRunningAsPWA() {
+    return window.matchMedia('(display-mode: standalone)').matches || 
+           window.navigator.standalone === true ||
+           window.matchMedia('(display-mode: fullscreen)').matches;
 }
 
-/**
- * Hàm kiểm tra: Nếu đang mở bằng App độc lập thì ẩn nút lập tức
- */
-function kiemTraVaAnNutChuan() {
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-    if (isStandalone) {
-        const installBtn = document.getElementById('btn-install-pwa');
-        const manualGuide = document.getElementById('pwa-manual-guide');
-        if (installBtn) installBtn.style.setProperty('display', 'none', 'important');
-        if (manualGuide) manualGuide.style.setProperty('display', 'none', 'important');
+function kiemTraVaAnNut() {
+    const btn = document.getElementById('btn-install-pwa');
+    if (!btn) return;
+    
+    if (isRunningAsPWA()) {
+        btn.classList.remove('show');
         return true;
     }
     return false;
 }
 
-// Khởi động nạp manifest khi chạy online
+// Khởi tạo
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        if (window.location.protocol === 'file:') return; 
-
-        // Ẩn nút ngay nếu đang ở trong giao diện App
-        kiemTraVaAnNutChuan();
+        if (window.location.protocol === 'file:') return;
+        
+        kiemTraVaAnNut();
 
         const link = document.createElement('link');
         link.rel = 'manifest';
         link.href = './manifest.json';
         document.head.appendChild(link);
 
-        navigator.serviceWorker.register('./sw.js')
-            .catch(err => console.error('Lỗi kích hoạt PWA:', err));
+        navigator.serviceWorker.register('./sw.js');
     });
 }
 
-// Bắt sự kiện hiện nút khi lướt web thông thường
+// Beforeinstallprompt
 window.addEventListener('beforeinstallprompt', (e) => {
-    if (kiemTraVaAnNutChuan()) return;
+    if (isRunningAsPWA()) return;
 
     e.preventDefault();
     deferredPrompt = e;
-    
-    const installBtn = document.getElementById('btn-install-pwa');
-    if (installBtn) {
-        installBtn.style.display = 'flex'; // Hiện nút dạng Premium Pulse
-        
-        installBtn.onclick = async () => {
+
+    const btn = document.getElementById('btn-install-pwa');
+    if (btn) {
+        btn.classList.add('show');
+
+        btn.onclick = async () => {
             if (!deferredPrompt) return;
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
-            console.log(`Người dùng chọn: ${outcome}`);
+            
             if (outcome === 'accepted') {
-                installBtn.style.display = 'none';
+                btn.classList.remove('show');
             }
             deferredPrompt = null;
         };
     }
 });
 
-window.addEventListener('appinstalled', (evt) => {
-    kiemTraVaAnNutChuan();
+window.addEventListener('appinstalled', () => {
+    const btn = document.getElementById('btn-install-pwa');
+    if (btn) btn.classList.remove('show');
+});
+
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+        setTimeout(kiemTraVaAnNut, 600);
+    }
 });
