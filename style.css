@@ -1430,7 +1430,7 @@ mjx-container {
     max-height: 0;
     opacity: 0;
 }
-/* PWA Floating Button - Thẩm mỹ */
+/* PWA Floating Button - Bản Sửa Lỗi Hiệu Ứng Mượt Mà */
 .pwa-fab-btn {
     position: fixed;
     bottom: 20px;
@@ -1442,42 +1442,56 @@ mjx-container {
     padding: 12px 18px;
     font-size: 0.9rem;
     font-weight: bold;
-    display: none;
+    
+    /* Sử dụng bộ 3 thuộc tính này thay cho display:none để hiệu ứng transition hoạt động */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.8) translateY(10px);
+    
+    display: flex;
     align-items: center;
     gap: 8px;
     box-shadow: 0 4px 15px rgba(223, 183, 108, 0.4);
     z-index: 9999;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Hiệu ứng bounce nhẹ quý phái */
     white-space: nowrap;
-    opacity: 0;
-    transform: scale(0.8);
+    -webkit-tap-highlight-color: transparent;
 }
 
+/* Hiệu ứng khi rê chuột vào (PC) */
 .pwa-fab-btn:hover {
-    transform: scale(1.05);
+    transform: scale(1.05) translateY(-2px);
     box-shadow: 0 6px 20px rgba(223, 183, 108, 0.6);
 }
 
+/* Hiệu ứng khi chạm ngón tay (Mobile) */
+.pwa-fab-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(223, 183, 108, 0.4);
+}
+
 .pwa-fab-icon {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .pwa-fab-text {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
 }
 
-/* Khi nút hiện lên mượt mà */
+/* Khi nút hiện lên mượt mà chuẩn PWA Premium */
 .pwa-fab-btn.show {
-    display: flex;
     opacity: 1;
-    transform: scale(1);
+    visibility: visible;
+    pointer-events: auto;
+    transform: scale(1) translateY(0);
 }
 
-/* Responsive cho mobile */
+/* Tự động thụt lùi một chút trên màn hình điện thoại nhỏ */
 @media (max-width: 480px) {
     .pwa-fab-btn {
-        bottom: 15px;
-        right: 15px;
+        bottom: 16px;
+        right: 16px;
         padding: 10px 16px;
         font-size: 0.85rem;
     }
