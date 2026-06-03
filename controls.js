@@ -1255,8 +1255,12 @@ function updateCompassUI(heading) {
     // =========================================================================
     // SỬA LỖI TRỤC THỜI GIAN: Phân định rạch ròi Năm Sinh và Năm Khảo Sát
     // =========================================================================
+    // 1. Năm sinh dùng để tính toán Bản Mệnh (Giữ nguyên logic của bạn)
     const namSinhMệnhChủ = (yearStr && yearStr.length === 4) ? parseInt(yearStr) : new Date().getFullYear();
-    const txtNamKhaoSat = document.getElementById('surveyYear'); 
+    
+    // 2. Năm Khảo Sát (Niên Trạch) phải chạy theo năm hiện hành của máy tính (2026, 2027, 2028...)
+    // Đón đầu tương lai: Nếu sau này có ô nhập 'txtNamKhaoSat' thì ưu tiên bốc, không thì tự động lấy năm hiện tại
+    const txtNamKhaoSat = document.getElementById('surveyYear'); // Giả định id tương lai
     const namKhaoSatThucTe = (txtNamKhaoSat && txtNamKhaoSat.value.length === 4) ? parseInt(txtNamKhaoSat.value) : new Date().getFullYear();
 
     // ==================== 1. XÁC ĐỊNH 8 CUNG ĐẠI CỤC (45°) ====================
@@ -1299,11 +1303,11 @@ function updateCompassUI(heading) {
     const currentHauInfo = getCurrentHauInfo(trueHeading);
     const mụcĐích = document.getElementById('purpose').value;
     
-    // ĐỒNG BỘ TOÁN PHÁP THEO NĂM KHẢO SÁT THỰC TẾ
+    // ĐỒNG BỘ TOÁN PHÁP THEO NĂM KHẢO SÁT THỰC TẾ (CHẠY THEO NĂM ĐANG XEM CHỨ KHÔNG THEO NĂM SINH)
     const tongHop = tinhDiemTongHop(chủMệnh || "Khảm", trueHeading, namKhaoSatThucTe, mụcĐích);
 
-    // FIX LỖI KHỞI TẠO BIẾN TOÀN CỤC: Khai báo let cho colorDiemRealtime rõ ràng
-    let colorDiemRealtime = "#ff4444"; 
+    // Mốc màu hiển thị số điểm tổng hợp trên thanh la bàn đồng bộ với ngưỡng Đạt Cách 72pt
+    colorDiemRealtime = "#ff4444"; 
     if (tongHop.diem >= 72) {
         colorDiemRealtime = "#30d158"; 
     } else if (tongHop.diem >= 50) {
@@ -1337,6 +1341,7 @@ function updateCompassUI(heading) {
             Tọa độ: <span class="gold-text">${currentHeading}°</span> | Phương: <b>${currentCung}</b> | Sơn: <span style="color:var(--gold); font-weight:bold;">${sơnHiệnTại}</span>.<br>
             Thích hợp đo đạc kiểm tra thông số long mạch thiết kế hạ tầng trạch đất. Vui lòng điền đầy đủ Ngày/Tháng/Năm sinh để bóc tách Cát/Hung gia trạch bản mệnh.</span>`;
         
+        // THANH HIỂN THỊ ĐO TỰ DO: SỐ LỚN, CHỐNG SẬP KHUNG
         degreeTxt.innerHTML = `
             <div style="display: grid; grid-template-rows: auto auto; gap: 6px; font-family: sans-serif; width: 100%; box-sizing: border-box; overflow: hidden;">
                 <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; white-space: nowrap; overflow: hidden;">
@@ -1391,7 +1396,6 @@ function updateCompassUI(heading) {
     let giaiHanCuuTinh = "";
     const boxStyle = "margin-top:10px; padding:10px; border-radius:6px; font-size:0.85rem; line-height:1.4;";
 
-    // FIX LỖI CHÍNH TẢ: Thay canbBaoCuuTinh bằng canhBaoCuuTinh để tránh crash ứng dụng
     if (ketQua.thongTinSao.includes("⚠️")) {
         canhBaoCuuTinh = `<div style="${boxStyle} background:rgba(255,59,48,0.1); border:1px solid #ff3b30; color:#ff3b30;">
             <b style="display:block; margin-bottom:4px;">⚠️ CẢNH BÁO NIÊN HẠN ${namKhaoSatThucTe}:</b>
@@ -1427,8 +1431,15 @@ function updateCompassUI(heading) {
     // ==================== 6. THIẾT LẬP MÀU SẮC GIAO DIỆN THEO MỐC 72PT ĐỒNG BỘ ====================
     const config = ConfigPhongThuy[mụcĐích] || { title: "Cung vị", isCat: true };
     const isGoodRealtime = tongHop.diem >= 72; 
+    
+    colorDiemRealtime = "#ff4444"; 
+    if (tongHop.diem >= 72) {
+        colorDiemRealtime = "#30d158"; 
+    } else if (tongHop.diem >= 50) {
+        colorDiemRealtime = "#ffd700"; 
+    }
 
-    // THANH HIỂN THỊ CAO CẤP
+    // THANH HIỂN THỊ CAO CẤP: ĐÃ BỎ CHỮ "PT:", DẢI HẬU VÀ ĐIỂM SỐ CO GIÃN ĐỘNG CHỐNG SẬP LAYOUT
     degreeTxt.innerHTML = `
         <div style="display: grid; grid-template-rows: auto auto; gap: 6px; font-family: sans-serif; width: 100%; box-sizing: border-box; overflow: hidden;">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; white-space: nowrap; overflow: hidden;">
@@ -1482,14 +1493,8 @@ function updateCompassUI(heading) {
     }
     noiDungDetail += thôngTinCung.ý_nghĩa + '</span></div>';
 
-    // =========================================================================
-    // 🔥 KHẮC PHỤC LỖI ẨN HÓA GIẢI: Ép luôn luôn hiện khi gặp 4 Cung Hung 
-    // Cho dù điểm tổng hợp cao nhờ Tọa Hung Trấn Sát thì vẫn phải hiển thị Pháp Bảo
-    // =========================================================================
-    const danhSachCungHung = ["Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"];
-    const gapCungHungBatTrach = danhSachCungHung.includes(cungTrạch);
-
-    if (gapCungHungBatTrach || !isGoodRealtime) {
+    // Điều kiện ẩn hiện pháp bảo hóa giải đồng bộ (Nếu điểm dưới 72pt bắt buộc hiện hộp hóa giải)
+    if (!isGoodRealtime) {
         const matPhap = (typeof sinhMatPhapHoaGiai === 'function') ? sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung, currentCode) : "";
         const camNang = advices[cungTrạch] || "";
         noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,159,10,0.08); border:1px solid #ff9f0a;">';
@@ -1501,7 +1506,7 @@ function updateCompassUI(heading) {
         noiDungDetail += '</div></div>';
     }
 
-    // THẦN SÁT VÀ CỬU TINH VẬN HẠN
+    // THẦN SÁT VÀ CỬU TINH VẬN HẠN: Nạp chuẩn xác dòng thời gian động thực tế
     noiDungDetail += '<div style="margin-top:15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.2); border: 1px solid #d4af37;">';
     noiDungDetail += '<div style="margin-bottom:12px;">';
     noiDungDetail += '<b style="color:var(--gold); font-size: 0.95rem;">🎯 THẦN SÁT ĐỘ SỐ PHÂN CHI TIẾT (24 SƠN):</b>';
@@ -1522,13 +1527,8 @@ function updateCompassUI(heading) {
 
     // ==================== 7. ADVICE BOX DISPLAY CONTROLLER ====================
     if (adviceBox && adviceContent) {
-        // Chỉ hiển thị hộp phụ bên ngoài nếu thực sự có cẩm nang cho cung đó
-        if (advices[cungTrạch]) {
-            adviceBox.style.display = 'block';
-            adviceContent.innerHTML = advices[cungTrạch];
-        } else {
-            adviceBox.style.display = 'none';
-        }
+        adviceBox.style.display = advices[cungTrạch] ? 'block' : 'none';
+        if (advices[cungTrạch]) adviceContent.innerHTML = advices[cungTrạch];
     }
 
     // ==================== 8. TRIGGER REALTIME EFFECTS ====================
