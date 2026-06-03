@@ -1428,10 +1428,21 @@ function updateCompassUI(heading) {
         luanDoanSonChiTiet = `<span style="color:#a0a0a0; font-style:italic;">Tọa độ định vị: ${currentHeading}° | Sơn ${sơnHiệnTại} | Hướng đại cục ${sơnHiệnTạiObj?.huong}.</span>`;
     }
 
-    // ==================== 6. THIẾT LẬP MÀU SẮC GIAO DIỆN THEO MỐC 72PT ĐỒNG BỘ ====================
+    // =========================================================================
+    // 🔥 PHÂN ĐOẠN 6: ĐỒNG BỘ TOÁN PHÁP CHÍNH TÔNG - PHÂN ĐỊNH GỐC & NGỌN
+    // Giải quyết triệt để lỗi ẩn hiện Mật pháp, xử lý đảo chiều ứng xử Thần sát Lưu Niên
+    // =========================================================================
     const config = ConfigPhongThuy[mụcĐích] || { title: "Cung vị", isCat: true };
-    const isGoodRealtime = tongHop.diem >= 72; 
+
+    // 1. ĐỊNH VỊ CÁI GỐC (Bản chất Địa lý tĩnh Bát Trạch): Xác định tính chất thuần túy của Cung vị
+    const hungTinhBạtTrach = ["Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"];
+    const laCungHungDiaLy = hungTinhBạtTrach.includes(cungTrạch);
     
+    // Thuận địa lý học: Mục đích cát đặt vào cung cát, hoặc mục đích hung (WC/Bếp) đặt đè cung hung
+    const laThuanDiaLy = config.isCat ? !laCungHungDiaLy : laCungHungDiaLy;
+
+    // 2. ĐỊNH VỊ CÁI NGỌN (Sức khỏe khí trường thời thực): Đồng bộ mốc màu theo điểm số Vận 9 của bạn
+    const isGoodRealtime = tongHop.diem >= 72; 
     colorDiemRealtime = "#ff4444"; 
     if (tongHop.diem >= 72) {
         colorDiemRealtime = "#30d158"; 
@@ -1439,7 +1450,7 @@ function updateCompassUI(heading) {
         colorDiemRealtime = "#ffd700"; 
     }
 
-    // THANH HIỂN THỊ CAO CẤP: ĐÃ BỎ CHỮ "PT:", DẢI HẬU VÀ ĐIỂM SỐ CO GIÃN ĐỘNG CHỐNG SẬP LAYOUT
+    // THANH HIỂN THỊ CAO CẤP DYNAMIC: Loại bỏ "PT:", tự động co giãn chống sập khung
     degreeTxt.innerHTML = `
         <div style="display: grid; grid-template-rows: auto auto; gap: 6px; font-family: sans-serif; width: 100%; box-sizing: border-box; overflow: hidden;">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; white-space: nowrap; overflow: hidden;">
@@ -1481,7 +1492,7 @@ function updateCompassUI(heading) {
     judgmentBox.className = isGoodRealtime ? "judgment-badge bg-good" : "judgment-badge bg-bad";
     detailBox.style.borderLeftColor = isGoodRealtime ? "var(--green)" : "var(--red)";
 
-    // RENDER NỘI DUNG DIỄN GIẢI CHI TIẾT RA MÀN HÌNH CHUẨN CÔNG THỨC
+    // --- RENDER PHẦN 1: THÔNG TIN DIỄN GIẢI CHÍNH ---
     let noiDungDetail = "";
     noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,255,255,0.05); border-left: 4px solid ' + (isGoodRealtime ? '#30d158' : '#ff3b30') + '">';
     noiDungDetail += '<strong style="color: ' + (isGoodRealtime ? '#30d158' : '#ff3b30') + '; font-size: 1.05rem; display:block; margin-bottom:5px;">';
@@ -1493,17 +1504,47 @@ function updateCompassUI(heading) {
     }
     noiDungDetail += thôngTinCung.ý_nghĩa + '</span></div>';
 
-    // Điều kiện ẩn hiện pháp bảo hóa giải đồng bộ (Nếu điểm dưới 72pt bắt buộc hiện hộp hóa giải)
-    if (!isGoodRealtime) {
-        const matPhap = (typeof sinhMatPhapHoaGiai === 'function') ? sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung, currentCode) : "";
-        const camNang = advices[cungTrạch] || "";
+    // --- RENDER PHẦN 2: BỘ LỌC ĐIỀU KIỆN HIỂN THỊ MẬT PHÁP / CẢNH BÁO THEO TÂM ĐẠO ---
+    // Hộp mở ra khi: Bố trí nghịch Địa lý tĩnh (!laThuanDiaLy) HOẶC dính Sát Tinh niên vận làm điểm tụt (< 72pt)
+    if (!laThuanDiaLy || !isGoodRealtime) {
         noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,159,10,0.08); border:1px solid #ff9f0a;">';
-        noiDungDetail += '<h4 style="color:#ff9f0a; margin:0 0 8px 0; font-size: 0.9rem;">🛠 MẬT PHÁP ĐIỀU TIẾT / HÓA GIẢI KHÍ TRƯỜNG</h4>';
-        noiDungDetail += '<div style="color:#fff; font-size:0.85rem; line-height:1.5;">' + matPhap;
-        if (camNang) {
-            noiDungDetail += '<br><b style="color:#dfb76c;">Danh mục pháp bảo phụ trợ khuyên dùng trong Vận 9:</b><div style="color:#ccc;">' + camNang.replace(/👉 <em>.*?<\/em>:<br>/, '') + '</div>';
+        
+        if (!laThuanDiaLy) {
+            // [KỊCH BẢN A]: SAI GỐC ĐỊA LÝ (Bố trí sai lệch quy cách bản mệnh) -> Bung Mật Pháp linh vật điều tiết
+            const matPhap = (typeof sinhMatPhapHoaGiai === 'function') ? sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung, currentCode) : "";
+            const camNang = advices[cungTrạch] || "";
+            
+            noiDungDetail += '<h4 style="color:#ff9f0a; margin:0 0 8px 0; font-size: 0.9rem;">🛠 MẬT PHÁP ĐIỀU TIẾT / HÓA GIẢI ĐỊA CỤC</h4>';
+            noiDungDetail += '<div style="color:#fff; font-size:0.85rem; line-height:1.5;">' + matPhap;
+            if (camNang) {
+                noiDungDetail += '<br><b style="color:#dfb76c;">Danh mục pháp bảo phụ trợ khuyên dùng trong Vận 9:</b><div style="color:#ccc;">' + camNang.replace(/👉 <em>.*?<\/em>:<br>/, '') + '</div>';
+            }
+            noiDungDetail += '</div>';
+            
+        } else {
+            // [KỊCH BẢN B]: ĐÚNG GỐC ĐỊA LÝ NHƯNG SAI NIÊN VẬN (Ngọn suy do dính Sát Tinh lưu niên như Ngũ Hoàng/Thái Tuế)
+            noiDungDetail += '<h4 style="color:#ffd700; margin:0 0 8px 0; font-size: 0.9rem;">⚠️ CẢNH BÁO ĐIỀU TIẾT HÀNH VI NIÊN HẠN</h4>';
+            noiDungDetail += '<div style="color:#fff; font-size:0.85rem; line-height:1.5;">';
+            
+            if (!config.isCat) {
+                // Toilet/Bếp tọa đè hung cung rất chuẩn nhưng năm nay bị Sát tinh năm chiếu góc quấy phá
+                noiDungDetail += `Vị trí cấu trúc <b>${config.title}</b> đặt đè lên cung <b>${cungTrạch}</b> hiện tại đã đạt cách cục <span style="color:#30d158; font-weight:bold;">Tọa Hung Trấn Sát Đắc Cách</span> về mặt Địa Lý Dương Trạch. Tuyệt đối không cần phá dỡ hay thay đổi vị trí công trình.<br><br>`;
+                noiDungDetail += `⚠️ <span style="color:#ff9f0a; font-weight:bold;">LƯU Ý NIÊN HẠN:</span> Do chịu trường khí xung sát của Hung tinh Lưu Niên đáo phương (Chỉ số sụt giảm thực thời còn <b>${tongHop.diem}pt</b>). Trong năm nay, gia chủ **tuyệt đối tránh động thổ đập phá, khoan đục hay sửa chữa lớn** tại khu vực này để không kích động ác tính của sát tinh.`;
+            } else {
+                // Cổng/Giường ngủ rơi vào cung cát nhưng năm nay dính sao xấu hạ điểm
+                noiDungDetail += `Hạng mục vị trí về mặt Địa lý bản mệnh vốn là cung cát lợi (<b>${cungTrạch}</b>). Tuy nhiên, niên độ khảo sát hiện hành đang gặp từ trường suy yếu do vướng hung tinh thời vận niên hạn chiếu góc (Chỉ số sụt giảm còn <b>${tongHop.diem}pt</b>).<br>`;
+            }
+            
+            // Trích xuất giải pháp động từ hàm tính điểm tổng hợp của bạn
+            noiDungDetail += `<br><b style="color:#30d158;">💡 Giải pháp hóa giải & Trợ lực khí trường từ Thuật Toán:</b>`;
+            noiDungDetail += `<div style="padding:10px; background:rgba(0,0,0,0.25); border-left:3px solid #30d158; color:#ddd; margin-top:5px; border-radius:0 6px 6px 0;">${tongHop.hoaGiai}</div>`;
+            
+            // Đường băng mở rộng: Kết nối module Chọn Ngày Lành & Tuổi Quý Nhân sau này
+            noiDungDetail += `<br><span style="color:#8a8a8f; font-size:0.8rem; font-style:italic;">* Cẩm nang Tuyển Nhật Cát (chọn ngày giờ động thổ cát lành) và bộ lọc Quý Nhân phù trợ bẻ gãy sát tinh đang được đồng bộ hóa cùng hệ thống...</span>`;
+            noiDungDetail += '</div>';
         }
-        noiDungDetail += '</div></div>';
+
+        noiDungDetail += '</div>';
     }
 
     // THẦN SÁT VÀ CỬU TINH VẬN HẠN: Nạp chuẩn xác dòng thời gian động thực tế
