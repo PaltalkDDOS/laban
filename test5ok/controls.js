@@ -716,61 +716,49 @@ function recalculateFate() {
     updateCompassUI(currentHeading);
 }
 
+// ====================== TRÍCH XUẤT 72 HẬU LONG MẠCH ĐỒNG BỘ TUYỆT ĐỐI ======================
 function getCurrentHauInfo(degree) {
-    // 1. Chuẩn hóa góc về dải an toàn tuyệt đối [0, 360)
     const normalized = ((degree % 360) + 360) % 360;
     
-    // Làm tròn chuẩn xác theo bước phân châm 5 độ cố định
-    const keyHau = (Math.round(normalized / 5) * 5) % 360;
-    
-    // 2. Truy xuất nguồn dữ liệu gốc từ hệ thống Data72Hau
-    const hau = Data72Hau[keyHau.toString()] || { 
-        ten: "Xung Không", 
-        chatLuong: "Bình Hòa", 
-        diem: 50, 
-        ynghia: "Khí trường chuyển dịch luân hồi.",
-        giaiphap: "Chưa có dữ liệu trích xuất."
-    };
+    // Thuật toán định vị phân thùy thẳng: Mỗi hậu chiếm chính xác góc độ 360 / 72 = 5 độ
+    let indexHau = Math.floor(normalized / 5);
+    if (indexHau > 71) indexHau = 71; // Chốt chặn tràn mảng số liệu
 
-    // 3. Khởi tạo cấu trúc dữ liệu dynamic sạch
+    // Tạo mốc key động khớp với cấu trúc object Data72Hau của bạn (Ví dụ: "0", "5", "10",...)
+    let keyHau = (indexHau * 5).toString();
+    const hau = Data72Hau[keyHau] || { ten: "Xung Không", chatLuong: "Bình Hòa", diem: 50, ynghia: "Khí trường chuyển dịch luân hồi." };
+
     let result = {
-        ten: hau.ten ?? "Xung Không",
-        chatLuong: hau.chatLuong ?? "Bình Hòa",
-        ynghia: hau.ynghia ?? "Khí trường chuyển dịch luân hồi.",
-        diem: Number(hau.diem) || 50,
-        giaiphap: String(hau.giaiphap ?? "Thiết kế phối hợp trạch pháp, an vị an lành."),
+        ten: hau.ten,
+        chatLuong: hau.chatLuong,
+        ynghia: hau.ynghia,
+        diem: hau.diem || 50,
+        giaiphap: hau.giaiphap || "Chưa có giải pháp cụ thể.",
+        interactionLevel: hau.interactionLevel || "Trung bình",
         emoji: "🟡"
     };
 
-    // 4. Bộ lọc trạng thái khí trường ban đầu
+    // Chuẩn hóa bộ lọc nhãn Emoji năng lượng
     if (result.chatLuong.includes("Đại Cát") || result.chatLuong.includes("Cát")) {
         result.emoji = "🟢";
     } else if (result.chatLuong.includes("Đại Hung") || result.chatLuong.includes("Hung")) {
         result.emoji = "🔴";
     }
 
-    // 5. CƠ CHẾ OVERRIDE THỰC THỜI: Tích hợp Không Vong cập nhật thẳng vào điểm mạch Hậu
-    if (typeof kiemTraKhongVong === 'function') {
-        const khongVong = kiemTraKhongVong(normalized);
-        if (khongVong) {
-            if (khongVong.loai === "ĐẠI KHÔNG VONG") {
-                result.chatLuong = "ĐẠI HUNG (Không Vong)";
-                result.emoji = "☠️";
-                result.diem = 12; // Ép sụp đổ điểm số một cách khách quan
-            } else {
-                result.chatLuong = "TIỂU KHÔNG VONG (Khí Suy)";
-                result.emoji = "⚠️";
-                result.diem = Math.max(10, result.diem - 25); // Khấu trừ trực tiếp vào mạch khí
-            }
+    // === TÍCH HỢP BỘ LỌC CHỐT CHẶN KHÔNG VONG OVERRIDE ===
+    const khongVong = kiemTraKhongVong(normalized);
+    if (khongVong) {
+        if (khongVong.loai === "ĐẠI KHÔNG VONG") {
+            result.chatLuong = "ĐẠI HUNG (Không Vong)";
+            result.emoji = "☠️";
+            result.diem = Math.min(result.diem, 15); // Hạ gục điểm số xuống ngưỡng tử huyệt
+        } else {
+            result.chatLuong = "TIỂU KHÔNG VONG (Khí Suy)";
+            result.emoji = "⚠️";
+            result.diem = Math.max(10, result.diem - 25); // Trừ điểm năng lượng do rò rỉ tuyến phân giới
         }
     }
 
-    // 6. LIÊN TỤC GHI ĐÈ VÀO CACHE THEO THỜI GIAN THỰC
-    // Giải phóng bộ nhớ đệm cũ để luồng đọc của tinhDiemTongHop luôn nhận vi viễn mới nhất
-    if (typeof hauCache !== 'undefined' && hauCache.set) {
-        hauCache.set(keyHau, result);
-    }
-    
     return result;
 }
 
@@ -804,6 +792,7 @@ const ConfigPhongThuy = {
     'trash_area':     { title: "Vị trí Thùng Rác / Phế Liệu (Tọa Hung)", isCat: false }
 };
 
+// ====================== HÀM generateDirectionsList() - BIỂU DIỄN DANH SÁCH GỢI Ý ======================
 function generateDirectionsList() {
     const mucDich = document.getElementById('purpose').value;
     const config = ConfigPhongThuy[mucDich];
@@ -819,16 +808,13 @@ function generateDirectionsList() {
 
     const isCatPurpose = config.isCat; // true: cần Cát, false: cần Hung
     let listDirections = [];
-    
-    // ĐỒNG BỘ TRỤC THỜI GIAN: Trích xuất niên độ khảo sát từ form động để khớp điểm số la bàn số
-    const yearInput = document.getElementById('birthYear')?.value;
-    const namKhaoSat = (yearInput && yearInput.length === 4) ? parseInt(yearInput) : new Date().getFullYear();
+    const currentYear = new Date().getFullYear();
 
     directionMeta.forEach(dir => {
         const cungTrạch = bátTrạchMap[chủMệnh][dir.code];
         
-        // Gọi hàm tính điểm tổng hợp đa tầng truyền chuẩn xác tham số năm động
-        const tongHopDir = tinhDiemTongHop(chủMệnh, dir.angle, namKhaoSat, mucDich);
+        // Gọi hàm tính điểm tổng hợp đa tầng theo Vận 9 chính xác
+        const tongHopDir = tinhDiemTongHop(chủMệnh, dir.angle, currentYear, mucDich);
         const hauInfo = getCurrentHauInfo(dir.angle);
 
         listDirections.push({
@@ -841,18 +827,18 @@ function generateDirectionsList() {
         });
     });
 
-    // Sắp xếp: Ai điểm cao nhất (hợp mục đích nhất) xếp lên đầu bảng một cách khách quan
+    // Sắp xếp: Ai điểm cao nhất (hợp mục đích nhất) lên đầu
     listDirections.sort((a, b) => b.priority - a.priority);
     
-    listPanelTitle.innerText = `Gợi ý vị trí Vận 9: ${config.title}`;
+    listPanelTitle.innerText = `Gợi ý vị trí: ${config.title}`;
     directionsContainer.innerHTML = "";
 
     listDirections.forEach(item => {
-        // Đồng bộ mốc đạt cách thống nhất toàn hệ thống (>= 72pt)
+        // Màu sắc nhãn dựa trên điểm số đã qua bộ lọc thông minh Vận 9 (Đạt cách >= 72pt)
         const isHợp = item.diemTongHop >= 72;
         const colorStyle = isHợp ? '#30d158' : '#ff3b30';
 
-        // Đảo nhãn trạng thái chuẩn xác cấu trúc nguyên bản
+        // Đảo nhãn trạng thái trực quan theo cấu trúc nguyên bản
         let statusText = "";
         if (isCatPurpose) {
             statusText = isHợp ? '🟢 ĐÓN CÁT KHÍ (HƯỚNG TỐT)' : '❌ PHẠM HUNG PHƯƠNG (HƯỚNG XẤU)';
@@ -863,16 +849,18 @@ function generateDirectionsList() {
         const sonGroup = getSonGroupForDirection(item.code);
         let sonHTML = "";
         
-        // GIỮ NGUYÊN BẢN 100% LOGIC RENDER SƠN VỊ TỪ HỆ THỐNG GỐC CỦA BẠN
+        // GIỮ NGUYÊN BẢN 100% LOGIC CLICK XEM GIẢI THÍCH SƠN VỊ CỦA BẠN
         sonGroup.forEach((son, index) => {
             const dataSon = MaTranMinhChau[chủMệnh] ? MaTranMinhChau[chủMệnh][son] : null;
             const score = dataSon ? dataSon.diem : 0;
             const nhom = dataSon ? dataSon.nhom : "";
             
+            // Xử lý tooltip cho Sơn chống sập chuỗi khi render HTML
             const titleInfo = `${son} (${nhom})`;
             const textInfo = dataSon ? dataSon.text.replace(/'/g, "\\'") : "Chưa có thông tin.";
             const solInfo = dataSon ? dataSon.giaiphap.replace(/'/g, "\\'") : "Chưa có giải pháp.";
             
+            // Màu sắc cho từng sơn nhỏ theo chất lượng gốc
             const sonColor = score >= 80 ? "#30d158" : (score >= 50 ? "#dfb76c" : "#ff3b30");
             
             sonHTML += `<span style="display:inline-block; white-space:nowrap; cursor:pointer;"
@@ -883,43 +871,38 @@ function generateDirectionsList() {
             if (index < sonGroup.length - 1) sonHTML += ` • `;
         });
 
-        const bgDiem = isHợp ? 'rgba(48,209,88,0.15)' : 'rgba(255,59,48,0.15)';
+        // Thẻ điểm tổng hợp (Badge) - Phân loại màu sắc trực quan dựa trên mốc hợp cách 72pt mới
+        const bgDiem = isHợp ? 'rgba(48,209,88,0.2)' : 'rgba(255,59,48,0.2)';
+
         const diemTag = `
-            <span style="font-size:0.75rem; padding:2px 6px; border-radius:4px; font-weight:bold;
-                  background:${bgDiem}; color:${colorStyle}; border:1px solid ${colorStyle}; 
-                  white-space:nowrap; flex-shrink:0; display:inline-flex; align-items:center; gap:3px;">
-                ${item.diemTongHop}pt ${item.hau ? (item.hau.emoji || '🟡') : '🟡'}
+            <span style="font-size:0.75rem; padding:2px 7px; border-radius:4px; font-weight:bold;
+                  background:${bgDiem}; color:${colorStyle}; border:1px solid ${colorStyle}">
+                ${item.diemTongHop}pt ${item.hau ? item.hau.emoji : ''}
             </span>`;
 
         const div = document.createElement('div');
         div.className = `direction-item ${isHợp ? 'good' : 'bad'}`;
-        div.style.cssText = `border-left:4px solid ${colorStyle}; background:rgba(255,255,255,0.03); margin-bottom:12px; padding:12px; border-radius:10px; width:100%; box-sizing:border-box; display:flex; flex-direction:column; gap:10px;`;
+        div.style.cssText = `border-left: 4px solid ${colorStyle}; background: rgba(255,255,255,0.03); margin-bottom:8px; padding:12px; border-radius:8px;`;
         
+        // Render cấu trúc giao diện nguyên bản, đồng bộ màu nút bấm "Xoay thử" theo colorStyle
         div.innerHTML = `
-            <div class="item-info" style="width:100%;">
-                <div style="color:#fff; font-size:0.95rem; margin-bottom:8px; font-weight:bold; display:flex; justify-content:space-between; align-items:center;">
-                    <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                        ${item.name} ➔ <span style="color:${isCatPurpose ? colorStyle : '#fff'}">${item.cungTrạch}</span>
-                    </span>
-                    ${diemTag}
+            <div class="item-info" style="flex:1;">
+                <div class="item-name" style="color:#fff; font-size:0.95rem; margin-bottom: 5px; font-weight:bold;">
+                    ${item.name} ➔ <span style="color:${isCatPurpose ? colorStyle : '#fff'}">${item.cungTrạch}</span> ${diemTag}
                 </div>
-                
-                <div style="margin-bottom:6px; font-size:0.8rem; overflow-x:auto;" class="no-scrollbar">
+                <div style="margin:6px 0; font-size:0.78rem;">
                     <span style="color:#dfb76c; font-weight:600;">SƠN Vị:</span> ${sonHTML}
                 </div>
-                
                 <div style="font-size:0.8rem; color:#aaa; margin-bottom:6px;">
                     Cung 5°: <strong>${item.hau.ten}</strong> — <span style="color:${item.hau.chatLuong.includes('Cát') ? '#30d158' : '#ff3b30'}">${item.hau.chatLuong}</span>
                 </div>
-                
-                <div style="color:${colorStyle}; font-size:0.85rem; font-weight:bold; padding-top:4px;">
+                <div style="color: ${colorStyle}; font-size:0.85rem; font-weight:bold; letter-spacing:0.5px; border-top:1px solid rgba(255,255,255,0.1); padding-top:6px;">
                     ${statusText}
                 </div>
             </div>
-
             <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})" 
-                style="background:#222; color:var(--gold); border:1px solid var(--gold); padding:8px; border-radius:6px; font-weight:bold; cursor:pointer; width:100%; font-size:0.85rem; text-align:center;">
-                Xoay thử la bàn
+                style="background:${colorStyle}; color:#000; border:none; padding:6px 12px; border-radius:5px; font-weight:bold; cursor:pointer; align-self:center; margin-left:10px;">
+                Xoay thử
             </button>
         `;
         directionsContainer.appendChild(div);
@@ -1089,42 +1072,43 @@ const VAN_DATA = {
 
 function sinhLuanGiaiThienThoi(code) {
     const currentYear = new Date().getFullYear();
-    // Thuật toán động dịch chuyển đại vận trạch tinh tự động suốt đời
+    // Tính vận dựa trên năm hiện tại
     let vanSo = Math.floor((currentYear - 1864) / 20) % 9 + 1;
     const item = VAN_DATA[vanSo] ? VAN_DATA[vanSo][code] : null;
 
-    if (!item) return `<p style="color: #666; padding: 10px;">Chưa có dữ liệu thiên thời cho phương vị này.</p>`;
+    if (!item) return `<p style="color: #666; padding: 10px;">Chưa có dữ liệu cho phương vị này.</p>`;
 
+    // --- LỜI KHUYÊN HÀNH ĐỘNG ---
     const getAdvice = (loai) => {
         const adviceMap = {
-            best: "👉 Cát khí đương vượng, ưu tiên lập kế hoạch đại sự, khai trương, nhập trạch.",
-            good: "👉 Vận khí hanh thông, trường khí có sự tăng trưởng, thích hợp để phát triển học tập.",
-            neutral: "👉 Khí trường bình hòa, giữ vững ổn định và thận trọng trong các quyết định.",
-            bad: "👉 Tiết khí suy thoái, cẩn thận trong các mối quan hệ xã hội và quản lý tiền của.",
-            worst: "⚠️ ĐẠI HUNG SÁT TINH: Tuyệt đối kỵ việc động thổ, khoan đục hay phá dỡ cấu trúc phương vị này."
+            best: "👉 Cát khí vượng, ưu tiên việc quan trọng, khai trương, nhập trạch.",
+            good: "👉 Vận khí hanh thông, thích hợp để phát triển công việc, học tập.",
+            neutral: "👉 Bình hòa, giữ ổn định và cẩn trọng trong các quyết định.",
+            bad: "👉 Cẩn thận trong lời ăn tiếng nói và các mối quan hệ xã hội.",
+            worst: "⚠️ ĐẠI HUNG: Tuyệt đối không động thổ, sửa chữa tại phương vị này."
         };
         return adviceMap[loai] || "";
     };
 
-    const colorMap = { best: "#30d158", good: "#aaff00", neutral: "#e0e0e0", bad: "#ff9f0a", worst: "#ff3b30" };
+    const colorMap = { best: "#00ff00", good: "#aaff00", neutral: "#e0e0e0", bad: "#ffaa00", worst: "#ff0000" };
     const colorStar = colorMap[item.loai] || "#fff";
 
     return `
-        <div style="background: rgba(255,255,255,0.01); padding: 15px; border-radius: 12px; border: 1px solid rgba(223,183,108,0.2); margin-top: 15px;">
-            <div style="color: var(--gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 5px; font-weight:bold;">
-                ◆ HUYỀN KHÔNG VẬN ${vanSo} — NIÊN ĐỘ LỊCH PHÁP ${currentYear}
+        <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; border: 1px solid #555; margin-top: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+            <div style="color: #0a84ff; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 5px;">
+                ◆ HUYỀN KHÔNG VẬN ${vanSo} (${currentYear})
             </div>
             
-            <div style="margin: 5px 0 10px 0; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 10px;">
-                <span style="color: ${colorStar}; font-size: 1.2rem; font-weight: 800;">${item.sao}</span>
-                <span style="color: #aaa; font-size: 0.85rem; margin-left: 8px;">• Ngũ Hành: ${item.hanh}</span>
+            <div style="margin: 5px 0 10px 0; border-bottom: 1px solid #444; padding-bottom: 10px;">
+                <span style="color: ${colorStar}; font-size: 1.3rem; font-weight: 800;">${item.sao}</span>
+                <span style="color: #aaa; font-size: 0.9rem; margin-left: 8px;">• Hành: ${item.hanh}</span>
             </div>
             
-            <div style="color: #ddd; font-size: 0.88rem; line-height: 1.6; margin-bottom: 12px;">
+            <div style="color: #eee; font-size: 0.95rem; line-height: 1.5; margin-bottom: 12px;">
                 ${item.y_nghia}
             </div>
             
-            <div style="color: ${colorStar}; font-size: 0.85rem; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 6px; border-left: 3px solid ${colorStar}; font-weight:500;">
+            <div style="color: ${colorStar}; font-size: 0.85rem; font-style: italic; background: rgba(255,255,255,0.06); padding: 10px; border-radius: 6px; border-left: 3px solid ${colorStar};">
                 ${getAdvice(item.loai)}
             </div>
         </div>`;
@@ -1132,7 +1116,7 @@ function sinhLuanGiaiThienThoi(code) {
 
 const DATA_HOA_GIAI = {
     'Tuyệt Mệnh': {
-        'Mộc': { phap: 'Tuyệt Mệnh sát thuộc Kim trực tiếp khắc hại bản mệnh Mộc của gia chủ, lại tọa lạc ở phương vị \${phuongHuong} (\${hanhPhuongVi}). Đây là thế trận cực hung "Quỷ Sai Lộ Xương", tàn phá nghiêm trọng cả sức khỏe lẫn tài lộc, khiến sự nghiệp dễ bị gián đoạn, gia đạo bất an.', vat: 'Sử dụng vật phẩm hành Thủy cao cấp như <strong>Hồ Lô Thủy Tinh Xanh Lam</strong> hoặc <strong>Bình Nước An Nhẫn Phong Thủy</strong> đặt tại phương vị này. Thủy đóng vai trò cầu nối chuyển hóa liên hoàn (Kim sát sinh Thủy - Thủy tương sinh bồi đắp Mộc mệnh), vừa hóa giải triệt để tính hung ác của Tuyệt Mệnh Kim, vừa quay lại nuôi dưỡng bản thể chủ mệnh phát triển viên mãn, mang lại vượng khí lâu dài.' },
+        'Mộc': { phap: 'Tuyệt Mệnh sát thuộc Kim trực tiếp khắc hại bản mệnh Mộc của gia chủ, lại tọa lạc ở phương vị ${phuongHuong} (${hanhPhuongVi}). Đây là thế trận cực hung "Quỷ Sai Lộ Xương", tàn phá nghiêm trọng cả sức khỏe lẫn tài lộc, khiến sự nghiệp dễ bị gián đoạn, gia đạo bất an.', vat: 'Sử dụng vật phẩm hành Thủy cao cấp như <strong>Hồ Lô Thủy Tinh Xanh Lam</strong> hoặc <strong>Bình Nước An Nhẫn Phong Thủy</strong> đặt tại phương vị này. Thủy đóng vai trò cầu nối chuyển hóa liên hoàn (Kim sát sinh Thủy - Thủy tương sinh bồi đắp Mộc mệnh), vừa hóa giải triệt để tính hung ác của Tuyệt Mệnh Kim, vừa quay lại nuôi dưỡng bản thể chủ mệnh phát triển viên mãn, mang lại vượng khí lâu dài.' },
         'Hỏa': { phap: 'Tuyệt Mệnh Kim sát gặp Cung Mệnh Hỏa của gia chủ. Mặc dù Hỏa mệnh có thể khắc chế được Kim sát, nhưng bản thể gia chủ sẽ bị hao tổn nguyên khí và kiệt quệ sinh lực rất nặng khi phải gồng gánh chống chọi lâu dài với Sát tinh tại phương vị này.', vat: 'Bố trí linh vật thuộc hành Mộc tinh khiết như <strong>Hồ Lô Gỗ Đào Lâu Năm Kinh Chú</strong> hoặc <strong>Gậy Như Ý Gỗ Sưa</strong>. Mộc đóng vai trò chất xúc tác làm dịu sự xung đột mạch khí giữa phương vị và bản mệnh, đồng thời gia tăng Hỏa lực chính khí nội tại giúp gia chủ thiêu rụi triệt để tà khí Tuyệt Mệnh, chuyển hung thành cát.' },
         'Thổ': { phap: 'Tuyệt Mệnh Kim sát hút cạn sinh khí từ Cung Mệnh Thổ của gia chủ (Thổ phải sinh xuất nuôi Kim hung tinh), khiến gia đạo lâm vào thế hao tài tốn của, sức khỏe suy kiệt lâm bệnh hiểm nghèo.', vat: 'Đặt một <strong>Cặp Tỳ Hưu bằng Đá Thạch Anh Đỏ hoặc Hồng</strong> (thuộc hành Hỏa) tại vị trí này. Năng lượng Hỏa thần từ đá tự nhiên sẽ trực tiếp thiêu đốt, áp chế và tiêu diệt Tuyệt Mệnh Kim sát, đồng thời Hỏa sinh Thổ bồi hoàn lại năng lượng gốc bệ vững cho bản mệnh gia chủ, giúp gia đạo vững vàng vượt qua tai ương.' },
         'Kim': { phap: 'Tuyệt Mệnh Kim sát đồng hành cùng bản mệnh Kim tạo nên thế trận "Tỷ Kiếp Trợ Sát", làm sát khí hệ Kim kết tụ lại dồn dập, đẩy mạnh họa phá sản và tai nạn bất ngờ lên mức cực đại.', vat: 'Bài trí <strong>Quả Cầu Thạch Anh Đen</strong> hoặc <strong>Đĩa Thất Tinh Thạch Anh Khói</strong> (thuộc hành Thủy) để tiết hao, rút cạn năng lượng dư thừa của Tuyệt Mệnh Kim sát một cách êm dịu nhất mà không làm tổn hại hay xung đột đến bản mệnh Kim của gia chủ.' },
@@ -1142,7 +1126,7 @@ const DATA_HOA_GIAI = {
         'Kim': { phap: 'Ngũ Quỷ Hỏa tinh thiêu đốt trực diện Cung Mệnh Kim của gia chủ, tạo thế trận "Lửa Thiêu Cốt Tủy", sinh ra tai họa hoạn nạn ập đến bất ngờ, thị phi quấy phá khốc liệt và hao tán tài sản thần tốc.', vat: 'Đặt một <strong>Đĩa Thất Tinh Thạch Anh Vàng</strong> hoặc <strong>Tượng Tỳ Hưu Ngọc Hoàng Long Nguyên Khối</strong> (thuộc hành Thổ). Thổ đóng vai trò lá chắn tối thượng hút hết hỏa khí hung tàn của Ngũ Quỷ, sau đó Thổ lại quay sang tương sinh chuyển hóa bồi bổ năng lượng cường đại cho mệnh Kim của chủ nhà.' },
         'Mộc': { phap: 'Ngũ Quỷ Hỏa tinh rút cạn tinh huyết năng lượng của Cung Mệnh Mộc (Mộc phải sinh xuất cho Hỏa sát), khiến gia chủ hao mòn trí lực, kinh doanh thua lỗ, gia đạo lục đục không yên.', vat: 'Treo <strong>Chuông Gió Đồng Pháp Khí 6 Thanh</strong> kết hợp đặt <strong>Tháp Văn Xương Bằng Đồng Nguyên Khối</strong> (thuộc hành Kim). Kim lực mạnh mẽ sẽ chặt đứt mạch liên kết tà tính của Hỏa tinh tại phương vị này, giải phóng bản mệnh Mộc khỏi thế kiệt quệ.' },
         'Thủy': { phap: 'Cung Mệnh Thủy xung đột trực diện kịch liệt với Ngũ Quỷ Hỏa tinh, hình thành cục diện đại kỵ "Thủy Hỏa Vị Tế", làm dòng khí trong nhà đảo điên, vợ chồng ly tán, tinh thần bất an.', vat: 'Sử dụng vật phẩm chứa linh khí Mộc cao như <strong>Hồ Lô Gỗ Đào Tự Nhiên Thần Chú</strong> hoặc <strong>Tranh Trúc Chỉ Phong Thủy</strong> tại phương vị này để chuyển hóa tương khắc thành thế sinh sát thuần khiết: Thủy sinh Mộc - Mộc sinh Hỏa (thuần hóa thuần thục ác tính Ngũ Quỷ thành ngọn lửa sinh hoạt lành tính).' },
-        'Hỏa': { phap: 'Ngũ Quỷ Hỏa kết hợp với bản mệnh Hỏa tạo thành ngọn lửa hung tàn thiêu rụi toàn bộ hậu vận, khiến tính khí thành viên gia đình nóng nảy thất thường, dễ vướng vào tranh chấp luật pháp bĩ cực.', vat: 'Bố trí một <strong>Lu Nước Phong Thủy Tuần Hoàn Màu Đen</strong> hoặc đặt <strong>Quả Cầu Thạch Anh Tím trên Đế Thạch Anh Thô</strong> (thuộc hành Thổ) giúp hấp thu toàn bộ nhiệt lượng tiêu cực dư thừa, bình ổn hoàn toàn trật tự năng lượng.' },
+        'Hỏa': { phap: 'Ngũ Quỷ Hỏa kết hợp with bản mệnh Hỏa tạo thành ngọn lửa hung tàn thiêu rụi toàn bộ hậu vận, khiến tính khí thành viên gia đình nóng nảy thất thường, dễ vướng vào tranh chấp luật pháp bĩ cực.', vat: 'Bố trí một <strong>Lu Nước Phong Thủy Tuần Hoàn Màu Đen</strong> hoặc đặt <strong>Quả Cầu Thạch Anh Tím trên Đế Thạch Anh Thô</strong> (thuộc hành Thổ) giúp hấp thu toàn bộ nhiệt lượng tiêu cực dư thừa, bình ổn hoàn toàn trật tự năng lượng.' },
         'Thổ': { phap: 'Mệnh Thổ vô tình hấp thụ năng lượng Hỏa từ Ngũ Quỷ tinh. Dù là mối quan hệ sinh nhưng do nạp phải dòng khí độc hại của sát tinh, gia chủ dễ rơi vào trạng thái trì trệ, suy nghĩ tiêu cực, chịu nhiều u uất.', vat: 'Sử dụng <strong>Gương Bát Quái Gỗ Đào</strong> ở cửa hoặc đặt <strong>Cặp Kỳ Lân Bằng Đồng</strong> (thuộc hành Kim) tại phương vị này nhằm tiết giảm triệt để Thổ khí đã bị nhiễm độc tà khí, trả lại sự thanh tịnh cho dương trạch.' }
     },
     'Lục Sát': {
@@ -1169,14 +1153,13 @@ function sinhMatPhapHoaGiai(mucDich, cungSat, hanhChu, phuongHuong, code) {
     let data = DATA_HOA_GIAI[cungSat] ? DATA_HOA_GIAI[cungSat][hanhChu] : null;
     if (!data) return `<div style="padding:10px; color:#777; font-style:italic;">Dữ liệu pháp bảo điều tiết chưa được thiết lập cho cung vị này.</div>`;
 
-    // Sửa lỗi vỡ HTML bằng bộ xử lý Regex toàn cục an toàn thay thế biến động ${}
+    // Thay thế các biến động trong văn bản gốc một cách an toàn chống vỡ HTML
     let phuongPhapBaoQuoc = data.phap.replace(/\${phuongHuong}/g, phuongHuong).replace(/\${hanhPhuongVi}/g, hanhPhuongVi);
     let vatPhamToiThuong = data.vat;
     
     const currentConfig = ConfigPhongThuy[mucDich] || { title: "Vị trí hạng mục", isCat: true };
     let thuyetMinhViTri = "";
     
-    // Đã làm sạch lỗi văn phong chính tả "đối đối", "uế uế" từ hàm gốc
     if (currentConfig.isCat) {
         thuyetMinhViTri = `Cấu trúc đang thiết lập nhìn về phương vị bị phạm đại kỵ Sát tinh <strong>${cungSat}</strong>. Phương án điều hòa khí trường: ${phuongPhapBaoQuoc}`;
     } else if (mucDich === 'kitchen') {
@@ -1234,7 +1217,6 @@ function getLuanDoanChiTiet(huong, son) {
         ` : ''}
     </div>`;
 }
-
 function updateCompassUI(heading) {
     // 1. TÍNH GÓC THỰC TẾ (Đã bù trừ độ lệch từ trường tuyệt đối)
     let trueHeading = (heading + (magneticDeclination % 360) + 360) % 360;
@@ -1861,7 +1843,6 @@ function getHuongDoiXung(huong) {
     const map = { "Bắc": "Nam", "Nam": "Bắc", "Đông": "Tây", "Tây": "Đông", "Đông Bắc": "Tây Nam", "Tây Nam": "Đông Bắc", "Đông Nam": "Tây Bắc", "Tây Bắc": "Đông Nam" };
     return map[huong] || huong;
 }
-
 function renderMultiLayerDetail(result, van, degree) {
     if (!result) return;
 
@@ -2106,6 +2087,7 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich) {
         hauInfo: hauInfo
     };
 }
+
 
 function showExplanation(sonName, textInfo, solInfo) {
     const modal = document.getElementById('infoModal');
