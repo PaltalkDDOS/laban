@@ -1430,8 +1430,3 @@ mjx-container {
     max-height: 0;
     opacity: 0;
 }
-/* Hiệu ứng bóng đổ Neon tối ưu hóa bằng phần cứng, tuyệt đối không gây lag la bàn */
-.neon-sao-phuc-duc {
-    filter: drop-shadow(0 0 2px #d4af37);
-    will-change: transform, opacity;
-}
