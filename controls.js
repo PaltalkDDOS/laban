@@ -3592,3 +3592,38 @@ if ('serviceWorker' in navigator) {
             .catch(err => console.error('Lỗi kích hoạt PWA:', err));
     });
 }
+// --- BỘ BẮT SỰ KIỆN CÀI ĐẶT PWA DÀNH CHO ANDROID / PC ---
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Ngăn chặn Chrome tự động hiện banner mặc định dạng cũ
+    e.preventDefault();
+    // Lưu lại sự kiện để kích hoạt khi người dùng bấm nút custom của bạn
+    deferredPrompt = e;
+    
+    // Tìm hoặc tạo một nút Cài đặt trên giao diện của bạn
+    // Ví dụ: Bạn có một nút bấm có id là "btn-install-pwa" trên HTML
+    const installBtn = document.getElementById('btn-install-pwa');
+    if (installBtn) {
+        installBtn.style.display = 'block'; // Hiện nút cài đặt lên
+        
+        installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            // Kích hoạt hộp thoại cài đặt hệ thống của Chrome
+            deferredPrompt.prompt();
+            // Chờ người dùng phản hồi (Đồng ý cài hoặc Hủy)
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`Người dùng đã chọn: ${outcome}`);
+            // Xóa bộ nhớ đệm sự kiện vì nó chỉ dùng được 1 lần
+            deferredPrompt = null;
+            installBtn.style.display = 'none'; // Ẩn nút đi sau khi cài xong
+        });
+    }
+});
+
+// Tự động ẩn nút nếu người dùng đã cài ứng dụng rồi
+window.addEventListener('appinstalled', (evt) => {
+    console.log('Ứng dụng La Bàn đã được cài đặt thành công thành App điện thoại!');
+    const installBtn = document.getElementById('btn-install-pwa');
+    if (installBtn) installBtn.style.display = 'none';
+});
