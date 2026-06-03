@@ -3585,6 +3585,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+
 // Bộ kích hoạt đăng ký PWA & Nạp Manifest thông minh (CHỐNG LỖI CORS & PROTOCOL OFFLINE)
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -3633,3 +3634,86 @@ window.addEventListener('appinstalled', (evt) => {
     const installBtn = document.getElementById('btn-install-pwa');
     if (installBtn) installBtn.style.display = 'none';
 });
+
+// ====================== BỘ BẮT MÔI TRƯỜNG PWA THÔNG MINH CHỐNG HIỆN LẠI NÚT ======================
+
+function kiemTraVaAnNutNeuDaCaiApp() {
+    // Kiểm tra xem người dùng có đang mở bằng giao diện App (Standalone) hay không
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    
+    if (isStandalone) {
+        console.log('Hệ thống phát hiện: Người dùng đang sử dụng App độc lập. Tự động ẩn toàn bộ nút cài đặt.');
+        
+        // Tiến hành ẩn triệt để nút bấm và dòng hướng dẫn thủ công
+        const installBtn = document.getElementById('btn-install-pwa');
+        const manualGuide = document.getElementById('pwa-manual-guide');
+        
+        if (installBtn) installBtn.style.setProperty('display', 'none', 'important');
+        if (manualGuide) manualGuide.style.setProperty('display', 'none', 'important');
+        return true;
+    }
+    return false;
+}
+
+// Bộ kích hoạt đăng ký PWA & Nạp Manifest thông minh
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        if (window.location.protocol === 'file:') {
+            console.log('Chế độ test offline (file:///): Tự động tắt Service Worker và Manifest để tránh lỗi CORS.');
+            return; 
+        }
+
+        // Chạy kiểm tra lập tức khi vừa tải xong trang
+        if (kiemTraVaAnNutNeuDaCaiApp()) return;
+
+        // Nếu không phải đang ở trong App, tiến hành nạp manifest và đăng ký như bình thường
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = './manifest.json';
+        document.head.appendChild(link);
+
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('PWA Service Worker đã kích hoạt thành công!', reg))
+            .catch(err => console.error('Lỗi kích hoạt PWA:', err));
+    });
+}
+
+// --- BỘ BẮT SỰ KIỆN CÀI ĐẶT DÀNH CHO ANDROID / PC (ĐÃ THÊM LỚP CHẶN ĐỒNG BỘ) ---
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+    // CHỐT CHẶN TỐI CAO: Nếu đã cài app rồi thì chặn đứng sự kiện mời cài đặt, không cho nút hiện lên
+    if (kiemTraVaAnNutNeuDaCaiApp()) return;
+
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    const installBtn = document.getElementById('btn-install-pwa');
+    if (installBtn) {
+        // Chỉ hiện nút khi không ở trong chế độ App
+        if (!window.matchMedia('(display-mode: standalone)').matches) {
+            installBtn.style.display = 'flex'; // Ép kiểu flex theo CSS Premium của bạn
+        }
+        
+        installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`Người dùng đã chọn: ${outcome}`);
+            deferredPrompt = null;
+            installBtn.style.display = 'none';
+        });
+    }
+});
+
+window.addEventListener('appinstalled', (evt) => {
+    console.log('Ứng dụng đã được cài đặt thành công!');
+    kiemTraVaAnNutNeuDaCaiApp(); // Chạy lệnh ẩn ngay khi vừa cài xong
+});
+
+// Lắng nghe liên tục sự thay đổi môi trường hiển thị để xử lý tức thời
+window.matchMedia('(display-mode: standalone)').addEventListener('change', (evt) => {
+    if (evt.matches) {
+        kiemTraVaAnNutNeuDaCaiApp();
+    }
+});
+// Bộ kích hoạt đăng ký PWA & Nạp Manifest thông minh (Cui Ham ket Thuc)
