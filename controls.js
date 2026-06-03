@@ -3659,6 +3659,8 @@ window.addEventListener('beforeinstallprompt', async (e) => {
     deferredPrompt = e;
     
     const installBtn = document.getElementById('btn-install-pwa');
+    const manualGuide = document.getElementById('pwa-manual-guide');
+    
     if (installBtn) {
         if (!window.matchMedia('(display-mode: standalone)').matches) {
             installBtn.style.display = 'flex';
