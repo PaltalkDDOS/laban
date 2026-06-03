@@ -2108,10 +2108,8 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich) {
 }
 
 // ==========================================================================
-// HỆ THỐNG ĐIỀU HÀNH LA BÀN PHONG THỦY - PHIÊN BẢN SIÊU MƯỢT & TỐI ƯU SÂU 2026
+// THUẬT TOÁN KIM QUAY LA BÀN - PHIÊN BẢN TỐI ƯU (MƯỢT + ỔN ĐỊNH)
 // ==========================================================================
-
-// --- BIẾN TOÀN CỤC LUỒNG KIM QUAY ---
 let lastHeading = null;
 let orientationListenerAdded = false;
 let rafId = null;
@@ -2121,34 +2119,22 @@ const SMOOTH_MIN = 0.08;
 const SMOOTH_MAX = 0.55;
 const THROTTLE_MS = 16; // ~60fps
 
-// --- BIẾN TOÀN CỤC ĐỊA TỪ & IOS ACCURACY ---
-let magneticDeclination = 0;
+// Thêm 2 biến toàn cục này vào đầu file nếu chưa có
 let lastAccuracy = 0; 
 let isMagneticWarningActive = false;
 
-/**
- * 1. TRÌNH XỬ LÝ SỰ KIỆN ĐỊA HƯỚNG (DEVICE ORIENTATION)
- */
 function handleOrientation(event) {
     let rawHeading = null;
-    const now = Date.now();
     
-    // --- LỚP TỰ ĐỘNG THÔNG MINH CHO IOS (KHÔNG LO LÀM NÓNG MÁY) ---
+    // 1. LẤY DỮ LIỆU VÀ GIÁM SÁT NHIỄU
+    // iOS cung cấp webkitCompassAccuracy (độ sai số)
     const accuracy = event.webkitCompassAccuracy;
-    if (accuracy !== undefined && accuracy !== null && accuracy >= 0) {
-        // Chỉ cập nhật DOM khi độ lệch accuracy thay đổi đáng kể (> 3 độ) 
-        // hoặc khi trạng thái cảnh báo nhiễu cần thay đổi.
-        if (Math.abs(accuracy - lastAccuracy) > 3 || 
-           (accuracy > 15 && lastAccuracy <= 15) || 
-           (accuracy > 30 && lastAccuracy <= 30) ||
-           (accuracy <= 15 && lastAccuracy > 15)) {
-            
-            lastAccuracy = accuracy;
-            updateMagneticStatus(accuracy); 
-        }
+    if (accuracy !== undefined && accuracy !== null) {
+        lastAccuracy = accuracy;
+        // Cập nhật đèn báo hoặc Toast nếu nhiễu > 25 độ
+        updateMagneticStatus(accuracy); 
     }
 
-    // --- LẤY DỮ LIỆU GÓC QUAY GỐC ---
     if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
         rawHeading = event.webkitCompassHeading;
     } else if (event.alpha !== undefined && event.alpha !== null) {
@@ -2157,11 +2143,15 @@ function handleOrientation(event) {
     
     if (rawHeading === null) return;
 
-    // --- CỘNG ĐỘ LỆCH TỪ PHONG THỦY CHÍNH XÁC ---
+    // 2. CỘNG ĐỘ LỆCH TỪ (MAGNETIC DECLINATION)
+    // Đây là bước quan trọng nhất để tính toán Phong Thủy chính xác
+    // magneticDeclination là biến chúng ta đã tính từ GPS/IP hoặc nhập tay
     rawHeading = (rawHeading + (magneticDeclination || 0) + 360) % 360;
 
-    // --- CƠ CHẾ KHÓA KHI ĐANG NHẬP LIỆU & THROTTLE KIM ---
+    // 3. CƠ CHẾ KHÓA & THROTTLE
     if (document.activeElement?.id === 'compassSlider') return;
+
+    const now = Date.now();
     if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
     lastUpdateTime = now;
 
@@ -2172,7 +2162,7 @@ function handleOrientation(event) {
         return;
     }
 
-    // --- THUẬT TOÁN LỌC MƯỢT ĐỘNG ---
+    // 4. THUẬT TOÁN LỌC MƯỢT ĐỘNG (GIỮ NGUYÊN VÌ ĐÃ TỐT)
     let diff = rawHeading - lastHeading;
     if (diff > 180) diff -= 360;
     if (diff < -180) diff += 360;
@@ -2189,53 +2179,79 @@ function handleOrientation(event) {
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
 
-    // --- CẬP NHẬT GIAO DIỆN QUA RAF ---
+    // 5. CẬP NHẬT GIAO DIỆN QUA RAF
     if (rafId) cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(() => {
         executeUIUpdate(lastHeading);
     });
 }
 
-/**
- * 2. CÁC HÀM CẬP NHẬT GIAO DIỆN LA BÀN
- */
+// Hàm phụ trợ để đóng gói các lệnh cập nhật UI
 function executeUIUpdate(heading) {
     if (typeof updateCompassUI === 'function') updateCompassUI(heading);
     if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(heading);
     if (typeof recalculateFate === 'function') recalculateFate();
 }
 
-// Cập nhật trạng thái nhiễu dành riêng cho phần cứng iOS (Đã tối ưu giảm tải DOM)
+// Hàm cập nhật trạng thái nhiễu (Hiển thị đèn báo)
 function updateMagneticStatus(acc) {
     const dot = document.getElementById('accuracy-dot');
     const text = document.getElementById('accuracy-text');
     if (!dot || !text) return;
 
-    let bg = '#4caf50', txt = "TÍN HIỆU TỐT";
-    
-    if (acc > 15 && acc <= 30) {
-        bg = '#ff9800';
-        txt = "NHIỄU NHẸ";
-    } else if (acc > 30) {
-        bg = '#f44336';
-        txt = "NHIỄU NẶNG";
-        
+    if (acc <= 15) {
+        dot.style.background = '#4caf50'; // Xanh
+        text.innerText = "TÍN HIỆU TỐT";
+    } else if (acc <= 30) {
+        dot.style.background = '#ff9800'; // Vàng
+        text.innerText = "NHIỄU NHẸ";
+    } else {
+        dot.style.background = '#f44336'; // Đỏ
+        text.innerText = "NHIỄU NẶNG";
+        // Chỉ hiện Toast một lần để không gây phiền
         if (typeof showToast === 'function' && !isMagneticWarningActive) {
             showToast("⚠️ Nhiễu từ trường! Hãy tránh xa sắt thép", true);
             isMagneticWarningActive = true;
             setTimeout(() => { isMagneticWarningActive = false; }, 10000);
         }
     }
+}
+function updateAccuracyDisplay(acc) {
+    const dot = document.getElementById('accuracy-dot');
+    const text = document.getElementById('accuracy-text');
+    if (!dot || !text) return;
 
-    // Cơ chế chặn ghi đè DOM trùng lặp
-    if (text.innerText !== txt) {
-        dot.style.background = bg;
-        text.innerText = txt;
+    // Nếu acc = -1 hoặc chưa có dữ liệu, coi như đang chờ tín hiệu
+    if (acc < 0) {
+        dot.style.background = '#888';
+        text.innerText = "ĐANG QUÉT TÍN HIỆU...";
+        return;
+    }
+
+    if (acc <= 15) {
+        dot.style.background = '#4caf50'; 
+        text.innerText = "TÍN HIỆU TỐT";
+    } else if (acc <= 30) {
+        dot.style.background = '#ff9800'; 
+        text.innerText = "NHIỄU NHẸ";
+    } else {
+        dot.style.background = '#f44336'; 
+        text.innerText = "NHIỄU NẶNG - HÃY XOAY MÁY";
+        
+        if (typeof showToast === 'function' && !window.isToastShowing) {
+             showToast("⚠️ Nhiễu từ trường! Hãy tránh xa vật kim loại", true);
+             // Gắn cờ để không hiện Toast liên tục gây phiền
+             window.isToastShowing = true;
+             setTimeout(() => { window.isToastShowing = false; }, 5000);
+        }
     }
 }
 
+// ====================== TRÌNH ĐIỀU KHIỂN ĐỊA TỪ SIÊU CẤP 2026 ======================
+let magneticDeclination = 0;
+
 /**
- * 3. HÀM HIỂN THỊ THÔNG BÁO TOAST SANG TRỌNG
+ * HÀM HIỂN THỊ THÔNG BÁO SANG TRỌNG (THAY ALERT)
  */
 function showToast(message, isError = false) {
     const container = document.getElementById('toast-container');
@@ -2261,45 +2277,17 @@ function showToast(message, isError = false) {
     setTimeout(() => toast.remove(), 3000);
 }
 
-// Thêm keyframes cho hiệu ứng Toast vào tài liệu
-if (typeof window !== 'undefined') {
-    const styleSheet = document.createElement("style");
-    styleSheet.innerText = `
-        @keyframes toastIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes toastOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
-    `;
-    document.head.appendChild(styleSheet);
-}
+// Thêm keyframes cho hiệu ứng Toast vào đầu file hoặc CSS
+const styleSheet = document.createElement("style");
+styleSheet.innerText = `
+    @keyframes toastIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes toastOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
+`;
+document.head.appendChild(styleSheet);
 
 /**
- * 4. THUẬT TOÁN ĐỊA TỪ TOÀN CẦU & LÀM SẠCH DỮ LIỆU ĐẦU VÀO
+ * THUẬT TOÁN WMM-LITE 2026
  */
-function getCleanValue(raw) {
-    if (!raw) return ''; 
-    let str = String(raw).trim().replace(/,/g, '.'); 
-    let isNegative = str.startsWith('-');
-    let processStr = isNegative ? str.substring(1) : str;
-    
-    let numericPart = "";
-    let dotCount = 0;
-    
-    for (let i = 0; i < processStr.length; i++) {
-        let char = processStr[i];
-        if (char >= '0' && char <= '9') {
-            numericPart += char;
-        } else if (char === '.' && dotCount === 0) {
-            numericPart += char;
-            dotCount = 1;
-        } else {
-            break; 
-        }
-    }
-    
-    if (numericPart.endsWith('.')) numericPart = numericPart.slice(0, -1);
-    let res = (isNegative ? '-' : '') + (numericPart || '');
-    return (res === '-' || res === '') ? '' : res;
-}
-
 function calculateGlobalDeclination(lat, lon) {
     try {
         const phi = lat * Math.PI / 180;
@@ -2323,6 +2311,9 @@ function calculateGlobalDeclination(lat, lon) {
     } catch (e) { return 0; }
 }
 
+/**
+ * CƠ CHẾ PHÒNG THỦ IP
+ */
 async function fallbackIPGeolocation() {
     if (navigator.onLine) {
         try {
@@ -2353,8 +2344,8 @@ function updateMagneticDeclination() {
     let val = input.value;
     magneticDeclination = (val === '-' || val === '.' || val.trim() === '') ? 0 : parseFloat(val) || 0;
     
-    if (typeof updateCompassUI === 'function' && typeof lastHeading === 'number') {
-        updateCompassUI(lastHeading);
+    if (typeof updateCompassUI === 'function' && typeof currentHeading !== 'undefined') {
+        updateCompassUI(currentHeading);
     }
 }
 
@@ -2405,24 +2396,12 @@ async function autoDetectDeclination() {
 }
 
 function calculateRemoteDeclination() {
-    const latEl = document.getElementById('remote-lat');
-    const lonEl = document.getElementById('remote-lon');
+    const latV = parseFloat(document.getElementById('remote-lat').value);
+    const lonV = parseFloat(document.getElementById('remote-lon').value);
     const rBtn = document.getElementById('remote-calc-btn');
-    
-    if (!latEl || !lonEl) return;
-    const latStr = latEl.value.trim();
-    const lonStr = lonEl.value.trim();
 
-    if (latStr === '' || lonStr === '') {
+    if (isNaN(latV) || isNaN(lonV)) {
         showToast("⚠️ Vui lòng nhập đủ tọa độ!", true);
-        return;
-    }
-
-    const latV = parseFloat(latStr);
-    const lonV = parseFloat(lonStr);
-
-    if (isNaN(latV) || isNaN(lonV) || (latV === 0 && lonV === 0)) {
-        showToast("⚠️ Tọa độ không hợp lệ!", true);
         return;
     }
 
@@ -2445,78 +2424,53 @@ function toggleDeclinationPanel(show) {
     if (m) m.style.display = show ? 'flex' : 'none';
 }
 
-function parseSmartNumeric(val, maxVal) {
-    if (!val || val.trim() === '') return null;
-
-    let str = val.trim().replace(/,/g, '.');
-    let isNegative = str.startsWith('-');
-    let processStr = isNegative ? str.substring(1) : str;
-    let numericPart = "";
-    let dotCount = 0;
-
-    for (let i = 0; i < processStr.length; i++) {
-        let char = processStr[i];
-        if (char >= '0' && char <= '9') {
-            numericPart += char;
-        } else if (char === '.' && dotCount === 0) {
-            numericPart += char;
-            dotCount = 1;
-        } else {
-            break;
-        }
-    }
-    
-    if (numericPart.endsWith('.')) numericPart = numericPart.slice(0, -1);
-    const finalVal = parseFloat((isNegative ? '-' : '') + (numericPart || '0'));
-    
-    return isNaN(finalVal) ? null : finalVal;
-}
-
-/**
- * 5. KHỞI TẠO BỘ LẮNG NGHE INPUT FORM ĐỊA TỪ
- */
 document.addEventListener('DOMContentLoaded', () => {
-    const configs = {
-        'declination-input': { max: 180, limit: 7 },
-        'remote-lat': { max: 90, limit: 10 },
-        'remote-lon': { max: 180, limit: 11 }
-    };
+    const inputs = [
+        { id: 'declination-input', max: 180 },
+        { id: 'remote-lat', max: 90 },
+        { id: 'remote-lon', max: 180 }
+    ];
 
-    Object.keys(configs).forEach(id => {
-        const el = document.getElementById(id);
+    inputs.forEach(cfg => {
+        const el = document.getElementById(cfg.id);
         if (!el) return;
 
-        el.addEventListener('input', () => {
-            const cfg = configs[id];
-            let raw = el.value;
+        el.addEventListener('input', (e) => {
+            let val = el.value;
 
-            if (raw === '') return;
-
-            const clean = parseSmartNumeric(raw, cfg.max);
+            // 1. Chỉ cho phép các ký tự: số, dấu chấm, dấu trừ
+            // 2. Chống nhập nhiều dấu trừ, dấu trừ chỉ được ở đầu
+            val = val.replace(/[^0-9.-]/g, ''); 
+            if (val.split('-').length > 2) val = '-' + val.replace(/-/g, '');
+            if (val.indexOf('-') > 0) val = val.replace('-', '');
             
-            if (/[a-zA-Z!@#$%^&*()_+={}\[\]:;"'<>?\/\\|]/.test(raw)) {
-                el.value = clean !== null ? clean.toString() : '';
+            // 3. Chống nhập nhiều dấu chấm
+            const parts = val.split('.');
+            if (parts.length > 2) val = parts[0] + '.' + parts.slice(1).join('');
+
+            el.value = val;
+
+            // 4. Kiểm tra Logic khi người dùng nhập xong số
+            const num = parseFloat(val);
+            if (!isNaN(num)) {
+                if (Math.abs(num) > cfg.max) {
+                    showToast(`⚠️ Tối đa là ±${cfg.max}`, true);
+                    el.value = val.slice(0, -1); // Xóa ký tự cuối nếu vượt ngưỡng
+                }
             }
 
-            if (el.value.length > cfg.limit) {
-                el.value = el.value.slice(0, cfg.limit);
-            }
-
-            if (id === 'declination-input') updateMagneticDeclination();
+            if (cfg.id === 'declination-input') updateMagneticDeclination();
         });
 
-        el.addEventListener('blur', () => {
-            const cfg = configs[id];
-            const clean = parseSmartNumeric(el.value, cfg.max);
-            
-            if (clean !== null) {
-                let clamped = Math.max(-cfg.max, Math.min(cfg.max, clean));
-                el.value = clamped.toString();
-            } else {
-                el.value = ''; 
-            }
-            
-            if (id === 'declination-input') updateMagneticDeclination();
+        // Tự động xóa số 0 thừa khi focus và trả về 0 nếu trống khi blur
+        el.addEventListener('focus', () => { if(el.value === '0') el.value = ''; });
+        el.addEventListener('blur', () => { 
+            if(el.value === '' || el.value === '-') el.value = '0'; 
+            updateMagneticDeclination();
+        });
+
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { el.blur(); toggleDeclinationPanel(false); }
         });
     });
 });
@@ -3160,28 +3114,100 @@ function render24SonRing() {
         });
     }
 
-    // 4. Vòng 24 Sao Phúc Đức - MÀU NEON LUXURY
+    // 4. Vòng 24 Sao Phúc Đức - ĐÃ NÂNG CẤP (màu đẹp hơn, đồng bộ phong thủy)
     const phucDucRingSvg = document.getElementById('phucDucRingSvg');
     if (phucDucRingSvg) {
         phucDucRingSvg.innerHTML = "";
         const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
-       
+        
         phucDucNames.forEach((name, index) => {
             const goc = (index * 15) % 360;
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250");
+            textNode.setAttribute("x", "250"); 
             textNode.setAttribute("y", "72");
             textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "6.8");
+            textNode.setAttribute("font-size", "6.5");
             textNode.setAttribute("font-weight", "700");
             textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
             textNode.setAttribute("data-sao-goc", goc.toString());
-            textNode.setAttribute("data-base-size", "6.8");
+            textNode.setAttribute("data-base-size", "6.5");
             textNode.textContent = name;
 
-            // Màu neon tối sang trọng cho Sao Phúc Đức
-            textNode.setAttribute("fill", "#b8a36f");        // Gold nhạt neon
-            textNode.setAttribute("filter", "drop-shadow(0 0 2.5px #d4af37)");
+            // Nâng cấp màu: Dùng tone vàng đồng phong thủy, có chút phân biệt nhẹ
+            textNode.setAttribute("fill", "#d4af37");  // Màu vàng đồng chính
+            phucDucRingSvg.appendChild(textNode);
+        });
+    }
+
+    function render24SonRing() {
+    // 1. Vạch độ ngoài cùng (giữ nguyên)
+    const vachDoRing = document.getElementById('vachDoRing');
+    if (vachDoRing) {
+        let linesHtml = "";
+        for (let i = 0; i < 360; i++) {
+            const y2 = (i % 10 === 0) ? 28 : (i % 5 === 0) ? 25 : 23;
+            linesHtml += `<line x1="250" y1="18" x2="250" y2="${y2}" transform="rotate(${i}, 250, 250)" />`;
+        }
+        vachDoRing.innerHTML = linesHtml;
+    }
+
+    // 2. Vạch ngăn 24 Sơn (giữ nguyên)
+    const khe24SonRing = document.getElementById('khe24SonRing');
+    if (khe24SonRing) {
+        let lines24Html = "";
+        for (let i = 0; i < 24; i++) {
+            const gocBiên = i * 15 - 7.5;
+            lines24Html += `<line x1="250" y1="115" x2="250" y2="162" transform="rotate(${gocBiên}, 250, 250)" />`;
+        }
+        khe24SonRing.innerHTML = lines24Html;
+    }
+
+    // 3. Chữ 24 Sơn (giữ nguyên)
+    const sonRingSvg = document.getElementById('sonRingSvg');
+    if (sonRingSvg) {
+        sonRingSvg.innerHTML = "";
+        SON_24_CONFIG.forEach((son, index) => {
+            const goc = (index * 15) % 360;
+            const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            textNode.setAttribute("x", "250"); 
+            textNode.setAttribute("y", "114");
+            textNode.setAttribute("text-anchor", "middle");
+            textNode.setAttribute("font-size", "10");
+            textNode.setAttribute("font-weight", "900");
+            textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
+            textNode.setAttribute("data-son-goc", goc.toString());
+            textNode.setAttribute("data-base-size", "10");
+            textNode.textContent = son.name;
+            
+            const color = ["Cấn", "Tốn", "Khôn", "Càn"].includes(son.name) ? "#ff3b30" :
+                          ["Tý", "Mão", "Ngọ", "Dậu"].includes(son.name) ? "#00a525" : "#5c4314";
+            textNode.setAttribute("fill", color);
+            textNode.setAttribute("data-color", color);
+            sonRingSvg.appendChild(textNode);
+        });
+    }
+
+    // 4. Vòng 24 Sao Phúc Đức - ĐÃ NÂNG CẤP (màu đẹp hơn, đồng bộ phong thủy)
+    const phucDucRingSvg = document.getElementById('phucDucRingSvg');
+    if (phucDucRingSvg) {
+        phucDucRingSvg.innerHTML = "";
+        const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
+        
+        phucDucNames.forEach((name, index) => {
+            const goc = (index * 15) % 360;
+            const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            textNode.setAttribute("x", "250"); 
+            textNode.setAttribute("y", "72");
+            textNode.setAttribute("text-anchor", "middle");
+            textNode.setAttribute("font-size", "6.5");
+            textNode.setAttribute("font-weight", "700");
+            textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
+            textNode.setAttribute("data-sao-goc", goc.toString());
+            textNode.setAttribute("data-base-size", "6.5");
+            textNode.textContent = name;
+
+            // Nâng cấp màu: Dùng tone vàng đồng phong thủy, có chút phân biệt nhẹ
+            textNode.setAttribute("fill", "#d4af37");  // Màu vàng đồng chính
             phucDucRingSvg.appendChild(textNode);
         });
     }
