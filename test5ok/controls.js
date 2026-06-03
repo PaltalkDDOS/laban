@@ -3158,49 +3158,59 @@ function render24SonRing() {
         });
     }
 
-    // 4. Vòng 24 Sao Phúc Đức - ĐÃ NÂNG CẤP (màu đẹp hơn, đồng bộ phong thủy)
+    // 4. Vòng 24 Sao Phúc Đức - MÀU NEON LUXURY
     const phucDucRingSvg = document.getElementById('phucDucRingSvg');
     if (phucDucRingSvg) {
         phucDucRingSvg.innerHTML = "";
         const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
-        
+       
         phucDucNames.forEach((name, index) => {
             const goc = (index * 15) % 360;
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250"); 
+            textNode.setAttribute("x", "250");
             textNode.setAttribute("y", "72");
             textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "6.5");
+            textNode.setAttribute("font-size", "6.8");
             textNode.setAttribute("font-weight", "700");
             textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
             textNode.setAttribute("data-sao-goc", goc.toString());
-            textNode.setAttribute("data-base-size", "6.5");
+            textNode.setAttribute("data-base-size", "6.8");
             textNode.textContent = name;
 
-            // Nâng cấp màu: Dùng tone vàng đồng phong thủy, có chút phân biệt nhẹ
-            textNode.setAttribute("fill", "#d4af37");  // Màu vàng đồng chính
+            // Màu neon tối sang trọng cho Sao Phúc Đức
+            textNode.setAttribute("fill", "#b8a36f");        // Gold nhạt neon
+            textNode.setAttribute("filter", "drop-shadow(0 0 2.5px #d4af37)");
             phucDucRingSvg.appendChild(textNode);
         });
     }
 
-    // 5. Vòng 72 Hậu - ĐÃ NÂNG CẤP (màu rõ hơn + chuẩn bị cho highlight mạnh)
+    // 5. Vòng 72 Hậu - KHỚP 100% VỚI DATA CHUẨN HÓA BƯỚC CHẴN 5 ĐỘ
     const hauRing = document.getElementById('hau72RingSvg');
     if (hauRing) {
         hauRing.innerHTML = "";
+        
         Object.keys(Data72Hau).forEach(degStr => {
             const hau = Data72Hau[degStr];
-            const deg = parseFloat(degStr) + 2.4;
+            
+            // QUAN TRỌNG: Data mới đã chuẩn hóa mốc chẵn chính tâm (340, 345, 350)
+            // Vì vậy góc vẽ đồ họa TRÙNG KHỚP LUÔN với góc dữ liệu, không cộng thêm offset lệch nữa!
+            const degVisual = parseFloat(degStr);
+            
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
             textNode.setAttribute("x", "250"); 
             textNode.setAttribute("y", "95");
             textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "3.2");        // Tăng nhẹ size gốc
+            textNode.setAttribute("font-size", "3.2"); 
             textNode.setAttribute("font-weight", "700");
-            textNode.setAttribute("transform", `rotate(${deg}, 250, 250)`);
-            textNode.setAttribute("data-hau-goc", degStr);
+            
+            // Xoay góc chữ đúng vị trí mốc chẵn của cung địa bàn
+            textNode.setAttribute("transform", `rotate(${degVisual}, 250, 250)`);
+            
+            // Giữ nguyên key dữ liệu gốc phục vụ hàm quét sáng LED
+            textNode.setAttribute("data-hau-goc", degStr); 
             textNode.setAttribute("data-base-size", "3.2");
 
-            // Màu rõ ràng hơn
+            // Thiết lập màu sắc theo chất lượng khí trường
             let color;
             if (hau.chatLuong.includes("Cát")) {
                 color = "#a8c46f";      // Xanh ngọc nhạt
@@ -3212,6 +3222,8 @@ function render24SonRing() {
             
             textNode.setAttribute("fill", color);
             textNode.setAttribute("data-original-fill", color);
+            
+            // Xử lý chuỗi hiển thị gọn đẹp trên mặt la kinh
             textNode.textContent = hau.ten.replace(" Hậu", "").replace(/(\D+)(\d)/, (m, p1, p2) => p1.substring(0,1) + p2);
             hauRing.appendChild(textNode);
         });
