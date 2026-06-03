@@ -1,13 +1,14 @@
 const CACHE_NAME = 'laban-pt-v1';
-// Khai báo danh sách các file cần nạp vào bộ nhớ đệm của điện thoại
+
+// KHẮC PHỤC CHÍ MẠNG: Đã thêm đầy đủ dấu phẩy và xóa bỏ 'sw.js' ra khỏi danh sách tự cache
 const ASSETS_TO_CACHE = [
-  'index.html',
+  'LabanThanSo.html',
   'manifest.json',
   'icon-192.png',
-  'icon-512.png'
-  // Nếu bạn có file style.css hoặc controls.js riêng biệt, hãy điền thêm tên file vào đây nhé, ví dụ:
-  // 'style.css',
-  // 'controls.js'
+  'icon-512.png',
+  'ungho.png',
+  'style.css',
+  'controls.js'
 ];
 
 // 1. Sự kiện Cài đặt (Install) - Tự động tải lưu các file vào bộ nhớ máy
