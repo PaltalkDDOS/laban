@@ -3610,7 +3610,7 @@ if ('serviceWorker' in navigator) {
 }
 
 // --- BỘ BẮT SỰ KIỆN CÀI ĐẶT DÀNH CHO ANDROID / PC (Giữ nguyên phần dưới của bạn) ---
-let deferredPrompt;
+
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
