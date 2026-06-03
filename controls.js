@@ -3586,25 +3586,25 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// Bộ kích hoạt đăng ký PWA & Nạp Manifest thông minh (CHỐNG LỖI CORS & PROTOCOL OFFLINE)
+// Bộ kích hoạt đăng ký PWA & Nạp Manifest thông minh (ĐÃ XÓA TOÀN BỘ LOG THÀNH CÔNG)
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         // CHỐT CHẶN 1: Nếu đang nhấp đúp file chạy offline (file:///) -> Thoát hoàn toàn
         if (window.location.protocol === 'file:') {
-            console.log('Chế độ test offline (file:///): Tự động tắt Service Worker và Manifest để tránh lỗi CORS.');
-            return; 
+            return; // Thoát im lặng, không in log ra nữa
         }
 
-        // CHỐT CHẶN 2: Chỉ khi chạy Online (https:// hoặc localhost), JS mới tự động nhúng thẻ Manifest vào HTML
+        // CHỐT CHẶN 2: Tự động khóa nút cài đặt nếu người dùng đang ở trong giao diện App độc lập
+        if (typeof kiemTraVaAnNutNeuDaCaiApp === 'function' && kiemTraVaAnNutNeuDaCaiApp()) return;
+
+        // Tự động nhúng thẻ Manifest vào HTML khi chạy Online
         const link = document.createElement('link');
         link.rel = 'manifest';
         link.href = './manifest.json';
         document.head.appendChild(link);
-        console.log('Đã nạp file manifest.json hợp lệ từ máy chủ.');
 
-        // Tiến hành đăng ký Service Worker chạy ngầm bảo mật
+        // Tiến hành đăng ký Service Worker (Chỉ giữ lại .catch để bắt lỗi nếu có sự cố)
         navigator.serviceWorker.register('./sw.js')
-            .then(reg => console.log('PWA Service Worker đã kích hoạt thành công!', reg))
             .catch(err => console.error('Lỗi kích hoạt PWA:', err));
     });
 }
@@ -3655,25 +3655,25 @@ function kiemTraVaAnNutNeuDaCaiApp() {
     return false;
 }
 
-// Bộ kích hoạt đăng ký PWA & Nạp Manifest thông minh
+// Bộ kích hoạt đăng ký PWA & Nạp Manifest thông minh (ĐÃ XÓA TOÀN BỘ LOG THÀNH CÔNG)
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
+        // CHỐT CHẶN 1: Nếu đang nhấp đúp file chạy offline (file:///) -> Thoát hoàn toàn
         if (window.location.protocol === 'file:') {
-            console.log('Chế độ test offline (file:///): Tự động tắt Service Worker và Manifest để tránh lỗi CORS.');
-            return; 
+            return; // Thoát im lặng, không in log ra nữa
         }
 
-        // Chạy kiểm tra lập tức khi vừa tải xong trang
-        if (kiemTraVaAnNutNeuDaCaiApp()) return;
+        // CHỐT CHẶN 2: Tự động khóa nút cài đặt nếu người dùng đang ở trong giao diện App độc lập
+        if (typeof kiemTraVaAnNutNeuDaCaiApp === 'function' && kiemTraVaAnNutNeuDaCaiApp()) return;
 
-        // Nếu không phải đang ở trong App, tiến hành nạp manifest và đăng ký như bình thường
+        // Tự động nhúng thẻ Manifest vào HTML khi chạy Online
         const link = document.createElement('link');
         link.rel = 'manifest';
         link.href = './manifest.json';
         document.head.appendChild(link);
 
+        // Tiến hành đăng ký Service Worker (Chỉ giữ lại .catch để bắt lỗi nếu có sự cố)
         navigator.serviceWorker.register('./sw.js')
-            .then(reg => console.log('PWA Service Worker đã kích hoạt thành công!', reg))
             .catch(err => console.error('Lỗi kích hoạt PWA:', err));
     });
 }
@@ -3716,4 +3716,3 @@ window.matchMedia('(display-mode: standalone)').addEventListener('change', (evt)
         kiemTraVaAnNutNeuDaCaiApp();
     }
 });
-// Bộ kích hoạt đăng ký PWA & Nạp Manifest thông minh (Cui Ham ket Thuc)
