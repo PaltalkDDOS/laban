@@ -3585,8 +3585,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// ==================== PWA FLOATING BUTTON ====================
-let deferredPrompt;
+// ==================== HỆ THỐNG PWA FLOATING ACTION BUTTON ====================
+if (typeof deferredPrompt === 'undefined') {
+    var deferredPrompt; 
+}
 
 function isRunningAsPWA() {
     return window.matchMedia('(display-mode: standalone)').matches || 
@@ -3596,7 +3598,7 @@ function isRunningAsPWA() {
 
 function kiemTraVaAnNut() {
     const btn = document.getElementById('btn-install-pwa');
-    if (!btn) return;
+    if (!btn) return false;
     
     if (isRunningAsPWA()) {
         btn.classList.remove('show');
@@ -3605,7 +3607,7 @@ function kiemTraVaAnNut() {
     return false;
 }
 
-// Khởi tạo
+// Khởi tạo hệ thống lõi
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         if (window.location.protocol === 'file:') return;
@@ -3617,11 +3619,12 @@ if ('serviceWorker' in navigator) {
         link.href = './manifest.json';
         document.head.appendChild(link);
 
-        navigator.serviceWorker.register('./sw.js');
+        navigator.serviceWorker.register('./sw.js')
+            .catch(err => console.error('Lỗi kích hoạt PWA:', err));
     });
 }
 
-// Beforeinstallprompt
+// Lắng nghe sự kiện mời cài đặt từ trình duyệt hợp lệ
 window.addEventListener('beforeinstallprompt', (e) => {
     if (isRunningAsPWA()) return;
 
@@ -3636,6 +3639,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
             if (!deferredPrompt) return;
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
+            console.log(`Người dùng chọn: ${outcome}`);
             
             if (outcome === 'accepted') {
                 btn.classList.remove('show');
@@ -3645,11 +3649,13 @@ window.addEventListener('beforeinstallprompt', (e) => {
     }
 });
 
+// Ẩn nút lập tức khi cài xong
 window.addEventListener('appinstalled', () => {
     const btn = document.getElementById('btn-install-pwa');
     if (btn) btn.classList.remove('show');
 });
 
+// Bộ quét thông minh khi người dùng tắt đi mở lại màn hình điện thoại
 document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
         setTimeout(kiemTraVaAnNut, 600);
