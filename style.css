@@ -1430,3 +1430,71 @@ mjx-container {
     max-height: 0;
     opacity: 0;
 }
+/* ====================== PREMIUM PWA BUTTON STYLE ====================== */
+.pwa-install-btn-premium {
+    display: none; /* Mặc định ẩn, controls.js sẽ tự kích hoạt hiển thị */
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #dfb76c 0%, #b58e4b 100%);
+    color: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 22px;
+    border-radius: 25px;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    margin: 14px auto 6px auto;
+    outline: none;
+    box-shadow: 0 4px 15px rgba(223, 183, 108, 0.3), 0 0 0 0 rgba(223, 183, 108, 0.5);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-tap-highlight-color: transparent;
+    
+    /* Kích hoạt hiệu ứng mạch đập huyền ảo tự động */
+    animation: pwaPulseEffect 2s infinite;
+}
+
+/* Hiệu ứng khi rê chuột vào (PC) */
+.pwa-install-btn-premium:hover {
+    background: linear-gradient(135deg, #ffe0a3 0%, #dfb76c 100%);
+    box-shadow: 0 6px 20px rgba(223, 183, 108, 0.5);
+    transform: translateY(-1px);
+}
+
+/* Hiệu ứng khi chạm ngón tay vào (Điện thoại Android/Samsung) */
+.pwa-install-btn-premium:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 2px 8px rgba(223, 183, 108, 0.4);
+}
+
+/* Icon lắc nhẹ định kỳ tạo điểm nhấn */
+.pwa-install-btn-premium .pwa-icon {
+    font-size: 1rem;
+    display: inline-block;
+    animation: pwaIconShake 3s infinite ease-in-out;
+}
+
+/* ĐỊNH NGHĨA CÁC ĐOẠN CHUYỂN ĐỘNG (ANIMATIONS) */
+@keyframes pwaPulseEffect {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(223, 183, 108, 0.3), 0 0 0 0 rgba(223, 183, 108, 0.6);
+    }
+    70% {
+        transform: scale(1.02);
+        box-shadow: 0 6px 18px rgba(223, 183, 108, 0.4), 0 0 0 10px rgba(223, 183, 108, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(223, 183, 108, 0.3), 0 0 0 0 rgba(223, 183, 108, 0);
+    }
+}
+
+@keyframes pwaIconShake {
+    0%, 90%, 100% { transform: rotate(0deg); }
+    92% { transform: rotate(-15deg); }
+    94% { transform: rotate(15deg); }
+    96% { transform: rotate(-10deg); }
+    98% { transform: rotate(10deg); }
+}
