@@ -3160,7 +3160,7 @@ function render24SonRing() {
         });
     }
 
-    // 4. Vòng 24 Sao Phúc Đức - MÀU NEON LUXURY (ĐÃ TỐI ƯU CHỐNG GIẬT)
+    // 4. Vòng 24 Sao Phúc Đức - MÀU NEON LUXURY
     const phucDucRingSvg = document.getElementById('phucDucRingSvg');
     if (phucDucRingSvg) {
         phucDucRingSvg.innerHTML = "";
@@ -3179,10 +3179,9 @@ function render24SonRing() {
             textNode.setAttribute("data-base-size", "6.8");
             textNode.textContent = name;
 
-            // TỐI ƯU CHÍ MẠNG: Thêm class CSS thay vì nạp filter bằng JS
-            textNode.setAttribute("class", "neon-sao-phuc-duc");
-            textNode.setAttribute("fill", "#b8a36f"); // Màu vàng Gold nhạt nền ban đầu
-            
+            // Màu neon tối sang trọng cho Sao Phúc Đức
+            textNode.setAttribute("fill", "#b8a36f");        // Gold nhạt neon
+            textNode.setAttribute("filter", "drop-shadow(0 0 2.5px #d4af37)");
             phucDucRingSvg.appendChild(textNode);
         });
     }
