@@ -3584,3 +3584,11 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('gender-male').classList.remove('active');
     }
 });
+// Bộ kích hoạt đăng ký PWA Service Worker chạy ngầm
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('PWA Service Worker đã kích hoạt thành công!', reg))
+            .catch(err => console.error('Lỗi kích hoạt PWA:', err));
+    });
+}
