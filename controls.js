@@ -773,9 +773,9 @@ function getCurrentHauInfo(degree) {
     return result;
 }
 
-// --- CẤU HÌNH PHONG THỦY ĐỒNG BỘ ĐA TẦNG VẬN 9 (ĐÃ CHUẨN HÓA KHÍ CỤC KINH DOANH) ---
+// --- CẤU HÌNH PHONG THỦY ĐỒNG BỘ ĐA TẦNG VẬN 9 ---
 const ConfigPhongThuy = {
-    // 🟢 KHÍ CỤC: Hướng và Tọa Cát (Cần nạp cát khí theo bản mệnh)
+    // Hướng và Tọa Cát (Ưu tiên nạp sinh khí vượng cát nạp tài Vận 9)
     'house':          { title: "Hướng Nhà / Cửa Chính", isCat: true },
     'gate':           { title: "Hướng Cổng Chính", isCat: true },
     'altar':          { title: "Hướng Bàn Thờ / Thần Tài", isCat: true },
@@ -793,9 +793,9 @@ const ConfigPhongThuy = {
     'restaurant':     { title: "Hướng Quán Ăn / Nhà Hàng", isCat: true },
     'shop':           { title: "Hướng Cửa Hàng / Showroom", isCat: true },
     'salon':          { title: "Hướng Salon Tóc / Nail / Spa", isCat: true },
-    'safe':           { title: "Vị trí Két Sắt / Tụ Tài Lộc", isCat: true }, 
+    'safe':           { title: "Vị trí Két Sắt / Tụ Tài Lộc", isCat: true }, // ĐÃ SỬA THÀNH CÁT CỤC: Tụ tài phải đặt cung cát hướng cát
 
-    // 🔴 TRẤN SÁT: Tọa vị Tiêu Hung (Cần đặt đè lên hung phương để tiêu sát)
+    // Tọa vị Trấn Sát (Ưu tiên đặt đè lên vùng hung để tiêu trừ tà khí, lấy độc trị độc)
     'kitchen':        { title: "Vị trí Đặt Bếp Nấu (Tọa Hung)", isCat: false },
     'toilet':         { title: "Vị trí Nhà Vệ Sinh / WC (Tọa Hung)", isCat: false },
     'septic_tank':    { title: "Vị trí Hầm Tự Hoại / Bể Phốt (Tọa Hung)", isCat: false },
