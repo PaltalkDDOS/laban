@@ -817,23 +817,23 @@ function generateDirectionsList() {
         return;
     }
 
-    const isCatPurpose = config.isCat; // true: cần Cát, false: cần Hung
+    const isCatPurpose = config.isCat; 
     let listDirections = [];
     
-    // ĐỒNG BỘ TRỤC THỜI GIAN: Trích xuất niên độ khảo sát từ form động để khớp điểm số la bàn số
-    const yearInput = document.getElementById('birthYear')?.value;
-    const namKhaoSat = (yearInput && yearInput.length === 4) ? parseInt(yearInput) : new Date().getFullYear();
+    // ✅ KHẮC PHỤC CHÍ MẠNG: Bốc chuẩn năm khảo sát thực tế (surveyYear), tự động bẫy về năm hiện hành của máy tính nếu rỗng
+    const surveyInput = document.getElementById('surveyYear');
+    const surveyYearChuan = (surveyInput && surveyInput.value.length === 4) ? parseInt(surveyInput.value) : new Date().getFullYear();
 
     directionMeta.forEach(dir => {
-        const cungTrạch = bátTrạchMap[chủMệnh][dir.code];
+        const cungTrachTen = bátTrạchMap[chủMệnh][dir.code];
         
-        // Gọi hàm tính điểm tổng hợp đa tầng truyền chuẩn xác tham số năm động
-        const tongHopDir = tinhDiemTongHop(chủMệnh, dir.angle, namKhaoSat, mucDich);
+        // ✅ ĐỒNG BỘ TOÁN PHÁP MỚI: Truyền chính xác năm xem phong thủy thực tế vào hàm tính điểm đa tầng
+        const tongHopDir = tinhDiemTongHop(chủMệnh, dir.angle, surveyYearChuan, mucDich);
         const hauInfo = getCurrentHauInfo(dir.angle);
 
         listDirections.push({
             ...dir,
-            cungTrạch: cungTrạch,
+            cungTrạch: cungTrachTen,
             diemTongHop: tongHopDir.diem,
             level: tongHopDir.level,
             hau: hauInfo,
@@ -841,7 +841,7 @@ function generateDirectionsList() {
         });
     });
 
-    // Sắp xếp: Ai điểm cao nhất (hợp mục đích nhất) xếp lên đầu bảng một cách khách quan
+    // ✅ TỰ ĐỘNG ƯU TIÊN: Đẩy phương vị có điểm số thích hợp với mục đích nhất lên đỉnh bảng tra cứu
     listDirections.sort((a, b) => b.priority - a.priority);
     
     listPanelTitle.innerText = `Gợi ý vị trí Vận 9: ${config.title}`;
@@ -849,21 +849,20 @@ function generateDirectionsList() {
 
     listDirections.forEach(item => {
         // Đồng bộ mốc đạt cách thống nhất toàn hệ thống (>= 72pt)
-        const isHợp = item.diemTongHop >= 72;
-        const colorStyle = isHợp ? '#30d158' : '#ff3b30';
+        const isHopCach = item.diemTongHop >= 72;
+        const colorStyle = isHopCach ? '#30d158' : '#ff3b30';
 
-        // Đảo nhãn trạng thái chuẩn xác cấu trúc nguyên bản
         let statusText = "";
         if (isCatPurpose) {
-            statusText = isHợp ? '🟢 ĐÓN CÁT KHÍ (HƯỚNG TỐT)' : '❌ PHẠM HUNG PHƯƠNG (HƯỚNG XẤU)';
+            statusText = isHopCach ? '🟢 ĐÓN CÁT KHÍ (HƯỚNG TỐT)' : '❌ PHẠM HUNG PHƯƠNG (HƯỚNG XẤU)';
         } else {
-            statusText = isHợp ? '🏆 TỌA HUNG TRẤN SÁT (ĐẮC VỊ)' : '⚠️ SAI VỊ: TỌA CÁT TIÊU HAO';
+            statusText = isHopCach ? '🏆 TỌA HUNG TRẤN SÁT (ĐẮC VỊ)' : '⚠️ SAI VỊ: TỌA CÁT TIÊU HAO';
         }
 
         const sonGroup = getSonGroupForDirection(item.code);
         let sonHTML = "";
         
-        // GIỮ NGUYÊN BẢN 100% LOGIC RENDER SƠN VỊ TỪ HỆ THỐNG GỐC CỦA BẠN
+        // GIỮ NGUYÊN BẢN 100% LOGIC RENDER SƠN VỊ CỦA BẠN
         sonGroup.forEach((son, index) => {
             const dataSon = MaTranMinhChau[chủMệnh] ? MaTranMinhChau[chủMệnh][son] : null;
             const score = dataSon ? dataSon.diem : 0;
@@ -883,7 +882,7 @@ function generateDirectionsList() {
             if (index < sonGroup.length - 1) sonHTML += ` • `;
         });
 
-        const bgDiem = isHợp ? 'rgba(48,209,88,0.15)' : 'rgba(255,59,48,0.15)';
+        const bgDiem = isHopCach ? 'rgba(48,209,88,0.15)' : 'rgba(255,59,48,0.15)';
         const diemTag = `
             <span style="font-size:0.75rem; padding:2px 6px; border-radius:4px; font-weight:bold;
                   background:${bgDiem}; color:${colorStyle}; border:1px solid ${colorStyle}; 
@@ -892,7 +891,7 @@ function generateDirectionsList() {
             </span>`;
 
         const div = document.createElement('div');
-        div.className = `direction-item ${isHợp ? 'good' : 'bad'}`;
+        div.className = `direction-item ${isHopCach ? 'good' : 'bad'}`;
         div.style.cssText = `border-left:4px solid ${colorStyle}; background:rgba(255,255,255,0.03); margin-bottom:12px; padding:12px; border-radius:10px; width:100%; box-sizing:border-box; display:flex; flex-direction:column; gap:10px;`;
         
         div.innerHTML = `
@@ -909,7 +908,7 @@ function generateDirectionsList() {
                 </div>
                 
                 <div style="font-size:0.8rem; color:#aaa; margin-bottom:6px;">
-                    Cung 5°: <strong>${item.hau.ten}</strong> — <span style="color:${item.hau.chatLuong.includes('Cát') ? '#30d158' : '#ff3b30'}">${item.hau.chatLuong}</span>
+                    Cung 5°: <strong>${item.hau.ten.replace(" Hậu", "")}</strong> — <span style="color:${item.hau.chatLuong.includes('Cát') ? '#30d158' : '#ff3b30'}">${item.hau.chatLuong}</span>
                 </div>
                 
                 <div style="color:${colorStyle}; font-size:0.85rem; font-weight:bold; padding-top:4px;">
@@ -925,6 +924,22 @@ function generateDirectionsList() {
         directionsContainer.appendChild(div);
     });
 }
+
+// =========================================================================
+// ⚡ MẠCH KÍCH HOẠT ĐỘNG: ĐẢM BẢO THAY ĐỔI TRÊN FORM LÀ GIAO DIỆN TỰ ĐỘNG UPDATE
+// =========================================================================
+// Bạn dán đoạn này ngay dưới hàm generateDirectionsList để kích hoạt cơ chế tự làm mới
+document.addEventListener("DOMContentLoaded", function() {
+    const selectPurpose = document.getElementById('purpose');
+    const inputSurveyYear = document.getElementById('surveyYear');
+    
+    if (selectPurpose) {
+        selectPurpose.addEventListener('change', generateDirectionsList);
+    }
+    if (inputSurveyYear) {
+        inputSurveyYear.addEventListener('input', generateDirectionsList);
+    }
+});
 // ====================== ÁNH XẠ 24 SƠN ĐỒNG BỘ TỐI ƯU HÓA O(1) ======================
 function getSonGroupForDirection(code) {
     // Ma trận bóc tách 3 Sơn từ nguồn sự thật duy nhất SON_24_CONFIG ứng với 8 hướng địa lý
@@ -952,13 +967,17 @@ function triggerGhostNeedle(angle) {
         ghost.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
     }
     
-    // Gọi tính điểm nhanh để hiển thị
-    const currentYear = new Date().getFullYear();
-    const mucDich = document.getElementById('purpose')?.value || 'house';
-    const tongHop = tinhDiemTongHop(chủMệnh, angle, currentYear, mucDich);
-    const colorStyle = tongHop.diem >= 70 ? "#30d158" : "#ff3b30";
+    // CORRECTION: Đồng bộ mốc thời gian động thực tế của năm đang khảo sát
+    const surveyInput = document.getElementById('surveyYear');
+    const surveyYearChuan = (surveyInput && surveyInput.value.length === 4) ? parseInt(surveyInput.value) : new Date().getFullYear();
     
-    let sơnThử = tìmSơnHướng(angle);
+    const mucDich = document.getElementById('purpose')?.value || 'house';
+    const tongHop = tinhDiemTongHop(chủMệnh, angle, surveyYearChuan, mucDich);
+    
+    // CORRECTION: Đồng bộ mốc màu đạt cách chuẩn xác 72pt thống nhất với hệ thống
+    const colorStyle = tongHop.diem >= 72 ? "#30d158" : "#ff3b30";
+    
+    let sonThuTen = tìmSơnHướng(angle);
     detailBox.style.borderLeftColor = colorStyle;
     detailBox.style.background = "rgba(255,255,255,0.05)";
     detailBox.innerHTML = `
@@ -967,12 +986,12 @@ function triggerGhostNeedle(angle) {
             <span style="background: ${colorStyle}; color: #000; padding: 2px 8px; border-radius: 12px; font-weight: bold; font-size: 0.8rem;">PT: ${tongHop.diem}đ</span>
         </div>
         <div style="color:#ddd; font-size: 0.9rem; line-height: 1.5;">
-            Kim vàng ảo đang chốt tại tọa độ <strong>Sơn ${sơnThử}</strong>.<br>
+            Kim vàng ảo đang chốt tại tọa độ <strong>Sơn ${sonThuTen}</strong>.<br>
             Hãy cầm điện thoại xoay người từ từ sao cho <strong>Kim Đỏ thực tế khớp với Kim Vàng</strong>.
         </div>
     `;
     
-    updateCompassUI(currentHeading); // Đảm bảo hàm này được định nghĩa ở ngoài
+    updateCompassUI(currentHeading); 
 }
 
 // ====================== ĐỊNH VỊ 24 SƠN ĐỒNG BỘ TUYỆT ĐỐI THEO CONFIG TĨNH ======================
@@ -1538,37 +1557,10 @@ function updateCompassUI(heading) {
             // Trích xuất giải pháp động từ hàm tính điểm tổng hợp của bạn
             noiDungDetail += `<br><b style="color:#30d158;">💡 Giải pháp hóa giải & Trợ lực khí trường từ Thuật Toán:</b>`;
             noiDungDetail += `<div style="padding:10px; background:rgba(0,0,0,0.25); border-left:3px solid #30d158; color:#ddd; margin-top:5px; border-radius:0 6px 6px 0;">${tongHop.hoaGiai}</div>`;
+            
+            // Đường băng mở rộng: Kết nối module Chọn Ngày Lành & Tuổi Quý Nhân sau này
+            noiDungDetail += `<br><span style="color:#8a8a8f; font-size:0.8rem; font-style:italic;">* Cẩm nang Tuyển Nhật Cát (chọn ngày giờ động thổ cát lành) và bộ lọc Quý Nhân phù trợ bẻ gãy sát tinh đang được đồng bộ hóa cùng hệ thống...</span>`;
             noiDungDetail += '</div>';
-        }
-
-        // =========================================================================
-        // ⏳ TIẾN TRÌNH TRẠCH NHẬT TOÁN PHÁP ĐỘNG (BỐC ĐÚNG DATA ĐỂ HIỂN THỊ)
-        // Đặt ở cuối hộp bọc cam để đảm bảo tính mỹ thuật huyền bí của Lịch Pháp
-        // =========================================================================
-        if (typeof tinhNgayGioCatTuong === 'function') {
-            const thangHienTai = new Date().getMonth() + 1;
-            // Gọi bộ não trạch nhật truyền chính xác: Tuổi (Nhân), Sơn gốc địa lý (Địa) và Mục đích hành sự
-            const lichNgayTot = tinhNgayGioCatTuong(parseInt(yearStr), sơnHiệnTại, namKhaoSatThucTe, thangHienTai, mụcĐích);
-
-            if (lichNgayTot && lichNgayTot.length > 0) {
-                const ngayDauBang = lichNgayTot[0]; // Trích xuất ngày đắc cách đạt điểm số cao nhất trong tháng
-                
-                noiDungDetail += `<div style="margin-top:15px; padding:12px; background:rgba(48,209,88,0.04); border:1px dashed rgba(48,209,88,0.4); border-radius:8px; font-family:sans-serif;">`;
-                
-                // Thay đổi tiêu đề dẫn dắt dựa theo tính chất Cát/Hung của hạng mục sử dụng
-                if (config.isCat) {
-                    noiDungDetail += `<b style="color:#30d158; font-size:0.88rem; display:block; margin-bottom:6px;">🌌 NHẬT CÁT KHỞI SỰ ĐỂ PHÁT ĐỘNG KHÍ TRƯỜNG:</b>`;
-                } else {
-                    noiDungDetail += `<b style="color:#ffd700; font-size:0.88rem; display:block; margin-bottom:6px;">⏳ LỊCH PHÁP TIÊU SÁT KHỞI CÔNG AN TOÀN:</b>`;
-                }
-                
-                noiDungDetail += `<div style="font-size:0.85rem; color:#e5e5ea; line-height:1.6;">`;
-                noiDungDetail += `• <span style="color:#8a8a8f;">Thời gian:</span> Ngày Dương <b>${ngayDauBang.solarDate}</b> (Âm lịch: <b>${ngayDauBang.lunarDate}</b> — Ngày <b>${ngayDauBang.canChiText}</b>)<br>`;
-                noiDungDetail += `• <span style="color:#8a8a8f;">Cơ duyên thiên địa:</span> Thiên tinh đắc tinh tú <b>${ngayDauBang.saoName}</b> phối hợp vòng chuyển dịch <b>Trực ${ngayDauBang.trucName}</b>.<br>`;
-                noiDungDetail += `• <span style="color:#8a8a8f;">Phẩm chất thời không:</span> <span style="color:#ffd700; font-weight:bold;">${ngayDauBang.score}pt</span> [${ngayDauBang.levelText}]<br>`;
-                noiDungDetail += `• <span style="color:#8a8a8f;">Khung giờ vàng phát động khí (Hoàng Đạo):</span> <span style="color:#30d158; font-weight:bold;">${ngayDauBang.goldHours.slice(0, 3).join(", ")}</span>`;
-                noiDungDetail += `</div></div>`;
-            }
         }
 
         noiDungDetail += '</div>';
