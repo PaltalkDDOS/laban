@@ -1,0 +1,23 @@
+{
+  "file_name": "manifest.json",
+  "name": "La Bàn Phong Thủy Số",
+  "short_name": "La Bản PT",
+  "description": "Ứng dụng La bàn Phong Thủy lập cực Vận 9 siêu mượt.",
+  "start_url": "LabanThanSo.html",
+  "display": "fullscreen",
+  "orientation": "portrait-primary",
+  "background_color": "#111111",
+  "theme_color": "#dfb76c",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
