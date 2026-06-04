@@ -774,9 +774,9 @@ function getCurrentHauInfo(degree) {
     return result;
 }
 
-// --- CẤU HÌNH PHONG THỦY ĐỒNG BỘ ĐA TẦNG VẬN 9 ---
+// --- CẤU HÌNH PHONG THỦY ĐỒNG BỘ ĐA TẦNG VẬN 9 (ĐÃ CHUẨN HÓA KHÍ CỤC KINH DOANH) ---
 const ConfigPhongThuy = {
-    // Hướng và Tọa Cát (Ưu tiên nạp sinh khí vượng cát nạp tài Vận 9)
+    // 🟢 KHÍ CỤC: Hướng và Tọa Cát (Cần nạp cát khí theo bản mệnh)
     'house':          { title: "Hướng Nhà / Cửa Chính", isCat: true },
     'gate':           { title: "Hướng Cổng Chính", isCat: true },
     'altar':          { title: "Hướng Bàn Thờ / Thần Tài", isCat: true },
@@ -794,9 +794,9 @@ const ConfigPhongThuy = {
     'restaurant':     { title: "Hướng Quán Ăn / Nhà Hàng", isCat: true },
     'shop':           { title: "Hướng Cửa Hàng / Showroom", isCat: true },
     'salon':          { title: "Hướng Salon Tóc / Nail / Spa", isCat: true },
-    'safe':           { title: "Vị trí Két Sắt / Tụ Tài Lộc", isCat: true }, // ĐÃ SỬA THÀNH CÁT CỤC: Tụ tài phải đặt cung cát hướng cát
+    'safe':           { title: "Vị trí Két Sắt / Tụ Tài Lộc", isCat: true }, 
 
-    // Tọa vị Trấn Sát (Ưu tiên đặt đè lên vùng hung để tiêu trừ tà khí, lấy độc trị độc)
+    // 🔴 TRẤN SÁT: Tọa vị Tiêu Hung (Cần đặt đè lên hung phương để tiêu sát)
     'kitchen':        { title: "Vị trí Đặt Bếp Nấu (Tọa Hung)", isCat: false },
     'toilet':         { title: "Vị trí Nhà Vệ Sinh / WC (Tọa Hung)", isCat: false },
     'septic_tank':    { title: "Vị trí Hầm Tự Hoại / Bể Phốt (Tọa Hung)", isCat: false },
@@ -817,23 +817,23 @@ function generateDirectionsList() {
         return;
     }
 
-    const isCatPurpose = config.isCat; 
+    const isCatPurpose = config.isCat; // true: cần Cát, false: cần Hung
     let listDirections = [];
     
-    // ✅ KHẮC PHỤC CHÍ MẠNG: Bốc chuẩn năm khảo sát thực tế (surveyYear), tự động bẫy về năm hiện hành của máy tính nếu rỗng
-    const surveyInput = document.getElementById('surveyYear');
-    const surveyYearChuan = (surveyInput && surveyInput.value.length === 4) ? parseInt(surveyInput.value) : new Date().getFullYear();
+    // ĐỒNG BỘ TRỤC THỜI GIAN: Trích xuất niên độ khảo sát từ form động để khớp điểm số la bàn số
+    const yearInput = document.getElementById('birthYear')?.value;
+    const namKhaoSat = (yearInput && yearInput.length === 4) ? parseInt(yearInput) : new Date().getFullYear();
 
     directionMeta.forEach(dir => {
-        const cungTrachTen = bátTrạchMap[chủMệnh][dir.code];
+        const cungTrạch = bátTrạchMap[chủMệnh][dir.code];
         
-        // ✅ ĐỒNG BỘ TOÁN PHÁP MỚI: Truyền chính xác năm xem phong thủy thực tế vào hàm tính điểm đa tầng
-        const tongHopDir = tinhDiemTongHop(chủMệnh, dir.angle, surveyYearChuan, mucDich);
+        // Gọi hàm tính điểm tổng hợp đa tầng truyền chuẩn xác tham số năm động
+        const tongHopDir = tinhDiemTongHop(chủMệnh, dir.angle, namKhaoSat, mucDich);
         const hauInfo = getCurrentHauInfo(dir.angle);
 
         listDirections.push({
             ...dir,
-            cungTrạch: cungTrachTen,
+            cungTrạch: cungTrạch,
             diemTongHop: tongHopDir.diem,
             level: tongHopDir.level,
             hau: hauInfo,
@@ -841,7 +841,7 @@ function generateDirectionsList() {
         });
     });
 
-    // ✅ TỰ ĐỘNG ƯU TIÊN: Đẩy phương vị có điểm số thích hợp với mục đích nhất lên đỉnh bảng tra cứu
+    // Sắp xếp: Ai điểm cao nhất (hợp mục đích nhất) xếp lên đầu bảng một cách khách quan
     listDirections.sort((a, b) => b.priority - a.priority);
     
     listPanelTitle.innerText = `Gợi ý vị trí Vận 9: ${config.title}`;
@@ -849,20 +849,21 @@ function generateDirectionsList() {
 
     listDirections.forEach(item => {
         // Đồng bộ mốc đạt cách thống nhất toàn hệ thống (>= 72pt)
-        const isHopCach = item.diemTongHop >= 72;
-        const colorStyle = isHopCach ? '#30d158' : '#ff3b30';
+        const isHợp = item.diemTongHop >= 72;
+        const colorStyle = isHợp ? '#30d158' : '#ff3b30';
 
+        // Đảo nhãn trạng thái chuẩn xác cấu trúc nguyên bản
         let statusText = "";
         if (isCatPurpose) {
-            statusText = isHopCach ? '🟢 ĐÓN CÁT KHÍ (HƯỚNG TỐT)' : '❌ PHẠM HUNG PHƯƠNG (HƯỚNG XẤU)';
+            statusText = isHợp ? '🟢 ĐÓN CÁT KHÍ (HƯỚNG TỐT)' : '❌ PHẠM HUNG PHƯƠNG (HƯỚNG XẤU)';
         } else {
-            statusText = isHopCach ? '🏆 TỌA HUNG TRẤN SÁT (ĐẮC VỊ)' : '⚠️ SAI VỊ: TỌA CÁT TIÊU HAO';
+            statusText = isHợp ? '🏆 TỌA HUNG TRẤN SÁT (ĐẮC VỊ)' : '⚠️ SAI VỊ: TỌA CÁT TIÊU HAO';
         }
 
         const sonGroup = getSonGroupForDirection(item.code);
         let sonHTML = "";
         
-        // GIỮ NGUYÊN BẢN 100% LOGIC RENDER SƠN VỊ CỦA BẠN
+        // GIỮ NGUYÊN BẢN 100% LOGIC RENDER SƠN VỊ TỪ HỆ THỐNG GỐC CỦA BẠN
         sonGroup.forEach((son, index) => {
             const dataSon = MaTranMinhChau[chủMệnh] ? MaTranMinhChau[chủMệnh][son] : null;
             const score = dataSon ? dataSon.diem : 0;
@@ -882,7 +883,7 @@ function generateDirectionsList() {
             if (index < sonGroup.length - 1) sonHTML += ` • `;
         });
 
-        const bgDiem = isHopCach ? 'rgba(48,209,88,0.15)' : 'rgba(255,59,48,0.15)';
+        const bgDiem = isHợp ? 'rgba(48,209,88,0.15)' : 'rgba(255,59,48,0.15)';
         const diemTag = `
             <span style="font-size:0.75rem; padding:2px 6px; border-radius:4px; font-weight:bold;
                   background:${bgDiem}; color:${colorStyle}; border:1px solid ${colorStyle}; 
@@ -891,7 +892,7 @@ function generateDirectionsList() {
             </span>`;
 
         const div = document.createElement('div');
-        div.className = `direction-item ${isHopCach ? 'good' : 'bad'}`;
+        div.className = `direction-item ${isHợp ? 'good' : 'bad'}`;
         div.style.cssText = `border-left:4px solid ${colorStyle}; background:rgba(255,255,255,0.03); margin-bottom:12px; padding:12px; border-radius:10px; width:100%; box-sizing:border-box; display:flex; flex-direction:column; gap:10px;`;
         
         div.innerHTML = `
@@ -908,7 +909,7 @@ function generateDirectionsList() {
                 </div>
                 
                 <div style="font-size:0.8rem; color:#aaa; margin-bottom:6px;">
-                    Cung 5°: <strong>${item.hau.ten.replace(" Hậu", "")}</strong> — <span style="color:${item.hau.chatLuong.includes('Cát') ? '#30d158' : '#ff3b30'}">${item.hau.chatLuong}</span>
+                    Cung 5°: <strong>${item.hau.ten}</strong> — <span style="color:${item.hau.chatLuong.includes('Cát') ? '#30d158' : '#ff3b30'}">${item.hau.chatLuong}</span>
                 </div>
                 
                 <div style="color:${colorStyle}; font-size:0.85rem; font-weight:bold; padding-top:4px;">
@@ -924,22 +925,6 @@ function generateDirectionsList() {
         directionsContainer.appendChild(div);
     });
 }
-
-// =========================================================================
-// ⚡ MẠCH KÍCH HOẠT ĐỘNG: ĐẢM BẢO THAY ĐỔI TRÊN FORM LÀ GIAO DIỆN TỰ ĐỘNG UPDATE
-// =========================================================================
-// Bạn dán đoạn này ngay dưới hàm generateDirectionsList để kích hoạt cơ chế tự làm mới
-document.addEventListener("DOMContentLoaded", function() {
-    const selectPurpose = document.getElementById('purpose');
-    const inputSurveyYear = document.getElementById('surveyYear');
-    
-    if (selectPurpose) {
-        selectPurpose.addEventListener('change', generateDirectionsList);
-    }
-    if (inputSurveyYear) {
-        inputSurveyYear.addEventListener('input', generateDirectionsList);
-    }
-});
 // ====================== ÁNH XẠ 24 SƠN ĐỒNG BỘ TỐI ƯU HÓA O(1) ======================
 function getSonGroupForDirection(code) {
     // Ma trận bóc tách 3 Sơn từ nguồn sự thật duy nhất SON_24_CONFIG ứng với 8 hướng địa lý
@@ -967,17 +952,13 @@ function triggerGhostNeedle(angle) {
         ghost.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
     }
     
-    // CORRECTION: Đồng bộ mốc thời gian động thực tế của năm đang khảo sát
-    const surveyInput = document.getElementById('surveyYear');
-    const surveyYearChuan = (surveyInput && surveyInput.value.length === 4) ? parseInt(surveyInput.value) : new Date().getFullYear();
-    
+    // Gọi tính điểm nhanh để hiển thị
+    const currentYear = new Date().getFullYear();
     const mucDich = document.getElementById('purpose')?.value || 'house';
-    const tongHop = tinhDiemTongHop(chủMệnh, angle, surveyYearChuan, mucDich);
+    const tongHop = tinhDiemTongHop(chủMệnh, angle, currentYear, mucDich);
+    const colorStyle = tongHop.diem >= 70 ? "#30d158" : "#ff3b30";
     
-    // CORRECTION: Đồng bộ mốc màu đạt cách chuẩn xác 72pt thống nhất với hệ thống
-    const colorStyle = tongHop.diem >= 72 ? "#30d158" : "#ff3b30";
-    
-    let sonThuTen = tìmSơnHướng(angle);
+    let sơnThử = tìmSơnHướng(angle);
     detailBox.style.borderLeftColor = colorStyle;
     detailBox.style.background = "rgba(255,255,255,0.05)";
     detailBox.innerHTML = `
@@ -986,12 +967,12 @@ function triggerGhostNeedle(angle) {
             <span style="background: ${colorStyle}; color: #000; padding: 2px 8px; border-radius: 12px; font-weight: bold; font-size: 0.8rem;">PT: ${tongHop.diem}đ</span>
         </div>
         <div style="color:#ddd; font-size: 0.9rem; line-height: 1.5;">
-            Kim vàng ảo đang chốt tại tọa độ <strong>Sơn ${sonThuTen}</strong>.<br>
+            Kim vàng ảo đang chốt tại tọa độ <strong>Sơn ${sơnThử}</strong>.<br>
             Hãy cầm điện thoại xoay người từ từ sao cho <strong>Kim Đỏ thực tế khớp với Kim Vàng</strong>.
         </div>
     `;
     
-    updateCompassUI(currentHeading); 
+    updateCompassUI(currentHeading); // Đảm bảo hàm này được định nghĩa ở ngoài
 }
 
 // ====================== ĐỊNH VỊ 24 SƠN ĐỒNG BỘ TUYỆT ĐỐI THEO CONFIG TĨNH ======================
