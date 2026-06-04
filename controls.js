@@ -3300,101 +3300,101 @@ function render24SonRing() {
     }
 }
 
-// ====================== HÀM LÀM SÁNG LED QUÉT (ĐỒNG BỘ MƯỢT MÀ) ======================
+// ====================== HÀM LÀM SÁNG LED QUÉT (NÂNG CẤP ĐỒNG BỘ) ======================
 function kichHoatDenLedQuet(heading) {
     const ledTargetAngle = ((heading % 360) + 360) % 360;
+    cacheCompassElements();
 
-    // Hàm phụ trợ xử lý hiệu ứng đổi màu và phóng to chữ khi trúng tia quét
+    // Hàm phụ trợ để xử lý hiệu ứng chung cho các vòng
     const applyEffect = (elements, attrGoc, range, zoomScale) => {
-        if (!elements || !elements.forEach) return; // Chốt chặn an toàn chống crash
-        
         elements.forEach(txt => {
             const goc = parseFloat(txt.getAttribute(attrGoc)) || 0;
             let phanSai = Math.abs(ledTargetAngle - goc);
             if (phanSai > 180) phanSai = 360 - phanSai;
 
-            const baseSize = parseFloat(txt.getAttribute("data-base-size")) || 10;
+            // Lấy size gốc từ attribute (nếu chưa có thì lấy theo mặc định)
+            const baseSize = parseFloat(txt.getAttribute("data-base-size")) || parseFloat(txt.style.fontSize) || 10;
             
             if (phanSai <= range) {
-                // Trạng thái Khi quét trúng cung
+                // Khi trúng: Phóng to, đổi màu vàng/nổi bật, độ đậm cao
                 txt.style.opacity = "1";
                 txt.style.fontSize = (baseSize * zoomScale) + "px";
                 txt.style.fontWeight = "900";
-                
+                // Nếu có data-original-fill, chuyển sang màu vàng nổi bật khi trúng
                 if (txt.hasAttribute("data-original-fill")) {
-                    txt.style.fill = "#ffff00"; // Đổi sang vàng LED rực rỡ khi trúng mạch Hậu
+                    txt.style.fill = "#ffff00";
                 } else if (txt.getAttribute("data-color")) {
+                     // Nếu là các vòng cũ (Sơn/Sao)
                     const color = txt.getAttribute("data-color");
                     txt.style.fill = (color === "#5c4314") ? "#ffcc00" : (color === "#ff3b30" ? "#ff0000" : "#00ff00");
                 }
             } else {
-                // Trạng thái Bình thường quay về tĩnh
+                // Trở về trạng thái bình thường
                 txt.style.opacity = "0.6";
                 txt.style.fontSize = baseSize + "px";
                 txt.style.fontWeight = "700";
+                // Phục hồi màu gốc
                 txt.style.fill = txt.getAttribute("data-original-fill") || txt.getAttribute("data-color") || "#8a8a8f";
             }
         });
     };
 
-    // 1. Xử lý 8 Hướng Lớn (Giữ nguyên logic gốc của bạn)
-    if (typeof huongLonTextsCache !== 'undefined') {
-        huongLonTextsCache.forEach(txt => {
-            const textGoc = parseFloat(txt.getAttribute("data-goc")) || 0;
-            let phanSai = Math.abs(ledTargetAngle - textGoc);
-            if (phanSai > 180) phanSai = 360 - phanSai;
-            if (phanSai <= 22.5) {
-                txt.style.opacity = "1"; txt.style.fontWeight = "900";
-                txt.style.fill = (txt.getAttribute("fill") === "#00a525") ? "#00ff37" : "#ff1a00";
-            } else {
-                txt.style.opacity = "0.5"; txt.style.fontWeight = "normal";
-                const transform = txt.getAttribute("transform") || "";
-                if (txt.parentNode?.getAttribute("id") === "textChinhPhuong") {
-                    txt.style.fill = (transform.includes("rotate(90") || transform.includes("rotate(270")) ? "#00a525" : "#ff3b30";
-                } else { txt.style.fill = "#6b4e18"; }
-            }
-        });
-    }
+    // 1. Xử lý 8 Hướng Lớn (Giữ logic cũ của bạn)
+    huongLonTextsCache.forEach(txt => {
+        const textGoc = parseFloat(txt.getAttribute("data-goc")) || 0;
+        let phanSai = Math.abs(ledTargetAngle - textGoc);
+        if (phanSai > 180) phanSai = 360 - phanSai;
+        if (phanSai <= 22.5) {
+            txt.style.opacity = "1"; txt.style.fontWeight = "900";
+            txt.style.fill = (txt.getAttribute("fill") === "#00a525") ? "#00ff37" : "#ff1a00";
+        } else {
+            txt.style.opacity = "0.5"; txt.style.fontWeight = "normal";
+            const transform = txt.getAttribute("transform") || "";
+            if (txt.parentNode.getAttribute("id") === "textChinhPhuong") {
+                txt.style.fill = (transform.includes("rotate(90") || transform.includes("rotate(270")) ? "#00a525" : "#ff3b30";
+            } else { txt.style.fill = "#6b4e18"; }
+        }
+    });
 
     // 2. Xử lý 24 Sơn (Phóng to 1.3 lần)
-    if (typeof sonTextsCache !== 'undefined') {
-        applyEffect(sonTextsCache, "data-son-goc", 7.5, 1.3);
-    }
+    applyEffect(sonTextsCache, "data-son-goc", 7.5, 1.3);
 
     // 3. Xử lý Sao Phúc Đức (Phóng to 1.2 lần)
-    if (typeof saoTextsCache !== 'undefined') {
-        applyEffect(saoTextsCache, "data-sao-goc", 7.5, 1.2);
-    }
+    applyEffect(saoTextsCache, "data-sao-goc", 7.5, 1.2);
 
-    // 4. Xử lý 72 Hậu (Quét trúng cung quản 2.5 độ, phóng to 1.65 lần nổi bật)
-    if (typeof hau72TextsCache !== 'undefined') {
-        applyEffect(hau72TextsCache, "data-hau-goc", 2.5, 1.65); 
-    }
+    // 4. Xử lý 72 Hậu (tăng phóng to)
+if (typeof hau72TextsCache !== 'undefined') {
+    applyEffect(hau72TextsCache, "data-hau-goc", 3.0, 1.65);  // Tăng từ 1.5 lên 1.65
+}
 }
 
-// ====================== CACHE ELEMENTS - TỐI ƯU HIỆU SUẤT ======================
+// ====================== CACHE ELEMENTS - TỐI ƯU HIỆU SUẤT CHUẨN VẬN 9 ======================
+// Đảm bảo khai báo đủ 4 biến mảng toàn cục ở đầu file (hoặc trước hàm)
 let sonTextsCache = null;
 let huongLonTextsCache = null;
 let saoTextsCache = null;
+let hau72TextsCache = null; // Khai báo thêm biến này nếu chưa có ở đầu file
 
-function cacheCompassElements() {
-    if (sonTextsCache && sonTextsCache.length > 0) return; // Chỉ cache 1 lần
+function cacheCompassElements(forceRefresh = false) {
+    // NẾU KHÔNG ÉP BUỘC LÀM MỚI và đã có dữ liệu -> Bỏ qua để tiết kiệm CPU
+    if (!forceRefresh && sonTextsCache && sonTextsCache.length > 0) return; 
 
-    // Cache các vòng cũ
+    // Thực hiện quét nạp bộ nhớ đệm từ DOM
     sonTextsCache = document.querySelectorAll("#sonRingSvg text");
     huongLonTextsCache = document.querySelectorAll("#chuHuongLonG text");
     saoTextsCache = document.querySelectorAll("#phucDucRingSvg text");
-
-    // === Cache 72 Hậu (MỚI THÊM) ===
     hau72TextsCache = document.querySelectorAll("#hau72RingSvg text");
 
-    // Lưu màu gốc của 72 Hậu để khôi phục sau khi highlight
-    hau72TextsCache.forEach(txt => {
-        if (!txt.hasAttribute("data-original-fill")) {
-            txt.setAttribute("data-original-fill", txt.getAttribute("fill") || "#ffcc77");
-        }
-    });
+    // Lưu lưu lượng màu gốc của 72 Hậu phục vụ cho hàm trả màu LED quét
+    if (hau72TextsCache) {
+        hau72TextsCache.forEach(txt => {
+            if (!txt.hasAttribute("data-original-fill")) {
+                txt.setAttribute("data-original-fill", txt.getAttribute("fill") || "#ffcc77");
+            }
+        });
+    }
 }
+
 // ====================== MANUAL ROTATE (KÉO SLIDER) ======================
 function manualRotate(value) {
     const numValue = parseFloat(value);
