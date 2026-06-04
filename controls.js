@@ -737,7 +737,7 @@ function getCurrentHauInfo(degree) {
         ten: hau.ten ?? "Xung Không",
         chatLuong: hau.chatLuong ?? "Bình Hòa",
         ynghia: hau.ynghia ?? "Khí trường chuyển dịch luân hồi.",
-        diem: Number(hau.diem) || 50, // GIỮ NGUYÊN ĐIỂM GỐC TỪ DATA CHUẨN, KHÔNG TRỪ Ở ĐÂY
+        diem: Number(hau.diem) || 50,
         giaiphap: String(hau.giaiphap ?? "Thiết kế phối hợp trạch pháp, an vị an lành."),
         emoji: "🟡"
     };
@@ -749,23 +749,24 @@ function getCurrentHauInfo(degree) {
         result.emoji = "🔴";
     }
 
-    // 5. CƠ CHẾ OVERRIDE (CHỈ DÀNH CHO HIỂN THỊ UI/UX - TUYỆT ĐỐI KHÔNG CAN THIỆP ĐIỂM SỐ)
+    // 5. CƠ CHẾ OVERRIDE THỰC THỜI: Tích hợp Không Vong cập nhật thẳng vào điểm mạch Hậu
     if (typeof kiemTraKhongVong === 'function') {
         const khongVong = kiemTraKhongVong(normalized);
         if (khongVong) {
             if (khongVong.loai === "ĐẠI KHÔNG VONG") {
                 result.chatLuong = "ĐẠI HUNG (Không Vong)";
                 result.emoji = "☠️";
-                // LƯU Ý: Đã xóa lệnh result.diem = 12 ở đây. Trả quyền trừ điểm về hàm não bộ tinhDiemTongHop
+                result.diem = 12; // Ép sụp đổ điểm số một cách khách quan
             } else {
                 result.chatLuong = "TIỂU KHÔNG VONG (Khí Suy)";
                 result.emoji = "⚠️";
-                // LƯU Ý: Đã xóa lệnh trừ 25 điểm ở đây. Trả quyền trừ điểm về hàm não bộ tinhDiemTongHop
+                result.diem = Math.max(10, result.diem - 25); // Khấu trừ trực tiếp vào mạch khí
             }
         }
     }
 
     // 6. LIÊN TỤC GHI ĐÈ VÀO CACHE THEO THỜI GIAN THỰC
+    // Giải phóng bộ nhớ đệm cũ để luồng đọc của tinhDiemTongHop luôn nhận vi viễn mới nhất
     if (typeof hauCache !== 'undefined' && hauCache.set) {
         hauCache.set(keyHau, result);
     }
@@ -1990,18 +1991,14 @@ function renderMultiLayerDetail(result, van, degree) {
     if (detailBox) detailBox.innerHTML = html;
 }
 
-// ====================== KIỂM TRA KHÔNG VONG (Thuật toán O(1) Tối ưu hóa tuyệt đối) ======================
+// ====================== KIỂM TRA KHÔNG VONG (Critical) ======================
 function kiemTraKhongVong(degree) {
-    // Chuẩn hóa góc kim về dải 0 - 360 độ (Bảo vệ tuyệt đối lỗi số âm)
     const gockim = ((degree % 360) + 360) % 360;
     
-    // === 1. ĐẠI KHÔNG VONG (Giao tuyến Bát Quái - Chu kỳ 45° tính từ mốc 22.5° ± 0.5°) ===
-    // Dùng modulo khép kín để tính khoảng cách góc ngắn nhất đến ranh giới
-    let distDai = (gockim + 360 - 22.5) % 45;
-    distDai = Math.min(distDai, 45 - distDai);
-    
-    // Nếu khoảng cách đến ranh giới <= 0.5 độ, lập tức báo động
-    if (distDai <= 0.5) {
+    // === 1. ĐẠI KHÔNG VONG (Giao tuyến Bát Quái - Chu kỳ 45° tính từ mốc ranh giới 22.5° ± 0.5°) ===
+    const duDaiKV = (gockim - 22.5) % 45;
+    const absDuDaiKV = Math.abs(duDaiKV);
+    if (absDuDaiKV <= 0.5 || Math.abs(absDuDaiKV - 45) <= 0.5) {
         return {
             loai: "ĐẠI KHÔNG VONG",
             mucDo: "NGUY HIỂM CAO",
@@ -2009,13 +2006,10 @@ function kiemTraKhongVong(degree) {
         };
     }
 
-    // === 2. TIỂU KHÔNG VONG (Giao tuyến 24 Sơn - Chu kỳ 15° tính từ mốc 7.5° ± 0.6°) ===
-    // Dùng modulo khép kín để tính khoảng cách góc ngắn nhất đến ranh giới 24 Sơn
-    let distTieu = (gockim + 360 - 7.5) % 15;
-    distTieu = Math.min(distTieu, 15 - distTieu);
-    
-    // Nếu khoảng cách đến ranh giới <= 0.6 độ, phát cảnh báo
-    if (distTieu <= 0.6) {
+    // === 2. TIỂU KHÔNG VONG (Giao tuyến 24 Sơn - Chu kỳ 15° tính từ mốc ranh giới 7.5° ± 0.6°) ===
+    const duTieuKV = (gockim - 7.5) % 15;
+    const absDuTieuKV = Math.abs(duTieuKV);
+    if (absDuTieuKV <= 0.6 || Math.abs(absDuTieuKV - 15) <= 0.6) {
         return {
             loai: "TIỂU KHÔNG VONG",
             mucDo: "Cảnh báo trung bình",
@@ -2023,8 +2017,7 @@ function kiemTraKhongVong(degree) {
         };
     }
 
-    // Khí trường an toàn, tĩnh tại, thuần khí (Không vướng tuyến Không Vong)
-    return null; 
+    return null; // Khí trường an toàn ổn định bên trong Sơn vị
 }
 
 /**
