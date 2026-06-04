@@ -1527,58 +1527,66 @@ function updateCompassUI(heading) {
             noiDungDetail += '<div style="color:#fff; font-size:0.85rem; line-height:1.5;">';
             
             if (!config.isCat) {
-                // Toilet/Bếp tọa đè hung cung rất chuẩn nhưng năm nay bị Sát tinh năm chiếu góc quấy phá
                 noiDungDetail += `Vị trí cấu trúc <b>${config.title}</b> đặt đè lên cung <b>${cungTrạch}</b> hiện tại đã đạt cách cục <span style="color:#30d158; font-weight:bold;">Tọa Hung Trấn Sát Đắc Cách</span> về mặt Địa Lý Dương Trạch. Tuyệt đối không cần phá dỡ hay thay đổi vị trí công trình.<br><br>`;
                 noiDungDetail += `⚠️ <span style="color:#ff9f0a; font-weight:bold;">LƯU Ý NIÊN HẠN:</span> Do chịu trường khí xung sát của Hung tinh Lưu Niên đáo phương (Chỉ số sụt giảm thực thời còn <b>${tongHop.diem}pt</b>). Trong năm nay, gia chủ **tuyệt đối tránh động thổ đập phá, khoan đục hay sửa chữa lớn** tại khu vực này để không kích động ác tính của sát tinh.`;
             } else {
-                // Cổng/Giường ngủ rơi vào cung cát nhưng năm nay dính sao xấu hạ điểm
                 noiDungDetail += `Hạng mục vị trí về mặt Địa lý bản mệnh vốn là cung cát lợi (<b>${cungTrạch}</b>). Tuy nhiên, niên độ khảo sát hiện hành đang gặp từ trường suy yếu do vướng hung tinh thời vận niên hạn chiếu góc (Chỉ số sụt giảm còn <b>${tongHop.diem}pt</b>).<br>`;
             }
             
-            // Trích xuất giải pháp động từ hàm tính điểm tổng hợp của bạn
             noiDungDetail += `<br><b style="color:#30d158;">💡 Giải pháp hóa giải & Trợ lực khí trường từ Thuật Toán:</b>`;
             noiDungDetail += `<div style="padding:10px; background:rgba(0,0,0,0.25); border-left:3px solid #30d158; color:#ddd; margin-top:5px; border-radius:0 6px 6px 0;">${tongHop.hoaGiai}</div>`;
             noiDungDetail += '</div>';
         }
 
         // =========================================================================
-        // ⏳ TIẾN TRÌNH TRẠCH NHẬT TOÁN PHÁP ĐỘNG (MÃ SẠCH KHÔNG DẤU TOÀN DIỆN)
+        // ⏳ TIẾN TRÌNH TRẠCH NHẬT TOÁN PHÁP ĐỘNG ĐA TẦNG (THIÊN - ĐỊA - NHÂN)
         // =========================================================================
         if (typeof tinhNgayGioCatTuong === 'function') {
             try {
                 const currentMonth = new Date().getMonth() + 1;
-                // Khai báo biến không dấu, bốc trích xuất chuỗi gốc từ hệ thống có sẵn của bạn
                 const sonInput = typeof sơnHiệnTại === 'string' ? sơnHiệnTại.trim() : "";
                 
                 const trachNhatData = tinhNgayGioCatTuong(parseInt(yearStr), sonInput, namKhaoSatThucTe, currentMonth, mụcĐích);
 
                 if (trachNhatData && trachNhatData.length > 0) {
                     const topNgayTot = trachNhatData[0];
+                    const statusNhanKhi = topNgayTot.ownerStatus;
+
+                    noiDungDetail += `<div style="margin-top:15px; padding:12px; background:rgba(255,255,255,0.02); border:1px dashed rgba(223,183,108,0.3); border-radius:8px; font-family:sans-serif;">`;
+                    noiDungDetail += `<b style="color:#dfb76c; font-size:0.88rem; display:block; margin-bottom:8px;">🌌 THỜI KHÔNG TRẠCH NHẬT KHAI VẬN QUYẾT:</b>`;
                     
-                    noiDungDetail += `<div style="margin-top:15px; padding:12px; background:rgba(48,209,88,0.04); border:1px dashed rgba(48,209,88,0.4); border-radius:8px; font-family:sans-serif;">`;
-                    
-                    if (config.isCat) {
-                        noiDungDetail += `<b style="color:#30d158; font-size:0.88rem; display:block; margin-bottom:6px;">🌌 NHẬT CÁT KHỞI SỰ ĐỂ PHÁT ĐỘNG KHÍ TRƯỜNG:</b>`;
+                    // A. KHỐI HIỂN THỊ NHÂN KHÍ (Sức khỏe hạn tuổi và Sách lược mượn tuổi)
+                    noiDungDetail += `<div style="font-size:0.83rem; line-height:1.5; margin-bottom:10px; padding-bottom:8px; border-bottom:1px dashed rgba(255,255,255,0.08);">`;
+                    if (statusNhanKhi.isOk) {
+                        noiDungDetail += `✅ <span style="color:#30d158; font-weight:bold;">Nhân Khí Vững Chãi:</span> Tuổi bản mệnh của trạch chủ trong năm ${namKhaoSatThucTe} không phạm Kim Lâu, Hoang Ốc, Tam Tai. Đắc trạch cát đại lợi, **tự tay đứng ra động thổ phát động khí mạch** viên mãn.`;
                     } else {
-                        noiDungDetail += `<b style="color:#ffd700; font-size:0.88rem; display:block; margin-bottom:6px;">⏳ LỊCH PHÁP TIÊU SÁT KHỞI CÔNG AN TOÀN:</b>`;
+                        // Gọi thuật toán bốc tuổi Quý Nhân mượn tinh dynamic của bạn
+                        const quyNhan = timTuoiQuyNhanMuonTinh(namKhaoSatThucTe, sonInput);
+                        noiDungDetail += `⚠️ <span style="color:#ff3b30; font-weight:bold;">Nhân Khí Suy Tổn:</span> Tuổi chủ nhà phạm hạn (${statusNhanKhi.reasons.join(", ")}). Khí trường bản thể yếu, tuyệt đối tránh tự tay cuốc đất hay động thổ khởi công.<br>`;
+                        noiDungDetail += `👉 <span style="color:#ffd700; font-weight:bold;">Sách lược Mật truyền:</span> Hệ thống quét dải Lục Thập Hoa Giáp, kiến nghị **mượn tuổi Quý Nhân** gánh vác thay long mạch. Tuổi đại cát lựa chọn: Gia chủ tuổi <span style="color:#fff; font-weight:bold;">${quyNhan.name} (Sinh năm ${quyNhan.year} — ${quyNhan.age} tuổi)</span> đứng ra cuốc đất làm lễ thay để nạp cát, tống hung.`;
                     }
-                    
+                    noiDungDetail += `</div>`;
+
+                    // B. KHỐI HIỂN THỊ LỊCH PHÁP (Ngày giờ cát tường động)
+                    if (config.isCat) {
+                        noiDungDetail += `<b style="color:#30d158; font-size:0.83rem; display:block; margin-bottom:4px;">⏳ LẬP KHAI MÔN PHÁT ĐỘNG KHÍ MẠCH:</b>`;
+                    } else {
+                        noiDungDetail += `<b style="color:#ff9f0a; font-size:0.83rem; display:block; margin-bottom:4px;">⏳ KHỞI CÔNG TIÊU SÁT AN ĐỊNH LONG MẠCH:</b>`;
+                    }
+
                     const hoursView = (topNgayTot.goldHours && topNgayTot.goldHours.length > 0) 
                         ? topNgayTot.goldHours.slice(0, 3).join(", ") 
                         : "Đang cập nhật dải giờ hoàng đạo...";
 
-                    noiDungDetail += `<div style="font-size:0.85rem; color:#e5e5ea; line-height:1.6;">`;
+                    noiDungDetail += `<div style="font-size:0.83rem; color:#e5e5ea; line-height:1.6;">`;
                     noiDungDetail += `• <span style="color:#8a8a8f;">Thời gian:</span> Ngày Dương <b>${topNgayTot.solarDate}</b> (Âm lịch: <b>${topNgayTot.lunarDate}</b> — Ngày <b>${topNgayTot.canChiText}</b>)<br>`;
-                    noiDungDetail += `• <span style="color:#8a8a8f;">Cơ duyên thiên địa:</span> Thiên tinh đắc tinh tú <b>${topNgayTot.saoName}</b> phối hợp vòng chuyển dịch <b>Trực ${topNgayTot.trucName}</b>.<br>`;
-                    noiDungDetail += `• <span style="color:#8a8a8f;">Phẩm chất thời không:</span> <span style="color:#ffd700; font-weight:bold;">${topNgayTot.score}pt</span> [${topNgayTot.levelText}]<br>`;
-                    noiDungDetail += `• <span style="color:#8a8a8f;">Khung giờ vàng phát động khí (Hoàng Đạo):</span> <span style="color:#30d158; font-weight:bold;">${hoursView}</span>`;
+                    noiDungDetail += `• <span style="color:#8a8a8f;">Cơ duyên:</span> Đắc tinh tú <b>${topNgayTot.saoName}</b> phối hợp chuyển dịch <b>Trực ${topNgayTot.trucName}</b> (${topNgayTot.trucText})<br>`;
+                    noiDungDetail += `• <span style="color:#8a8a8f;">Phẩm cấp:</span> <span style="color:#ffd700; font-weight:bold;">${topNgayTot.score}pt</span> [${topNgayTot.levelText}]<br>`;
+                    noiDungDetail += `• <span style="color:#8a8a8f;">Giờ Vàng Kích Hoạt (Hoàng Đạo):</span> <span style="color:#30d158; font-weight:bold;">${hoursView}</span>`;
                     noiDungDetail += `</div></div>`;
                 }
             } catch (err) {
-                console.error("Lỗi xử lý Trạch Nhật thời không:", err);
-                noiDungDetail += `<div style="margin-top:15px; padding:10px; background:rgba(255,59,48,0.05); border:1px dashed rgba(255,59,48,0.3); border-radius:8px; font-size:0.8rem; color:#ff4444; font-style:italic;">`;
-                noiDungDetail += `* Hệ thống đang tối ưu hóa vi điểm dữ liệu Trạch Nhật cho phương vị này...`;
-                noiDungDetail += `</div>`;
+                console.error("Lỗi đồng bộ Trạch Nhật hệ thống:", err);
             }
         }
 
