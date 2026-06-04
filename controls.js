@@ -2038,7 +2038,7 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich) {
 
     // Chiết xuất nguồn dữ liệu phân rã đa tầng O(1) từ hệ thống gốc
     const sonName = tìmSơnHướng(normalizedDegree); // Xác định Sơn vị (15°)
-    const sonInfo = layThongTin24Son(normalizedDegree, cungPhi, namKhảoSát); // Bóc tách dữ liệu từ MaTranMinhChau
+    const sonInfo = layThongTin24Son(normalizedDegree, cungPhi, namKhảoSát); 
     const hauInfo = getCurrentHauInfo(normalizedDegree); // Xác định vi mạch Long mạch (5°)
     const khongVong = kiemTraKhongVong(normalizedDegree); // Chốt chặn tử huyệt Không Vong
     const satTinhs = getPhongThuySatTinh(sonName, namKhảoSát); // Thần sát lưu niên bám theo Sơn
@@ -2047,72 +2047,86 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich) {
     const isCatPurpose = config.isCat;
 
     // =========================================================================
-    // LỚP 1 & 2: ĐIỂM NỀN SƠN VỊ GỐC (Kế thừa từ điểm số chi tiết của MaTranMinhChau)
+    // 🔥 BƯỚC 0: TRÍCH XUẤT ĐẠI CỤC BÁT TRẠCH BẢO VỆ GỐC ĐỊA LÝ
     // =========================================================================
-    // Điểm nền xuất phát trực tiếp từ MaTranMinhChau (đã phối hợp hoàn hảo Bát Trạch và Sơn vị)
-    // Không dùng con số 68 tù túng và cào bằng của các thuật toán cũ.
+    let currentCode = "N";
+    if (normalizedDegree >= 337.5 || normalizedDegree < 22.5) currentCode = "N";
+    else if (normalizedDegree >= 22.5 && normalizedDegree < 67.5) currentCode = "NE";
+    else if (normalizedDegree >= 67.5 && normalizedDegree < 112.5) currentCode = "E";
+    else if (normalizedDegree >= 112.5 && normalizedDegree < 157.5) currentCode = "SE";
+    else if (normalizedDegree >= 157.5 && normalizedDegree < 202.5) currentCode = "S";
+    else if (normalizedDegree >= 202.5 && normalizedDegree < 247.5) currentCode = "SW";
+    else if (normalizedDegree >= 247.5 && normalizedDegree < 292.5) currentCode = "W";
+    else if (normalizedDegree >= 292.5 && normalizedDegree < 337.5) currentCode = "NW";
+
+    // Trích xuất Du Tinh thực tế (Ví dụ: Lục Sát, Sinh Khí...)
+    const cungTrach = (typeof bátTrạchMap !== 'undefined' && bátTrạchMap[cungPhi]) ? bátTrạchMap[cungPhi][currentCode] : "Khác";
+    const laCungHungBatTrach = ["Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"].includes(cungTrach);
+
+    // =========================================================================
+    // LỚP 1 & 2: ĐIỂM NỀN SƠN VỊ GỐC (Đã bổ sung bộ lọc Gốc)
+    // =========================================================================
     let diemGocSon = (sonInfo && typeof sonInfo.diem === 'number') ? sonInfo.diem : 68;
     let isCungCat = sonInfo.loai === "Cát" || sonInfo.isCatBatTrach;
+
+    // ⛔ CHỐT CHẶN BÁT TRẠCH: KHÔNG CHO PHÉP NGỌN LẤN GỐC
+    if (isCatPurpose && laCungHungBatTrach) {
+        // Lỗi 1: Đặt Giường/Bàn Thờ vào cung Xấu (Lục Sát, Tuyệt Mệnh...) -> Giáng thẳng 35 điểm gốc
+        diemGocSon -= 35; 
+        isCungCat = false;
+    } else if (!isCatPurpose && !laCungHungBatTrach) {
+        // Lỗi 2: Đặt WC/Bếp vào cung Tốt (Sinh Khí, Diên Niên...) -> Giáng thẳng 35 điểm vì ô uế cung Cát
+        diemGocSon -= 35;
+    }
 
     // =========================================================================
     // LỚP 3: BIÊN ĐỘ VI MẠCH 72 HẬU LONG MẠCH (Δ H72) - QUẢN 5 ĐỘ
     // =========================================================================
-    // Điểm 72 Hậu đóng vai trò biến thiên vi điểm (co giãn biên độ khí mạch)
-    let bienDoMaoLong = (hauInfo.diem - 60); // Biên độ so với mốc bình hòa 60
+    let bienDoMaoLong = (hauInfo.diem - 60);
 
     // =========================================================================
     // LỚP 4: TRỌNG SỐ VẬN TINH HUYỀN KHÔNG VẬN 9 DYNAMIC (K_Van)
     // =========================================================================
-    // Giải phóng trục thời gian: Chạy dynamic 100% theo niên độ khảo sát của người dùng
     const namTinhVan = namKhảoSát ? parseInt(namKhảoSát) : new Date().getFullYear();
     const vanSo = Math.floor((namTinhVan - 1864) / 20) % 9 + 1;
 
-    // Ánh xạ mã hướng Tiếng Việt sang Code hệ thống dữ liệu VAN_DATA
     const huongToCodeMap = {
         "Bắc": "N", "Đông Bắc": "NE", "Đông": "E", "Đông Nam": "SE",
         "Nam": "S", "Tây Nam": "SW", "Tây": "W", "Tây Bắc": "NW"
     };
-    const codeChuan = huongToCodeMap[sonInfo.huong] || "N";
-    const saoNam = VAN_DATA[vanSo] && VAN_DATA[vanSo][codeChuan] ? VAN_DATA[vanSo][codeChuan] : { loai: "neutral" };
+    const codeChuan = sonInfo ? (huongToCodeMap[sonInfo.huong] || "N") : "N";
+    const saoNam = (typeof VAN_DATA !== 'undefined' && VAN_DATA[vanSo] && VAN_DATA[vanSo][codeChuan]) ? VAN_DATA[vanSo][codeChuan] : { loai: "neutral" };
     
-    // Đòn bẩy thời vận Vận 9 tác động trực tiếp lên toàn cục mạch khí trạch đất
     const kVan = (saoNam.loai === "best") ? 1.2 : (saoNam.loai === "worst" ? 0.7 : 1.0);
 
     // =========================================================================
     // LỚP 5: HỆ SỐ THÔNG KHÍ KHAI MÔN TOÁN PHÁP (Γ_Khai)
     // =========================================================================
     let gKhai = 1.0;
-    // Nếu là hạng mục nạp cát khí (Cửa chính, Cổng) đặt đúng vào Sơn Cát vượng khí
-    if (isCatPurpose && isCungCat) {
-        gKhai = 1.15; // Kích hoạt đòn bẩy thông khí khai môn tăng cường 15% hiệu năng
+    if (isCatPurpose && isCungCat && !laCungHungBatTrach) {
+        gKhai = 1.15; // Chỉ kích hoạt nạp khí nếu đúng là cung Cát thực sự
     }
 
     // =========================================================================
     // THỰC THI CÔNG THỨC TOÁN PHÁP TRUNG TÂM PHONG THỦY SỐ ĐA TẦNG
     // =========================================================================
-    // Khí mạch tích hợp chuỗi tính toán nền tảng
     let diem = (diemGocSon + bienDoMaoLong) * kVan;
 
-    // Khấu trừ tác động Thần Sát Lưu Niên (Σ Ψ_Sat)
-    // GIỮ ĐÚNG CÁI TÂM HỌC THUẬT: Chỉ phạt điểm sát tinh nếu hạng mục yêu cầu nạp cát khí.
-    // Ngược lại, nếu là Tọa Hung Trấn Sát (WC, Bếp), Sát tinh đáo cung là "lấy độc trị độc", giữ nguyên không phạt điểm.
     if (isCatPurpose) {
         satTinhs.forEach(sat => {
             diem -= (sat.ten === "NGŨ HOÀNG ĐẠI SÁT" || sat.ten === "THÁI TUẾ") ? 28 : 18;
         });
     }
 
-    // Áp dụng hệ số thông khí mở hướng ở cuối chuỗi phép nhân nạp cát
     diem = diem * gKhai;
 
     // =========================================================================
     // BƯỚC 6: ĐẢO CHIỀU MỤC ĐÍCH SỬ DỤNG ĐẮC CÁCH (Xử lý Đảo chiều Âm Dương)
     // =========================================================================
-    let messageGhiChu = sonInfo.text || sonInfo.luanDoan;
-    let hoaGiaiGợiÝ = sonInfo.giaiphap || sonInfo.hoaGiai || hauInfo.giaiphap;
+    let messageGhiChu = (sonInfo && (sonInfo.text || sonInfo.luanDoan)) || "Không có thông tin Sơn";
+    let hoaGiaiGợiÝ = (sonInfo && (sonInfo.giaiphap || sonInfo.hoaGiai)) || hauInfo.giaiphap;
 
     if (!isCatPurpose) { 
-        // Nghịch đảo điểm số để tôn vinh cấu trúc hạ tầng xả uế đặt đè đúng lên hung cung
         diem = (100 - diem) + 15; 
         messageGhiChu = `🌟 Tọa Hung Trấn Sát Đắc Cách: Vị trí ${config.title} đặt đè lên hung cung giúp trấn áp, tiêu trừ hoàn toàn hung khí tà khí của trạch đất. ` + messageGhiChu;
         hoaGiaiGợiÝ = "Thiết kế đắc cách chuẩn phong thủy số, khí trường ổn định an định, không cần an vị vật phẩm hóa giải.";
@@ -2123,16 +2137,15 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich) {
     // =========================================================================
     if (khongVong) {
         if (khongVong.loai === "ĐẠI KHÔNG VONG") {
-            diem = 12; // Khóa chết điểm số ở mốc Đại Hung, bẻ gãy mọi cách cục tốt một cách khách quan
+            diem = 12; 
         } else {
-            diem -= 22; // Khấu trừ nặng vào mạch nạp khí của Tiểu Không Vong
+            diem -= 22; 
         }
     }
 
-    // Gông chặn chuẩn hóa điểm số trong ngưỡng kỹ thuật an toàn [10 - 98]
+    // Gông chặn chuẩn hóa điểm số
     diem = Math.max(10, Math.min(98, Math.round(diem)));
 
-    // Phân cấp học thuật chuẩn xác tương thích đồng bộ với mốc Đạt cách 72pt mới của Vận 9
     let level = "HUNG";
     if (diem >= 85) {
         level = "ĐẠI CÁT";
