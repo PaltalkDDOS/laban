@@ -1428,21 +1428,10 @@ function updateCompassUI(heading) {
         luanDoanSonChiTiet = `<span style="color:#a0a0a0; font-style:italic;">Tọa độ định vị: ${currentHeading}° | Sơn ${sơnHiệnTại} | Hướng đại cục ${sơnHiệnTạiObj?.huong}.</span>`;
     }
 
-    // =========================================================================
-    // 🔥 PHÂN ĐOẠN 6: ĐỒNG BỘ TOÁN PHÁP CHÍNH TÔNG - PHÂN ĐỊNH GỐC & NGỌN
-    // Sửa lỗi ẩn hiện Mật pháp, vá lỗi vọt điểm đắc cách khi phạm Sát Tinh niên hạn
-    // =========================================================================
+    // ==================== 6. THIẾT LẬP MÀU SẮC GIAO DIỆN THEO MỐC 72PT ĐỒNG BỘ ====================
     const config = ConfigPhongThuy[mụcĐích] || { title: "Cung vị", isCat: true };
-    
-    // 1. XÁC ĐỊNH CÁI GỐC (Bản chất Địa lý tĩnh): Cung vị này theo Bát Trạch là Cát hay Hung?
-    const hungTinhBạtTrach = ["Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"];
-    const laCungHungDiaLy = hungTinhBạtTrach.includes(cungTrạch);
-    
-    // Thuận địa lý: Hạng mục cát đặt vào cung cát, hoặc hạng mục hung (WC/Bếp) đặt đè cung hung
-    const laThuanDiaLy = config.isCat ? !laCungHungDiaLy : laCungHungDiaLy;
-
-    // 2. XÁC ĐỊNH CÁI NGỌN (Sức khỏe khí trường thời thực): Đồng bộ mốc màu theo điểm số Vận 9
     const isGoodRealtime = tongHop.diem >= 72; 
+    
     colorDiemRealtime = "#ff4444"; 
     if (tongHop.diem >= 72) {
         colorDiemRealtime = "#30d158"; 
@@ -1450,7 +1439,7 @@ function updateCompassUI(heading) {
         colorDiemRealtime = "#ffd700"; 
     }
 
-    // THANH HIỂN THỊ CAO CẤP DYNAMIC CHỐNG SẬP KHUNG GIAO DIỆN
+    // THANH HIỂN THỊ CAO CẤP: ĐÃ BỎ CHỮ "PT:", DẢI HẬU VÀ ĐIỂM SỐ CO GIÃN ĐỘNG CHỐNG SẬP LAYOUT
     degreeTxt.innerHTML = `
         <div style="display: grid; grid-template-rows: auto auto; gap: 6px; font-family: sans-serif; width: 100%; box-sizing: border-box; overflow: hidden;">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; white-space: nowrap; overflow: hidden;">
@@ -1492,7 +1481,7 @@ function updateCompassUI(heading) {
     judgmentBox.className = isGoodRealtime ? "judgment-badge bg-good" : "judgment-badge bg-bad";
     detailBox.style.borderLeftColor = isGoodRealtime ? "var(--green)" : "var(--red)";
 
-    // --- DIỄN GIẢI LUẬN ĐOÁN THỜI THỰC ---
+    // RENDER NỘI DUNG DIỄN GIẢI CHI TIẾT RA MÀN HÌNH CHUẨN CÔNG THỨC
     let noiDungDetail = "";
     noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,255,255,0.05); border-left: 4px solid ' + (isGoodRealtime ? '#30d158' : '#ff3b30') + '">';
     noiDungDetail += '<strong style="color: ' + (isGoodRealtime ? '#30d158' : '#ff3b30') + '; font-size: 1.05rem; display:block; margin-bottom:5px;">';
@@ -1504,47 +1493,17 @@ function updateCompassUI(heading) {
     }
     noiDungDetail += thôngTinCung.ý_nghĩa + '</span></div>';
 
-    // --- BỘ LỌC ĐIỀU KIỆN HIỂN THỊ MẬT PHÁP / CẢNH BÁO KHÔNG SAI SÓT ---
-    // Hộp này mở ra khi: Bản chất bố trí sai địa lý Bát trạch (!laThuanDiaLy) HOẶC Sát tinh đè sụt điểm (< 72pt)
-    if (!laThuanDiaLy || !isGoodRealtime) {
+    // Điều kiện ẩn hiện pháp bảo hóa giải đồng bộ (Nếu điểm dưới 72pt bắt buộc hiện hộp hóa giải)
+    if (!isGoodRealtime) {
+        const matPhap = (typeof sinhMatPhapHoaGiai === 'function') ? sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung, currentCode) : "";
+        const camNang = advices[cungTrạch] || "";
         noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,159,10,0.08); border:1px solid #ff9f0a;">';
-        
-        if (!laThuanDiaLy) {
-            // KỊCH BẢN A: PHẠM ĐỊA LÝ (GỐC HUNG) -> Hiện mật pháp phối vật phẩm của bạn
-            const matPhap = (typeof sinhMatPhapHoaGiai === 'function') ? sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung, currentCode) : "";
-            const camNang = advices[cungTrạch] || "";
-            
-            noiDungDetail += '<h4 style="color:#ff9f0a; margin:0 0 8px 0; font-size: 0.9rem;">🛠️ MẬT PHÁP ĐIỀU TIẾT / HÓA GIẢI ĐỊA CỤC</h4>';
-            noiDungDetail += '<div style="color:#fff; font-size:0.85rem; line-height:1.5;">' + matPhap;
-            if (camNang) {
-                noiDungDetail += '<br><b style="color:#dfb76c;">Danh mục pháp bảo phụ trợ khuyên dùng trong Vận 9:</b><div style="color:#ccc;">' + camNang.replace(/👉 <em>.*?<\/em>:<br>/, '') + '</div>';
-            }
-            noiDungDetail += '</div>';
-            
-        } else {
-            // KỊCH BẢN B: ĐẮC CÁCH ĐỊA LÝ NHƯNG VƯỚNG NIÊN HẠN (NGỌN SUY)
-            // Áp dụng cho trường hợp chọn WC/Bếp đắc cách nhưng năm nay vướng Sát tinh đáo phương
-            noiDungDetail += '<h4 style="color:#ffd700; margin:0 0 8px 0; font-size: 0.9rem;">⚠️ CẨNH BÁO ĐIỀU TIẾT KHÍ TRƯỜNG LƯU NIÊN</h4>';
-            noiDungDetail += '<div style="color:#fff; font-size:0.85rem; line-height:1.5;">';
-            
-            if (!config.isCat) {
-                // Ngữ cảnh dành riêng cho Bếp / WC đặt chuẩn phong thủy nhưng dính sao xấu của năm
-                noiDungDetail += `Vị trí hạng mục <b>${config.title}</b> đặt đè lên cung hung <b>${cungTrạch}</b> đã đạt thế trận <span style="color:#30d158; font-weight:bold;">Tọa Hung Trấn Sát Đắc Cách</span> về mặt Địa Lý. Không cần phá dỡ hay thay đổi cấu trúc.<br>`;
-                noiDungDetail += `<span style="color:#ff9f0a;">Lưu ý niên hạn:</span> Do chịu ảnh hưởng biến thiên của Sát tinh lưu niên đáo phương, trạch khí thực thời bị biến động sụt giảm còn <b>${tongHop.diem}pt</b>.<br>`;
-            } else {
-                // Ngữ cảnh dành cho hạng mục cát (Giường ngủ/Cổng chính) dính sao xấu của năm
-                noiDungDetail += `Phương vị hạng mục về mặt Địa lý bản mệnh vốn là cung cát (<b>${cungTrạch}</b>). Tuy nhiên, trường khí năm nay bị suy yếu xuống còn <b>${tongHop.diem}pt</b> do vướng phải hung tinh hạn hạn chiếu hướng.<br>`;
-            }
-            
-            noiDungDetail += `<br><b style="color:#30d158;">💡 Sách lược vận hành & Giải pháp từ Thuật Toán Lõi:</b>`;
-            noiDungDetail += `<div style="padding:10px; background:rgba(0,0,0,0.2); border-left:3px solid #30d158; color:#ddd; margin-top:5px; border-radius:0 6px 6px 0;">${tongHop.hoaGiai}</div>`;
-            
-            // Đón đầu tương lai: Nơi chèn cổng logic hiển thị ngày khởi công lành mạnh
-            noiDungDetail += `<br><span style="color:#8a8a8f; font-size:0.8rem; font-style:italic;">* Hệ thống tự động khóa trạng thái động thổ phá dỡ. Cẩm nang tuyển chọn Nhật Cát khởi công, trạch cát người trợ lực (Quý Nhân) đang được đồng bộ theo toán pháp...</span>`;
-            noiDungDetail += '</div>';
+        noiDungDetail += '<h4 style="color:#ff9f0a; margin:0 0 8px 0; font-size: 0.9rem;">🛠 MẬT PHÁP ĐIỀU TIẾT / HÓA GIẢI KHÍ TRƯỜNG</h4>';
+        noiDungDetail += '<div style="color:#fff; font-size:0.85rem; line-height:1.5;">' + matPhap;
+        if (camNang) {
+            noiDungDetail += '<br><b style="color:#dfb76c;">Danh mục pháp bảo phụ trợ khuyên dùng trong Vận 9:</b><div style="color:#ccc;">' + camNang.replace(/👉 <em>.*?<\/em>:<br>/, '') + '</div>';
         }
-
-        noiDungDetail += '</div>';
+        noiDungDetail += '</div></div>';
     }
 
     // THẦN SÁT VÀ CỬU TINH VẬN HẠN: Nạp chuẩn xác dòng thời gian động thực tế
@@ -3154,7 +3113,7 @@ function handleDateInput(currentInput, nextInputId) {
 }
 
 function render24SonRing() {
-    // 1. Vạch độ ngoài cùng (Giữ nguyên)
+    // 1. Vạch độ ngoài cùng (giữ nguyên)
     const vachDoRing = document.getElementById('vachDoRing');
     if (vachDoRing) {
         let linesHtml = "";
@@ -3165,7 +3124,7 @@ function render24SonRing() {
         vachDoRing.innerHTML = linesHtml;
     }
 
-    // 2. Vạch ngăn 24 Sơn (Giữ nguyên)
+    // 2. Vạch ngăn 24 Sơn (giữ nguyên)
     const khe24SonRing = document.getElementById('khe24SonRing');
     if (khe24SonRing) {
         let lines24Html = "";
@@ -3176,7 +3135,7 @@ function render24SonRing() {
         khe24SonRing.innerHTML = lines24Html;
     }
 
-    // 3. Chữ 24 Sơn (Giữ nguyên)
+    // 3. Chữ 24 Sơn (giữ nguyên)
     const sonRingSvg = document.getElementById('sonRingSvg');
     if (sonRingSvg) {
         sonRingSvg.innerHTML = "";
@@ -3201,38 +3160,41 @@ function render24SonRing() {
         });
     }
 
-    // 4. Vòng 24 Sao Phúc Đức - ĐÃ TỐI ƯU SẠCH (Không chứa filter gây lag)
+    // 4. Vòng 24 Sao Phúc Đức - ĐÃ NÂNG CẤP (màu đẹp hơn, đồng bộ phong thủy)
     const phucDucRingSvg = document.getElementById('phucDucRingSvg');
     if (phucDucRingSvg) {
         phucDucRingSvg.innerHTML = "";
         const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
-       
+        
         phucDucNames.forEach((name, index) => {
             const goc = (index * 15) % 360;
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250");
+            textNode.setAttribute("x", "250"); 
             textNode.setAttribute("y", "72");
             textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "6.8");
+            textNode.setAttribute("font-size", "6.5");
             textNode.setAttribute("font-weight", "700");
             textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
             textNode.setAttribute("data-sao-goc", goc.toString());
-            textNode.setAttribute("data-base-size", "6.8");
+            textNode.setAttribute("data-base-size", "6.5");
             textNode.textContent = name;
 
-            // Dùng màu vàng đồng nguyên bản, cực nhẹ cho máy quay
-            textNode.setAttribute("fill", "#b8a36f"); 
+            // Nâng cấp màu: Dùng tone vàng đồng phong thủy, có chút phân biệt nhẹ
+            textNode.setAttribute("fill", "#d4af37");  // Màu vàng đồng chính
             phucDucRingSvg.appendChild(textNode);
         });
     }
 
-    // 5. Vòng 72 Hậu - CHUẨN XÁC ĐỒNG TRỤC CHÍNH SƠN
+    // 5. Vòng 72 Hậu - KHỚP 100% VỚI DATA CHUẨN HÓA BƯỚC CHẴN 5 ĐỘ
     const hauRing = document.getElementById('hau72RingSvg');
     if (hauRing) {
         hauRing.innerHTML = "";
         
         Object.keys(Data72Hau).forEach(degStr => {
             const hau = Data72Hau[degStr];
+            
+            // QUAN TRỌNG: Data mới đã chuẩn hóa mốc chẵn chính tâm (340, 345, 350)
+            // Vì vậy góc vẽ đồ họa TRÙNG KHỚP LUÔN với góc dữ liệu, không cộng thêm offset lệch nữa!
             const degVisual = parseFloat(degStr);
             
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -3241,136 +3203,123 @@ function render24SonRing() {
             textNode.setAttribute("text-anchor", "middle");
             textNode.setAttribute("font-size", "3.2"); 
             textNode.setAttribute("font-weight", "700");
+            
+            // Xoay góc chữ đúng vị trí mốc chẵn của cung địa bàn
             textNode.setAttribute("transform", `rotate(${degVisual}, 250, 250)`);
+            
+            // Giữ nguyên key dữ liệu gốc phục vụ hàm quét sáng LED
             textNode.setAttribute("data-hau-goc", degStr); 
             textNode.setAttribute("data-base-size", "3.2");
 
+            // Thiết lập màu sắc theo chất lượng khí trường
             let color;
             if (hau.chatLuong.includes("Cát")) {
-                color = "#a8c46f"; 
+                color = "#a8c46f";      // Xanh ngọc nhạt
             } else if (hau.chatLuong.includes("Hung")) {
-                color = "#e07a5f"; 
+                color = "#e07a5f";      // Đỏ gạch
             } else {
-                color = "#d4af37"; 
+                color = "#d4af37";      // Vàng đồng
             }
             
             textNode.setAttribute("fill", color);
             textNode.setAttribute("data-original-fill", color);
             
-            // Tối ưu chuỗi: Nhặt chữ cái đầu + số (Ví dụ: "Nhâm Hậu 1" -> "N1")
-            const tenGoc = hau.ten || "";
-            const soHau = tenGoc.match(/\d+/); // Nhặt số ở cuối
-            const chuDau = tenGoc.charAt(0);  // Nhặt chữ cái đầu tiên (N, T, Q, S...)
-            textNode.textContent = soHau ? (chuDau + soHau[0]) : tenGoc;
-
+            // Xử lý chuỗi hiển thị gọn đẹp trên mặt la kinh
+            textNode.textContent = hau.ten.replace(" Hậu", "").replace(/(\D+)(\d)/, (m, p1, p2) => p1.substring(0,1) + p2);
             hauRing.appendChild(textNode);
         });
     }
-
-    // QUAN TRỌNG: Cập nhật lại bộ nhớ đệm Cache ngay sau khi tạo mới DOM để hàm LED quét chạy đúng
-    if (typeof cacheCompassElements === 'function') {
-        cacheCompassElements();
-    }
 }
-
-// ====================== HÀM LÀM SÁNG LED QUÉT (ĐỒNG BỘ MƯỢT MÀ) ======================
+// ====================== HÀM LÀM SÁNG LED QUÉT (NÂNG CẤP ĐỒNG BỘ) ======================
 function kichHoatDenLedQuet(heading) {
     const ledTargetAngle = ((heading % 360) + 360) % 360;
+    cacheCompassElements();
 
-    // Hàm phụ trợ xử lý hiệu ứng đổi màu và phóng to chữ khi trúng tia quét
+    // Hàm phụ trợ để xử lý hiệu ứng chung cho các vòng
     const applyEffect = (elements, attrGoc, range, zoomScale) => {
-        if (!elements || !elements.forEach) return; // Chốt chặn an toàn chống crash
-        
         elements.forEach(txt => {
             const goc = parseFloat(txt.getAttribute(attrGoc)) || 0;
             let phanSai = Math.abs(ledTargetAngle - goc);
             if (phanSai > 180) phanSai = 360 - phanSai;
 
-            const baseSize = parseFloat(txt.getAttribute("data-base-size")) || 10;
+            // Lấy size gốc từ attribute (nếu chưa có thì lấy theo mặc định)
+            const baseSize = parseFloat(txt.getAttribute("data-base-size")) || parseFloat(txt.style.fontSize) || 10;
             
             if (phanSai <= range) {
-                // Trạng thái Khi quét trúng cung
+                // Khi trúng: Phóng to, đổi màu vàng/nổi bật, độ đậm cao
                 txt.style.opacity = "1";
                 txt.style.fontSize = (baseSize * zoomScale) + "px";
                 txt.style.fontWeight = "900";
-                
+                // Nếu có data-original-fill, chuyển sang màu vàng nổi bật khi trúng
                 if (txt.hasAttribute("data-original-fill")) {
-                    txt.style.fill = "#ffff00"; // Đổi sang vàng LED rực rỡ khi trúng mạch Hậu
+                    txt.style.fill = "#ffff00";
                 } else if (txt.getAttribute("data-color")) {
+                     // Nếu là các vòng cũ (Sơn/Sao)
                     const color = txt.getAttribute("data-color");
                     txt.style.fill = (color === "#5c4314") ? "#ffcc00" : (color === "#ff3b30" ? "#ff0000" : "#00ff00");
                 }
             } else {
-                // Trạng thái Bình thường quay về tĩnh
+                // Trở về trạng thái bình thường
                 txt.style.opacity = "0.6";
                 txt.style.fontSize = baseSize + "px";
                 txt.style.fontWeight = "700";
+                // Phục hồi màu gốc
                 txt.style.fill = txt.getAttribute("data-original-fill") || txt.getAttribute("data-color") || "#8a8a8f";
             }
         });
     };
 
-    // 1. Xử lý 8 Hướng Lớn (Giữ nguyên logic gốc của bạn)
-    if (typeof huongLonTextsCache !== 'undefined') {
-        huongLonTextsCache.forEach(txt => {
-            const textGoc = parseFloat(txt.getAttribute("data-goc")) || 0;
-            let phanSai = Math.abs(ledTargetAngle - textGoc);
-            if (phanSai > 180) phanSai = 360 - phanSai;
-            if (phanSai <= 22.5) {
-                txt.style.opacity = "1"; txt.style.fontWeight = "900";
-                txt.style.fill = (txt.getAttribute("fill") === "#00a525") ? "#00ff37" : "#ff1a00";
-            } else {
-                txt.style.opacity = "0.5"; txt.style.fontWeight = "normal";
-                const transform = txt.getAttribute("transform") || "";
-                if (txt.parentNode?.getAttribute("id") === "textChinhPhuong") {
-                    txt.style.fill = (transform.includes("rotate(90") || transform.includes("rotate(270")) ? "#00a525" : "#ff3b30";
-                } else { txt.style.fill = "#6b4e18"; }
-            }
-        });
-    }
+    // 1. Xử lý 8 Hướng Lớn (Giữ logic cũ của bạn)
+    huongLonTextsCache.forEach(txt => {
+        const textGoc = parseFloat(txt.getAttribute("data-goc")) || 0;
+        let phanSai = Math.abs(ledTargetAngle - textGoc);
+        if (phanSai > 180) phanSai = 360 - phanSai;
+        if (phanSai <= 22.5) {
+            txt.style.opacity = "1"; txt.style.fontWeight = "900";
+            txt.style.fill = (txt.getAttribute("fill") === "#00a525") ? "#00ff37" : "#ff1a00";
+        } else {
+            txt.style.opacity = "0.5"; txt.style.fontWeight = "normal";
+            const transform = txt.getAttribute("transform") || "";
+            if (txt.parentNode.getAttribute("id") === "textChinhPhuong") {
+                txt.style.fill = (transform.includes("rotate(90") || transform.includes("rotate(270")) ? "#00a525" : "#ff3b30";
+            } else { txt.style.fill = "#6b4e18"; }
+        }
+    });
 
     // 2. Xử lý 24 Sơn (Phóng to 1.3 lần)
-    if (typeof sonTextsCache !== 'undefined') {
-        applyEffect(sonTextsCache, "data-son-goc", 7.5, 1.3);
-    }
+    applyEffect(sonTextsCache, "data-son-goc", 7.5, 1.3);
 
     // 3. Xử lý Sao Phúc Đức (Phóng to 1.2 lần)
-    if (typeof saoTextsCache !== 'undefined') {
-        applyEffect(saoTextsCache, "data-sao-goc", 7.5, 1.2);
-    }
+    applyEffect(saoTextsCache, "data-sao-goc", 7.5, 1.2);
 
-    // 4. Xử lý 72 Hậu (Quét trúng cung quản 2.5 độ, phóng to 1.65 lần nổi bật)
-    if (typeof hau72TextsCache !== 'undefined') {
-        applyEffect(hau72TextsCache, "data-hau-goc", 2.5, 1.65); 
-    }
+    // 4. Xử lý 72 Hậu (tăng phóng to)
+if (typeof hau72TextsCache !== 'undefined') {
+    applyEffect(hau72TextsCache, "data-hau-goc", 3.0, 1.65);  // Tăng từ 1.5 lên 1.65
+}
 }
 
-
-// ====================== CACHE ELEMENTS - TỐI ƯU HIỆU SUẤT CHUẨN VẬN 9 ======================
-// Đảm bảo khai báo đủ 4 biến mảng toàn cục ở đầu file (hoặc trước hàm)
+// ====================== CACHE ELEMENTS - TỐI ƯU HIỆU SUẤT ======================
 let sonTextsCache = null;
 let huongLonTextsCache = null;
 let saoTextsCache = null;
-let hau72TextsCache = null; // Khai báo thêm biến này nếu chưa có ở đầu file
 
-function cacheCompassElements(forceRefresh = false) {
-    // NẾU KHÔNG ÉP BUỘC LÀM MỚI và đã có dữ liệu -> Bỏ qua để tiết kiệm CPU
-    if (!forceRefresh && sonTextsCache && sonTextsCache.length > 0) return; 
+function cacheCompassElements() {
+    if (sonTextsCache && sonTextsCache.length > 0) return; // Chỉ cache 1 lần
 
-    // Thực hiện quét nạp bộ nhớ đệm từ DOM
+    // Cache các vòng cũ
     sonTextsCache = document.querySelectorAll("#sonRingSvg text");
     huongLonTextsCache = document.querySelectorAll("#chuHuongLonG text");
     saoTextsCache = document.querySelectorAll("#phucDucRingSvg text");
+
+    // === Cache 72 Hậu (MỚI THÊM) ===
     hau72TextsCache = document.querySelectorAll("#hau72RingSvg text");
 
-    // Lưu lưu lượng màu gốc của 72 Hậu phục vụ cho hàm trả màu LED quét
-    if (hau72TextsCache) {
-        hau72TextsCache.forEach(txt => {
-            if (!txt.hasAttribute("data-original-fill")) {
-                txt.setAttribute("data-original-fill", txt.getAttribute("fill") || "#ffcc77");
-            }
-        });
-    }
+    // Lưu màu gốc của 72 Hậu để khôi phục sau khi highlight
+    hau72TextsCache.forEach(txt => {
+        if (!txt.hasAttribute("data-original-fill")) {
+            txt.setAttribute("data-original-fill", txt.getAttribute("fill") || "#ffcc77");
+        }
+    });
 }
 
 // ====================== MANUAL ROTATE (KÉO SLIDER) ======================
@@ -3557,82 +3506,5 @@ document.addEventListener('DOMContentLoaded', function() {
     if (currentGender === 'female') {
         document.getElementById('gender-female').classList.add('active');
         document.getElementById('gender-male').classList.remove('active');
-    }
-});
-
-// ==================== HỆ THỐNG PWA FLOATING ACTION BUTTON ====================
-if (typeof deferredPrompt === 'undefined') {
-    var deferredPrompt; 
-}
-
-function isRunningAsPWA() {
-    return window.matchMedia('(display-mode: standalone)').matches || 
-           window.navigator.standalone === true ||
-           window.matchMedia('(display-mode: fullscreen)').matches;
-}
-
-function kiemTraVaAnNut() {
-    const btn = document.getElementById('btn-install-pwa');
-    if (!btn) return false;
-    
-    if (isRunningAsPWA()) {
-        btn.classList.remove('show');
-        return true;
-    }
-    return false;
-}
-
-// Khởi tạo hệ thống lõi
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        if (window.location.protocol === 'file:') return;
-        
-        kiemTraVaAnNut();
-
-        const link = document.createElement('link');
-        link.rel = 'manifest';
-        link.href = './manifest.json';
-        document.head.appendChild(link);
-
-        navigator.serviceWorker.register('./sw.js')
-            .catch(err => console.error('Lỗi kích hoạt PWA:', err));
-    });
-}
-
-// Lắng nghe sự kiện mời cài đặt từ trình duyệt hợp lệ
-window.addEventListener('beforeinstallprompt', (e) => {
-    if (isRunningAsPWA()) return;
-
-    e.preventDefault();
-    deferredPrompt = e;
-
-    const btn = document.getElementById('btn-install-pwa');
-    if (btn) {
-        btn.classList.add('show');
-
-        btn.onclick = async () => {
-            if (!deferredPrompt) return;
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            console.log(`Người dùng chọn: ${outcome}`);
-            
-            if (outcome === 'accepted') {
-                btn.classList.remove('show');
-            }
-            deferredPrompt = null;
-        };
-    }
-});
-
-// Ẩn nút lập tức khi cài xong
-window.addEventListener('appinstalled', () => {
-    const btn = document.getElementById('btn-install-pwa');
-    if (btn) btn.classList.remove('show');
-});
-
-// Bộ quét thông minh khi người dùng tắt đi mở lại màn hình điện thoại
-document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') {
-        setTimeout(kiemTraVaAnNut, 600);
     }
 });
