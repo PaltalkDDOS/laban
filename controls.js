@@ -1236,10 +1236,6 @@ function getLuanDoanChiTiet(huong, son) {
 }
 
 function updateCompassUI(heading) {
-	// CHỐT CHẶN KHÓA CỨNG TỐI CAO: Nếu đang bật chế độ LUẬN GIẢI (HOLD) -> Đóng băng toàn bộ hệ thống ngay lập tức!
-    if (typeof isCompassHoldingMode !== 'undefined' && isCompassHoldingMode) {
-        return; // Ngắt luồng, giữ nguyên góc xoay và bảng chữ cũ, tuyệt đối không tính toán lại gây nhảy chữ
-    }
     // 1. TÍNH GÓC THỰC TẾ (Đã bù trừ độ lệch từ trường tuyệt đối)
     let trueHeading = (heading + (magneticDeclination % 360) + 360) % 360;
     currentHeading = Math.round(trueHeading);
@@ -1434,18 +1430,18 @@ function updateCompassUI(heading) {
 
     // =========================================================================
     // 🔥 PHÂN ĐOẠN 6: ĐỒNG BỘ TOÁN PHÁP CHÍNH TÔNG - PHÂN ĐỊNH GỐC & NGỌN
-    // Giải quyết triệt để lỗi ẩn hiện Mật pháp, xử lý đảo chiều ứng xử Thần sát Lưu Niên
+    // Sửa lỗi ẩn hiện Mật pháp, vá lỗi vọt điểm đắc cách khi phạm Sát Tinh niên hạn
     // =========================================================================
     const config = ConfigPhongThuy[mụcĐích] || { title: "Cung vị", isCat: true };
-
-    // 1. ĐỊNH VỊ CÁI GỐC (Bản chất Địa lý tĩnh Bát Trạch): Xác định tính chất thuần túy của Cung vị
+    
+    // 1. XÁC ĐỊNH CÁI GỐC (Bản chất Địa lý tĩnh): Cung vị này theo Bát Trạch là Cát hay Hung?
     const hungTinhBạtTrach = ["Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"];
     const laCungHungDiaLy = hungTinhBạtTrach.includes(cungTrạch);
     
-    // Thuận địa lý học: Mục đích cát đặt vào cung cát, hoặc mục đích hung (WC/Bếp) đặt đè cung hung
+    // Thuận địa lý: Hạng mục cát đặt vào cung cát, hoặc hạng mục hung (WC/Bếp) đặt đè cung hung
     const laThuanDiaLy = config.isCat ? !laCungHungDiaLy : laCungHungDiaLy;
 
-    // 2. ĐỊNH VỊ CÁI NGỌN (Sức khỏe khí trường thời thực): Đồng bộ mốc màu theo điểm số Vận 9 của bạn
+    // 2. XÁC ĐỊNH CÁI NGỌN (Sức khỏe khí trường thời thực): Đồng bộ mốc màu theo điểm số Vận 9
     const isGoodRealtime = tongHop.diem >= 72; 
     colorDiemRealtime = "#ff4444"; 
     if (tongHop.diem >= 72) {
@@ -1454,7 +1450,7 @@ function updateCompassUI(heading) {
         colorDiemRealtime = "#ffd700"; 
     }
 
-    // THANH HIỂN THỊ CAO CẤP DYNAMIC: Loại bỏ "PT:", tự động co giãn chống sập khung
+    // THANH HIỂN THỊ CAO CẤP DYNAMIC CHỐNG SẬP KHUNG GIAO DIỆN
     degreeTxt.innerHTML = `
         <div style="display: grid; grid-template-rows: auto auto; gap: 6px; font-family: sans-serif; width: 100%; box-sizing: border-box; overflow: hidden;">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; white-space: nowrap; overflow: hidden;">
@@ -1496,7 +1492,7 @@ function updateCompassUI(heading) {
     judgmentBox.className = isGoodRealtime ? "judgment-badge bg-good" : "judgment-badge bg-bad";
     detailBox.style.borderLeftColor = isGoodRealtime ? "var(--green)" : "var(--red)";
 
-    // --- RENDER PHẦN 1: THÔNG TIN DIỄN GIẢI CHÍNH ---
+    // --- DIỄN GIẢI LUẬN ĐOÁN THỜI THỰC ---
     let noiDungDetail = "";
     noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,255,255,0.05); border-left: 4px solid ' + (isGoodRealtime ? '#30d158' : '#ff3b30') + '">';
     noiDungDetail += '<strong style="color: ' + (isGoodRealtime ? '#30d158' : '#ff3b30') + '; font-size: 1.05rem; display:block; margin-bottom:5px;">';
@@ -1508,17 +1504,17 @@ function updateCompassUI(heading) {
     }
     noiDungDetail += thôngTinCung.ý_nghĩa + '</span></div>';
 
-    // --- RENDER PHẦN 2: BỘ LỌC ĐIỀU KIỆN HIỂN THỊ MẬT PHÁP / CẢNH BÁO THEO TÂM ĐẠO ---
-    // Hộp mở ra khi: Bố trí nghịch Địa lý tĩnh (!laThuanDiaLy) HOẶC dính Sát Tinh niên vận làm điểm tụt (< 72pt)
+    // --- BỘ LỌC ĐIỀU KIỆN HIỂN THỊ MẬT PHÁP / CẢNH BÁO KHÔNG SAI SÓT ---
+    // Hộp này mở ra khi: Bản chất bố trí sai địa lý Bát trạch (!laThuanDiaLy) HOẶC Sát tinh đè sụt điểm (< 72pt)
     if (!laThuanDiaLy || !isGoodRealtime) {
         noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,159,10,0.08); border:1px solid #ff9f0a;">';
         
         if (!laThuanDiaLy) {
-            // [KỊCH BẢN A]: SAI GỐC ĐỊA LÝ (Bố trí sai lệch quy cách bản mệnh) -> Bung Mật Pháp linh vật điều tiết
+            // KỊCH BẢN A: PHẠM ĐỊA LÝ (GỐC HUNG) -> Hiện mật pháp phối vật phẩm của bạn
             const matPhap = (typeof sinhMatPhapHoaGiai === 'function') ? sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung, currentCode) : "";
             const camNang = advices[cungTrạch] || "";
             
-            noiDungDetail += '<h4 style="color:#ff9f0a; margin:0 0 8px 0; font-size: 0.9rem;">🛠 MẬT PHÁP ĐIỀU TIẾT / HÓA GIẢI ĐỊA CỤC</h4>';
+            noiDungDetail += '<h4 style="color:#ff9f0a; margin:0 0 8px 0; font-size: 0.9rem;">🛠️ MẬT PHÁP ĐIỀU TIẾT / HÓA GIẢI ĐỊA CỤC</h4>';
             noiDungDetail += '<div style="color:#fff; font-size:0.85rem; line-height:1.5;">' + matPhap;
             if (camNang) {
                 noiDungDetail += '<br><b style="color:#dfb76c;">Danh mục pháp bảo phụ trợ khuyên dùng trong Vận 9:</b><div style="color:#ccc;">' + camNang.replace(/👉 <em>.*?<\/em>:<br>/, '') + '</div>';
@@ -1526,53 +1522,26 @@ function updateCompassUI(heading) {
             noiDungDetail += '</div>';
             
         } else {
-            // [KỊCH BẢN B]: ĐÚNG GỐC ĐỊA LÝ NHƯNG SAI NIÊN VẬN (Ngọn suy do dính Sát Tinh lưu niên như Ngũ Hoàng/Thái Tuế)
-            noiDungDetail += '<h4 style="color:#ffd700; margin:0 0 8px 0; font-size: 0.9rem;">⚠️ CẢNH BÁO ĐIỀU TIẾT HÀNH VI NIÊN HẠN</h4>';
+            // KỊCH BẢN B: ĐẮC CÁCH ĐỊA LÝ NHƯNG VƯỚNG NIÊN HẠN (NGỌN SUY)
+            // Áp dụng cho trường hợp chọn WC/Bếp đắc cách nhưng năm nay vướng Sát tinh đáo phương
+            noiDungDetail += '<h4 style="color:#ffd700; margin:0 0 8px 0; font-size: 0.9rem;">⚠️ CẨNH BÁO ĐIỀU TIẾT KHÍ TRƯỜNG LƯU NIÊN</h4>';
             noiDungDetail += '<div style="color:#fff; font-size:0.85rem; line-height:1.5;">';
             
             if (!config.isCat) {
-                // Toilet/Bếp tọa đè hung cung rất chuẩn nhưng năm nay bị Sát tinh năm chiếu góc quấy phá
-                noiDungDetail += `Vị trí cấu trúc <b>${config.title}</b> đặt đè lên cung <b>${cungTrạch}</b> hiện tại đã đạt cách cục <span style="color:#30d158; font-weight:bold;">Tọa Hung Trấn Sát Đắc Cách</span> về mặt Địa Lý Dương Trạch. Tuyệt đối không cần phá dỡ hay thay đổi vị trí công trình.<br><br>`;
-                noiDungDetail += `⚠️ <span style="color:#ff9f0a; font-weight:bold;">LƯU Ý NIÊN HẠN:</span> Do chịu trường khí xung sát của Hung tinh Lưu Niên đáo phương (Chỉ số sụt giảm thực thời còn <b>${tongHop.diem}pt</b>). Trong năm nay, gia chủ **tuyệt đối tránh động thổ đập phá, khoan đục hay sửa chữa lớn** tại khu vực này để không kích động ác tính của sát tinh.`;
+                // Ngữ cảnh dành riêng cho Bếp / WC đặt chuẩn phong thủy nhưng dính sao xấu của năm
+                noiDungDetail += `Vị trí hạng mục <b>${config.title}</b> đặt đè lên cung hung <b>${cungTrạch}</b> đã đạt thế trận <span style="color:#30d158; font-weight:bold;">Tọa Hung Trấn Sát Đắc Cách</span> về mặt Địa Lý. Không cần phá dỡ hay thay đổi cấu trúc.<br>`;
+                noiDungDetail += `<span style="color:#ff9f0a;">Lưu ý niên hạn:</span> Do chịu ảnh hưởng biến thiên của Sát tinh lưu niên đáo phương, trạch khí thực thời bị biến động sụt giảm còn <b>${tongHop.diem}pt</b>.<br>`;
             } else {
-                // Cổng/Giường ngủ rơi vào cung cát nhưng năm nay dính sao xấu hạ điểm
-                noiDungDetail += `Hạng mục vị trí về mặt Địa lý bản mệnh vốn là cung cát lợi (<b>${cungTrạch}</b>). Tuy nhiên, niên độ khảo sát hiện hành đang gặp từ trường suy yếu do vướng hung tinh thời vận niên hạn chiếu góc (Chỉ số sụt giảm còn <b>${tongHop.diem}pt</b>).<br>`;
+                // Ngữ cảnh dành cho hạng mục cát (Giường ngủ/Cổng chính) dính sao xấu của năm
+                noiDungDetail += `Phương vị hạng mục về mặt Địa lý bản mệnh vốn là cung cát (<b>${cungTrạch}</b>). Tuy nhiên, trường khí năm nay bị suy yếu xuống còn <b>${tongHop.diem}pt</b> do vướng phải hung tinh hạn hạn chiếu hướng.<br>`;
             }
             
-            // Trích xuất giải pháp động từ hàm tính điểm tổng hợp của bạn
-            noiDungDetail += `<br><b style="color:#30d158;">💡 Giải pháp hóa giải & Trợ lực khí trường từ Thuật Toán:</b>`;
-            noiDungDetail += `<div style="padding:10px; background:rgba(0,0,0,0.25); border-left:3px solid #30d158; color:#ddd; margin-top:5px; border-radius:0 6px 6px 0;">${tongHop.hoaGiai}</div>`;
+            noiDungDetail += `<br><b style="color:#30d158;">💡 Sách lược vận hành & Giải pháp từ Thuật Toán Lõi:</b>`;
+            noiDungDetail += `<div style="padding:10px; background:rgba(0,0,0,0.2); border-left:3px solid #30d158; color:#ddd; margin-top:5px; border-radius:0 6px 6px 0;">${tongHop.hoaGiai}</div>`;
+            
+            // Đón đầu tương lai: Nơi chèn cổng logic hiển thị ngày khởi công lành mạnh
+            noiDungDetail += `<br><span style="color:#8a8a8f; font-size:0.8rem; font-style:italic;">* Hệ thống tự động khóa trạng thái động thổ phá dỡ. Cẩm nang tuyển chọn Nhật Cát khởi công, trạch cát người trợ lực (Quý Nhân) đang được đồng bộ theo toán pháp...</span>`;
             noiDungDetail += '</div>';
-        }
-
-        // =========================================================================
-        // ⏳ TIẾN TRÌNH TRẠCH NHẬT TOÁN PHÁP ĐỘNG (BỐC ĐÚNG DATA ĐỂ HIỂN THỊ)
-        // Đặt ở cuối hộp bọc cam để đảm bảo tính mỹ thuật huyền bí của Lịch Pháp
-        // =========================================================================
-        if (typeof tinhNgayGioCatTuong === 'function') {
-            const thangHienTai = new Date().getMonth() + 1;
-            // Gọi bộ não trạch nhật truyền chính xác: Tuổi (Nhân), Sơn gốc địa lý (Địa) và Mục đích hành sự
-            const lichNgayTot = tinhNgayGioCatTuong(parseInt(yearStr), sơnHiệnTại, namKhaoSatThucTe, thangHienTai, mụcĐích);
-
-            if (lichNgayTot && lichNgayTot.length > 0) {
-                const ngayDauBang = lichNgayTot[0]; // Trích xuất ngày đắc cách đạt điểm số cao nhất trong tháng
-                
-                noiDungDetail += `<div style="margin-top:15px; padding:12px; background:rgba(48,209,88,0.04); border:1px dashed rgba(48,209,88,0.4); border-radius:8px; font-family:sans-serif;">`;
-                
-                // Thay đổi tiêu đề dẫn dắt dựa theo tính chất Cát/Hung của hạng mục sử dụng
-                if (config.isCat) {
-                    noiDungDetail += `<b style="color:#30d158; font-size:0.88rem; display:block; margin-bottom:6px;">🌌 NHẬT CÁT KHỞI SỰ ĐỂ PHÁT ĐỘNG KHÍ TRƯỜNG:</b>`;
-                } else {
-                    noiDungDetail += `<b style="color:#ffd700; font-size:0.88rem; display:block; margin-bottom:6px;">⏳ LỊCH PHÁP TIÊU SÁT KHỞI CÔNG AN TOÀN:</b>`;
-                }
-                
-                noiDungDetail += `<div style="font-size:0.85rem; color:#e5e5ea; line-height:1.6;">`;
-                noiDungDetail += `• <span style="color:#8a8a8f;">Thời gian:</span> Ngày Dương <b>${ngayDauBang.solarDate}</b> (Âm lịch: <b>${ngayDauBang.lunarDate}</b> — Ngày <b>${ngayDauBang.canChiText}</b>)<br>`;
-                noiDungDetail += `• <span style="color:#8a8a8f;">Cơ duyên thiên địa:</span> Thiên tinh đắc tinh tú <b>${ngayDauBang.saoName}</b> phối hợp vòng chuyển dịch <b>Trực ${ngayDauBang.trucName}</b>.<br>`;
-                noiDungDetail += `• <span style="color:#8a8a8f;">Phẩm chất thời không:</span> <span style="color:#ffd700; font-weight:bold;">${ngayDauBang.score}pt</span> [${ngayDauBang.levelText}]<br>`;
-                noiDungDetail += `• <span style="color:#8a8a8f;">Khung giờ vàng phát động khí (Hoàng Đạo):</span> <span style="color:#30d158; font-weight:bold;">${ngayDauBang.goldHours.slice(0, 3).join(", ")}</span>`;
-                noiDungDetail += `</div></div>`;
-            }
         }
 
         noiDungDetail += '</div>';
@@ -3376,6 +3345,7 @@ function kichHoatDenLedQuet(heading) {
     }
 }
 
+
 // ====================== CACHE ELEMENTS - TỐI ƯU HIỆU SUẤT CHUẨN VẬN 9 ======================
 // Đảm bảo khai báo đủ 4 biến mảng toàn cục ở đầu file (hoặc trước hàm)
 let sonTextsCache = null;
@@ -3666,107 +3636,3 @@ document.addEventListener('visibilitychange', () => {
         setTimeout(kiemTraVaAnNut, 600);
     }
 });
-//LUan giai-bo-sung
-// Biến trạng thái HOLD đóng băng la bàn toàn cục
-var isCompassHoldingMode = false;
-var savedHoldDataForLuanGiai = null; // Lưu trữ dữ liệu tại thời điểm bấm HOLD
-
-/**
- * MẬT PHÁP LUẬN GIẢI CHUYÊN SÂU: Khóa hướng và bung bài sớ phân tích tổng hợp
- */
-function kichHoatLuandaiThuat() {
-    const holdBtn = document.getElementById('btn-hold-luan-giai');
-    const holdIcon = document.getElementById('luan-giai-icon');
-    const holdText = document.getElementById('luan-giai-text');
-    const modal = document.getElementById('luanGiaiModal');
-
-    if (!holdBtn || !modal) return;
-
-    // Đảo trạng thái HOLD của cảm biến la bàn
-    isCompassHoldingMode = !isCompassHoldingMode;
-
-    if (isCompassHoldingMode) {
-        // 1. CHUYỂN TRẠNG THÁI NÚT SANG ĐANG KHÓA HƯỚNG
-        holdBtn.classList.add('holding');
-        holdIcon.innerText = '🔒';
-        holdText.innerText = 'Đang Giữ';
-
-        // 2. TRÍCH XUẤT DỮ LIỆU ĐỘNG HIỆN HÀNH TRÊN MÀN HÌNH CỦA THẦY PHONG THỦY
-        const userName = document.getElementById('userName').value || "Người Tầm Phương";
-        const customDegreeText = document.getElementById('degree-txt').innerText;
-        const currentHauText = document.getElementById('hau-txt').innerText;
-        const currentFateText = document.getElementById('fate-txt').innerText;
-        const detailAnalysisHtml = document.getElementById('detail-box').innerHTML;
-        
-        // Trích xuất điểm số từ giao diện thực tế
-        const badgeStyleColor = colorDiemRealtime || "#ffd700";
-        const diemBadge = document.getElementById('lg-pop-badge-pt');
-        if (diemBadge) {
-            diemBadge.innerText = typeof tongHop !== 'undefined' ? `${tongHop.diem}pt` : "Khảo Sát";
-            diemBadge.style.backgroundColor = badgeStyleColor;
-        }
-
-        // 3. XÂY DỰNG BẢN LUẬN GIẢI ĐỒNG BỘ NHẤT THỂ CÓ ĐẦU CÓ ĐUÔI
-        let bàiSớLuậnGiải = `
-            <div style="font-family: sans-serif; line-height: 1.6;">
-                <p style="margin-top:0; font-size:1.05rem; border-bottom:1px dashed #333; padding-bottom:10px;">
-                    ☯️ Kính chào gia chủ <b>${userName}</b>. Hệ thống la kinh số đã lập cực thành công, khóa cứng tọa độ thực địa để tiến hành đại thuật luận giải dương trạch bản mệnh chi tiết như sau:
-                </p>
-                
-                <div style="background:#1c1c1e; border:1px solid #2d2d2d; padding:14px; border-radius:10px; margin:15px 0;">
-                    <strong style="color:#dfb76c; display:block; margin-bottom:8px; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.5px;">📍 TỌA ĐỘ PHƯƠNG VỊ GHI NHẬN (ĐÃ KHÓA):</strong>
-                    <ul style="margin:0; padding-left:18px; color:#e5e5ea; font-size:0.92rem;">
-                        <li><span style="color:#8a8a8f;">Thông số góc:</span> <b style="color:#ffca28; font-size:1.1rem;">${currentHeading}°</b></li>
-                        <li><span style="color:#8a8a8f;">Bản vị địa lý:</span> <b>${customDegreeText.replace(/^\d+°\s*-\s*/, '')}</b></li>
-                        <li><span style="color:#8a8a8f;">Vi cục long mạch:</span> ${currentHauText}</li>
-                        <li><span style="color:#8a8a8f;">Đối chiếu thiên mệnh:</span> ${currentFateText}</li>
-                    </ul>
-                </div>
-
-                <div style="margin-top:20px;">
-                    <strong style="color:#dfb76c; display:block; margin-bottom:8px; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.5px;">🔮 KẾT LUẬN CÁT HUNG & BIỆN PHÁP ĐIỀU TIẾT:</strong>
-                    <div class="lg-dynamic-content" style="color:#fff;">
-                        ${detailAnalysisHtml}
-                    </div>
-                </div>
-
-                <p style="margin-bottom:0; margin-top:20px; font-size:0.8rem; color:#666; text-align:center; border-top:1px dashed #232323; padding-top:10px; font-style:italic;">
-                    Hệ thống đã khóa bộ cảm biến. Nhấn nút bên dưới để xả HOLD và khôi phục chế độ xoay tự động.
-                </p>
-            </div>
-        `;
-
-        // Bơm bài sớ vào lòng modal và mở bung giao diện lên
-        document.getElementById('lg-pop-body-content').innerHTML = bàiSớLuậnGiải;
-        modal.classList.add('open');
-    } else {
-        // Trả lại trạng thái xoay tự động
-        gỡKhóaHoldCompass();
-    }
-}
-
-/**
- * Xả trạng thái khóa hướng để cảm biến tiếp tục xoay tự do
- */
-function gỡKhóaHoldCompass() {
-    isCompassHoldingMode = false;
-    const holdBtn = document.getElementById('btn-hold-luan-giai');
-    const holdIcon = document.getElementById('luan-giai-icon');
-    const holdText = document.getElementById('luan-giai-text');
-    
-    if (holdBtn) {
-        holdBtn.classList.remove('holding');
-        holdIcon.innerText = '🔓';
-        holdText.innerText = 'Luận Giải';
-    }
-}
-
-/**
- * Đóng cửa sổ Pop-up luận giải
- */
-function dongModalLuanGiai() {
-    const modal = document.getElementById('luanGiaiModal');
-    if (modal) modal.classList.remove('open');
-    // Khi người dùng tắt bảng đọc luận giải, tự động giải phóng cảm biến cho la bàn xoay tiếp
-    gỡKhóaHoldCompass();
-}
