@@ -1496,3 +1496,81 @@ mjx-container {
         font-size: 0.85rem;
     }
 }
+/* ================= TỔNG LUẬN FLOATING BUTTON ================= */
+.luangiai-fab-btn {
+    position: fixed;
+    bottom: 75px; /* Nằm ngay phía trên nút Cài App (bottom 20px + cao 55px) */
+    right: 20px;
+    background: linear-gradient(135deg, #30d158, #189839); /* Tone xanh ngọc bích quý phái */
+    color: #fff;
+    border: 1px solid #71f592;
+    border-radius: 50px;
+    padding: 12px 18px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(48, 209, 88, 0.4);
+    z-index: 9999;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.luangiai-fab-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(48, 209, 88, 0.6);
+}
+
+.luangiai-fab-btn:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 480px) {
+    .luangiai-fab-btn {
+        bottom: 65px;
+        right: 16px;
+        padding: 10px 16px;
+        font-size: 0.85rem;
+    }
+}
+
+/* ================= POPUP TỔNG LUẬN (GLASSMORPHISM) ================= */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-overlay.show {
+    opacity: 1; visibility: visible;
+}
+
+.luangiai-modal {
+    background: linear-gradient(145deg, rgba(30,30,32,0.95), rgba(15,15,18,0.98));
+    border: 1px solid var(--gold);
+    border-radius: 16px;
+    width: 90%; max-width: 500px; max-height: 85vh;
+    overflow-y: auto;
+    padding: 20px;
+    transform: scale(0.8) translateY(30px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.1);
+}
+
+.modal-overlay.show .luangiai-modal {
+    transform: scale(1) translateY(0);
+}
+
+.btn-close-modal {
+    width: 100%; padding: 12px; margin-top: 15px;
+    background: #ff3b30; color: #fff; font-weight: bold;
+    border: none; border-radius: 8px; cursor: pointer;
+    font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;
+}
