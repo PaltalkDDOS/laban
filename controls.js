@@ -3181,7 +3181,7 @@ function handleDateInput(currentInput, nextInputId) {
 }
 
 function render24SonRing() {
-    // 1. Vạch độ ngoài cùng (giữ nguyên)
+    // 1. Vạch độ ngoài cùng (Giữ nguyên)
     const vachDoRing = document.getElementById('vachDoRing');
     if (vachDoRing) {
         let linesHtml = "";
@@ -3192,7 +3192,7 @@ function render24SonRing() {
         vachDoRing.innerHTML = linesHtml;
     }
 
-    // 2. Vạch ngăn 24 Sơn (giữ nguyên)
+    // 2. Vạch ngăn 24 Sơn (Giữ nguyên)
     const khe24SonRing = document.getElementById('khe24SonRing');
     if (khe24SonRing) {
         let lines24Html = "";
@@ -3203,7 +3203,7 @@ function render24SonRing() {
         khe24SonRing.innerHTML = lines24Html;
     }
 
-    // 3. Chữ 24 Sơn (giữ nguyên)
+    // 3. Chữ 24 Sơn (Giữ nguyên)
     const sonRingSvg = document.getElementById('sonRingSvg');
     if (sonRingSvg) {
         sonRingSvg.innerHTML = "";
@@ -3228,41 +3228,38 @@ function render24SonRing() {
         });
     }
 
-    // 4. Vòng 24 Sao Phúc Đức - ĐÃ NÂNG CẤP (màu đẹp hơn, đồng bộ phong thủy)
+    // 4. Vòng 24 Sao Phúc Đức - ĐÃ TỐI ƯU SẠCH (Không chứa filter gây lag)
     const phucDucRingSvg = document.getElementById('phucDucRingSvg');
     if (phucDucRingSvg) {
         phucDucRingSvg.innerHTML = "";
         const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
-        
+       
         phucDucNames.forEach((name, index) => {
             const goc = (index * 15) % 360;
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250"); 
+            textNode.setAttribute("x", "250");
             textNode.setAttribute("y", "72");
             textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "6.5");
+            textNode.setAttribute("font-size", "6.8");
             textNode.setAttribute("font-weight", "700");
             textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
             textNode.setAttribute("data-sao-goc", goc.toString());
-            textNode.setAttribute("data-base-size", "6.5");
+            textNode.setAttribute("data-base-size", "6.8");
             textNode.textContent = name;
 
-            // Nâng cấp màu: Dùng tone vàng đồng phong thủy, có chút phân biệt nhẹ
-            textNode.setAttribute("fill", "#d4af37");  // Màu vàng đồng chính
+            // Dùng màu vàng đồng nguyên bản, cực nhẹ cho máy quay
+            textNode.setAttribute("fill", "#b8a36f"); 
             phucDucRingSvg.appendChild(textNode);
         });
     }
 
-    // 5. Vòng 72 Hậu - ĐÃ NÂNG CẤP (màu rõ hơn + chuẩn bị cho highlight mạnh)
+    // 5. Vòng 72 Hậu - CHUẨN XÁC ĐỒNG TRỤC CHÍNH SƠN
     const hauRing = document.getElementById('hau72RingSvg');
     if (hauRing) {
         hauRing.innerHTML = "";
         
         Object.keys(Data72Hau).forEach(degStr => {
             const hau = Data72Hau[degStr];
-            
-            // QUAN TRỌNG: Data mới đã chuẩn hóa mốc chẵn chính tâm (340, 345, 350)
-            // Vì vậy góc vẽ đồ họa TRÙNG KHỚP LUÔN với góc dữ liệu, không cộng thêm offset lệch nữa!
             const degVisual = parseFloat(degStr);
             
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -3271,33 +3268,38 @@ function render24SonRing() {
             textNode.setAttribute("text-anchor", "middle");
             textNode.setAttribute("font-size", "3.2"); 
             textNode.setAttribute("font-weight", "700");
-            
-            // Xoay góc chữ đúng vị trí mốc chẵn của cung địa bàn
             textNode.setAttribute("transform", `rotate(${degVisual}, 250, 250)`);
-            
-            // Giữ nguyên key dữ liệu gốc phục vụ hàm quét sáng LED
             textNode.setAttribute("data-hau-goc", degStr); 
             textNode.setAttribute("data-base-size", "3.2");
 
-            // Thiết lập màu sắc theo chất lượng khí trường
             let color;
             if (hau.chatLuong.includes("Cát")) {
-                color = "#a8c46f";      // Xanh ngọc nhạt
+                color = "#a8c46f"; 
             } else if (hau.chatLuong.includes("Hung")) {
-                color = "#e07a5f";      // Đỏ gạch
+                color = "#e07a5f"; 
             } else {
-                color = "#d4af37";      // Vàng đồng
+                color = "#d4af37"; 
             }
             
             textNode.setAttribute("fill", color);
             textNode.setAttribute("data-original-fill", color);
             
-            // Xử lý chuỗi hiển thị gọn đẹp trên mặt la kinh
-            textNode.textContent = hau.ten.replace(" Hậu", "").replace(/(\D+)(\d)/, (m, p1, p2) => p1.substring(0,1) + p2);
+            // Tối ưu chuỗi: Nhặt chữ cái đầu + số (Ví dụ: "Nhâm Hậu 1" -> "N1")
+            const tenGoc = hau.ten || "";
+            const soHau = tenGoc.match(/\d+/); // Nhặt số ở cuối
+            const chuDau = tenGoc.charAt(0);  // Nhặt chữ cái đầu tiên (N, T, Q, S...)
+            textNode.textContent = soHau ? (chuDau + soHau[0]) : tenGoc;
+
             hauRing.appendChild(textNode);
         });
     }
+
+    // QUAN TRỌNG: Cập nhật lại bộ nhớ đệm Cache ngay sau khi tạo mới DOM để hàm LED quét chạy đúng
+    if (typeof cacheCompassElements === 'function') {
+        cacheCompassElements();
+    }
 }
+
 // ====================== HÀM LÀM SÁNG LED QUÉT (NÂNG CẤP ĐỒNG BỘ) ======================
 function kichHoatDenLedQuet(heading) {
     const ledTargetAngle = ((heading % 360) + 360) % 360;
