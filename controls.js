@@ -3372,7 +3372,7 @@ function kichHoatDenLedQuet(heading) {
 
     // 4. Xử lý 72 Hậu (Quét trúng cung quản 2.5 độ, phóng to 1.65 lần nổi bật)
     if (typeof hau72TextsCache !== 'undefined') {
-        applyEffect(hau72TextsCache, "data-hau-goc", 3.0, 1.65); 
+        applyEffect(hau72TextsCache, "data-hau-goc", 2.5, 1.65); 
     }
 }
 
@@ -3666,107 +3666,3 @@ document.addEventListener('visibilitychange', () => {
         setTimeout(kiemTraVaAnNut, 600);
     }
 });
-//LUan giai-bo-sung
-// Biến trạng thái HOLD đóng băng la bàn toàn cục
-var isCompassHoldingMode = false;
-var savedHoldDataForLuanGiai = null; // Lưu trữ dữ liệu tại thời điểm bấm HOLD
-
-/**
- * MẬT PHÁP LUẬN GIẢI CHUYÊN SÂU: Khóa hướng và bung bài sớ phân tích tổng hợp
- */
-function kichHoatLuandaiThuat() {
-    const holdBtn = document.getElementById('btn-hold-luan-giai');
-    const holdIcon = document.getElementById('luan-giai-icon');
-    const holdText = document.getElementById('luan-giai-text');
-    const modal = document.getElementById('luanGiaiModal');
-
-    if (!holdBtn || !modal) return;
-
-    // Đảo trạng thái HOLD của cảm biến la bàn
-    isCompassHoldingMode = !isCompassHoldingMode;
-
-    if (isCompassHoldingMode) {
-        // 1. CHUYỂN TRẠNG THÁI NÚT SANG ĐANG KHÓA HƯỚNG
-        holdBtn.classList.add('holding');
-        holdIcon.innerText = '🔒';
-        holdText.innerText = 'Đang Giữ';
-
-        // 2. TRÍCH XUẤT DỮ LIỆU ĐỘNG HIỆN HÀNH TRÊN MÀN HÌNH CỦA THẦY PHONG THỦY
-        const userName = document.getElementById('userName').value || "Người Tầm Phương";
-        const customDegreeText = document.getElementById('degree-txt').innerText;
-        const currentHauText = document.getElementById('hau-txt').innerText;
-        const currentFateText = document.getElementById('fate-txt').innerText;
-        const detailAnalysisHtml = document.getElementById('detail-box').innerHTML;
-        
-        // Trích xuất điểm số từ giao diện thực tế
-        const badgeStyleColor = colorDiemRealtime || "#ffd700";
-        const diemBadge = document.getElementById('lg-pop-badge-pt');
-        if (diemBadge) {
-            diemBadge.innerText = typeof tongHop !== 'undefined' ? `${tongHop.diem}pt` : "Khảo Sát";
-            diemBadge.style.backgroundColor = badgeStyleColor;
-        }
-
-        // 3. XÂY DỰNG BẢN LUẬN GIẢI ĐỒNG BỘ NHẤT THỂ CÓ ĐẦU CÓ ĐUÔI
-        let bàiSớLuậnGiải = `
-            <div style="font-family: sans-serif; line-height: 1.6;">
-                <p style="margin-top:0; font-size:1.05rem; border-bottom:1px dashed #333; padding-bottom:10px;">
-                    ☯️ Kính chào gia chủ <b>${userName}</b>. Hệ thống la kinh số đã lập cực thành công, khóa cứng tọa độ thực địa để tiến hành đại thuật luận giải dương trạch bản mệnh chi tiết như sau:
-                </p>
-                
-                <div style="background:#1c1c1e; border:1px solid #2d2d2d; padding:14px; border-radius:10px; margin:15px 0;">
-                    <strong style="color:#dfb76c; display:block; margin-bottom:8px; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.5px;">📍 TỌA ĐỘ PHƯƠNG VỊ GHI NHẬN (ĐÃ KHÓA):</strong>
-                    <ul style="margin:0; padding-left:18px; color:#e5e5ea; font-size:0.92rem;">
-                        <li><span style="color:#8a8a8f;">Thông số góc:</span> <b style="color:#ffca28; font-size:1.1rem;">${currentHeading}°</b></li>
-                        <li><span style="color:#8a8a8f;">Bản vị địa lý:</span> <b>${customDegreeText.replace(/^\d+°\s*-\s*/, '')}</b></li>
-                        <li><span style="color:#8a8a8f;">Vi cục long mạch:</span> ${currentHauText}</li>
-                        <li><span style="color:#8a8a8f;">Đối chiếu thiên mệnh:</span> ${currentFateText}</li>
-                    </ul>
-                </div>
-
-                <div style="margin-top:20px;">
-                    <strong style="color:#dfb76c; display:block; margin-bottom:8px; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.5px;">🔮 KẾT LUẬN CÁT HUNG & BIỆN PHÁP ĐIỀU TIẾT:</strong>
-                    <div class="lg-dynamic-content" style="color:#fff;">
-                        ${detailAnalysisHtml}
-                    </div>
-                </div>
-
-                <p style="margin-bottom:0; margin-top:20px; font-size:0.8rem; color:#666; text-align:center; border-top:1px dashed #232323; padding-top:10px; font-style:italic;">
-                    Hệ thống đã khóa bộ cảm biến. Nhấn nút bên dưới để xả HOLD và khôi phục chế độ xoay tự động.
-                </p>
-            </div>
-        `;
-
-        // Bơm bài sớ vào lòng modal và mở bung giao diện lên
-        document.getElementById('lg-pop-body-content').innerHTML = bàiSớLuậnGiải;
-        modal.classList.add('open');
-    } else {
-        // Trả lại trạng thái xoay tự động
-        gỡKhóaHoldCompass();
-    }
-}
-
-/**
- * Xả trạng thái khóa hướng để cảm biến tiếp tục xoay tự do
- */
-function gỡKhóaHoldCompass() {
-    isCompassHoldingMode = false;
-    const holdBtn = document.getElementById('btn-hold-luan-giai');
-    const holdIcon = document.getElementById('luan-giai-icon');
-    const holdText = document.getElementById('luan-giai-text');
-    
-    if (holdBtn) {
-        holdBtn.classList.remove('holding');
-        holdIcon.innerText = '🔓';
-        holdText.innerText = 'Luận Giải';
-    }
-}
-
-/**
- * Đóng cửa sổ Pop-up luận giải
- */
-function dongModalLuanGiai() {
-    const modal = document.getElementById('luanGiaiModal');
-    if (modal) modal.classList.remove('open');
-    // Khi người dùng tắt bảng đọc luận giải, tự động giải phóng cảm biến cho la bàn xoay tiếp
-    gỡKhóaHoldCompass();
-}
