@@ -3372,33 +3372,29 @@ function kichHoatDenLedQuet(heading) {
     }
 }
 
-// ====================== CACHE ELEMENTS - TỐI ƯU HIỆU SUẤT CHUẨN VẬN 9 ======================
-// Đảm bảo khai báo đủ 4 biến mảng toàn cục ở đầu file (hoặc trước hàm)
+// ====================== CACHE ELEMENTS - TỐI ƯU HIỆU SUẤT ======================
 let sonTextsCache = null;
 let huongLonTextsCache = null;
 let saoTextsCache = null;
-let hau72TextsCache = null; // Khai báo thêm biến này nếu chưa có ở đầu file
 
-function cacheCompassElements(forceRefresh = false) {
-    // NẾU KHÔNG ÉP BUỘC LÀM MỚI và đã có dữ liệu -> Bỏ qua để tiết kiệm CPU
-    if (!forceRefresh && sonTextsCache && sonTextsCache.length > 0) return; 
+function cacheCompassElements() {
+    if (sonTextsCache && sonTextsCache.length > 0) return; // Chỉ cache 1 lần
 
-    // Thực hiện quét nạp bộ nhớ đệm từ DOM
+    // Cache các vòng cũ
     sonTextsCache = document.querySelectorAll("#sonRingSvg text");
     huongLonTextsCache = document.querySelectorAll("#chuHuongLonG text");
     saoTextsCache = document.querySelectorAll("#phucDucRingSvg text");
+
+    // === Cache 72 Hậu (MỚI THÊM) ===
     hau72TextsCache = document.querySelectorAll("#hau72RingSvg text");
 
-    // Lưu lưu lượng màu gốc của 72 Hậu phục vụ cho hàm trả màu LED quét
-    if (hau72TextsCache) {
-        hau72TextsCache.forEach(txt => {
-            if (!txt.hasAttribute("data-original-fill")) {
-                txt.setAttribute("data-original-fill", txt.getAttribute("fill") || "#ffcc77");
-            }
-        });
-    }
+    // Lưu màu gốc của 72 Hậu để khôi phục sau khi highlight
+    hau72TextsCache.forEach(txt => {
+        if (!txt.hasAttribute("data-original-fill")) {
+            txt.setAttribute("data-original-fill", txt.getAttribute("fill") || "#ffcc77");
+        }
+    });
 }
-
 // ====================== MANUAL ROTATE (KÉO SLIDER) ======================
 function manualRotate(value) {
     const numValue = parseFloat(value);
