@@ -804,6 +804,7 @@ const ConfigPhongThuy = {
     'trash_area':     { title: "Vị trí Thùng Rác / Phế Liệu (Tọa Hung)", isCat: false }
 };
 
+// ====================== HÀM generateDirectionsList() - BIỂU DIỄN DANH SÁCH GỢI Ý ======================
 function generateDirectionsList() {
     const mucDich = document.getElementById('purpose').value;
     const config = ConfigPhongThuy[mucDich];
@@ -819,16 +820,13 @@ function generateDirectionsList() {
 
     const isCatPurpose = config.isCat; // true: cần Cát, false: cần Hung
     let listDirections = [];
-    
-    // ĐỒNG BỘ TRỤC THỜI GIAN: Trích xuất niên độ khảo sát từ form động để khớp điểm số la bàn số
-    const yearInput = document.getElementById('birthYear')?.value;
-    const namKhaoSat = (yearInput && yearInput.length === 4) ? parseInt(yearInput) : new Date().getFullYear();
+    const currentYear = new Date().getFullYear();
 
     directionMeta.forEach(dir => {
         const cungTrạch = bátTrạchMap[chủMệnh][dir.code];
         
-        // Gọi hàm tính điểm tổng hợp đa tầng truyền chuẩn xác tham số năm động
-        const tongHopDir = tinhDiemTongHop(chủMệnh, dir.angle, namKhaoSat, mucDich);
+        // Gọi hàm tính điểm tổng hợp đa tầng theo Vận 9 chính xác
+        const tongHopDir = tinhDiemTongHop(chủMệnh, dir.angle, currentYear, mucDich);
         const hauInfo = getCurrentHauInfo(dir.angle);
 
         listDirections.push({
@@ -841,18 +839,18 @@ function generateDirectionsList() {
         });
     });
 
-    // Sắp xếp: Ai điểm cao nhất (hợp mục đích nhất) xếp lên đầu bảng một cách khách quan
+    // Sắp xếp: Ai điểm cao nhất (hợp mục đích nhất) lên đầu
     listDirections.sort((a, b) => b.priority - a.priority);
     
-    listPanelTitle.innerText = `Gợi ý vị trí Vận 9: ${config.title}`;
+    listPanelTitle.innerText = `Gợi ý vị trí: ${config.title}`;
     directionsContainer.innerHTML = "";
 
     listDirections.forEach(item => {
-        // Đồng bộ mốc đạt cách thống nhất toàn hệ thống (>= 72pt)
+        // Màu sắc nhãn dựa trên điểm số đã qua bộ lọc thông minh Vận 9 (Đạt cách >= 72pt)
         const isHợp = item.diemTongHop >= 72;
         const colorStyle = isHợp ? '#30d158' : '#ff3b30';
 
-        // Đảo nhãn trạng thái chuẩn xác cấu trúc nguyên bản
+        // Đảo nhãn trạng thái trực quan theo cấu trúc nguyên bản
         let statusText = "";
         if (isCatPurpose) {
             statusText = isHợp ? '🟢 ĐÓN CÁT KHÍ (HƯỚNG TỐT)' : '❌ PHẠM HUNG PHƯƠNG (HƯỚNG XẤU)';
@@ -863,16 +861,18 @@ function generateDirectionsList() {
         const sonGroup = getSonGroupForDirection(item.code);
         let sonHTML = "";
         
-        // GIỮ NGUYÊN BẢN 100% LOGIC RENDER SƠN VỊ TỪ HỆ THỐNG GỐC CỦA BẠN
+        // GIỮ NGUYÊN BẢN 100% LOGIC CLICK XEM GIẢI THÍCH SƠN VỊ CỦA BẠN
         sonGroup.forEach((son, index) => {
             const dataSon = MaTranMinhChau[chủMệnh] ? MaTranMinhChau[chủMệnh][son] : null;
             const score = dataSon ? dataSon.diem : 0;
             const nhom = dataSon ? dataSon.nhom : "";
             
+            // Xử lý tooltip cho Sơn chống sập chuỗi khi render HTML
             const titleInfo = `${son} (${nhom})`;
             const textInfo = dataSon ? dataSon.text.replace(/'/g, "\\'") : "Chưa có thông tin.";
             const solInfo = dataSon ? dataSon.giaiphap.replace(/'/g, "\\'") : "Chưa có giải pháp.";
             
+            // Màu sắc cho từng sơn nhỏ theo chất lượng gốc
             const sonColor = score >= 80 ? "#30d158" : (score >= 50 ? "#dfb76c" : "#ff3b30");
             
             sonHTML += `<span style="display:inline-block; white-space:nowrap; cursor:pointer;"
@@ -883,43 +883,38 @@ function generateDirectionsList() {
             if (index < sonGroup.length - 1) sonHTML += ` • `;
         });
 
-        const bgDiem = isHợp ? 'rgba(48,209,88,0.15)' : 'rgba(255,59,48,0.15)';
+        // Thẻ điểm tổng hợp (Badge) - Phân loại màu sắc trực quan dựa trên mốc hợp cách 72pt mới
+        const bgDiem = isHợp ? 'rgba(48,209,88,0.2)' : 'rgba(255,59,48,0.2)';
+
         const diemTag = `
-            <span style="font-size:0.75rem; padding:2px 6px; border-radius:4px; font-weight:bold;
-                  background:${bgDiem}; color:${colorStyle}; border:1px solid ${colorStyle}; 
-                  white-space:nowrap; flex-shrink:0; display:inline-flex; align-items:center; gap:3px;">
-                ${item.diemTongHop}pt ${item.hau ? (item.hau.emoji || '🟡') : '🟡'}
+            <span style="font-size:0.75rem; padding:2px 7px; border-radius:4px; font-weight:bold;
+                  background:${bgDiem}; color:${colorStyle}; border:1px solid ${colorStyle}">
+                ${item.diemTongHop}pt ${item.hau ? item.hau.emoji : ''}
             </span>`;
 
         const div = document.createElement('div');
         div.className = `direction-item ${isHợp ? 'good' : 'bad'}`;
-        div.style.cssText = `border-left:4px solid ${colorStyle}; background:rgba(255,255,255,0.03); margin-bottom:12px; padding:12px; border-radius:10px; width:100%; box-sizing:border-box; display:flex; flex-direction:column; gap:10px;`;
+        div.style.cssText = `border-left: 4px solid ${colorStyle}; background: rgba(255,255,255,0.03); margin-bottom:8px; padding:12px; border-radius:8px;`;
         
+        // Render cấu trúc giao diện nguyên bản, đồng bộ màu nút bấm "Xoay thử" theo colorStyle
         div.innerHTML = `
-            <div class="item-info" style="width:100%;">
-                <div style="color:#fff; font-size:0.95rem; margin-bottom:8px; font-weight:bold; display:flex; justify-content:space-between; align-items:center;">
-                    <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                        ${item.name} ➔ <span style="color:${isCatPurpose ? colorStyle : '#fff'}">${item.cungTrạch}</span>
-                    </span>
-                    ${diemTag}
+            <div class="item-info" style="flex:1;">
+                <div class="item-name" style="color:#fff; font-size:0.95rem; margin-bottom: 5px; font-weight:bold;">
+                    ${item.name} ➔ <span style="color:${isCatPurpose ? colorStyle : '#fff'}">${item.cungTrạch}</span> ${diemTag}
                 </div>
-                
-                <div style="margin-bottom:6px; font-size:0.8rem; overflow-x:auto;" class="no-scrollbar">
+                <div style="margin:6px 0; font-size:0.78rem;">
                     <span style="color:#dfb76c; font-weight:600;">SƠN Vị:</span> ${sonHTML}
                 </div>
-                
                 <div style="font-size:0.8rem; color:#aaa; margin-bottom:6px;">
                     Cung 5°: <strong>${item.hau.ten}</strong> — <span style="color:${item.hau.chatLuong.includes('Cát') ? '#30d158' : '#ff3b30'}">${item.hau.chatLuong}</span>
                 </div>
-                
-                <div style="color:${colorStyle}; font-size:0.85rem; font-weight:bold; padding-top:4px;">
+                <div style="color: ${colorStyle}; font-size:0.85rem; font-weight:bold; letter-spacing:0.5px; border-top:1px solid rgba(255,255,255,0.1); padding-top:6px;">
                     ${statusText}
                 </div>
             </div>
-
             <button class="btn-rotate" onclick="triggerGhostNeedle(${item.angle})" 
-                style="background:#222; color:var(--gold); border:1px solid var(--gold); padding:8px; border-radius:6px; font-weight:bold; cursor:pointer; width:100%; font-size:0.85rem; text-align:center;">
-                Xoay thử la bàn
+                style="background:${colorStyle}; color:#000; border:none; padding:6px 12px; border-radius:5px; font-weight:bold; cursor:pointer; align-self:center; margin-left:10px;">
+                Xoay thử
             </button>
         `;
         directionsContainer.appendChild(div);
