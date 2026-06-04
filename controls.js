@@ -1538,37 +1538,10 @@ function updateCompassUI(heading) {
             // Trích xuất giải pháp động từ hàm tính điểm tổng hợp của bạn
             noiDungDetail += `<br><b style="color:#30d158;">💡 Giải pháp hóa giải & Trợ lực khí trường từ Thuật Toán:</b>`;
             noiDungDetail += `<div style="padding:10px; background:rgba(0,0,0,0.25); border-left:3px solid #30d158; color:#ddd; margin-top:5px; border-radius:0 6px 6px 0;">${tongHop.hoaGiai}</div>`;
+            
+            // Đường băng mở rộng: Kết nối module Chọn Ngày Lành & Tuổi Quý Nhân sau này
+            noiDungDetail += `<br><span style="color:#8a8a8f; font-size:0.8rem; font-style:italic;">* Cẩm nang Tuyển Nhật Cát (chọn ngày giờ động thổ cát lành) và bộ lọc Quý Nhân phù trợ bẻ gãy sát tinh đang được đồng bộ hóa cùng hệ thống...</span>`;
             noiDungDetail += '</div>';
-        }
-
-        // =========================================================================
-        // ⏳ TIẾN TRÌNH TRẠCH NHẬT TOÁN PHÁP ĐỘNG (BỐC ĐÚNG DATA ĐỂ HIỂN THỊ)
-        // Đặt ở cuối hộp bọc cam để đảm bảo tính mỹ thuật huyền bí của Lịch Pháp
-        // =========================================================================
-        if (typeof tinhNgayGioCatTuong === 'function') {
-            const thangHienTai = new Date().getMonth() + 1;
-            // Gọi bộ não trạch nhật truyền chính xác: Tuổi (Nhân), Sơn gốc địa lý (Địa) và Mục đích hành sự
-            const lichNgayTot = tinhNgayGioCatTuong(parseInt(yearStr), sơnHiệnTại, namKhaoSatThucTe, thangHienTai, mụcĐích);
-
-            if (lichNgayTot && lichNgayTot.length > 0) {
-                const ngayDauBang = lichNgayTot[0]; // Trích xuất ngày đắc cách đạt điểm số cao nhất trong tháng
-                
-                noiDungDetail += `<div style="margin-top:15px; padding:12px; background:rgba(48,209,88,0.04); border:1px dashed rgba(48,209,88,0.4); border-radius:8px; font-family:sans-serif;">`;
-                
-                // Thay đổi tiêu đề dẫn dắt dựa theo tính chất Cát/Hung của hạng mục sử dụng
-                if (config.isCat) {
-                    noiDungDetail += `<b style="color:#30d158; font-size:0.88rem; display:block; margin-bottom:6px;">🌌 NHẬT CÁT KHỞI SỰ ĐỂ PHÁT ĐỘNG KHÍ TRƯỜNG:</b>`;
-                } else {
-                    noiDungDetail += `<b style="color:#ffd700; font-size:0.88rem; display:block; margin-bottom:6px;">⏳ LỊCH PHÁP TIÊU SÁT KHỞI CÔNG AN TOÀN:</b>`;
-                }
-                
-                noiDungDetail += `<div style="font-size:0.85rem; color:#e5e5ea; line-height:1.6;">`;
-                noiDungDetail += `• <span style="color:#8a8a8f;">Thời gian:</span> Ngày Dương <b>${ngayDauBang.solarDate}</b> (Âm lịch: <b>${ngayDauBang.lunarDate}</b> — Ngày <b>${ngayDauBang.canChiText}</b>)<br>`;
-                noiDungDetail += `• <span style="color:#8a8a8f;">Cơ duyên thiên địa:</span> Thiên tinh đắc tinh tú <b>${ngayDauBang.saoName}</b> phối hợp vòng chuyển dịch <b>Trực ${ngayDauBang.trucName}</b>.<br>`;
-                noiDungDetail += `• <span style="color:#8a8a8f;">Phẩm chất thời không:</span> <span style="color:#ffd700; font-weight:bold;">${ngayDauBang.score}pt</span> [${ngayDauBang.levelText}]<br>`;
-                noiDungDetail += `• <span style="color:#8a8a8f;">Khung giờ vàng phát động khí (Hoàng Đạo):</span> <span style="color:#30d158; font-weight:bold;">${ngayDauBang.goldHours.slice(0, 3).join(", ")}</span>`;
-                noiDungDetail += `</div></div>`;
-            }
         }
 
         noiDungDetail += '</div>';
@@ -3371,96 +3344,32 @@ function kichHoatDenLedQuet(heading) {
         applyEffect(hau72TextsCache, "data-hau-goc", 2.5, 1.65); 
     }
 }
-// ====================== HÀM LÀM SÁNG LED QUÉT (NÂNG CẤP ĐỒNG BỘ) ======================
-function kichHoatDenLedQuet(heading) {
-    const ledTargetAngle = ((heading % 360) + 360) % 360;
-    cacheCompassElements();
 
-    // Hàm phụ trợ để xử lý hiệu ứng chung cho các vòng
-    const applyEffect = (elements, attrGoc, range, zoomScale) => {
-        elements.forEach(txt => {
-            const goc = parseFloat(txt.getAttribute(attrGoc)) || 0;
-            let phanSai = Math.abs(ledTargetAngle - goc);
-            if (phanSai > 180) phanSai = 360 - phanSai;
-
-            // Lấy size gốc từ attribute (nếu chưa có thì lấy theo mặc định)
-            const baseSize = parseFloat(txt.getAttribute("data-base-size")) || parseFloat(txt.style.fontSize) || 10;
-            
-            if (phanSai <= range) {
-                // Khi trúng: Phóng to, đổi màu vàng/nổi bật, độ đậm cao
-                txt.style.opacity = "1";
-                txt.style.fontSize = (baseSize * zoomScale) + "px";
-                txt.style.fontWeight = "900";
-                // Nếu có data-original-fill, chuyển sang màu vàng nổi bật khi trúng
-                if (txt.hasAttribute("data-original-fill")) {
-                    txt.style.fill = "#ffff00";
-                } else if (txt.getAttribute("data-color")) {
-                     // Nếu là các vòng cũ (Sơn/Sao)
-                    const color = txt.getAttribute("data-color");
-                    txt.style.fill = (color === "#5c4314") ? "#ffcc00" : (color === "#ff3b30" ? "#ff0000" : "#00ff00");
-                }
-            } else {
-                // Trở về trạng thái bình thường
-                txt.style.opacity = "0.6";
-                txt.style.fontSize = baseSize + "px";
-                txt.style.fontWeight = "700";
-                // Phục hồi màu gốc
-                txt.style.fill = txt.getAttribute("data-original-fill") || txt.getAttribute("data-color") || "#8a8a8f";
-            }
-        });
-    };
-
-    // 1. Xử lý 8 Hướng Lớn (Giữ logic cũ của bạn)
-    huongLonTextsCache.forEach(txt => {
-        const textGoc = parseFloat(txt.getAttribute("data-goc")) || 0;
-        let phanSai = Math.abs(ledTargetAngle - textGoc);
-        if (phanSai > 180) phanSai = 360 - phanSai;
-        if (phanSai <= 22.5) {
-            txt.style.opacity = "1"; txt.style.fontWeight = "900";
-            txt.style.fill = (txt.getAttribute("fill") === "#00a525") ? "#00ff37" : "#ff1a00";
-        } else {
-            txt.style.opacity = "0.5"; txt.style.fontWeight = "normal";
-            const transform = txt.getAttribute("transform") || "";
-            if (txt.parentNode.getAttribute("id") === "textChinhPhuong") {
-                txt.style.fill = (transform.includes("rotate(90") || transform.includes("rotate(270")) ? "#00a525" : "#ff3b30";
-            } else { txt.style.fill = "#6b4e18"; }
-        }
-    });
-
-    // 2. Xử lý 24 Sơn (Phóng to 1.3 lần)
-    applyEffect(sonTextsCache, "data-son-goc", 7.5, 1.3);
-
-    // 3. Xử lý Sao Phúc Đức (Phóng to 1.2 lần)
-    applyEffect(saoTextsCache, "data-sao-goc", 7.5, 1.2);
-
-    // 4. Xử lý 72 Hậu (tăng phóng to)
-if (typeof hau72TextsCache !== 'undefined') {
-    applyEffect(hau72TextsCache, "data-hau-goc", 3.0, 1.65);  // Tăng từ 1.5 lên 1.65
-}
-}
-
-// ====================== CACHE ELEMENTS - TỐI ƯU HIỆU SUẤT ======================
+// ====================== CACHE ELEMENTS - TỐI ƯU HIỆU SUẤT CHUẨN VẬN 9 ======================
+// Đảm bảo khai báo đủ 4 biến mảng toàn cục ở đầu file (hoặc trước hàm)
 let sonTextsCache = null;
 let huongLonTextsCache = null;
 let saoTextsCache = null;
+let hau72TextsCache = null; // Khai báo thêm biến này nếu chưa có ở đầu file
 
-function cacheCompassElements() {
-    if (sonTextsCache && sonTextsCache.length > 0) return; // Chỉ cache 1 lần
+function cacheCompassElements(forceRefresh = false) {
+    // NẾU KHÔNG ÉP BUỘC LÀM MỚI và đã có dữ liệu -> Bỏ qua để tiết kiệm CPU
+    if (!forceRefresh && sonTextsCache && sonTextsCache.length > 0) return; 
 
-    // Cache các vòng cũ
+    // Thực hiện quét nạp bộ nhớ đệm từ DOM
     sonTextsCache = document.querySelectorAll("#sonRingSvg text");
     huongLonTextsCache = document.querySelectorAll("#chuHuongLonG text");
     saoTextsCache = document.querySelectorAll("#phucDucRingSvg text");
-
-    // === Cache 72 Hậu (MỚI THÊM) ===
     hau72TextsCache = document.querySelectorAll("#hau72RingSvg text");
 
-    // Lưu màu gốc của 72 Hậu để khôi phục sau khi highlight
-    hau72TextsCache.forEach(txt => {
-        if (!txt.hasAttribute("data-original-fill")) {
-            txt.setAttribute("data-original-fill", txt.getAttribute("fill") || "#ffcc77");
-        }
-    });
+    // Lưu lưu lượng màu gốc của 72 Hậu phục vụ cho hàm trả màu LED quét
+    if (hau72TextsCache) {
+        hau72TextsCache.forEach(txt => {
+            if (!txt.hasAttribute("data-original-fill")) {
+                txt.setAttribute("data-original-fill", txt.getAttribute("fill") || "#ffcc77");
+            }
+        });
+    }
 }
 
 // ====================== MANUAL ROTATE (KÉO SLIDER) ======================
