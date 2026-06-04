@@ -3180,46 +3180,8 @@ function handleDateInput(currentInput, nextInputId) {
     }
 }
 
-// =================================================================================
-// 💎 BỘ ĐÔI PHÂN LUỒNG ĐỒNG BỘ LED QUÉT & CACHE TỐI ƯU - PREMIUM (THÁI THÔNG)
-// =================================================================================
-
-// Khai báo 4 mảng bộ nhớ đệm RAM tĩnh toàn cục (Luôn đặt ở đầu file)
-let sonTextsCache = null;
-let huongLonTextsCache = null;
-let saoTextsCache = null;
-let hau72TextsCache = null; 
-
-/**
- * 🛠️ HÀM 1: BỘ NẠP BỘ NHỚ ĐỆM TĨNH (Chỉ chạy khi vẽ xong hoặc khi ép buộc)
- */
-function cacheCompassElements(forceRefresh = false) {
-    // Nếu không ép buộc làm mới VÀ bộ đệm đã nạp đầy đủ thẻ chữ -> Thoát ra để tiết kiệm CPU
-    if (!forceRefresh && sonTextsCache && sonTextsCache.length > 0 && hau72TextsCache && hau72TextsCache.length > 0) {
-        return; 
-    }
-
-    // Tiến hành bốc thẻ chữ từ DOM nạp vào RAM tĩnh đúng 1 lần
-    sonTextsCache = document.querySelectorAll("#sonRingSvg text");
-    huongLonTextsCache = document.querySelectorAll("#chuHuongLonG text");
-    saoTextsCache = document.querySelectorAll("#phucDucRingSvg text");
-    hau72TextsCache = document.querySelectorAll("#hau72RingSvg text");
-
-    // Đóng dấu bảo lưu màu sắc nguyên bản cho vòng vi mạch 72 Hậu
-    if (hau72TextsCache) {
-        hau72TextsCache.forEach(txt => {
-            if (!txt.hasAttribute("data-original-fill")) {
-                txt.setAttribute("data-original-fill", txt.getAttribute("fill") || "#ffcc77");
-            }
-        });
-    }
-}
-
-/**
- * 🎨 HÀM 2: HÀM KHỞI TẠO VÀ VẼ MẶT LA BÀN (Gọi hàm cache ở CUỐI để chốt dữ liệu)
- */
 function render24SonRing() {
-    // 1. Vạch độ ngoài cùng
+    // 1. Vạch độ ngoài cùng (giữ nguyên)
     const vachDoRing = document.getElementById('vachDoRing');
     if (vachDoRing) {
         let linesHtml = "";
@@ -3230,7 +3192,7 @@ function render24SonRing() {
         vachDoRing.innerHTML = linesHtml;
     }
 
-    // 2. Vạch ngăn 24 Sơn
+    // 2. Vạch ngăn 24 Sơn (giữ nguyên)
     const khe24SonRing = document.getElementById('khe24SonRing');
     if (khe24SonRing) {
         let lines24Html = "";
@@ -3241,16 +3203,18 @@ function render24SonRing() {
         khe24SonRing.innerHTML = lines24Html;
     }
 
-    // 3. Chữ 24 Sơn vị
+    // 3. Chữ 24 Sơn (giữ nguyên)
     const sonRingSvg = document.getElementById('sonRingSvg');
     if (sonRingSvg) {
         sonRingSvg.innerHTML = "";
         SON_24_CONFIG.forEach((son, index) => {
             const goc = (index * 15) % 360;
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250"); textNode.setAttribute("y", "114");
+            textNode.setAttribute("x", "250"); 
+            textNode.setAttribute("y", "114");
             textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "10"); textNode.setAttribute("font-weight", "900");
+            textNode.setAttribute("font-size", "10");
+            textNode.setAttribute("font-weight", "900");
             textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
             textNode.setAttribute("data-son-goc", goc.toString());
             textNode.setAttribute("data-base-size", "10");
@@ -3264,128 +3228,166 @@ function render24SonRing() {
         });
     }
 
-    // 4. Vòng 24 Sao Phúc Đức (Đã triệt tiêu filter gây lag đồ họa)
+    // 4. Vòng 24 Sao Phúc Đức - ĐÃ NÂNG CẤP (màu đẹp hơn, đồng bộ phong thủy)
     const phucDucRingSvg = document.getElementById('phucDucRingSvg');
     if (phucDucRingSvg) {
         phucDucRingSvg.innerHTML = "";
         const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
-       
+        
         phucDucNames.forEach((name, index) => {
             const goc = (index * 15) % 360;
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250"); textNode.setAttribute("y", "72");
+            textNode.setAttribute("x", "250"); 
+            textNode.setAttribute("y", "72");
             textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "6.8"); textNode.setAttribute("font-weight", "700");
+            textNode.setAttribute("font-size", "6.5");
+            textNode.setAttribute("font-weight", "700");
             textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
             textNode.setAttribute("data-sao-goc", goc.toString());
-            textNode.setAttribute("data-base-size", "6.8");
+            textNode.setAttribute("data-base-size", "6.5");
             textNode.textContent = name;
-            textNode.setAttribute("fill", "#b8a36f"); 
+
+            // Nâng cấp màu: Dùng tone vàng đồng phong thủy, có chút phân biệt nhẹ
+            textNode.setAttribute("fill", "#d4af37");  // Màu vàng đồng chính
             phucDucRingSvg.appendChild(textNode);
         });
     }
 
-    // 5. Vòng vi mạch 72 Hậu Long Mạch
+    // 5. Vòng 72 Hậu - ĐÃ NÂNG CẤP (màu rõ hơn + chuẩn bị cho highlight mạnh)
     const hauRing = document.getElementById('hau72RingSvg');
     if (hauRing) {
         hauRing.innerHTML = "";
+        
         Object.keys(Data72Hau).forEach(degStr => {
             const hau = Data72Hau[degStr];
+            
+            // QUAN TRỌNG: Data mới đã chuẩn hóa mốc chẵn chính tâm (340, 345, 350)
+            // Vì vậy góc vẽ đồ họa TRÙNG KHỚP LUÔN với góc dữ liệu, không cộng thêm offset lệch nữa!
             const degVisual = parseFloat(degStr);
             
             const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250"); textNode.setAttribute("y", "95");
+            textNode.setAttribute("x", "250"); 
+            textNode.setAttribute("y", "95");
             textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "3.2"); textNode.setAttribute("font-weight", "700");
+            textNode.setAttribute("font-size", "3.2"); 
+            textNode.setAttribute("font-weight", "700");
+            
+            // Xoay góc chữ đúng vị trí mốc chẵn của cung địa bàn
             textNode.setAttribute("transform", `rotate(${degVisual}, 250, 250)`);
+            
+            // Giữ nguyên key dữ liệu gốc phục vụ hàm quét sáng LED
             textNode.setAttribute("data-hau-goc", degStr); 
             textNode.setAttribute("data-base-size", "3.2");
 
-            let color = hau.chatLuong.includes("Cát") ? "#a8c46f" : (hau.chatLuong.includes("Hung") ? "#e07a5f" : "#d4af37");
+            // Thiết lập màu sắc theo chất lượng khí trường
+            let color;
+            if (hau.chatLuong.includes("Cát")) {
+                color = "#a8c46f";      // Xanh ngọc nhạt
+            } else if (hau.chatLuong.includes("Hung")) {
+                color = "#e07a5f";      // Đỏ gạch
+            } else {
+                color = "#d4af37";      // Vàng đồng
+            }
+            
             textNode.setAttribute("fill", color);
             textNode.setAttribute("data-original-fill", color);
             
-            const tenGoc = hau.ten || "";
-            const soHau = tenGoc.match(/\d+/);
-            const chuDau = tenGoc.charAt(0); 
-            textNode.textContent = soHau ? (chuDau + soHau[0]) : tenGoc;
+            // Xử lý chuỗi hiển thị gọn đẹp trên mặt la kinh
+            textNode.textContent = hau.ten.replace(" Hậu", "").replace(/(\D+)(\d)/, (m, p1, p2) => p1.substring(0,1) + p2);
             hauRing.appendChild(textNode);
         });
     }
-
-    // 🔥 CHỐT HẠ AN TOÀN: Vẽ xong xuôi hết thẻ chữ mới ra lệnh ép nạp Cache 1 lần duy nhất!
-    cacheCompassElements(true);
 }
-
-/**
- * ⚡ HÀM 3: HÀM LÀM SÁNG ĐÈN LED REAL-TIME (SIÊU NHẸ MÁY - TUYỆT ĐỐI KHÔNG CHỨA LỆNH CACHE)
- */
+// ====================== HÀM LÀM SÁNG LED QUÉT (NÂNG CẤP ĐỒNG BỘ) ======================
 function kichHoatDenLedQuet(heading) {
-    // CHỐT CHẶN PHÒNG NGỪA: Nếu rủi ro mảng cache bị trống (do đổi tab hoặc tải trễ), tự động nạp nóng rồi chạy tiếp
-    if (!sonTextsCache || sonTextsCache.length === 0 || !hau72TextsCache || hau72TextsCache.length === 0) {
-        cacheCompassElements(true);
-    }
-
     const ledTargetAngle = ((heading % 360) + 360) % 360;
+    cacheCompassElements();
 
-    // Hàm lõi xử lý hiệu ứng bật sáng và phóng to chữ siêu tốc bằng RAM tĩnh
+    // Hàm phụ trợ để xử lý hiệu ứng chung cho các vòng
     const applyEffect = (elements, attrGoc, range, zoomScale) => {
-        if (!elements || !elements.forEach) return; // Bảo vệ luồng chống crash
-        
         elements.forEach(txt => {
             const goc = parseFloat(txt.getAttribute(attrGoc)) || 0;
             let phanSai = Math.abs(ledTargetAngle - goc);
             if (phanSai > 180) phanSai = 360 - phanSai;
 
-            const baseSize = parseFloat(txt.getAttribute("data-base-size")) || 10;
+            // Lấy size gốc từ attribute (nếu chưa có thì lấy theo mặc định)
+            const baseSize = parseFloat(txt.getAttribute("data-base-size")) || parseFloat(txt.style.fontSize) || 10;
             
             if (phanSai <= range) {
+                // Khi trúng: Phóng to, đổi màu vàng/nổi bật, độ đậm cao
                 txt.style.opacity = "1";
                 txt.style.fontSize = (baseSize * zoomScale) + "px";
                 txt.style.fontWeight = "900";
-                
+                // Nếu có data-original-fill, chuyển sang màu vàng nổi bật khi trúng
                 if (txt.hasAttribute("data-original-fill")) {
-                    txt.style.fill = "#ffff00"; // Bật sáng vàng LED rực rỡ cho vòng 72 Hậu
+                    txt.style.fill = "#ffff00";
                 } else if (txt.getAttribute("data-color")) {
+                     // Nếu là các vòng cũ (Sơn/Sao)
                     const color = txt.getAttribute("data-color");
                     txt.style.fill = (color === "#5c4314") ? "#ffcc00" : (color === "#ff3b30" ? "#ff0000" : "#00ff00");
                 }
             } else {
+                // Trở về trạng thái bình thường
                 txt.style.opacity = "0.6";
                 txt.style.fontSize = baseSize + "px";
                 txt.style.fontWeight = "700";
+                // Phục hồi màu gốc
                 txt.style.fill = txt.getAttribute("data-original-fill") || txt.getAttribute("data-color") || "#8a8a8f";
             }
         });
     };
 
-    // 1. Quét sáng 8 Hướng Lớn
-    if (huongLonTextsCache) {
-        huongLonTextsCache.forEach(txt => {
-            const textGoc = parseFloat(txt.getAttribute("data-goc")) || 0;
-            let phanSai = Math.abs(ledTargetAngle - textGoc);
-            if (phanSai > 180) phanSai = 360 - phanSai;
-            if (phanSai <= 22.5) {
-                txt.style.opacity = "1"; txt.style.fontWeight = "900";
-                txt.style.fill = (txt.getAttribute("fill") === "#00a525") ? "#00ff37" : "#ff1a00";
-            } else {
-                txt.style.opacity = "0.5"; txt.style.fontWeight = "normal";
-                const transform = txt.getAttribute("transform") || "";
-                if (txt.parentNode?.getAttribute("id") === "textChinhPhuong") {
-                    txt.style.fill = (transform.includes("rotate(90") || transform.includes("rotate(270")) ? "#00a525" : "#ff3b30";
-                } else { txt.style.fill = "#6b4e18"; }
-            }
-        });
-    }
+    // 1. Xử lý 8 Hướng Lớn (Giữ logic cũ của bạn)
+    huongLonTextsCache.forEach(txt => {
+        const textGoc = parseFloat(txt.getAttribute("data-goc")) || 0;
+        let phanSai = Math.abs(ledTargetAngle - textGoc);
+        if (phanSai > 180) phanSai = 360 - phanSai;
+        if (phanSai <= 22.5) {
+            txt.style.opacity = "1"; txt.style.fontWeight = "900";
+            txt.style.fill = (txt.getAttribute("fill") === "#00a525") ? "#00ff37" : "#ff1a00";
+        } else {
+            txt.style.opacity = "0.5"; txt.style.fontWeight = "normal";
+            const transform = txt.getAttribute("transform") || "";
+            if (txt.parentNode.getAttribute("id") === "textChinhPhuong") {
+                txt.style.fill = (transform.includes("rotate(90") || transform.includes("rotate(270")) ? "#00a525" : "#ff3b30";
+            } else { txt.style.fill = "#6b4e18"; }
+        }
+    });
 
-    // 2. Bật sáng 24 Sơn (Phóng to 1.3 lần)
+    // 2. Xử lý 24 Sơn (Phóng to 1.3 lần)
     applyEffect(sonTextsCache, "data-son-goc", 7.5, 1.3);
 
-    // 3. Bật sáng Sao Phúc Đức (Phóng to 1.2 lần)
+    // 3. Xử lý Sao Phúc Đức (Phóng to 1.2 lần)
     applyEffect(saoTextsCache, "data-sao-goc", 7.5, 1.2);
 
-    // 4. Bật sáng 72 Hậu (Quản mạch quét rộng 3.0 độ, phóng to 1.65 lần quý phái)
-    applyEffect(hau72TextsCache, "data-hau-goc", 3.0, 1.65);
+    // 4. Xử lý 72 Hậu (tăng phóng to)
+if (typeof hau72TextsCache !== 'undefined') {
+    applyEffect(hau72TextsCache, "data-hau-goc", 3.0, 1.65);  // Tăng từ 1.5 lên 1.65
+}
+}
+
+// ====================== CACHE ELEMENTS - TỐI ƯU HIỆU SUẤT ======================
+let sonTextsCache = null;
+let huongLonTextsCache = null;
+let saoTextsCache = null;
+
+function cacheCompassElements() {
+    if (sonTextsCache && sonTextsCache.length > 0) return; // Chỉ cache 1 lần
+
+    // Cache các vòng cũ
+    sonTextsCache = document.querySelectorAll("#sonRingSvg text");
+    huongLonTextsCache = document.querySelectorAll("#chuHuongLonG text");
+    saoTextsCache = document.querySelectorAll("#phucDucRingSvg text");
+
+    // === Cache 72 Hậu (MỚI THÊM) ===
+    hau72TextsCache = document.querySelectorAll("#hau72RingSvg text");
+
+    // Lưu màu gốc của 72 Hậu để khôi phục sau khi highlight
+    hau72TextsCache.forEach(txt => {
+        if (!txt.hasAttribute("data-original-fill")) {
+            txt.setAttribute("data-original-fill", txt.getAttribute("fill") || "#ffcc77");
+        }
+    });
 }
 
 // ====================== MANUAL ROTATE (KÉO SLIDER) ======================
