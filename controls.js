@@ -3900,13 +3900,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // =========================================================================
-// 🌐 HỆ THỐNG PWA FLOATING ACTION BUTTON - KHÔNG GIAN TƯƠNG THÍCH XUYÊN NỀN TẢNG
+// 🌐 HỆ THỐNG PWA FLOATING ACTION BUTTON - PHIÊN BẢN CHỐNG LỖI GỠ ỨNG DỤNG
 // =========================================================================
 if (typeof deferredPrompt === 'undefined') {
     var deferredPrompt; 
 }
 
-// 1. Quét sâu trạng thái môi trường hệ điều hành (Chống mù thông tin đa trình duyệt)
+// 1. Quét sâu trạng thái môi trường hệ điều hành (Đã sửa lỗi gỡ cài đặt)
 function isRunningAsPWA() {
     // Kiểm tra chế độ độc lập chuẩn Google/Android
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
@@ -3919,13 +3919,13 @@ function isRunningAsPWA() {
     const urlParams = new URLSearchParams(window.location.search);
     const isUrlMode = urlParams.get('mode') === 'pwa_installed';
 
-    // Nếu chạy từ màn hình home, lập tức lưu trạng thái vĩnh viễn vào trình duyệt hiện tại
+    // Nếu ĐANG CHẠY thực tế từ màn hình home (Standalone/UrlMode), chắc chắn app đã cài
     if (isStandalone || isIOSStandalone || isUrlMode) {
         localStorage.setItem('pwa_dinh_danh_cai_dat', 'true');
         return true;
     }
 
-    // Đọc trạng thái lưu trữ chéo (Nếu bất kỳ trình duyệt nào đã từng xác thực cài đặt)
+    // Nếu chạy trên trình duyệt web thông thường, đọc bộ nhớ chéo
     return localStorage.getItem('pwa_dinh_danh_cai_dat') === 'true';
 }
 
@@ -3947,20 +3947,16 @@ if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         if (window.location.protocol === 'file:') return;
         
-        // Thực hiện quét ẩn nút lập tức khi tải trang
         kiemTraVaAnNut();
 
-        // Tự động kiểm tra cập nhật sw.js ngầm khi người dùng mở app
         navigator.serviceWorker.register('./sw.js')
             .then((reg) => {
-                // Nếu phát hiện có sw.js phiên bản mới (CACHE_NAME mới) đang đợi
                 reg.onupdatefound = () => {
                     const installingWorker = reg.installing;
                     if (installingWorker) {
                         installingWorker.onstatechange = () => {
                             if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
                                 console.log('Hệ thống đã tự động nạp khí mới, làm sạch cache thành công!');
-                                // Tự động F5 nhẹ để nạp giao diện code mới ngay lập tức cho khách
                                 window.location.reload(); 
                             }
                         };
@@ -3971,9 +3967,11 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-// 4. Lắng nghe sự kiện mời cài đặt từ các trình duyệt Chromium Nhân Bản
+// 4. Lắng nghe sự kiện mời cài đặt (NƠI XỬ LÝ FIX LỖI GỠ APP)
 window.addEventListener('beforeinstallprompt', (e) => {
-    if (kiemTraVaAnNut()) return;
+    // MẬT PHÁP FIX: Nếu trình duyệt kích hoạt sự kiện này, nghĩa là app CHƯA được cài.
+    // Lập tức giải phóng localStorage về false để nút bấm hiển thị lại ngay!
+    localStorage.setItem('pwa_dinh_danh_cai_dat', 'false');
 
     e.preventDefault();
     deferredPrompt = e;
@@ -3981,7 +3979,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     const btn = document.getElementById('btn-install-pwa');
     if (btn) {
         btn.classList.add('show');
-        btn.style.display = 'block';
+        btn.style.display = 'block'; // Hiện nút lại ngay lập tức cho người dùng
 
         btn.onclick = async () => {
             if (!deferredPrompt) return;
