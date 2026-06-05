@@ -4065,6 +4065,8 @@ const DATA_TRACH_NHAT_CAO_CAP = {
         "Thin": "Thìn (07h-09h)", "Tỵ": "Tỵ (09h-11h)", "Ngo": "Ngọ (11h-13h)", "Mui": "Mùi (13h-15h)",
         "Than": "Thân (15h-17h)", "Dau": "Dậu (17h-19h)", "Tuat": "Tuất (19h-21h)", "Hoi": "Hợi (21h-23h)"
     },
+    
+    // 🚀 HỢP NHẤT TOÀN DIỆN THẦN SÁT VÀO TRONG ĐĨA SỐ MA TRẬN GỐC O(1)
     MA_TRAN_THAN_SAT_TINH: {
         tamSat: {
             "Dần Ngọ Tuất": "Bắc",
@@ -4165,7 +4167,6 @@ function tuDongTinhCuuTinhLuuNien(sonName, namKhaoSat) {
     };
 }
 
-// 🚀 FIX LỖI TRIỆT ĐỂ: Khớp chuẩn tên hàm xayDungBaoCaoLuanGiai chữ D hoa, loại bỏ hoàn toàn đơ click
 function toggleTongLuan() {
     const overlay = document.getElementById('tongLuanOverlay');
     const name = document.getElementById('userName')?.value.trim() || "Trạch Chủ";
@@ -4183,9 +4184,7 @@ function toggleTongLuan() {
     if (!isCompassHold) {
         isCompassHold = true;
         let headingToLock = typeof currentHeading !== 'undefined' ? currentHeading : 0;
-        holdedHeading = parseInt(headingToLock); 
-        
-        // CHÍNH XÁC TUYỆT ĐỐI: Gọi đúng hàm gốc với chữ D hoa, triệt tiêu lỗi ReferenceError phá hỏng luồng chạy
+        holdedHeading = headingToLock; 
         if (typeof xayDungBaoCaoLuanGiai === 'function') {
             xayDungBaoCaoLuanGiai(name, holdedHeading);
         }
@@ -4269,6 +4268,7 @@ function timTuoiQuyNhanMuonTinh(currentYear, sonName) {
     return { year: currentYear - 36, name: "Bính Tý", age: 37 }; 
 }
 
+// 🌟 SIÊU NÂNG CẤP CHÂN PHÁP 3: THUẬT TOÁN TRA CỨU TAM SÁT - THÁI TUẾ ĐA TẦNG CHO NGÀY HÀNH SỰ
 function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat, mucDich) {
     const chiTuoiChuNha = DATA_TRACH_NHAT_CAO_CAP.CHI_QUY_CHUAN[birthYear % 12];
     const chiCuaSon = DATA_TRACH_NHAT_CAO_CAP.SON_TO_CHI_MAP[sonName] || "Ty";
@@ -4285,10 +4285,12 @@ function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat,
 
     let soNgayTrongThang = new Date(namKhaoSat, thangKhaoSat, 0).getDate();
 
+    // 🚀 ĐỒNG BỘ THẦN SÁT NIÊN CỤC TRƯỚC KHI QUÉT MẢNG NGÀY
     const satTinhMaTran = DATA_TRACH_NHAT_CAO_CAP.MA_TRAN_THAN_SAT_TINH;
     const tenChiNamKhaoSat = satTinhMaTran.thaiTueArr[namKhaoSat % 12];
     const huongThaiTueNam = satTinhMaTran.phuongViChi[tenChiNamKhaoSat];
     
+    // Tìm bộ Tam Hợp để xác định phương vị Tam Sát của năm khảo sát
     const tamHopKey = namKhaoSat % 12 >= 9 || namKhaoSat % 12 <= 2 ? "Thân Tý Thìn" :
                       namKhaoSat % 12 <= 5 ? "Tỵ Dậu Sửu" :
                       namKhaoSat % 12 <= 8 ? "Hợi Mão Mùi" : "Dần Ngọ Tuất";
@@ -4304,14 +4306,17 @@ function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat,
         let lyDoPhat = [];
         let lyDoThuong = [];
 
+        // MÀNG LỌC 1: Đại Sát Thiên Thời Nguyệt Kỵ
         if ([5, 14, 23].includes(ngay)) { 
             diemNgay -= 40; lyDoPhat.push("Phạm Nguyệt Kỵ");
         }
 
+        // MÀNG LỌC 2: Không gian Địa mạch Lục Xung
         if (canChiNgayObj.chi === DATA_TRACH_NHAT_CAO_CAP.HINH_XUNG_QUY_QUYET.LUC_XUNG[chiCuaSon]) {
             diemNgay -= 55; lyDoPhat.push(`Lục Xung Chiếu Hướng nhà (Xung phá Sơn ${sonName})`);
         }
 
+        // MÀNG LỌC 3: Nhân khí đương sự
         if (canChiNgayObj.chi === DATA_TRACH_NHAT_CAO_CAP.HINH_XUNG_QUY_QUYET.LUC_XUNG[chiTuoiChuNha]) {
             diemNgay -= 45; lyDoPhat.push("Trực Xung Bản Mệnh Tuổi Gia Chủ");
         }
@@ -4319,17 +4324,21 @@ function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat,
             diemNgay += 15; lyDoThuong.push("Lục Hợp cát tường bản mệnh");
         }
 
+        // 🚀 MÀNG LỌC THẦN SÁT NÂNG CẤP: Kiểm tra ngày phạm phương vị Tam Sát và Thái Tuế của Trạch Đất
         const chiTiengVietNgay = canChiNgayObj.text.split(" ")[1];
         const keyChiNgayChuan = satTinhMaTran.chiTiengVietToKey[chiTiengVietNgay] || "Ty";
         const phuongViCuaNgay = satTinhMaTran.phuongViChi[chiTiengVietNgay];
 
+        // Nếu hướng nhà trùng với phương vị Tam Sát của năm mà chọn ngày có địa chi thuộc phương vị Tam Sát -> Phạt nặng
         if (huongNhaDaiCuc === phuongViTamSatNam && phuongViCuaNgay === phuongViTamSatNam) {
             diemNgay -= 30; lyDoPhat.push(`Phạm ngày Tam Sát Lưu Nhật hành sự hướng ${huongThaiTueNam}`);
         }
+        // Nếu ngày trùng địa chi đối xung với Thái Tuế của năm (Ngày Tuế Phá)
         if (DATA_TRACH_NHAT_CAO_CAP.HINH_XUNG_QUY_QUYET.LUC_XUNG[keyChiNgayChuan] === satTinhMaTran.chiTiengVietToKey[tenChiNamKhaoSat]) {
             diemNgay -= 35; lyDoPhat.push(`Phạm ngày Tuế Phá (Đối xung trục khí của năm)`);
         }
 
+        // MÀNG LỌC 4: Thập Nhị Kiến Trừ đắc cách
         let cauHinhTruc = DATA_TRACH_NHAT_CAO_CAP.THAP_NHI_KIEN_TRU[phanHeTruc.trucName];
         if (cauHinhTruc) {
             if (configHangMuc.isCat && cauHinhTruc.cat.includes(mucDich)) {
