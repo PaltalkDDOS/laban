@@ -332,23 +332,38 @@ body {
   filter: brightness(1.05);
 }
 
-/* === KIM VÀNG GHOST - VÀNG KIM LOẠI/VÀNG NGHỆ NEON === */
+/* === KIM VÀNG GHOST - PHIÊN BẢN NỬA TRỤC THÔNG MINH === */
 .ghost-needle {
   position: absolute;
   left: 50%;
   top: 50%;
   width: 5.5px;
-  height: 86%;
-  background: linear-gradient(to bottom, #d4af37 0%, #f1c40f 50%, #d4af37 100%);
-  clip-path: polygon(50% 0%, 100% 15%, 65% 15%, 65% 100%, 35% 100%, 35% 15%, 0% 15%);
+  height: 86%; 
+  background: linear-gradient(to bottom, #d4af37 0%, #f1c40f 45%, #d4af37 50%, transparent 50%, transparent 100%);
+  clip-path: polygon(50% 0%, 100% 15%, 65% 15%, 65% 50%, 35% 50%, 35% 15%, 0% 15%);
   transform: translate(-50%, -50%) rotate(0deg);
   transform-origin: 50% 50%;
   z-index: 7;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.4s ease, transform 0.15s ease-out;
+  /* Đổi transition ngắn lại một chút để cảm giác khớp kim nhạy bén, tức thì */
+  transition: opacity 0.3s ease, transform 0.1s ease-out, filter 0.3s ease;
   box-shadow: 0 0 6px #d4af37, 0 0 12px rgba(212,175,55,0.3);
   filter: brightness(1.1);
+}
+
+/* 🚀 HIỆU ỨNG THƯỢNG TẦNG: KHỚP PHƯƠNG VỊ LONG MẠCH */
+.ghost-needle.matched-pulse {
+  /* Ép đổi dải gradient sang màu xanh lập cực neon rực rỡ để báo hiệu thông khí */
+  background: linear-gradient(to bottom, #30d158 0%, #00ff41 45%, #30d158 50%, transparent 50%, transparent 100%) !important;
+  filter: brightness(1.4) drop-shadow(0 0 12px #30d158);
+  animation: longMachPulse 1s infinite alternate ease-in-out;
+}
+
+/* Hiệu ứng nhịp đập từ trường ngầm */
+@keyframes longMachPulse {
+  0% { opacity: 0.8; filter: brightness(1.2) drop-shadow(0 0 4px #30d158); }
+  100% { opacity: 1; filter: brightness(1.5) drop-shadow(0 0 16px #00ff41); }
 }
 
 /* ====================== LA BÀN - NÂNG CẤP CAO CẤP 2026 ====================== */
