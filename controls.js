@@ -3899,29 +3899,33 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// ==================== HỆ THỐNG PWA FLOATING ACTION BUTTON ====================
+// =========================================================================
+// 🌐 HỆ THỐNG PWA FLOATING ACTION BUTTON - KIẾN TRÚC NHẠY BÉN NGUYÊN BẢN
+// =========================================================================
 if (typeof deferredPrompt === 'undefined') {
     var deferredPrompt; 
 }
 
+// 1. Giữ nguyên bản hàm kiểm tra môi trường gốc của bạn (Cực kỳ chính xác khi gỡ app)
 function isRunningAsPWA() {
     return window.matchMedia('(display-mode: standalone)').matches || 
            window.navigator.standalone === true ||
            window.matchMedia('(display-mode: fullscreen)').matches;
 }
 
+// 2. Hàm dọn dẹp ẩn nút bằng Class mượt mà (Đồng bộ hiệu ứng CSS Bounce của bạn)
 function kiemTraVaAnNut() {
     const btn = document.getElementById('btn-install-pwa');
     if (!btn) return false;
     
     if (isRunningAsPWA()) {
-        btn.classList.remove('show');
+        btn.classList.remove('show'); // Ẩn mượt mà theo CSS
         return true;
     }
     return false;
 }
 
-// Khởi tạo hệ thống lõi
+// 3. Nâng cấp bộ tự động cập nhật code mới ngầm (Không đụng vào logic nút bấm)
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         if (window.location.protocol === 'file:') return;
@@ -3933,12 +3937,26 @@ if ('serviceWorker' in navigator) {
         link.href = './manifest.json';
         document.head.appendChild(link);
 
+        // Đăng ký sw.js và lắng nghe nếu bạn tăng v1 lên v2 ở file sw, nó tự nạp code mới luôn
         navigator.serviceWorker.register('./sw.js')
-            .catch(err => console.error('Lỗi kích hoạt PWA:', err));
+            .then((reg) => {
+                reg.onupdatefound = () => {
+                    const installingWorker = reg.installing;
+                    if (installingWorker) {
+                        installingWorker.onstatechange = () => {
+                            if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                console.log('Hệ thống phát hiện mạch khí mới, tự động làm sạch cache!');
+                                window.location.reload(); // Tự F5 nạp code mới khi bạn update file
+                            }
+                        };
+                    }
+                };
+            })
+            .catch(err => console.error('Lỗi kích hoạt mạch PWA:', err));
     });
 }
 
-// Lắng nghe sự kiện mời cài đặt từ trình duyệt hợp lệ
+// 4. Lắng nghe sự kiện mời cài đặt (Trực hệ nguyên bản từ hàm gốc của bạn)
 window.addEventListener('beforeinstallprompt', (e) => {
     if (isRunningAsPWA()) return;
 
@@ -3947,7 +3965,8 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
     const btn = document.getElementById('btn-install-pwa');
     if (btn) {
-        btn.classList.add('show');
+        // Gọi class .show để kích hoạt hiệu ứng nảy nhẹ quý phái trong CSS của bạn
+        btn.classList.add('show'); 
 
         btn.onclick = async () => {
             if (!deferredPrompt) return;
@@ -3963,13 +3982,13 @@ window.addEventListener('beforeinstallprompt', (e) => {
     }
 });
 
-// Ẩn nút lập tức khi cài xong
+// 5. Ẩn nút lập tức khi cài xong
 window.addEventListener('appinstalled', () => {
     const btn = document.getElementById('btn-install-pwa');
     if (btn) btn.classList.remove('show');
 });
 
-// Bộ quét thông minh khi người dùng tắt đi mở lại màn hình điện thoại
+// Bộ quét thông minh khi người dùng khóa/mở màn hình nền điện thoại
 document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
         setTimeout(kiemTraVaAnNut, 600);
