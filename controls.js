@@ -3936,7 +3936,7 @@ function timTuoiQuyNhanMuonTinh(currentYear, sonName) {
 }
 
 // -----------------------------------------------------------------
-// 📅 CHÂN PHÁP 3: THUẬT TOÁN ĐA TẦNG TRẠCH NHẬT TOÁN PHÁP CHI TIẾT
+// 📅 CHÂN PHÁP 3: THUẬT TOÁN ĐA TẦNG TRẠCH NHẬT TOÁN PHÁP - TỰ ĐỘNG TỊNH TIẾN 2026
 // -----------------------------------------------------------------
 function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat, mucDich) {
     const chiArr = ["Than", "Dau", "Tuat", "Hoi", "Ty", "Suu", "Dan", "Mao", "Thin", "Tỵ", "Ngo", "Mui"];
@@ -3946,18 +3946,32 @@ function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat,
 
     let danhSachNgayTot = [];
 
-    // Quét tịnh tiến trọn vẹn chu kỳ 31 ngày của trục tháng khảo sát
-    for (let ngay = 1; ngay <= 31; ngay++) {
-        // Gọi Phân hệ Thuật toán Can Chi Dương lịch -> Julian lịch
+    // Lấy thời gian thực tại của hệ thống máy tính
+    const realDate = new Date();
+    const realDay = realDate.getDate();
+    const realMonth = realDate.getMonth() + 1;
+    const realYear = realDate.getFullYear();
+
+    // Xác định điểm xuất phát ngày: Nếu xem tháng/năm hiện tại, bắt đầu quét từ ngày hôm nay
+    let ngayBatDauQuet = 1;
+    if (namKhaoSat === realYear && thangKhaoSat === realMonth) {
+        ngayBatDauQuet = realDay;
+    }
+
+    // Quét tịnh tiến trọn vẹn chu kỳ ngày còn lại của trục tháng khảo sát
+    for (let ngay = ngayBatDauQuet; ngay <= 31; ngay++) {
         let canChiNgayObj = layCanChiNgayChinhXac(namKhaoSat, thangKhaoSat, ngay);
         let phanHeTruc = layThangTietKhiVaTruc(namKhaoSat, thangKhaoSat, ngay, canChiNgayObj.chi);
+
+        // Chốt chặn chống crash nếu tháng có ít hơn 31 ngày
+        if (!phanHeTruc || !phanHeTruc.trucName) continue;
 
         let diemNgay = 100;
         let lyDoPhat = [];
         let lyDoThuong = [];
 
         // MÀNG LỌC 1: ĐẠI SÁT THIÊN THỜI TIĨNH
-        if ([5, 14, 23].includes(ngay)) { // Ngày Nguyệt Kỵ dương trạch phá khí
+        if ([5, 14, 23].includes(ngay)) { 
             diemNgay -= 40; lyDoPhat.push("Phạm Nguyệt Kỵ");
         }
 
@@ -3987,9 +4001,7 @@ function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat,
 
         diemNgay = Math.max(10, Math.min(100, diemNgay));
 
-        // Thiết lập bộ lọc chỉ kết xuất ra các ngày đạt điểm Cách Cục từ 70pt trở lên
         if (diemNgay >= 70) {
-            // Trích xuất cấu trúc giờ Hoàng đạo và Giờ Sát Chủ động cho từng Chi ngày
             let cauHinhGio = DATA_TRACH_NHAT_CAO_CAP.CAN_CHI_DINH_GIO[canChiNgayObj.chi];
             let gioCatTường = cauHinhGio.hoangDao.map(g => DATA_TRACH_NHAT_CAO_CAP.GIO_DICH_NGHIA[g]);
             let gioHungKị = cauHinhGio.satChu.map(g => DATA_TRACH_NHAT_CAO_CAP.GIO_DICH_NGHIA[g]);
@@ -4011,9 +4023,6 @@ function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat,
     return danhSachNgayTot.sort((a, b) => b.score - a.score);
 }
 
-// =========================================================================
-// 🏆 HÀM BIÊN SOẠN BÁO CÁO PHONG THỦY SỐ: THÔNG MINH HÓA HÀNH VĂN BIẾN THIÊN
-// =========================================================================
 function xayDungBaoCaoLuanGiai(name, degree) {
     const contentBox = document.getElementById('tongLuanContent');
     const mucDich = document.getElementById('purpose').value;
@@ -4029,12 +4038,24 @@ function xayDungBaoCaoLuanGiai(name, degree) {
     let birthYearInt = parseInt(yearStr || "1993");
     let namAmMệnhChủ = (parseInt(monthStr) < 2 || (parseInt(monthStr) === 2 && parseInt(dayStr) < 5)) ? birthYearInt - 1 : birthYearInt;
 
-    // Khóa đồng bộ an toàn: Dùng biến thucTeChuMenh thay cho chủMệnh toàn cục để tăng tốc O(1)
     let thucTeChuMenh = (typeof chủMệnh !== 'undefined' && chủMệnh) ? chủMệnh : "Khảm";
     const tongHop = tinhDiemTongHop(thucTeChuMenh, degree, namKhaoSat, mucDich, namAmMệnhChủ);
     const sonChuan = tongHop.sonName || "Tý";
 
-    // Quét tự động Cửu Tinh Lưu Niên Vận 9 theo toán pháp thời gian động
+    // Quét lấy dữ liệu 72 Long Khí Xuyên Sơn thực địa tại góc đo la bàn
+    let thongTin72Hau = { ten: "Đang quét mạch", chatLuong: "Bình Hòa" };
+    if (typeof Data72Hau !== 'undefined') {
+        let gocChuan72 = (Math.floor(degree / 5) * 5).toFixed(1);
+        if (Data72Hau[gocChuan72]) {
+            thongTin72Hau = Data72Hau[gocChuan72];
+        } else {
+            // Tìm mạch bao quanh gần nhất nếu lệch số lẻ
+            let keys = Object.keys(Data72Hau).map(Number);
+            let closest = keys.reduce((prev, curr) => (Math.abs(curr - degree) < Math.abs(prev - degree) ? curr : prev));
+            thongTin72Hau = Data72Hau[closest.toFixed(1)] || thongTin72Hau;
+        }
+    }
+
     const luuNienObj = tuDongTinhCuuTinhLuuNien(sonChuan, namKhaoSat);
 
     let currentCode = "N";
@@ -4047,154 +4068,150 @@ function xayDungBaoCaoLuanGiai(name, degree) {
     else if (degree >= 247.5 && degree < 292.5) currentCode = "W";
     else if (degree >= 292.5 && degree < 337.5) currentCode = "NW";
 
-    // ĐỒNG BỘ: Đã đổi chủMệnh thành thucTeChuMenh để tránh lỗi bất đồng bộ dữ liệu tĩnh
     const cungTrach = bátTrạchMap[thucTeChuMenh]?.[currentCode] || "Khác";
     const hungTinhBatTrach = ["Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"];
     const laCungHungDiaLy = hungTinhBatTrach.includes(cungTrach);
     const isKhongVong = !!tongHop.khongVong;
 
-    // Biến thiên câu từ chuyên sâu thích ứng theo từng hạ tầng công trình phụ/chính
-    let tuNguHanhVi = { hanhDong: "khởi công dựng trạch", viTri: "phương vị long mạch trạch đất" };
+    // PHÂN LOẠI MINH TRIẾT: Phân định Hạng mục Nặng (Đại sự phá đất) và Nhẹ (Nội thất bài trí)
+    const nhomHangMucDaiSu = ["house", "gate", "door", "kitchen", "toilet", "septic_tank", "sewer"];
+    const laHangMucDaiSu = nhomHangMucDaiSu.includes(mucDich);
+
+    let tuNguHanhVi = { hanhDong: "bài trí sắp đặt", viTri: "phương vị không gian" };
     if (mucDich.includes("bed")) {
         tuNguHanhVi.hanhDong = "an vị gối đầu giường ngủ phòng trạch";
         tuNguHanhVi.viTri = "trục vị đầu giường nạp khí";
-    } else if (mucDich.includes("toilet") || mucDich.includes("sewer")) {
-        tuNguHanhVi.hanhDong = "đào móng đặt bể tự hoại xả uế";
+    } else if (mucDich.includes("toilet") || mucDich.includes("sewer") || mucDich.includes("septic_tank")) {
+        tuNguHanhVi.hanhDong = "đào móng đặt hệ thống xả uế khí";
         tuNguHanhVi.viTri = "phương vị tọa đè trấn áp";
     } else if (mucDich.includes("kitchen")) {
         tuNguHanhVi.hanhDong = "đặt bếp táo nhóm lửa vượng cung";
         tuNguHanhVi.viTri = "vị trí đặt bếp nấu";
-    } else if (mucDich.includes("door")) {
-        tuNguHanhVi.hanhDong = "khai môn lập hướng cửa nạp tài";
-        tuNguHanhVi.viTri = "khu vực cửa chính đại môn";
+    } else if (mucDich.includes("door") || mucDich.includes("house") || mucDich.includes("gate")) {
+        tuNguHanhVi.hanhDong = "khởi công phạt mộc lập hướng cửa đại môn";
+        tuNguHanhVi.viTri = "khu vực đại môn lập hướng";
     }
 
-    // Phát động khối toán pháp Trạch Nhật và Quét hạn tuổi chủ sự
     const ketQuaTrachNhat = tinhNgayGioCatTuongBaoCao(namAmMệnhChủ, sonChuan, namKhaoSat, thangKhaoSat, mucDich);
     const checkHanNhanKhi = kiemTraHanNhanKhiChinhXac(namAmMệnhChủ, namKhaoSat);
 
     let lichTrachNhatHTML = "";
     let matPhapMuonTuoiHTML = "";
 
+    // TOÁN PHÁP QUYẾT ĐỊNH: LÀM ĐƯỢC HAY KHÔNG LÀM ĐƯỢC
+    let thongDiepTốiCao = "🟢 [HÀNH SỰ ĐẠI CÁT - LONG MẠCH THÔNG SUỐT]";
+    let bieuTuongTrangThai = '<span style="background:#30d158; color:#000; padding:4px 10px; border-radius:4px; font-weight:bold; font-size:0.8rem; display:inline-block; margin-bottom:8px;">LÀM ĐƯỢC (ĐẮC CÁCH)</span>';
+    let mauChu = "#30d158";
+
+    if (isKhongVong || (laCungHungDiaLy && config.isCat)) {
+        thongDiepTốiCao = "🔴 [TUYỆT ĐỐI PHONG TỎA - CẤM NGĂN ĐỘNG THỦ]";
+        bieuTuongTrangThai = '<span style="background:#ff3b30; color:#fff; padding:4px 10px; border-radius:4px; font-weight:bold; font-size:0.8rem; display:inline-block; margin-bottom:8px;">KHÔNG LÀM ĐƯỢC (ĐẠI KỴ)</span>';
+        mauChu = "#ff3b30";
+    } else if (luuNienObj.isHung || thongTin72Hau.chatLuong.includes("Hung")) {
+        thongDiepTốiCao = "⚠️ [HÀNH SỰ THẬN TRỌNG - BẮT BUỘC HÓA GIẢI]";
+        bieuTuongTrangThai = '<span style="background:#ff9f0a; color:#000; padding:4px 10px; border-radius:4px; font-weight:bold; font-size:0.8rem; display:inline-block; margin-bottom:8px;">CÓ THỂ LÀM (CẦN PHÁP BẢO VẬT PHẨM)</span>';
+        mauChu = "#ff9f0a";
+    }
+
+    // Xuất lịch Trạch nhật nếu là cấu trúc cát lợi và không dính tử huyệt phong tỏa
     if (config.isCat) {
-        if (ketQuaTrachNhat.length > 0 && !isKhongVong && !laCungHungDiaLy) {
+        if (ketQuaTrachNhat.length > 0 && !isKhongVong && !(laCungHungDiaLy && config.isCat)) {
             let topNgay = ketQuaTrachNhat.slice(0, 3);
-            lichTrachNhatHTML = `<div style="margin-top:15px; background:rgba(48,209,88,0.06); padding:12px; border-radius:8px; border:1px solid #30d158; box-shadow: inset 0 0 10px rgba(48,209,88,0.1);">
-                <b style="color:#30d158; display:block; margin-bottom:8px; font-size:0.9rem;">📅 LỊCH TRẠCH NHẬT TOÁN PHÁP ĐẮC CÁCH TRONG THÁNG ĐO KHẢO SÁT:</b>`;
+            lichTrachNhatHTML = `<div style="margin-top:15px; background:rgba(48,209,88,0.06); padding:12px; border-radius:8px; border:1px solid #30d158;">
+                <b style="color:#30d158; display:block; margin-bottom:8px; font-size:0.9rem;">📅 LỊCH TRẠCH NHẬT TOÁN PHÁP KHỞI SỰ TIẾN TRÌNH THỜI GIAN (TỪ NGÀY XEM):</b>`;
             topNgay.forEach(n => {
                 lichTrachNhatHTML += `
                 <div style="padding:8px 0; border-bottom:1px dashed rgba(255,255,255,0.1); font-size:0.85rem; line-height:1.5;">
-                    • <b>Ngày Dương:</b> <span style="color:#ffd700; font-weight:bold;">${n.solarDate}</span> | <b>Can Chi:</b> <span style="color:#fff;">${n.canChiText}</span> | <b>Định điểm:</b> <b style="color:#30d158;">${n.score}pt</b><br>
-                    • <b>Thần sát Trực Kiến:</b> Trực <span style="color:#30d158; font-weight:bold;">${n.trucName}</span> (${n.trucText})<br>
-                    • <span style="color:#30d158;">🟢 <b>GIỜ ĐẠI CÁT ĐỘNG THỔ KHỞI SỰ:</b></span> <b style="color:#fff;">${n.goldHours.slice(0, 4).join(' / ')}</b><br>
+                    • <b>Ngày Cát Tường:</b> <span style="color:#ffd700; font-weight:bold;">${n.solarDate}</span> | <b>Can Chi:</b> <span style="color:#fff;">${n.canChiText}</span> | <b>Điểm Số Vượng:</b> <b style="color:#30d158;">${n.score}pt</b><br>
+                    • <b>Thần sát:</b> Trực <span style="color:#30d158; font-weight:bold;">${n.trucName}</span> (${n.trucText})<br>
+                    • <span style="color:#30d158;">🟢 <b>GIỜ ĐẠI CÁT NẠP KHÍ KHỞI SỰ:</b></span> <b style="color:#fff;">${n.goldHours.slice(0, 4).join(' / ')}</b><br>
                     • <span style="color:#ff4444;">🔴 <b>GIỜ ĐẠI KỴ TUYỆT ĐỐI NÉ TRÁNH:</b></span> <span style="color:#aaa;">${n.blackHours.join(' / ')}</span>
                 </div>`;
             });
             lichTrachNhatHTML += `</div>`;
         } else {
             lichTrachNhatHTML = `<div style="margin-top:15px; background:rgba(255,59,48,0.06); padding:12px; border-radius:8px; border:1px solid #ff3b30; font-size:0.85rem; color:#eee; line-height:1.5;">
-                <b>📅 PHONG TỎA TRẠCH NHẬT LỆNH:</b> Vì phương vị gốc Địa lý tĩnh đang phạm trọng kỵ cấu trúc học (Phạm Không Vong hoặc phạm Hung Cung bản mệnh). Khí trường gốc bị nhiễm uế, hệ thống **tự động đóng lệnh trích xuất ngày lành** để ngăn chặn hành vi động thổ sai chỗ làm kích động ác tính của hung tinh. Gia chủ cần dịch chuyển la bàn hoặc an vị pháp bảo hóa giải trước.
+                <b>📅 PHONG TỎA TRẠCH NHẬT LỆNH:</b> Hệ thống tự động khóa lệnh trích xuất ngày lành để bảo vệ trạch gia khỏi sự quấy nhiễu khí trường của ác tinh static nền móng đất.
             </div>`;
         }
 
-        // Biên soạn Mật pháp mượn tuổi Nhân Khí phối hợp học
-        if (!checkHanNhanKhi.isOk) {
+        // Biên soạn Mật pháp mượn tuổi Nhân Khí phối hợp học (Chỉ ép khi là hạng mục ĐẠI SỰ PHÁ ĐẤT)
+        if (!checkHanNhanKhi.isOk && laHangMucDaiSu) {
             const razones = checkHanNhanKhi.reasons.join(' + ');
             const nguoiMuon = timTuoiQuyNhanMuonTinh(namKhaoSat, sonChuan);
             matPhapMuonTuoiHTML = `
             <div style="margin-top:12px; background:rgba(255,159,10,0.06); padding:12px; border-radius:8px; border:1px solid #ff9f0a; font-size:0.85rem; line-height:1.6;">
-                <b style="color:#ff9f0a; display:block; margin-bottom:4px;">👥 MẬT PHÁP NHÂN KHÍ - ỦY THÁC MƯỢN TUỔI ĐỘNG THỔ:</b>
-                Đương số trạch chủ sinh năm âm lịch <b>${namAmMệnhChủ}</b> bước vào niên độ khảo sát ${namKhaoSat} dính trọng kỵ niên hạn: <span style="color:#ff4444; font-weight:bold;">${razones}</span>. Nội lực nhân khí hao tổn, nếu tự tay động thổ cuốc đất dễ làm đứt gãy mạch long khí. <br><br>
-                👉 <b>Khẩu quyết điều tiết từ Thuật Toán:</b> Gia chủ nên ủy thác một nam giới gánh vác long mạch thay thế. Hệ thống quét ma trận Lục Thập Hoa Giáp đề xuất tuổi đại hợp: Tuổi <span style="color:#30d158; font-weight:bold;">${nguoiMuon.name} (Sinh năm ${nguoiMuon.year} — Hiện tại ${nguoiMuon.age} tuổi mụ)</span>. Người này nhân khí thanh sạch, hoàn toàn không vướng tam tai/kim lâu/hoang ốc, bản mệnh tương sinh ngũ hành với Sơn vị <b>Sơn ${sonChuan}</b> để làm lễ đứng tên phạt mộc động móng thay thế.
+                <b style="color:#ff9f0a; display:block; margin-bottom:4px;">👥 MẬT PHÁP NHÂN KHÍ ĐẠI SỰ - ỦY THÁC MƯỢN TUỔI ĐỘNG THỔ:</b>
+                Gia chủ dính trọng kỵ hạn tuổi: <span style="color:#ff4444; font-weight:bold;">${razones}</span>. Vì đây là hạng mục xây dựng phá vỡ đất đai lớn (<b>${config.title}</b>), nên ủy thác tuổi đại hợp thay thế gánh vác long mạch: Tuổi <span style="color:#30d158; font-weight:bold;">${nguoiMuon.name} (Sinh năm ${nguoiMuon.year} — ${nguoiMuon.age} tuổi mụ)</span> đứng tên làm lễ.
+            </div>`;
+        } else if (!checkHanNhanKhi.isOk && !laHangMucDaiSu) {
+            matPhapMuonTuoiHTML = `
+            <div style="margin-top:12px; background:rgba(48,209,88,0.06); padding:12px; border-radius:8px; border:1px solid #30d158; font-size:0.85rem; color:#eee;">
+                ✅ <b>AN VỊ TIỂU SỰ BÀI TRÍ:</b> Mặc dù bản mệnh gia chủ có vướng niên hạn tuổi xấu, nhưng vì hạng mục hành sự là bài trí sắp đặt không phá dỡ nền móng long mạch cốt lõi (<b>${config.title}</b>), gia chủ **hoàn toàn có thể tự tay thực hiện an vị đặt giường/bàn làm việc/quầy kệ** vào ngày giờ cát tường của lịch pháp mà không cần thủ tục mượn tuổi phức tạp.
             </div>`;
         } else {
             matPhapMuonTuoiHTML = `
             <div style="margin-top:12px; background:rgba(48,209,88,0.06); padding:12px; border-radius:8px; border:1px solid #30d158; font-size:0.85rem; color:#eee;">
-                ✅ <b>NHÂN KHÍ KHANG THỊNH:</b> Bản mệnh tuổi âm lịch <b>${namAmMệnhChủ}</b> của đương số trong năm hành sự ${namKhaoSat} hoàn toàn sạch sẽ, **không phạm Kim Lâu, không dính Hoang Ốc hung tinh, không vướng Tam Tai**. Khí trường cơ thể hòa hợp với vũ trụ, trạch chủ hoàn toàn tự tay cuốc đất phạt mộc động thổ dựng trạch mà không cần mượn tuổi.
+                ✅ <b>NHÂN KHÍ THANH SẠCH:</b> Tuổi chủ sự sạch sẽ, không phạm Kim Lâu/Tam Tai/Hoang Ốc, tự tay phạt mộc hành sự đắc cách.
             </div>`;
         }
-    } else {
-        let matPhapXửLýChuyênSâu = tongHop.hoaGiai; // Lấy mặc định từ hàm chấm điểm của bạn
-
-        // Nếu dính tử huyệt Địa Lý (Cung hung) hoặc Không Vong dẫn đến khóa lịch Trạch Nhật
-        if (laCungHungDiaLy || isKhongVong) {
-            matPhapXửLýChuyênSâu = `
-            <div style="line-height: 1.6; color: #eee;">
-                ⚠️ <b style="color:#ff9f0a;">BÁO CÁO ĐIỀU TIẾT THƯỢNG TẦNG: VÌ SAO LỊCH TRẠCH NHẬT BỊ PHONG TỎA?</b><br>
-                Hiện tại, vị trí <span style="color:#ffd700; font-weight:bold;">${config.title}</span> của trạch chủ đang đóng sai quy cách nền tảng về mặt Địa lý tĩnh (Phạm cung <span style="color:#ff4444; font-weight:bold;">${cungTrach.toUpperCase()}</span>). Trong phong thủy chính tông, <b>'Gốc có vững thì Ngọn mới xanh'</b>. Khi cái Gốc địa lý đang nghịch chuyển khí trường, nếu hệ thống vẫn cố tình xuất ngày giờ tốt (phần Ngọn) để trạch chủ hành sự, thì cát khí của ngày giờ đó cũng bị hung khí của đất nuốt chửng, hoàn toàn vô tác dụng, thậm chí kích động ác tính của hung tinh.<br><br>
-                
-                🛠️ <b style="color:#30d158;">QUY TRÌNH HÓA GIẢI 2 BƯỚC KHAI THÔNG MẠCH KHÍ TỪ BỰC THẦY:</b><br>
-                <b style="color:#ffd700;">• Bước 1 (Xử lý phần Gốc - Trấn sát khí):</b> Trạch chủ tuyệt đối không được tự ý hành sự phá dỡ tại đây. Trước tiên, bắt buộc phải dùng năng lượng hóa sát của vật phẩm phong thủy để 'ngủ đông' hung tính của cung ${cungTrach}. 
-                ${mucDich.includes("toilet") ? 'Hạng mục xả uế đã đắc cách không cần xử lý.' : `Đối với cấu trúc hệ <b>${config.title}</b> này, phương án tối ưu là sử dụng <b>Mật pháp điều tiết ngũ hành từ hệ thống</b>: ${tongHop.hoaGiai}.`} <br>
-                <b style="color:#ffd700;">• Bước 2 (Khai môn lập hướng/Dịch chuyển tâm la bàn):</b> Nếu có thể, hãy dịch chuyển vị trí cấu trúc nạp khí sang các cung vị cát tường như Sinh Khí, Thiên Y hiển thị trên bản đồ la bàn số để hệ thống tự động giải phóng lệnh phong tỏa và trích xuất chuỗi Ngày Giờ Đại Cát Thượng Cách cho gia chủ.
-            </div>`;
-        }
-
-        // Thay thế đoạn hiển thị cũ bằng đoạn HTML nâng cấp này:
-        let doanHTMLMatPhapMoi = `
-        <div style="margin-top: 12px; font-size:0.86rem; margin-bottom: 12px;">
-            <b style="color:var(--gold); display:block; margin-bottom:6px; border-bottom:1px solid rgba(223,183,108,0.2); padding-bottom:3px;">💡 MẬT PHÁP ĐIỀU TIẾT PHÁP BẢO VẬT PHẨM:</b>
-            <div style="color:#ddd; padding:10px; background:rgba(255,159,10,0.03); border:1px solid rgba(255,159,10,0.15); border-radius:6px; text-align: justify;">
-                ${matPhapXửLýChuyênSâu}
-            </div>
-        </div>`;
-        }    
-
-    // --- BIÊN SOẠN KHẨU QUYẾT LUẬN GIẢI CHUYÊN SÂU BIẾN THIÊN ---
-    let thongDiepKetLuan = ""; let mauChu = "#30d158"; let dienGiaiChuyenSauHTML = "";
-
-    if (isKhongVong) {
-        thongDiepKetLuan = "ĐẠI TRỌNG KỴ TỬ HUYỆT: PHẠM KHÔNG VONG"; mauChu = "#ff3b30";
-        dienGiaiChuyenSauHTML = `Tọa độ la bàn thực địa phản hồi góc đo rơi thẳng vào đường lằn ranh đường sinh tử Đại Không Vong/Tiểu Không Vong cực kỳ độc hại. Tại điểm này, từ trường bị nhiễu loạn nghiêm trọng, âm dương cắt đứt. Nếu cố tinh tiến hành ${tuNguHanhVi.hanhDong} tại đây, trạch đất sẽ rơi vào thế bộc phát tai ương hại nhân đinh, tinh thần hoảng loạn, bệnh tật triền miên. Phương án tối hậu là bắt buộc phải dịch chuyển vị trí hoặc xoay chuyển lệch hướng cấu trúc đại môn để né tránh long mạch gãy này.`;
-    } 
-    else if (laCungHungDiaLy) {
-        if (config.isCat) {
-            thongDiepKetLuan = `ĐẠI KỴ ĐỊA CỤC TĨNH: PHẠM CUNG ${cungTrach.toUpperCase()}`; mauChu = "#ff3b30";
-            dienGiaiChuyenSauHTML = `Hạng mục cấu trúc công trình <b>${config.title}</b> đòi hỏi nạp sinh khí vượng nhưng trạch chủ lại đặt đè lên cung hung static bản mệnh là cung <b>${cungTrach}</b>. Đây là lỗi sai chí mạng từ cái Gốc Địa lý. Khi đặt sai chỗ, hung khí của đất sẽ triệt tiêu năng lượng cát, dẫn đến tổn hao tài lộc, công sự bế tắc. Việc chọn ngày giờ tốt ở trường hợp này chỉ là phần Ngọn tạm thời che mắt, không thể gánh được cái Hung ác tính lâu dài của đất cũ. Cần dịch chuyển công trình lập tức.`;
-        } else {
-            thongDiepKetLuan = "🏆 TOẠ HUNG TRẤN SÁT ĐẮC CÁCH CHÍNH TÔNG"; mauChu = "#30d158";
-            dienGiaiChuyenSauHTML = `Bố cục thượng thừa! Cấu trúc hạ tầng tiêu trừ uế khí <b>${config.title}</b> đã được đặt đè lên chính xác phương vị ác tinh địa lý tĩnh là cung hung <b>${cungTrach}</b> của chủ mệnh. Vận dụng đúng nguyên lý kinh điển 'Tọa hung hướng cát' — dùng chính sự uế tạp của công trình phụ để trấn áp và hóa giải hoàn toàn hung tính của du tinh xấu, bảo vệ sự thanh sạch cho toàn bộ các cung vị vượng khí còn lại của trạch đất. Đắc cách an vị lâu dài.`;
-        }
-    } 
-    else if (luuNienObj.isHung) {
-        thongDiepKetLuan = `⚠️ ĐỊA CÁT NIÊN HUNG: PHẠM SÁT TINH LƯU NIÊN TRẠCH`; mauChu = "#ff9f0a";
-        dienGiaiChuyenSauHTML = `Xét về mặt Bản mệnh Dương trạch static (Gốc), ${tuNguHanhVi.viTri} cực kỳ cát tường và đại hợp quẻ mệnh gia chủ (Cung cát khí <b>${cungTrach}</b>). Tuy nhiên xét về dòng thiên văn luân chuyển (Ngọn), niên độ hành sự đang bị quấy nhiễu trực diện bởi hung tinh **${luuNienObj.tenSao}** bay vào chiếm đóng Sơn vị <b>Sơn ${sonChuan}</b>, khiến điểm số bị sụt giảm thực tế còn <b>${tongHop.diem}pt</b>. Cục diện này giống như đất tốt gặp mưa bão thời tiết xấu. Không cần đập phá cấu trúc, nhưng gia chủ bắt buộc phải bài trí pháp bảo ngũ hành điều tiết khí trường và chọn giờ lành Trạch Nhật Thượng Cách để nén chặt hung tính của sao niên hạn trước khi phát động thi công.`;
-    } 
-    else {
-        thongDiepKetLuan = "🏆 THỜI KHÔNG ĐẮC CÁCH - THIÊN ĐỊA NHÂN HỢP NHẤT"; mauChu = "#30d158";
-        dienGiaiChuyenSauHTML = `Tuyệt hảo! Tọa độ la bàn thực địa đạt chỉ số trường khí đỉnh cao đạt <b>${tongHop.diem}pt</b>. Vị trí vừa đắc thế cục Địa lý tĩnh Bát Trạch (Cung cát khí <b>${cungTrach}</b>), vừa có Thiên thời thông suốt sạch bóng hoàn toàn mọi sao hạn Sát tinh Cửu tinh lưu niên bao vây phương vị. Sao chủ quản phương vị năm nay là <span style="color:#30d158; font-weight:bold;">${luuNienObj.tenSao}</span> trợ lực thần tốc. Phương vị đại cát để gia chủ lập tức phát động nhân khí tiến hành ${tuNguHanhVi.hanhDong} để nạp phúc trạch hưng vượng công danh sự nghiệp, gia đạo bình an trường thọ.`;
     }
 
-    // --- TIẾN TRÌNH RENDER ĐỒNG BỘ POPUP DIỆN MẠO MỚI 100% ---
+    // Câu chữ biện giải chuyên sâu
+    let dienGiaiChuyenSauHTML = "";
+    let quẻMệnhBátTrạchChuẩn = (cungTrach.includes("Sinh Khí") || cungTrach.includes("Thiên Y") || cungTrach.includes("Diên Niên") || cungTrach.includes("Phục Vị")) ? `<span style="color:#30d158; font-weight:bold;">${cungTrach} (Cát Cục Địa Linh)</span>` : `<span style="color:#ff3b30; font-weight:bold;">${cungTrach} (Đại Hung Bại Địa)</span>`;
+
+    if (isKhongVong) {
+        dienGiaiChuyenSauHTML = `Góc đo thực địa chạm thẳng đường tử huyệt gãy trục Không Vong. Tại vị trí đường biên độc hại này, 72 Long Khí Xuyên Sơn bị chặt đứt mạch, âm dương hỗn loạn phản phệ. Tuyệt đối **KHÔNG ĐƯỢC PHÉP HÀNH SỰ THI CÔNG**, nếu cố tình đặt đè kết cấu ${config.title} tại đây sẽ kích hoạt đại họa sụt giảm tài đinh, gia đạo bất an trường kỳ.`;
+    } else if (laCungHungDiaLy && config.isCat) {
+        dienGiaiChuyenSauHTML = `Sai sót nghiêm trọng ở phần Gốc! Hạng mục ${config.title} là cấu trúc vượng khí tối cao nhưng lại đặt đè lên cung địa lý tĩnh bát trạch xấu bản mệnh là cung ${quẻMệnhBátTrạchChuẩn}. Hung khí của đất nền cũ sẽ triệt tiêu và bóp nghẹt toàn bộ sinh khí nạp tài, khiến việc chọn ngày giờ lành chỉ mang tính chất cứu vãn nhất thời ở phần Ngọn, không thể chống chọi được sự suy thoái lâu dài của mảnh đất.`;
+    } else {
+        dienGiaiChuyenSauHTML = `Khảo sát tọa độ đĩa số phân lập hướng vượng. Không gian trạch đất tại vị trí này đang được chiếu ứng bởi cung mệnh Bát Trạch: ${quẻMệnhBátTrạchChuẩn}. Đồng thời dòng chảy địa mạch ứng nghiệm vào **72 Long Khí Xuyên Sơn: ${thongTin72Hau.ten} (${thongTin72Hau.chatLuong})**. Sự kết hợp đồng trục thiên địa nạp khí mang lại chỉ số năng lượng trạch cực đạt **${tongHop.diem}/98 điểm**. Hãy bám sát lịch pháp trạch nhật bên dưới để kích hoạt đại cát hưng tài.`;
+    }
+
+    let matPhapXửLýChuyênSâu = tongHop.hoaGiai;
+    if (laCungHungDiaLy || isKhongVong) {
+        matPhapXửLýChuyênSâu = `
+        <div style="line-height: 1.6; color: #eee;">
+            ⚠️ <b>BÁO CÁO PHONG TỎA THƯỢNG TẦNG - QUY TRÌNH HÓA GIẢI:</b><br>
+            Hiện tại vị trí ${config.title} đang nghịch khí trường gốc. Biện pháp duy nhất để giải phóng lệnh phong tỏa và xuất lịch trạch nhật đắc cách là gia chủ buộc phải tịnh tiến tâm la bàn, xoay chuyển lệch hướng cấu trúc hoặc an vị pháp bảo vật phẩm: <span style="color:#ffd700;">${tongHop.hoaGiai}</span> để trấn át ác tính mạch đất cũ.
+        </div>`;
+    }
+
     let html = `
         <div style="text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 12px; margin-bottom: 15px;">
             <div style="font-size: 0.8rem; color: #dfb76c; letter-spacing: 1.5px; font-weight:bold;">✨ THƯỢNG TẦNG TỔNG LUẬN GIẢI PHONG THỦY SỐ VẬN 9 ✨</div>
-            <div style="font-size: 1.15rem; font-weight: 900; color: ${mauChu}; margin-top: 6px; text-shadow: 0 0 8px rgba(0,0,0,0.5);">${thongDiepKetLuan}</div>
+            <div style="font-size: 1.1rem; font-weight: 900; color: ${mauChu}; margin-top: 6px; text-shadow: 0 0 8px rgba(0,0,0,0.5);">${thongDiepTốiCao}</div>
         </div>
 
         <div style="font-size: 0.9rem; line-height: 1.7; color: #fff; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 12px;">
+            <div style="text-align:center;">${bieuTuongTrangThai}</div>
             <div style="margin-bottom: 6px;">👤 <b>Đương số chủ sự:</b> <span style="color:var(--gold); font-weight:bold;">${name}</span> | Bản mệnh quẻ chi: <b>${thucTeChuMenh}</b> (${namAmMệnhChủ} âm lịch)</div>
-            <div style="margin-bottom: 6px;">📐 <b>Tọa độ đo thực địa:</b> <span style="color:#ffca28; font-weight:bold;">${degree}°</span> — Sơn hướng quản lý: <span style="color:var(--gold); font-weight:bold;">Sơn ${sonChuan}</span></div>
-            <div style="margin-bottom: 6px;">🎯 <b>Hạ tầng quy hoạch:</b> Thiết lập cấu trúc hệ [<b>${config.title}</b>]</div>
-            <div style="margin-bottom: 6px;">📊 <b>Năng lượng tổng hợp thời vận:</b> <span style="color:${mauChu}; font-weight:black; font-size:1.05rem;">${tongHop.diem}/98 điểm</span> — Cấp độ trạch: <span style="color:${mauChu}; font-weight:bold;">${tongHop.level}</span></div>
-            <div style="margin-bottom: 2px;">⏳ <b>Từ trường Cửu Tinh Lưu Niên (${namKhaoSat}):</b> <span style="color:${luuNienObj.isHung ? '#ff9f0a' : '#30d158'}; font-weight:500;">${luuNienObj.tenSao} đáo phương</span></div>
+            <div style="margin-bottom: 6px;">📐 <b>Tọa độ đo la bàn thực địa:</b> <span style="color:#ffca28; font-weight:bold;">${degree}°</span> — Sơn hướng quản lý: <span style="color:var(--gold); font-weight:bold;">Sơn ${sonChuan}</span></div>
+            <div style="margin-bottom: 6px;">🔮 <b>72 Long Khí Xuyên Sơn:</b> <span style="color:#ffd700; font-weight:bold;">Mạch ${thongTin72Hau.ten}</span> — Phân cấp chất lượng: <b style="color:${thongTin72Hau.chatLuong.includes('Hung') ? '#ff3b30' : '#30d158'};">${thongTin72Hau.chatLuong}</b></div>
+            <div style="margin-bottom: 6px;">🧭 <b>Cung vị du tinh Bát Trạch:</b> Quản lý bởi du tinh cung <b>${cungTrach}</b></div>
+            <div style="margin-bottom: 6px;">🎯 <b>Hạ tầng hoạch định:</b> Cấu trúc hệ thống [<b>${config.title}</b>]</div>
+            <div style="margin-bottom: 6px;">📊 <b>Năng lượng thời vận:</b> <span style="color:${mauChu}; font-weight:black; font-size:1.05rem;">${tongHop.diem}/98 điểm</span> — Cấp độ: <span style="color:${mauChu}; font-weight:bold;">${tongHop.level}</span></div>
+            <div style="margin-bottom: 2px;">⏳ <b>Từ trường Cửu Tinh (${namKhaoSat}):</b> <span style="color:${luuNienObj.isHung ? '#ff9f0a' : '#30d158'}; font-weight:500;">${luuNienObj.tenSao} đáo phương vị</span></div>
         </div>
 
         <div style="padding: 12px; background: rgba(0,0,0,0.3); border-left: 4px solid ${mauChu}; font-size: 0.88rem; color: #e5e5ea; text-align: justify; line-height: 1.6; margin-bottom: 12px; border-radius: 0 8px 8px 0;">
-            <b>🔮 KHẨU QUYẾT BẢN MẠCH BIỆN GIẢI CHUYÊN SÂU TỪ BỰC THẦY:</b><br>
+            <b>🔮 KHẨU QUYẾT LUẬN GIẢI CHUYÊN SÂU TỪ BỰC THẦY (BÁT TRẠCH ĐỒNG TRỤC LONG KHÍ):</b><br>
             ${dienGiaiChuyenSauHTML}
         </div>
 
         <div style="margin-top: 10px; font-size:0.86rem; margin-bottom: 12px;">
-            <b style="color:var(--gold); display:block; margin-bottom:4px; border-bottom:1px solid rgba(223,183,108,0.2); padding-bottom:3px;">💡 MẬT PHÁP ĐIỀU TIẾT PHÁB BẢO VẬT PHẨM:</b>
-            <div style="color:#ddd; line-height:1.5; padding:8px; background:rgba(255,255,255,0.02); border-radius:6px;">${tongHop.hoaGiai}</div>
+            <b style="color:var(--gold); display:block; margin-bottom:4px; border-bottom:1px solid rgba(223,183,108,0.2); padding-bottom:3px;">💡 MẬT PHÁP ĐIỀU TIẾT PHÁP BẢO VẬT PHẨM NỀN MÓNG:</b>
+            <div style="color:#ddd; padding:10px; background:rgba(255,159,10,0.03); border:1px solid rgba(255,159,10,0.15); border-radius:6px; text-align: justify;">
+                ${matPhapXửLýChuyênSâu}
+            </div>
         </div>
 
         ${lichTrachNhatHTML}
         ${matPhapMuonTuoiHTML}
         
         <div style="text-align:center; font-size:0.75rem; color:#666; margin-top:15px; font-style:italic;">
-            * Báo cáo tối cao được kết xuất tự động bởi lõi toán pháp trạch nhật Julian thiên văn học máy tính Vận 9 thực hành năm 2026.
+            * Báo cáo tối cao kết xuất tự động bởi toán pháp thiên văn học Julian Vận 9 thực hành ngày xem 05/06/2026.
         </div>
     `;
 
