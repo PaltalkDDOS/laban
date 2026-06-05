@@ -4154,3 +4154,141 @@ function xayDungBaoCaoLuanGiai(name, degree) {
 
     contentBox.innerHTML = html;
 }
+// =========================================================================
+// 🚀 HỆ THỐNG ĐIỀU KHIỂN GIAO DIỆN LA BÀN THÔNG MINH ĐỘNG
+// =========================================================================
+
+// 1. Khai báo các biến trạng thái quản lý thời gian và cử chỉ
+let dừngKimTimeout = null; 
+let chạmHoldTimeout = null;
+let đangChạmMànHình = false;
+
+// 2. CSS Inject tự động: Tạo hiệu ứng mượt mà (Fade In/Out) cho nút Luận Giải
+const styleLuangiai = document.createElement('style');
+styleLuangiai.innerHTML = `
+    .luangiai-fab-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 999;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(15px) scale(0.9);
+        transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                    transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .luangiai-fab-btn.vượng-xuất {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0) scale(1);
+    }
+    /* Hiệu ứng rung nhẹ khi la bàn bị khóa bằng touch để báo hiệu cho trạch chủ */
+    .la-ban-khoa-khí {
+        animation: rungNheLongMach 0.3s ease-in-out 2;
+    }
+    @keyframes rungNheLongMach {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+    }
+`;
+document.head.appendChild(styleLuangiai);
+
+
+// =========================================================================
+// 🎯 MÓC KHÓA (HOOK) VÀO LUỒNG ĐO GÓC REALTIME CỦA LA BÀN
+// =========================================================================
+// Tìm đến hàm nhận sự kiện DeviceOrientation hoặc hàm cập nhật slider/góc xoay của bạn,
+// chèn logic điều khiển ẩn/hiện nút Luận Giải này vào dòng đầu tiên:
+
+function xuLyAnHienNutThongMinh() {
+    const btnTongLuan = document.getElementById('btn-tong-luan');
+    if (!btnTongLuan) return;
+
+    // Nếu la bàn đang bị khóa chủ động (isCompassHold), luôn giữ nút Luận Giải hiển thị
+    if (isCompassHold) return;
+
+    // BƯỚC 1: Khi kim la bàn đang xoay liên tục, ngay lập tức ẩn nút lập tức không độ trễ
+    btnTongLuan.classList.remove('vượng-xuất');
+
+    // BƯỚC 2: Xóa bộ đếm thời gian cũ để thiết lập vòng lặp quét tĩnh mới (Debounce)
+    clearTimeout(dừngKimTimeout);
+
+    // BƯỚC 3: Nếu kim đứng im hoàn toàn, không có biến động góc trong vòng 2 giây (2000ms)
+    dừngKimTimeout = setTimeout(() => {
+        // Chỉ xuất hiện nút khi người dùng nhập đủ năm sinh (an toàn thuật toán)
+        const yearStr = document.getElementById('birthYear')?.value;
+        if (yearStr && yearStr.length === 4 && !đangChạmMànHình) {
+            btnTongLuan.classList.add('vượng-xuất'); // Xuất hiện mượt mà
+        }
+    }, 2000);
+}
+
+// 💡 GỢI Ý NHÚNG: Trong hàm xoay la bàn thực địa của bạn, hãy gọi hàm này:
+// window.addEventListener('deviceorientationabsolute', function(event) {
+//     if (isCompassHold) return;
+//     // ... code tính góc trueHeading của bạn ...
+//     xuLyAnHienNutThongMinh(); // Nhúng dòng này để tự động bắt góc đứng im 2s
+// });
+
+
+// =========================================================================
+// 🖐️ PHÂN HỆ TOUCH HOLD 3 GIÂY ĐỂ KHÓA / 2 GIÂY ĐỂ MỞ LA BÀN
+// =========================================================================
+function kichHoatBoLangNgheTouchLaBan() {
+    // Tìm đến phần tử chứa đĩa xoay la bàn hoặc toàn bộ vùng màn hình đo đạc của bạn
+    const vungLaBan = document.getElementById('compass') || document.body;
+
+    vungLaBan.addEventListener('touchstart', function(e) {
+        // Nếu đang mở bảng Luận giải Popup thì không kích hoạt khóa màn hình tĩnh
+        const overlay = document.getElementById('tongLuanOverlay');
+        if (overlay && overlay.classList.contains('show')) return;
+
+        đangChạmMànHình = true;
+        clearTimeout(chạmHoldTimeout);
+
+        if (!isCompassHold) {
+            // KỊCH BẢN A: La bàn đang quay tự do -> Đè im ngón tay 3 giây để KHÓA
+            chạmHoldTimeout = setTimeout(() => {
+                isCompassHold = true;
+                holdedHeading = currentHeading; // Đóng băng tọa độ thực địa
+                
+                // Hiệu ứng phản hồi xúc giác / giao diện
+                vungLaBan.classList.add('la-ban-khoa-khí');
+                setTimeout(() => vungLaBan.classList.remove('la-ban-khoa-khí'), 600);
+                
+                // Hiển thị nút luận giải ngay khi khóa bằng Touch
+                document.getElementById('btn-tong-luan')?.classList.add('vượng-xuất');
+                
+                if (typeof showCustomAlert === 'function') {
+                    showCustomAlert(`🔒 Đã khóa cứng Long Mạch tại tọa độ thực địa: ${holdedHeading}°!`);
+                }
+            }, 3000); // 3 giây khóa
+        } else {
+            // KỊCH BẢN B: La bàn đang khóa -> Đè im ngón tay 2 giây trên đĩa để MỞ KHÓA
+            chạmHoldTimeout = setTimeout(() => {
+                isCompassHold = false;
+                
+                // Phát lệnh ẩn nút luận giải để la bàn quay trở lại mạch realtime
+                document.getElementById('btn-tong-luan')?.classList.remove('vượng-xuất');
+                
+                if (typeof showCustomAlert === 'function') {
+                    showCustomAlert("🔓 Giải phóng mạch khí! La bàn chuyển sang chế độ đo động thực thời.");
+                }
+            }, 2000); // 2 giây mở khóa
+        }
+    }, { passive: true });
+
+    vungLaBan.addEventListener('touchend', function(e) {
+        đangChạmMànHình = false;
+        // Nếu người dùng nhấc ngón tay ra trước thời gian quy định, hủy lệnh đếm giây lập tức
+        clearTimeout(chạmHoldTimeout);
+    }, { passive: true });
+    
+    vungLaBan.addEventListener('touchmove', function(e) {
+        // Nếu người dùng lướt ngón tay di chuyển (vuốt màn hình), hủy lệnh hold để tránh nhầm cử chỉ
+        clearTimeout(chạmHoldTimeout);
+    }, { passive: true });
+}
+
+// Khởi động phân hệ lắng nghe cử chỉ Touch ngay khi ứng dụng sẵn sàng
+document.addEventListener('DOMContentLoaded', kichHoatBoLangNgheTouchLaBan);
