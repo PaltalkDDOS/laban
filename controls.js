@@ -3538,14 +3538,20 @@ function manualRotate(value) {
     });
 }
 
+// =========================================================================
+// 🌐 PHÂN HỆ QUẢN TRỊ BỘ NHỚ: LƯU TRỮ VÀ LÀM SẠCH CHỌN LỌC CẤP CAO VẬN 9
+// =========================================================================
+
+// 1. LƯU THÀNH VIÊN (Tự động hóa chuẩn hóa danh tính, chống trùng rác)
 function saveCurrentMember() {
-    const name = document.getElementById('userName').value.trim();
+    let nameInput = document.getElementById('userName');
+    let name = nameInput ? nameInput.value.trim() : "";
     const gender = document.getElementById('gender').value;
     const dayStr = document.getElementById('birthDay').value;
     const monthStr = document.getElementById('birthMonth').value;
     const yearStr = document.getElementById('birthYear').value;
 
-    // Kiểm tra đầu vào: Gọi với tiêu đề cảnh báo
+    // Chốt chặn kiểm tra đầu vào nghiêm ngặt
     if (!name || name === "Người Tầm Phương") {
         showCustomAlert("Vui lòng nhập họ tên thật của thành viên gia đình!", "⚠️ Sai Lệch Dữ Liệu");
         return;
@@ -3555,13 +3561,24 @@ function saveCurrentMember() {
         return;
     }
 
+    // THÔNG MINH: Tự động viết hoa chữ cái đầu danh tính (Chuẩn hóa Nhân Mệnh)
+    name = name.toLowerCase().replace(/(^|\s)\S/g, l => l.toUpperCase());
+    if (nameInput) nameInput.value = name;
+
     let members = JSON.parse(localStorage.getItem('fengshui_members') || '[]');
 
-    // Tạo thành viên mới
+    // THÔNG MINH: Chống trùng lặp dữ liệu (Nếu trùng cả Tên, Ngày, Tháng, Năm thì cảnh báo, tránh rác)
+    const biTrung = members.some(m => m.name === name && m.birthDay === dayStr && m.birthMonth === monthStr && m.birthYear === yearStr);
+    if (biTrung) {
+        showCustomAlert(`Thành viên ${name} với ngày sinh này đã tồn tại trong gia tộc bảng số!`, "⚠️ Trùng Lặp Bộ Nhớ");
+        return;
+    }
+
+    // Tạo cấu trúc thực thể thành viên mới
     const newMember = {
         id: Date.now(), 
-        name,
-        gender,
+        name: name,
+        gender: gender,
         birthDay: dayStr,
         birthMonth: monthStr,
         birthYear: yearStr
@@ -3570,81 +3587,124 @@ function saveCurrentMember() {
     members.push(newMember);
     localStorage.setItem('fengshui_members', JSON.stringify(members));
     
-    // THÀNH CÔNG: Gọi với tiêu đề tích cực
-    showCustomAlert("Đã lưu thành viên: " + name, "✅ Thành Công");
+    showCustomAlert(`Đã mã hóa và lưu thành viên: ${name}`, "✅ Thành Công");
     loadSavedMembers();
 }
 
-// 2. TẢI DANH SÁCH (Render ID vào thẻ HTML)
+// 2. TẢI DANH SÁCH THÀNH VIÊN (Render an toàn, chống sập DOM)
 function loadSavedMembers() {
     const data = JSON.parse(localStorage.getItem('fengshui_members') || '[]');
-    const savedPanel = document.getElementById('savedPanel'); // Đảm bảo bạn có ID này
+    const savedPanel = document.getElementById('savedPanel'); 
     const savedContainer = document.getElementById('savedContainer');
 
+    if (!savedContainer) return;
+
     if (data.length === 0) {
-        savedPanel.style.display = "none";
+        if (savedPanel) savedPanel.style.display = "none";
         return;
     }
     
-    savedPanel.style.display = "block";
+    if (savedPanel) savedPanel.style.display = "block";
     savedContainer.innerHTML = "";
     
     data.forEach(m => {
         const chip = document.createElement('div');
         chip.className = 'saved-chip';
-        // Truyền ID vào hàm selectMember và deleteMember
+        // Giữ cấu trúc hàm gốc truyền ID vào xử lý sự kiện
         chip.innerHTML = `
-            <span onclick="selectMember(${m.id})">👤 ${m.name}</span>
-            <span class="del-btn" onclick="deleteMember(event, ${m.id})">×</span>
+            <span onclick="selectMember(${m.id})" style="cursor:pointer;">👤 ${m.name}</span>
+            <span class="del-btn" onclick="deleteMember(event, ${m.id})" style="margin-left:8px; cursor:pointer; font-weight:bold;">×</span>
         `;
         savedContainer.appendChild(chip);
     });
 }
 
-// 3. CHỌN THÀNH VIÊN (Dựa trên ID)
+// 3. CHỌN THÀNH VIÊN TRONG DANH SÁCH (Đồng bộ tức thì toán pháp)
 function selectMember(id) {
     const data = JSON.parse(localStorage.getItem('fengshui_members') || '[]');
     const m = data.find(item => item.id === id);
     
     if (m) {
-        document.getElementById('userName').value = m.name;
-        document.getElementById('userName').style.color = '#fff';
+        const txtUser = document.getElementById('userName');
+        if (txtUser) {
+            txtUser.value = m.name;
+            txtUser.style.color = '#fff';
+        }
         document.getElementById('gender').value = m.gender;
         document.getElementById('birthDay').value = m.birthDay;
         document.getElementById('birthMonth').value = m.birthMonth;
         document.getElementById('birthYear').value = m.birthYear;
-        recalculateFate();
+        
+        // Kích hoạt tái tính toán toàn bộ hệ thống ngay khi đổi người
+        if (typeof recalculateFate === 'function') {
+            recalculateFate();
+        }
     }
 }
 
-// 4. XÓA THÀNH VIÊN (Dựa trên ID)
+// 4. XÓA THÀNH VIÊN CHỈ ĐỊNH
 function deleteMember(event, id) {
-    event.stopPropagation();
+    if (event) event.stopPropagation();
     let data = JSON.parse(localStorage.getItem('fengshui_members') || '[]');
     data = data.filter(m => m.id !== id);
     localStorage.setItem('fengshui_members', JSON.stringify(data));
     loadSavedMembers();
 }
 
-// 5. RESET DỮ LIỆU
+// 5. SIÊU RESET: THANH LỌC TOÀN DIỆN BỘ NHỚ RÁC - GIỮ LẠI DANH SÁCH THÀNH VIÊN
 function clearAllData() {
     const btn = document.getElementById('btnReset');
     if (btn) {
         btn.classList.add('executing');
         setTimeout(() => btn.classList.remove('executing'), 400);
     }
-    document.getElementById('userName').value = 'Người Tầm Phương';
-    document.getElementById('userName').style.color = '#aaa';
+    
+    // 🚀 BƯỚC ĐỘT PHÁ PHONG THỦY SỐ: TRÍCH XUẤT CẤT GIỮ DANH SÁCH THÀNH VIÊN RA VÙNG CÁCH LY
+    const danhSachGiaTocHienTai = localStorage.getItem('fengshui_members');
+    
+    // LẬP TỨC TIÊU HỦY TOÀN BỘ KHÔNG GIAN BỘ NHỚ (Xóa sạch mọi rác cấu trúc cũ, biến lỗi khi dev)
+    localStorage.clear();
+    
+    // KHÔI PHỤC LẠI DUY NHẤT DANH SÁCH THÀNH VIÊN SẠCH SẼ VÀO LẠI STORAGE
+    if (danhSachGiaTocHienTai) {
+        localStorage.setItem('fengshui_members', danhSachGiaTocHienTai);
+    }
+
+    // 🚀 GIẢI PHÓNG TOÀN DIỆN CÁC BỘ NHỚ ĐỆM (CACHE) KHÍ MẠCH TRÊN RAM
+    if (typeof hauCache !== 'undefined' && hauCache.clear) {
+        hauCache.clear(); // Xóa sạch bộ nhớ đệm 72 Hậu cũ tránh loãng khí
+    }
+    
+    // ĐƯA CẤU TRÚC FORM VÀ ĐỒ HÌNH LA BÀN VỀ TRẠNG THÁI KHỞI NGUYÊN TỰ DO
+    const txtUser = document.getElementById('userName');
+    if (txtUser) {
+        txtUser.value = 'Người Tầm Phương';
+        txtUser.style.color = '#aaa';
+    }
     document.getElementById('gender').value = 'male';
     document.getElementById('birthDay').value = '';
     document.getElementById('birthMonth').value = '';
     document.getElementById('birthYear').value = '';
     document.getElementById('purpose').value = '';
     
+    // Tắt chốt chặn kim ảo an toàn tuyệt đối
     if (typeof targetAngle !== 'undefined') targetAngle = null;
-    if (typeof ghostNeedle !== 'undefined') ghostNeedle.style.opacity = "0";
     
-    recalculateFate();
+    const ghost = document.getElementById('ghostNeedle');
+    if (ghost) {
+        ghost.style.opacity = "0";
+        ghost.style.display = "none";
+        ghost.classList.remove('matched-pulse');
+    }
+    
+    // Ép hệ thống vẽ lại bản đồ khí cục theo dữ liệu trắc địa thực địa tự do sạch sẽ
+    if (typeof recalculateFate === 'function') {
+        recalculateFate();
+    } else if (typeof updateCompassUI === 'function') {
+        updateCompassUI(currentHeading);
+    }
+    
+    showCustomAlert("Hệ thống đã dọn sạch toàn bộ rác cấu trúc cũ, nạp mới khí trường thành công!", "🧹 Thanh Lọc Bộ Nhớ");
 }
 
 /**
