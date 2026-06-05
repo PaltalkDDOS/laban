@@ -31,7 +31,7 @@
     <div class="luangiai-modal">
         <div id="tongLuanContent">
             </div>
-        <button class="btn-close-modal" onclick="toggleTongLuan()">ĐÃ HIỂU MẬT PHÁP</button>
+        <button class="btn-close-modal" onclick="event.stopPropagation(); toggleTongLuan();">ĐÃ HIỂU MẬT PHÁP</button>
     </div>
 </div>
 <!-- ====================== MAIN PANEL WRAPPER ====================== -->
@@ -352,7 +352,7 @@
         <!-- Nút đóng lệnh chân phương dưới đáy -->
         <div style="margin-top: 15px; text-align: center;">
             <button id="btnUnderstandMap" 
-        onclick="document.getElementById('donateModal').style.display = 'none';" 
+        onclick="event.stopPropagation(); document.getElementById('donateModal').style.display = 'none';" 
         style="background: linear-gradient(135deg, #dfb76c, #b38938); color: #000; border: none; padding: 10px 24px; font-weight: bold; border-radius: 20px; cursor: pointer; font-size: 0.8rem; letter-spacing: 1px; width: 100%; transition: all 0.3s;">
     ĐÃ HIỂU MẬT PHÁP KHỞI VẬN
 </button>
@@ -649,12 +649,12 @@
   </div>
 
   <div class="custom-alert-overlay" id="customAlert">
-    <div class="custom-alert-box">
-      <div class="custom-alert-title">⚠️ Sai Lệch Dữ Liệu</div>
-      <div class="custom-alert-msg" id="customAlertMsg">Nội dung cảnh báo phong thủy tại đây.</div>
-      <button class="custom-alert-btn" onclick="closeCustomAlert()">Đã Hiểu</button>
-    </div>
+  <div class="custom-alert-box">
+    <div class="custom-alert-title">⚠️ Sai Lệch Dữ Liệu</div>
+    <div class="custom-alert-msg" id="customAlertMsg">Nội dung cảnh báo phong thủy tại đây.</div>
+    <button class="custom-alert-btn" onclick="event.stopPropagation(); closeCustomAlert();">Đã Hiểu</button>
   </div>
+</div>
 <div id="infoModal" onclick="this.style.display='none'" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; padding:20px; align-items:center; justify-content:center;">
     <div style="background:#1c1c1e; max-width:450px; padding:25px; border-radius:15px; color:#fff; border:1px solid #dfb76c;">
         <h3 id="modalTitle" style="color:#dfb76c; margin-top:0;"></h3>
