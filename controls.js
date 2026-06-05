@@ -4288,7 +4288,7 @@ function kichHoatBoLangNgheTouchLaBan() {
                 if (typeof showCustomAlert === 'function') {
                     showCustomAlert(`🔒 Đã khóa cứng Long Mạch tại tọa độ thực địa: ${window.holdedHeading}°!`);
                 }
-            }, 2000); 
+            }, 1000); 
         } else {
             // KỊCH BẢN B: Đè im ngón tay 2 giây để MỞ KHÓA la bàn
             chạmHoldTimeout = setTimeout(() => {
@@ -4302,7 +4302,7 @@ function kichHoatBoLangNgheTouchLaBan() {
                 if (typeof showCustomAlert === 'function') {
                     showCustomAlert("🔓 Giải phóng mạch khí! La bàn chuyển sang chế độ đo động thực thời.");
                 }
-            }, 2000); 
+            }, 1000); 
         }
     }, { passive: true });
 
