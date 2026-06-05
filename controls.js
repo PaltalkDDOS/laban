@@ -3900,46 +3900,32 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // =========================================================================
-// 🌐 HỆ THỐNG PWA FLOATING ACTION BUTTON - KIẾN TRÚC THÔNG MINH ĐA PHÂN TẦNG
+// 🌐 HỆ THỐNG PWA FLOATING ACTION BUTTON - HOÀN TRẢ KIẾN TRÚC GỐC NGUYÊN BẢN
 // =========================================================================
 if (typeof deferredPrompt === 'undefined') {
     var deferredPrompt; 
 }
 
-// 1. Hàm kiểm tra môi trường kết hợp phao dấu vết URL (Thông minh đa trình duyệt)
+// 1. Giữ nguyên bản 100% hàm kiểm tra độc lập gốc của bạn
 function isRunningAsPWA() {
-    // A. Kiểm tra môi trường Standalone gốc của trình duyệt hiện tại
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
-                         window.navigator.standalone === true ||
-                         window.matchMedia('(display-mode: fullscreen)').matches;
-    
-    // B. Kiểm tra dấu vết nhận diện đặc quyền từ URL khi bấm mở từ màn hình chính
-    const urlParams = new URLSearchParams(window.location.search);
-    const isUrlMode = urlParams.get('mode') === 'pwa_installed';
-
-    // Nếu ĐANG CHẠY thực tế từ màn hình nền, kích hoạt phao cứu sinh vĩnh viễn
-    if (isStandalone || isIOSStandalone || isUrlMode) {
-        localStorage.setItem('pwa_da_xac_thuc_cai_dat', 'true');
-        return true;
-    }
-
-    // C. Đọc phao cứu sinh xuyên trình duyệt (Nếu máy đã cài, các trình duyệt khác mở link sẽ đọc được và tự ẩn nút)
-    return localStorage.getItem('pwa_da_xac_thuc_cai_dat') === 'true';
+    return window.matchMedia('(display-mode: standalone)').matches || 
+           window.navigator.standalone === true ||
+           window.matchMedia('(display-mode: fullscreen)').matches;
 }
 
-// 2. Hàm dọn dẹp ẩn nút mượt mà theo Class CSS
+// 2. Giữ nguyên bản 100% hàm kiểm tra và ẩn nút gốc của bạn
 function kiemTraVaAnNut() {
     const btn = document.getElementById('btn-install-pwa');
     if (!btn) return false;
     
     if (isRunningAsPWA()) {
-        btn.classList.remove('show'); // Ẩn mượt mà chuẩn CSS Bounce của bạn
+        btn.classList.remove('show');
         return true;
     }
     return false;
 }
 
-// 3. Nâng cấp bộ tự động cập nhật dọn rác Cache (Giữ nguyên cấu trúc chạy ngầm v1/v2)
+// 3. Khởi tạo hệ thống lõi - Tích hợp mạch tự động dọn cache khi sửa code
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         if (window.location.protocol === 'file:') return;
@@ -3951,6 +3937,7 @@ if ('serviceWorker' in navigator) {
         link.href = './manifest.json';
         document.head.appendChild(link);
 
+        // Đăng ký Service Worker và tự động F5 làm sạch bộ nhớ nếu bạn đổi v1 thành v2 ở sw.js
         navigator.serviceWorker.register('./sw.js')
             .then((reg) => {
                 reg.onupdatefound = () => {
@@ -3958,30 +3945,27 @@ if ('serviceWorker' in navigator) {
                     if (installingWorker) {
                         installingWorker.onstatechange = () => {
                             if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                console.log('Hệ thống phát hiện mạch khí mới, tự động làm sạch cache!');
-                                window.location.reload(); 
+                                console.log('Hệ thống đã tự động nạp khí mới, làm sạch cache cũ thành công!');
+                                window.location.reload(); // Tự động làm mới trang để ăn code mới
                             }
                         };
                     }
                 };
             })
-            .catch(err => console.error('Lỗi kích hoạt mạch PWA:', err));
+            .catch(err => console.error('Lỗi kích hoạt PWA:', err));
     });
 }
 
-// 4. Lắng nghe sự kiện mời cài đặt (🌟 NƠI ĐỘT PHÁ: FIX LỖI GỠ APP)
+// 4. Lắng nghe sự kiện mời cài đặt (Giữ nguyên bản 100% hàm gốc của bạn)
 window.addEventListener('beforeinstallprompt', (e) => {
-    // MẬT PHÁP ĐỘC QUYỀN: Nếu trình duyệt bắn ra sự kiện này, chứng tỏ app CHƯA ĐƯỢC CÀI (hoặc vừa bị gỡ).
-    // Lập tức đập tan cái phao 'true' cũ, đưa về 'false' để nút cài đặt hiện ra lại ngay!
-    localStorage.setItem('pwa_da_xac_thuc_cai_dat', 'false');
+    if (isRunningAsPWA()) return;
 
     e.preventDefault();
     deferredPrompt = e;
 
     const btn = document.getElementById('btn-install-pwa');
     if (btn) {
-        // Hiện nút mượt mà với hiệu ứng bounce quý phái
-        btn.classList.add('show'); 
+        btn.classList.add('show');
 
         btn.onclick = async () => {
             if (!deferredPrompt) return;
@@ -3990,7 +3974,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
             console.log(`Người dùng chọn: ${outcome}`);
             
             if (outcome === 'accepted') {
-                localStorage.setItem('pwa_da_xac_thuc_cai_dat', 'true');
                 btn.classList.remove('show');
             }
             deferredPrompt = null;
@@ -3998,14 +3981,13 @@ window.addEventListener('beforeinstallprompt', (e) => {
     }
 });
 
-// 5. Ẩn nút lập tức và kích hoạt phao cứu sinh khi người dùng nhấn cài xong
+// 5. Ẩn nút lập tức khi cài xong (Giữ nguyên bản 100% hàm gốc của bạn)
 window.addEventListener('appinstalled', () => {
-    localStorage.setItem('pwa_da_xac_thuc_cai_dat', 'true');
     const btn = document.getElementById('btn-install-pwa');
     if (btn) btn.classList.remove('show');
 });
 
-// Bộ quét kiểm tra trạng thái khi bật/tắt tab
+// Bộ quét quét lại khi người dùng bật tắt màn hình (Giữ nguyên bản 100% hàm gốc của bạn)
 document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
         setTimeout(kiemTraVaAnNut, 600);
