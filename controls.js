@@ -812,11 +812,15 @@ function generateDirectionsList() {
     const config = ConfigPhongThuy[mucDich];
     
     if (!mucDich || !config) {
-        directionsContainer.innerHTML = `
-            <div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:15px;'>
-                Chọn mục đích Khí Cục hoặc Trấn Sát để hiển thị đồ hình gợi ý tương ứng
-            </div>`;
-        listPanelTitle.innerText = "Danh Sách Phương Vị Gợi Ý";
+        if (typeof directionsContainer !== 'undefined') {
+            directionsContainer.innerHTML = `
+                <div style='font-size:0.8rem;color:#8a8a8f;text-align:center;padding:15px;'>
+                    Chọn mục đích Khí Cục hoặc Trấn Sát để hiển thị đồ hình gợi ý tương ứng
+                </div>`;
+        }
+        if (typeof listPanelTitle !== 'undefined') {
+            listPanelTitle.innerText = "Danh Sách Phương Vị Gợi Ý";
+        }
         return;
     }
 
@@ -831,7 +835,7 @@ function generateDirectionsList() {
     const txtSurveyYear = document.getElementById('surveyYear');
     const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value) : new Date().getFullYear();
 
-    // ĐỒNG BỘ TUỔI ÂM SINH THEO TIẾT LẬP XUÂN
+    // ĐỒNG BỘ TUỔI ÂM SINH THEI TIẾT LẬP XUÂN
     let namAmMệnhChủ = new Date().getFullYear();
     if (dayStr && monthStr && yearStr && yearStr.length === 4) {
         const d = parseInt(dayStr);
@@ -864,18 +868,41 @@ function generateDirectionsList() {
 
     listDirections.forEach(item => {
         const isHợp = item.diemTongHop >= 72;
-        const colorStyle = isHợp ? '#30d158' : '#ff3b30';
+        
+        // --- THUẬT TOÁN KIỂM TRA SƠN VỊ CÁT HUNG ĐỂ ĐIỀU CHỈNH MÀU THÔNG MINH ---
+        const sonGroup = getSonGroupForDirection(item.code);
+        let coSonViNguyHiem = false;
+
+        // Quét nhanh ma trận để phát hiện xem có sơn vị nào bị điểm Hung (< 50%) không
+        sonGroup.forEach(son => {
+            const dataSon = MaTranMinhChau[chủMệnh] ? MaTranMinhChau[chủMệnh][son] : null;
+            const score = dataSon ? dataSon.diem : 0;
+            if (score < 50) {
+                coSonViNguyHiem = true; 
+            }
+        });
+
+        // Nếu hướng là Cát (>=72pt) nhưng bên trong chứa cấu trúc Sơn hoặc Hậu hung tinh kỵ, chuyển sang màu Vàng Cam Cảnh Báo
+        let colorStyle = isHợp ? '#30d158' : '#ff3b30';
+        let bgKhung = isHợp ? 'rgba(48,209,88,0.03)' : 'rgba(255,59,48,0.03)';
+        
+        if (isHợp && (coSonViNguyHiem || item.hau.chatLuong.includes("Hung"))) {
+            colorStyle = '#ff9f0a'; // Chuyển sang sắc vàng cam đậm chất nghệ thuật phong thủy
+            bgKhung = 'rgba(255,159,10,0.04)';
+        }
 
         let statusText = "";
         if (isCatPurpose) {
-            statusText = isHợp ? '🟢 ĐÓN CÁT KHÍ (HƯỚNG TỐT)' : '❌ PHẠM HUNG PHƯƠNG (HƯỚNG XẤU)';
+            if (colorStyle === '#ff9f0a') {
+                statusText = '⚠️ CẢNH BÁO: HƯỚNG CÁT PHẠM SƠN VỊ HUNG (CẦN HÓA GIẢI)';
+            } else {
+                statusText = isHợp ? '🟢 ĐÓN CÁT KHÍ (HƯỚNG TỐT)' : '❌ PHẠM HUNG PHƯƠNG (HƯỚNG XẤU)';
+            }
         } else {
             statusText = isHợp ? '🏆 TỌA HUNG TRẤN SÁT (ĐẮC VỊ)' : '⚠️ SAI VỊ: TỌA CÁT TIÊU HAO';
         }
 
-        const sonGroup = getSonGroupForDirection(item.code);
         let sonHTML = "";
-        
         sonGroup.forEach((son, index) => {
             const dataSon = MaTranMinhChau[chủMệnh] ? MaTranMinhChau[chủMệnh][son] : null;
             const score = dataSon ? dataSon.diem : 0;
@@ -895,7 +922,7 @@ function generateDirectionsList() {
             if (index < sonGroup.length - 1) sonHTML += ` • `;
         });
 
-        const bgDiem = isHợp ? 'rgba(48,209,88,0.15)' : 'rgba(255,59,48,0.15)';
+        const bgDiem = colorStyle === '#30d158' ? 'rgba(48,209,88,0.15)' : (colorStyle === '#ff9f0a' ? 'rgba(255,159,10,0.15)' : 'rgba(255,59,48,0.15)');
         const diemTag = `
             <span style="font-size:0.75rem; padding:2px 6px; border-radius:4px; font-weight:bold;
                   background:${bgDiem}; color:${colorStyle}; border:1px solid ${colorStyle}; 
@@ -904,14 +931,14 @@ function generateDirectionsList() {
             </span>`;
 
         const div = document.createElement('div');
-        div.className = `direction-item ${isHợp ? 'good' : 'bad'}`;
-        div.style.cssText = `border-left:4px solid ${colorStyle}; background:rgba(255,255,255,0.03); margin-bottom:12px; padding:12px; border-radius:10px; width:100%; box-sizing:border-box; display:flex; flex-direction:column; gap:10px;`;
+        div.className = `direction-item`;
+        div.style.cssText = `border-left:4px solid ${colorStyle}; background:${bgKhung}; margin-bottom:12px; padding:12px; border-radius:10px; width:100%; box-sizing:border-box; display:flex; flex-direction:column; gap:10px;`;
         
         div.innerHTML = `
             <div class="item-info" style="width:100%;">
                 <div style="color:#fff; font-size:0.95rem; margin-bottom:8px; font-weight:bold; display:flex; justify-content:space-between; align-items:center;">
                     <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                        ${item.name} ➔ <span style="color:${isCatPurpose ? (isHợp ? '#30d158' : '#ff3b30') : (isHợp ? '#30d158' : '#fff')}">${item.cungTrạch}</span>
+                        ${item.name} ➔ <span style="color:${isCatPurpose ? (colorStyle === '#ff3b30' ? '#ff3b30' : (colorStyle === '#ff9f0a' ? '#ff9f0a' : '#30d158')) : (isHợp ? '#30d158' : '#fff')}">${item.cungTrạch}</span>
                     </span>
                     ${diemTag}
                 </div>
@@ -954,37 +981,77 @@ function getSonGroupForDirection(code) {
     return maTranSonHuong[code] || [];
 }
 
+// =========================================================================
+// 🔮 PHÂN HỆ ĐIỀU KHÍ: MÔ PHỎNG XOAY KIM ẢO CHUẨN ĐỒNG TRỤC TRỌNG TÂM
+// =========================================================================
 function triggerGhostNeedle(angle) {
-    targetAngle = angle;
+    targetAngle = angle; // Ghi nhận góc độ mô phỏng vào bộ nhớ hệ thống
     
     const ghost = document.getElementById('ghostNeedle');
     if (ghost) {
         ghost.style.display = 'block';
         ghost.style.opacity = "1";
+        // Loại bỏ hiệu ứng khớp cũ để chuẩn bị cho chu trình quét cảm biến mới
+        ghost.classList.remove('matched-pulse'); 
         ghost.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
     }
     
-    // Gọi tính điểm nhanh để hiển thị
-    const currentYear = new Date().getFullYear();
+    // --- ĐỒNG BỘ TOÁN PHÁP CHÍNH TÔNG CỦA TRỤC THỜI GIAN ĐỘNG ---
+    const dayStr = document.getElementById('birthDay').value;
+    const monthStr = document.getElementById('birthMonth').value;
+    const yearStr = document.getElementById('birthYear').value;
+
+    const txtSurveyYear = document.getElementById('surveyYear');
+    const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value) : new Date().getFullYear();
+
+    let namAmMệnhChủ = new Date().getFullYear();
+    if (dayStr && monthStr && yearStr && yearStr.length === 4) {
+        const d = parseInt(dayStr);
+        const m = parseInt(monthStr);
+        const y = parseInt(yearStr);
+        namAmMệnhChủ = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
+    }
+
+    let tinhChuMenh = (typeof chủMệnh !== 'undefined' && chủMệnh) ? chủMệnh : "Khảm";
+    if (dayStr && monthStr && yearStr && yearStr.length === 4) {
+        if (typeof tínhCungPhi === 'function') {
+            tinhChuMenh = tínhCungPhi(parseInt(yearStr), parseInt(monthStr), parseInt(dayStr), document.getElementById('gender').value);
+        }
+    }
+
     const mucDich = document.getElementById('purpose')?.value || 'house';
-    const tongHop = tinhDiemTongHop(chủMệnh, angle, currentYear, mucDich);
-    const colorStyle = tongHop.diem >= 70 ? "#30d158" : "#ff3b30";
+    const tongHop = tinhDiemTongHop(tinhChuMenh, angle, namKhaoSatThucTe, mucDich, namAmMệnhChủ);
+    
+    let colorStyle = "#ff3b30"; 
+    if (tongHop.diem >= 72) {
+        colorStyle = "#30d158"; 
+    } else if (tongHop.diem >= 50) {
+        colorStyle = "#ff9f0a"; 
+    }
     
     let sơnThử = tìmSơnHướng(angle);
-    detailBox.style.borderLeftColor = colorStyle;
-    detailBox.style.background = "rgba(255,255,255,0.05)";
-    detailBox.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #444; padding-bottom: 8px; margin-bottom: 8px;">
-            <span style="color:#dfb76c; font-weight: bold; font-size: 0.9rem;">◆ ĐANG MÔ PHỎNG XOAY: ${angle}°</span>
-            <span style="background: ${colorStyle}; color: #000; padding: 2px 8px; border-radius: 12px; font-weight: bold; font-size: 0.8rem;">PT: ${tongHop.diem}đ</span>
-        </div>
-        <div style="color:#ddd; font-size: 0.9rem; line-height: 1.5;">
-            Kim vàng ảo đang chốt tại tọa độ <strong>Sơn ${sơnThử}</strong>.<br>
-            Hãy cầm điện thoại xoay người từ từ sao cho <strong>Kim Đỏ thực tế khớp với Kim Vàng</strong>.
-        </div>
-    `;
     
-    updateCompassUI(currentHeading); // Đảm bảo hàm này được định nghĩa ở ngoài
+    if (typeof detailBox !== 'undefined' && detailBox) {
+        detailBox.style.borderLeftColor = colorStyle;
+        detailBox.style.background = "rgba(255,255,255,0.05)";
+        detailBox.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 8px;">
+                <span style="color:#dfb76c; font-weight: bold; font-size: 0.9rem;">◆ ĐANG MÔ PHỎNG XOAY: ${angle}°</span>
+                <span id="ghost-score-badge" style="background: ${colorStyle}; color: #000; padding: 2px 10px; border-radius: 12px; font-weight: bold; font-size: 0.8rem; transition: all 0.3s;">PT: ${tongHop.diem}pt</span>
+            </div>
+            <div id="ghost-advice-text" style="color:#ddd; font-size: 0.9rem; line-height: 1.5; text-align: left; transition: all 0.3s;">
+                Tia vàng ảo đang định vị nạp khí tại tọa độ <strong>Sơn ${sơnThử}</strong>.<br>
+                <span style="color:#aaa; font-size:0.82rem; display:block; margin-top:5px;">
+                    👉 Hãy cầm điện thoại xoay người từ từ sao cho <b>Kim Đỏ thực tế khớp thẳng trục với tia Vàng ảo</b> để đón đúng cát khí.
+                </span>
+            </div>
+        `;
+    }
+    
+    // Gọi cập nhật lại giao diện UI la bàn thực thời để kiểm tra trạng thái khớp kim ngay lập tức
+    if (typeof updateCompassUI === 'function') {
+        updateCompassUI(currentHeading);
+    }
 }
 
 // ====================== ĐỊNH VỊ 24 SƠN ĐỒNG BỘ TUYỆT ĐỐI THEO CONFIG TĨNH ======================
@@ -1560,12 +1627,63 @@ function updateCompassUI(heading) {
 
     // ==================== 8. TRIGGER REALTIME EFFECTS ====================
     kichHoatDenLedQuet(currentHeading);
+    
     if (targetAngle !== null && document.getElementById('ghostNeedle')) {
         const ghost = document.getElementById('ghostNeedle');
+        const adviceTxtEl = document.getElementById('ghost-advice-text');
+        const scoreBadgeEl = document.getElementById('ghost-score-badge');
+        
+        // 1. GIỮ NGUYÊN HOÀN TOÀN CÔNG THỨC XOAY BÙ TRỪ GỐC KHÔNG LỆCH 1 PIXEL
         ghost.style.opacity = "1";
         ghost.style.transform = `translate(-50%, -50%) rotate(${targetAngle - currentHeading}deg)`;
+        
+        // 2. TOÁN PHÁP TỰ ĐỘNG BẮT SÓNG KHỚP HAI TRỤC THỜI GIAN THỰC
+        // Tính sai số góc trị tuyệt đối giữa góc đầu máy hướng nhìn thực tế và góc Virtual nạp khí
+        let saiSoGoc = Math.abs(currentHeading - targetAngle) % 360;
+        if (saiSoGoc > 180) saiSoGoc = 360 - saiSoGoc;
+
+        // TIÊU CHUẨN ĐỊA LÝ CAO CẤP: Sai lệch trong dải 1.5 độ coi như dòng mạch thông suốt
+        if (saiSoGoc <= 1.5) {
+            ghost.classList.add('matched-pulse'); // Bật hiệu ứng nhấp nháy quang học Neon
+            
+            // Chuyển đổi nội dung hộp văn bản sang trạng thái ĐẮC CÁCH ĐẠI CÁT
+            if (adviceTxtEl && !adviceTxtEl.innerHTML.includes("🏆")) {
+                adviceTxtEl.style.color = "#30d158";
+                adviceTxtEl.innerHTML = `
+                    <span style="color:#30d158; font-weight:bold; display:block; margin-bottom:4px; animation: flashText 0.5s infinite alternate;">
+                        🏆 KHỚP TRỤC LONG MẠCH — PHƯƠNG VỊ ĐẮC VỊ THÀNH CÔNG!
+                    </span>
+                    <span style="color:#fff; font-size:0.85rem;">
+                        Tọa độ thực địa đã trùng khớp hoàn toàn với trục nạp khí lý tưởng. Đương số hãy giữ nguyên góc máy này để tiến hành lập hướng/an vị kết cấu không gian.
+                    </span>
+                `;
+                if (scoreBadgeEl) {
+                    scoreBadgeEl.style.boxShadow = "0 0 12px #30d158";
+                    scoreBadgeEl.style.transform = "scale(1.08)";
+                }
+            }
+        } else {
+            // Khi xoay người ra khỏi dải từ trường vàng, lập tức gạt bỏ hiệu ứng
+            ghost.classList.remove('matched-pulse');
+            
+            // Trả lại cấu trúc văn bản hướng dẫn hành vi ban đầu cho trạch chủ
+            if (adviceTxtEl && adviceTxtEl.innerHTML.includes("🏆")) {
+                let sonHienTaiTxt = tìmSơnHướng(targetAngle);
+                adviceTxtEl.removeAttribute("style");
+                if (scoreBadgeEl) {
+                    scoreBadgeEl.style.boxShadow = "none";
+                    scoreBadgeEl.style.transform = "scale(1)";
+                }
+                adviceTxtEl.innerHTML = `
+                    Tia vàng ảo đang định vị nạp khí tại tọa độ <strong>Sơn ${sonHienTaiTxt}</strong>.<br>
+                    <span style="color:#aaa; font-size:0.82rem; display:block; margin-top:5px;">
+                        👉 Hãy cầm điện thoại xoay người từ từ sao cho <b>Kim Đỏ thực tế khớp thẳng trục với tia Vàng ảo</b> để đón đúng cát khí.
+                    </span>
+                `;
+            }
+        }
     }
-}
+} // Dấu đóng hàm gốc của updateCompassUI
 // ====================== HÀM QUÉT THẦN SÁT LƯU NIÊN CHIẾU HƯỚNG (FULL VERSION) ======================
 function getPhongThuySatTinh(tenSon, nam) {
     const results = [];
