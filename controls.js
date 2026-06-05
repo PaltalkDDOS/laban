@@ -4024,7 +4024,7 @@ function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat,
 }
 
 // =========================================================================
-// 🏆 HÀM BIÊN SOẠN BÁO CÁO PHONG THỦY SỐ THƯỢNG TẦNG - PHIÊN BẢN TUYỆT ĐỐI 2026
+// 🏆 HÀM BIÊN SOẠN BÁO CÁO PHONG THỦY SỐ THƯỢNG TẦNG - PHIÊN BẢN CHUẨN PHONG VỊ VẬN 9
 // =========================================================================
 function xayDungBaoCaoLuanGiai(name, degree) {
     const contentBox = document.getElementById('tongLuanContent');
@@ -4106,15 +4106,15 @@ function xayDungBaoCaoLuanGiai(name, degree) {
     let lichTrachNhatHTML = "";
     let matPhapMuonTuoiHTML = "";
 
-    // TOÁN PHÁP CHUYÊN NGHIỆP: ĐỊNH DANH TRẠNG THÁI CẤP CAO (GỐC ĐỊA vs NGỌN THỜI)
+    // TOÁN PHÁP CHUYÊN NGHIỆP: ĐỊNH DANH TRẠNG THÁI CẤP CAO (GỐC ĐỊA TĨNH vs NGỌN THỜI BIẾN)
     let thongDiepTốiCao = "🟢 [HÀNH SỰ ĐẠI CÁT - LONG MẠCH THÔNG SUỐT]";
-    let bieuTuongTrangThai = '<span style="background:#30d158; color:#000; padding:5px 12px; border-radius:4px; font-weight:bold; font-size:0.85rem; display:inline-block; margin-bottom:8px;">HÀNH SỰ ĐẮC CÁCH (LÀM ĐƯỢC Ngay)</span>';
+    let bieuTuongTrangThai = '<span style="background:#30d158; color:#000; padding:5px 12px; border-radius:4px; font-weight:bold; font-size:0.85rem; display:inline-block; margin-bottom:8px;">HÀNH SỰ ĐẮC CÁCH (LÀM ĐƯỢC NGAY)</span>';
     let mauChu = "#30d158";
 
     if (isKhongVong || (laCungHungDiaLy && config.isCat)) {
-        // Tử huyệt từ phần GỐC ĐỊA LÝ -> Bất biến, không thể sửa đổi bằng cách chọn ngày
-        thongDiepTốiCao = "🔴 [PHONG TỎA GỐC ĐỊA LÝ - TUYỆT ĐỐI KHÔNG THỂ LÀM]";
-        bieuTuongTrangThai = '<span style="background:#ff3b30; color:#fff; padding:5px 12px; border-radius:4px; font-weight:bold; font-size:0.85rem; display:inline-block; margin-bottom:8px;">VỊ TRÍ PHẠM TỬ HUYỆT (KHÔNG THỂ LÀM)</span>';
+        // Tử huyệt từ phần GỐC ĐỊA LÝ TĨNH -> Bất biến, không thể sửa đổi bằng cách chọn ngày
+        thongDiepTốiCao = "🔴 [PHONG TỎA ĐỊA LÝ TĨNH - TUYỆT ĐỐI KHÔNG THỂ LÀM]";
+        bieuTuongTrangThai = '<span style="background:#ff3b30; color:#fff; padding:5px 12px; border-radius:4px; font-weight:bold; font-size:0.85rem; display:inline-block; margin-bottom:8px;">VỊ TRÍ PHẠM TỬ HUYỆT ĐẤT (KHÔNG THỂ LÀM)</span>';
         mauChu = "#ff3b30";
     } else if (luuNienObj.isHung || thongTin72Hau.chatLuong.includes("Hung")) {
         // Lỗi từ phần NGỌN THỜI GIAN -> Có thể thay đổi bằng cách dời ngày hoặc đổi tháng sau
@@ -4126,7 +4126,7 @@ function xayDungBaoCaoLuanGiai(name, degree) {
     // Xuất lịch Trạch nhật mở rộng lên hẳn 7 ngày cát tường nhất để trạch chủ lựa chọn chu kỳ
     if (config.isCat) {
         if (ketQuaTrachNhat.length > 0 && !isKhongVong && !(laCungHungDiaLy && config.isCat)) {
-            let topNgay = ketQuaTrachNhat.slice(0, 7); // Nâng cấp từ 3 lên 7 ngày cát tường nhất tháng
+            let topNgay = ketQuaTrachNhat.slice(0, 7); 
             lichTrachNhatHTML = `<div style="margin-top:15px; background:rgba(48,209,88,0.06); padding:12px; border-radius:8px; border:1px solid #30d158;">
                 <b style="color:#30d158; display:block; margin-bottom:8px; font-size:0.9rem;">📅 HỆ THỐNG TRÍCH XUẤT 7 NGÀY ĐẠI CÁT THƯỢNG CÁCH TRONG THÁNG (TÍNH TỪ NGÀY XEM):</b>`;
             topNgay.forEach(n => {
@@ -4145,7 +4145,7 @@ function xayDungBaoCaoLuanGiai(name, degree) {
             </div>`;
         } else {
             lichTrachNhatHTML = `<div style="margin-top:15px; background:rgba(255,59,48,0.06); padding:12px; border-radius:8px; border:1px solid #ff3b30; font-size:0.85rem; color:#eee; line-height:1.5;">
-                <b>📅 LỆNH PHONG TỎA LỊCH PHÁP:</b> Đất nền static đang bị lỗi tử huyệt nghiêm trọng ở phần Gốc. Việc cố tình chọn ngày tốt (phần Ngọn) lúc này hoàn toàn vô nghĩa vì cát khí của thời gian sẽ bị hung khí của đất nuốt chửng, hệ thống tự động khóa bảng ngày lành để bảo vệ trạch chủ.
+                <b>📅 LỆNH PHONG TỎA LỊCH PHÁP:</b> Đất nền địa lý đang bị lỗi tọa vị tĩnh nghiêm trọng ở phần Gốc. Việc cố tình chọn ngày tốt (phần Ngọn thời gian) lúc này hoàn toàn vô nghĩa vì cát khí của thời gian sẽ bị hung khí của địa mạch xâm lấn, hệ thống tự động khóa bảng ngày lành để bảo vệ trạch chủ.
             </div>`;
         }
 
@@ -4177,7 +4177,7 @@ function xayDungBaoCaoLuanGiai(name, degree) {
     if (isKhongVong) {
         dienGiaiChuyenSauHTML = `Tọa độ la bàn thực địa phản hồi đường biên chết Đại Không Vong/Tiểu Không Vong cực hiểm. Tại điểm gãy long mạch này, trường từ trường quay nhiễu loạn vỡ vụn. **TUYỆT ĐỐI KHÔNG ĐƯỢC PHÉP THI CÔNG**, nếu cố tình đặt kết cấu kết cấu ${config.title} tại đây sẽ kích động tai ương, hại nhân đinh, tài vận tiêu tán không thể cứu vãn.`;
     } else if (laCungHungDiaLy && config.isCat) {
-        dienGiaiChuyenSauHTML = `Sai sót nghiêm trọng từ phần Gốc Địa Lý Tĩnh! Hạng mục ${config.title} đòi hỏi phải thu nạp sinh khí tối cao nhưng hiện trạng la bàn báo đang đóng đè lên ${quẻMệnhBátTrạchChuẩn} bản mệnh. Lỗi phong thủy static này sẽ triệt tiêu năng lượng vượng, khiến công việc bế tắc, tổn hao sức khỏe trường kỳ.`;
+        dienGiaiChuyenSauHTML = `Sai sót nghiêm trọng từ phần Gốc Địa Lý Tĩnh! Hạng mục ${config.title} đòi hỏi phải thu nạp sinh khí tối cao nhưng hiện trạng la bàn báo đang đóng đè lên ${quẻMệnhBátTrạchChuẩn} bản mệnh. Lỗi phong thủy tọa vị tĩnh này sẽ triệt tiêu năng lượng vượng, khiến công việc bế tắc, tổn hao sức khỏe trường kỳ.`;
     } else {
         dienGiaiChuyenSauHTML = `Khảo sát long mạch đắc vị thông suốt. Không gian đất nền tại vị trí này đón trọn dòng trường khí đắc cách từ ${quẻMệnhBátTrạchChuẩn}. Đồng thời luồng địa mạch chạy ngầm khớp thẳng vào **72 Long Khí Xuyên Sơn: Mạch ${thongTin72Hau.ten} (${thongTin72Hau.chatLuong})**. Thiên Địa giao hòa đạt chỉ số năng lượng tối cao **${tongHop.diem}/98 điểm**, gia trạch hưng vượng bền vững.`;
     }
@@ -4187,7 +4187,7 @@ function xayDungBaoCaoLuanGiai(name, degree) {
         matPhapXửLýChuyênSâu = `
         <div style="line-height: 1.6; color: #eee;">
             ⚠️ <b style="color:#ff3b30;">ĐIỀU TIẾT THƯỢNG TẦNG - PHƯƠNG ÁN XỬ LÝ KHÔNG THỂ DỜI:</b><br>
-            Vì vị trí ${config.title} phạm lỗi static cốt lõi của mảnh đất, việc chọn ngày giờ (phần Ngọn) hoàn toàn vô tác dụng. Phương án sửa đổi duy nhất là trạch chủ buộc phải dịch chuyển vị trí thiết bị vật chất, hoặc kích hoạt khẩn cấp năng lượng hóa giải của pháp bảo hệ thống: <span style="color:#ffd700; font-weight:bold;">${tongHop.hoaGiai}</span> để che chở trục khí.
+            Vì vị trí ${config.title} phạm lỗi tọa vị tĩnh cốt lõi của mảnh đất, việc chọn ngày giờ (phần Ngọn thời gian) hoàn toàn vô tác dụng. Phương án sửa đổi duy nhất là trạch chủ buộc phải dịch chuyển vị trí thiết bị vật chất, hoặc kích hoạt khẩn cấp năng lượng hóa giải của pháp bảo hệ thống: <span style="color:#ffd700; font-weight:bold;">${tongHop.hoaGiai}</span> để che chở trục khí.
         </div>`;
     }
 
@@ -4203,7 +4203,7 @@ function xayDungBaoCaoLuanGiai(name, degree) {
             <div style="margin-bottom: 6px;">📐 <b>Tọa độ đo thực địa:</b> <span style="color:#ffca28; font-weight:bold;">${degree}°</span> — Sơn hướng quản lý: <span style="color:var(--gold); font-weight:bold;">Sơn ${sonChuan}</span></div>
             <div style="margin-bottom: 6px;">🔮 <b>72 Long Khí Xuyên Sơn:</b> <span style="color:#ffd700; font-weight:bold;">Mạch ${thongTin72Hau.ten}</span> — Phân cấp long khí: <b style="color:${thongTin72Hau.chatLuong.includes('Hung') ? '#ff3b30' : '#30d158'};">${thongTin72Hau.chatLuong}</b></div>
             <div style="margin-bottom: 6px;">🎯 <b>Hạ tầng hoạch định:</b> Thiết lập cấu trúc hệ thống [<b>${config.title}</b>]</div>
-            <div style="margin-bottom: 6px;">📊 <b>Năng lượng thời vận:</b> <span style="color:${mauChu}; font-weight:black; font-size:1.05rem;">${tongHop.diem}/98 điểm</span> — Cấp độ trạch khí: <span style="color:${mauChu}; font-weight:bold;">${tongHop.level}</span></div>
+            <div style="margin-bottom: 6px;">📊 <b>Năng lượng thời vận:</b> <span style="color:${mauChu}; font-weight:black; font-size:1.05rem;">${tongHop.diem}/98 điểm</span> — Cấp độ khí trường: <span style="color:${mauChu}; font-weight:bold;">${tongHop.level}</span></div>
             <div style="margin-bottom: 2px;">⏳ <b>Từ trường Cửu Tinh (${namKhaoSat}):</b> <span style="color:${luuNienObj.isHung ? '#ff9f0a' : '#30d158'}; font-weight:500;">${luuNienObj.tenSao} chiếm đóng</span></div>
         </div>
 
