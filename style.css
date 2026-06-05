@@ -1445,9 +1445,7 @@ mjx-container {
     max-height: 0;
     opacity: 0;
 }
-/* =========================================================================
-   📲 PWA FLOATING ACTION BUTTON - ĐỒNG BỘ HIỆU ỨNG BOUNCE QUÝ PHÁI VẬN 9
-   ========================================================================= */
+/* PWA Floating Button - Bản Sửa Lỗi Hiệu Ứng Mượt Mà */
 .pwa-fab-btn {
     position: fixed;
     bottom: 20px;
@@ -1460,30 +1458,26 @@ mjx-container {
     font-size: 0.9rem;
     font-weight: bold;
     
-    /* Đồng bộ hiển thị dạng khối hàng ngang để giữ layout icon + text */
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 15px rgba(223, 183, 108, 0.4);
-    z-index: 9999;
-    white-space: nowrap;
-    -webkit-tap-highlight-color: transparent;
-
-    /* 🟢 KHỞI TẠI TRẠNG THÁI ẨN MƯỢT MÀ: Cho phép transition hoạt động */
+    /* Sử dụng bộ 3 thuộc tính này thay cho display:none để hiệu ứng transition hoạt động */
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
     transform: scale(0.8) translateY(10px);
     
-    /* Hiệu ứng bounce nhẹ quý phái đặc trưng của bạn */
-    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(223, 183, 108, 0.4);
+    z-index: 9999;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Hiệu ứng bounce nhẹ quý phái */
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* Hiệu ứng khi rê chuột vào (PC) */
 .pwa-fab-btn:hover {
     transform: scale(1.05) translateY(-2px);
     box-shadow: 0 6px 20px rgba(223, 183, 108, 0.6);
-    cursor: pointer;
 }
 
 /* Hiệu ứng khi chạm ngón tay (Mobile) */
@@ -1500,7 +1494,7 @@ mjx-container {
     font-size: 0.9rem;
 }
 
-/* 🟢 KHI NÚT HIỆN LÊN: JS sẽ kích hoạt Class này */
+/* Khi nút hiện lên mượt mà chuẩn PWA Premium */
 .pwa-fab-btn.show {
     opacity: 1;
     visibility: visible;
