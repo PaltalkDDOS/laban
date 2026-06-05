@@ -3900,45 +3900,54 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // =========================================================================
-// 🌐 HỆ THỐNG PWA FLOATING ACTION BUTTON - BẢN ĐỒNG BỘ CSS HIỆU ỨNG TUYỆT ĐỐI
+// 🌐 HỆ THỐNG PWA FLOATING ACTION BUTTON - THÔNG MINH ĐA TẦNG TOÀN NĂNG
 // =========================================================================
 if (typeof deferredPrompt === 'undefined') {
     var deferredPrompt; 
 }
 
-// 1. Quét sâu trạng thái môi trường hệ điều hành
+// 1. Nhận diện môi trường thực tế siêu chính xác (Giữ cốt lõi hàm gốc của bạn)
 function isRunningAsPWA() {
+    // A. Kiểm tra môi trường chạy thực tế tức thời (Chuẩn tuyệt đối như hàm gốc của bạn)
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
                          window.matchMedia('(display-mode: fullscreen)').matches;
     const isIOSStandalone = window.navigator.standalone === true;
+
+    // B. Kiểm tra dấu mốc từ URL manifest nạp ngầm
     const urlParams = new URLSearchParams(window.location.search);
     const isUrlMode = urlParams.get('mode') === 'pwa_installed';
 
+    // ĐỘT PHÁ: Nếu ĐANG CHẠY thực tế từ màn hình home, ghi nhận đã cài
     if (isStandalone || isIOSStandalone || isUrlMode) {
         localStorage.setItem('pwa_dinh_danh_cai_dat', 'true');
         return true;
     }
+
+    // Nếu đang chạy trên web bình thường, nhưng trình duyệt báo sự kiện cho phép cài (ở hàm số 4)
+    // thì bộ nhớ đệm tự động reset về false. Do đó lệnh dưới này luôn an toàn 100%.
     return localStorage.getItem('pwa_dinh_danh_cai_dat') === 'true';
 }
 
-// 2. Hàm dọn dẹp và ẩn nút bấm thông minh (Bỏ style.display, dùng thuần class của CSS)
+// 2. Hàm ẩn/hiện nút - Tuân thủ Class CSS để không làm mất hiệu ứng bounce mượt mà
 function kiemTraVaAnNut() {
     const btn = document.getElementById('btn-install-pwa');
     if (!btn) return false;
     
     if (isRunningAsPWA()) {
-        btn.classList.remove('show'); // CSS tự động lo việc ẩn, thu nhỏ và tắt tương tác mượt mà
+        btn.classList.remove('show'); // Ẩn mượt mà theo đúng hiệu ứng CSS của bạn
         return true;
     }
     return false;
 }
 
-// 3. Khởi tạo và đăng ký Service Worker tối ưu
+// 3. Khởi tạo hệ thống và đăng ký Service Worker
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         if (window.location.protocol === 'file:') return;
+        
         kiemTraVaAnNut();
 
+        // Đăng ký sw.js và kiểm tra cập nhật tự động
         navigator.serviceWorker.register('./sw.js')
             .then((reg) => {
                 reg.onupdatefound = () => {
@@ -3946,7 +3955,7 @@ if ('serviceWorker' in navigator) {
                     if (installingWorker) {
                         installingWorker.onstatechange = () => {
                             if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                console.log('Hệ thống đã tự động nạp khí mới, làm sạch cache thành công!');
+                                console.log('Hệ thống PWA tự động nâng cấp phiên bản mới thành công!');
                                 window.location.reload(); 
                             }
                         };
@@ -3957,9 +3966,10 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-// 4. Lắng nghe sự kiện mời cài đặt (Hiện nút mượt mà bằng Class)
+// 4. Lắng nghe sự kiện mời cài đặt (CHỐT CHẶN THÔNG MINH - HIỆN NÚT LẬP TỨC KHI GỠ APP)
 window.addEventListener('beforeinstallprompt', (e) => {
-    // Nếu trình duyệt kích hoạt sự kiện này, chứng tỏ chưa cài app -> Reset ngay bộ nhớ về false
+    // 🚀 ĐỘT PHÁ THÔNG MINH: Nếu trình duyệt kích hoạt sự kiện này, chứng tỏ app CHƯA được cài 
+    // hoặc VỪA BỊ XÓA. Lập tức dọn sạch bong bộ nhớ đệm sai lệch về false ngay!
     localStorage.setItem('pwa_dinh_danh_cai_dat', 'false');
 
     e.preventDefault();
@@ -3967,14 +3977,14 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
     const btn = document.getElementById('btn-install-pwa');
     if (btn) {
-        // THÔNG MINH: Gọi Class kích hoạt hiệu ứng chuyển động CSS Premium
+        // Hiện nút mượt mà, kích hoạt toàn bộ thuộc tính hiệu ứng nảy nhẹ của CSS
         btn.classList.add('show'); 
 
         btn.onclick = async () => {
             if (!deferredPrompt) return;
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
-            console.log(`Hành động phản hồi: ${outcome}`);
+            console.log(`Người dùng phản hồi: ${outcome}`);
             
             if (outcome === 'accepted') {
                 localStorage.setItem('pwa_dinh_danh_cai_dat', 'true');
@@ -3985,17 +3995,17 @@ window.addEventListener('beforeinstallprompt', (e) => {
     }
 });
 
-// 5. Chốt chặn cuối cùng: Xóa nút cài đặt khi hoàn tất tiến trình cài
+// 5. Ẩn nút lập tức khi tiến trình cài hoàn tất thành công
 window.addEventListener('appinstalled', () => {
     localStorage.setItem('pwa_dinh_danh_cai_dat', 'true');
     const btn = document.getElementById('btn-install-pwa');
     if (btn) btn.classList.remove('show');
 });
 
-// Bộ quét thông minh khi người dùng khóa/mở màn hình nền điện thoại
+// Bộ quét thông minh khi tắt/mở màn hình điện thoại
 document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
-        setTimeout(kiemTraVaAnNut, 500);
+        setTimeout(kiemTraVaAnNut, 600);
     }
 });
 
