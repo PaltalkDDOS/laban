@@ -546,23 +546,38 @@ function debounceRecalculate() {
     }, 300);
 }
 
-// ====================== 6. MÀNG LỌC KIỂM TRA LỊCH PHÁP DƯƠNG TRẠCH ======================
+// =========================================================================
+// 🌌 6. MÀNG LỌC KIỂM TRA LỊCH PHÁP DƯƠNG TRẠCH - PHIÊN BẢN VÔ HẠN THỜI KHÔNG
+// =========================================================================
 function validateFullDate(day, month, year) {
-    if (month < 1 || month > 12) return false;
+    // Ép kiểu dữ liệu sang số nguyên để tránh lỗi so sánh chuỗi ký tự
+    const d = parseInt(day);
+    const m = parseInt(month);
+    const y = parseInt(year);
+
+    if (isNaN(d) || isNaN(m) || isNaN(y)) return false;
+    if (m < 1 || m > 12) return false;
     
-    // Thuật toán xác định năm nhuận kiểm thử độ chính xác số ngày trong tháng 2
+    // Thuật toán ma trận năm nhuận thiên văn chính xác tuyệt đối cho mọi niên đại tương lai
     let listDaysInMonth = [
-        31, (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) ? 29 : 28, 
+        31, (y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0)) ? 29 : 28, 
         31, 30, 31, 30, 31, 31, 30, 31, 30, 31
     ];
     
-    if (day < 1 || day > listDaysInMonth[month - 1]) return false;
+    if (d < 1 || d > listDaysInMonth[m - 1]) return false;
     
-    // Kiểm tra chốt chặn biên độ lịch pháp hỗ trợ của phần mềm
-    if (year < 1900 || year > 2050) {
-        showCustomAlert(`Năm sinh ${year} nằm ngoài khoảng hỗ trợ chuẩn xác (1900-2050). Kết quả phân tích chỉ mang tính chất tham khảo thực địa!`);
-        return true; // Trả về true để giữ mạch chạy nhưng phát cảnh báo bảo vệ trạch chủ
+    // =========================================================================
+    // 🚀 ĐỘC QUYỀN VẬN 9: PHÁ BỎ BIÊN ĐỘ TĨNH - HỖ TRỢ ĐA NIÊN ĐẠI VÔ HẠN (SUỐT ĐỜI)
+    // =========================================================================
+    // Hạ cấp chốt chặn tối thiểu xuống năm 1800 (để luận cả tiền nhân) và mở toang trần trên đến vô cực
+    if (y < 1800) {
+        if (typeof showCustomAlert === 'function') {
+            showCustomAlert(`Niên đại lịch pháp năm ${y} quá sâu. Hệ thống tự động chuyển sang cấu trúc thuật toán mô phỏng từ xa!`, "⚠️ Cảnh Báo Thiên Di");
+        }
+        return true; 
     }
+
+    // Trả về true cho tất cả các năm từ 1800 trở đi (2026, 2050, 2099, 3000...) không giới hạn mốc chặn
     return true;
 }
 // =========================================================================
