@@ -4068,12 +4068,31 @@ function xayDungBaoCaoLuanGiai(name, degree) {
             </div>`;
         }
     } else {
-        if (laCungHungDiaLy && !isKhongVong) {
-            lichTrachNhatHTML = `<div style="margin-top:15px; background:rgba(48,209,88,0.06); padding:12px; border-radius:8px; border:1px solid #30d158; font-size:0.85rem; color:#eee; line-height:1.6;">
-                <b style="color:#30d158; display:block; margin-bottom:4px;">🏆 PHÁP CHẾ TRẤN SÁT ĐẮC CÁCH:</b> Vị trí cấu trúc hạ tầng phụ đã tọa lạc chuẩn quy cách phong thủy. Để tiến hành thi công đào móng, trạch chủ nên phát động khởi công vào các ngày mang tính chất tháo dỡ đào thải khí trường (Ưu tiên chọn các ngày có **Trực Trừ** hoặc **Trực Phá** trong lịch vạn niên hành hành) nhằm tận dụng năng lượng thời gian quét sạch tà khí của hung cung.
+        let matPhapXửLýChuyênSâu = tongHop.hoaGiai; // Lấy mặc định từ hàm chấm điểm của bạn
+
+        // Nếu dính tử huyệt Địa Lý (Cung hung) hoặc Không Vong dẫn đến khóa lịch Trạch Nhật
+        if (laCungHungDiaLy || isKhongVong) {
+            matPhapXửLýChuyênSâu = `
+            <div style="line-height: 1.6; color: #eee;">
+                ⚠️ <b style="color:#ff9f0a;">BÁO CÁO ĐIỀU TIẾT THƯỢNG TẦNG: VÌ SAO LỊCH TRẠCH NHẬT BỊ PHONG TỎA?</b><br>
+                Hiện tại, vị trí <span style="color:#ffd700; font-weight:bold;">${config.title}</span> của trạch chủ đang đóng sai quy cách nền tảng về mặt Địa lý tĩnh (Phạm cung <span style="color:#ff4444; font-weight:bold;">${cungTrach.toUpperCase()}</span>). Trong phong thủy chính tông, <b>'Gốc có vững thì Ngọn mới xanh'</b>. Khi cái Gốc địa lý đang nghịch chuyển khí trường, nếu hệ thống vẫn cố tình xuất ngày giờ tốt (phần Ngọn) để trạch chủ hành sự, thì cát khí của ngày giờ đó cũng bị hung khí của đất nuốt chửng, hoàn toàn vô tác dụng, thậm chí kích động ác tính của hung tinh.<br><br>
+                
+                🛠️ <b style="color:#30d158;">QUY TRÌNH HÓA GIẢI 2 BƯỚC KHAI THÔNG MẠCH KHÍ TỪ BỰC THẦY:</b><br>
+                <b style="color:#ffd700;">• Bước 1 (Xử lý phần Gốc - Trấn sát khí):</b> Trạch chủ tuyệt đối không được tự ý hành sự phá dỡ tại đây. Trước tiên, bắt buộc phải dùng năng lượng hóa sát của vật phẩm phong thủy để 'ngủ đông' hung tính của cung ${cungTrach}. 
+                ${mucDich.includes("toilet") ? 'Hạng mục xả uế đã đắc cách không cần xử lý.' : `Đối với cấu trúc hệ <b>${config.title}</b> này, phương án tối ưu là sử dụng <b>Mật pháp điều tiết ngũ hành từ hệ thống</b>: ${tongHop.hoaGiai}.`} <br>
+                <b style="color:#ffd700;">• Bước 2 (Khai môn lập hướng/Dịch chuyển tâm la bàn):</b> Nếu có thể, hãy dịch chuyển vị trí cấu trúc nạp khí sang các cung vị cát tường như Sinh Khí, Thiên Y hiển thị trên bản đồ la bàn số để hệ thống tự động giải phóng lệnh phong tỏa và trích xuất chuỗi Ngày Giờ Đại Cát Thượng Cách cho gia chủ.
             </div>`;
         }
-    }
+
+        // Thay thế đoạn hiển thị cũ bằng đoạn HTML nâng cấp này:
+        let doanHTMLMatPhapMoi = `
+        <div style="margin-top: 12px; font-size:0.86rem; margin-bottom: 12px;">
+            <b style="color:var(--gold); display:block; margin-bottom:6px; border-bottom:1px solid rgba(223,183,108,0.2); padding-bottom:3px;">💡 MẬT PHÁP ĐIỀU TIẾT PHÁP BẢO VẬT PHẨM:</b>
+            <div style="color:#ddd; padding:10px; background:rgba(255,159,10,0.03); border:1px solid rgba(255,159,10,0.15); border-radius:6px; text-align: justify;">
+                ${matPhapXửLýChuyênSâu}
+            </div>
+        </div>`;
+        }    
 
     // --- BIÊN SOẠN KHẨU QUYẾT LUẬN GIẢI CHUYÊN SÂU BIẾN THIÊN ---
     let thongDiepKetLuan = ""; let mauChu = "#30d158"; let dienGiaiChuyenSauHTML = "";
