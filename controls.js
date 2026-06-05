@@ -2157,28 +2157,21 @@ let lastAccuracy = 0;
 let isMagneticWarningActive = false;
 
 /**
- * 1. TRÌNH XỬ LÝ SỰ KIỆN ĐỊA HƯỚNG (DEVICE ORIENTATION)
- */
-/**
- * 1. TRÌNH XỬ LÝ SỰ KIỆN ĐỊA HƯỚNG (DEVICE ORIENTATION) - ĐÃ TÍCH HỢP KHÓA CỨNG LONG MẠCH
+ * 1. TRÌNH XỬ LÝ SỰ KIỆN ĐỊA HƯỚNG (DEVICE ORIENTATION) - SIÊU MƯỢT & TỐI ƯU TÀI NGUYÊN
  */
 function handleOrientation(event) {
-    // ==========================================
-    // 🔥 KHỐI PHONG TỎA GÓC XOAY THỰC ĐỊA KHI ĐANG LOCK 
-    // ==========================================
+    // KỊCH BẢN A: Long mạch đang khóa -> Đóng băng tuyệt đối, thoát sớm để nhẹ máy
     if (window.isCompassHold) {
-        // Ép góc quay hiện tại bằng góc đóng băng tại giây bấm khóa
         if (typeof window.holdedHeading !== 'undefined') {
             lastHeading = window.holdedHeading;
             if (typeof currentHeading !== 'undefined') currentHeading = window.holdedHeading;
             
-            // Render cố định giao diện theo góc đã khóa
             if (rafId) cancelAnimationFrame(rafId);
             rafId = requestAnimationFrame(() => {
                 executeUIUpdate(window.holdedHeading);
             });
         }
-        return; // Chặn đứng không cho tính toán góc từ cảm biến con quay nữa
+        return; 
     }
 
     let rawHeading = null;
@@ -2239,17 +2232,22 @@ function handleOrientation(event) {
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
     
-    // Đồng bộ biến góc realtime để khối xử lý UI hiển thị đồng bộ toàn hệ thống
+    // Đồng bộ hóa cấu trúc góc ngay lập tức cho toàn hệ thống
     if (typeof currentHeading !== 'undefined') currentHeading = lastHeading;
 
-    // ==========================================
-    // 🎯 ĐIỀU KHIỂN ẨN/HIỆN NÚT LUẬN GIẢI KHI DI CHUYỂN
-    // ==========================================
-    // Nếu người dùng xoay la bàn lệch góc đáng kể (> 0.4 độ), lập tức ẩn nút Luận Giải ngay
+    // =========================================================================
+    // MẮT QUÉT THÔNG MINH: ĐANG XOAY PHÁT LÀ ẨN NÚT LẬP TỨC (NẾU LỆCH > 0.4 ĐỘ)
+    // =========================================================================
     if (absDiff > 0.4) {
-        if (typeof xuLyAnHienNutThongMinh === 'function') {
-            xuLyAnHienNutThongMinh();
+        const btnTongLuan = document.getElementById('btn-tong-luan');
+        if (btnTongLuan) {
+            btnTongLuan.classList.remove('vượng-xuất'); // Ẩn ngay lập tức không trễ 1 giây
         }
+        // Xóa bộ đếm tĩnh cũ vì kim la bàn đang chuyển động
+        clearTimeout(dừngKimTimeout);
+        
+        // Kích hoạt lại bộ đếm chờ: Phải đứng im liên tục 2 giây mới được hiện lại
+        kichHoatBoDemDungKim();
     }
 
     // --- CẬP NHẬT GIAO DIỆN QUA RAF ---
@@ -4237,77 +4235,28 @@ document.head.appendChild(styleLuangiai);
 
 
 // =========================================================================
-// 🎯 MÓC KHÓA (HOOK) VÀO LUỒNG ĐO GÓC REALTIME CỦA LA BÀN
-// =========================================================================
-
-function xuLyAnHienNutThongMinh() {
-    const btnTongLuan = document.getElementById('btn-tong-luan');
-    if (!btnTongLuan) return;
-
-    // Kiểm tra điều kiện bắt buộc: Phải nhập ngày tháng năm sinh VÀ đã chọn danh mục (vị trí/mục đích)
-    const dayStr = document.getElementById('birthDay')?.value;
-    const monthStr = document.getElementById('birthMonth')?.value;
-    const yearStr = document.getElementById('birthYear')?.value;
-    const mucDich = document.getElementById('purpose')?.value;
-
-    const daNhapDuNgayThangNam = (dayStr && monthStr && yearStr && yearStr.length === 4);
-    // Điều kiện danh mục hợp lệ (Không để trống và không phải giá trị mặc định chưa chọn)
-    const daChonDanhMuc = (mucDich && mucDich !== "" && mucDich !== "none");
-
-    // Nếu CHƯA nhập đủ thông tin form, tuyệt đối KHÔNG hiển thị nút và thoát sớm
-    if (!daNhapDuNgayThangNam || !daChonDanhMuc) {
-        btnTongLuan.classList.remove('vượng-xuất');
-        clearTimeout(dừngKimTimeout);
-        return;
-    }
-
-    // Nếu la bàn đang bị khóa chủ động bằng Touch (isCompassHold), luôn ép giữ nút hiển thị
-    if (window.isCompassHold) {
-        btnTongLuan.classList.add('vượng-xuất');
-        return;
-    }
-
-    // THỨ 3: Người dùng di chuyển (xoay) la bàn phát là biến mất ngay (sau 1 giây ẩn hẳn nếu tiếp tục xoay)
-    btnTongLuan.classList.remove('vượng-xuất');
-
-    // Xóa bộ đếm thời gian cũ để thiết lập vòng lặp quét tĩnh mới
-    clearTimeout(dừngKimTimeout);
-
-    // THỨ 3: Đợi người dùng đứng im đúng 2 giây (2000ms) thì mới hiển thị nút Luận Giải
-    dừngKimTimeout = setTimeout(() => {
-        if (!đangChạmMànHình) {
-            btnTongLuan.classList.add('vượng-xuất');
-        }
-    }, 2000);
-}
-
-
-// =========================================================================
-// 🖐️ PHÂN HỆ TOUCH HOLD 2 GIÂY ĐỂ KHÓA / 2 GIÂY ĐỂ MỞ LA BÀN
+// 🖐️ PHÂN HỆ TOUCH HOLD 2 GIÂY ĐỂ KHÓA / 2 GIÂY ĐỂ MỞ LA BÀN (BẢN CHUẨN HOÀN THIỆN)
 // =========================================================================
 function kichHoatBoLangNgheTouchLaBan() {
     const vungLaBan = document.getElementById('compass') || document.body;
 
-    // Ngăn chặn menu ngữ cảnh mặc định khi đè lâu trên thiết bị di động
+    // Ngăn chặn triệt để menu ngữ cảnh mặc định khi đè lâu trên thiết bị di động
     vungLaBan.addEventListener('contextmenu', function(e) {
         e.preventDefault();
         return false;
     });
 
     vungLaBan.addEventListener('touchstart', function(e) {
-        // Nếu đang mở bảng Luận giải Popup thì không kích hoạt khóa màn hình tĩnh
         const overlay = document.getElementById('tongLuanOverlay');
         if (overlay && overlay.classList.contains('show')) return;
 
         đangChạmMànHình = true;
         clearTimeout(chạmHoldTimeout);
 
-        // THỨ 1: Rút ngắn thời gian đè im xuống đúng 2 giây (2000ms) cho cả khóa và mở
         if (!window.isCompassHold) {
             // KỊCH BẢN A: Đè im ngón tay 2 giây để KHÓA CỨNG la bàn
             chạmHoldTimeout = setTimeout(() => {
                 window.isCompassHold = true;
-                // Đồng bộ đóng băng góc quay thực địa vào biến hệ thống của bạn
                 if (typeof currentHeading !== 'undefined') {
                     window.holdedHeading = currentHeading;
                 }
@@ -4316,8 +4265,10 @@ function kichHoatBoLangNgheTouchLaBan() {
                 vungLaBan.classList.add('la-ban-khoa-khí');
                 setTimeout(() => vungLaBan.classList.remove('la-ban-khoa-khí'), 600);
                 
-                // Ép hiển thị nút luận giải ngay khi khóa
-                xuLyAnHienNutThongMinh();
+                // ĐỒNG BỘ MỚI: Gọi hàm kiểm tra form độc lập thay cho hàm cũ đã xóa
+                if (typeof kichHoatBoDemDungKim === 'function') {
+                    kichHoatBoDemDungKim();
+                }
                 
                 if (typeof showCustomAlert === 'function') {
                     showCustomAlert(`🔒 Đã khóa cứng Long Mạch tại tọa độ thực địa: ${window.holdedHeading}°!`);
@@ -4328,8 +4279,10 @@ function kichHoatBoLangNgheTouchLaBan() {
             chạmHoldTimeout = setTimeout(() => {
                 window.isCompassHold = false;
                 
-                // Chuyển la bàn về trạng thái động, ẩn nút nếu kim chưa đứng im đủ điều kiện
-                xuLyAnHienNutThongMinh();
+                // ĐỒNG BỘ MỚI: Gọi hàm quét cập nhật lại trạng thái nút
+                if (typeof kichHoatBoDemDungKim === 'function') {
+                    kichHoatBoDemDungKim();
+                }
                 
                 if (typeof showCustomAlert === 'function') {
                     showCustomAlert("🔓 Giải phóng mạch khí! La bàn chuyển sang chế độ đo động thực thời.");
@@ -4344,10 +4297,58 @@ function kichHoatBoLangNgheTouchLaBan() {
     }, { passive: true });
     
     vungLaBan.addEventListener('touchmove', function(e) {
-        // Nếu ngón tay dịch chuyển lướt màn hình, hủy bộ đếm tránh nhầm cử chỉ cuộn trang
         clearTimeout(chạmHoldTimeout);
     }, { passive: true });
 }
 
 // Khởi động phân hệ khi trang tải xong
 document.addEventListener('DOMContentLoaded', kichHoatBoLangNgheTouchLaBan);
+
+
+// =========================================================================
+// 🎯 PHÂN HỆ ĐIỀU KHIỂN ĐỔI MỚI: XỬ LÝ NÚT LUẬN GIẢI THEO ĐỘ ĐỨNG IM & FORM
+// =========================================================================
+function kichHoatBoDemDungKim() {
+    const btnTongLuan = document.getElementById('btn-tong-luan');
+    if (!btnTongLuan) return;
+
+    // Nếu đang chủ động khóa la bàn (isCompassHold) thì giữ nguyên hiển thị nút, không chạy đếm nữa
+    if (window.isCompassHold) {
+        btnTongLuan.classList.add('vượng-xuất');
+        return;
+    }
+
+    // Kiểm tra dữ liệu đầu vào của các trường form thực tế
+    const dayStr = document.getElementById('birthDay')?.value;
+    const monthStr = document.getElementById('birthMonth')?.value;
+    const yearStr = document.getElementById('birthYear')?.value;
+    const mucDich = document.getElementById('purpose')?.value;
+
+    const daNhapDuNgayThangNam = (dayStr && monthStr && yearStr && yearStr.length === 4);
+    const daChonDanhMuc = (mucDich && mucDich !== "" && mucDich !== "none");
+
+    // ĐIỀU KIỆN CHẶN: Nếu chưa nhập đủ ngày tháng năm HOẶC chưa chọn danh mục -> Ẩn nút lập tức
+    if (!daNhapDuNgayThangNam || !daChonDanhMuc) {
+        btnTongLuan.classList.remove('vượng-xuất');
+        return;
+    }
+
+    // NẾU ĐÃ HỘI TỤ ĐỦ YẾU TỐ: Đợi kim la bàn đứng im ròng rã đúng 2 giây (2000ms) mới cho xuất hiện
+    dừngKimTimeout = setTimeout(() => {
+        if (!đangChạmMànHình) {
+            btnTongLuan.classList.add('vượng-xuất');
+        }
+    }, 2000);
+}
+
+// Lắng nghe sự kiện thay đổi Form nhập liệu để cập nhật trạng thái nút bấm ngay tức thì
+document.addEventListener('DOMContentLoaded', () => {
+    const inputs = ['birthDay', 'birthMonth', 'birthYear', 'purpose'];
+    inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', kichHoatBoDemDungKim);
+            el.addEventListener('change', kichHoatBoDemDungKim);
+        }
+    });
+});
