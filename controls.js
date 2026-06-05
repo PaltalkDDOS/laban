@@ -4338,7 +4338,7 @@ function kichHoatBoDemDungKim() {
         if (!đangChạmMànHình) {
             btnTongLuan.classList.add('vượng-xuất');
         }
-    }, 2000);
+    }, 1000);
 }
 
 // Lắng nghe sự kiện thay đổi Form nhập liệu để cập nhật trạng thái nút bấm ngay tức thì
