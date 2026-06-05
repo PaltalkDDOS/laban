@@ -2159,15 +2159,34 @@ let isMagneticWarningActive = false;
 /**
  * 1. TRÌNH XỬ LÝ SỰ KIỆN ĐỊA HƯỚNG (DEVICE ORIENTATION)
  */
+/**
+ * 1. TRÌNH XỬ LÝ SỰ KIỆN ĐỊA HƯỚNG (DEVICE ORIENTATION) - ĐÃ TÍCH HỢP KHÓA CỨNG LONG MẠCH
+ */
 function handleOrientation(event) {
+    // ==========================================
+    // 🔥 KHỐI PHONG TỎA GÓC XOAY THỰC ĐỊA KHI ĐANG LOCK 
+    // ==========================================
+    if (window.isCompassHold) {
+        // Ép góc quay hiện tại bằng góc đóng băng tại giây bấm khóa
+        if (typeof window.holdedHeading !== 'undefined') {
+            lastHeading = window.holdedHeading;
+            if (typeof currentHeading !== 'undefined') currentHeading = window.holdedHeading;
+            
+            // Render cố định giao diện theo góc đã khóa
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+                executeUIUpdate(window.holdedHeading);
+            });
+        }
+        return; // Chặn đứng không cho tính toán góc từ cảm biến con quay nữa
+    }
+
     let rawHeading = null;
     const now = Date.now();
     
     // --- LỚP TỰ ĐỘNG THÔNG MINH CHO IOS (KHÔNG LO LÀM NÓNG MÁY) ---
     const accuracy = event.webkitCompassAccuracy;
     if (accuracy !== undefined && accuracy !== null && accuracy >= 0) {
-        // Chỉ cập nhật DOM khi độ lệch accuracy thay đổi đáng kể (> 3 độ) 
-        // hoặc khi trạng thái cảnh báo nhiễu cần thay đổi.
         if (Math.abs(accuracy - lastAccuracy) > 3 || 
            (accuracy > 15 && lastAccuracy <= 15) || 
            (accuracy > 30 && lastAccuracy <= 30) ||
@@ -2198,6 +2217,7 @@ function handleOrientation(event) {
     // Khởi tạo lần đầu
     if (lastHeading === null) {
         lastHeading = rawHeading;
+        if (typeof currentHeading !== 'undefined') currentHeading = lastHeading;
         executeUIUpdate(lastHeading);
         return;
     }
@@ -2218,6 +2238,19 @@ function handleOrientation(event) {
     
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
+    
+    // Đồng bộ biến góc realtime để khối xử lý UI hiển thị đồng bộ toàn hệ thống
+    if (typeof currentHeading !== 'undefined') currentHeading = lastHeading;
+
+    // ==========================================
+    // 🎯 ĐIỀU KHIỂN ẨN/HIỆN NÚT LUẬN GIẢI KHI DI CHUYỂN
+    // ==========================================
+    // Nếu người dùng xoay la bàn lệch góc đáng kể (> 0.4 độ), lập tức ẩn nút Luận Giải ngay
+    if (absDiff > 0.4) {
+        if (typeof xuLyAnHienNutThongMinh === 'function') {
+            xuLyAnHienNutThongMinh();
+        }
+    }
 
     // --- CẬP NHẬT GIAO DIỆN QUA RAF ---
     if (rafId) cancelAnimationFrame(rafId);
