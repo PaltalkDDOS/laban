@@ -762,9 +762,9 @@ function getCurrentHauInfo(degree) {
     return result;
 }
 
-// --- CẤU HÌNH PHONG THỦY ĐỒNG BỘ ĐA TẦNG VẬN 9 ---
+/// --- CẤU HÌNH PHONG THỦY ĐỒNG BỘ ĐA TẦNG VẬN 9 (ĐÃ CHUẨN HÓA KHÍ CỤC KINH DOANH) ---
 const ConfigPhongThuy = {
-    // Hướng và Tọa Cát (Ưu tiên nạp sinh khí vượng cát nạp tài Vận 9)
+    // 🟢 KHÍ CỤC: Hướng và Tọa Cát (Cần nạp cát khí theo bản mệnh)
     'house':          { title: "Hướng Nhà / Cửa Chính", isCat: true },
     'gate':           { title: "Hướng Cổng Chính", isCat: true },
     'altar':          { title: "Hướng Bàn Thờ / Thần Tài", isCat: true },
@@ -782,9 +782,9 @@ const ConfigPhongThuy = {
     'restaurant':     { title: "Hướng Quán Ăn / Nhà Hàng", isCat: true },
     'shop':           { title: "Hướng Cửa Hàng / Showroom", isCat: true },
     'salon':          { title: "Hướng Salon Tóc / Nail / Spa", isCat: true },
-    'safe':           { title: "Vị trí Két Sắt / Tụ Tài Lộc", isCat: true }, // ĐÃ SỬA THÀNH CÁT CỤC: Tụ tài phải đặt cung cát hướng cát
+    'safe':           { title: "Vị trí Két Sắt / Tụ Tài Lộc", isCat: true }, 
 
-    // Tọa vị Trấn Sát (Ưu tiên đặt đè lên vùng hung để tiêu trừ tà khí, lấy độc trị độc)
+    // 🔴 TRẤN SÁT: Tọa vị Tiêu Hung (Cần đặt đè lên hung phương để tiêu sát)
     'kitchen':        { title: "Vị trí Đặt Bếp Nấu (Tọa Hung)", isCat: false },
     'toilet':         { title: "Vị trí Nhà Vệ Sinh / WC (Tọa Hung)", isCat: false },
     'septic_tank':    { title: "Vị trí Hầm Tự Hoại / Bể Phốt (Tọa Hung)", isCat: false },
@@ -3625,6 +3625,25 @@ document.addEventListener('visibilitychange', () => {
     }
 });
 
+/**
+ * Ánh xạ góc độ la bàn sang mã phương hướng chuẩn
+ * Dải 45 độ cho mỗi cung Bát Trạch
+ */
+function getHuongByDegree(degree) {
+    const d = ((degree % 360) + 360) % 360;
+    
+    if (d >= 337.5 || d < 22.5) return "N";   // Bắc
+    if (d >= 22.5 && d < 67.5) return "NE";   // Đông Bắc
+    if (d >= 67.5 && d < 112.5) return "E";   // Đông
+    if (d >= 112.5 && d < 157.5) return "SE"; // Đông Nam
+    if (d >= 157.5 && d < 202.5) return "S";  // Nam
+    if (d >= 202.5 && d < 247.5) return "SW"; // Tây Nam
+    if (d >= 247.5 && d < 292.5) return "W";  // Tây
+    if (d >= 292.5 && d < 337.5) return "NW"; // Tây Bắc
+    
+    return "N"; // Mặc định
+}
+
 // Biến toàn cục để khóa la bàn
 let isCompassHold = false;
 let holdedHeading = 0;
@@ -3668,82 +3687,56 @@ function toggleTongLuan() {
 function xayDungBaoCaoLuanGiai(name, degree) {
     const contentBox = document.getElementById('tongLuanContent');
     const mucDich = document.getElementById('purpose').value;
-    const config = ConfigPhongThuy[mucDich] || { title: "Vị trí", isCat: true };
+    const config = ConfigPhongThuy[mucDich] || { title: "Hạng mục", isCat: true };
+    const namKhaoSat = new Date().getFullYear();
+    const tongHop = tinhDiemTongHop(chủMệnh, degree, namKhaoSat, mucDich);
+
+    // 1. Phân định Gốc (Trạch Mệnh)
+    const huongLon = getHuongByDegree(degree);
+    const cungTrach = bátTrạchMap[chủMệnh][huongLon];
+    const isGocHung = ["Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"].includes(cungTrach);
     
-    const txtNamKhaoSat = document.getElementById('surveyYear'); 
-    const namKhaoSatThucTe = (txtNamKhaoSat && txtNamKhaoSat.value.length === 4) ? parseInt(txtNamKhaoSat.value) : new Date().getFullYear();
+    // 2. Phân định Ngọn (Lưu Niên)
+    const isNgonHung = tongHop.satTinhs.length > 0;
+    const danhSachSat = tongHop.satTinhs.map(s => s.ten).join(', ');
 
-    // GỌI HÀM NÃO BỘ ĐỂ LẤY TOÀN BỘ KẾT QUẢ ĐÃ ĐƯỢC TÍNH TOÁN (Tái sử dụng 100% logic đã tối ưu)
-    const tongHop = tinhDiemTongHop(chủMệnh, degree, namKhaoSatThucTe, mucDich);
-    
-    const colorDiem = tongHop.diem >= 72 ? "#30d158" : (tongHop.diem >= 50 ? "#ffd700" : "#ff3b30");
-    const bgDiem = tongHop.diem >= 72 ? "rgba(48,209,88,0.15)" : (tongHop.diem >= 50 ? "rgba(255,215,0,0.15)" : "rgba(255,59,48,0.15)");
+    // 3. Logic quyết định
+    let thongDiepKetLuan = "";
+    let mauChu = "#30d158";
 
-    // --- BẮT ĐẦU VẼ BẢN BÁO CÁO CẤP CAO ---
-    let html = `
-        <div style="text-align: center; border-bottom: 1px dashed #555; padding-bottom: 15px; margin-bottom: 15px;">
-            <h2 style="color: var(--gold); margin: 0 0 5px 0; font-size: 1.3rem;">BẢN BÁO CÁO TỔNG LUẬN</h2>
-            <div style="color: #ccc; font-size: 0.85rem;">Hệ thống phân tích Khí Trường Vận 9</div>
-        </div>
-    `;
-
-    // 1. Hồ Sơ Mệnh Chủ & Tọa Độ
-    html += `
-        <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 0.9rem; color: #fff;">
-            <div style="margin-bottom: 5px;">👤 <b>Mệnh chủ:</b> <span style="color: #dfb76c;">${name}</span> (Cung ${chủMệnh})</div>
-            <div style="margin-bottom: 5px;">📍 <b>Định vị:</b> <span style="color: #dfb76c;">${degree}°</span> — Sơn <b>${tongHop.sonName}</b></div>
-            <div style="margin-bottom: 5px;">🔍 <b>Hạng mục:</b> <span style="color: #30d158;">${config.title}</span></div>
-            <div>⏳ <b>Niên trạch luận đoán:</b> Năm ${namKhaoSatThucTe}</div>
-        </div>
-    `;
-
-    // 2. Điểm Số Tổng Quan
-    html += `
-        <div style="text-align: center; background: ${bgDiem}; border: 1px solid ${colorDiem}; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
-            <div style="font-size: 0.8rem; color: #aaa; text-transform: uppercase;">Chỉ số Cát Hung Đa Tầng</div>
-            <div style="font-size: 2.5rem; font-weight: 900; color: ${colorDiem}; line-height: 1.2;">${tongHop.diem} <span style="font-size: 1rem;">điểm</span></div>
-            <div style="font-weight: bold; color: ${colorDiem}; background: rgba(0,0,0,0.5); display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem;">${tongHop.level}</div>
-        </div>
-    `;
-
-    // 3. Phân Tích Thông Minh: Chia Rõ GỐC và NGỌN cho người dùng dễ hiểu
-    html += `<h3 style="color: var(--gold); font-size: 1rem; margin-bottom: 8px;">1. Phân Tích Địa Lý Tĩnh (Cái Gốc)</h3>`;
-    html += `<div style="font-size: 0.85rem; color: #ddd; margin-bottom: 15px; line-height: 1.5; text-align: justify;">`;
-    
     if (tongHop.khongVong) {
-        html += `<span style="color: #ff3b30; font-weight: bold;">[ĐẠI KỴ]</span> Hướng này đã rơi vào đường Không Vong (${tongHop.khongVong.loai}). Khí trường gốc bị đứt gãy hoàn toàn. Dù các yếu tố khác có tốt đến đâu cũng không thể cứu vãn. Bắt buộc phải nhích la bàn để thoát khỏi tuyến ranh giới này.`;
+        thongDiepKetLuan = "ĐẠI KỴ: PHẠM KHÔNG VONG - KHÍ TRƯỜNG VÔ ĐỊNH";
+        mauChu = "#ff3b30";
+    } else if (isGocHung) {
+        thongDiepKetLuan = `ĐẠI KỴ: PHẠM CUNG ${cungTrach.toUpperCase()} - SAI TRẠCH MỆNH`;
+        mauChu = "#ff3b30";
+    } else if (isNgonHung) {
+        thongDiepKetLuan = `CẢNH BÁO: PHẠM SÁT TINH LƯU NIÊN (${danhSachSat})`;
+        mauChu = "#ff9f0a";
     } else {
-        html += `<span style="color: #dfb76c; font-weight: bold;">[MINH CHÂU SƠN ĐẠO]</span> Về mặt bản thể cấu trúc, khu vực Sơn ${tongHop.sonName} này đối với hạng mục <b>${config.title}</b> mang ý nghĩa: ${tongHop.message.split('💡')[0]} <br><br>`;
-        html += `<span style="color: #00ffaa; font-weight: bold;">[LONG MẠCH TIẾT KHÍ]</span> ${tongHop.hauInfo.ten} (${tongHop.hauInfo.chatLuong}): ${tongHop.hauInfo.ynghia}`;
+        thongDiepKetLuan = "CÁT VỊ - ĐẮC CÁCH HỢP TRẠCH";
+        mauChu = "#30d158";
     }
-    html += `</div>`;
 
-    html += `<h3 style="color: var(--gold); font-size: 1rem; margin-bottom: 8px;">2. Biến Động Thời Vận (Cái Ngọn năm ${namKhaoSatThucTe})</h3>`;
-    html += `<div style="font-size: 0.85rem; color: #ddd; margin-bottom: 15px; line-height: 1.5; text-align: justify;">`;
-    
-    if (tongHop.satTinhs && tongHop.satTinhs.length > 0) {
-        let satNames = tongHop.satTinhs.map(s => s.ten).join(", ");
-        html += `<span style="color: #ff9f0a; font-weight: bold;">[SÁT TINH CHIẾU HƯỚNG]</span> Năm ${namKhaoSatThucTe}, khu vực này bị chòm sao <b>${satNames}</b> chiếu tới. Khí trường từ trường xấu tăng cao, dễ gây nhiễu loạn.`;
-        if (config.isCat) {
-            html += ` Đây là lý do khiến điểm số của bạn bị kéo tụt xuống. Đặc biệt cẩn trọng không đập phá, khoan đục tại góc này trong năm nay.`;
-        } else {
-            html += ` Tuy nhiên, vì đây là hạng mục xả uế/trấn sát (WC/Bếp) nên việc Sát tinh giáng lâm lại mang tính "Lấy độc trị độc", cấu trúc hạ tầng đang ép chặt sát khí rất tốt.`;
-        }
-    } else {
-        html += `<span style="color: #30d158; font-weight: bold;">[THUẦN KHÍ AN LÀNH]</span> Năm nay khu vực này không vướng các Đại Sát Tinh hung hiểm (như Ngũ Hoàng, Thái Tuế). Thời vận bình hòa, có thể yên tâm sử dụng hoặc tiến hành động thổ tu tạo.`;
-    }
-    html += `</div>`;
+    // 4. Báo cáo phong thủy thực chiến
+    let html = `
+        <div style="text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 15px;">
+            <div style="font-size: 0.8rem; color: #dfb76c; letter-spacing: 1px;">TRẠCH THUẬT PHÂN TÍCH: ${config.title.toUpperCase()}</div>
+            <div style="font-size: 1.1rem; font-weight: 800; color: ${mauChu}; margin-top: 5px;">${thongDiepKetLuan}</div>
+        </div>
 
-    // 4. Lời Khuyên Chốt Hạ & Đón đầu Cẩm nang Tuổi/Ngày
-    html += `<div style="background: rgba(223, 183, 108, 0.1); border-left: 4px solid var(--gold); padding: 12px; border-radius: 4px;">
-                <h3 style="color: var(--gold); font-size: 0.95rem; margin: 0 0 5px 0;">3. Kết Luận & Hành Động</h3>
-                <div style="font-size: 0.85rem; color: #fff; line-height: 1.5; text-align: justify;">
-                    ${tongHop.hoaGiai}
-                </div>
-                <div style="margin-top: 10px; font-size: 0.75rem; color: #8a8a8f; font-style: italic; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;">
-                    * Lưu ý: Để vạn sự hanh thông tuyệt đối, việc kích hoạt hoặc xây dựng tại phương vị này cần kết hợp <b>Chọn Tuổi Động Thổ</b> và <b>Tuyển Nhật Cát (Ngày Giờ Đắc Lệnh)</b>. Hệ thống Đạo Trạch Lịch Pháp đang được đồng bộ...
-                </div>
-            </div>`;
+        <div style="font-size: 0.9rem; line-height: 1.7; color: #fff;">
+            <div style="margin-bottom: 8px;"><b>• Xét về Trạch Mệnh:</b> Phương vị này ${isGocHung ? "rơi vào cung " + cungTrach.toUpperCase() + " (Hung tinh bản mệnh)" : "hợp bản mệnh, đắc cách vượng khí"}.</div>
+            <div style="margin-bottom: 8px;"><b>• Xét về Lưu Niên:</b> ${isNgonHung ? "Năm " + namKhaoSat + " phạm " + danhSachSat + " (Sát khí chiếu lâm)" : "Năm " + namKhaoSat + " bình hòa, không vướng sát khí"}.</div>
+            <div style="margin-bottom: 8px;"><b>• Điểm định trạch:</b> ${tongHop.diem}/98 điểm (${tongHop.level}).</div>
+        </div>
+
+        <div style="padding: 12px; border-top: 1px solid var(--gold); margin-top: 15px; background: rgba(0,0,0,0.2); font-size: 0.85rem; color: #ddd; text-align: justify;">
+            ${isGocHung ? "Địa cục phạm Hung tinh, khí trường nghịch chuyển. Tuyệt đối không khởi công, an vị tại đây để tránh họa hại lâu dài." : 
+              (isNgonHung ? "Địa cục vốn tốt, nhưng Lưu niên phạm Sát, khí trường đang bị nhiễu loạn. Cần hoãn khởi công hoặc dùng pháp bảo trấn áp mới có thể an cư." : 
+              "Thiên thời - Địa lợi hội tụ. Tọa độ này hoàn toàn có thể khởi công, vạn sự hanh thông.")}
+        </div>
+    `;
 
     contentBox.innerHTML = html;
 }
