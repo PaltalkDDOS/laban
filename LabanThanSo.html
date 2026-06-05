@@ -285,21 +285,82 @@
         </div>
     </div>
 </div></div>
-<!-- MODAL DONATE / QR CODE -->
+<!-- =========================================================================
+     🔮 MODAL ĐẠI LUẬN SỐ MỆNH TOÀN DIỆN & TRẬN ĐỒ XOAY CHUYỂN VẬN MỆNH
+     ========================================================================= -->
 <div id="donateModal" class="lk-guide-modal" style="display: none;">
-    <div class="lk-guide-modal-content" style="max-width: 380px; height: auto; padding: 20px;">
-        <div class="lk-guide-modal-header">
-            <h2 class="lk-guide-modal-title">❤️ ỦNG HỘ DỰ ÁN</h2>
-            <span class="lk-guide-close-btn" id="closeDonateBtn">&times;</span>
+    <div class="lk-guide-modal-content" style="max-width: 500px; height: auto; padding: 25px; border: 1px solid rgba(223, 183, 108, 0.3); background: #121212; box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+        
+        <div class="lk-guide-modal-header" style="border-bottom: 1px solid rgba(223, 183, 108, 0.2); padding-bottom: 12px;">
+            <h2 class="lk-guide-modal-title" style="color: #dfb76c; font-size: 1.1rem; text-align: center; letter-spacing: 1px; width: 100%;">
+                🔮 ĐẠI LUẬN SỐ MỆNH TOÀN DIỆN & TRẬN ĐỒ XOAY CHUYỂN VẬN MỆNH
+            </h2>
+            <span class="lk-guide-close-btn" id="closeDonateBtn" style="cursor: pointer; font-size: 24px; color: #aaa;">&times;</span>
         </div>
-        <div style="text-align: center; padding: 15px 0;">
-            <img src="ungho.png" alt="QR Donate" style="width: 100%; max-width: 280px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
-            <p style="margin: 15px 0 5px; color: #dfb76c; font-weight: bold;">NGUYEN NGOC THAI THONG</p>
-            <p style="margin: 5px 0; color: #ccc;">9898661918 • Vietcombank</p>
-            <small style="color: #888;">Quét mã QR để ủng hộ dự án La Bàn Phong Thủy</small>
+
+        <div class="luanmenh-form-body" style="padding: 15px 0; color: #e0e0e0; font-size: 0.88rem; line-height: 1.6; max-height: 65vh; overflow-y: auto;">
+            
+            <!-- Khối thông điệp dẫn dắt chuyên sâu -->
+            <div style="background: rgba(223, 183, 108, 0.05); border-left: 3px solid #dfb76c; padding: 12px; border-radius: 4px; margin-bottom: 15px;">
+                <b style="color: #dfb76c;">⚠️ Yêu cầu để Luận Mệnh chính xác:</b> Cần thực hiện cung cấp thông tin đúng và đủ theo quy chuẩn thiên văn số học dưới đây (Đặc biệt quan trọng <b>Ngày tháng năm sinh</b> và <b>Giờ sinh</b>).
+            </div>
+
+            <!-- Khối nội dung hướng dẫn nhập liệu bài bản -->
+            <div style="margin-bottom: 15px;">
+                <b style="color: #ffca28; display: block; margin-bottom: 5px;">📋 THÔNG TIN ĐẦU VÀO (Bắt buộc)</b>
+                <ul style="list-style-type: none; padding-left: 0; margin: 0;">
+                    <li style="margin-bottom: 8px; padding-left: 15px; text-indent: -15px;">
+                        📌 <b>Khách hàng chính:</b> Họ tên + Ngày tháng năm sinh (Ghi rõ Dương/Âm) + Giờ sinh chính xác.
+                    </li>
+                    <li style="margin-bottom: 8px; padding-left: 15px; text-indent: -15px;">
+                        👥 <b>Gia đạo (Chồng/Vợ/Con cái):</b> Họ tên + Ngày tháng năm sinh (Chỉ cần ngày tháng năm, có giờ càng tốt. Nếu không có giờ sinh và không có ảnh, hệ thống tự động dùng Tử Bình 3 trụ và Thần Số Học để bóc tách. Nếu khách cung cấp kèm ảnh người thân, lập tức kết hợp thêm Nhân Tướng và Chỉ Tay để luận đoạt).
+                    </li>
+                    <li style="margin-bottom: 8px; padding-left: 15px; text-indent: -15px;">
+                        📸 <b>Hình ảnh (Cực nét - Ánh sáng tự nhiên):</b> Lòng bàn tay (Trái/Phải không gồng), Mu bàn tay & Móng tay, Kẽ ngón tay khép kín, Ảnh chân dung thẳng diện không app.
+                    </li>
+                    <li style="margin-bottom: 8px; padding-left: 15px; text-indent: -15px;">
+                        ⚫ <b>Hệ thống nốt ruồi (Điểm huyệt):</b> Vị trí nốt ruồi lạ trên mặt, cổ, tay.
+                    </li>
+                    <li style="margin-bottom: 8px; padding-left: 15px; text-indent: -15px;">
+                        🎯 <b>Sự vụ quan tâm:</b> Nghề nghiệp hiện tại + 1 câu hỏi đau đáu nhất cần giải quyết ngay.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Đường chia cắt phong thủy -->
+            <div style="border-top: 1px dashed rgba(255,255,255,0.1); margin: 20px 0;"></div>
+
+            <!-- Khối thông tin Donate & Email liên hệ chuyển dịch -->
+            <div style="text-align: center; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                <img src="ungho.png" alt="QR Donate" style="width: 100%; max-width: 240px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); margin-bottom: 12px;">
+                
+                <p style="margin: 5px 0; color: #dfb76c; font-weight: 900; letter-spacing: 0.5px; font-size: 1rem;">NGUYEN NGOC THAI THONG</p>
+                <p style="margin: 4px 0; color: #fff; font-family: monospace; font-size: 0.95rem;">9898661918 • Vietcombank</p>
+                <p style="margin: 10px 0 5px; color: #aaa; font-size: 0.8rem;">Quét mã QR để ủng hộ kinh phí duy trì dự án La Bàn Phong Thủy Số.</p>
+                
+                <!-- Khối Email liên hệ tối cao -->
+                <div style="margin-top: 15px; padding-top: 12px; border-top: 1px solid rgba(223,183,108,0.15);">
+                    <small style="color: #666; display: block; margin-bottom: 2px;">📬 Gửi bộ hồ sơ thông tin đầu vào về hòm thư Pháp sư:</small>
+                    <a href="mailto:ThaiThongsj@gmail.com" style="color: #30d158; text-decoration: none; font-weight: bold; font-size: 0.9rem; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 5px;">
+                        📧 ThaiThongsj@gmail.com
+                    </a>
+                </div>
+            </div>
+
         </div>
+        
+        <!-- Nút đóng lệnh chân phương dưới đáy -->
+        <div style="margin-top: 15px; text-align: center;">
+            <button id="btnUnderstandMap" 
+        onclick="document.getElementById('donateModal').style.display = 'none';" 
+        style="background: linear-gradient(135deg, #dfb76c, #b38938); color: #000; border: none; padding: 10px 24px; font-weight: bold; border-radius: 20px; cursor: pointer; font-size: 0.8rem; letter-spacing: 1px; width: 100%; transition: all 0.3s;">
+    ĐÃ HIỂU MẬT PHÁP KHỞI VẬN
+</button>
+        </div>
+
     </div>
 </div>
+
 <div id="compass-wrapper-origin">
 <div class="compass-container" style="position: relative; width: 340px; height: 340px; margin: 45px auto 20px; ...">
 <div onclick="toggleFullScreenMode()" class="fs-icon">⛶</div>
