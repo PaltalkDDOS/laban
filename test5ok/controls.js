@@ -679,47 +679,35 @@ function getCurrentHauInfo(degree) {
     if (result.chatLuong.includes("Hung")) result.emoji = "🔴";
     return result;
 }
-// --- CẤU HÌNH PHONG THỦY ĐỒNG BỘ ĐA TẦNG VẬN 9 (ĐÃ MỞ RỘNG DANH MỤC THỰC CHIẾN) ---
+/// --- CẤU HÌNH PHONG THỦY ĐỒNG BỘ ĐA TẦNG VẬN 9 (ĐÃ CHUẨN HÓA KHÍ CỤC KINH DOANH) ---
 const ConfigPhongThuy = {
-    // 🏛️ DƯƠNG TRẠCH CHỦ CỤC (Nhà Ở)
-    'house':          { title: "Hướng Nhà / Cửa Chính", isCat: true,  sizeDegree: 15 },
-    'gate':           { title: "Hướng Cổng Chính", isCat: true,  sizeDegree: 15 },
-    'altar':          { title: "Hướng Ban Thờ / Thần Tài", isCat: true,  sizeDegree: 2  },
-    'altar_room':     { title: "Không Gian Phòng Thờ", isCat: true,  sizeDegree: 15 },
-    'bed':            { title: "Hướng Đầu Giường Ngủ", isCat: true,  sizeDegree: 10 },
-    'livingroom':     { title: "Hướng Phòng Khách", isCat: true,  sizeDegree: 15 },
-    'bedroom_master': { title: "Hướng Phòng Ngủ Chính", isCat: true,  sizeDegree: 15 },
-    'bedroom_child':  { title: "Hướng Phòng Ngủ Con Cái", isCat: true,  sizeDegree: 10 },
-    'balcony':        { title: "Hướng Ban Công / Cửa Sổ", isCat: true,  sizeDegree: 12 },
-    
-    // 📚 VĂN XƯƠNG KHOA DANH (Sự Nghiệp)
-    'workspace':      { title: "Hướng Bàn Làm Việc", isCat: true,  sizeDegree: 10 },
-    'ceo_office':     { title: "Hướng Phòng Sếp / Lãnh Đạo", isCat: true,  sizeDegree: 15 },
-    'study_desk':     { title: "Hướng Bàn Học Văn Xương", isCat: true,  sizeDegree: 8  },
-    'bookcase':       { title: "Vị Trí Tủ Sách / Hồ Sơ", isCat: true,  sizeDegree: 10 },
-
-    // 💰 ĐẮC TÀI MẬU DỊCH (Kinh Doanh)
-    'signboard':      { title: "Hướng Biển Hiệu Cửa Hàng", isCat: true,  sizeDegree: 15 },
-    'counter':        { title: "Hướng Quầy Thu Ngân", isCat: true,  sizeDegree: 10 },
-    'safe':           { title: "Vị Trí Két Sắt Tụ Tài", isCat: true,  sizeDegree: 4  }, 
-    'machinery':      { title: "Hệ Thống Máy Móc / Dây Chuyền", isCat: true,  sizeDegree: 12 },
-    'bakery':         { title: "Hướng Lò Nướng / Quầy Bánh", isCat: true,  sizeDegree: 10 },
-    'coffee':         { title: "Hướng Quầy Pha Chế Cà Phê", isCat: true,  sizeDegree: 10 },
-    'restaurant':     { title: "Hướng Nhà Hàng / Quán Ăn", isCat: true,  sizeDegree: 15 },
-    'shop':           { title: "Hướng Showroom / Cửa Hàng", isCat: true,  sizeDegree: 15 },
-    'salon':          { title: "Hướng Salon Tóc / Giường Spa", isCat: true,  sizeDegree: 12 },
-
-    // 🛠️ TỌA VỊ TRẤN SÁT (Hệ Thống Đè Hung)
-    'kitchen':        { title: "Vị trí Đặt Bếp Nấu", isCat: false, sizeDegree: 10 },
-    'toilet':         { title: "Vị trí Nhà Vệ Sinh", isCat: false, sizeDegree: 15 },
-    'septic_tank':    { title: "Vị trí Hầm Tự Hoại / Bể Phốt", isCat: false, sizeDegree: 15 },
-    'pipe_shaft':     { title: "Trục Kỹ Thuật / Hộp Gen Uế Khí", isCat: false, sizeDegree: 6  },
-    'storage':        { title: "Vị trí Kho Hàng Tạp Khí", isCat: false, sizeDegree: 15 },
-    'trash_area':     { title: "Vị trí Thùng Rác / Phế Liệu", isCat: false, sizeDegree: 8  }
+    'house':          { title: "Hướng Nhà / Cửa Chính", isCat: true },
+    'gate':           { title: "Hướng Cổng Chính", isCat: true },
+    'altar':          { title: "Hướng Bàn Thờ / Thần Tài", isCat: true },
+    'bed':            { title: "Hướng Đầu Giường Ngủ", isCat: true },
+    'livingroom':     { title: "Hướng Phòng Khách", isCat: true },
+    'bedroom_master': { title: "Hướng Phòng Ngủ Chính", isCat: true },
+    'balcony':        { title: "Hướng Ban Công", isCat: true },
+    'workspace':      { title: "Hướng Bàn Làm Việc", isCat: true },
+    'ceo_office':     { title: "Hướng Phòng Sếp", isCat: true },
+    'study_desk':     { title: "Hướng Bàn Học", isCat: true },
+    'signboard':      { title: "Hướng Biển Hiệu", isCat: true },
+    'counter':        { title: "Hướng Quầy Thu Ngân", isCat: true },
+    'bakery':         { title: "Hướng Quầy Bánh Mì", isCat: true },
+    'coffee':         { title: "Hướng Quán Cà Phê", isCat: true },
+    'restaurant':     { title: "Hướng Nhà Hàng", isCat: true },
+    'shop':           { title: "Hướng Cửa Hàng", isCat: true },
+    'salon':          { title: "Hướng Salon Tóc / Spa", isCat: true },
+    'safe':           { title: "Vị trí Két Sắt", isCat: true }, 
+    'kitchen':        { title: "Vị trí Đặt Bếp Nấu (Tọa Hung)", isCat: false },
+    'toilet':         { title: "Vị trí Nhà Vệ Sinh (Tọa Hung)", isCat: false },
+    'septic_tank':    { title: "Vị trí Hầm Tự Hoại (Tọa Hung)", isCat: false },
+    'storage':        { title: "Vị trí Kho Hàng (Tọa Hung)", isCat: false },
+    'trash_area':     { title: "Vị trí Thùng Rác (Tọa Hung)", isCat: false }
 };
 
 // =========================================================================
-// 🚀 PHIÊN BẢN ĐẠI NÂNG CẤP: DANH SÁCH PHƯƠNG VỊ GỢI Ý - SIÊU HIỂN THỊ ĐỘNG 3 HẬU MẠCH
+// 🚀 NĂNG CẤP HÀM HIỂN THỊ DANH SÁCH GỢI Ý - BỘ LỌC CHI TIẾT SƠN HẬU THÔNG MINH
 // =========================================================================
 function generateDirectionsList() {
     const mucDich = document.getElementById('purpose').value;
@@ -2193,8 +2181,8 @@ function kiemTraKhongVong(degree) {
 }
 
 /**
- * 📊 THUẬT TOÁN ĐIỂM TỔNG HỢP ĐA TẦNG - PHIÊN BẢN THỰC CHIẾN CHÍNH TÔNG
- * Hợp nhất Gốc Nhân Mệnh (24 Sơn) + Gốc Địa Khí (Tích phân dải độ 72 Hậu chiếm dụng)
+ * 📊 THUẬT TOÁN ĐIỂM TỔNG HỢP ĐA TẦNG - PHIÊN BẢN ĐỒNG BỘ 100% SƠN HẬU
+ * Quy trình lập cực: Bát Trạch (45°) ➔ 24 Sơn (15°) ➔ 72 Hậu (5°)
  */
 function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
     const normalizedDegree = ((degree % 360) + 360) % 360;
@@ -2202,6 +2190,11 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
     const sonName = sonObj.name;
     
     let namAmReal = namAm || new Date().getFullYear();
+    const sonInfo = layThongTin24Son(normalizedDegree, cungPhi, namAmReal); 
+    const hauInfo = getCurrentHauInfo(normalizedDegree); 
+    const khongVong = typeof kiemTraKhongVong === 'function' ? kiemTraKhongVong(normalizedDegree) : null; 
+    const satTinhs = typeof getPhongThuySatTinh === 'function' ? getPhongThuySatTinh(sonName, namKhảoSát) : []; 
+
     const config = ConfigPhongThuy[mucDich] || { title: "Vị trí", isCat: true };
     const isCatPurpose = config.isCat;
 
@@ -2212,51 +2205,11 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
     const laCungHungDiaLy = ["Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"].includes(cungBátTrạch);
     const laCungCatDiaLy = !laCungHungDiaLy;
 
-    // ─── LỚP TÍNH TOÁN 1: XÁC ĐỊNH DẢI ĐỘ CHIẾM DỤNG CỦA VẬT THỂ ───
-    let dảiĐộVậtThể = 2; // Ban thờ, bát hương nhỏ chiếm 2 độ
-    if (mucDich.includes('bed') || mucDich.includes('desk') || mucDich.includes('kitchen')) {
-        dảiĐộVậtThể = 10; // Giường ngủ, bàn làm việc, bếp nấu đè qua khoảng 10 độ la bàn
-    } else if (mucDich.includes('house') || mucDich.includes('door') || mucDich.includes('toilet')) {
-        dảiĐộVậtThể = 15; // Cửa chính, cổng lớn, phòng vệ sinh quét dải diện tích rộng 15 độ
-    }
+    // A. PHẦN GỐC (HỢP NHẤT NHÂN MỆNH 24 SƠN + ĐỊA MẠCH 72 HẬU)
+    let diemGocSon = sonInfo.diem;
+    let bienDoMaoLong = hauInfo.diem - 60; 
 
-    // ─── LỚP TÍNH TOÁN 2: TÍCH PHÂN TÌM NĂNG LƯỢNG ĐỊA MẠCH TRUNG BÌNH ───
-    let tongDiemHauMạch = 0;
-    let soDiemQuet = 0;
-    let dínhKhôngVongNặng = false;
-    let loaiKhôngVong = "";
-
-    let gocBatDau = normalizedDegree - (dảiĐộVậtThể / 2);
-    let gocKetThuc = normalizedDegree + (dảiĐộVậtThể / 2);
-
-    for (let g = gocBatDau; g <= gocKetThuc; g += 1) {
-        let gocQuetChuanHoa = ((g % 360) + 360) % 360;
-        
-        let mốcHậuGầnNhất = Math.round(gocQuetChuanHoa / 5) * 5;
-        if (mốcHậuGầnNhất >= 360) mốcHậuGầnNhất = 0;
-        let hauQuyDoi = Data72Hau[mốcHậuGầnNhất.toString()] || { diem: 60 };
-        
-        tongDiemHauMạch += hauQuyDoi.diem;
-        soDiemQuet++;
-
-        if (typeof kiemTraKhongVong === 'function') {
-            let kv = kiemTraKhongVong(gocQuetChuanHoa);
-            if (kv) {
-                dínhKhôngVongNặng = true;
-                loaiKhôngVong = kv.loai;
-            }
-        }
-    }
-
-    // Năng lượng địa mạch thực tế đổ lên toàn bộ diện tích kết cấu thực thể
-    let diemHauMachTrungBinh = tongDiemHauMạch / soDiemQuet;
-    let bienDoMaoLong = diemHauMachTrungBinh - 60; 
-
-    // Lấy điểm nền tĩnh Ma trận Minh Châu (Đã tách lọc không cho phạt trùng Không Vong trong hàm con)
-    const sonInfo = layThongTin24Son(normalizedDegree, cungPhi, namAmReal); 
-    let diemGocSon = (sonInfo && typeof sonInfo.diem === 'number') ? sonInfo.diem : 70;
-
-    // ─── LỚP TÍNH TOÁN 3: TÁC ĐỘNG NGOẠI CẢNH (THỜI GIAN VÀ SÁT TINH) ───
+    // B. PHẦN NGỌN (THỜI GIAN, SÁT KHÍ, CÔNG NĂNG KHAI MÔN)
     const namTinhVan = namKhảoSát ? parseInt(namKhảoSát) : new Date().getFullYear();
     const vanSo = Math.floor((namTinhVan - 1864) / 20) % 9 + 1;
     let kVan = 1.0; 
@@ -2266,11 +2219,8 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
     }
 
     let gKhai = (isCatPurpose && laCungCatDiaLy) ? 1.1 : 1.0;
-    
-    // Phương trình hợp nhất Siêu Gốc (Địa Khí + Nhân Mệnh) nhân hệ số Thiên Thời
     let diem = (diemGocSon + bienDoMaoLong) * kVan;
 
-    const satTinhs = typeof getPhongThuySatTinh === 'function' ? getPhongThuySatTinh(sonName, namKhảoSát) : [];
     if (isCatPurpose) {
         satTinhs.forEach(sat => {
             diem -= (sat.ten === "NGŨ HOÀNG ĐẠI SÁT" || sat.ten === "THÁI TUẾ") ? 25 : 15;
@@ -2278,47 +2228,30 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
     }
     diem = diem * gKhai;
 
-    // ─── LỚP TÍNH TOÁN 4: ĐẢO CHIỀU KHÔNG GIAN VÀ ĐỒNG BỘ LỜI BÌNH TRỰC QUAN ───
-    let messageGhiChu = "";
-    let hoaGiaiGợiÝ = "";
+    let messageGhiChu = sonInfo.luanDoan;
+    let hoaGiaiGợiÝ = sonInfo.hoaGiai;
 
     if (isCatPurpose) {
-        // KHÍ CỤC (Cửa, Giường, Thờ)
-        messageGhiChu = sonInfo.luanDoan;
-        hoaGiaiGợiÝ = sonInfo.hoaGiai;
-
         if (laCungCatDiaLy) {
             diem = Math.max(72, diem); 
         } else {
-            diem = Math.min(64, diem); // Khóa trần hướng hung phương
+            diem = Math.min(64, diem); 
         }
     } else {
-        // TRẤN SÁT (Bếp, Toilet) -> Đảo chiều thông minh toàn diện từ Điểm đến Lời bình
         if (laCungHungDiaLy) {
             diem = Math.max(75, (100 - diem) + 12); 
-            messageGhiChu = `🌟 [TỌA HUNG TRẤN SÁT ĐẮC CÁCH]: Vị trí ${config.title} đặt đè lên hung phương ${cungBátTrạch} giúp thiêu rụi, triệt tiêu hoàn toàn tà khí của mạch đất nền.`;
-            hoaGiaiGợiÝ = "Tuyệt diệu trạch pháp cách cục, trường khí ổn định định tâm, không cần đặt pháp bảo hóa giải.";
+            messageGhiChu = `🌟 [TỌA HUNG TRẤN SÁT ĐẮC CÁCH]: Đặt đè trên hung phương ${cungBátTrạch} giúp triệt tiêu hoàn toàn ác khí của mạch đất.`;
+            hoaGiaiGợiÝ = "Tuyệt diệu cách cục, đạt chuẩn phong thủy thực chứng, không cần đặt pháp bảo.";
         } else {
             diem = Math.min(45, diem); 
-            messageGhiChu = `⚠️ [PHẠM KỊ TIÊU HAO]: Thiết bị xả uế/Bếp nấu đặt đè lên phương vị Cát khí của bản mệnh (${cungBátTrạch}) làm ô nhiễm sinh khí, tổn hao tài lộc.`;
-            hoaGiaiGợiÝ = "Khuyên gia chủ chủ động dịch chuyển vị trí thiết bị sang dải Sơn vị có màu xanh bên cạnh.";
+            messageGhiChu = `⚠️ [PHẠM KỊ TIÊU HAO]: Thiết bị đặt đè lên cung vị sinh khí cát lợi (${cungBátTrạch}), làm ô nhiễm trục nạp phúc.`;
         }
     }
 
-    // ─── LỚP TÍNH TOÁN 5: KHẤU TRỪ THEO MẬT ĐỘ PHẠM KHÔNG VONG THỰC TẾ ───
-    if (dínhKhôngVongNặng) {
-        if (loaiKhôngVong === "ĐẠI KHÔNG VONG") {
-            diem = 12; // Đại Không Vong đánh sập toàn cục, biến mọi thứ thành hung cục không thể cứu vãn
-            messageGhiChu = `❌ [ĐẠI HỌA KHÔNG VONG]: Toàn bộ kết cấu vật thể đè trúng trục Đại Không Vong ranh giới hướng lớn, khí trường đảo lộn vô khí, cực kỳ nguy hiểm!`;
-            hoaGiaiGợiÝ = "Tuyệt đối không xây dựng cửa chính hoặc đặt giường ngủ/ban thờ tại phân độ tử huyệt này.";
-        } else {
-            diem = Math.min(48, diem - 20); // Tiểu Không Vong phá vỡ dải điểm cát vị
-            messageGhiChu += ` ⚠️ [CẢNH BÁO TIỂU KHÔNG VONG]: Rìa kết cấu vật thể đang liếm sang đường ranh giới Sơn vị (Tiểu Không Vong Sai Thác).`;
-            hoaGiaiGợiÝ = "Xoay nhẹ hoặc dịch chuyển kết cấu khoảng 2-3 độ để đưa toàn bộ trọng tâm và rìa vật thể về vùng mạch khí thuần khiết.";
-        }
+    if (khongVong) {
+        diem = (khongVong.loai === "ĐẠI KHÔNG VONG") ? 12 : Math.min(48, diem - 20);
     }
 
-    // Khóa trần và sàn bảo vệ
     diem = Math.max(10, Math.min(98, Math.round(diem)));
     let level = "HUNG";
     if (diem >= 85) level = "ĐẠI CÁT";
@@ -2327,9 +2260,7 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
 
     return {
         diem, level, message: messageGhiChu, hoaGiai: hoaGiaiGợiÝ,
-        khongVong: dínhKhôngVongNặng ? { loai: loaiKhôngVong } : null, 
-        satTinhs, sonName, sonInfo, 
-        hauInfo: getCurrentHauInfo(normalizedDegree) // Trả về thông tin Hậu mạch mốc tâm để hiển thị UI la bàn
+        khongVong, satTinhs, sonName, sonInfo, hauInfo
     };
 }
 // ==========================================================================
@@ -3225,7 +3156,7 @@ function showPurposeModal() {
         modal.id = 'purpose-modal';
         modal.innerHTML = `
             <div id="purpose-modal-content">
-                <div id="purpose-modal-header">MỤC ĐÍCH KHẢO SÁT KHÍ CỤC VẬN 9</div>
+                <div id="purpose-modal-header">Chọn Mục Đích Tầm Phương Vị</div>
                 <div id="purpose-modal-body"></div>
             </div>
         `;
@@ -3238,51 +3169,45 @@ function showPurposeModal() {
         <div class="purpose-modal-group">🏛️ DƯƠNG TRẠCH CHỦ CỤC (Nhà Ở & Sinh Hoạt)</div>
         <div class="purpose-modal-option" data-value="house">Hướng Nhà / Cửa Chính (Đại Môn)</div>
         <div class="purpose-modal-option" data-value="gate">Hướng Cổng Chính (Lộ Khẩu)</div>
-        <div class="purpose-modal-option" data-value="altar">Hướng Bàn Thờ / Ban Thần Tài (Tụ Phúc)</div>
-        <div class="purpose-modal-option" data-value="altar_room">Không Gian Phòng Thờ Độc Lập (Tổ Đường)</div>
+        <div class="purpose-modal-option" data-value="altar">Hướng Bàn Thờ / Ban Thần Tài</div>
         <div class="purpose-modal-option" data-value="bed">Hướng Đầu Giường Ngủ (Sàng Vị)</div>
         <div class="purpose-modal-option" data-value="livingroom">Hướng Phòng Khách (Trung Đường)</div>
         <div class="purpose-modal-option" data-value="bedroom_master">Hướng Phòng Ngủ Chính (Chủ Khang)</div>
-        <div class="purpose-modal-option" data-value="bedroom_child">Hướng Phòng Ngủ Con Cái (Phúc Nhân)</div>
-        <div class="purpose-modal-option" data-value="balcony">Hướng Ban Công / Cửa Sổ Lớn (Nạp Khí)</div>
+        <div class="purpose-modal-option" data-value="balcony">Hướng Ban Công / Cửa Sổ Lớn</div>
 
         <div class="purpose-modal-group">📚 VĂN XƯƠNG KHOA DANH (Học Hành & Sự Nghiệp)</div>
         <div class="purpose-modal-option" data-value="workspace">Hướng Bàn Làm Việc (Quyền Lực Vị)</div>
         <div class="purpose-modal-option" data-value="ceo_office">Hướng Phòng Sếp / Bàn Lãnh Đạo</div>
         <div class="purpose-modal-option" data-value="study_desk">Hướng Bàn Học / Văn Xương Vị</div>
-        <div class="purpose-modal-option" data-value="bookcase">Vị Trí Tủ Sách / Lưu Trữ Hồ Sơ</div>
 
         <div class="purpose-modal-group">💰 ĐẮC TÀI MẬU DỊCH (Kinh Doanh Thương Mại)</div>
         <div class="purpose-modal-option" data-value="signboard">Hướng Biển Hiệu (Minh Đường Lộ)</div>
         <div class="purpose-modal-option" data-value="counter">Hướng Quầy Thu Ngân (Tài Khố Vị)</div>
         <div class="purpose-modal-option" data-value="safe">Vị trí Két Sắt (Tụ Tài Bảo Khố)</div>
-        <div class="purpose-modal-option" data-value="machinery">Hệ Thống Máy Móc / Dây Chuyền Sản Xuất</div>
-        <div class="purpose-modal-option" data-value="bakery">Hướng Lò Nướng / Quầy Bánh Mì</div>
-        <div class="purpose-modal-option" data-value="coffee">Hướng Quầy Pha Chế Cà Phê / Trà Sữa</div>
+        <div class="purpose-modal-option" data-value="bakery">Hướng Quầy Bánh Mì / Tiệm Bánh</div>
+        <div class="purpose-modal-option" data-value="coffee">Hướng Quán Cà Phê / Trà Sữa</div>
         <div class="purpose-modal-option" data-value="restaurant">Hướng Quán Ăn / Nhà Hàng</div>
-        <div class="purpose-modal-option" data-value="shop">Hướng Cửa Hàng / Showroom / Tạp Hóa</div>
-        <div class="purpose-modal-option" data-value="salon">Hướng Salon Tóc / Giường Nail / Spa</div>
+        <div class="purpose-modal-option" data-value="shop">Hướng Cửa Hàng / Tạp Hóa / Showroom</div>
+        <div class="purpose-modal-option" data-value="salon">Hướng Salon Tóc / Nail / Spa</div>
 
         <div class="purpose-modal-group">🛠️ TỌA VỊ TRẤN SÁT (Hệ Thống Đè Hung)</div>
-        <div class="purpose-modal-option" data-value="kitchen">Vị trí Đặt Bếp Nấu (Táo Vị Trấn Sát)</div>
-        <div class="purpose-modal-option" data-value="toilet">Vị trí Nhà Vệ Sinh (Tiêu Sát Khí)</div>
-        <div class="purpose-modal-option" data-value="septic_tank">Vị trí Hầm Tự Hoại / Bể Phốt Ngầm</div>
-        <div class="purpose-modal-option" data-value="pipe_shaft">Trục Kỹ Thuật / Hộp Gen Uế Khí</div>
-        <div class="purpose-modal-option" data-value="storage">Vị trí Kho Hàng / Phòng Đồ Tạp</div>
-        <div class="purpose-modal-option" data-value="trash_area">Vị trí Thùng Rác / Khu Tập Kết Phế Liệu</div>
+        <div class="purpose-modal-option" data-value="kitchen">Vị trí Đặt Bếp Nấu (Táo Vị)</div>
+        <div class="purpose-modal-option" data-value="toilet">Vị trí Nhà Vệ Sinh (Huyền Vũ Tiêu Sát)</div>
+        <div class="purpose-modal-option" data-value="septic_tank">Vị trí Hầm Tự Hoại / Bể Phốt</div>
+        <div class="purpose-modal-option" data-value="storage">Vị trí Kho Hàng / Tủ Đồ</div>
+        <div class="purpose-modal-option" data-value="trash_area">Vị trí Thùng Rác / Khu Phế Liệu</div>
     `;
 
-    // Xử lý sự kiện click chọn danh mục mục đích
+    // Xử lý click chọn option
     body.querySelectorAll('.purpose-modal-option').forEach(item => {
         item.addEventListener('click', () => {
             const value = item.getAttribute('data-value');
             const text = item.textContent.trim();
 
-            // Cập nhật giao diện text hiển thị bên ngoài
-            const textDisplay = document.getElementById('purpose-selected-text');
-            if (textDisplay) textDisplay.textContent = text;
+            // Cập nhật text hiển thị
+            document.getElementById('purpose-selected-text').textContent = text;
             
-            // Cập nhật giá trị vào input ẩn phục vụ thuật toán lõi
+            // Cập nhật giá trị vào input ẩn (quan trọng nhất)
             const hiddenInput = document.getElementById('purpose');
             if (hiddenInput) {
                 hiddenInput.value = value;
@@ -3290,19 +3215,10 @@ function showPurposeModal() {
 
             currentPurposeValue = value;
 
-            // Ẩn modal an toàn
-            if (typeof hidePurposeModal === 'function') {
-                hidePurposeModal();
-            } else {
-                modal.style.display = 'none';
-            }
+            hidePurposeModal();
+            recalculateFate();        // Gọi lại hàm tính toán
 
-            // Thực thi tính toán lại toàn bộ trục Thiên - Địa - Nhân
-            if (typeof recalculateFate === 'function') {
-                recalculateFate();
-            }
-
-            // Cập nhật hộp danh sách gợi ý realtime
+            // 🔥 Tự động cập nhật lại danh sách phương vị gợi ý ngay lập tức
             if (typeof generateDirectionsList === 'function') {
                 generateDirectionsList(); 
             }
@@ -4834,167 +4750,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
-/**
- * 🧭 ĐỒNG BỘ HIỆN ỨNG SÁNG CỦA HẬU MẠCH KHI XOAY KIM LA BÀN REAL-TIME
- * Hãy chèn đoạn này vào cuối hàm xoay la bàn hoặc hàm onCompassUpdate của bạn
- */
-function highlightActiveHauNode(currentCompassDegree) {
-    let chuẩnHóaĐộ = ((currentCompassDegree % 360) + 360) % 360;
-    
-    // Tìm mốc Hậu mạch gần nhất dựa theo bước nhảy 5 độ
-    let mốcHậuGầnNhất = Math.round(chuẩnHóaĐộ / 5) * 5;
-    if (mốcHậuGầnNhất >= 360) mốcHậuGầnNhất = 0;
-
-    // Bước 1: Khôi phục tất cả các node Hậu mạch về trạng thái nền bình thường
-    document.querySelectorAll('.hau-node-item').forEach(node => {
-        node.style.boxShadow = 'none';
-        node.style.transform = 'scale(1)';
-        node.style.background = 'rgba(255,255,255,0.05)';
-        node.style.borderColor = 'rgba(255,255,255,0.1)';
-    });
-
-    // Bước 2: Tìm đúng node Hậu mạch mà Kim đang đè lên thực thời và kích hoạt hiệu ứng rực sáng
-    let activeNodes = document.querySelectorAll(`.node-goc-${mốcHậuGầnNhất}`);
-    activeNodes.forEach(activeNode => {
-        // Tự động nhận diện màu sắc của chữ bên trong để làm viền sáng tương ứng (Đỏ chói, Xanh vượng hay Vàng)
-        let textColor = activeNode.querySelector('div:nth-child(2)').style.color;
-        
-        activeNode.style.background = 'rgba(255,255,255,0.15)';
-        activeNode.style.borderColor = textColor; // Viền sáng lên theo đúng màu Cát/Hung của Hậu mạch
-        activeNode.style.transform = 'scale(1.05)'; // Nhô nhẹ lên tạo cảm giác cơ khí động học
-        activeNode.style.boxShadow = `0 0 10px ${textColor}40`; // Tạo vầng hào quang nhẹ bao quanh cực đẹp
-    });
-}
-
-// Biến lưu trữ trạng thái quét dải độ vật thể
-let scanState = {
-    isScanning: false,
-    startAngle: null,
-    endAngle: null,
-    currentAngle: 0
-};
-
-/**
- * 1. HÀM CẬP NHẬT GÓC ĐỘ REAL-TIME TỪ CẢM BIẾN THIẾT BỊ
- * Hàm này chạy liên tục khi người dùng xoay điện thoại
- */
-function onCompassUpdate(heading) {
-    scanState.currentAngle = ((heading % 360) + 360) % 360;
-    
-    // Nếu đang trong chế độ quét, hiển thị trực quan dải góc lên màn hình (UI)
-    if (scanState.isScanning) {
-        renderScanningArc(scanState.startAngle, scanState.currentAngle);
-    } else {
-        // Chế độ la bàn thông thường
-        updateDegreeDisplay(scanState.currentAngle);
-    }
-}
-
-/**
- * 2. NÚT BẤM ĐIỀU KHIỂN QUÈT ĐỘNG KHÔNG GIAN
- * Kích hoạt khi người dùng nhấn nút "Quét Vị Trí Kết Cấu"
- */
-function handleScanButtonClick() {
-    const btn = document.getElementById('btn-scan-action');
-    const purposeElement = document.getElementById('purpose');
-    const hiddenInputPurpose = purposeElement ? purposeElement.value : 'bed';
-    
-    // Đọc nhãn hiển thị của danh mục để tương tác văn bản thông minh với người dùng
-    const configHienTai = ConfigPhongThuy[hiddenInputPurpose] || { title: "Kết cấu" };
-
-    // ─── BƯỚC 1: KHỞI CHẠY QUÉT TẠI MÉP TRÁI VẬT THỂ ───
-    if (!scanState.isScanning && scanState.startAngle === null) {
-        scanState.isScanning = true;
-        scanState.startAngle = scanState.currentAngle;
-        
-        btn.innerText = `🛑 DỪNG QUÉT (Nhấn khi tới Mép Phải)`;
-        btn.style.background = "#ff3b30"; // Chuyển sang màu đỏ rực rỡ để báo hiệu đang ghi dữ liệu cảm biến
-        btn.style.boxShadow = "0 0 15px rgba(255,59,48,0.6)";
-        
-        // Tạo một node thông báo nổi trên màn hình để tăng UX thực địa
-        showToast(`[RA ĐA ĐỊA KHÍ]: Đang ghi nhận điểm khởi khí mép trái của ${configHienTai.title}. Hãy rà từ từ thiết bị sang mép phải.`);
-        return;
-    }
-
-    // ─── BƯỚC 2: HOÀN TẤT QUÉT TẠI MÉP PHẢI ───
-    if (scanState.isScanning && scanState.startAngle !== null) {
-        scanState.isScanning = false;
-        scanState.endAngle = scanState.currentAngle;
-
-        // Thuật toán vi phân tìm khoảng lệch góc hình quạt vượt trục 0°/360°
-        let diff = scanState.endAngle - scanState.startAngle;
-        if (diff < 0) diff += 360; 
-
-        let realSizeDegree = Math.round(diff); 
-        if (realSizeDegree === 0) realSizeDegree = 2; // Phòng ngừa lỗi người dùng đứng im tại chỗ
-
-        // Tính tọa độ Trọng tâm (Điểm rơi năng lượng chính giữa)
-        let centerAngle = scanState.startAngle + (diff / 2);
-        centerAngle = (centerAngle % 360 + 360) % 360; 
-
-        // TRẢ GIAO DIỆN NÚT BẤM VỀ TRẠNG THÁI KHỞI TẠO AN TOÀN
-        btn.innerText = "📐 Bắt Đầu Quét Dải Độ Mới";
-        btn.style.background = "#2c2c2e";
-        btn.style.boxShadow = "none";
-
-        // 🔥 THÔNG MINH ÉP SỐ ĐỘ VỪA ĐO THỰC TẾ VÀO CẤU HÌNH HỆ THỐNG ĐỘNG
-        if (ConfigPhongThuy[hiddenInputPurpose]) {
-            ConfigPhongThuy[hiddenInputPurpose].sizeDegree = realSizeDegree;
-        }
-
-        showToast(`✔️ Đo đạc thành công! Chiều rộng thực tế: ${realSizeDegree}°. Đang định vị Trọng tâm: ${Math.round(centerAngle)}°`);
-
-        // 🔥 LỆNH BẮT BUỘC: Đổ ngược dữ liệu tính toán ra giao diện danh sách gợi ý và la bàn số ngay lập tức
-        processScanResult(centerAngle, realSizeDegree, hiddenInputPurpose);
-        
-        // Giao diện danh sách gợi ý tự động sắp xếp lại theo kích thước vật thể mới đo
-        if (typeof generateDirectionsList === 'function') {
-            generateDirectionsList();
-        }
-
-        // Reset bộ nhớ đệm cảm biến
-        scanState.startAngle = null;
-        scanState.endAngle = null;
-    }
-}
-
-/**
- * 3. XỬ LÝ KẾT QUẢ QUÉT VÀ ĐỒ DỮ LIỆU LÊN UI LA BÀN
- */
-function processScanResult(centerAngle, sizeDegree, purpose) {
-    const cungPhiChủMệnh = vịTríLấyCungPhi(); // Hàm lấy quẻ mệnh hiện tại (Khảm, Khôn, Cấn...)
-    const txtSurveyYear = document.getElementById('surveyYear');
-    const namKhaoSat = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value) : new Date().getFullYear();
-    const namAmReal = vịTríLấyNămÂmChuẩn();
-
-    // Khởi tạo một bản config động tạm thời ghi đè (override) lên thuộc tính sizeDegree mặc định
-    if (ConfigPhongThuy[purpose]) {
-        ConfigPhongThuy[purpose].sizeDegree = Math.round(sizeDegree);
-    }
-
-    // Gọi thuật toán lõi tích phân đa tầng đã nâng cấp ở câu trước
-    const ketQua = tinhDiemTongHop(cungPhiChủMệnh, centerAngle, namKhaoSat, purpose, namAmReal);
-
-    // Render kết quả Trọng Tâm trực quan ra màn hình cho người dùng
-    const container = document.getElementById('scan-result-panel');
-    if (container) {
-        container.style.display = "block";
-        container.innerHTML = `
-            <div style="background: rgba(48,209,88,0.08); border: 1px solid #30d15840; padding: 12px; border-radius: 8px; font-family: sans-serif; color: #fff;">
-                <div style="font-weight: bold; color: #ffca28; margin-bottom: 6px; font-size: 1rem;">🎯 KẾT QUẢ QUÉT KẾT CẤU THỰC ĐỊA</div>
-                <div style="font-size: 0.85rem; margin-bottom: 4px;">• Chiều rộng kết cấu quy đổi: <strong style="color: #30d158;">${Math.round(sizeDegree)}°</strong></div>
-                <div style="font-size: 0.85rem; margin-bottom: 4px;">• Tọa độ Trọng tâm chính giữa: <strong style="color: #ffca28;">${Math.round(centerAngle)}° (${ketQua.sonName} Sơn)</strong></div>
-                <div style="font-size: 0.85rem; margin-bottom: 8px;">• Điểm năng lượng vùng tích hợp: <strong style="color: #30d158;">${ketQua.diem}pt (${ketQua.level})</strong></div>
-                <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 6px; font-size: 0.8rem; color: #aaa; line-height: 1.4;">
-                    ${ketQua.message}
-                </div>
-            </div>
-        `;
-    }
-
-    // Ép kim la bàn xoay tự động về đúng điểm Trọng tâm vừa tìm được để người dùng quan sát
-    if (typeof triggerGhostNeedle === 'function') {
-        triggerGhostNeedle(centerAngle);
-    }
-}
