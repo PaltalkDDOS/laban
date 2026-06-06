@@ -1514,12 +1514,63 @@ function updateCompassUI(heading) {
 
     // ==================== 8. TRIGGER REALTIME EFFECTS ====================
     kichHoatDenLedQuet(currentHeading);
+    
     if (targetAngle !== null && document.getElementById('ghostNeedle')) {
         const ghost = document.getElementById('ghostNeedle');
+        const adviceTxtEl = document.getElementById('ghost-advice-text');
+        const scoreBadgeEl = document.getElementById('ghost-score-badge');
+        
+        // 1. GIỮ NGUYÊN HOÀN TOÀN CÔNG THỨC XOAY BÙ TRỪ GỐC KHÔNG LỆCH 1 PIXEL
         ghost.style.opacity = "1";
         ghost.style.transform = `translate(-50%, -50%) rotate(${targetAngle - currentHeading}deg)`;
+        
+        // 2. TOÁN PHÁP TỰ ĐỘNG BẮT SÓNG KHỚP HAI TRỤC THỜI GIAN THỰC
+        // Tính sai số góc trị tuyệt đối giữa góc đầu máy hướng nhìn thực tế và góc Virtual nạp khí
+        let saiSoGoc = Math.abs(currentHeading - targetAngle) % 360;
+        if (saiSoGoc > 180) saiSoGoc = 360 - saiSoGoc;
+
+        // TIÊU CHUẨN ĐỊA LÝ CAO CẤP: Sai lệch trong dải 1.5 độ coi như dòng mạch thông suốt
+        if (saiSoGoc <= 1.5) {
+            ghost.classList.add('matched-pulse'); // Bật hiệu ứng nhấp nháy quang học Neon
+            
+            // Chuyển đổi nội dung hộp văn bản sang trạng thái ĐẮC CÁCH ĐẠI CÁT
+            if (adviceTxtEl && !adviceTxtEl.innerHTML.includes("🏆")) {
+                adviceTxtEl.style.color = "#30d158";
+                adviceTxtEl.innerHTML = `
+                    <span style="color:#30d158; font-weight:bold; display:block; margin-bottom:4px; animation: flashText 0.5s infinite alternate;">
+                        🏆 KHỚP TRỤC LONG MẠCH — PHƯƠNG VỊ ĐẮC VỊ THÀNH CÔNG!
+                    </span>
+                    <span style="color:#fff; font-size:0.85rem;">
+                        Tọa độ thực địa đã trùng khớp hoàn toàn với trục nạp khí lý tưởng. Đương số hãy giữ nguyên góc máy này để tiến hành lập hướng/an vị kết cấu không gian.
+                    </span>
+                `;
+                if (scoreBadgeEl) {
+                    scoreBadgeEl.style.boxShadow = "0 0 12px #30d158";
+                    scoreBadgeEl.style.transform = "scale(1.08)";
+                }
+            }
+        } else {
+            // Khi xoay người ra khỏi dải từ trường vàng, lập tức gạt bỏ hiệu ứng
+            ghost.classList.remove('matched-pulse');
+            
+            // Trả lại cấu trúc văn bản hướng dẫn hành vi ban đầu cho trạch chủ
+            if (adviceTxtEl && adviceTxtEl.innerHTML.includes("🏆")) {
+                let sonHienTaiTxt = tìmSơnHướng(targetAngle);
+                adviceTxtEl.removeAttribute("style");
+                if (scoreBadgeEl) {
+                    scoreBadgeEl.style.boxShadow = "none";
+                    scoreBadgeEl.style.transform = "scale(1)";
+                }
+                adviceTxtEl.innerHTML = `
+                    Tia vàng ảo đang định vị nạp khí tại tọa độ <strong>Sơn ${sonHienTaiTxt}</strong>.<br>
+                    <span style="color:#aaa; font-size:0.82rem; display:block; margin-top:5px;">
+                        👉 Hãy cầm điện thoại xoay người từ từ sao cho <b>Kim Đỏ thực tế khớp thẳng trục với tia Vàng ảo</b> để đón đúng cát khí.
+                    </span>
+                `;
+            }
+        }
     }
-}
+} // Dấu đóng hàm gốc của updateCompassUI
 // ====================== HÀM QUÉT THẦN SÁT LƯU NIÊN CHIẾU HƯỚNG (FULL VERSION) ======================
 function getPhongThuySatTinh(tenSon, nam) {
     const results = [];
@@ -1623,81 +1674,94 @@ function getTamSat24Son(cuc) {
 }
 
 function updateDegreeDisplay(degree) {
+    // 1. Chuẩn hóa góc độ nạp khí an toàn dải [0, 360)
     const normalized = ((degree % 360) + 360) % 360;
     const currentHeading = Math.round(normalized);
 
-    const dayStr = document.getElementById('birthDay')?.value;
-    const monthStr = document.getElementById('birthMonth')?.value;
+    // LẤY TRỤC THỜI GIAN ĐỘNG ĐỒNG BỘ TỪ FORM BIỂU MẪU KHẢO SÁT
     const yearStr = document.getElementById('birthYear')?.value;
+    // Đón đầu tương lai: Ưu tiên bốc năm từ ô nhập năm khảo sát, nếu không có tự động lấy năm máy tính thực thời
     const txtNamKhaoSat = document.getElementById('surveyYear'); 
-    
     const namKhaoSatThucTe = (txtNamKhaoSat && txtNamKhaoSat.value.length === 4) ? parseInt(txtNamKhaoSat.value) : new Date().getFullYear();
 
-    let namAmReal = new Date().getFullYear();
-    if (dayStr && monthStr && yearStr && yearStr.length === 4) {
-        namAmReal = (parseInt(monthStr) < 2 || (parseInt(monthStr) === 2 && parseInt(dayStr) < 5)) ? parseInt(yearStr) - 1 : parseInt(yearStr);
-    }
-
+    // 2. Xác định cấu trúc Đại Cục 8 Cung và Vi cục 24 Sơn
     const currentCung = getCungName(normalized);
-    const sonObj = getSonObjByDegree(normalized); // Đồng bộ gọi một hàm duy nhất
-    const sonName = sonObj.name;
+    const sonName = tìmSơnHướng(normalized);
+
+    // 3. Truy xuất vi mạch Long mạch 72 Hậu thực thời
     const currentHauInfo = getCurrentHauInfo(normalized);
-    const khongVongInfo = typeof kiemTraKhongVong === 'function' ? kiemTraKhongVong(normalized) : null;
-    
-    const khongVongHTML = khongVongInfo ? `<span style="color:#ff4444; font-weight:bold; margin-left: 6px;">⚠️ ${khongVongInfo.loai}</span>` : "";
+    let hauName = currentHauInfo.ten.replace(" Hậu", "");
+    let hauColor = "#ffd700"; // Mặc định Bình Hòa (Vàng)
+    if (currentHauInfo.chatLuong.includes("Cát")) hauColor = "#00FF41";
+    else if (currentHauInfo.chatLuong.includes("Hung")) hauColor = "#ff4444";
+
+    // 4. Gọi bộ lọc tử huyệt Không Vong
+    const khongVongInfo = kiemTraKhongVong(normalized);
+    const khongVongHTML = khongVongInfo 
+        ? `<span style="color:#ff4444; font-weight:bold; text-shadow: 0 0 6px #ff0000; margin-left: 8px;">⚠️ ${khongVongInfo.loai}</span>` 
+        : "";
+
+    // 5. TÍNH ĐIỂM TỔNG HỢP ĐA TẦNG (PT) THEO ĐÚNG MỤC ĐÍCH ĐỘNG VÀ NĂM ĐỘNG
     let tongDiemHTML = "";
-    
     if (typeof chủMệnh !== 'undefined' && chủMệnh) {
         const mucDichHienTai = document.getElementById('purpose')?.value || 'house';
-        let quẻMệnhThựcThời = chủMệnh;
-        if (dayStr && monthStr && yearStr && yearStr.length === 4) {
-            if (typeof tínhCungPhi === 'function') {
-                quẻMệnhThựcThời = tínhCungPhi(parseInt(yearStr), parseInt(monthStr), parseInt(dayStr), document.getElementById('gender').value);
-            }
+        
+        // Gọi thuật toán lõi tối thượng (Hàm 1) truyền chính xác tham số năm khảo sát động
+        const tongHop = tinhDiemTongHop(chủMệnh, normalized, namKhaoSatThucTe, mucDichHienTai);
+        
+        // ĐỒNG BỘ MỐC MÀU DYNAMIC TUYỆT ĐỐI VỚI MỐC ĐẠT CÁCH VẬN 9 (72PT)
+        colorDiemRealtime = "#ff4444"; // Hung (Đỏ)
+        if (tongHop.diem >= 72) {
+            colorDiemRealtime = "#30d158"; // Cát Vị trở lên (Xanh lá)
+        } else if (tongHop.diem >= 50) {
+            colorDiemRealtime = "#ffd700"; // Trung bình (Vàng)
         }
 
-        // Gọi thuật toán bộ não xử lý trung tâm truyền đủ 5 tham số
-        const tongHop = tinhDiemTongHop(quẻMệnhThựcThời, normalized, namKhaoSatThucTe, mucDichHienTai, namAmReal);
-        
-        let colorDiemRealtime = "#ff4444"; 
-        if (tongHop.diem >= 72) colorDiemRealtime = "#30d158"; 
-        else if (tongHop.diem >= 50) colorDiemRealtime = "#ffd700"; 
-
+        // Đổ dữ liệu điểm nạp khí sạch sẽ, loại bỏ icon theo đúng yêu cầu tinh giản của bạn
         tongDiemHTML = `
-            <div style="font-size: 0.95rem; font-weight: 850; color: ${colorDiemRealtime}; background: rgba(0,0,0,0.35); padding: 2px 8px; border-radius: 5px; flex-shrink: 0; border: 1px solid ${colorDiemRealtime}40; letter-spacing: 0.3px;">
+            <div style="font-size: 0.95rem; font-weight: 850; color: ${colorDiemRealtime}; letter-spacing: 0.3px; background: rgba(0,0,0,0.35); padding: 2px 8px; border-radius: 5px; flex-shrink: 0;">
                 ${tongHop.diem}pt (${tongHop.level})
-            </div>`;
+            </div>
+        `;
     }
 
+    // 6. CẬP NHẬT LÊN DOM GIỮ NGUYÊN KIẾN TRÚC LAYOUT FLEX-GRID CHỐNG NHẢY KHUNG KHÍ CỤC
     const degreeTxt = document.getElementById('degree-txt') || document.getElementById('degreeTxt');
     if (degreeTxt) {
         degreeTxt.innerHTML = `
-            <div style="display: grid; grid-template-rows: auto auto; gap: 6px; font-family: sans-serif; width: 100%; text-align: left; box-sizing: border-box; overflow: hidden;">
+            <div style="display: grid; grid-template-rows: auto auto; gap: 6px; font-family: sans-serif; width: 100%; box-sizing: border-box; overflow: hidden; text-align: left;">
                 <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; white-space: nowrap; overflow: hidden;">
                     <div style="display: flex; align-items: center; gap: 6px;">
-                        <span style="font-size: 1.8rem; font-weight: 900; color: #ffca28; line-height: 1; letter-spacing: -0.5px;">${currentHeading}°</span>
-                        <span style="color: #8a8a8f; font-size: 0.9rem;">Phương:</span>
-                        <span style="color: #ffffff; font-size: 0.95rem; font-weight: bold;">${currentCung}</span>
+                        <span style="font-size: 1.8rem; font-weight: 900; color: #ffca28; letter-spacing: -0.5px; line-height: 1;">${currentHeading}°</span>
+                        <span style="font-size: 0.9rem; color: #8a8a8f; margin-left: 4px;">Phương:</span>
+                        <span style="font-size: 0.95rem; font-weight: bold; color: #ffffff;">${currentCung}</span>
                     </div>
                     <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
-                        <span style="color: #8a8a8f; font-size: 0.9rem;">Sơn:</span>
-                        <span style="font-size: 0.9rem; font-weight: 800; padding: 2px 10px; border-radius: 5px; background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 40%, #3a3a3c 55%, #1c1c1e 100%); color: #e5e5ea; border: 1px solid #48484a; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 3px rgba(0,0,0,0.5); text-shadow: -1px -1px 0 rgba(0,0,0,0.8); letter-spacing: 0.3px;">
+                        <span style="font-size: 0.9rem; color: #8a8a8f;">Sơn:</span>
+                        <span style="font-size: 0.9rem; font-weight: 800; padding: 2px 10px; border-radius: 5px; 
+                                     background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 40%, #3a3a3c 55%, #1c1c1e 100%); 
+                                     color: #e5e5ea; border: 1px solid #48484a; 
+                                     box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 3px rgba(0,0,0,0.5); 
+                                     text-shadow: -1px -1px 0 rgba(0,0,0,0.8); letter-spacing: 0.3px;">
                             ${sonName}
                         </span>
                     </div>
                 </div>
-                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 5px; white-space: nowrap; overflow: hidden;">
-                    <div style="font-size: 0.85rem; display: flex; align-items: center; gap: 4px; overflow: hidden; text-overflow: ellipsis;">
-                        <span style="color: #8a8a8f;">Mạch Khí:</span>
-                        <strong style="color: #ffffff;">${currentHauInfo.ten.replace(" Hậu", "")}</strong>
-                        <span style="color: ${currentHauInfo.emoji === '🟢' ? '#00ff41' : (currentHauInfo.emoji === '🔴' ? '#ff4444' : '#ffd700')}; font-weight: 600;">
+                
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; white-space: nowrap; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 5px;">
+                    <div style="overflow: hidden; text-overflow: ellipsis; font-size: 0.85rem; display: flex; align-items: center; gap: 4px;">
+                        <span style="color: #8a8a8f;">Hậu:</span>
+                        <strong style="color: #ffffff;">${hauName}</strong>
+                        <span style="color: ${hauColor}; font-weight: 600; text-shadow: 0 0 8px ${hauColor}40;">
                             (${currentHauInfo.chatLuong})
                         </span>
                         ${khongVongHTML}
                     </div>
+                    
                     ${tongDiemHTML}
                 </div>
-            </div>`;
+            </div>
+        `;
     }
 }
 
