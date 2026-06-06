@@ -332,23 +332,38 @@ body {
   filter: brightness(1.05);
 }
 
-/* === KIM VÀNG GHOST - VÀNG KIM LOẠI/VÀNG NGHỆ NEON === */
+/* === KIM VÀNG GHOST - PHIÊN BẢN NỬA TRỤC THÔNG MINH === */
 .ghost-needle {
   position: absolute;
   left: 50%;
   top: 50%;
   width: 5.5px;
-  height: 86%;
-  background: linear-gradient(to bottom, #d4af37 0%, #f1c40f 50%, #d4af37 100%);
-  clip-path: polygon(50% 0%, 100% 15%, 65% 15%, 65% 100%, 35% 100%, 35% 15%, 0% 15%);
+  height: 86%; 
+  background: linear-gradient(to bottom, #d4af37 0%, #f1c40f 45%, #d4af37 50%, transparent 50%, transparent 100%);
+  clip-path: polygon(50% 0%, 100% 15%, 65% 15%, 65% 50%, 35% 50%, 35% 15%, 0% 15%);
   transform: translate(-50%, -50%) rotate(0deg);
   transform-origin: 50% 50%;
   z-index: 7;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.4s ease, transform 0.15s ease-out;
+  /* Đổi transition ngắn lại một chút để cảm giác khớp kim nhạy bén, tức thì */
+  transition: opacity 0.3s ease, transform 0.1s ease-out, filter 0.3s ease;
   box-shadow: 0 0 6px #d4af37, 0 0 12px rgba(212,175,55,0.3);
   filter: brightness(1.1);
+}
+
+/* 🚀 HIỆU ỨNG THƯỢNG TẦNG: KHỚP PHƯƠNG VỊ LONG MẠCH */
+.ghost-needle.matched-pulse {
+  /* Ép đổi dải gradient sang màu xanh lập cực neon rực rỡ để báo hiệu thông khí */
+  background: linear-gradient(to bottom, #30d158 0%, #00ff41 45%, #30d158 50%, transparent 50%, transparent 100%) !important;
+  filter: brightness(1.4) drop-shadow(0 0 12px #30d158);
+  animation: longMachPulse 1s infinite alternate ease-in-out;
+}
+
+/* Hiệu ứng nhịp đập từ trường ngầm */
+@keyframes longMachPulse {
+  0% { opacity: 0.8; filter: brightness(1.2) drop-shadow(0 0 4px #30d158); }
+  100% { opacity: 1; filter: brightness(1.5) drop-shadow(0 0 16px #00ff41); }
 }
 
 /* ====================== LA BÀN - NÂNG CẤP CAO CẤP 2026 ====================== */
@@ -1430,3 +1445,164 @@ mjx-container {
     max-height: 0;
     opacity: 0;
 }
+/* =========================================================================
+   📲 PWA FLOATING ACTION BUTTON - ĐỒNG BỘ HIỆU ỨNG BOUNCE QUÝ PHÁI VẬN 9
+   ========================================================================= */
+.pwa-fab-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #dfb76c, #c99a4d);
+    color: #000;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 18px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    
+    /* Đồng bộ hiển thị dạng khối hàng ngang để giữ layout icon + text */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(223, 183, 108, 0.4);
+    z-index: 9999;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+
+    /* 🟢 KHỞI TẠI TRẠNG THÁI ẨN MƯỢT MÀ: Cho phép transition hoạt động */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.8) translateY(10px);
+    
+    /* Hiệu ứng bounce nhẹ quý phái đặc trưng của bạn */
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+
+/* Hiệu ứng khi rê chuột vào (PC) */
+.pwa-fab-btn:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 6px 20px rgba(223, 183, 108, 0.6);
+    cursor: pointer;
+}
+
+/* Hiệu ứng khi chạm ngón tay (Mobile) */
+.pwa-fab-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(223, 183, 108, 0.4);
+}
+
+.pwa-fab-icon {
+    font-size: 1.2rem;
+}
+
+.pwa-fab-text {
+    font-size: 0.9rem;
+}
+
+/* 🟢 KHI NÚT HIỆN LÊN: JS sẽ kích hoạt Class này */
+.pwa-fab-btn.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: scale(1) translateY(0);
+}
+
+/* Tự động thụt lùi một chút trên màn hình điện thoại nhỏ */
+@media (max-width: 480px) {
+    .pwa-fab-btn {
+        bottom: 16px;
+        right: 16px;
+        padding: 10px 16px;
+        font-size: 0.85rem;
+    }
+}
+/* ================= TỔNG LUẬN FLOATING BUTTON ================= */
+.luangiai-fab-btn {
+    position: fixed;
+    bottom: 75px; /* Nằm ngay phía trên nút Cài App (bottom 20px + cao 55px) */
+    right: 20px;
+    background: linear-gradient(135deg, #30d158, #189839); /* Tone xanh ngọc bích quý phái */
+    color: #fff;
+    border: 1px solid #71f592;
+    border-radius: 50px;
+    padding: 12px 18px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(48, 209, 88, 0.4);
+    z-index: 9999;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.luangiai-fab-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(48, 209, 88, 0.6);
+}
+
+.luangiai-fab-btn:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 480px) {
+    .luangiai-fab-btn {
+        bottom: 65px;
+        right: 16px;
+        padding: 10px 16px;
+        font-size: 0.85rem;
+    }
+}
+
+/* ================= POPUP TỔNG LUẬN (GLASSMORPHISM) ================= */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-overlay.show {
+    opacity: 1; visibility: visible;
+}
+
+.luangiai-modal {
+    background: linear-gradient(145deg, rgba(30,30,32,0.95), rgba(15,15,18,0.98));
+    border: 1px solid var(--gold);
+    border-radius: 16px;
+    width: 90%; max-width: 500px; max-height: 85vh;
+    overflow-y: auto;
+    padding: 20px;
+    transform: scale(0.8) translateY(30px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.1);
+}
+
+.modal-overlay.show .luangiai-modal {
+    transform: scale(1) translateY(0);
+}
+
+.btn-close-modal {
+    width: 100%; padding: 12px; margin-top: 15px;
+    background: #ff3b30; color: #fff; font-weight: bold;
+    border: none; border-radius: 8px; cursor: pointer;
+    font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;
+}
+    /* CSS bổ trợ tăng trải nghiệm cuộn mượt mà trên các thiết bị di động */
+    .luanmenh-form-body::-webkit-scrollbar {
+        width: 4px;
+    }
+    .luanmenh-form-body::-webkit-scrollbar-track {
+        background: rgba(255,255,255,0.01);
+    }
+    .luanmenh-form-body::-webkit-scrollbar-thumb {
+        background: rgba(223, 183, 108, 0.3);
+        border-radius: 10px;
+    }
