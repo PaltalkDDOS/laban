@@ -4785,25 +4785,19 @@ document.addEventListener('DOMContentLoaded', kichHoatBoLangNgheTouchLaBan);
 
 
 // =========================================================================
-// 🎯 PHÂN HỆ ĐIỀU KHIỂN ĐỔI MỚI: XỬ LÝ NÚT LUẬN GIẢI THÔNG MINH (CHỐNG NHÁY)
+// 🎯 PHÂN HỆ ĐIỀU KHIỂN ĐỔI MỚI: XỬ LÝ NÚT LUẬN GIẢI THEO ĐỘ ĐỨNG IM & FORM
 // =========================================================================
-
-// Khai báo thêm các biến trạng thái tĩnh để theo dõi biến động góc độ
-let lastHeadingLuanGiai = 0;      // Lưu lại góc độ ổn định gần nhất
-const NGƯỠNG_XÊ_DỊCH = 3.0;        // Dung sai (Độ): Quay nhẹ dưới 3 độ thì nút KHÔNG BỊ MẤT
-const THỜI_GIAN_ĐỨNG_IM = 800;    // Thời gian kim đứng im (ms) để kích hoạt nút
-
 function kichHoatBoDemDungKim() {
     const btnTongLuan = document.getElementById('btn-tong-luan');
     if (!btnTongLuan) return;
 
-    // 1. CHỐT CHẶN KHÓA: Nếu đang chủ động khóa la bàn thì giữ nguyên hiển thị
+    // Nếu đang chủ động khóa la bàn (isCompassHold) thì giữ nguyên hiển thị nút, không chạy đếm nữa
     if (window.isCompassHold) {
         btnTongLuan.classList.add('vượng-xuất');
         return;
     }
 
-    // 2. KIỂM TRA ĐIỀU KIỆN FORM DỮ LIỆU
+    // Kiểm tra dữ liệu đầu vào của các trường form thực tế
     const dayStr = document.getElementById('birthDay')?.value;
     const monthStr = document.getElementById('birthMonth')?.value;
     const yearStr = document.getElementById('birthYear')?.value;
@@ -4812,54 +4806,18 @@ function kichHoatBoDemDungKim() {
     const daNhapDuNgayThangNam = (dayStr && monthStr && yearStr && yearStr.length === 4);
     const daChonDanhMuc = (mucDich && mucDich !== "" && mucDich !== "none");
 
-    // ĐIỀU KIỆN CHẶN FORM: Chưa nhập đủ thì ẩn nút lập tức và xóa bộ đếm
+    // ĐIỀU KIỆN CHẶN: Nếu chưa nhập đủ ngày tháng năm HOẶC chưa chọn danh mục -> Ẩn nút lập tức
     if (!daNhapDuNgayThangNam || !daChonDanhMuc) {
-        clearTimeout(dừngKimTimeout);
         btnTongLuan.classList.remove('vượng-xuất');
         return;
     }
 
-    // 3. THUẬT TOÁN ĐIỀU KHIỂN ĐỘNG THEO GÓC ĐỘ (CHỐNG NHÁY)
-    if (typeof currentHeading !== 'undefined') {
-        // Tính toán độ lệch sai số giữa góc hiện tại và góc ổn định trước đó
-        let diff = Math.abs(currentHeading - lastHeadingLuanGiai);
-        if (diff > 180) diff = 360 - diff; // Chuẩn hóa vòng tròn góc quay
-
-        // KỊCH BẢN A: Nếu la bàn quay mạnh (vượt ngưỡng xê dịch), chứng tỏ người dùng đang xoay tìm hướng mới
-        if (diff > NGƯỠNG_XÊ_DỊCH) {
-            // Chỉ ẩn nút khi người dùng thực sự quay la bàn sang hướng khác
-            btnTongLuan.classList.remove('vượng-xuất');
-            
-            // Xóa bộ đếm cũ để lập chu kỳ đếm im mới cho hướng này
-            clearTimeout(dừngKimTimeout);
-            
-            // Cập nhật lại mốc góc quay hiện tại để theo dõi tiếp
-            lastHeadingLuanGiai = currentHeading;
-
-            // Thiết lập bộ đếm: Nếu đứng im tại hướng mới này đủ thời gian -> Hiện nút
-            dừngKimTimeout = setTimeout(() => {
-                if (!đangChạmMànHình) {
-                    btnTongLuan.classList.add('vượng-xuất');
-                }
-            }, THỜI_GIAN_ĐỨNG_IM);
-        } 
-        // KỊCH BẢN B: Nếu chỉ rung lắc nhẹ hoặc nhiễu số (diff <= NGƯỠNG_XÊ_DỊCH)
-        else {
-            // NẾU NÚT ĐANG HIỆN -> KHÔNG LÀM GÌ CẢ (Giữ nguyên trạng thái hiển thị cho user kịp bấm)
-            if (btnTongLuan.classList.contains('vượng-xuất')) {
-                return; 
-            }
-            
-            // NẾU NÚT CHƯA HIỆN -> Tiếp tục duy trì bộ đếm để chờ kích hoạt
-            if (!dừngKimTimeout) {
-                dừngKimTimeout = setTimeout(() => {
-                    if (!đangChạmMànHình) {
-                        btnTongLuan.classList.add('vượng-xuất');
-                    }
-                }, THỜI_GIAN_ĐỨNG_IM);
-            }
+    // NẾU ĐÃ HỘI TỤ ĐỦ YẾU TỐ: Đợi kim la bàn đứng im ròng rã đúng 2 giây (2000ms) mới cho xuất hiện
+    dừngKimTimeout = setTimeout(() => {
+        if (!đangChạmMànHình) {
+            btnTongLuan.classList.add('vượng-xuất');
         }
-    }
+    }, 600);
 }
 
 // Lắng nghe sự kiện thay đổi Form nhập liệu để cập nhật trạng thái nút bấm ngay tức thì
