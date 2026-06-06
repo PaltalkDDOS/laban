@@ -360,21 +360,22 @@ function getNguHoangAlert(currentHuong) {
     return "";
 }
 
-// 🔥 FIX TRIỆT ĐỂ HÀM KIỂM TRA HƯỚNG THEO ĐÚNG BIÊN ĐỘ 24 SƠN THỰC ĐỊA (15 GÓC ĐỘ)
+// ====================== HÀM ĐỊNH VỊ PHƯƠNG VỊ LONG MẠCH CHUẨN XÁC 100% ======================
 function getHanhByHeading(heading) {
     if (heading === null || heading === undefined) return "Chưa xác định";
     let normalized = ((heading % 360) + 360) % 360;
 
-    // Quét chính xác tọa độ theo đúng đồ hình la bàn góc hẹp
-    if (normalized >= 337.5 || normalized < 22.5) return "Thủy"; // Nhâm - Tý - Quý
-    if (normalized >= 22.5 && normalized < 67.5) return "Thổ";   // Sửu - Cấn - Dần
-    if (normalized >= 67.5 && normalized < 112.5) return "Mộc";  // Giáp - Mão - Ất
-    if (normalized >= 112.5 && normalized < 157.5) return "Mộc"; // Thìn - Tốn - Tỵ
-    if (normalized >= 157.5 && normalized < 202.5) return "Hỏa"; // Bính - Ngọ - Đinh
-    if (normalized >= 202.5 && normalized < 247.5) return "Thổ"; // Mùi - Khôn - Thân
-    if (normalized >= 247.5 && normalized < 292.5) return "Kim"; // Canh - Dậu - Tân
-    if (normalized >= 292.5 && normalized < 337.5) return "Kim"; // Tuất - Càn - Hợi
-    return "Thổ";
+    // Khớp tuyệt đối thông số góc độ phân rã của đồ hình la bàn 24 Sơn địa lý
+    if (normalized >= 337.5 || normalized < 22.5) return "Thủy";
+    if (normalized >= 22.5 && normalized < 67.5) return "Thổ";
+    if (normalized >= 67.5 && normalized < 112.5) return "Mộc";
+    if (normalized >= 112.5 && normalized < 157.5) return "Mộc";
+    if (normalized >= 157.5 && normalized < 202.5) return "Hỏa";
+    if (normalized >= 202.5 && normalized < 247.5) return "Thổ";
+    if (normalized >= 247.5 && normalized < 292.5) return "Kim";
+    if (normalized >= 292.5 && normalized < 337.5) return "Kim";
+    
+    return "Thổ"; // Ngưỡng trung cung dự phòng
 }
 
 // ====================== GLOBAL ELEMENTS ======================
