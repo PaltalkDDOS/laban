@@ -4812,12 +4812,25 @@ function kichHoatBoDemDungKim() {
         return;
     }
 
-    // NẾU ĐÃ HỘI TỤ ĐỦ YẾU TỐ: Đợi kim la bàn đứng im ròng rã đúng 2 giây (2000ms) mới cho xuất hiện
+    // 🌟 CHỈNH SỬA TẠI ĐÂY: Xóa ngay bộ đếm cũ khi kim vừa nhích để kích hoạt chu kỳ chờ mới
+    clearTimeout(dừngKimTimeout);
+
+    // Nếu nút ĐÃ xuất hiện rồi, cho phép xê dịch nhẹ (không ẩn ngay). 
+    // Khi nào quay liên tục và dừng lại ở hướng mới quá thời gian trễ thì mới tính chu kỳ mới.
+    if (btnTongLuan.classList.contains('vượng-xuất')) {
+        // Nếu muốn quay thật nhiều mới mất, ta chủ động ẩn nút khi sự kiện bắn liên tục quá nhanh
+        dừngKimTimeout = setTimeout(() => {
+            btnTongLuan.classList.remove('vượng-xuất');
+        }, 100); // Biên độ trễ 100ms chặn quay tít mù
+        return;
+    }
+
+    // NẾU ĐÃ HỘI TỤ ĐỦ YẾU TỐ: Đợi kim la bàn đứng im (Hạ xuống 200ms để nhạy hơn, đứng im là hiện ngay)
     dừngKimTimeout = setTimeout(() => {
         if (!đangChạmMànHình) {
             btnTongLuan.classList.add('vượng-xuất');
         }
-    }, 600);
+    }, 200); 
 }
 
 // Lắng nghe sự kiện thay đổi Form nhập liệu để cập nhật trạng thái nút bấm ngay tức thì
