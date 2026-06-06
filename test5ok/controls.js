@@ -2192,19 +2192,18 @@ function kiemTraKhongVong(degree) {
     return null; 
 }
 
+/**
+ * 📊 THUẬT TOÁN ĐIỂM TỔNG HỢP ĐA TẦNG - PHIÊN BẢN THỰC CHIẾN CHÍNH TÔNG
+ * Hợp nhất Gốc Nhân Mệnh (24 Sơn) + Gốc Địa Khí (Tích phân dải độ 72 Hậu chiếm dụng)
+ */
 function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
     const normalizedDegree = ((degree % 360) + 360) % 360;
     const sonObj = getSonObjByDegree(normalizedDegree);
     const sonName = sonObj.name;
     
     let namAmReal = namAm || new Date().getFullYear();
-    
-    // ─── ĐỒNG BỘ DỰA VÀO DANH MỤC MỞ RỘNG (KHÔNG FIX CỨNG) ───
-    const config = ConfigPhongThuy[mucDich] || { title: "Vị trí", isCat: true, sizeDegree: 2 };
+    const config = ConfigPhongThuy[mucDich] || { title: "Vị trí", isCat: true };
     const isCatPurpose = config.isCat;
-    
-    // Tự động nhận diện dải diện tích từ trường từ bảng cấu hình động
-    let dảiĐộVậtThể = config.sizeDegree || 2; 
 
     const huongToCodeMap = { "Bắc": "N", "Đông Bắc": "NE", "Đông": "E", "Đông Nam": "SE", "Nam": "S", "Tây Nam": "SW", "Tây": "W", "Tây Bắc": "NW" };
     const codeChuan = huongToCodeMap[sonObj.huong] || "N";
@@ -2213,7 +2212,15 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
     const laCungHungDiaLy = ["Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"].includes(cungBátTrạch);
     const laCungCatDiaLy = !laCungHungDiaLy;
 
-    // ─── TÍCH PHÂN ĐỊA MẠCH THEO DẢI DIỆN TÍCH ĐỘNG ───
+    // ─── LỚP TÍNH TOÁN 1: XÁC ĐỊNH DẢI ĐỘ CHIẾM DỤNG CỦA VẬT THỂ ───
+    let dảiĐộVậtThể = 2; // Ban thờ, bát hương nhỏ chiếm 2 độ
+    if (mucDich.includes('bed') || mucDich.includes('desk') || mucDich.includes('kitchen')) {
+        dảiĐộVậtThể = 10; // Giường ngủ, bàn làm việc, bếp nấu đè qua khoảng 10 độ la bàn
+    } else if (mucDich.includes('house') || mucDich.includes('door') || mucDich.includes('toilet')) {
+        dảiĐộVậtThể = 15; // Cửa chính, cổng lớn, phòng vệ sinh quét dải diện tích rộng 15 độ
+    }
+
+    // ─── LỚP TÍNH TOÁN 2: TÍCH PHÂN TÌM NĂNG LƯỢNG ĐỊA MẠCH TRUNG BÌNH ───
     let tongDiemHauMạch = 0;
     let soDiemQuet = 0;
     let dínhKhôngVongNặng = false;
@@ -2241,13 +2248,15 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
         }
     }
 
+    // Năng lượng địa mạch thực tế đổ lên toàn bộ diện tích kết cấu thực thể
     let diemHauMachTrungBinh = tongDiemHauMạch / soDiemQuet;
     let bienDoMaoLong = diemHauMachTrungBinh - 60; 
 
+    // Lấy điểm nền tĩnh Ma trận Minh Châu (Đã tách lọc không cho phạt trùng Không Vong trong hàm con)
     const sonInfo = layThongTin24Son(normalizedDegree, cungPhi, namAmReal); 
     let diemGocSon = (sonInfo && typeof sonInfo.diem === 'number') ? sonInfo.diem : 70;
 
-    // ─── THIÊN THỜI VÀ LƯU NIÊN SÁT TINH ───
+    // ─── LỚP TÍNH TOÁN 3: TÁC ĐỘNG NGOẠI CẢNH (THỜI GIAN VÀ SÁT TINH) ───
     const namTinhVan = namKhảoSát ? parseInt(namKhảoSát) : new Date().getFullYear();
     const vanSo = Math.floor((namTinhVan - 1864) / 20) % 9 + 1;
     let kVan = 1.0; 
@@ -2257,6 +2266,8 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
     }
 
     let gKhai = (isCatPurpose && laCungCatDiaLy) ? 1.1 : 1.0;
+    
+    // Phương trình hợp nhất Siêu Gốc (Địa Khí + Nhân Mệnh) nhân hệ số Thiên Thời
     let diem = (diemGocSon + bienDoMaoLong) * kVan;
 
     const satTinhs = typeof getPhongThuySatTinh === 'function' ? getPhongThuySatTinh(sonName, namKhảoSát) : [];
@@ -2267,43 +2278,47 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
     }
     diem = diem * gKhai;
 
-    // ─── ĐẢO CHIỀU KHÔNG GIAN LUẬN ĐOÁN ───
+    // ─── LỚP TÍNH TOÁN 4: ĐẢO CHIỀU KHÔNG GIAN VÀ ĐỒNG BỘ LỜI BÌNH TRỰC QUAN ───
     let messageGhiChu = "";
     let hoaGiaiGợiÝ = "";
 
     if (isCatPurpose) {
+        // KHÍ CỤC (Cửa, Giường, Thờ)
         messageGhiChu = sonInfo.luanDoan;
         hoaGiaiGợiÝ = sonInfo.hoaGiai;
+
         if (laCungCatDiaLy) {
             diem = Math.max(72, diem); 
         } else {
-            diem = Math.min(64, diem); 
+            diem = Math.min(64, diem); // Khóa trần hướng hung phương
         }
     } else {
+        // TRẤN SÁT (Bếp, Toilet) -> Đảo chiều thông minh toàn diện từ Điểm đến Lời bình
         if (laCungHungDiaLy) {
             diem = Math.max(75, (100 - diem) + 12); 
-            messageGhiChu = `🌟 [TỌA HUNG TRẤN SÁT ĐẮC CÁCH]: Vị trí ${config.title} đặt đè lên hung phương ${cungBátTrạch} giúp thiêu rụi hoàn toàn sát khí mạch đất.`;
-            hoaGiaiGợiÝ = "Trạch pháp cách cục đắc vị, trường khí an định, không cần đặt pháp bảo hóa giải.";
+            messageGhiChu = `🌟 [TỌA HUNG TRẤN SÁT ĐẮC CÁCH]: Vị trí ${config.title} đặt đè lên hung phương ${cungBátTrạch} giúp thiêu rụi, triệt tiêu hoàn toàn tà khí của mạch đất nền.`;
+            hoaGiaiGợiÝ = "Tuyệt diệu trạch pháp cách cục, trường khí ổn định định tâm, không cần đặt pháp bảo hóa giải.";
         } else {
             diem = Math.min(45, diem); 
-            messageGhiChu = `⚠️ [PHẠM KỊ TIÊU HAO]: Thiết bị đặt đè lên phương vị Cát khí của bản mệnh (${cungBátTrạch}) làm ô nhiễm sinh khí.`;
-            hoaGiaiGợiÝ = "Khuyên gia chủ chủ động dịch chuyển kết cấu sang dải Sơn vị màu xanh bên cạnh.";
+            messageGhiChu = `⚠️ [PHẠM KỊ TIÊU HAO]: Thiết bị xả uế/Bếp nấu đặt đè lên phương vị Cát khí của bản mệnh (${cungBátTrạch}) làm ô nhiễm sinh khí, tổn hao tài lộc.`;
+            hoaGiaiGợiÝ = "Khuyên gia chủ chủ động dịch chuyển vị trí thiết bị sang dải Sơn vị có màu xanh bên cạnh.";
         }
     }
 
-    // ─── PHẠT ĐIỂM THEO THỰC TẾ PHẠM KHÔNG VONG MẢNG ───
+    // ─── LỚP TÍNH TOÁN 5: KHẤU TRỪ THEO MẬT ĐỘ PHẠM KHÔNG VONG THỰC TẾ ───
     if (dínhKhôngVongNặng) {
         if (loaiKhôngVong === "ĐẠI KHÔNG VONG") {
-            diem = 12; 
-            messageGhiChu = `❌ [ĐẠI HỌA KHÔNG VONG]: Kết cấu kết cấu đè trúng trục Đại Không Vong, khí trường vô khí cực nguy hiểm!`;
+            diem = 12; // Đại Không Vong đánh sập toàn cục, biến mọi thứ thành hung cục không thể cứu vãn
+            messageGhiChu = `❌ [ĐẠI HỌA KHÔNG VONG]: Toàn bộ kết cấu vật thể đè trúng trục Đại Không Vong ranh giới hướng lớn, khí trường đảo lộn vô khí, cực kỳ nguy hiểm!`;
             hoaGiaiGợiÝ = "Tuyệt đối không xây dựng cửa chính hoặc đặt giường ngủ/ban thờ tại phân độ tử huyệt này.";
         } else {
-            diem = Math.min(48, diem - 20); 
-            messageGhiChu += ` ⚠️ [CẢNH BÁO TIỂU KHÔNG VONG]: Kết cấu đang liếm sang đường ranh giới Sơn vị (Tiểu Không Vong).`;
-            hoaGiaiGợiÝ = "Dịch chuyển kết cấu khoảng 2 độ để đưa toàn bộ trọng tâm về vùng mạch khí thuần khiết.";
+            diem = Math.min(48, diem - 20); // Tiểu Không Vong phá vỡ dải điểm cát vị
+            messageGhiChu += ` ⚠️ [CẢNH BÁO TIỂU KHÔNG VONG]: Rìa kết cấu vật thể đang liếm sang đường ranh giới Sơn vị (Tiểu Không Vong Sai Thác).`;
+            hoaGiaiGợiÝ = "Xoay nhẹ hoặc dịch chuyển kết cấu khoảng 2-3 độ để đưa toàn bộ trọng tâm và rìa vật thể về vùng mạch khí thuần khiết.";
         }
     }
 
+    // Khóa trần và sàn bảo vệ
     diem = Math.max(10, Math.min(98, Math.round(diem)));
     let level = "HUNG";
     if (diem >= 85) level = "ĐẠI CÁT";
@@ -2313,7 +2328,8 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
     return {
         diem, level, message: messageGhiChu, hoaGiai: hoaGiaiGợiÝ,
         khongVong: dínhKhôngVongNặng ? { loai: loaiKhôngVong } : null, 
-        satTinhs, sonName, sonInfo, hauInfo: getCurrentHauInfo(normalizedDegree)
+        satTinhs, sonName, sonInfo, 
+        hauInfo: getCurrentHauInfo(normalizedDegree) // Trả về thông tin Hậu mạch mốc tâm để hiển thị UI la bàn
     };
 }
 // ==========================================================================
