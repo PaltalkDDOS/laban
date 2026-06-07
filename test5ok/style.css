@@ -1520,9 +1520,9 @@ mjx-container {
 /* ================= TỔNG LUẬN FLOATING BUTTON ================= */
 .luangiai-fab-btn {
     position: fixed;
-    bottom: 75px; 
+    bottom: 75px; /* Nằm ngay phía trên nút Cài App (bottom 20px + cao 55px) */
     right: 20px;
-    background: linear-gradient(135deg, #30d158, #189839);
+    background: linear-gradient(135deg, #30d158, #189839); /* Tone xanh ngọc bích quý phái */
     color: #fff;
     border: 1px solid #71f592;
     border-radius: 50px;
@@ -1535,18 +1535,8 @@ mjx-container {
     box-shadow: 0 4px 15px rgba(48, 209, 88, 0.4);
     z-index: 9999;
     cursor: pointer;
-    /* --- NÂNG CẤP ĐỂ HẾT CHỚP --- */
-    opacity: 0;              /* Ẩn mặc định */
-    visibility: hidden;      /* Không tương tác được khi ẩn */
-    transform: translateY(20px);
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
     -webkit-tap-highlight-color: transparent;
-}
-
-.luangiai-fab-btn.vượng-xuất {
-    opacity: 1;              /* Hiện lên mượt */
-    visibility: visible;
-    transform: translateY(0);
 }
 
 .luangiai-fab-btn:hover {
