@@ -5177,6 +5177,7 @@ function executeManualScanConfig(customCenterAngle, customSizeDegree, purposeKey
     }
 }
 
+/**
  * 3. XỬ LÝ KẾT QUẢ QUÉT ĐỘNG VÀ ĐỒ DỮ LIỆU THÔNG MINH LÊN UI
  * PHIÊN BẢN 2026: Cá nhân hóa vật thể quét, hiển thị chi tiết Định vị Sơn Hậu và tích hợp nút Đóng (✕)
  */
