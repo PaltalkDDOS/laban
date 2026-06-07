@@ -5003,3 +5003,165 @@ function highlightActiveHauNode(currentCompassDegree) {
         activeNode.style.boxShadow = `0 0 10px ${textColor}40`; // Tạo vầng hào quang nhẹ bao quanh cực đẹp
     });
 }
+
+// 📐 HỆ THỐNG QUÉT ĐỘNG KHÔNG GIAN - PHIÊN BẢN KHẮC PHỤC GÓC KẸT THỰC ĐỊA
+let scanState = {
+    isScanning: false,
+    startAngle: null, // Góc hướng thẳng mép trái
+    endAngle: null,   // Góc hướng thẳng mép phải
+    currentAngle: 0
+};
+
+/**
+ * 1. HÀM CẬP NHẬT GÓC ĐỘ REAL-TIME TỪ CẢM BIẾN THIẾT BỊ
+ */
+function onCompassUpdate(heading) {
+    scanState.currentAngle = ((heading % 360) + 360) % 360;
+    
+    if (scanState.isScanning) {
+        // Vẽ dải góc thời gian thực từ Mép Trái đến hướng camera hiện tại
+        if (typeof renderScanningArc === 'function') {
+            renderScanningArc(scanState.startAngle, scanState.currentAngle);
+        }
+    } else {
+        if (typeof updateDegreeDisplay === 'function') {
+            updateDegreeDisplay(scanState.currentAngle);
+        }
+    }
+}
+
+/**
+ * 2. NÚT BẤM ĐIỀU KHIỂN QUÈT ĐỘNG THÔNG MINH
+ * Áp dụng tư duy nhắm tâm Camera (Chính giữa điện thoại) loại bỏ lỗi góc kẹt
+ */
+function handleScanButtonClick() {
+    const btn = document.getElementById('btn-scan-action');
+    const purposeElement = document.getElementById('purpose');
+    const hiddenInputPurpose = purposeElement ? purposeElement.value : 'bed';
+    const configHienTai = ConfigPhongThuy[hiddenInputPurpose] || { title: "Kết cấu" };
+
+    // ─── BƯỚC 1: NHẮM TÂM CAMERA VÀO MÉP TRÁI VẬT THỂ ───
+    if (!scanState.isScanning && scanState.startAngle === null) {
+        scanState.isScanning = true;
+        scanState.startAngle = scanState.currentAngle;
+        
+        btn.innerHTML = `🛑 CHỐT MÉP PHẢI (Nhắm thẳng tâm camera)`;
+        btn.style.background = "#ff9500"; // Màu cam cảnh báo đang giữ tiêu điểm ngắm
+        btn.style.borderColor = "#ff9500";
+        btn.style.boxShadow = "0 0 15px rgba(255,149,0,0.5)";
+        
+        showToast(`[RA ĐA TIÊU ĐIỂM]: Đã khóa Mép Trái tại ${Math.round(scanState.startAngle)}°. Hãy xoay tâm giữa điện thoại nhắm thẳng vào Mép Phải.`);
+        return;
+    }
+
+    // ─── BƯỚC 2: NHẮM TÂM CAMERA VÀO MÉP PHẢI & TRÍCH XUẤT TRỌNG TÂM ───
+    if (scanState.isScanning && scanState.startAngle !== null) {
+        scanState.isScanning = false;
+        scanState.endAngle = scanState.currentAngle;
+
+        // Thuật toán vi phân tính khoảng cách góc hình quạt giữa 2 mép ngắm (Bù trừ trục 0°/360°)
+        let diff = scanState.endAngle - scanState.startAngle;
+        if (diff < 0) diff += 360; 
+
+        // Nếu người dùng ngắm ngược từ phải qua trái, góc diff sẽ lớn hơn 180 độ. 
+        // Phong thủy thực địa chỉ quét vật thể cục bộ (< 180 độ) -> Tự động đảo chiều nếu quét ngược hướng la bàn.
+        if (diff > 180) {
+            diff = 360 - diff;
+            // Đổi lại vị trí góc để tính toán trọng tâm chuẩn xác
+            let temp = scanState.startAngle;
+            scanState.startAngle = scanState.endAngle;
+            scanState.endAngle = temp;
+        }
+
+        let realSizeDegree = Math.round(diff); 
+        if (realSizeDegree === 0) realSizeDegree = 2; // Phòng ngừa đứng im bấm 2 lần
+
+        // 🎯 TÍNH TOÁN TRỌNG TÂM HÌNH HỌC (ĐIỂM CHÍNH GIỮA CỦA VẬT THỂ VỚI ĐỘ CHÍNH XÁC CAO)
+        let centerAngle = scanState.startAngle + (diff / 2);
+        centerAngle = ((centerAngle % 360) + 360) % 360; 
+
+        // Khôi phục trạng thái ban đầu cho nút bấm UI
+        btn.innerHTML = "📐 Nhắm Quét Dải Độ Thực Địa";
+        btn.style.background = "#2c2c2e";
+        btn.style.borderColor = "#ffca28";
+        btn.style.boxShadow = "none";
+
+        // Đồng bộ độ rộng vật thể vừa đo vào cấu hình động của hệ thống
+        if (ConfigPhongThuy[hiddenInputPurpose]) {
+            ConfigPhongThuy[hiddenInputPurpose].sizeDegree = realSizeDegree;
+        }
+
+        showToast(`✔️ Quét góc kẹt thành công! Độ rộng vật thể: ${realSizeDegree}°. Tâm camera chính giữa định vị Trọng tâm: ${Math.round(centerAngle)}°`);
+
+        // Đổ dữ liệu ra lõi tính toán điểm và giao diện hiển thị
+        processScanResult(centerAngle, realSizeDegree, hiddenInputPurpose);
+        
+        if (typeof generateDirectionsList === 'function') {
+            generateDirectionsList();
+        }
+
+        // Xóa bộ nhớ đệm để sẵn sàng cho lần quét tiếp theo
+        scanState.startAngle = null;
+        scanState.endAngle = null;
+    }
+}
+
+/**
+ * 3. XỬ LÝ KẾT QUẢ QUÉT ĐỘNG VÀ ĐỒ DỮ LIỆU THÔNG MINH LÊN UI
+ */
+function processScanResult(centerAngle, sizeDegree, purpose) {
+    const cungPhiChủMệnh = vịTríLấyCungPhi(); 
+    const txtSurveyYear = document.getElementById('surveyYear');
+    const namKhaoSat = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value) : new Date().getFullYear();
+    const namAmReal = vịTríLấyNămÂmChuẩn();
+
+    // Chạy phương trình lõi Đa Tầng Thực Chiến (Đã fix logic ở bước trước)
+    const ketQua = tinhDiemTongHop(cungPhiChủMệnh, centerAngle, namKhaoSat, purpose, namAmReal);
+
+    const container = document.getElementById('scan-result-panel');
+    if (container) {
+        let mauSắcGiaoDiện = ketQua.diem >= 72 ? '#30d158' : '#ff3b30';
+        let bgGiaoDiện = ketQua.diem >= 72 ? 'rgba(48,209,88,0.06)' : 'rgba(255,59,48,0.06)';
+
+        // PHONG THỦY CAO CẤP: Phân tích trực quan độ cân bằng và lấn biên của dải độ vật thể
+        let thongTinPhanTichHau = "";
+        if (ketQua.scanMetrics && ketQua.scanMetrics.totalHauOccupied > 1) {
+            thongTinPhanTichHau = `
+                <div style="margin-top: 6px; padding: 6px; background: rgba(255,149,0,0.1); border-radius: 4px; border-left: 3px solid #ff9500; font-size: 0.8rem; color: #ffbc66;">
+                    ⚠️ <strong>CẢNH BÁO LẤN BIÊN LONG MẠCH:</strong> Vật thể rộng ${sizeDegree}° lấn qua <strong>${ketQua.scanMetrics.totalHauOccupied} phân độ Hậu</strong> khí trường ngầm. Trọng tâm bị xé nhỏ, hãy dịch chuyển nhẹ hoặc xoay kết cấu để đưa tâm máy về vùng báo màu xanh!
+                </div>
+            `;
+        } else {
+            thongTinPhanTichHau = `
+                <div style="margin-top: 6px; padding: 6px; background: rgba(48,209,88,0.1); border-radius: 4px; border-left: 3px solid #30d158; font-size: 0.8rem; color: #82f5a0;">
+                    ✅ <strong>ĐẮC TRỌNG TÂM THUẦN KHÍ:</strong> Toàn bộ bề mặt kết cấu nằm trọn vẹn, an định trong 1 phân độ Hậu địa khí ngầm, năng lượng tích tụ cao nhất.
+                </div>
+            `;
+        }
+
+        container.style.display = "block";
+        container.innerHTML = `
+            <div style="background: ${bgGiaoDiện}; border: 1px solid ${mauSắcGiaoDiện}40; padding: 14px; border-radius: 10px; color: #fff; font-family: sans-serif; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <div style="font-weight: bold; color: #ffca28; margin-bottom: 8px; font-size: 0.95rem; display: flex; align-items: center; gap: 6px;">
+                    🎯 KẾT QUẢ QUÉT KẾT CẤU THỰC ĐỊA ĐỘNG
+                </div>
+                <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse; margin-bottom: 8px;">
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);"><td style="padding: 4px 0; color: #aaa;">Chiều rộng vật thể:</td><td style="text-align: right; font-weight: bold; color: #30d158;">${Math.round(sizeDegree)}°</td></tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);"><td style="padding: 4px 0; color: #aaa;">Góc Trọng Tâm (Giữa máy):</td><td style="text-align: right; font-weight: bold; color: #ffca28;">${Math.round(centerAngle)}° (${ketQua.sonName} Sơn)</td></tr>
+                    <tr><td style="padding: 4px 0; color: #aaa;">Điểm tích phân mảng:</td><td style="text-align: right; font-weight: bold; color: ${mauSắcGiaoDiện};">${ketQua.diem}pt (${ketQua.level})</td></tr>
+                </table>
+                
+                ${thongTinPhanTichHau}
+                
+                <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 8px; padding-top: 8px; font-size: 0.8rem; color: #ddd; line-height: 1.4;">
+                    <strong>Luận trạch:</strong> ${ketQua.message}
+                </div>
+                ${ketQua.hoaGiai ? `<div style="margin-top: 4px; font-size: 0.8rem; color: #ffca28;"><strong>Hóa giải gợi ý:</strong> ${ketQua.hoaGiai}</div>` : ''}
+            </div>
+        `;
+    }
+
+    if (typeof triggerGhostNeedle === 'function') {
+        triggerGhostNeedle(centerAngle);
+    }
+}
