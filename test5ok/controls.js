@@ -4993,7 +4993,7 @@ function kichHoatBoLangNgheTouchLaBan() {
                 if (typeof showCustomAlert === 'function') {
                     showCustomAlert(`🔒 Đã khóa cứng Long Mạch tại: ${window.holdedHeading}°!`);
                 }
-            }, 2000); // Tăng lên 2 giây cho chuẩn
+            }, 500); // Tăng lên 2 giây cho chuẩn
         } else {
             // Kịch bản B: Đè 2 giây để MỞ KHÓA
             chạmHoldTimeout = setTimeout(() => {
@@ -5003,7 +5003,7 @@ function kichHoatBoLangNgheTouchLaBan() {
                 if (typeof showCustomAlert === 'function') {
                     showCustomAlert("🔓 Giải phóng mạch khí! La bàn đo động thực thời.");
                 }
-            }, 2000);
+            }, 500);
         }
     }, { passive: true });
 
@@ -5084,18 +5084,6 @@ function kichHoatBoDemDungKim() {
 }
 
 // Lắng nghe form
-document.addEventListener('DOMContentLoaded', () => {
-    const inputs = ['birthDay', 'birthMonth', 'birthYear', 'purpose'];
-    inputs.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-            el.addEventListener('input', kichHoatBoDemDungKim);
-            el.addEventListener('change', kichHoatBoDemDungKim);
-        }
-    });
-});
-
-// Lắng nghe sự kiện thay đổi Form nhập liệu để cập nhật trạng thái nút bấm ngay tức thì
 document.addEventListener('DOMContentLoaded', () => {
     const inputs = ['birthDay', 'birthMonth', 'birthYear', 'purpose'];
     inputs.forEach(id => {
