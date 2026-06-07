@@ -779,7 +779,6 @@ function generateDirectionsList() {
         let statusText = "";
 
         if (isCatPurpose) {
-            // Tab nạp sinh khí (Cửa, Giường, Thờ...)
             if (item.diemTongHop >= 72) {
                 colorStyle = cóSơnVịBịHungNguyHiem ? '#ff9f0a' : '#30d158';
                 bgKhung = cóSơnVịBịHungNguyHiem ? 'rgba(255,159,10,0.04)' : 'rgba(48,209,88,0.03)';
@@ -790,8 +789,6 @@ function generateDirectionsList() {
                 statusText = '❌ PHẠM HUNG PHƯƠNG TOÀN CỤC (ĐẠI KỴ LẬP HƯỚNG BẢN MỆNH)';
             }
         } else {
-            // Tab trấn sát tiêu uế (Toilet, Bếp, Hầm tự hoại...)
-            // Cung địa lý càng xấu thì điểm tổng hợp càng cao -> Điểm cao là tốt (Màu XANH)
             if (item.diemTongHop >= 72) {
                 colorStyle = '#30d158';
                 bgKhung = 'rgba(48,209,88,0.03)';
@@ -825,7 +822,6 @@ function generateDirectionsList() {
                     solInfo = "Biện pháp: Dịch chuyển nhẹ kết cấu kiến trúc sang các sơn vị báo màu xanh bên cạnh hoặc ứng dụng la bàn vi phân.";
                 }
             } else {
-                // Đảo chiều logic thị giác cho Toilet, Bếp nấu
                 if (score < 50) {
                     sonColor = "#30d158"; 
                     titleInfo = `Sơn vị ${son} [Trấn Sát Đắc Cách - Đại Cát]`;
@@ -839,7 +835,12 @@ function generateDirectionsList() {
                 }
             }
             
-            sonHTML += `<span style="display:inline-block; white-space:nowrap; cursor:pointer;" onclick="showExplanation('${titleInfo.replace(/'/g, "\\'")}', '${textInfo.replace(/'/g, "\\'")}', '${solInfo.replace(/'/g, "\\'")}')">` +
+            // Xử lý loại bỏ dấu nháy đơn để tránh vỡ chuỗi onclick inline HTML
+            const safeTitle = titleInfo.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            const safeText = textInfo.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            const safeSol = solInfo.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+
+            sonHTML += `<span style="display:inline-block; white-space:nowrap; cursor:pointer;" onclick="showExplanation('${safeTitle}', '${safeText}', '${safeSol}')">` +
                        `<span style="color:${sonColor}; font-weight:700;">${son}</span>` +
                        `<span style="color:#ffffff;"> (${score}%)</span></span>`;
             
@@ -853,48 +854,68 @@ function generateDirectionsList() {
 
         let hauInfoTrái = Data72Hau[Math.round(mốcTrái / 5) * 5] || { ten: "Hậu Trái", chatLuong: "Bình Hòa", diem: 60, ynghia: "Mạch khí bình hòa ổn định.", giaiphap: "Giữ sạch sẽ." };
         let hauInfoTâm  = Data72Hau[Math.round(mốcTâm / 5) * 5] || { ten: "Hậu Tâm", chatLuong: "Bình Hòa", diem: 60, ynghia: "Mạch khí bình hòa ổn định.", giaiphap: "Giữ sạch sẽ." };
-        let hauInfoPhải = Data72Hau[Math.round(mốcPhải / 5) * 5] || { tile: "Hậu Phải", chatLuong: "Bình Hòa", diem: 60, ynghia: "Mạch khí bình hòa ổn định.", giaiphap: "Giữ sạch sẽ." };
+        // ĐÃ SỬA LỖI ĐÁNH MÁY: đổi 'tile' thành 'ten' để đồng bộ dữ liệu
+        let hauInfoPhải = Data72Hau[Math.round(mốcPhải / 5) * 5] || { ten: "Hậu Phải", chatLuong: "Bình Hòa", diem: 60, ynghia: "Mạch khí bình hòa ổn định.", giaiphap: "Giữ sạch sẽ." };
 
         const getHauColor = (cl) => cl.includes('Cát') ? '#30d158' : (cl.includes('Hung') ? '#ff3b30' : '#dfb76c');
         
-        // Hàm trích xuất lời bình lý giải sâu sắc lý do sụt điểm/thăng điểm khi kết hợp hai trục Địa mạch + Nhân mệnh
-        const getHauExplanation = (hauObj, sonScore) => {
+        const getHauExplanation = (hauObj, isCat) => {
             let lyGiai = `Phân đoạn Hậu mạch đất ngầm: ${hauObj.ten} (Chỉ số năng lượng Địa khí đạt ${hauObj.diem}pt - Trạng thái: ${hauObj.chatLuong}).\\n\\n`;
-            if (hauObj.chatLuong.includes('Hung') || hauObj.chatLuong.includes('Không Vong')) {
-                lyGiai += `⚠️ LÝ GIẢI SỰ SỤT GIẢM NĂNG LƯỢNG: Mặc dù Sơn vị hướng lớn của bạn đang đạt điểm vượng thế, nhưng mạch khí 5 độ ngầm tại vị trí này lại dính cung xấu hoặc lằn ranh hỗn loạn từ trường. Sát khí ngầm này giống như vết sâu đục từ dưới đất lên, kéo chìm hiệu suất năng lượng tổng hòa của toàn bộ kết cấu vật thể đè lên nó.`;
+            
+            if (isCat) {
+                if (hauObj.chatLuong.includes('Hung') || hauObj.chatLuong.includes('Không Vong') || hauObj.chatLuong.includes('Sai Thác')) {
+                    lyGiai += `⚠️ LÝ GIẢI SỰ SỤT GIẢM NĂNG LƯỢNG: Mặc dù Sơn vị hướng lớn của bạn đang đạt điểm vượng thế, nhưng mạch khí 5 độ ngầm tại vị trí này lại dính cung xấu hoặc lằn ranh hỗn loạn từ trường. Sát khí ngầm này giống như vết sâu đục từ dưới đất lên, kéo chìm hiệu suất năng lượng tổng hòa của toàn bộ kết cấu vật thể đè lên nó.`;
+                } else {
+                    lyGiai += `🌟 LÝ GIẢI SỰ GIA TRÌ NĂNG LƯỢNG: Vùng mạch địa khí này vô cùng thuần khiết. Sự cộng hưởng đồng nhất giữa Nhân mệnh vượng cát của Sơn vị và Địa khí Tiến khí của Hậu mạch tạo ra một Siêu Gốc trường khí vững chãi, bảo vệ công năng khỏi các tác động xấu của sao hạn lưu niên.`;
+                }
             } else {
-                lyGiai += `🌟 LÝ GIẢI SỰ GIA TRÌ NĂNG LƯỢNG: Vùng mạch địa khí này vô cùng thuần khiết. Sự cộng hưởng đồng nhất giữa Nhân mệnh vượng cát của Sơn vị và Địa khí Tiến khí của Hậu mạch tạo ra một Siêu Gốc trường khí vững chãi, bảo vệ công năng khỏi các tác động xấu của sao hạn lưu niên.`;
+                if (hauObj.chatLuong.includes('Hung') || hauObj.chatLuong.includes('Không Vong') || hauObj.chatLuong.includes('Sai Thác')) {
+                    lyGiai += `🟢 GIẢI THÍCH CHUYÊN SÂU: Ô Hậu mạch này báo XANH vì mạch đất ngầm ở đây mang tính hung sát, hỗn loạn từ trường. Đặt thiết bị tiêu uế (Toilet, Bếp) đè trúng phân độ này sẽ bế khí sát, biến trục tử huyệt thành nơi xả bỏ tạp khí, làm sạch đại cục trường khí cho ngôi nhà.`;
+                } else {
+                    lyGiai += `⚠️ GIẢI THÍCH CHUYÊN SÂU: Ô Hậu mạch báo ĐỎ vì long mạch ngầm dưới đất tại phân độ hẹp này rất sạch và vượng khí. Tuyệt đối không đặt uế khí đè lên làm ô nhiễm nguồn mạch khí ngầm quý giá này.`;
+                }
             }
             return lyGiai;
         };
 
+        // Đảm bảo lấy đúng chữ đầu tiên của tên Hậu mạch (Ví dụ: "Mậu" từ "Mậu Tý")
+        const tenTrái = hauInfoTrái.ten ? hauInfoTrái.ten.split(' ')[0] : "Hậu";
+        const tenTâm = hauInfoTâm.ten ? hauInfoTâm.ten.split(' ')[0] : "Hậu";
+        const tenPhải = hauInfoPhải.ten ? hauInfoPhải.ten.split(' ')[0] : "Hậu";
+
+        // Đồng bộ màu sắc chữ trạng thái của Hậu mạch theo Tab tương ứng
+        const txtColorTrái = isCatPurpose ? getHauColor(hauInfoTrái.chatLuong) : (hauInfoTrái.chatLuong.includes('Hung') || hauInfoTrái.chatLuong.includes('Không Vong') ? '#30d158' : '#ff3b30');
+        const txtColorTâm = isCatPurpose ? getHauColor(hauInfoTâm.chatLuong) : (hauInfoTâm.chatLuong.includes('Hung') || hauInfoTâm.chatLuong.includes('Không Vong') ? '#30d158' : '#ff3b30');
+        const txtColorPhải = isCatPurpose ? getHauColor(hauInfoPhải.chatLuong) : (hauInfoPhải.chatLuong.includes('Hung') || hauInfoPhải.chatLuong.includes('Không Vong') ? '#30d158' : '#ff3b30');
+
+        const labelTrái = isCatPurpose ? hauInfoTrái.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.') : (hauInfoTrái.chatLuong.includes('Hung') || hauInfoTrái.chatLuong.includes('Không Vong') ? 'ĐẮC VỊ' : 'KỴ ĐẶT');
+        const labelTâm = isCatPurpose ? hauInfoTâm.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.') : (hauInfoTâm.chatLuong.includes('Hung') || hauInfoTâm.chatLuong.includes('Không Vong') ? 'ĐẮC VỊ' : 'KỴ ĐẶT');
+        const labelPhải = isCatPurpose ? hauInfoPhải.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.') : (hauInfoPhải.chatLuong.includes('Hung') || hauInfoPhải.chatLuong.includes('Không Vong') ? 'ĐẮC VỊ' : 'KỴ ĐẶT');
+
         let html3HauMạch = `
             <div style="display: flex; gap: 6px; margin-top: 6px; width: 100%; box-sizing: border-box; font-family: sans-serif;">
-                <!-- HẬU TRÁI -->
                 <div class="hau-node-item node-goc-${Math.round(mốcTrái / 5) * 5}" 
-                     onclick="showExplanation('${hauInfoTrái.ten}', '${getHauExplanation(hauInfoTrái, item.diemTongHop)}', 'Yêu cầu tinh chỉnh kiến trúc: ${hauInfoTrái.giaiphap.replace(/'/g, "\\'")}')"
+                     onclick="showExplanation('${hauInfoTrái.ten.replace(/'/g, "\\'")}', '${getHauExplanation(hauInfoTrái, isCatPurpose).replace(/'/g, "\\'")}', 'Yêu cầu tinh chỉnh kiến trúc: ${hauInfoTrái.giaiphap.replace(/'/g, "\\'")}')"
                      style="flex: 1; text-align: center; background: rgba(255,255,255,0.04); padding: 6px 4px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; transition: all 0.2s;">
-                    <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${hauInfoTrái.ten.split(' ')[0]} (${Math.round(mốcTrái)}°)</div>
-                    <div style="font-size: 0.7rem; color: ${getHauColor(hauInfoTrái.chatLuong)}; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px;">
-                        ${hauInfoTrái.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.')}
+                    <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${tenTrái} (${Math.round(mốcTrái)}°)</div>
+                    <div style="font-size: 0.7rem; color: ${txtColorTrái}; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px;">
+                        ${labelTrái}
                     </div>
                 </div>
-                <!-- HẬU TÂM -->
                 <div class="hau-node-item node-goc-${Math.round(mốcTâm / 5) * 5}" 
-                     onclick="showExplanation('${hauInfoTâm.ten}', '${getHauExplanation(hauInfoTâm, item.diemTongHop)}', 'Yêu cầu tinh chỉnh kiến trúc: ${hauInfoTâm.giaiphap.replace(/'/g, "\\'")}')"
+                     onclick="showExplanation('${hauInfoTâm.ten.replace(/'/g, "\\'")}', '${getHauExplanation(hauInfoTâm, isCatPurpose).replace(/'/g, "\\'")}', 'Yêu cầu tinh chỉnh kiến trúc: ${hauInfoTâm.giaiphap.replace(/'/g, "\\'")}')"
                      style="flex: 1; text-align: center; background: rgba(255,255,255,0.04); padding: 6px 4px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; transition: all 0.2s;">
-                    <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${hauInfoTâm.ten.split(' ')[0]} (${Math.round(mốcTâm)}°)</div>
-                    <div style="font-size: 0.7rem; color: ${getHauColor(hauInfoTâm.chatLuong)}; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px;">
-                        ${hauInfoTâm.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.')}
+                    <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${tenTâm} (${Math.round(mốcTâm)}°)</div>
+                    <div style="font-size: 0.7rem; color: ${txtColorTâm}; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px;">
+                        ${labelTâm}
                     </div>
                 </div>
-                <!-- HẬU PHẢI -->
                 <div class="hau-node-item node-goc-${Math.round(mốcPhải / 5) * 5}" 
-                     onclick="showExplanation('${hauInfoPhải.ten}', '${getHauExplanation(hauInfoPhải, item.diemTongHop)}', 'Yêu cầu tinh chỉnh kiến trúc: ${hauInfoPhải.giaiphap.replace(/'/g, "\\'")}')"
+                     onclick="showExplanation('${hauInfoPhải.ten.replace(/'/g, "\\'")}', '${getHauExplanation(hauInfoPhải, isCatPurpose).replace(/'/g, "\\'")}', 'Yêu cầu tinh chỉnh kiến trúc: ${hauInfoPhải.giaiphap.replace(/'/g, "\\'")}')"
                      style="flex: 1; text-align: center; background: rgba(255,255,255,0.04); padding: 6px 4px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; transition: all 0.2s;">
-                    <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${hauInfoPhải.ten.split(' ')[0]} (${Math.round(mốcPhải)}°)</div>
-                    <div style="font-size: 0.7rem; color: ${getHauColor(hauInfoPhải.chatLuong)}; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px;">
-                        ${hauInfoPhải.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.')}
+                    <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${tenPhải} (${Math.round(mốcPhải)}°)</div>
+                    <div style="font-size: 0.7rem; color: ${txtColorPhải}; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px;">
+                        ${labelPhải}
                     </div>
                 </div>
             </div>
@@ -2088,84 +2109,146 @@ function getHuongDoiXung(huong) {
     return map[huong] || huong;
 }
 
+// =========================================================================
+// 🚀 PHIÊN BẢN ĐẠI NÂNG CẤP: HIỂN THỊ CHI TIẾT ĐA TẦNG - ĐỒNG BỘ 100% XUYÊN MẠCH
+// =========================================================================
 function renderMultiLayerDetail(result, van, degree) {
     if (!result) return;
 
     // Phân rã dữ liệu từ toán pháp lõi (đảm bảo tính toàn vẹn số liệu)
     const { diem, level, message, hoaGiai, khongVong, satTinhs, sonName, sonInfo, hauInfo } = result;
 
-    // ĐỒNG BỘ MỐC MÀU CHUẨN TUYỆT ĐỐI VỚI MỐC ĐẠT CÁCH VẬN 9 (72pt)
-    let colorStatus = "#ff3b30"; // Dưới 50: Hung (Màu Đỏ)
-    if (diem >= 85) {
-        colorStatus = "#30d158"; // Đại Cát (Xanh lá sáng)
-    } else if (diem >= 72) {
-        colorStatus = "#30d158"; // Cát Vị - Đạt cách chuẩn (Xanh lá)
-    } else if (diem >= 50) {
-        colorStatus = "#dfb76c"; // Trung Bình (Vàng Gold)
+    // Trích xuất mục đích sử dụng động để đảo chiều thị giác âm dương
+    const mucDich = document.getElementById('purpose').value;
+    const config = ConfigPhongThuy[mucDich] || { title: "Vị trí", isCat: true };
+    const isCatPurpose = config.isCat; // true: Nạp Cát, false: Trấn Sát (Bếp, Toilet...)
+
+    // ─── ĐỒNG BỘ MỐC MÀU CHUẨN TUYỆT ĐỐI THEO CHỦ THỂ CÔNG NĂNG ───
+    let colorStatus = "#ff3b30"; // Mặc định ĐỎ (Hung Cục)
+    if (diem >= 72) {
+        colorStatus = diem >= 85 ? "#30d158" : "#32b057"; // XANH LÁ (Đắc Cách / Đạt Ngưỡng Cát)
+    } else if (diem >= 50 && isCatPurpose) {
+        colorStatus = "#dfb76c"; // VÀNG GOLD (Cảnh báo điều tiết nhẹ cho tab Nạp Cát)
     }
 
-    let html = `<div style="font-size:0.92rem; line-height:1.6; color:#e0e0e0; font-family: sans-serif;">`;
+    let html = `<div style="font-size:0.92rem; line-height:1.6; color:#e0e0e0; font-family: sans-serif; width: 100%; box-sizing: border-box;">`;
 
-    // ==========================================
-    // TẦNG 1: THƯỢNG ĐỈNH TỔNG ĐIỂM (PT - PHONG THỦY SỐ ĐA TẦNG)
-    // ==========================================
+    // =========================================================================
+    // TẦNG 1: THƯỢNG ĐỈNH TỔNG ĐIỂM (PT - PHONG THỦY SỐ ĐA TẦNG ĐẢO CHIỀU)
+    // =========================================================================
     html += `
-    <div style="text-align:center; padding:20px; background:rgba(255,255,255,0.03); border-radius:16px; margin-bottom:20px; border: 1px solid ${colorStatus}40;">
-        <div style="font-size:0.7rem; color:#888; text-transform:uppercase; letter-spacing: 2px;">Chỉ số PT (Phong Thủy Số Vận 9)</div>
-        <div style="font-size:3.5rem; font-weight:900; color:${colorStatus}; margin: 5px 0;">${diem}<span style="font-size:1.2rem; font-weight:400;">pt</span></div>
-        <div style="font-weight:700; color:${colorStatus}; letter-spacing: 1px; padding: 4px 12px; background: ${colorStatus}20; display: inline-block; border-radius: 20px;">${level}</div>
-        <div style="margin-top:10px; font-size:0.75rem; color:#8a8a8f; font-family: monospace; line-height: 1.4;">
-            PT = [ ( BT<sub>Gốc</sub> + Δ<sub>H72</sub> ) × K<sub>Van</sub> - ΣΨ<sub>Sat</sub> ] × Γ<sub>Khai</sub>
+    <div style="text-align:center; padding:20px; background:rgba(255,255,255,0.02); border-radius:16px; margin-bottom:20px; border: 1px solid ${colorStatus}40; box-shadow: inset 0 0 15px ${colorStatus}10;">
+        <div style="font-size:0.7rem; color:#888; text-transform:uppercase; letter-spacing: 2px; font-weight: bold;">Chỉ số PT [${config.title}] Vận 9</div>
+        <div style="font-size:3.5rem; font-weight:900; color:${colorStatus}; margin: 5px 0; text-shadow: 0 0 10px ${colorStatus}20;">${diem}<span style="font-size:1.2rem; font-weight:400;">pt</span></div>
+        <div style="font-weight:700; color:${colorStatus}; letter-spacing: 1px; padding: 4px 16px; background: ${colorStatus}15; display: inline-block; border-radius: 20px; text-transform: uppercase; font-size: 0.85rem; border: 1px solid ${colorStatus}30;">${level}</div>
+        <div style="margin-top:12px; font-size:0.75rem; color:#8a8a8f; font-family: monospace; line-height: 1.4; border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 8px;">
+            PT = [ ( BT<sub>Gốc</sub> + Δ<sub>H72</sub> ) × K<sub>Van</sub> ${isCatPurpose ? '-' : '+'} ΣΨ<sub>Sat</sub> ] × Γ<sub>Khai</sub>
         </div>
     </div>`;
 
-    // ==========================================
-    // TẦNG 2: CẢNH BÁO LUỒNG KHÍ ĐẠI KỴ
-    // ==========================================
+    // =========================================================================
+    // TẦNG 2: CẢNH BÁO LUỒNG KHÍ ĐẠI KỴ / THƯỞNG ĐIỂM TIÊU SÁT
+    // =========================================================================
     if (khongVong || (satTinhs && satTinhs.length > 0)) {
-        html += `<div style="margin-bottom:20px;">`;
+        html += `<div style="margin-bottom:20px; display: flex; flex-direction: column; gap: 8px;">`;
+        
         if (khongVong) {
+            // Đảo chiều lời luận Không Vong động theo bản chất Cát/Hung của công năng
+            let kvBg = isCatPurpose ? "rgba(255,59,48,0.12)" : "rgba(48,209,88,0.12)";
+            let kvBorder = isCatPurpose ? "#ff3b30" : "#30d158";
+            let kvTitle = isCatPurpose ? `⚠️ ĐẠI KỴ TỬ HUYỆT: ${khongVong.loai}` : `🏆 THẦN CÁCH TIÊU SÁT: ĐÈ TRÚC ${khongVong.loai}`;
+            let kvMsg = isCatPurpose ? 
+                `Kết cấu nạp khí đang đặt dính lằn ranh đại kỵ khiến dòng từ trường bị xé toạc, hỗn loạn khí trường.` : 
+                `Tuyệt diệu! Chọn đúng lằn ranh nhiễu loạn để đặt uế khí giúp cách ly và xả thẳng tạp khí độc hại ra khỏi long mạch trạch đất.`;
+
             html += `
-            <div style="background:rgba(255,59,48,0.15); padding:15px; border-radius:12px; border:1px solid #ff3b30; margin-bottom:10px;">
-                <strong style="color:#ff3b30;">⚠️ ĐẠI KỴ TỬ HUYỆT: ${khongVong.loai}</strong><br>
-                <span style="font-size:0.85rem;">${khongVong.message}</span>
+            <div style="background:${kvBg}; padding:12px 15px; border-radius:12px; border:1px solid ${kvBorder};">
+                <strong style="color:${kvBorder}; font-size: 0.9rem; display: block; margin-bottom: 3px;">${kvTitle}</strong>
+                <span style="font-size:0.85rem; color: #eee;">${kvMsg}</span>
             </div>`;
         }
+
         satTinhs.forEach(sat => {
+            let satColor = isCatPurpose ? (sat.color || '#ff9f0a') : '#30d158';
+            let satBg = isCatPurpose ? 'rgba(255,159,10,0.08)' : 'rgba(48,209,88,0.06)';
+            let satTitle = isCatPurpose ? `💀 CHIẾU HƯỚNG SÁT TINH: ${sat.ten}` : `🛡️ TIÊU DIỆT SÁT TINH: ĐÈ TRÚNG VỊ TRÍ ${sat.ten}`;
+            let satMsg = isCatPurpose ? 
+                (sat.giaiPhap || "Khu vực vướng năng lượng cực xấu lưu niên, gia chủ tránh động thổ khoan đục sâu tại phân độ này.") :
+                "Bếp/Toilet đặt tại đây đóng vai trò trấn yểm cực mạnh, đốt cháy hoàn toàn hung tính của hung tinh lưu niên.";
+
             html += `
-            <div style="background:rgba(255,159,10,0.1); padding:10px 15px; border-radius:10px; border-left:4px solid ${sat.color || '#ff9f0a'}; margin-bottom:8px;">
-                <strong style="color:${sat.color || '#ff9f0a'}; font-size:0.9rem;">💀 CHIẾU HƯỚNG SÁT TINH: ${sat.ten}</strong><br>
-                <span style="font-size:0.82rem; color:#ccc;">${sat.giaiPhap || "Khu vực chịu năng lượng xấu hung tinh đáo phương, tránh động thổ khoan đục sâu."}</span>
+            <div style="background:${satBg}; padding:10px 15px; border-radius:10px; border-left:4px solid ${satColor}; border-top: 1px solid ${satColor}15; border-right: 1px solid ${satColor}15; border-bottom: 1px solid ${satColor}15;">
+                <strong style="color:${satColor}; font-size:0.88rem; display: block; margin-bottom: 2px;">${satTitle}</strong>
+                <span style="font-size:0.82rem; color:#ccc;">${satMsg}</span>
             </div>`;
         });
+        
         html += `</div>`;
     }
 
-    // ==========================================
-    // TẦNG 3: LUẬN GIẢI CHUYÊN SÂU (MATRANMINHCHAU SƠN ĐẠO)
-    // ==========================================
-    const isHung = diem < 72; // Khớp mốc Cát Hung học thuật số mới
-    const accentColor = isHung ? "#ff3b30" : "#dfb76c";
-
+    // =========================================================================
+    // TẦNG 3: LUẬN GIẢI CHUYÊN SÂU ĐỒNG BỘ ĐẢO CHIỀU ĐỘNG (MATRANMINHCHAU SƠN ĐẠO)
+    // =========================================================================
+    // Biến message và hoaGiai từ kết quả lõi đã tự động lật ngược nội dung text, chỉ cần gán hiển thị chuẩn màu
     html += `
-    <div style="background:rgba(255,255,255,0.03); padding:15px; border-radius:12px; border:1px solid #444;">
-        <strong style="color:${accentColor}; display:block; margin-bottom:8px;">◆ MINH CHÂU SƠN ĐẠO: ${sonName} (${degree}°)</strong>
-        <div style="font-size: 0.88rem; color: #fff; text-align: justify;">${message}</div>
-        <div style="margin-top:10px; color:#dfb76c; font-size:0.85rem; border-top:1px solid #333; padding-top:8px;">
-            <b>💡 Mật pháp quy hoạch / Hóa giải khuyên dùng:</b> ${hoaGiai}
+    <div style="background:rgba(255,255,255,0.01); padding:15px; border-radius:12px; border:1px solid rgba(255,255,255,0.08); box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
+        <strong style="color:#dfb76c; display:block; margin-bottom:8px; font-size:0.9rem; letter-spacing: 0.5px;">◆ MINH CHÂU SƠN ĐẠO ĐỘ SỐ: ${sonName} (${degree}°)</strong>
+        <div style="font-size: 0.88rem; color: #ddd; text-align: justify; line-height: 1.5;">${message}</div>
+        <div style="margin-top:12px; color:#ffd700; font-size:0.85rem; border-top:1px solid rgba(255,255,255,0.08); padding-top:10px; line-height: 1.45;">
+            <b style="color:#dfb76c; display: block; margin-bottom: 3px;">💡 Mật pháp quy hoạch / Hóa giải mật truyền:</b> ${hoaGiai}
         </div>
     </div>`;
 
-    // ==========================================
-    // TẦNG 4: VẬN KHÍ & LONG MẠCH (72 HẬU)
-    // ==========================================
+    // =========================================================================
+    // TẦNG 4: ĐỒNG BỘ HIỂN THỊ ĐỒ HỌA 3 HẬU MẠCH PHÂN TẦNG TRỰC QUAN
+    // =========================================================================
     if (hauInfo) {
+        // Đồng bộ thuật toán tìm kiếm 3 góc kề cận y hệt hàm danh sách gợi ý để vẽ cấu hình
+        let mốcTâm = Math.round(degree / 5) * 5;
+        if (mốcTâm >= 360) mốcTâm = 0;
+        let mốcTrái = (mốcTâm - 5 + 360) % 360;
+        let mốcPhải = (mốcTâm + 5) % 360;
+
+        let hauTrái = Data72Hau[mốcTrái.toString()] || { ten: "Hậu Trái", chatLuong: "Bình Hòa", diem: 60 };
+        let hauTâm  = Data72Hau[mốcTâm.toString()] || { ten: "Hậu Tâm", chatLuong: "Bình Hòa", diem: 60 };
+        let hauPhải = Data72Hau[mốcPhải.toString()] || { ten: "Hậu Phải", chatLuong: "Bình Hòa", diem: 60 };
+
+        const checkHauColor = (cl) => cl.includes('Cát') ? '#30d158' : (cl.includes('Hung') ? '#ff3b30' : '#dfb76c');
+        
+        // Đoạn html dựng cấu trúc khối 3 phân đoạn góc Trên/Dưới cực kỳ khoa học
+        let htmlKhối3Hậu = `
+            <div style="display: flex; gap: 6px; margin-top: 10px; width: 100%; box-sizing: border-box;">
+                <div style="flex: 1; text-align: center; background: rgba(255,255,255,0.03); padding: 8px 4px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${hauTrái.ten.split(' ')[0]} (${mốcTrái}°)</div>
+                    <div style="font-size: 0.68rem; color: ${isCatPurpose ? checkHauColor(hauTrái.chatLuong) : (hauTrái.chatLuong.includes('Hung') ? '#30d158' : '#ff3b30')}; font-weight: bold; text-transform: uppercase;">
+                        ${isCatPurpose ? hauTrái.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.') : (hauTrái.chatLuong.includes('Hung') ? 'ĐẮC VỊ' : 'K KỴ ĐẶT')}
+                    </div>
+                </div>
+                <div style="flex: 1; text-align: center; background: rgba(255,255,255,0.08); padding: 8px 4px; border-radius: 8px; border: 1px solid ${isCatPurpose ? checkHauColor(hauTâm.chatLuong) : (hauTâm.chatLuong.includes('Hung') ? '#30d158' : '#ff3b30')}; box-shadow: 0 0 8px ${isCatPurpose ? checkHauColor(hauTâm.chatLuong) : (hauTâm.chatLuong.includes('Hung') ? '#30d158' : '#ff3b30')}30;">
+                    <div style="font-size: 0.75rem; color: #ffd700; font-weight: bold; margin-bottom: 2px;">🎯 ${hauTâm.ten.split(' ')[0]} (${mốcTâm}°)</div>
+                    <div style="font-size: 0.68rem; color: ${isCatPurpose ? checkHauColor(hauTâm.chatLuong) : (hauTâm.chatLuong.includes('Hung') ? '#30d158' : '#ff3b30')}; font-weight: bold; text-transform: uppercase;">
+                        ${isCatPurpose ? hauTâm.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.') : (hauTâm.chatLuong.includes('Hung') ? 'ĐẮC VỊ' : 'K KỴ ĐẶT')}
+                    </div>
+                </div>
+                <div style="flex: 1; text-align: center; background: rgba(255,255,255,0.03); padding: 8px 4px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${hauPhải.ten.split(' ')[0]} (${mốcPhải}°)</div>
+                    <div style="font-size: 0.68rem; color: ${isCatPurpose ? checkHauColor(hauPhải.chatLuong) : (hauPhải.chatLuong.includes('Hung') ? '#30d158' : '#ff3b30')}; font-weight: bold; text-transform: uppercase;">
+                        ${isCatPurpose ? hauPhải.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.') : (hauPhải.chatLuong.includes('Hung') ? 'ĐẮC VỊ' : 'K KỴ ĐẶT')}
+                    </div>
+                </div>
+            </div>
+        `;
+
         html += `
-        <div style="margin-top:20px; padding:15px; background:rgba(0,255,120,0.05); border-radius:12px; border:1px solid #00ffaa33;">
-            <strong style="color:#00ffaa; font-size:0.9rem;">🌟 LONG MẠCH 72 HẬU PHÂN CHÂM (VI CỤC 5°)</strong>
-            <div style="font-size:0.85rem; color:#bbb; margin-top:5px; line-height: 1.5;">
-                Khí mạch Tiết khí: <b>${hauInfo.ten}</b> — Phẩm chất: <span style="color:${hauInfo.chatLuong.includes('Cát') ? '#30d158' : '#ff3b30'}"><b>${hauInfo.chatLuong}</b></span><br>
-                Luận giải trường khí: <i>${hauInfo.ynghia}</i>
+        <div style="margin-top:20px; padding:15px; background:rgba(0,255,120,0.02); border-radius:12px; border:1px solid rgba(0,255,170,0.15);">
+            <strong style="color:#00ffaa; font-size:0.9rem; letter-spacing: 0.3px; display: block;">🌟 PHÂN PHỐI ĐỊA KHÍ ĐỘNG: LONG MẠCH 72 HẬU (5°)</strong>
+            <span style="font-size: 0.8rem; color: #8a8a8f; margin-top: 2px; display: block;">Mạch khí ngầm mốc tâm hướng nhìn hiện tại:</span>
+            
+            ${htmlKhối3Hậu}
+            
+            <div style="font-size:0.83rem; color:#bbb; margin-top:12px; line-height: 1.5; background: rgba(0,0,0,0.15); padding: 8px 12px; border-radius: 6px; border-left: 3px solid #00ffaa;">
+                Khí mạch Tiết khí mốc tâm: <b>${hauInfo.ten}</b> — Phẩm chất: <b>${hauInfo.chatLuong}</b> (Mạch gốc đạt ${hauInfo.diem}pt).<br>
+                <span style="color:#eee; font-style: italic; display: block; margin-top: 3px;">➔ Bản chất: ${hauInfo.ynghia}</span>
             </div>
         </div>`;
     }
