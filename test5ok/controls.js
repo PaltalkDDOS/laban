@@ -719,7 +719,7 @@ const ConfigPhongThuy = {
 };
 
 // =========================================================================
-// 👑 SIÊU THUẬT TOÁN GENERATE DIRECTIONS - PHIÊN BẢN BIỆN CHỨNG PHONG THỦY 2026
+// 👑 SIÊU THUẬT TOÁN GENERATE DIRECTIONS - PHIÊN BẢN CAO CẤP 2026 (SMART NEEDLE)
 // =========================================================================
 function generateDirectionsList() {
     const mucDich = document.getElementById('purpose').value;
@@ -753,6 +753,7 @@ function generateDirectionsList() {
     directionMeta.forEach(dir => {
         const cungTrạch = bátTrạchMap[chủMệnh]?.[dir.code] || "Khác";
         
+        // Lọc thô theo cấu trúc Bát Trạch tối ưu UX
         if (isCatPurpose) {
             if (!cacCungTot.includes(cungTrạch)) return; 
         } else {
@@ -772,6 +773,7 @@ function generateDirectionsList() {
         });
     });
 
+    // Sắp xếp đưa hướng tối ưu nhất lên đầu danh sách
     listDirections.sort((a, b) => b.priority - a.priority);
     listPanelTitle.innerText = `Gợi ý vị trí Vận 9: ${config.title}`;
     directionsContainer.innerHTML = "";
@@ -782,17 +784,19 @@ function generateDirectionsList() {
     }
 
     listDirections.forEach(item => {
-        const sonGroup = getSonGroupForDirection(item.code); 
+        const sonGroup = getSonGroupForDirection(item.code); // Mảng chứa 3 tên Sơn vị (VD: ["Tuất", "Càn", "Hợi"])
         
         let countSonXanh = 0, countSonVang = 0, countSonDo = 0;
         let sonHTML = "";
-        let sonAngles = []; 
+        let sonAngles = []; // Lưu tọa độ góc thực tế của 3 Sơn để phục vụ nút bấm thông minh
 
+        // Duyệt tính điểm chi tiết từng Sơn Vị bên trong
         sonGroup.forEach((son, index) => {
             const dataSon = MaTranMinhChau[chủMệnh] ? MaTranMinhChau[chủMệnh][son] : null;
             let score = dataSon ? dataSon.diem : 70;
             let nhom = dataSon ? dataSon.nhom : "Bình Hòa";
             
+            // Tính góc độ của từng Sơn vị: Trục chính hướng làm gốc, Sơn 1 lệch -15°, Sơn 2 ở giữa (0°), Sơn 3 lệch +15°
             let gocCuaSon = (item.angle + (index - 1) * 15 + 360) % 360;
             sonAngles.push({ name: son, angle: gocCuaSon, score: score });
 
@@ -845,6 +849,7 @@ function generateDirectionsList() {
             if (index < sonGroup.length - 1) sonHTML += ` • `;
         });
 
+        // JSON hóa mảng góc độ của 3 sơn vị để truyền thẳng vào thuộc tính button làm Data-attribute
         const stringifiedSonAngles = JSON.stringify(sonAngles).replace(/"/g, '&quot;');
 
         // ─── TÍNH TOÁN CẤU TRÚC CHI TIẾT LẬP CỰC 3 HẬU MẠCH ───
@@ -866,7 +871,7 @@ function generateDirectionsList() {
                 countHauVang++; return { color: '#dfb76c', label: 'BÌNH HÒA', desc: 'Địa mạch ổn định, không trợ lực nhiều nhưng không gây họa.' };
             } else {
                 if (isHungHau) { countHauXanh++; return { color: '#30d158', label: 'ĐẮC VỊ', desc: 'Mạch địa khí mang hung tính, rất thích hợp đặt uế cục để tiêu sát bế khí.' }; }
-                if (cl.includes('Cát')) { countHauDo++; return { color: '#ff3b30', label: 'KỴ ĐẶT', desc: 'Long mạch ngầm dưới đất rất vượng và sạch, tuyệt đối không đặt uế khí đè lên.' }; }
+                if (cl.includes('Cát')) { countHauDo++; return { color: '#ff3b30', label: 'K... ĐẶT', desc: 'Long mạch ngầm dưới đất rất vượng và sạch, tuyệt đối không đặt uế khí đè lên.' }; }
                 countHauVang++; return { color: '#dfb76c', label: 'TRUNG TÍNH', desc: 'Mạch khí trung hòa, có thể cân nhắc nếu không còn vị trí tốt hơn.' };
             }
         };
@@ -899,50 +904,49 @@ function generateDirectionsList() {
             </div>
         `;
 
-        // ─── ⚖️ ĐỔI MÀU KHUNG THEO ĐÚNG ĐIỂM TỔNG HỢP CỦA HƯỚNG (BÁT TRẠCH) ───
         let scoreColor = "#30d158"; 
+        if (item.diemTongHop < 50) scoreColor = "#ff3b30"; 
+        else if (item.diemTongHop < 75) scoreColor = "#dfb76c"; 
+
         let colorStyle = '#30d158';
         let bgKhung = 'rgba(48,209,88,0.03)';
-
-        if (item.diemTongHop < 50) {
-            scoreColor = "#ff3b30";
-            colorStyle = '#ff3b30';
-            bgKhung = 'rgba(255,59,48,0.04)';
-        } else if (item.diemTongHop < 75) {
-            scoreColor = "#dfb76c";
-            colorStyle = '#dfb76c';
-            bgKhung = 'rgba(223,183,108,0.04)';
-        }
-
-        // ─── 🚨 CHỈ DÙNG TEXT ĐỂ CẢNH BÁO VI PHÂN (KHÔNG HẠ MÀU KHUNG) ───
-        let statusText = "🟢 ĐỚN CÁT KHÍ ỔN ĐỊNH VÀ AN LÀNH";
-        let popExplanation = `Trường khí hướng lớn đạt chuẩn cát tường theo Bát Trạch (${item.diemTongHop} PT). Gia chủ hãy bấm nút 'Xoay la bàn số' để rà tìm phân độ Sơn/Hậu hoàn hảo nhất bên trong.`;
+        let statusText = "";
+        let popExplanation = "";
 
         if (isCatPurpose) {
-            if (countHauDo === 3) {
-                statusText = `🚨 CẢNH BÁO: 3 HẬU ĐẠI HUNG - CẦN LẬP CỰC NÉ TÂM`;
-                popExplanation = `Mặc dù hướng lớn đạt điểm Bát Trạch tốt, nhưng dải 72 Hậu ngầm bên dưới toàn bộ dính mạch Không Vong/Hung Sát. Khuyên gia chủ KHÔNG đặt kết cấu nạp khí chính diện tại góc tâm ${item.angle}°, mà phải chủ động nhấn 'Xoay la bàn' dịch kim sang phân độ Sơn vị lệch biên dải xanh để tìm mạch khí tốt còn sót lại!`;
-            } else if (countHauDo > 0 || countSonDo > 0) {
-                statusText = `⚠️ CẢNH BÁO: CÓ HẬU XẤU / SƠN HUNG CỤC BỘ`;
-                popExplanation = `Hướng đại thể tốt, nhưng phân đoạn nhỏ bên trong có xuất hiện điểm Đỏ nguy hiểm. Hãy bấm nút 'Xoay la bàn dò Sơn vị' để đưa kim góc lệch khỏi các cung lỗi này, nhắm thẳng vào Sơn Vị / Hậu mạch báo màu Xanh.`;
-            } else if (countSonXanh === 3 && countHauXanh === 3) {
+            if (countSonXanh === 3 && countHauXanh === 3) {
                 statusText = `🏆 ĐẠI CÁT VÒNG BẢO PHÒNG - TOÀN VẸN CHÍNH TÔNG`;
-                popExplanation = `Hướng đại cát vẹn toàn. Từ Bát Trạch lớn cho đến tất cả 24 Sơn hẹp và 72 Hậu mạch ngầm đều xanh tốt đắc vị. Vô cùng hiếm có!`;
+                popExplanation = `Hướng lớn thuộc Cung Cát Bát Trạch. Đặc biệt, toàn bộ 3 Sơn Vị và 3 Hậu Địa Mạch ngầm đều Đắc vị tuyệt đối xanh tươi.`;
+            } else if (countSonDo === 3 || countHauDo === 3) {
+                colorStyle = '#ff3b30'; bgKhung = 'rgba(255,59,48,0.04)';
+                statusText = `❌ TỬ HUYỆT ĐẠI KỴ - KHÔNG ĐƯỢC CHỌN VỊ TRÍ NÀY`;
+                popExplanation = `CẢNH BÁO NGUY HIỂM: Tuy hướng đại thể hợp Bát Trạch nhưng phân độ hẹp bên trong phạm toàn bộ Sơn hung hoặc Hậu mạch bị rỗng khí rách long (Không Vong).`;
+            } else if (countSonDo > 0 || countHauDo > 0) {
+                colorStyle = '#ff9f0a'; bgKhung = 'rgba(255,159,10,0.04)';
+                statusText = `⚠️ HƯỚNG CÁT PHẠM CỤC BỘ - CẦN VI PHÂN LẬP CỰC`;
+                popExplanation = `Hướng đại thể tốt nhưng cấu trúc vi phân có Sơn hoặc Hậu dính cung Đỏ xấu. Hãy nhấp liên tục nút 'Xoay la bàn' bên dưới để dịch chuyển kim dò chính xác tọa độ từng Sơn Xanh.`;
+            } else {
+                statusText = `🟢 ĐÓN CÁT KHÍ ỔN ĐỊNH VÀ AN LÀNH`;
+                popExplanation = `Trường khí hướng này đạt chuẩn trung bình khá trở lên. An tâm triển khai thiết kế.`;
             }
         } else {
-            // Đối với mục đích Trấn Sát (Bếp, Vệ Sinh...)
-            if (countHauDo === 3) {
-                statusText = `🚨 ĐẠI KỴ: LONG MẠCH QUÁ SẠCH - SAI THÁC TRẤN SÁT`;
-                popExplanation = `Khu vực này có nền tảng long mạch ngầm cực kỳ thuần khiết, đại kỵ đặt thiết bị uế khí đè lên làm ô uế cả ngôi nhà. Hãy chuyển sang hướng khác!`;
-            } else if (countHauDo > 0) {
+            if (item.diemTongHop >= 75) {
+                statusText = `🏆 ĐẮC CÁCH DIỆU PHÁP TRẤN SÁT HOÀN HẢO`;
+                popExplanation = `Vị trí tuyệt vời để đặt khu uế khí, khóa chặt hung sát của địa mạch.`;
+            } else if (item.diemTongHop < 50) {
+                colorStyle = '#ff3b30'; bgKhung = 'rgba(255,59,48,0.04)';
+                statusText = `❌ SAI THÁC TRẠCH PHÁP - PHẠM LONG MẠCH SẠCH`;
+                popExplanation = `ĐẠI KỴ: Điểm số quá thấp vì khu vực này dính vào các Sơn/Hậu cực kỳ sạch và vượng khí. Đè uế khí lên sẽ hoen ố mạch sinh khí.`;
+            } else {
+                colorStyle = '#ff9f0a'; bgKhung = 'rgba(255,159,10,0.04)';
                 statusText = `⚠️ TOẠ HUNG XUNG ĐỘT SƠN HẬU HẸP`;
-                popExplanation = `Mạch đất có sự đan xen phức tạp giữa hung và cát. Hãy xoay la bàn số đến tọa độ hiển thị trạng thái ĐẮC VỊ để khóa uế khí chuẩn xác nhất.`;
+                popExplanation = `Vị trí có sự đan xen phức tạp giữa đất hung và đất cát. Hãy nhấp nút 'Xoay la bàn' để chuyển kim đến Sơn Vị có năng lượng Đắc Cách Trấn Sát.`;
             }
         }
 
         const safePopTitle = `Biện giải Trạch Pháp: ${item.name}`.replace(/'/g, "\\'").replace(/"/g, '&quot;');
         const safePopDesc = popExplanation.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-        const safePopSol = `Giải pháp thực tế: Bản chất hướng Bát Trạch đang tốt (${item.diemTongHop}pt). Không bỏ hướng này, hãy dựa vào nút dò Sơn/Hậu để hiệu chỉnh tia kỹ thuật lệch cung hung.`.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        const safePopSol = `Khuyên dùng: Điểm số hiện tại phân bổ theo trục ${item.angle}°. Nhấn nút Xoay thử la bàn để định vị cấu trúc Sơn vị hẹp tốt nhất.`.replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
         const div = document.createElement('div');
         div.className = `direction-item`;
@@ -973,6 +977,7 @@ function generateDirectionsList() {
                 </div>
             </div>
             
+            <!-- NÚT BẤM ĐÃ ĐƯỢC TÍCH HỢP AI VI PHÂN SƠN VỊ TOÀN DIỆN -->
             <button class="btn-rotate" 
                 data-click-count="0"
                 data-son-angles="${stringifiedSonAngles}"
@@ -5358,59 +5363,64 @@ function vịTríLấyNămÂmChuẩn() {
     return new Date().getFullYear();
 }
 
-// =========================================================================
-// 🚀 HÀM PHỤ TRỢ: ĐIỀU PHỐI XOAY KIM THÔNG MINH THEO TỪNG SƠN VỊ VÀ BLINK BÁO HIỆU
-// =========================================================================
+// Biến lưu trạng thái toàn cục để không phụ thuộc vào DOM
+const rotateState = {}; 
+
 function handleSmartRotate(btn) {
-    // Đọc dữ liệu cấu hình từ thẻ HTML
-    let clickCount = parseInt(btn.getAttribute('data-click-count')) || 0;
+    // 1. Dùng ID của nút làm Key để quản lý trạng thái (Tránh lỗi nếu có nhiều nút xoay)
+    const btnId = btn.id || 'default-rotate-btn';
+    if (!rotateState[btnId]) {
+        rotateState[btnId] = { count: 0 };
+    }
+
+    // 2. Parse dữ liệu một lần duy nhất
     const sonAngles = JSON.parse(btn.getAttribute('data-son-angles'));
     const isCatPurpose = btn.getAttribute('data-is-cat') === 'true';
 
-    // Xác định sơn vị hiện tại dựa trên số lần click (Vòng lặp index 0 -> 1 -> 2)
-    const currentSonIdx = clickCount % 3;
+    // 3. Tăng count
+    rotateState[btnId].count++;
+    const clickCount = rotateState[btnId].count;
+    const currentSonIdx = clickCount % sonAngles.length; // Dùng % length để linh hoạt (không chỉ % 3)
     const currentSon = sonAngles[currentSonIdx];
 
-    // Cập nhật text trên button để người dùng biết họ đang ở Sơn nào
-    clickCount++;
-    btn.setAttribute('data-click-count', clickCount);
-    const nextSonName = sonAngles[clickCount % 3].name;
+    // 4. Cập nhật UI nút bấm
+    const nextSonIdx = (clickCount + 1) % sonAngles.length;
+    const nextSonName = sonAngles[nextSonIdx].name;
     btn.innerHTML = `🔄 Đang xem: Sơn ${currentSon.name} (${currentSon.angle}°) ➔ Click xem tiếp Sơn ${nextSonName}`;
 
-    // 1. Gọi lệnh gốc xoay kim la bàn vật lý của bạn trỏ vào góc Sơn vị hiện tại
-    if (typeof triggerGhostNeedle === 'function') {
-        triggerGhostNeedle(currentSon.angle);
-    }
-
-    // 2. THUẬT TOÁN NHẬP NHÁY (BLINK): Kiểm tra chất lượng điểm số của Sơn vị vừa xoay tới
-    const score = currentSon.score;
-    let isGoodLocation = false;
-
-    if (isCatPurpose) {
-        // Nếu chọn Đón cát khí (Sinh khí, Diên niên...): Sơn xanh (>=72%) là đắc vị
-        if (score >= 72) isGoodLocation = true;
-    } else {
-        // Nếu chọn Trấn sát (Uế cục): Sơn điểm càng thấp (<50% - đất hung) đè uế khí lên càng tốt
-        if (score < 50) isGoodLocation = true;
-    }
-
-    // Tìm selector của kim la bàn hoặc vòng quay chính trên UI của bạn để làm nhấp nháy
-    // Thay '.compass-needle' hoặc '#laBanElement' bằng class/id thực tế trục kim hiển thị của bạn
-    const needleElement = document.querySelector('.compass-needle') || document.getElementById('compassNeedle') || document.getElementById('laBanId');
-
-    if (needleElement) {
-        // Xóa class cũ nếu có
-        needleElement.classList.remove('la-ban-blink-green', 'la-ban-blink-yellow');
-        
-        // Buộc trình duyệt ép reflow để trigger lại CSS Animation
-        void needleElement.offsetWidth; 
-
-        if (isGoodLocation) {
-            // Nếu trúng Sơn vị Đại Cát (Màu Xanh), nhấp nháy xanh rực rỡ để báo hiệu
-            needleElement.classList.add('la-ban-blink-green');
-        } else if ((isCatPurpose && score >= 50) || (!isCatPurpose && score <= 70)) {
-            // Nếu rơi vào vùng Bình Hòa (Màu Vàng), nhấp nháy nhẹ màu vàng cam ổn định
-            needleElement.classList.add('la-ban-blink-yellow');
+    // 5. Điều phối kim (Dùng requestAnimationFrame để mượt trên di động)
+    requestAnimationFrame(() => {
+        if (typeof triggerGhostNeedle === 'function') {
+            triggerGhostNeedle(currentSon.angle);
         }
+        
+        // Gọi lại recalculateFate() để update các chỉ số chi tiết ngay lập tức
+        if (typeof recalculateFate === 'function') {
+            // Nếu bạn có biến lưu hướng khóa, cần cập nhật nó ở đây
+            if (typeof lockedHeadingAtOpen !== 'undefined') {
+                lockedHeadingAtOpen = currentSon.angle;
+            }
+            recalculateFate();
+        }
+    });
+
+    // 6. Xử lý Blink hiệu ứng
+    triggerBlinkEffect(currentSon.score, isCatPurpose);
+}
+
+// Hàm tách biệt xử lý hiệu ứng Blink để dễ quản lý
+function triggerBlinkEffect(score, isCatPurpose) {
+    const needleElement = document.querySelector('.compass-needle') || document.getElementById('compassNeedle');
+    if (!needleElement) return;
+
+    let isGoodLocation = isCatPurpose ? (score >= 72) : (score < 50);
+
+    needleElement.classList.remove('la-ban-blink-green', 'la-ban-blink-yellow');
+    void needleElement.offsetWidth; // Force Reflow
+
+    if (isGoodLocation) {
+        needleElement.classList.add('la-ban-blink-green');
+    } else if ((isCatPurpose && score >= 50) || (!isCatPurpose && score <= 70)) {
+        needleElement.classList.add('la-ban-blink-yellow');
     }
 }
