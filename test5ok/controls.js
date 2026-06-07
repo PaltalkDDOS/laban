@@ -2276,8 +2276,10 @@ function kiemTraKhongVong(degree) {
 }
 
 /**
- * 📊 THUẬT TOÁN ĐIỂM TỔNG HỢP ĐA TẦNG - PHIÊN BẢN THỰC CHIẾN CHÍNH TÔNG (ĐÃ ĐỒNG BỘ QUÉT ĐỘNG)
- * Công thức áp dụng: PT = [ (Điểm_Sơn_Gốc + ΔH72_Mạch) * K_Van - ΣΨ_Sat ] * Γ_Khai
+ * =========================================================================
+ * 📊 THUẬT TOÁN ĐIỂM TỔNG HỢP - PHIÊN BẢN PHÂN TÍCH ĐỊA CHẤT ĐA TẦNG THỰC CHIẾN
+ * =========================================================================
+ * Tự động phân tách hai chế độ: Dò Địa Khí Điểm và Tính Toán Trọng Tâm Vật Thể.
  */
 function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
     const normalizedDegree = ((degree % 360) + 360) % 360;
@@ -2285,12 +2287,14 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
     const sonName = sonObj.name;
     
     let namAmReal = namAm || new Date().getFullYear();
-    
-    // NẾU CHƯA QUÉT: Hệ thống lấy mặc định từ cấu hình hệ thống.
-    // NẾU ĐÃ QUÉT: Hệ thống tự động nhận `sizeDegree` thực tế vừa đo được đổ vào đây.
-    const config = ConfigPhongThuy[mucDich] || { title: "Vị trí", isCat: true, sizeDegree: 2 };
+    const config = ConfigPhongThuy[mucDich] || { title: "Vị trí", isCat: true };
     const isCatPurpose = config.isCat; 
-    let dảiĐộVậtThể = config.sizeDegree || 2; 
+
+    // ─── TỰ ĐỘNG BẺ LUỒNG THÔNG MINH ───
+    // Nếu người dùng CHƯA bấm nút quét ngắm camera, config.sizeDegree sẽ KHÔNG có (hoặc bằng 0).
+    // Hệ thống hiểu đây là chế độ "Dò tìm Long mạch điểm" -> Bề rộng vật thể = 0.
+    let dảiĐộVậtThể = (typeof config.sizeDegree === 'number') ? config.sizeDegree : 0;
+    let laCheDoQuetDong = dảiĐộVậtThể > 0;
 
     const huongToCodeMap = { "Bắc": "N", "Đông Bắc": "NE", "Đông": "E", "Đông Nam": "SE", "Nam": "S", "Tây Nam": "SW", "Tây": "W", "Tây Bắc": "NW" };
     const codeChuan = huongToCodeMap[sonObj.huong] || "N";
@@ -2299,38 +2303,44 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
     const laCungHungDiaLy = ["Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"].includes(cungBátTrạch);
     const laCungCatDiaLy = !laCungHungDiaLy;
 
-    // ==========================================
-    // ─── TẦNG 1: THIẾT LẬP SIÊU GỐC (NHÂN ĐỐI CHIẾU ĐỊA) ───
-    // ==========================================
-    
-    // 1.1 Lấy Gốc Nhân Mệnh (24 Sơn) tại điểm Trọng Tâm (Center)
+    // =====================================================================
+    // ─── TẦNG 1: THIẾT LẬP SIÊU GỐC TẠI TRỌNG TÂM (TÂM ĐIỂM CAMERA) ───
+    // =====================================================================
     const sonInfo = layThongTin24Son(normalizedDegree, cungPhi, namAmReal); 
     let diemGocSon = (sonInfo && typeof sonInfo.diem === 'number') ? sonInfo.diem : 70;
 
-    // Đảo chiều Nhân Mệnh cho trục Trấn Sát (Đất hung đặt uế khí lại thành đắc cách)
+    // Đảo chiều Nhân Mệnh cho trục Trấn Sát (Uế khí đặt vào đất hung thành đắc cách)
     if (!isCatPurpose) {
         diemGocSon = 100 - diemGocSon; 
     }
 
-    // 1.2 TÍCH PHÂN QUÉT TOÀN BỘ BỀ RỘNG VẬT THỂ (Xác định lấn biên 72 Hậu)
+    // =====================================================================
+    // ─── TẦNG 2: TÍCH PHÂN QUÉT MẢNG LONG MẠCH (72 HẬU LONG) ───
+    // =====================================================================
     let tongDiemHauMạch = 0;
     let soDiemQuet = 0;
     let dínhKhôngVongNặng = false;
     let loaiKhôngVong = "";
-    let danhSachHauBiDeLen = new Set(); // Để theo dõi vật thể đè lên bao nhiêu Hậu
+    let danhSachHauBiDeLen = new Set();
+    let chiTietCacHauBiChiem = []; // Lưu lại danh sách để xuất báo cáo UI sau khi quét
 
-    // Quét từ mép trái sang mép phải của vật thể dựa trên dải độ thực tế
+    // Biên độ quét toán học tỏa đều từ Trọng tâm sang 2 bên cánh mép vật thể
     let gocBatDau = normalizedDegree - (dảiĐộVậtThể / 2);
     let gocKetThuc = normalizedDegree + (dảiĐộVậtThể / 2);
 
-    for (let g = gocBatDau; g <= gocKetThuc; g += 1) {
+    // Bước nhảy 0.5 độ để đảm bảo quét mịn, không bỏ sót bất kỳ ranh giới tử huyệt nào
+    for (let g = gocBatDau; g <= gocKetThuc; g += 0.5) {
         let gocQuetChuanHoa = ((g % 360) + 360) % 360;
         
         let mốcHậuGầnNhất = Math.round(gocQuetChuanHoa / 5) * 5;
         if (mốcHậuGầnNhất >= 360) mốcHậuGầnNhất = 0;
         
         let hauQuyDoi = Data72Hau[mốcHậuGầnNhất.toString()] || { diem: 60, name: "Không rõ" };
-        danhSachHauBiDeLen.add(mốcHậuGầnNhất);
+        
+        if (!danhSachHauBiDeLen.has(mốcHậuGầnNhất)) {
+            danhSachHauBiDeLen.add(mốcHậuGầnNhất);
+            chiTietCacHauBiChiem.push({ moc: mốcHậuGầnNhất, ten: hauQuyDoi.name, diem: hauQuyDoi.diem });
+        }
         
         tongDiemHauMạch += hauQuyDoi.diem;
         soDiemQuet++;
@@ -2344,25 +2354,19 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
         }
     }
 
-    // Điểm địa khí trung bình của toàn bộ bề mặt kết cấu
     let diemHauMachTrungBinh = tongDiemHauMạch / soDiemQuet;
-    
-    // Tính toán ΔH72_Mạch (Biên độ Mạo Long) theo triết lý âm dương đảo ngược
     let bienDoMaoLong = isCatPurpose ? (diemHauMachTrungBinh - 60) : (60 - diemHauMachTrungBinh); 
-
-    // PHƯƠNG TRÌNH SIÊU GỐC HỢP NHẤT: (Điểm_Sơn_Gốc + ΔH72_Mạch)
     let bieuThucGoc = diemGocSon + bienDoMaoLong;
 
-    // PHONG THỦY CAO CẤP: Phạt điểm nếu vật thể quá rộng đè sang các Hậu khác (mất tính thuần khí)
-    if (danhSachHauBiDeLen.size > 1 && isCatPurpose) {
-        // Mỗi khi lấn thêm 1 Hậu (5 độ), trừ bớt điểm độ thuần khiết của long mạch nạp cát
-        bieuThucGoc -= (danhSachHauBiDeLen.size - 1) * 3;
+    // 🔴 PHẠT ĐIỂM THỰC TẾ LONG MẠCH TẠP KHÍ
+    // Chỉ phạt khi ĐÃ bật nút quét và vật thể quá to đè lên từ 2 phân độ Hậu trở lên (> 5 độ)
+    if (laCheDoQuetDong && danhSachHauBiDeLen.size > 1 && isCatPurpose) {
+        bieuThucGoc -= (danhSachHauBiDeLen.size - 1) * 4; // Trừ nghiêm khắc hơn để ép dịch chuyển về thế Thuần Khí
     }
 
     // ==========================================
-    // ─── TẦNG 2: VẬN HÀNH PHẦN NGỌN (THIÊN THỜI & SÁT TINH) ───
+    // ─── TẦNG 3: THIÊN THỜI VẬN TINH & SÁT TINH LUỒNG ───
     // ==========================================
-    
     const namTinhVan = namKhảoSát ? parseInt(namKhảoSát) : new Date().getFullYear();
     const vanSo = Math.floor((namTinhVan - 1864) / 20) % 9 + 1;
     let kVan = 1.0; 
@@ -2393,11 +2397,10 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
     } else {
         gKhai = laCungHungDiaLy ? 1.15 : 0.8; 
     }
-
     diemTinhToan = diemTinhToan * gKhai;
 
     // ==========================================
-    // ─── TẦNG 3: KHẤU TRỪ / THƯỞNG ĐIỂM KHÔNG VONG ───
+    // ─── TẦNG 4: BIỆN CHỨNG TỬ HUYỆT KHÔNG VONG ───
     // ==========================================
     let messageGhiChu = isCatPurpose ? (sonInfo?.luanDoan || "") : "";
     let hoaGiaiGợiÝ = isCatPurpose ? (sonInfo?.hoaGiai || "") : "";
@@ -2406,46 +2409,39 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
         if (isCatPurpose) {
             if (loaiKhôngVong === "ĐẠI KHÔNG VONG") {
                 diemTinhToan = 12; 
-                messageGhiChu = `❌ [ĐẠI HỌA KHÔNG VONG]: Trục kết cấu nằm đè trúng ranh giới Đại Không Vong, đại cục vô khí khí trường hỗn loạn!`;
-                hoaGiaiGợiÝ = `Tuyệt đối không bố trí ${config.title} tại phân độ tử huyệt này.`;
+                messageGhiChu = `❌ [ĐẠI HỌA KHÔNG VONG]: Trọng tâm hoặc dải cánh vật thể nằm đè trúng ranh giới Đại Không Vong, trường khí đứt gãy, đại hung!`;
+                hoaGiaiGợiÝ = `Cấm kỵ đặt cố định ${config.title} tại đây. Hãy tịnh tiến toàn bộ kết cấu sang vùng an toàn.`;
             } else {
-                diemTinhToan = Math.min(48, diemTinhToan - 20); 
-                messageGhiChu += ` ⚠️ [CẢNH BÁO TIỂU KHÔNG VONG]: Một phần bề rộng vật thể đang liếm sang đường ranh giới rạch sỏi Sơn vị.`;
-                hoaGiaiGợiÝ = "Xoay nhẹ hoặc tịnh tiến kết cấu khoảng 2-3 độ để đưa toàn bộ trọng tâm về phân độ mạch thuần.";
+                diemTinhToan = Math.min(45, diemTinhToan - 22); 
+                messageGhiChu += ` ⚠️ [TIỂU KHÔNG VONG BIÊN]: Rìa kết cấu đang liếm sang đường ranh rạch sỏi gãy khí khí trường pha tạp.`;
+                hoaGiaiGợiÝ = "Dịch chuyển nhẹ hoặc thu hẹp kích thước vật thể khoảng 1.5 - 3 độ để giải phóng đường biên khí.";
             }
         } else {
             if (loaiKhôngVong === "ĐẠI KHÔNG VONG") {
-                diemTinhToan = Math.max(88, diemTinhToan + 10);
-                messageGhiChu = `🌟 [TỌA ĐẠI KHÔNG VONG TIÊU SÁT]: Vị trí xả uế đè trúng trục ranh giới nhiễu loạn, biến tử huyệt thành nơi xả bỏ tạp khí, cứu vãn mạch đất!`;
-                hoaGiaiGợiÝ = "Cách cục sắp đặt cực kỳ thông minh, giữ nguyên vị trí.";
-            } else {
-                diemTinhToan = Math.max(76, diemTinhToan + 5);
-                messageGhiChu += ` 🟢 [TIỂU KHÔNG VONG TIÊU SÁT]: Rìa thiết bị đè trúng trục ranh giới hẹp, giúp bao bọc cách ly tạp khí mạch đất.`;
+                diemTinhToan = Math.max(90, diemTinhToan + 12);
+                messageGhiChu = `🌟 [ĐẠI KHÔNG VONG TIÊU SÁT]: Đặt uế khí vào đúng tử huyệt đứt gãy trường khí, dùng hung trị hung, biến nơi rò rỉ thành cống xả tạp khí tuyệt vời!`;
+                hoaGiaiGợiÝ = "Bố cục đỉnh cao của thuật Tiêu Sát, giữ nguyên trạng thái.";
             }
         }
     }
 
     // ==========================================
-    // ─── TẦNG 4: BỘ LỌC KIỂM ĐỊNH BÁT TRẠCH CUỐI ───
+    // ─── TẦNG 5: KIỂM ĐỊNH LỌC PHONG THỦY CUỐI ───
     // ==========================================
     let diemCuoi = diemTinhToan;
 
     if (!dínhKhôngVongNặng) { 
         if (isCatPurpose) {
-            if (laCungCatDiaLy) {
-                diemCuoi = Math.max(72, diemCuoi); 
-            } else {
-                diemCuoi = Math.min(64, diemCuoi); 
-            }
+            diemCuoi = laCungCatDiaLy ? Math.max(72, diemCuoi) : Math.min(62, diemCuoi); 
         } else {
             if (laCungHungDiaLy) {
-                diemCuoi = Math.max(76, diemCuoi); 
-                messageGhiChu = `🌟 [TỌA HUNG TRẤN SÁT ĐẮC CÁCH]: Vị trí ${config.title} đặt đè lên hung phương đại cục ${cungBátTrạch} giúp trấn áp tà khí mạch đất.`;
-                hoaGiaiGợiÝ = "Trạch pháp đại cát đại lợi, không cần can thiệp hóa giải.";
+                diemCuoi = Math.max(78, diemCuoi); 
+                messageGhiChu = `🌟 [TỌA HUNG TRẤN SÁT ĐẮC CÁCH]: Bản mệnh thuộc cung phối hợp cấu thành cách cục ép chế hung tinh ${cungBátTrạch} hoàn hảo.`;
+                hoaGiaiGợiÝ = "Đạt điểm rơi năng lượng trấn trạch cát tường.";
             } else {
-                diemCuoi = Math.min(48, diemCuoi); 
-                messageGhiChu = `⚠️ [PHẠM KỊ TIÊU HAO]: Thiết bị uế khí đặt đè lên phương vị Cát khí sinh khí của bản mệnh (${cungBátTrạch}) làm ô nhiễm trường khí.`;
-                hoaGiaiGợiÝ = "Khuyên gia chủ nên chủ động dịch chuyển vị trí sang dải Sơn vị có báo màu xanh bên cạnh.";
+                diemCuoi = Math.min(45, diemCuoi); 
+                messageGhiChu = `⚠️ [TỌA CÁT HƯỚNG HUNG NGHỊCH LÝ]: Đặt khu vực xả uế đè trúng cung Sinh Khí/Phúc Đức cát lành (${cungBátTrạch}) làm suy tổn mạch long.`;
+                hoaGiaiGợiÝ = "Nên tịnh tiến khối kiến trúc uế khí sang dải Sơn hung bên cạnh để trả lại sự thuần khiết cho cát phương.";
             }
         }
     }
@@ -2453,19 +2449,28 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm) {
     diemCuoi = Math.max(10, Math.min(98, Math.round(diemCuoi)));
     
     let level = "HUNG";
-    if (diemCuoi >= 85) level = "ĐẠI CÁT";
+    if (diemCuoi >= 86) level = "ĐẠI CÁT";
     else if (diemCuoi >= 72) level = "CÁT VỊ";
     else if (diemCuoi >= 50) level = "TRUNG BÌNH";
 
-    // Trả về thêm siêu dữ liệu dải quét để hiển thị trực quan lên UI giao diện
+    // Trả dữ liệu đóng gói về cho UI render
     return {
-        diem: diemCuoi, level, message: messageGhiChu, hoaGiai: hoaGiaiGợiÝ,
+        diem: diemCuoi, 
+        level, 
+        message: messageGhiChu, 
+        hoaGiai: hoaGiaiGợiÝ,
         khongVong: dínhKhôngVongNặng ? { loai: loaiKhôngVong } : null, 
-        satTinhs, sonName, sonInfo, 
+        satTinhs, 
+        sonName, 
+        sonInfo, 
         hauInfo: getCurrentHauInfo(normalizedDegree),
         scanMetrics: {
+            isDynamicScanned: laCheDoQuetDong, // UI dựa vào cờ này để biết có hiển thị báo cáo mở rộng không
             passedWidth: dảiĐộVậtThể,
-            totalHauOccupied: danhSachHauBiDeLen.size
+            totalHauOccupied: danhSachHauBiDeLen.size,
+            chiTietHau: chiTietCacHauBiChiem,
+            gocStart: gocBatDau,
+            gocEnd: gocKetThuc
         }
     };
 }
@@ -5004,11 +5009,12 @@ function highlightActiveHauNode(currentCompassDegree) {
     });
 }
 
-// 📐 HỆ THỐNG QUÉT ĐỘNG KHÔNG GIAN - PHIÊN BẢN KHẮC PHỤC GÓC KẸT THỰC ĐỊA
+// 📐 HỆ THỐNG QUÉT ĐỘNG KHÔNG GIAN - PHIÊN BẢN ĐA PHƯƠNG THỨC 2026
 let scanState = {
     isScanning: false,
-    startAngle: null, // Góc hướng thẳng mép trái
-    endAngle: null,   // Góc hướng thẳng mép phải
+    method: "CAMERA",  // "CAMERA" (Quét từ xa) hoặc "MANUAL" (Nhập số/Áp thực địa)
+    startAngle: null,  // Góc hướng thẳng mép trái
+    endAngle: null,    // Góc hướng thẳng mép phải
     currentAngle: 0
 };
 
@@ -5018,7 +5024,7 @@ let scanState = {
 function onCompassUpdate(heading) {
     scanState.currentAngle = ((heading % 360) + 360) % 360;
     
-    if (scanState.isScanning) {
+    if (scanState.isScanning && scanState.method === "CAMERA") {
         // Vẽ dải góc thời gian thực từ Mép Trái đến hướng camera hiện tại
         if (typeof renderScanningArc === 'function') {
             renderScanningArc(scanState.startAngle, scanState.currentAngle);
@@ -5031,22 +5037,21 @@ function onCompassUpdate(heading) {
 }
 
 /**
- * 2. NÚT BẤM ĐIỀU KHIỂN QUÈT ĐỘNG THÔNG MINH
- * Áp dụng tư duy nhắm tâm Camera (Chính giữa điện thoại) loại bỏ lỗi góc kẹt
+ * 2. CHẾ ĐỘ 1: BỘ QUÈT CAMERA TỪ XA VÀ TỰ ĐỘNG KHỬ SAI SỐ XOAY NGƯỢC
  */
 function handleScanButtonClick() {
+    scanState.method = "CAMERA"; // Xác định phương thức quét bằng mắt thần camera
     const btn = document.getElementById('btn-scan-action');
     const purposeElement = document.getElementById('purpose');
     const hiddenInputPurpose = purposeElement ? purposeElement.value : 'bed';
-    const configHienTai = ConfigPhongThuy[hiddenInputPurpose] || { title: "Kết cấu" };
 
-    // ─── BƯỚC 1: NHẮM TÂM CAMERA VÀO MÉP TRÁI VẬT THỂ ───
+    // ─── BƯỚC 1: CHỐT TIÊU ĐIỂM MÉP TRÁI ───
     if (!scanState.isScanning && scanState.startAngle === null) {
         scanState.isScanning = true;
         scanState.startAngle = scanState.currentAngle;
         
         btn.innerHTML = `🛑 CHỐT MÉP PHẢI (Nhắm thẳng tâm camera)`;
-        btn.style.background = "#ff9500"; // Màu cam cảnh báo đang giữ tiêu điểm ngắm
+        btn.style.background = "#ff9500"; 
         btn.style.borderColor = "#ff9500";
         btn.style.boxShadow = "0 0 15px rgba(255,149,0,0.5)";
         
@@ -5054,60 +5059,86 @@ function handleScanButtonClick() {
         return;
     }
 
-    // ─── BƯỚC 2: NHẮM TÂM CAMERA VÀO MÉP PHẢI & TRÍCH XUẤT TRỌNG TÂM ───
+    // ─── BƯỚC 2: CHỐT TIÊU ĐIỂM MÉP PHẢI & TRÍCH XUẤT TRỌNG TÂM CHIẾM DỤNG ───
     if (scanState.isScanning && scanState.startAngle !== null) {
         scanState.isScanning = false;
         scanState.endAngle = scanState.currentAngle;
 
-        // Thuật toán vi phân tính khoảng cách góc hình quạt giữa 2 mép ngắm (Bù trừ trục 0°/360°)
+        // Tính khoảng cách góc hình quạt giữa 2 mép ngắm (Khử lỗi trục giao thoa 0°/360°)
         let diff = scanState.endAngle - scanState.startAngle;
         if (diff < 0) diff += 360; 
 
-        // Nếu người dùng ngắm ngược từ phải qua trái, góc diff sẽ lớn hơn 180 độ. 
-        // Phong thủy thực địa chỉ quét vật thể cục bộ (< 180 độ) -> Tự động đảo chiều nếu quét ngược hướng la bàn.
+        // 💡 THUẬT TOÁN THÔNG MINH: Tự động đảo biên nếu người dùng quét ngược từ Phải qua Trái
         if (diff > 180) {
             diff = 360 - diff;
-            // Đổi lại vị trí góc để tính toán trọng tâm chuẩn xác
             let temp = scanState.startAngle;
             scanState.startAngle = scanState.endAngle;
             scanState.endAngle = temp;
         }
 
         let realSizeDegree = Math.round(diff); 
-        if (realSizeDegree === 0) realSizeDegree = 2; // Phòng ngừa đứng im bấm 2 lần
+        if (realSizeDegree === 0) realSizeDegree = 1; // Khử lỗi bấm đúp tại một điểm
 
-        // 🎯 TÍNH TOÁN TRỌNG TÂM HÌNH HỌC (ĐIỂM CHÍNH GIỮA CỦA VẬT THỂ VỚI ĐỘ CHÍNH XÁC CAO)
+        // Tính toán trọng tâm hình học chuẩn xác của kết cấu
         let centerAngle = scanState.startAngle + (diff / 2);
         centerAngle = ((centerAngle % 360) + 360) % 360; 
 
-        // Khôi phục trạng thái ban đầu cho nút bấm UI
+        // Trả UI nút bấm về trạng thái tĩnh
         btn.innerHTML = "📐 Nhắm Quét Dải Độ Thực Địa";
         btn.style.background = "#2c2c2e";
         btn.style.borderColor = "#ffca28";
         btn.style.boxShadow = "none";
 
-        // Đồng bộ độ rộng vật thể vừa đo vào cấu hình động của hệ thống
+        // Đồng bộ dải độ thực tế vào bộ nhớ cấu hình vật thể
         if (ConfigPhongThuy[hiddenInputPurpose]) {
             ConfigPhongThuy[hiddenInputPurpose].sizeDegree = realSizeDegree;
         }
 
-        showToast(`✔️ Quét góc kẹt thành công! Độ rộng vật thể: ${realSizeDegree}°. Tâm camera chính giữa định vị Trọng tâm: ${Math.round(centerAngle)}°`);
+        showToast(`✔️ Quét thành công! Độ rộng vật thể: ${realSizeDegree}°. Trọng tâm hình học: ${Math.round(centerAngle)}°`);
 
-        // Đổ dữ liệu ra lõi tính toán điểm và giao diện hiển thị
+        // Đổ dữ liệu ra lõi tính điểm toán học
         processScanResult(centerAngle, realSizeDegree, hiddenInputPurpose);
         
         if (typeof generateDirectionsList === 'function') {
             generateDirectionsList();
         }
 
-        // Xóa bộ nhớ đệm để sẵn sàng cho lần quét tiếp theo
+        // Giải phóng bộ nhớ đệm
         scanState.startAngle = null;
         scanState.endAngle = null;
     }
 }
 
 /**
- * 3. XỬ LÝ KẾT QUẢ QUÉT ĐỘNG VÀ ĐỒ DỮ LIỆU THÔNG MINH LÊN UI
+ * 3. CHẾ ĐỘ 2 & 3: LẬP TỨC ĐỔ DỮ LIỆU BẰNG TAY / ÁP SÁT THÀNH VẬT THỂ
+ * Dành cho trường hợp phòng quá kẹt không thể đứng từ xa ngắm camera, hoặc làm việc trên bản vẽ
+ */
+function executeManualScanConfig(customCenterAngle, customSizeDegree, purposeKey) {
+    scanState.method = "MANUAL";
+    scanState.isScanning = false;
+
+    let cleanCenter = ((parseFloat(customCenterAngle) % 360) + 360) % 360;
+    let cleanSize = Math.max(0, Math.min(180, parseFloat(customSizeDegree) || 0));
+
+    if (ConfigPhongThuy[purposeKey]) {
+        ConfigPhongThuy[purposeKey].sizeDegree = cleanSize;
+    }
+
+    showToast(`⚙️ Đã nạp thông số thủ công: Trọng tâm ${Math.round(cleanCenter)}°, Bề rộng dải mạch: ${cleanSize}°`);
+
+    // Chạy phân tích điểm đa tầng ngay lập tức
+    processScanResult(cleanCenter, cleanSize, purposeKey);
+
+    if (typeof generateDirectionsList === 'function') {
+        generateDirectionsList();
+    }
+}
+
+/**
+ * =========================================================================
+ * 📐 3. XỬ LÝ KẾT QUẢ QUÉT ĐỘNG & BẢO CÁO ĐỊA CHẤT ĐA TẦNG TRÊN UI
+ * =========================================================================
+ * Phiên bản nâng cấp tối đa: Kết xuất ma trận phân độ Hậu, trực quan hóa ranh giới Long mạch.
  */
 function processScanResult(centerAngle, sizeDegree, purpose) {
     const cungPhiChủMệnh = vịTríLấyCungPhi(); 
@@ -5115,52 +5146,140 @@ function processScanResult(centerAngle, sizeDegree, purpose) {
     const namKhaoSat = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value) : new Date().getFullYear();
     const namAmReal = vịTríLấyNămÂmChuẩn();
 
-    // Chạy phương trình lõi Đa Tầng Thực Chiến (Đã fix logic ở bước trước)
+    // Chạy phương trình lõi Đa Tầng Thực Chiến (Đã bẻ luồng quét / dò điểm tự động)
     const ketQua = tinhDiemTongHop(cungPhiChủMệnh, centerAngle, namKhaoSat, purpose, namAmReal);
 
     const container = document.getElementById('scan-result-panel');
-    if (container) {
-        let mauSắcGiaoDiện = ketQua.diem >= 72 ? '#30d158' : '#ff3b30';
-        let bgGiaoDiện = ketQua.diem >= 72 ? 'rgba(48,209,88,0.06)' : 'rgba(255,59,48,0.06)';
+    if (!container) {
+        if (typeof triggerGhostNeedle === 'function') triggerGhostNeedle(centerAngle);
+        return;
+    }
 
-        // PHONG THỦY CAO CẤP: Phân tích trực quan độ cân bằng và lấn biên của dải độ vật thể
-        let thongTinPhanTichHau = "";
-        if (ketQua.scanMetrics && ketQua.scanMetrics.totalHauOccupied > 1) {
-            thongTinPhanTichHau = `
-                <div style="margin-top: 6px; padding: 6px; background: rgba(255,149,0,0.1); border-radius: 4px; border-left: 3px solid #ff9500; font-size: 0.8rem; color: #ffbc66;">
-                    ⚠️ <strong>CẢNH BÁO LẤN BIÊN LONG MẠCH:</strong> Vật thể rộng ${sizeDegree}° lấn qua <strong>${ketQua.scanMetrics.totalHauOccupied} phân độ Hậu</strong> khí trường ngầm. Trọng tâm bị xé nhỏ, hãy dịch chuyển nhẹ hoặc xoay kết cấu để đưa tâm máy về vùng báo màu xanh!
+    // Thiết lập hệ màu sắc động theo thang điểm Phong thủy cao cấp
+    let mauSắcGiaoDiện = '#ff3b30'; // Mặc định Hung (Đỏ)
+    let bgGiaoDiện = 'rgba(255,59,48,0.04)';
+    
+    if (ketQua.diem >= 86) {
+        mauSắcGiaoDiện = '#30d158'; // Đại Cát (Xanh lá sáng)
+        bgGiaoDiện = 'rgba(48,209,88,0.07)';
+    } else if (ketQua.diem >= 72) {
+        mauSắcGiaoDiện = '#007aff'; // Cát Vị (Xanh dương hoàng gia)
+        bgGiaoDiện = 'rgba(0,122,255,0.05)';
+    } else if (ketQua.diem >= 50) {
+        mauSắcGiaoDiện = '#ff9500'; // Trung Bình (Cam)
+        bgGiaoDiện = 'rgba(255,149,0,0.05)';
+    }
+
+    // ─── TẦNG TỰ ĐỘNG BÓC TÁCH MA TRẬN HẬU LONG CHIẾM DỤNG ───
+    let khốiPhân TíchHậuHTML = "";
+    if (ketQua.scanMetrics && ketQua.scanMetrics.chiTietHau && ketQua.scanMetrics.chiTietHau.length > 0) {
+        // Duyệt qua ma trận các Hậu khí bị đè lên để render thành các nhãn (tags) trực quan
+        let danhSachTagsHau = ketQua.scanMetrics.chiTietHau.map(hau => {
+            let làHậuCát = hau.diem >= 60;
+            let màuTag = làHậuCát ? '#30d158' : '#ff3b30';
+            let bgTag = làHậuCát ? 'rgba(48,209,88,0.1)' : 'rgba(255,59,48,0.1)';
+            let iconMạch = làHậuCát ? '🟢' : '🔴';
+            
+            return `
+                <div style="display: flex; align-items: center; justify-content: space-between; background: ${bgTag}; border: 1px solid ${màuTag}30; padding: 5px 8px; border-radius: 6px; font-size: 0.78rem;">
+                    <span style="color: #fff; font-weight: 500;">${iconMạch} Mốc ${hau.moc}° (${hau.ten})</span>
+                    <span style="color: ${màuTag}; font-weight: bold;">${hau.diem}đ</span>
+                </div>
+            `;
+        }).join('');
+
+        // Sinh cảnh báo hoặc chúc mừng dựa trên số lượng Hậu khí bị lấn biên
+        let khốiCảnhBáoBiên = "";
+        if (ketQua.scanMetrics.isDynamicScanned && ketQua.scanMetrics.totalHauOccupied > 1) {
+            khốiCảnhBáoBiên = `
+                <div style="margin-top: 10px; padding: 8px 10px; background: rgba(255,149,0,0.08); border-radius: 6px; border-left: 4px solid #ff9500; font-size: 0.8rem; color: #ffbc66; line-height: 1.4;">
+                    ⚠️ <strong>CẢNH BÁO TẠP KHÍ KHÔNG GIAN:</strong> Khối kết cấu có độ rộng mặt bằng khá lớn (${sizeDegree}°), trải dài đè qua <strong>${ketQua.scanMetrics.totalHauOccupied} phân độ Hậu</strong>. Trường khí ngầm bị phân mảnh, hãy ưu tiên tịnh tiến hoặc xoay nhẹ trọng tâm để né các mốc mạch màu đỏ bên dưới!
                 </div>
             `;
         } else {
-            thongTinPhanTichHau = `
-                <div style="margin-top: 6px; padding: 6px; background: rgba(48,209,88,0.1); border-radius: 4px; border-left: 3px solid #30d158; font-size: 0.8rem; color: #82f5a0;">
-                    ✅ <strong>ĐẮC TRỌNG TÂM THUẦN KHÍ:</strong> Toàn bộ bề mặt kết cấu nằm trọn vẹn, an định trong 1 phân độ Hậu địa khí ngầm, năng lượng tích tụ cao nhất.
+            khốiCảnhBáoBiên = `
+                <div style="margin-top: 10px; padding: 8px 10px; background: rgba(48,209,88,0.08); border-radius: 6px; border-left: 4px solid #30d158; font-size: 0.8rem; color: #82f5a0; line-height: 1.4;">
+                    ✅ <strong>ĐẮC CÁCH THUẦN KHÍ LONG MẠCH:</strong> Toàn bộ bề rộng của vật thể nằm trọn vẹn lý tưởng trong một phân độ địa khí duy nhất. Trường khí không bị lai tạp, năng lượng tập trung đạt đỉnh.
                 </div>
             `;
         }
 
-        container.style.display = "block";
-        container.innerHTML = `
-            <div style="background: ${bgGiaoDiện}; border: 1px solid ${mauSắcGiaoDiện}40; padding: 14px; border-radius: 10px; color: #fff; font-family: sans-serif; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-                <div style="font-weight: bold; color: #ffca28; margin-bottom: 8px; font-size: 0.95rem; display: flex; align-items: center; gap: 6px;">
-                    🎯 KẾT QUẢ QUÉT KẾT CẤU THỰC ĐỊA ĐỘNG
+        khốiPhân TíchHậuHTML = `
+            <div style="margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
+                <div style="font-size: 0.82rem; font-weight: bold; color: #ffca28; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    🗺️ Ma trận phân tích Địa khí mạch chiếm dụng:
                 </div>
-                <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse; margin-bottom: 8px;">
-                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);"><td style="padding: 4px 0; color: #aaa;">Chiều rộng vật thể:</td><td style="text-align: right; font-weight: bold; color: #30d158;">${Math.round(sizeDegree)}°</td></tr>
-                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);"><td style="padding: 4px 0; color: #aaa;">Góc Trọng Tâm (Giữa máy):</td><td style="text-align: right; font-weight: bold; color: #ffca28;">${Math.round(centerAngle)}° (${ketQua.sonName} Sơn)</td></tr>
-                    <tr><td style="padding: 4px 0; color: #aaa;">Điểm tích phân mảng:</td><td style="text-align: right; font-weight: bold; color: ${mauSắcGiaoDiện};">${ketQua.diem}pt (${ketQua.level})</td></tr>
-                </table>
-                
-                ${thongTinPhanTichHau}
-                
-                <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 8px; padding-top: 8px; font-size: 0.8rem; color: #ddd; line-height: 1.4;">
-                    <strong>Luận trạch:</strong> ${ketQua.message}
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; margin-bottom: 6px;">
+                    ${danhSachTagsHau}
                 </div>
-                ${ketQua.hoaGiai ? `<div style="margin-top: 4px; font-size: 0.8rem; color: #ffca28;"><strong>Hóa giải gợi ý:</strong> ${ketQua.hoaGiai}</div>` : ''}
+                ${khốiCảnhBáoBiên}
             </div>
         `;
     }
 
+    // ─── XỬ LÝ ĐỒ HỌA RA UI CONTAINER CHÍNH CHẤT LƯỢNG CAO ───
+    container.style.display = "block";
+    container.innerHTML = `
+        <div style="background: ${bgGiaoDiện}; border: 1px solid ${mauSắcGiaoDiện}50; padding: 16px; border-radius: 12px; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 8px 32px rgba(0,0,0,0.3); backdrop-filter: blur(10px); transition: all 0.3s ease;">
+            
+            <div style="font-weight: bold; color: #ffca28; margin-bottom: 12px; font-size: 1rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">
+                <span style="display: flex; align-items: center; gap: 6px;">🎯 BÁO CÁO ĐỊA CHẤT KẾT CẤU ĐỘNG</span>
+                <span style="font-size: 0.75rem; background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 20px; color: #aaa; font-weight: normal;">
+                    ${ketQua.scanMetrics && ketQua.scanMetrics.isDynamicScanned ? 'CHẾ ĐỘ QUÉT' : 'DÒ ĐIỂM'}
+                </span>
+            </div>
+            
+            <table style="width: 100%; font-size: 0.88rem; border-collapse: collapse; margin-bottom: 10px;">
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 6px 0; color: #aaa;">📐 Chiều rộng kết cấu thực tế:</td>
+                    <td style="text-align: right; font-weight: bold; color: #30d158;">${Math.round(sizeDegree)}°</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 6px 0; color: #aaa;">📍 Tọa độ trọng tâm (Máy nhìn):</td>
+                    <td style="text-align: right; font-weight: bold; color: #ffca28;">
+                        ${Math.round(centerAngle)}° (Sơn ${ketQua.sonName})
+                    </td>
+                </tr>
+                ${ketQua.scanMetrics && ketQua.scanMetrics.isDynamicScanned ? `
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 6px 0; color: #aaa;">🌐 Biên độ dải mạch giới hạn:</td>
+                    <td style="text-align: right; font-weight: 500; color: #ddd; font-size: 0.8rem;">
+                        Từ ${Math.round(ketQua.scanMetrics.gocStart)}° đến ${Math.round(ketQua.scanMetrics.gocEnd)}°
+                    </td>
+                </tr>` : ''}
+                <tr>
+                    <td style="padding: 6px 0; color: #aaa;">📊 Điểm tích phân tổng hợp khí:</td>
+                    <td style="text-align: right; font-size: 1.05rem; font-weight: 900; color: ${mauSắcGiaoDiện}; letter-spacing: 0.5px;">
+                        ${ketQua.diem} Pts (<span style="font-size: 0.85rem; font-weight: bold;">${ketQua.level}</span>)
+                    </td>
+                </tr>
+            </table>
+            
+            ${khốiPhân TíchHậuHTML}
+            
+            <div style="border-top: 1px solid rgba(255,255,255,0.08); margin-top: 10px; padding-top: 10px;">
+                <div style="font-size: 0.82rem; font-weight: bold; color: #ffca28; margin-bottom: 4px; text-transform: uppercase;">
+                    📖 Luận đoán khí trạch pháp:
+                </div>
+                <div style="font-size: 0.85rem; color: #e5e5ea; line-height: 1.5; text-align: justify; background: rgba(0,0,0,0.15); padding: 8px; border-radius: 6px;">
+                    ${ketQua.message}
+                </div>
+            </div>
+            
+            ${ketQua.hoaGiai ? `
+            <div style="margin-top: 10px; background: rgba(255,202,40,0.05); border: 1px dashed rgba(255,202,40,0.3); padding: 8px; border-radius: 6px;">
+                <div style="font-size: 0.82rem; font-weight: bold; color: #ffca28; margin-bottom: 2px; display: flex; align-items: center; gap: 4px;">
+                    🛠️ PHƯƠNG ÁN ĐIỀU CHỈNH THỰC ĐỊA:
+                </div>
+                <div style="font-size: 0.82rem; color: #fff; line-height: 1.4;">
+                    ${ketQua.hoaGiai}
+                </div>
+            </div>` : ''}
+            
+        </div>
+    `;
+
+    // Đồng bộ kích hoạt Kim La Bàn Ảo (Ghost Needle) trỏ thẳng vào Trọng tâm mới được xác định
     if (typeof triggerGhostNeedle === 'function') {
         triggerGhostNeedle(centerAngle);
     }
