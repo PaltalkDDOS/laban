@@ -5135,152 +5135,219 @@ function executeManualScanConfig(customCenterAngle, customSizeDegree, purposeKey
 }
 
 /**
- * =========================================================================
- * 📐 3. XỬ LÝ KẾT QUẢ QUÉT ĐỘNG & BẢO CÁO ĐỊA CHẤT ĐA TẦNG TRÊN UI
- * =========================================================================
- * Phiên bản nâng cấp tối đa: Kết xuất ma trận phân độ Hậu, trực quan hóa ranh giới Long mạch.
+ * 3. XỬ LÝ KẾT QUẢ QUÉT ĐỘNG VÀ ĐỒ DỮ LIỆU THÔNG MINH LÊN UI
+ * PHIÊN BẢN 2026: Tích hợp chế độ Debug hiển thị lỗi trực quan lên màn hình
+ */
+/**
+ * 3. XỬ LÝ KẾT QUẢ QUÉT ĐỘNG VÀ ĐỒ DỮ LIỆU THÔNG MINH LÊN UI
+ * PHIÊN BẢN 2026: Nâng cấp hộp chẩn đoán (Diagnostic UI) show sạch thông số khi lỗi hệ thống
  */
 function processScanResult(centerAngle, sizeDegree, purpose) {
-    const cungPhiChủMệnh = vịTríLấyCungPhi(); 
-    const txtSurveyYear = document.getElementById('surveyYear');
-    const namKhaoSat = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value) : new Date().getFullYear();
-    const namAmReal = vịTríLấyNămÂmChuẩn();
-
-    // Chạy phương trình lõi Đa Tầng Thực Chiến (Đã bẻ luồng quét / dò điểm tự động)
-    const ketQua = tinhDiemTongHop(cungPhiChủMệnh, centerAngle, namKhaoSat, purpose, namAmReal);
-
+    console.log("=== BẮT ĐẦU XỬ LÝ KẾT QUẢ QUÉT THỰC ĐỊA ===");
+    
+    // ─── 0. KIỂM TRA DOM AN TOÀN TRÁNH ALERT XẤU ───
     const container = document.getElementById('scan-result-panel');
     if (!container) {
-        if (typeof triggerGhostNeedle === 'function') triggerGhostNeedle(centerAngle);
+        let errorOverlay = document.getElementById('geo-error-overlay');
+        if (!errorOverlay) {
+            errorOverlay = document.createElement('div');
+            errorOverlay.id = 'geo-error-overlay';
+            errorOverlay.style.cssText = `
+                position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+                width: 90%; max-width: 400px; background: rgba(28, 28, 30, 0.95);
+                backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 59, 48, 0.4); border-left: 5px solid #ff3b30;
+                padding: 16px; border-radius: 12px; z-index: 999999;
+                box-shadow: 0 12px 30px rgba(0,0,0,0.5); font-family: -apple-system, sans-serif; color: #fff;
+            `;
+            document.body.appendChild(errorOverlay);
+        }
+        errorOverlay.innerHTML = `
+            <div style="display: flex; gap: 10px; align-items: flex-start;">
+                <span style="font-size: 1.2rem;">🚨</span>
+                <div style="flex: 1;">
+                    <div style="font-weight: bold; color: #ff453a; font-size: 0.85rem; margin-bottom: 4px;">THIẾU ELEMENT GIAO DIỆN</div>
+                    <div style="font-size: 0.8rem; color: #e5e5ea;">Vui lòng dán dòng sau vào file HTML:</div>
+                    <input type="text" value='<div id="scan-result-panel"></div>' readonly style="width: 100%; background: #000; color: #30d158; border: none; font-family: monospace; font-size: 0.75rem; margin-top: 6px; padding: 4px; border-radius: 4px;" onclick="this.select()">
+                </div>
+                <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: #8e8e93; cursor: pointer;">✕</button>
+            </div>
+        `;
         return;
     }
 
-    // Thiết lập hệ màu sắc động theo thang điểm Phong thủy cao cấp
-    let mauSắcGiaoDiện = '#ff3b30'; // Mặc định Hung (Đỏ)
-    let bgGiaoDiện = 'rgba(255,59,48,0.04)';
+    // Hiển thị trạng thái xử lý tạm thời
+    container.style.display = "block";
+    container.innerHTML = `<div style="color: #ffca28; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px; font-size: 0.85rem; border: 1px dashed rgba(255,255,255,0.1);">⏳ Hệ thống đang phân tích ma trận long mạch thực địa...</div>`;
+
+    // ─── 1. THU THẬP THÔNG SỐ ĐẦU VÀO ĐỂ CHẨN ĐOÁN ───
+    let cungPhiChuMenh = "Càn";
+    if (typeof vịTríLấyCungPhi === 'function') cungPhiChuMenh = vịTríLấyCungPhi();
+    else if (typeof viTriLayCungPhi === 'function') cungPhiChuMenh = viTriLayCungPhi();
+
+    const txtSurveyYear = document.getElementById('surveyYear');
+    const namKhaoSat = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value) : new Date().getFullYear();
     
-    if (ketQua.diem >= 86) {
-        mauSắcGiaoDiện = '#30d158'; // Đại Cát (Xanh lá sáng)
-        bgGiaoDiện = 'rgba(48,209,88,0.07)';
-    } else if (ketQua.diem >= 72) {
-        mauSắcGiaoDiện = '#007aff'; // Cát Vị (Xanh dương hoàng gia)
-        bgGiaoDiện = 'rgba(0,122,255,0.05)';
-    } else if (ketQua.diem >= 50) {
-        mauSắcGiaoDiện = '#ff9500'; // Trung Bình (Cam)
-        bgGiaoDiện = 'rgba(255,149,0,0.05)';
+    let namAmReal = namKhaoSat;
+    if (typeof vịTríLấyNămÂmChuẩn === 'function') namAmReal = vịTríLấyNămÂmChuẩn();
+
+    // ─── 2. BẪY LỖI LOGIC VÀ XỬ LÝ KHỐI GIAO DIỆN CHẨN ĐOÁN THÔNG SỐ ───
+    let ketQua;
+    try {
+        if (typeof tinhDiemTongHop !== 'function') {
+            throw new Error("Hàm lõi 'tinhDiemTongHop' chưa được khai báo hoặc bị lỗi cú pháp ở file khác.");
+        }
+        ketQua = tinhDiemTongHop(cungPhiChuMenh, centerAngle, namKhaoSat, purpose, namAmReal);
+        
+        if (!ketQua) {
+            throw new Error("Hàm 'tinhDiemTongHop' không trả về bất kỳ dữ liệu cấu trúc nào (null/undefined).");
+        }
+    } catch (error) {
+        console.error("🚨 SỰ CỐ PHƯƠNG TRÌNH LÕI:", error);
+        
+        // ĐỔ UI CHẨN ĐOÁN CAO CẤP: Hiện lỗi nhưng vẫn show sạch thông số gốc đã quét được!
+        container.innerHTML = `
+            <div style="background: rgba(255,59,48,0.04); border: 1px solid rgba(255,59,48,0.3); border-left: 4px solid #ff3b30; padding: 14px; border-radius: 10px; color: #fff; font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+                <div style="font-weight: bold; color: #ff453a; font-size: 0.9rem; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                    ❌ LỖI PHÂN TÍCH ĐỊA KHÍ CHUYÊN SÂU
+                </div>
+                
+                <div style="background: rgba(0,0,0,0.2); padding: 8px 10px; border-radius: 6px; margin-bottom: 10px; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.03);">
+                    <div style="color: #ffca28; font-weight: bold; margin-bottom: 4px; font-size: 0.75rem;">📊 THÔNG SỐ GHI NHẬN THỰC ĐỊA:</div>
+                    <table style="width: 100%; border-collapse: collapse; line-height: 1.4;">
+                        <tr><td style="color: #aaa;">• Góc Trọng Tâm:</td><td style="text-align: right; color: #fff; font-weight: bold;">${Math.round(centerAngle)}°</td></tr>
+                        <tr><td style="color: #aaa;">• Bề rộng vật thể:</td><td style="text-align: right; color: #30d158; font-weight: bold;">${Math.round(sizeDegree)}°</td></tr>
+                        <tr><td style="color: #aaa;">• Cung Phi / Bản mệnh:</td><td style="text-align: right; color: #ffd60a;">${cungPhiChuMenh} Mệnh</td></tr>
+                        <tr><td style="color: #aaa;">• Mục đích / Vật thể:</td><td style="text-align: right; color: #bfbfbf; font-family: monospace;">"${purpose}"</td></tr>
+                    </table>
+                </div>
+
+                <div style="font-size: 0.8rem; color: #ffbc66; line-height: 1.4; background: rgba(255,149,0,0.06); padding: 8px; border-radius: 4px; border: 1px solid rgba(255,149,0,0.15);">
+                    <strong>Chi tiết lỗi hệ thống:</strong> <span style="font-family: monospace; color: #ff453a;">${error.message}</span>
+                </div>
+                <div style="margin-top: 8px; font-size: 0.7rem; color: #8e8e93; text-align: right;">
+                    💡 Hãy kiểm tra lại hàm <i>tinhDiemTongHop</i> trong file core.
+                </div>
+            </div>
+        `;
+        return; 
     }
 
-    // ─── TẦNG TỰ ĐỘNG BÓC TÁCH MA TRẬN HẬU LONG CHIẾM DỤNG ───
-    let khốiPhân TíchHậuHTML = "";
-    if (ketQua.scanMetrics && ketQua.scanMetrics.chiTietHau && ketQua.scanMetrics.chiTietHau.length > 0) {
-        // Duyệt qua ma trận các Hậu khí bị đè lên để render thành các nhãn (tags) trực quan
-        let danhSachTagsHau = ketQua.scanMetrics.chiTietHau.map(hau => {
-            let làHậuCát = hau.diem >= 60;
-            let màuTag = làHậuCát ? '#30d158' : '#ff3b30';
-            let bgTag = làHậuCát ? 'rgba(48,209,88,0.1)' : 'rgba(255,59,48,0.1)';
-            let iconMạch = làHậuCát ? '🟢' : '🔴';
-            
+    // ─── 3. KHỐI BIÊN DỊCH VÀ XUẤT UI KHI THÀNH CÔNG (KHÔNG LỖI) ───
+    let danhSachHauBaoCaoHTML = "";
+    if (ketQua.scanMetrics && Array.isArray(ketQua.scanMetrics.chiTietHau) && ketQua.scanMetrics.chiTietHau.length > 0) {
+        danhSachHauBaoCaoHTML = ketQua.scanMetrics.chiTietHau.map(function(hau) {
+            let mauHauBadge = (hau.diem >= 60) ? '#30d158' : '#ff9500';
             return `
-                <div style="display: flex; align-items: center; justify-content: space-between; background: ${bgTag}; border: 1px solid ${màuTag}30; padding: 5px 8px; border-radius: 6px; font-size: 0.78rem;">
-                    <span style="color: #fff; font-weight: 500;">${iconMạch} Mốc ${hau.moc}° (${hau.ten})</span>
-                    <span style="color: ${màuTag}; font-weight: bold;">${hau.diem}đ</span>
-                </div>
+                <span style="display: inline-block; padding: 3px 8px; margin: 3px 2px; background: rgba(255,255,255,0.04); border: 1px solid ${mauHauBadge}40; border-radius: 4px; font-size: 0.75rem; color: #e5e5ea;">
+                    📍 Mốc ${hau.moc}° (${hau.ten || 'Hậu'}: <strong style="color:${mauHauBadge};">${hau.diem}đ</strong>)
+                </span>
             `;
         }).join('');
+    } else {
+        danhSachHauBaoCaoHTML = `<span style="color: #8e8e93; font-size: 0.75rem;">Không có dữ liệu chi tiết dải phân độ ngầm.</span>`;
+    }
 
-        // Sinh cảnh báo hoặc chúc mừng dựa trên số lượng Hậu khí bị lấn biên
-        let khốiCảnhBáoBiên = "";
-        if (ketQua.scanMetrics.isDynamicScanned && ketQua.scanMetrics.totalHauOccupied > 1) {
-            khốiCảnhBáoBiên = `
-                <div style="margin-top: 10px; padding: 8px 10px; background: rgba(255,149,0,0.08); border-radius: 6px; border-left: 4px solid #ff9500; font-size: 0.8rem; color: #ffbc66; line-height: 1.4;">
-                    ⚠️ <strong>CẢNH BÁO TẠP KHÍ KHÔNG GIAN:</strong> Khối kết cấu có độ rộng mặt bằng khá lớn (${sizeDegree}°), trải dài đè qua <strong>${ketQua.scanMetrics.totalHauOccupied} phân độ Hậu</strong>. Trường khí ngầm bị phân mảnh, hãy ưu tiên tịnh tiến hoặc xoay nhẹ trọng tâm để né các mốc mạch màu đỏ bên dưới!
-                </div>
-            `;
-        } else {
-            khốiCảnhBáoBiên = `
-                <div style="margin-top: 10px; padding: 8px 10px; background: rgba(48,209,88,0.08); border-radius: 6px; border-left: 4px solid #30d158; font-size: 0.8rem; color: #82f5a0; line-height: 1.4;">
-                    ✅ <strong>ĐẮC CÁCH THUẦN KHÍ LONG MẠCH:</strong> Toàn bộ bề rộng của vật thể nằm trọn vẹn lý tưởng trong một phân độ địa khí duy nhất. Trường khí không bị lai tạp, năng lượng tập trung đạt đỉnh.
-                </div>
-            `;
-        }
+    let mauSacGiaoDien = (ketQua.diem >= 72) ? '#30d158' : '#ff3b30';
+    let bgGiaoDien = (ketQua.diem >= 72) ? 'rgba(48,209,88,0.06)' : 'rgba(255,59,48,0.06)';
 
-        khốiPhân TíchHậuHTML = `
-            <div style="margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
-                <div style="font-size: 0.82rem; font-weight: bold; color: #ffca28; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">
-                    🗺️ Ma trận phân tích Địa khí mạch chiếm dụng:
+    let thongTinPhanTichHau = "";
+    if (ketQua.scanMetrics && ketQua.scanMetrics.totalHauOccupied > 1) {
+        thongTinPhanTichHau = `
+            <div style="margin-top: 10px; padding: 10px; background: rgba(255,149,0,0.08); border-radius: 6px; border-left: 4px solid #ff9500; font-size: 0.8rem; color: #ffbc66; line-height: 1.4;">
+                ⚠️ <strong>CẢNH BÁO LẤN BIÊN LONG MẠCH:</strong> Chiếm dụng dải quét <strong>${sizeDegree}°</strong>, nằm đè lên <strong>${ketQua.scanMetrics.totalHauOccupied} phân độ Hậu</strong> khí trường ngầm.
+                <div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,149,0,0.15);">
+                    ${danhSachHauBaoCaoHTML}
                 </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; margin-bottom: 6px;">
-                    ${danhSachTagsHau}
+            </div>
+        `;
+    } else {
+        thongTinPhanTichHau = `
+            <div style="margin-top: 10px; padding: 10px; background: rgba(48,209,88,0.08); border-radius: 6px; border-left: 4px solid #30d158; font-size: 0.8rem; color: #82f5a0; line-height: 1.4;">
+                ✅ <strong>ĐẮC TRỌNG TÂM THUẦN KHÍ:</strong> Toàn bộ mặt kết cấu định vị hoàn hảo trong địa khí thuần khiết:
+                <div style="margin-top: 6px;">
+                    ${danhSachHauBaoCaoHTML}
                 </div>
-                ${khốiCảnhBáoBiên}
             </div>
         `;
     }
 
-    // ─── XỬ LÝ ĐỒ HỌA RA UI CONTAINER CHÍNH CHẤT LƯỢNG CAO ───
-    container.style.display = "block";
     container.innerHTML = `
-        <div style="background: ${bgGiaoDiện}; border: 1px solid ${mauSắcGiaoDiện}50; padding: 16px; border-radius: 12px; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 8px 32px rgba(0,0,0,0.3); backdrop-filter: blur(10px); transition: all 0.3s ease;">
-            
-            <div style="font-weight: bold; color: #ffca28; margin-bottom: 12px; font-size: 1rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">
-                <span style="display: flex; align-items: center; gap: 6px;">🎯 BÁO CÁO ĐỊA CHẤT KẾT CẤU ĐỘNG</span>
-                <span style="font-size: 0.75rem; background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 20px; color: #aaa; font-weight: normal;">
-                    ${ketQua.scanMetrics && ketQua.scanMetrics.isDynamicScanned ? 'CHẾ ĐỘ QUÉT' : 'DÒ ĐIỂM'}
-                </span>
+        <div style="background: ${bgGiaoDien}; border: 1px solid ${mauSacGiaoDien}40; padding: 16px; border-radius: 12px; color: #fff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
+            <div style="font-weight: bold; color: #ffca28; margin-bottom: 10px; font-size: 0.95rem; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px;">
+                🎯 PHÂN TÍCH ĐỊA CHẤT & TRỌNG TÂM THỰC ĐỊA
             </div>
-            
-            <table style="width: 100%; font-size: 0.88rem; border-collapse: collapse; margin-bottom: 10px;">
+            <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse; margin-bottom: 4px;">
                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                    <td style="padding: 6px 0; color: #aaa;">📐 Chiều rộng kết cấu thực tế:</td>
-                    <td style="text-align: right; font-weight: bold; color: #30d158;">${Math.round(sizeDegree)}°</td>
+                    <td style="padding: 6px 0; color: #aeaeb2;">Dải rộng kết cấu:</td>
+                    <td style="text-align: right; font-weight: bold; color: #30d158; padding: 6px 0;">${Math.round(sizeDegree)}°</td>
                 </tr>
                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                    <td style="padding: 6px 0; color: #aaa;">📍 Tọa độ trọng tâm (Máy nhìn):</td>
-                    <td style="text-align: right; font-weight: bold; color: #ffca28;">
-                        ${Math.round(centerAngle)}° (Sơn ${ketQua.sonName})
-                    </td>
+                    <td style="padding: 6px 0; color: #aeaeb2;">Tọa độ Trọng tâm:</td>
+                    <td style="text-align: right; font-weight: bold; color: #ffca28; padding: 6px 0;">${Math.round(centerAngle)}° (Sơn ${ketQua.sonName || 'Chưa rõ'})</td>
                 </tr>
-                ${ketQua.scanMetrics && ketQua.scanMetrics.isDynamicScanned ? `
-                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                    <td style="padding: 6px 0; color: #aaa;">🌐 Biên độ dải mạch giới hạn:</td>
-                    <td style="text-align: right; font-weight: 500; color: #ddd; font-size: 0.8rem;">
-                        Từ ${Math.round(ketQua.scanMetrics.gocStart)}° đến ${Math.round(ketQua.scanMetrics.gocEnd)}°
-                    </td>
-                </tr>` : ''}
                 <tr>
-                    <td style="padding: 6px 0; color: #aaa;">📊 Điểm tích phân tổng hợp khí:</td>
-                    <td style="text-align: right; font-size: 1.05rem; font-weight: 900; color: ${mauSắcGiaoDiện}; letter-spacing: 0.5px;">
-                        ${ketQua.diem} Pts (<span style="font-size: 0.85rem; font-weight: bold;">${ketQua.level}</span>)
-                    </td>
+                    <td style="padding: 6px 0; color: #aeaeb2;">Điểm tích phân địa khí:</td>
+                    <td style="text-align: right; font-weight: bold; color: ${mauSacGiaoDien}; padding: 6px 0; font-size: 1rem;">${ketQua.diem || 0} pt (${ketQua.level || 'Không xếp hạng'})</td>
                 </tr>
             </table>
-            
-            ${khốiPhân TíchHậuHTML}
-            
-            <div style="border-top: 1px solid rgba(255,255,255,0.08); margin-top: 10px; padding-top: 10px;">
-                <div style="font-size: 0.82rem; font-weight: bold; color: #ffca28; margin-bottom: 4px; text-transform: uppercase;">
-                    📖 Luận đoán khí trạch pháp:
-                </div>
-                <div style="font-size: 0.85rem; color: #e5e5ea; line-height: 1.5; text-align: justify; background: rgba(0,0,0,0.15); padding: 8px; border-radius: 6px;">
-                    ${ketQua.message}
-                </div>
+            ${thongTinPhanTichHau}
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 10px; padding-top: 10px; font-size: 0.85rem; color: #e5e5ea; line-height: 1.5;">
+                <strong style="color: #ffca28;">Luận đại cục [${cungPhiChuMenh} Mệnh]:</strong> ${ketQua.message || 'Không có lời bình.'}
             </div>
-            
             ${ketQua.hoaGiai ? `
-            <div style="margin-top: 10px; background: rgba(255,202,40,0.05); border: 1px dashed rgba(255,202,40,0.3); padding: 8px; border-radius: 6px;">
-                <div style="font-size: 0.82rem; font-weight: bold; color: #ffca28; margin-bottom: 2px; display: flex; align-items: center; gap: 4px;">
-                    🛠️ PHƯƠNG ÁN ĐIỀU CHỈNH THỰC ĐỊA:
+                <div style="margin-top: 6px; padding: 8px; background: rgba(255,255,255,0.03); border-radius: 4px; font-size: 0.8rem; color: #ffd60a; line-height: 1.4;">
+                    <strong>Biện pháp tịnh tiến:</strong> ${ketQua.hoaGiai}
                 </div>
-                <div style="font-size: 0.82rem; color: #fff; line-height: 1.4;">
-                    ${ketQua.hoaGiai}
-                </div>
-            </div>` : ''}
-            
+            ` : ''}
         </div>
     `;
 
-    // Đồng bộ kích hoạt Kim La Bàn Ảo (Ghost Needle) trỏ thẳng vào Trọng tâm mới được xác định
+    console.log("=== ĐÃ ĐỔ DỮ LIỆU LÊN UI THÀNH CÔNG ===");
+
     if (typeof triggerGhostNeedle === 'function') {
         triggerGhostNeedle(centerAngle);
     }
+}
+/**
+ * HÀM BỔ SUNG: Trích xuất Cung Phi hiện tại từ giao diện người dùng
+ * Giúp hàm quét động nhận diện chính xác bản mệnh để tính điểm Bát Trạch
+ */
+function vịTríLấyCungPhi() {
+    // 1. Tìm xem giao diện có ô chọn (select/input) nào chứa Cung Phi không
+    const phầnTửCung = document.getElementById('cungPhi') || 
+                       document.getElementById('cungPhiChuMenh') || 
+                       document.getElementById('purpose'); // Tùy thuộc vào ID bạn đặt trong HTML
+                       
+    if (phầnTửCung && phầnTửCung.value) {
+        // Nếu giá trị là chữ (Càn, Khôn, Ly...) thì trả về luôn
+        if (["Càn", "Khôn", "Khảm", "Ly", "Chấn", "Tốn", "Cấn", "Đoài"].includes(phầnTửCung.value)) {
+            return phầnTửCung.value;
+        }
+    }
+    
+    // 2. Dự phòng: Nếu trên giao diện có lưu thông tin ngày sinh để tính toán
+    const txtNam = document.getElementById('birthYear');
+    const txtThang = document.getElementById('birthMonth') || { value: 6 };
+    const txtNgay = document.getElementById('birthDay') || { value: 15 };
+    const rdGioiTinh = document.querySelector('input[name="gender"]:checked') || { value: 'male' };
+    
+    if (txtNam && txtNam.value) {
+        // Tái sử dụng chính hàm `tínhCungPhi` có sẵn của bạn bên trên
+        return tínhCungPhi(parseInt(txtNam.value), parseInt(txtThang.value), parseInt(txtNgay.value), rdGioiTinh.value);
+    }
+
+    // 3. Nếu không tìm thấy bất kỳ dấu vết nào trên UI, trả về Càn (Mặc định hệ thống)
+    return "Càn";
+}
+
+/**
+ * HÀM BỔ SUNG: Lấy năm Âm lịch khảo sát từ UI
+ */
+function vịTríLấyNămÂmChuẩn() {
+    const txtSurveyYear = document.getElementById('surveyYear');
+    if (txtSurveyYear && txtSurveyYear.value.length === 4) {
+        return parseInt(txtSurveyYear.value);
+    }
+    return new Date().getFullYear();
 }
