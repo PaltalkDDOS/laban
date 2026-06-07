@@ -5021,7 +5021,7 @@ function kichHoatBoLangNgheTouchLaBan() {
 document.addEventListener('DOMContentLoaded', kichHoatBoLangNgheTouchLaBan);
 
 // =========================================================================
-// 🎯 PHÂN HỆ ĐIỀU KHIỂN NÚT TỔNG LUẬN - ỔN ĐỊNH & MƯỢT
+// 🎯 PHÂN HỆ ĐIỀU KHIỂN NÚT TỔNG LUẬN - ĐÚNG NGUYÊN LÝ
 // =========================================================================
 let dungKimTimeout = null;
 let lastStableHeading = null;
@@ -5031,7 +5031,7 @@ function kichHoatBoDemDungKim() {
     const btnTongLuan = document.getElementById('btn-tong-luan');
     if (!btnTongLuan) return;
 
-    // Ưu tiên khi đang khóa cứng la bàn
+    // Ưu tiên khi đang khóa cứng la bàn (luôn hiện)
     if (window.isCompassHold) {
         btnTongLuan.classList.add('vượng-xuất', 'show');
         return;
@@ -5051,38 +5051,39 @@ function kichHoatBoDemDungKim() {
         return;
     }
 
-    // === LOGIC PHÁT HIỆN ĐỨNG IM ===
+    // === LOGIC CHÍNH: Phát hiện quay hay đứng im ===
     clearTimeout(dungKimTimeout);
 
     const currentH = typeof currentHeading !== 'undefined' ? Math.round(currentHeading) : null;
-    if (currentH === null) return;
+    if (currentH === null) {
+        btnTongLuan.classList.remove('vượng-xuất', 'show');
+        return;
+    }
 
     const now = Date.now();
 
-    // Reset bộ đếm nếu kim quay > 2°
+    // Nếu kim đang thay đổi hướng (> 2°) → reset thời gian đứng im
     if (lastStableHeading === null || Math.abs(currentH - lastStableHeading) > 2) {
         lastStableHeading = currentH;
         stabilityStartTime = now;
+        
+        // Đang quay → ẩn nút ngay lập tức
+        btnTongLuan.classList.remove('vượng-xuất', 'show');
+        return;
     }
 
+    // Nếu đứng im, tính thời gian đã đứng im bao lâu
     const stillnessTime = now - stabilityStartTime;
 
-    // Chỉ hiện sau khi đứng im liên tục 5 giây
-    if (stillnessTime >= 1000) {
+    if (stillnessTime >= 2000) {        // 5 giây đứng im
         if (!btnTongLuan.classList.contains('vượng-xuất')) {
             btnTongLuan.classList.add('vượng-xuất', 'show');
         }
-    } else {
-        // Chưa đủ 5 giây → ẩn sau một khoảng rất ngắn (mượt mà)
-        dungKimTimeout = setTimeout(() => {
-            if (!window.isCompassHold) {
-                btnTongLuan.classList.remove('vượng-xuất', 'show');
-            }
-        }, 250);
-    }
+    } 
+    // Chưa đủ 5 giây thì không hiện (để nó tự ẩn khi đang quay)
 }
 
-// Lắng nghe thay đổi form
+ // Lắng nghe form
 document.addEventListener('DOMContentLoaded', () => {
     const inputs = ['birthDay', 'birthMonth', 'birthYear', 'purpose'];
     inputs.forEach(id => {
