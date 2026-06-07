@@ -5069,7 +5069,7 @@ function kichHoatBoDemDungKim() {
     // Chỉ hiện nút khi đứng im liên tục ít nhất 5 giây
     const stillnessTime = now - stabilityStartTime;
 
-    if (stillnessTime >= 500) {                    // ← 5 giây như bạn muốn
+    if (stillnessTime >= 900) {                    // ← 5 giây như bạn muốn
         if (!btnTongLuan.classList.contains('vượng-xuất')) {
             btnTongLuan.classList.add('vượng-xuất');
         }
