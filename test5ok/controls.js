@@ -2303,20 +2303,69 @@ function renderMultiLayerDetail(result, van, degree) {
     if (detailBox) detailBox.innerHTML = html;
 }
 
-// ====================== KIỂM TRA KHÔNG VONG (Thuật toán O(1) Tối ưu hóa tuyệt đối) ======================
+// =========================================================================
+// 🌌 THUẬT TOÁN ĐỊNH VỊ TỬ HUYỆT KHÔNG VONG - PHIÊN BẢN ĐA TẦNG CHÍNH XÁC CAO
+// =========================================================================
 function kiemTraKhongVong(degree) {
+    // 1. Chuẩn hóa góc kim về dải 0 - 360 độ (Bảo vệ tuyệt đối lỗi số âm hoặc lệch vòng)
     const gockim = ((degree % 360) + 360) % 360;
-    let distDai = (gockim + 360 - 22.5) % 45;
+    
+    // Ma trận dữ liệu phục vụ nội suy tên phân định ranh giới khí
+    const QUAI_8 = ["Khảm (Chính Bắc)", "Cấn (Đông Bắc)", "Chấn (Chính Đông)", "Tốn (Đông Nam)", "Ly (Chính Nam)", "Khôn (Tây Nam)", "Đoài (Chính Tây)", "Càn (Tây Bắc)"];
+    const SON_24 = ["Tý", "Quý", "Sửu", "Cấn", "Dần", "Giáp", "Mão", "Ất", "Thìn", "Tốn", "Tỵ", "Bính", "Ngọ", "Đinh", "Mùi", "Khôn", "Thân", "Canh", "Dậu", "Tân", "Tuất", "Càn", "Hợi", "Nhâm"];
+
+    // =====================================================================
+    // === TẦNG 1: ĐẠI KHÔNG VONG (Giao tuyến Bát Quái - Chu kỳ 45° từ mốc 22.5°) ===
+    // =====================================================================
+    let distDai = (gockim - 22.5) % 45;
+    if (distDai < 0) distDai += 45;
     distDai = Math.min(distDai, 45 - distDai);
+    
+    // Khử triệt để lỗi sai số dấu phẩy động của luồng nhị phân (Floating-point protection)
+    distDai = Math.round(distDai * 10000) / 10000;
+
     if (distDai <= 0.5) {
-        return { loai: "ĐẠI KHÔNG VONG", message: "Đường ranh giới Quái lớn. Trường khí đứt gãy đại kỵ." };
+        // Thuật toán nội suy O(1) xác định cặp Quái đang đại xung sát ranh giới
+        let qIdx = (Math.round((gockim - 22.5) / 45) + 8) % 8;
+        let quaiTrai = QUAI_8[qIdx];
+        let quaiPhai = QUAI_8[(qIdx + 1) % 8];
+
+        return {
+            loai: "ĐẠI KHÔNG VONG",
+            mucDo: "🔴 ĐẠI HƯNG VÔ CÙNG NGUY HIỂM",
+            saiLech: distDai,
+            toaDoTuyến: (Math.round((gockim - 22.5) / 45) * 45 + 22.5) % 360,
+            message: `Tọa độ thực địa (${gockim}°) đang đè vạch tử huyệt ranh giới giữa hai đại quái: [${quaiTrai}] và [${quaiPhai}]. Trường khí vũ trụ tại đường ranh này bị đứt gãy, hỗn tạp, từ chối nạp sinh khí, dễ dẫn đến tài vận tiêu tán, nhân đinh tổn hại. Tuyệt đối không lập hướng nhà hoặc cửa chính tại đây.`
+        };
     }
-    let distTieu = (gockim + 360 - 7.5) % 15;
+
+    // =====================================================================
+    // === TẦNG 2: TIỂU KHÔNG VONG (Giao tuyến 24 Sơn vị - Chu kỳ 15° từ mốc 7.5°) ===
+    // =====================================================================
+    let distTieu = (gockim - 7.5) % 15;
+    if (distTieu < 0) distTieu += 15;
     distTieu = Math.min(distTieu, 15 - distTieu);
+    
+    // Khử sai số toán học cơ sở máy tính
+    distTieu = Math.round(distTieu * 10000) / 10000;
+
     if (distTieu <= 0.6) {
-        return { loai: "TIỂU KHÔNG VONG", message: "Tuyến ranh giới 24 Sơn vị nhỏ. Khí thế suy kiệt." };
+        // Thuật toán nội suy O(1) xác định cặp Sơn vị đang bị liếm biên đứt mạch khí
+        let sIdx = (Math.round((gockim - 7.5) / 15) + 24) % 24;
+        let sonTrai = SON_24[sIdx];
+        let sonPhai = SON_24[(sIdx + 1) % 24];
+
+        return {
+            loai: "TIỂU KHÔNG VONG",
+            mucDo: "⚠️ CẢNH BÁO TRUNG BÌNH - TẠP KHÍ SÁT",
+            saiLech: distTieu,
+            toaDoTuyến: (Math.round((gockim - 7.5) / 15) * 15 + 7.5) % 360,
+            message: `Toạ độ la bàn nằm sát vạch phân chia ranh giới giữa Sơn [${sonTrai}] và Sơn [${sonPhai}] trong hệ thống 24 Sơn Vị. Trường khí bị pha tạp (Âm Dương lẫn lộn), long mạch yếu thưa, dễ sinh biến động vô thường cho trạch vận. Khuyến nghị điều chỉnh nhích nhẹ kết cấu sang trái hoặc phải từ 1.5° đến 2° để thu nạp thuần khí.`
+        };
     }
-    return null; 
+
+    // Khí trường đạt độ thuần khiết, an toàn lập cực (Không vướng tuyến Không Vong)
+    return null;
 }
 
 /**
@@ -4911,13 +4960,12 @@ document.head.appendChild(styleLuangiai);
 
 
 // =========================================================================
-// 🖐️ PHÂN HỆ TOUCH HOLD 2 GIÂY ĐỂ KHÓA / 2 GIÂY ĐỂ MỞ LA BÀN (BẢN CHUẨN HOÀN THIỆN)
+// 🖐️ PHÂN HỆ TOUCH HOLD 2 GIÂY (giữ nguyên)
 // =========================================================================
 function kichHoatBoLangNgheTouchLaBan() {
     const vungLaBan = document.getElementById('compass') || document.body;
 
-    // Ngăn chặn triệt để menu ngữ cảnh mặc định khi đè lâu trên thiết bị di động
-    vungLaBan.addEventListener('contextmenu', function(e) {
+    vungLaBan.addEventListener('contextmenu', e => {
         e.preventDefault();
         return false;
     });
@@ -4930,110 +4978,122 @@ function kichHoatBoLangNgheTouchLaBan() {
         clearTimeout(chạmHoldTimeout);
 
         if (!window.isCompassHold) {
-            // KỊCH BẢN A: Đè im ngón tay 2 giây để KHÓA CỨNG la bàn
+            // Kịch bản A: Đè 2 giây để KHÓA
             chạmHoldTimeout = setTimeout(() => {
                 window.isCompassHold = true;
                 if (typeof currentHeading !== 'undefined') {
                     window.holdedHeading = currentHeading;
                 }
-                
-                // Hiệu ứng phản hồi đồ họa
+
                 vungLaBan.classList.add('la-ban-khoa-khí');
                 setTimeout(() => vungLaBan.classList.remove('la-ban-khoa-khí'), 600);
-                
-                // ĐỒNG BỘ MỚI: Gọi hàm kiểm tra form độc lập thay cho hàm cũ đã xóa
-                if (typeof kichHoatBoDemDungKim === 'function') {
-                    kichHoatBoDemDungKim();
-                }
-                
+
+                if (typeof kichHoatBoDemDungKim === 'function') kichHoatBoDemDungKim();
+
                 if (typeof showCustomAlert === 'function') {
-                    showCustomAlert(`🔒 Đã khóa cứng Long Mạch tại tọa độ thực địa: ${window.holdedHeading}°!`);
+                    showCustomAlert(`🔒 Đã khóa cứng Long Mạch tại: ${window.holdedHeading}°!`);
                 }
-            }, 500); 
+            }, 2000); // Tăng lên 2 giây cho chuẩn
         } else {
-            // KỊCH BẢN B: Đè im ngón tay 2 giây để MỞ KHÓA la bàn
+            // Kịch bản B: Đè 2 giây để MỞ KHÓA
             chạmHoldTimeout = setTimeout(() => {
                 window.isCompassHold = false;
-                
-                // ĐỒNG BỘ MỚI: Gọi hàm quét cập nhật lại trạng thái nút
-                if (typeof kichHoatBoDemDungKim === 'function') {
-                    kichHoatBoDemDungKim();
-                }
-                
+                if (typeof kichHoatBoDemDungKim === 'function') kichHoatBoDemDungKim();
+
                 if (typeof showCustomAlert === 'function') {
-                    showCustomAlert("🔓 Giải phóng mạch khí! La bàn chuyển sang chế độ đo động thực thời.");
+                    showCustomAlert("🔓 Giải phóng mạch khí! La bàn đo động thực thời.");
                 }
-            }, 500); 
+            }, 2000);
         }
     }, { passive: true });
 
-    vungLaBan.addEventListener('touchend', function(e) {
+    vungLaBan.addEventListener('touchend', () => {
         đangChạmMànHình = false;
         clearTimeout(chạmHoldTimeout);
     }, { passive: true });
-    
-    vungLaBan.addEventListener('touchmove', function(e) {
+
+    vungLaBan.addEventListener('touchmove', () => {
         clearTimeout(chạmHoldTimeout);
     }, { passive: true });
 }
 
-// Khởi động phân hệ khi trang tải xong
+// Khởi động
 document.addEventListener('DOMContentLoaded', kichHoatBoLangNgheTouchLaBan);
 
-
 // =========================================================================
-// 🎯 PHÂN HỆ ĐIỀU KHIỂN ĐỔI MỚI: XỬ LÝ NÚT LUẬN GIẢI THEO ĐỘ ĐỨNG IM & FORM
+// 🎯 PHÂN HỆ MỚI: ĐIỀU KHIỂN NÚT TỔNG LUẬN - ỔN ĐỊNH HƠN
 // =========================================================================
-
-let tựẨnTimeout = null;
-let trạngTháiNút = false; // false = đang ẩn, true = đang hiện
+let dungKimTimeout = null;
+let lastStableHeading = null;
+let stabilityStartTime = 0;
 
 function kichHoatBoDemDungKim() {
     const btnTongLuan = document.getElementById('btn-tong-luan');
     if (!btnTongLuan) return;
 
-    // 1. Nếu đang khóa la bàn (Hold), giữ nút hiện mãi mãi
+    // Ưu tiên khi đang khóa cứng
     if (window.isCompassHold) {
-        if (!trạngTháiNút) {
-            btnTongLuan.classList.add('vượng-xuất');
-            trạngTháiNút = true;
-        }
+        btnTongLuan.classList.add('vượng-xuất');
         return;
     }
 
-    // 2. Kiểm tra điều kiện form
-    const daNhapDu = (document.getElementById('birthDay')?.value && document.getElementById('birthYear')?.value?.length === 4);
-    const daChonMucDich = (document.getElementById('purpose')?.value && document.getElementById('purpose')?.value !== "none");
+    // Kiểm tra form
+    const dayStr = document.getElementById('birthDay')?.value;
+    const monthStr = document.getElementById('birthMonth')?.value;
+    const yearStr = document.getElementById('birthYear')?.value;
+    const mucDich = document.getElementById('purpose')?.value;
 
-    // Nếu không đủ điều kiện, ẩn ngay lập tức
-    if (!daNhapDu || !daChonMucDich) {
+    const daNhapDuNgayThangNam = (dayStr && monthStr && yearStr && yearStr.length === 4);
+    const daChonDanhMuc = (mucDich && mucDich !== "" && mucDich !== "none");
+
+    if (!daNhapDuNgayThangNam || !daChonDanhMuc) {
         btnTongLuan.classList.remove('vượng-xuất');
-        trạngTháiNút = false;
-        clearTimeout(dừngKimTimeout);
-        clearTimeout(tựẨnTimeout);
         return;
     }
 
-    // 3. LOGIC CHỐNG CHỚP: Chỉ xử lý nếu trạng thái thực sự thay đổi
-    clearTimeout(dừngKimTimeout);
-    
-    // Đợi 500ms khi kim đứng yên mới cho hiện
-    dừngKimTimeout = setTimeout(() => {
-        if (!đangChạmMànHình && !trạngTháiNút) {
-            btnTongLuan.classList.add('vượng-xuất');
-            trạngTháiNút = true;
+    // === LOGIC MỚI: Phát hiện "đứng im" ổn định ===
+    clearTimeout(dungKimTimeout);
 
-            // Thiết lập tự ẩn sau 20 giây
-            clearTimeout(tựẨnTimeout);
-            tựẨnTimeout = setTimeout(() => {
-                if (!window.isCompassHold) {
-                    btnTongLuan.classList.remove('vượng-xuất');
-                    trạngTháiNút = false;
-                }
-            }, 20000);
+    const currentH = typeof currentHeading !== 'undefined' ? Math.round(currentHeading) : null;
+
+    if (currentH === null) return;
+
+    const now = Date.now();
+
+    // Nếu hướng thay đổi đáng kể → reset bộ đếm
+    if (lastStableHeading === null || Math.abs(currentH - lastStableHeading) > 2) {
+        lastStableHeading = currentH;
+        stabilityStartTime = now;
+    }
+
+    // Chỉ hiện nút khi đứng im liên tục ít nhất 5 giây
+    const stillnessTime = now - stabilityStartTime;
+
+    if (stillnessTime >= 5000) {                    // ← 5 giây như bạn muốn
+        if (!btnTongLuan.classList.contains('vượng-xuất')) {
+            btnTongLuan.classList.add('vượng-xuất');
         }
-    }, 500);
+    } else {
+        // Chưa đủ 5 giây thì ẩn (nhưng mượt hơn)
+        dungKimTimeout = setTimeout(() => {
+            if (!window.isCompassHold) {
+                btnTongLuan.classList.remove('vượng-xuất');
+            }
+        }, 300);
+    }
 }
+
+// Lắng nghe form
+document.addEventListener('DOMContentLoaded', () => {
+    const inputs = ['birthDay', 'birthMonth', 'birthYear', 'purpose'];
+    inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', kichHoatBoDemDungKim);
+            el.addEventListener('change', kichHoatBoDemDungKim);
+        }
+    });
+});
 
 // Lắng nghe sự kiện thay đổi Form nhập liệu để cập nhật trạng thái nút bấm ngay tức thì
 document.addEventListener('DOMContentLoaded', () => {
