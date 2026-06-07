@@ -1520,9 +1520,9 @@ mjx-container {
 /* ================= TỔNG LUẬN FLOATING BUTTON ================= */
 .luangiai-fab-btn {
     position: fixed;
-    bottom: 75px; /* Nằm ngay phía trên nút Cài App (bottom 20px + cao 55px) */
+    bottom: 75px; 
     right: 20px;
-    background: linear-gradient(135deg, #30d158, #189839); /* Tone xanh ngọc bích quý phái */
+    background: linear-gradient(135deg, #30d158, #189839);
     color: #fff;
     border: 1px solid #71f592;
     border-radius: 50px;
@@ -1535,8 +1535,18 @@ mjx-container {
     box-shadow: 0 4px 15px rgba(48, 209, 88, 0.4);
     z-index: 9999;
     cursor: pointer;
-    transition: all 0.3s ease;
+    /* --- NÂNG CẤP ĐỂ HẾT CHỚP --- */
+    opacity: 0;              /* Ẩn mặc định */
+    visibility: hidden;      /* Không tương tác được khi ẩn */
+    transform: translateY(20px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     -webkit-tap-highlight-color: transparent;
+}
+
+.luangiai-fab-btn.vượng-xuất {
+    opacity: 1;              /* Hiện lên mượt */
+    visibility: visible;
+    transform: translateY(0);
 }
 
 .luangiai-fab-btn:hover {
@@ -1606,3 +1616,31 @@ mjx-container {
         background: rgba(223, 183, 108, 0.3);
         border-radius: 10px;
     }
+/* Hiệu ứng nhấp nháy Xanh lá khi tìm đúng Sơn Vị Đắc Cách */
+.la-ban-blink-green {
+    animation: blinkGreenEffect 0.4s ease-in-out 4; /* Nhấp nháy 4 lần rồi dừng */
+}
+
+@keyframes blinkGreenEffect {
+    0%, 100% { 
+        filter: drop-shadow(0 0 2px #30d158) brightness(1);
+    }
+    50% { 
+        filter: drop-shadow(0 0 25px #30d158) brightness(1.8);
+        transform: scale(1.03); /* Nhích nhẹ kim lên tạo hiệu ứng kích thích thị giác */
+    }
+}
+
+/* Hiệu ứng nhấp nháy Vàng Cam cho vùng Bình Hòa */
+.la-ban-blink-yellow {
+    animation: blinkYellowEffect 0.5s ease-in-out 3;
+}
+
+@keyframes blinkYellowEffect {
+    0%, 100% { 
+        filter: drop-shadow(0 0 2px #dfb76c) brightness(1);
+    }
+    50% { 
+        filter: drop-shadow(0 0 15px #dfb76c) brightness(1.4);
+    }
+}
