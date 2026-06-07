@@ -719,7 +719,7 @@ const ConfigPhongThuy = {
 };
 
 // =========================================================================
-// 🚀 NĂNG CẤP HÀM HIỂN THỊ DANH SÁCH GỢI Ý - BỘ LỌC CHI TIẾT SƠN HẬU THÔNG MINH
+// 🚀 NĂNG CẤP HÀM HIỂN THỊ DANH SÁCH GỢI Ý - ĐỒNG BỘ DANH MỤC & LỌC HƯỚNG THÔNG MINH
 // =========================================================================
 function generateDirectionsList() {
     const mucDich = document.getElementById('purpose').value;
@@ -747,19 +747,45 @@ function generateDirectionsList() {
         namAmMệnhChủ = (parseInt(monthStr) < 2 || (parseInt(monthStr) === 2 && parseInt(dayStr) < 5)) ? parseInt(yearStr) - 1 : parseInt(yearStr);
     }
 
+    // Nhóm các du niên tốt/xấu trong Bát Trạch
+    const cacCungTot = ["Sinh Khí", "Diên Niên", "Thiên Y", "Phục Vị"];
+    const cacCungXau = ["Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"];
+
     directionMeta.forEach(dir => {
         const cungTrạch = bátTrạchMap[chủMệnh]?.[dir.code] || "Khác";
+        
+        // ─── TƯ DUY UX MỚI: LỌC ĐÚNG HƯỚNG THEO DANH MỤC ĐỂ NGƯỜI DÙNG DỄ HIỂU ───
+        if (isCatPurpose) {
+            // Mục đích cát (Cửa, Thờ...) -> Chỉ hiển thị các hướng thuộc cung tốt của Bản mệnh
+            if (!cacCungTot.includes(cungTrạch)) return; 
+        } else {
+            // Mục đích trấn sát (Bếp, Toilet...) -> Chỉ hiển thị các hướng thuộc cung xấu để tọa trấn
+            if (!cacCungXau.includes(cungTrạch)) return;
+        }
+
         const tongHopDir = tinhDiemTongHop(chủMệnh, dir.angle, namKhaoSatThucTe, mucDich, namAmMệnhChủ);
         const hauInfo = getCurrentHauInfo(dir.angle);
 
         listDirections.push({
-            ...dir, cungTrạch: cungTrạch, diemTongHop: tongHopDir.diem, level: tongHopDir.level, hau: hauInfo, priority: tongHopDir.diem 
+            ...dir, 
+            cungTrạch: cungTrạch, 
+            diemTongHop: tongHopDir.diem, 
+            level: tongHopDir.level, 
+            hau: hauInfo, 
+            priority: tongHopDir.diem 
         });
     });
 
+    // Sắp xếp đưa hướng tối ưu nhất lên đầu danh sách
     listDirections.sort((a, b) => b.priority - a.priority);
     listPanelTitle.innerText = `Gợi ý vị trí Vận 9: ${config.title}`;
     directionsContainer.innerHTML = "";
+
+    // Nếu không tìm thấy hướng nào phù hợp (Trường hợp dữ liệu cấu hình trống)
+    if (listDirections.length === 0) {
+        directionsContainer.innerHTML = `<div style='font-size:0.85rem;color:#ff3b30;text-align:center;padding:15px;'>Không tìm thấy hướng phù hợp với tiêu chuẩn trạch pháp.</div>`;
+        return;
+    }
 
     listDirections.forEach(item => {
         const sonGroup = getSonGroupForDirection(item.code);
@@ -773,30 +799,31 @@ function generateDirectionsList() {
             }
         });
 
-        // ─── SỬA LỖI TỬ HUYỆT: PHÂN PHỐI MÀU SẮC KHUNG ĐỘNG CHUẨN XÁC ───
-        let colorStyle = '#ff3b30';
-        let bgKhung = 'rgba(255,59,48,0.03)';
+        // ─── ĐỒNG BỘ MÀU SẮC KHUNG THEO TIÊU CHÍ ĐÃ LỌC THÔ ───
+        let colorStyle = '#30d158'; // Mặc định các hướng được lọt vào danh sách này đều là hướng tốt/đạt yêu cầu
+        let bgKhung = 'rgba(48,209,88,0.03)';
         let statusText = "";
 
         if (isCatPurpose) {
-            if (item.diemTongHop >= 72) {
-                colorStyle = cóSơnVịBịHungNguyHiem ? '#ff9f0a' : '#30d158';
-                bgKhung = cóSơnVịBịHungNguyHiem ? 'rgba(255,159,10,0.04)' : 'rgba(48,209,88,0.03)';
-                statusText = cóSơnVịBịHungNguyHiem ? 
-                    `⚠️ HƯỚNG CÁT NHƯNG PHẠM SƠN VỊ XUNG KHẮC (CẦN XOAY KIM NÉ GÓC ĐỘ ĐIỂM THẤP)` : 
-                    `🟢 ĐÓN CÁT KHÍ TOÀN VẸN (HƯỚNG ĐẠI CÁT ĐẮC VỊ CHÍNH TÔNG)`;
+            if (cóSơnVịBịHungNguyHiem) {
+                colorStyle = '#ff9f0a'; // Cảnh báo vàng nếu hướng đại thể tốt nhưng cấu trúc sơn vị bị lỗi
+                bgKhung = 'rgba(255,159,10,0.04)';
+                statusText = `⚠️ HƯỚNG CÁT BÁT TRẠCH NHƯNG BỊ PHẠM SƠN VỊ CỤC BỘ (CẦN XOAY KIM ĐỂ NÉ)`;
             } else {
-                statusText = '❌ PHẠM HUNG PHƯƠNG TOÀN CỤC (ĐẠI KỴ LẬP HƯỚNG BẢN MỆNH)';
-            }
-        } else {
-            if (item.diemTongHop >= 72) {
                 colorStyle = '#30d158';
                 bgKhung = 'rgba(48,209,88,0.03)';
-                statusText = '🏆 TỌA HUNG TRẤN SÁT ĐẮC CÁCH (VỊ TRÍ PHÂN BỔ HOÀN HẢO ĐỂ TIÊU SÁT)';
+                statusText = `🟢 ĐON CÁT KHÍ TOÀN VẸN (VỊ TRÍ ĐẠI CÁT ĐẮC VỊ CHÍNH TÔNG)`;
+            }
+        } else {
+            // Đối với Trấn Sát
+            if (item.diemTongHop >= 60) { // Điểm tiêu sát ổn định
+                colorStyle = '#30d158';
+                bgKhung = 'rgba(48,209,88,0.03)';
+                statusText = `🏆 TỌA HUNG TRẤN SÁT ĐẮC CÁCH (THÍCH HỢP ĐẶT KHU VỰC XẢ UẾ)`;
             } else {
-                colorStyle = '#ff3b30';
-                bgKhung = 'rgba(255,59,48,0.03)';
-                statusText = '⚠️ SAI VỊ TRÍ: ĐẶT ĐÈ CÁT PHƯƠNG TIÊU HAO PHÚC LỘC, Ô NHIỄM TRẠCH PHÁP';
+                colorStyle = '#ff9f0a';
+                bgKhung = 'rgba(255,159,10,0.04)';
+                statusText = `⚠️ VỊ TRÍ TỌA HUNG TRẤN SÁT BỊ XUNG ĐỘT PHÂN ĐỘ SƠN HẬU HẸP`;
             }
         }
 
@@ -815,27 +842,26 @@ function generateDirectionsList() {
             if (isCatPurpose) {
                 sonColor = score >= 72 ? "#30d158" : (score >= 50 ? "#dfb76c" : "#ff3b30");
                 if (score >= 72) {
-                    textInfo = `Sơn vị ${son} thuộc cung cát tính ${nhom} đạt hiệu suất năng lượng cát tường rất cao (${score}%). Thầy phong thủy khuyên bạn nên đặt tâm của kết cấu nạp khí (Bàn thờ, Cửa chính, Đầu giường) tại tọa độ góc này nhằm thu hút tài lộc, gia đạo hưng thịnh.`;
+                    textInfo = `Sơn vị ${son} thuộc cung cát tính ${nhom} đạt hiệu suất năng lượng cát tường rất cao (${score}%). Thầy phong thủy khuyên bạn nên đặt tâm của kết cấu nạp khí tại tọa độ góc này nhằm thu hút tài lộc.`;
                     solInfo = "Duy trì vị trí lập cực sạch sẽ, thông thoáng để sinh khí vận hành liên tục.";
                 } else {
-                    textInfo = `CẢNH BÁO TỬ HUYỆT: Sơn vị ${son} phạm vào vòng hung sát của cung ${nhom} khiến năng lượng sụt giảm nghiêm trọng xuống mức ${score}%. Nếu đặt cấu trúc cát vào đây, hung khí tiềm ẩn sẽ xói mòn sinh khí bản mệnh, gây bất an tai ương.`;
+                    textInfo = `CẢNH BÁO TỬ HUYỆT: Sơn vị ${son} phạm vào vòng hung sát của cung ${nhom} khiến năng lượng sụt giảm nghiêm trọng xuống mức ${score}%. Nếu đặt cấu trúc cát vào đây, hung khí tiềm ẩn sẽ xói mòn sinh khí bản mệnh.`;
                     solInfo = "Biện pháp: Dịch chuyển nhẹ kết cấu kiến trúc sang các sơn vị báo màu xanh bên cạnh hoặc ứng dụng la bàn vi phân.";
                 }
             } else {
                 if (score < 50) {
                     sonColor = "#30d158"; 
                     titleInfo = `Sơn vị ${son} [Trấn Sát Đắc Cách - Đại Cát]`;
-                    textInfo = `ĐẮC CÁCH DIỆU PHÁP: Sơn vị ${son} bản chất nền đất mang sát khí nguy hiểm thuộc cung ${nhom} (Điểm gốc cực thấp: ${score}%). Khi đặt thiết bị xả uế (Toilet, Bếp) đè lên đây, uế khí sẽ phát huy công năng 'Lấy độc trị độc', thiêu rụi hoàn toàn sát khí của mạch đất ngầm, biến hung thành cát cục!`;
+                    textInfo = `ĐẮC CÁCH DIỆU PHÁP: Sơn vị ${son} bản chất nền đất mang sát khí nguy hiểm thuộc cung ${nhom} (Điểm gốc cực thấp: ${score}%). Khi đặt thiết bị xả uế (${config.title}) đè lên đây, uế khí sẽ phát huy công năng 'Lấy độc trị độc', thiêu rụi hoàn toàn sát khí của mạch đất ngầm, biến hung thành cát cục!`;
                     solInfo = "Kết cấu phân bổ chuẩn mực, không cần bổ sung vật phẩm hóa giải.";
                 } else {
                     sonColor = "#ff3b30"; 
                     titleInfo = `Sơn vị ${son} [Phạm Kỵ Tiêu Hao - Hung Cục]`;
-                    textInfo = `ĐẠI KỴ TRẠCH PHÁP: Sơn vị ${son} vốn là trục long mạch vượng khí vẹn toàn đạt tới ${score}% điểm thuộc cung cát ${nhom}. Tuyệt đối kỵ đặt kết cấu uế khí đè lên đây, dòng xả thải uế sẽ làm ô nhiễm toàn bộ mạch sinh khí nuôi dưỡng ngôi nhà, khiến tài lộc tiêu hao.`;
-                    solInfo = "Khuyên gia chủ chủ động chuyển đổi vị trí thiết bị xả uế sang các dải Sơn vị báo màu xanh kế cạnh.";
+                    textInfo = `ĐẠI KỴ TRẠCH PHÁP: Sơn vị ${son} vốn là trục long mạch vượng khí vẹn toàn đạt tới ${score}% điểm thuộc cung cát ${nhom}. Tuyệt đối kỵ đặt kết cấu uế khí đè lên đây, dòng xả thải uế sẽ làm ô nhiễm toàn bộ mạch sinh khí nuôi dưỡng ngôi nhà.`;
+                    solInfo = `Khuyên gia chủ chủ động chuyển đổi vị trí thiết bị xả uế (${config.title}) sang các dải Sơn vị báo màu xanh kế cạnh.`;
                 }
             }
             
-            // Xử lý loại bỏ dấu nháy đơn để tránh vỡ chuỗi onclick inline HTML
             const safeTitle = titleInfo.replace(/'/g, "\\'").replace(/"/g, '&quot;');
             const safeText = textInfo.replace(/'/g, "\\'").replace(/"/g, '&quot;');
             const safeSol = solInfo.replace(/'/g, "\\'").replace(/"/g, '&quot;');
@@ -854,36 +880,32 @@ function generateDirectionsList() {
 
         let hauInfoTrái = Data72Hau[Math.round(mốcTrái / 5) * 5] || { ten: "Hậu Trái", chatLuong: "Bình Hòa", diem: 60, ynghia: "Mạch khí bình hòa ổn định.", giaiphap: "Giữ sạch sẽ." };
         let hauInfoTâm  = Data72Hau[Math.round(mốcTâm / 5) * 5] || { ten: "Hậu Tâm", chatLuong: "Bình Hòa", diem: 60, ynghia: "Mạch khí bình hòa ổn định.", giaiphap: "Giữ sạch sẽ." };
-        // ĐÃ SỬA LỖI ĐÁNH MÁY: đổi 'tile' thành 'ten' để đồng bộ dữ liệu
         let hauInfoPhải = Data72Hau[Math.round(mốcPhải / 5) * 5] || { ten: "Hậu Phải", chatLuong: "Bình Hòa", diem: 60, ynghia: "Mạch khí bình hòa ổn định.", giaiphap: "Giữ sạch sẽ." };
 
         const getHauColor = (cl) => cl.includes('Cát') ? '#30d158' : (cl.includes('Hung') ? '#ff3b30' : '#dfb76c');
         
         const getHauExplanation = (hauObj, isCat) => {
             let lyGiai = `Phân đoạn Hậu mạch đất ngầm: ${hauObj.ten} (Chỉ số năng lượng Địa khí đạt ${hauObj.diem}pt - Trạng thái: ${hauObj.chatLuong}).\\n\\n`;
-            
             if (isCat) {
                 if (hauObj.chatLuong.includes('Hung') || hauObj.chatLuong.includes('Không Vong') || hauObj.chatLuong.includes('Sai Thác')) {
-                    lyGiai += `⚠️ LÝ GIẢI SỰ SỤT GIẢM NĂNG LƯỢNG: Mặc dù Sơn vị hướng lớn của bạn đang đạt điểm vượng thế, nhưng mạch khí 5 độ ngầm tại vị trí này lại dính cung xấu hoặc lằn ranh hỗn loạn từ trường. Sát khí ngầm này giống như vết sâu đục từ dưới đất lên, kéo chìm hiệu suất năng lượng tổng hòa của toàn bộ kết cấu vật thể đè lên nó.`;
+                    lyGiai += `⚠️ LÝ GIẢI SỰ SỤT GIẢM NĂNG LƯỢNG: Mặc dù Sơn vị hướng lớn của bạn đang đạt điểm vượng thế, nhưng mạch khí 5 độ ngầm tại vị trí này lại dính cung xấu. Sát khí ngầm này làm kéo chìm hiệu suất năng lượng tổng hòa.`;
                 } else {
-                    lyGiai += `🌟 LÝ GIẢI SỰ GIA TRÌ NĂNG LƯỢNG: Vùng mạch địa khí này vô cùng thuần khiết. Sự cộng hưởng đồng nhất giữa Nhân mệnh vượng cát của Sơn vị và Địa khí Tiến khí của Hậu mạch tạo ra một Siêu Gốc trường khí vững chãi, bảo vệ công năng khỏi các tác động xấu của sao hạn lưu niên.`;
+                    lyGiai += `🌟 LÝ GIẢI SỰ GIA TRÌ NĂNG LƯỢNG: Vùng mạch địa khí này vô cùng thuần khiết. Sự cộng hưởng đồng nhất tạo ra trường khí vững chãi.`;
                 }
             } else {
                 if (hauObj.chatLuong.includes('Hung') || hauObj.chatLuong.includes('Không Vong') || hauObj.chatLuong.includes('Sai Thác')) {
-                    lyGiai += `🟢 GIẢI THÍCH CHUYÊN SÂU: Ô Hậu mạch này báo XANH vì mạch đất ngầm ở đây mang tính hung sát, hỗn loạn từ trường. Đặt thiết bị tiêu uế (Toilet, Bếp) đè trúng phân độ này sẽ bế khí sát, biến trục tử huyệt thành nơi xả bỏ tạp khí, làm sạch đại cục trường khí cho ngôi nhà.`;
+                    lyGiai += `🟢 GIẢI THÍCH CHUYÊN SÂU: Ô Hậu mạch này báo XANH vì mạch đất ngầm ở đây mang tính hung sát. Đặt thiết bị tiêu uế đè trúng phân độ này sẽ bế khí sát, làm sạch đại cục trường khí cho ngôi nhà.`;
                 } else {
-                    lyGiai += `⚠️ GIẢI THÍCH CHUYÊN SÂU: Ô Hậu mạch báo ĐỎ vì long mạch ngầm dưới đất tại phân độ hẹp này rất sạch và vượng khí. Tuyệt đối không đặt uế khí đè lên làm ô nhiễm nguồn mạch khí ngầm quý giá này.`;
+                    lyGiai += `⚠️ GIẢI THÍCH CHUYÊN SÂU: Ô Hậu mạch báo ĐỎ vì long mạch ngầm dưới đất tại phân độ hẹp này rất sạch và vượng khí. Tuyệt đối không đặt uế khí đè lên.`;
                 }
             }
             return lyGiai;
         };
 
-        // Đảm bảo lấy đúng chữ đầu tiên của tên Hậu mạch (Ví dụ: "Mậu" từ "Mậu Tý")
         const tenTrái = hauInfoTrái.ten ? hauInfoTrái.ten.split(' ')[0] : "Hậu";
         const tenTâm = hauInfoTâm.ten ? hauInfoTâm.ten.split(' ')[0] : "Hậu";
         const tenPhải = hauInfoPhải.ten ? hauInfoPhải.ten.split(' ')[0] : "Hậu";
 
-        // Đồng bộ màu sắc chữ trạng thái của Hậu mạch theo Tab tương ứng
         const txtColorTrái = isCatPurpose ? getHauColor(hauInfoTrái.chatLuong) : (hauInfoTrái.chatLuong.includes('Hung') || hauInfoTrái.chatLuong.includes('Không Vong') ? '#30d158' : '#ff3b30');
         const txtColorTâm = isCatPurpose ? getHauColor(hauInfoTâm.chatLuong) : (hauInfoTâm.chatLuong.includes('Hung') || hauInfoTâm.chatLuong.includes('Không Vong') ? '#30d158' : '#ff3b30');
         const txtColorPhải = isCatPurpose ? getHauColor(hauInfoPhải.chatLuong) : (hauInfoPhải.chatLuong.includes('Hung') || hauInfoPhải.chatLuong.includes('Không Vong') ? '#30d158' : '#ff3b30');
@@ -898,25 +920,19 @@ function generateDirectionsList() {
                      onclick="showExplanation('${hauInfoTrái.ten.replace(/'/g, "\\'")}', '${getHauExplanation(hauInfoTrái, isCatPurpose).replace(/'/g, "\\'")}', 'Yêu cầu tinh chỉnh kiến trúc: ${hauInfoTrái.giaiphap.replace(/'/g, "\\'")}')"
                      style="flex: 1; text-align: center; background: rgba(255,255,255,0.04); padding: 6px 4px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; transition: all 0.2s;">
                     <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${tenTrái} (${Math.round(mốcTrái)}°)</div>
-                    <div style="font-size: 0.7rem; color: ${txtColorTrái}; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px;">
-                        ${labelTrái}
-                    </div>
+                    <div style="font-size: 0.7rem; color: ${txtColorTrái}; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px;">${labelTrái}</div>
                 </div>
                 <div class="hau-node-item node-goc-${Math.round(mốcTâm / 5) * 5}" 
                      onclick="showExplanation('${hauInfoTâm.ten.replace(/'/g, "\\'")}', '${getHauExplanation(hauInfoTâm, isCatPurpose).replace(/'/g, "\\'")}', 'Yêu cầu tinh chỉnh kiến trúc: ${hauInfoTâm.giaiphap.replace(/'/g, "\\'")}')"
                      style="flex: 1; text-align: center; background: rgba(255,255,255,0.04); padding: 6px 4px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; transition: all 0.2s;">
                     <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${tenTâm} (${Math.round(mốcTâm)}°)</div>
-                    <div style="font-size: 0.7rem; color: ${txtColorTâm}; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px;">
-                        ${labelTâm}
-                    </div>
+                    <div style="font-size: 0.7rem; color: ${txtColorTâm}; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px;">${labelTâm}</div>
                 </div>
                 <div class="hau-node-item node-goc-${Math.round(mốcPhải / 5) * 5}" 
                      onclick="showExplanation('${hauInfoPhải.ten.replace(/'/g, "\\'")}', '${getHauExplanation(hauInfoPhải, isCatPurpose).replace(/'/g, "\\'")}', 'Yêu cầu tinh chỉnh kiến trúc: ${hauInfoPhải.giaiphap.replace(/'/g, "\\'")}')"
                      style="flex: 1; text-align: center; background: rgba(255,255,255,0.04); padding: 6px 4px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; transition: all 0.2s;">
                     <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${tenPhải} (${Math.round(mốcPhải)}°)</div>
-                    <div style="font-size: 0.7rem; color: ${txtColorPhải}; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px;">
-                        ${labelPhải}
-                    </div>
+                    <div style="font-size: 0.7rem; color: ${txtColorPhải}; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px;">${labelPhải}</div>
                 </div>
             </div>
         `;
@@ -931,7 +947,7 @@ function generateDirectionsList() {
                     <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
                         ${item.name} ➔ <span style="color:${colorStyle};">${item.cungTrạch}</span>
                     </span>
-                    <span style="font-size:0.75rem; padding:2px 6px; border-radius:4px; font-weight:bold; background:${colorStyle === '#30d158' ? 'rgba(48,209,88,0.15)' : (colorStyle === '#ff9f0a' ? 'rgba(255,159,10,0.15)' : 'rgba(255,59,48,0.15)')}; color:${colorStyle}; border:1px solid ${colorStyle}; white-space:nowrap;">
+                    <span style="font-size:0.75rem; padding:2px 6px; border-radius:4px; font-weight:bold; background:${colorStyle === '#30d158' ? 'rgba(48,209,88,0.15)' : 'rgba(255,159,10,0.15)'}; color:${colorStyle}; border:1px solid ${colorStyle}; white-space:nowrap;">
                         ${item.diemTongHop}pt
                     </span>
                 </div>
@@ -5140,164 +5156,139 @@ function executeManualScanConfig(customCenterAngle, customSizeDegree, purposeKey
  */
 /**
  * 3. XỬ LÝ KẾT QUẢ QUÉT ĐỘNG VÀ ĐỒ DỮ LIỆU THÔNG MINH LÊN UI
- * PHIÊN BẢN 2026: Nâng cấp hộp chẩn đoán (Diagnostic UI) show sạch thông số khi lỗi hệ thống
+ * PHIÊN BẢN 2026: Cá nhân hóa vật thể quét, hiển thị chi tiết Định vị Sơn Hậu và tích hợp nút Đóng (✕)
  */
 function processScanResult(centerAngle, sizeDegree, purpose) {
     console.log("=== BẮT ĐẦU XỬ LÝ KẾT QUẢ QUÉT THỰC ĐỊA ===");
     
-    // ─── 0. KIỂM TRA DOM AN TOÀN TRÁNH ALERT XẤU ───
     const container = document.getElementById('scan-result-panel');
-    if (!container) {
-        let errorOverlay = document.getElementById('geo-error-overlay');
-        if (!errorOverlay) {
-            errorOverlay = document.createElement('div');
-            errorOverlay.id = 'geo-error-overlay';
-            errorOverlay.style.cssText = `
-                position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-                width: 90%; max-width: 400px; background: rgba(28, 28, 30, 0.95);
-                backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-                border: 1px solid rgba(255, 59, 48, 0.4); border-left: 5px solid #ff3b30;
-                padding: 16px; border-radius: 12px; z-index: 999999;
-                box-shadow: 0 12px 30px rgba(0,0,0,0.5); font-family: -apple-system, sans-serif; color: #fff;
-            `;
-            document.body.appendChild(errorOverlay);
-        }
-        errorOverlay.innerHTML = `
-            <div style="display: flex; gap: 10px; align-items: flex-start;">
-                <span style="font-size: 1.2rem;">🚨</span>
-                <div style="flex: 1;">
-                    <div style="font-weight: bold; color: #ff453a; font-size: 0.85rem; margin-bottom: 4px;">THIẾU ELEMENT GIAO DIỆN</div>
-                    <div style="font-size: 0.8rem; color: #e5e5ea;">Vui lòng dán dòng sau vào file HTML:</div>
-                    <input type="text" value='<div id="scan-result-panel"></div>' readonly style="width: 100%; background: #000; color: #30d158; border: none; font-family: monospace; font-size: 0.75rem; margin-top: 6px; padding: 4px; border-radius: 4px;" onclick="this.select()">
-                </div>
-                <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: #8e8e93; cursor: pointer;">✕</button>
-            </div>
-        `;
-        return;
-    }
+    if (!container) return; // Đã xử lý bẫy overlay bên ngoài
 
     // Hiển thị trạng thái xử lý tạm thời
     container.style.display = "block";
     container.innerHTML = `<div style="color: #ffca28; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px; font-size: 0.85rem; border: 1px dashed rgba(255,255,255,0.1);">⏳ Hệ thống đang phân tích ma trận long mạch thực địa...</div>`;
 
-    // ─── 1. THU THẬP THÔNG SỐ ĐẦU VÀO ĐỂ CHẨN ĐOÁN ───
+    // ─── 1. TỰ ĐỘNG CHUYỂN ĐỔI NGÔN NGỮ DANH MỤC VẬT THỂ VÀ THÔNG SỐ NỀN ───
+    const dictVatThe = {
+        "bed": "Giường ngủ", "kitchen": "Bếp nấu", "door": "Cửa chính", 
+        "desk": "Bàn làm việc", "altar": "Bàn thờ", "toilet": "Nhà vệ sinh"
+    };
+    const tenVatTheChuan = dictVatThe[purpose] || "Vật thể kết cấu";
+
     let cungPhiChuMenh = "Càn";
     if (typeof vịTríLấyCungPhi === 'function') cungPhiChuMenh = vịTríLấyCungPhi();
     else if (typeof viTriLayCungPhi === 'function') cungPhiChuMenh = viTriLayCungPhi();
 
     const txtSurveyYear = document.getElementById('surveyYear');
     const namKhaoSat = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value) : new Date().getFullYear();
-    
     let namAmReal = namKhaoSat;
     if (typeof vịTríLấyNămÂmChuẩn === 'function') namAmReal = vịTríLấyNămÂmChuẩn();
 
-    // ─── 2. BẪY LỖI LOGIC VÀ XỬ LÝ KHỐI GIAO DIỆN CHẨN ĐOÁN THÔNG SỐ ───
+    // ─── 2. CHẠY PHƯƠNG TRÌNH LÕI VÀ BẪY LỖI ───
     let ketQua;
     try {
         if (typeof tinhDiemTongHop !== 'function') {
-            throw new Error("Hàm lõi 'tinhDiemTongHop' chưa được khai báo hoặc bị lỗi cú pháp ở file khác.");
+            throw new Error("Hàm lõi 'tinhDiemTongHop' chưa được khai báo.");
         }
         ketQua = tinhDiemTongHop(cungPhiChuMenh, centerAngle, namKhaoSat, purpose, namAmReal);
-        
-        if (!ketQua) {
-            throw new Error("Hàm 'tinhDiemTongHop' không trả về bất kỳ dữ liệu cấu trúc nào (null/undefined).");
-        }
+        if (!ketQua) throw new Error("Hàm 'tinhDiemTongHop' không trả về dữ liệu cấu trúc.");
     } catch (error) {
-        console.error("🚨 SỰ CỐ PHƯƠNG TRÌNH LÕI:", error);
-        
-        // ĐỔ UI CHẨN ĐOÁN CAO CẤP: Hiện lỗi nhưng vẫn show sạch thông số gốc đã quét được!
         container.innerHTML = `
-            <div style="background: rgba(255,59,48,0.04); border: 1px solid rgba(255,59,48,0.3); border-left: 4px solid #ff3b30; padding: 14px; border-radius: 10px; color: #fff; font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
-                <div style="font-weight: bold; color: #ff453a; font-size: 0.9rem; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-                    ❌ LỖI PHÂN TÍCH ĐỊA KHÍ CHUYÊN SÂU
-                </div>
-                
-                <div style="background: rgba(0,0,0,0.2); padding: 8px 10px; border-radius: 6px; margin-bottom: 10px; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.03);">
-                    <div style="color: #ffca28; font-weight: bold; margin-bottom: 4px; font-size: 0.75rem;">📊 THÔNG SỐ GHI NHẬN THỰC ĐỊA:</div>
-                    <table style="width: 100%; border-collapse: collapse; line-height: 1.4;">
-                        <tr><td style="color: #aaa;">• Góc Trọng Tâm:</td><td style="text-align: right; color: #fff; font-weight: bold;">${Math.round(centerAngle)}°</td></tr>
-                        <tr><td style="color: #aaa;">• Bề rộng vật thể:</td><td style="text-align: right; color: #30d158; font-weight: bold;">${Math.round(sizeDegree)}°</td></tr>
-                        <tr><td style="color: #aaa;">• Cung Phi / Bản mệnh:</td><td style="text-align: right; color: #ffd60a;">${cungPhiChuMenh} Mệnh</td></tr>
-                        <tr><td style="color: #aaa;">• Mục đích / Vật thể:</td><td style="text-align: right; color: #bfbfbf; font-family: monospace;">"${purpose}"</td></tr>
-                    </table>
-                </div>
-
-                <div style="font-size: 0.8rem; color: #ffbc66; line-height: 1.4; background: rgba(255,149,0,0.06); padding: 8px; border-radius: 4px; border: 1px solid rgba(255,149,0,0.15);">
-                    <strong>Chi tiết lỗi hệ thống:</strong> <span style="font-family: monospace; color: #ff453a;">${error.message}</span>
-                </div>
-                <div style="margin-top: 8px; font-size: 0.7rem; color: #8e8e93; text-align: right;">
-                    💡 Hãy kiểm tra lại hàm <i>tinhDiemTongHop</i> trong file core.
-                </div>
+            <div style="position: relative; background: rgba(255,59,48,0.05); border: 1px solid rgba(255,59,48,0.3); border-left: 4px solid #ff3b30; padding: 14px; border-radius: 10px; color: #fff; font-family: -apple-system, sans-serif;">
+                <button onclick="document.getElementById('scan-result-panel').style.display='none'" style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: #aaa; cursor: pointer; font-size: 1.1rem;">✕</button>
+                <div style="font-weight: bold; color: #ff453a; font-size: 0.9rem; margin-bottom: 6px;">❌ LỖI HỆ THỐNG</div>
+                <div style="font-size: 0.8rem; color: #ffbc66;">Không thể phân tích dữ liệu quét của <strong>${tenVatTheChuan}</strong>.</div>
             </div>
         `;
         return; 
     }
 
-    // ─── 3. KHỐI BIÊN DỊCH VÀ XUẤT UI KHI THÀNH CÔNG (KHÔNG LỖI) ───
+    // ─── 3. TRÍCH XUẤT THÔNG TIN ĐỊA LÝ ĐA TẦNG ĐỂ GỌI TÊN CHÍNH XÁC ───
+    const normalizedDegree = ((centerAngle % 360) + 360) % 360;
+    
+    // Lấy tên Hướng đại cục từ thông tin Sơn gốc
+    let tenHuongDaiCuc = "Chưa rõ";
+    if (normalizedDegree >= 337.5 || normalizedDegree < 22.5) tenHuongDaiCuc = "Phương Bắc";
+    else if (normalizedDegree >= 22.5 && normalizedDegree < 67.5) tenHuongDaiCuc = "Phương Đông Bắc";
+    else if (normalizedDegree >= 67.5 && normalizedDegree < 112.5) tenHuongDaiCuc = "Phương Đông";
+    else if (normalizedDegree >= 112.5 && normalizedDegree < 157.5) tenHuongDaiCuc = "Phương Đông Nam";
+    else if (normalizedDegree >= 157.5 && normalizedDegree < 202.5) tenHuongDaiCuc = "Phương Nam";
+    else if (normalizedDegree >= 202.5 && normalizedDegree < 247.5) tenHuongDaiCuc = "Phương Tây Nam";
+    else if (normalizedDegree >= 247.5 && normalizedDegree < 292.5) tenHuongDaiCuc = "Phương Tây";
+    else if (normalizedDegree >= 292.5 && normalizedDegree < 337.5) tenHuongDaiCuc = "Phương Tây Bắc";
+
+    const tenSonVi = ketQua.sonName || "Chưa xác định";
+    const tenHauVi = (ketQua.hauInfo && ketQua.hauInfo.ten) ? ketQua.hauInfo.ten : "Không rõ";
+
+    // ─── 4. BIÊN DỊCH CHI TIẾT MẠCH HẬU NGẦM ───
     let danhSachHauBaoCaoHTML = "";
     if (ketQua.scanMetrics && Array.isArray(ketQua.scanMetrics.chiTietHau) && ketQua.scanMetrics.chiTietHau.length > 0) {
         danhSachHauBaoCaoHTML = ketQua.scanMetrics.chiTietHau.map(function(hau) {
             let mauHauBadge = (hau.diem >= 60) ? '#30d158' : '#ff9500';
             return `
-                <span style="display: inline-block; padding: 3px 8px; margin: 3px 2px; background: rgba(255,255,255,0.04); border: 1px solid ${mauHauBadge}40; border-radius: 4px; font-size: 0.75rem; color: #e5e5ea;">
+                <span style="display: inline-block; padding: 3px 8px; margin: 2px; background: rgba(255,255,255,0.04); border: 1px solid ${mauHauBadge}40; border-radius: 4px; font-size: 0.75rem; color: #e5e5ea;">
                     📍 Mốc ${hau.moc}° (${hau.ten || 'Hậu'}: <strong style="color:${mauHauBadge};">${hau.diem}đ</strong>)
                 </span>
             `;
         }).join('');
-    } else {
-        danhSachHauBaoCaoHTML = `<span style="color: #8e8e93; font-size: 0.75rem;">Không có dữ liệu chi tiết dải phân độ ngầm.</span>`;
     }
 
     let mauSacGiaoDien = (ketQua.diem >= 72) ? '#30d158' : '#ff3b30';
-    let bgGiaoDien = (ketQua.diem >= 72) ? 'rgba(48,209,88,0.06)' : 'rgba(255,59,48,0.06)';
+    let bgGiaoDien = (ketQua.diem >= 72) ? 'rgba(48,209,88,0.05)' : 'rgba(255,59,48,0.05)';
 
+    // Thống kê phân tích lấn biên long mạch
     let thongTinPhanTichHau = "";
     if (ketQua.scanMetrics && ketQua.scanMetrics.totalHauOccupied > 1) {
         thongTinPhanTichHau = `
-            <div style="margin-top: 10px; padding: 10px; background: rgba(255,149,0,0.08); border-radius: 6px; border-left: 4px solid #ff9500; font-size: 0.8rem; color: #ffbc66; line-height: 1.4;">
-                ⚠️ <strong>CẢNH BÁO LẤN BIÊN LONG MẠCH:</strong> Chiếm dụng dải quét <strong>${sizeDegree}°</strong>, nằm đè lên <strong>${ketQua.scanMetrics.totalHauOccupied} phân độ Hậu</strong> khí trường ngầm.
-                <div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,149,0,0.15);">
-                    ${danhSachHauBaoCaoHTML}
-                </div>
+            <div style="margin-top: 10px; padding: 10px; background: rgba(255,149,0,0.06); border-radius: 6px; border-left: 4px solid #ff9500; font-size: 0.8rem; color: #ffbc66; line-height: 1.4;">
+                ⚠️ <strong>CẢNH BÁO LẤN BIÊN:</strong> Kết cấu chiếm dụng dải quét rộng <strong>${sizeDegree}°</strong>, đè lên <strong>${ketQua.scanMetrics.totalHauOccupied} phân độ Hậu</strong> khí trường ngầm.
+                ${danhSachHauBaoCaoHTML ? `<div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,149,0,0.15);">${danhSachHauBaoCaoHTML}</div>` : ''}
             </div>
         `;
     } else {
         thongTinPhanTichHau = `
-            <div style="margin-top: 10px; padding: 10px; background: rgba(48,209,88,0.08); border-radius: 6px; border-left: 4px solid #30d158; font-size: 0.8rem; color: #82f5a0; line-height: 1.4;">
-                ✅ <strong>ĐẮC TRỌNG TÂM THUẦN KHÍ:</strong> Toàn bộ mặt kết cấu định vị hoàn hảo trong địa khí thuần khiết:
-                <div style="margin-top: 6px;">
-                    ${danhSachHauBaoCaoHTML}
-                </div>
+            <div style="margin-top: 10px; padding: 10px; background: rgba(48,209,88,0.06); border-radius: 6px; border-left: 4px solid #30d158; font-size: 0.8rem; color: #82f5a0; line-height: 1.4;">
+                ✅ <strong>ĐẮC TRỌNG TÂM THUẦN KHÍ:</strong> Toàn bộ mặt kết cấu định vị hoàn hảo trong dải địa khí tinh khiết.
             </div>
         `;
     }
 
+    // ─── 5. XUẤT CẤU TRÚC GIAO DIỆN MINH BẠCH, THÔNG MINH ───
     container.innerHTML = `
-        <div style="background: ${bgGiaoDien}; border: 1px solid ${mauSacGiaoDien}40; padding: 16px; border-radius: 12px; color: #fff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
-            <div style="font-weight: bold; color: #ffca28; margin-bottom: 10px; font-size: 0.95rem; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px;">
-                🎯 PHÂN TÍCH ĐỊA CHẤT & TRỌNG TÂM THỰC ĐỊA
+        <div style="position: relative; background: ${bgGiaoDien}; border: 1px solid ${mauSacGiaoDien}35; padding: 16px; border-radius: 12px; color: #fff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-shadow: 0 8px 24px rgba(0,0,0,0.35);">
+            
+            <button onclick="document.getElementById('scan-result-panel').style.display='none'" 
+                    style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.05); border: none; color: #8e8e93; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.85rem; transition: all 0.2s;"
+                    onmouseover="this.style.background='rgba(255,255,255,0.1)';this.style.color='#fff'" 
+                    onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='#8e8e93'">✕</button>
+
+            <div style="font-weight: bold; color: #ffca28; margin-bottom: 12px; font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px; padding-right: 25px;">
+                📊 KẾT QUẢ ĐỊNH VỊ: ${tenVatTheChuan.toUpperCase()}
             </div>
-            <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse; margin-bottom: 4px;">
-                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                    <td style="padding: 6px 0; color: #aeaeb2;">Dải rộng kết cấu:</td>
-                    <td style="text-align: right; font-weight: bold; color: #30d158; padding: 6px 0;">${Math.round(sizeDegree)}°</td>
-                </tr>
-                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                    <td style="padding: 6px 0; color: #aeaeb2;">Tọa độ Trọng tâm:</td>
-                    <td style="text-align: right; font-weight: bold; color: #ffca28; padding: 6px 0;">${Math.round(centerAngle)}° (Sơn ${ketQua.sonName || 'Chưa rõ'})</td>
-                </tr>
+
+            <div style="font-size: 0.85rem; line-height: 1.6; color: #e5e5ea; background: rgba(0,0,0,0.15); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03);">
+                Bạn đang tiến hành đo đạc cấu trúc <span style="color: #ffca28; font-weight: bold;">${tenVatTheChuan}</span>:<br>
+                • Định vị địa bàn: Nằm tại <span style="color: #30d158; font-weight: bold;">${tenHuongDaiCuc}</span> (Sơn vị: <span style="color: #ffd60a;">${tenSonVi}</span> / Hậu vị: <span style="color: #ffd60a;">${tenHauVi}</span>).<br>
+                • Tọa độ trọng tâm: <span style="color: #ffca28; font-weight: bold;">${Math.round(centerAngle)}°</span>.<br>
+                • Bề rộng chiếm dụng không gian: <span style="color: #30d158; font-weight: bold;">${Math.round(sizeDegree)}°</span>.
+            </div>
+
+            <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse; margin-top: 10px;">
                 <tr>
-                    <td style="padding: 6px 0; color: #aeaeb2;">Điểm tích phân địa khí:</td>
-                    <td style="text-align: right; font-weight: bold; color: ${mauSacGiaoDien}; padding: 6px 0; font-size: 1rem;">${ketQua.diem || 0} pt (${ketQua.level || 'Không xếp hạng'})</td>
+                    <td style="padding: 6px 0; color: #aeaeb2;">Điểm địa khí tổng hợp:</td>
+                    <td style="text-align: right; font-weight: bold; color: ${mauSacGiaoDien}; font-size: 1.05rem;">${ketQua.diem || 0} pt (${ketQua.level || 'HUNG'})</td>
                 </tr>
             </table>
+
             ${thongTinPhanTichHau}
-            <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 10px; padding-top: 10px; font-size: 0.85rem; color: #e5e5ea; line-height: 1.5;">
-                <strong style="color: #ffca28;">Luận đại cục [${cungPhiChuMenh} Mệnh]:</strong> ${ketQua.message || 'Không có lời bình.'}
+
+            <div style="border-top: 1px solid rgba(255,255,255,0.08); margin-top: 12px; padding-top: 10px; font-size: 0.82rem; color: #d1d1d6; line-height: 1.5;">
+                <strong style="color: #ffca28;">Luận giải [${cungPhiChuMenh} Mệnh]:</strong> ${ketQua.message || 'Không có bình luận cục diện.'}
             </div>
+            
             ${ketQua.hoaGiai ? `
-                <div style="margin-top: 6px; padding: 8px; background: rgba(255,255,255,0.03); border-radius: 4px; font-size: 0.8rem; color: #ffd60a; line-height: 1.4;">
-                    <strong>Biện pháp tịnh tiến:</strong> ${ketQua.hoaGiai}
+                <div style="margin-top: 8px; padding: 8px; background: rgba(255,214,10,0.06); border: 1px solid rgba(255,214,10,0.15); border-radius: 6px; font-size: 0.8rem; color: #ffd60a; line-height: 1.4;">
+                    <strong>Biện pháp điều chỉnh:</strong> ${ketQua.hoaGiai}
                 </div>
             ` : ''}
         </div>
