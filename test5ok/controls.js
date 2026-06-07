@@ -5021,7 +5021,7 @@ function kichHoatBoLangNgheTouchLaBan() {
 document.addEventListener('DOMContentLoaded', kichHoatBoLangNgheTouchLaBan);
 
 // =========================================================================
-// 🎯 PHÂN HỆ MỚI: ĐIỀU KHIỂN NÚT TỔNG LUẬN - ỔN ĐỊNH HƠN
+// 🎯 PHÂN HỆ ĐIỀU KHIỂN NÚT TỔNG LUẬN - ỔN ĐỊNH & MƯỢT
 // =========================================================================
 let dungKimTimeout = null;
 let lastStableHeading = null;
@@ -5031,9 +5031,9 @@ function kichHoatBoDemDungKim() {
     const btnTongLuan = document.getElementById('btn-tong-luan');
     if (!btnTongLuan) return;
 
-    // Ưu tiên khi đang khóa cứng
+    // Ưu tiên khi đang khóa cứng la bàn
     if (window.isCompassHold) {
-        btnTongLuan.classList.add('vượng-xuất');
+        btnTongLuan.classList.add('vượng-xuất', 'show');
         return;
     }
 
@@ -5047,43 +5047,42 @@ function kichHoatBoDemDungKim() {
     const daChonDanhMuc = (mucDich && mucDich !== "" && mucDich !== "none");
 
     if (!daNhapDuNgayThangNam || !daChonDanhMuc) {
-        btnTongLuan.classList.remove('vượng-xuất');
+        btnTongLuan.classList.remove('vượng-xuất', 'show');
         return;
     }
 
-    // === LOGIC MỚI: Phát hiện "đứng im" ổn định ===
+    // === LOGIC PHÁT HIỆN ĐỨNG IM ===
     clearTimeout(dungKimTimeout);
 
     const currentH = typeof currentHeading !== 'undefined' ? Math.round(currentHeading) : null;
-
     if (currentH === null) return;
 
     const now = Date.now();
 
-    // Nếu hướng thay đổi đáng kể → reset bộ đếm
+    // Reset bộ đếm nếu kim quay > 2°
     if (lastStableHeading === null || Math.abs(currentH - lastStableHeading) > 2) {
         lastStableHeading = currentH;
         stabilityStartTime = now;
     }
 
-    // Chỉ hiện nút khi đứng im liên tục ít nhất 5 giây
     const stillnessTime = now - stabilityStartTime;
 
-    if (stillnessTime >= 900) {                    // ← 5 giây như bạn muốn
+    // Chỉ hiện sau khi đứng im liên tục 5 giây
+    if (stillnessTime >= 1000) {
         if (!btnTongLuan.classList.contains('vượng-xuất')) {
-            btnTongLuan.classList.add('vượng-xuất');
+            btnTongLuan.classList.add('vượng-xuất', 'show');
         }
     } else {
-        // Chưa đủ 5 giây thì ẩn (nhưng mượt hơn)
+        // Chưa đủ 5 giây → ẩn sau một khoảng rất ngắn (mượt mà)
         dungKimTimeout = setTimeout(() => {
             if (!window.isCompassHold) {
-                btnTongLuan.classList.remove('vượng-xuất');
+                btnTongLuan.classList.remove('vượng-xuất', 'show');
             }
-        }, 300);
+        }, 250);
     }
 }
 
-// Lắng nghe form
+// Lắng nghe thay đổi form
 document.addEventListener('DOMContentLoaded', () => {
     const inputs = ['birthDay', 'birthMonth', 'birthYear', 'purpose'];
     inputs.forEach(id => {
