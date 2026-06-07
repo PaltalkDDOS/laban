@@ -753,7 +753,7 @@ function generateDirectionsList() {
     directionMeta.forEach(dir => {
         const cungTrạch = bátTrạchMap[chủMệnh]?.[dir.code] || "Khác";
         
-        // Lọc thô theo cấu trúc Bát Trạch tối ưu UX
+        // Lọc thô theo cấu trúc Bát Trạch chuẩn mực: Khí cục tìm Cung Cát, Trấn sát tìm Cung Hung
         if (isCatPurpose) {
             if (!cacCungTot.includes(cungTrạch)) return; 
         } else {
@@ -773,7 +773,7 @@ function generateDirectionsList() {
         });
     });
 
-    // Sắp xếp đưa hướng tối ưu nhất lên đầu danh sách
+    // Sắp xếp đưa hướng có điểm tổng hợp tối ưu lên đầu danh sách
     listDirections.sort((a, b) => b.priority - a.priority);
     listPanelTitle.innerText = `Gợi ý vị trí Vận 9: ${config.title}`;
     directionsContainer.innerHTML = "";
@@ -788,7 +788,7 @@ function generateDirectionsList() {
         
         let countSonXanh = 0, countSonVang = 0, countSonDo = 0;
         let sonHTML = "";
-        let sonAngles = []; // Lưu tọa độ góc thực tế của 3 Sơn để phục vụ nút bấm thông minh
+        let sonAngles = []; // Lưu tọa độ góc thực tế của 3 Sơn để phục vụ nút bấm vi phân
 
         // Duyệt tính điểm chi tiết từng Sơn Vị bên trong
         sonGroup.forEach((son, index) => {
@@ -820,6 +820,7 @@ function generateDirectionsList() {
                     solInfo = "Biện pháp: Chủ động nhấp nút 'Xoay thử la bàn số' để dịch chuyển lệch góc độ, né hẳn tọa độ của sơn vị đỏ này.";
                 }
             } else {
+                // Đảo ngược tư duy Âm Dương cho mục đích trấn sát (Bếp, toilet, hầm tự hoại...)
                 if (score < 50) {
                     sonColor = "#30d158"; countSonXanh++; 
                     titleInfo = `Sơn vị ${son} [Trấn Sát Đắc Cách - Đại Cát]`;
@@ -871,7 +872,7 @@ function generateDirectionsList() {
                 countHauVang++; return { color: '#dfb76c', label: 'BÌNH HÒA', desc: 'Địa mạch ổn định, không trợ lực nhiều nhưng không gây họa.' };
             } else {
                 if (isHungHau) { countHauXanh++; return { color: '#30d158', label: 'ĐẮC VỊ', desc: 'Mạch địa khí mang hung tính, rất thích hợp đặt uế cục để tiêu sát bế khí.' }; }
-                if (cl.includes('Cát')) { countHauDo++; return { color: '#ff3b30', label: 'K... ĐẶT', desc: 'Long mạch ngầm dưới đất rất vượng và sạch, tuyệt đối không đặt uế khí đè lên.' }; }
+                if (cl.includes('Cát')) { countHauDo++; return { color: '#ff3b30', label: 'K. ĐẶT', desc: 'Long mạch ngầm dưới đất rất vượng và sạch, tuyệt đối không đặt uế khí đè lên.' }; }
                 countHauVang++; return { color: '#dfb76c', label: 'TRUNG TÍNH', desc: 'Mạch khí trung hòa, có thể cân nhắc nếu không còn vị trí tốt hơn.' };
             }
         };
@@ -908,45 +909,50 @@ function generateDirectionsList() {
         if (item.diemTongHop < 50) scoreColor = "#ff3b30"; 
         else if (item.diemTongHop < 75) scoreColor = "#dfb76c"; 
 
-        let colorStyle = '#30d158';
+        // ─── ĐỔI MỚI LOGIC QUYẾT ĐỊNH MÀU SẮC KHUNG NGOÀI THEO ĐÚNG CHỦ MỆNH BÁT TRẠCH ───
+        // Bất kể vi phân bên trong thế nào, hướng lớn đã qua bộ lọc thô ở trên luôn thuộc cung hợp cách của chủ mệnh
+        let colorStyle = '#30d158'; // Mặc định luôn giữ màu Xanh chuẩn Trạch Pháp đại thể
         let bgKhung = 'rgba(48,209,88,0.03)';
         let statusText = "";
         let popExplanation = "";
 
         if (isCatPurpose) {
             if (countSonXanh === 3 && countHauXanh === 3) {
-                statusText = `🏆 ĐẠI CÁT VÒNG BẢO PHÒNG - TOÀN VẸN CHÍNH TÔNG`;
-                popExplanation = `Hướng lớn thuộc Cung Cát Bát Trạch. Đặc biệt, toàn bộ 3 Sơn Vị và 3 Hậu Địa Mạch ngầm đều Đắc vị tuyệt đối xanh tươi.`;
-            } else if (countSonDo === 3 || countHauDo === 3) {
-                colorStyle = '#ff3b30'; bgKhung = 'rgba(255,59,48,0.04)';
-                statusText = `❌ TỬ HUYỆT ĐẠI KỴ - KHÔNG ĐƯỢC CHỌN VỊ TRÍ NÀY`;
-                popExplanation = `CẢNH BÁO NGUY HIỂM: Tuy hướng đại thể hợp Bát Trạch nhưng phân độ hẹp bên trong phạm toàn bộ Sơn hung hoặc Hậu mạch bị rỗng khí rách long (Không Vong).`;
-            } else if (countSonDo > 0 || countHauDo > 0) {
+                statusText = `🏆 ĐẠI CÁT TOÀN VẸN CHÍNH TÔNG - KHÔNG KHUYẾT ĐIỂM`;
+                popExplanation = `Hướng đại thể thuộc Cung Cát Bát Trạch. Đặc biệt, toàn bộ 3 Sơn Vị và 3 Hậu Địa Mạch ngầm đều Đắc vị tuyệt đối, sinh khí cực mạnh.`;
+            } else if (countSonDo === 3) {
+                // 3 sơn xấu hoàn toàn, mạch hậu dù tốt cũng không bù được 45 độ lỗi lớn, nhưng giữ màu vàng cảnh báo chứ không đổi sang đỏ
                 colorStyle = '#ff9f0a'; bgKhung = 'rgba(255,159,10,0.04)';
-                statusText = `⚠️ HƯỚNG CÁT PHẠM CỤC BỘ - CẦN VI PHÂN LẬP CỰC`;
-                popExplanation = `Hướng đại thể tốt nhưng cấu trúc vi phân có Sơn hoặc Hậu dính cung Đỏ xấu. Hãy nhấp liên tục nút 'Xoay la bàn' bên dưới để dịch chuyển kim dò chính xác tọa độ từng Sơn Xanh.`;
+                statusText = `⚠️ HƯỚNG CÁT PHẠM SƠN CỤC BỘ - PHẢI DÙNG KIM VI PHÂN`;
+                popExplanation = `Hướng đại thể tốt theo Bát Trạch nhưng phân độ 3 Sơn hẹp bên trong bị sụt giảm năng lượng nghiêm trọng. Không thể bù đắp bằng Hậu mạch. Hãy xoay la bàn số dịch chuyển sang hướng cận kề để cứu vãn cấu trúc.`;
+            } else if (countSonDo > 0 || countHauDo > 0) {
+                // Có sự đan xen xấu tốt, người dùng dịch chuyển trong dải 10-15 độ của kết cấu (nhà, giường, bàn làm việc) để tìm sơn xanh
+                colorStyle = '#ff9f0a'; bgKhung = 'rgba(255,159,10,0.04)';
+                statusText = `⚠️ HƯỚNG CÁT ĐAN XEN - CẦN VI CHỈNH TỌA ĐỘ SƠN XANH`;
+                popExplanation = `Hướng lớn thuộc cung Cát. Do kích dải phân bổ cấu trúc hình học (${config.sizeDegree}°), bạn hoàn toàn có thể né Sơn/Hậu xấu bằng cách chủ động nhấp nút 'Xoay la bàn' bên dưới để ép kim dò vào cung màu xanh tối ưu.`;
             } else {
-                statusText = `🟢 ĐÓN CÁT KHÍ ỔN ĐỊNH VÀ AN LÀNH`;
-                popExplanation = `Trường khí hướng này đạt chuẩn trung bình khá trở lên. An tâm triển khai thiết kế.`;
+                statusText = `🟢 ĐÓN ĐẠI THỂ CÁT KHÍ ỔN ĐỊNH VÀ AN LÀNH`;
+                popExplanation = `Trường khí hướng lớn đạt chuẩn, các yếu tố vi phân ở mức từ bình hòa đến tốt. An tâm triển khai xây dựng và bố trí không gian.`;
             }
         } else {
+            // Đối với hệ thống đè hung trấn sát (Toilet, Bếp, Hầm tự hoại, Hộp gen...)
             if (item.diemTongHop >= 75) {
                 statusText = `🏆 ĐẮC CÁCH DIỆU PHÁP TRẤN SÁT HOÀN HẢO`;
-                popExplanation = `Vị trí tuyệt vời để đặt khu uế khí, khóa chặt hung sát của địa mạch.`;
-            } else if (item.diemTongHop < 50) {
-                colorStyle = '#ff3b30'; bgKhung = 'rgba(255,59,48,0.04)';
-                statusText = `❌ SAI THÁC TRẠCH PHÁP - PHẠM LONG MẠCH SẠCH`;
-                popExplanation = `ĐẠI KỴ: Điểm số quá thấp vì khu vực này dính vào các Sơn/Hậu cực kỳ sạch và vượng khí. Đè uế khí lên sẽ hoen ố mạch sinh khí.`;
-            } else {
+                popExplanation = `Vị trí tuyệt vời để đặt khu uế khí, khóa chặt và tiêu diệt hoàn toàn hung sát của địa mạch cốt tủy.`;
+            } else if (countSonDo > 0 || countHauDo > 0) {
+                // Đan xen giữa đất vượng và đất hung, cảnh báo để họ định vị thiết bị chuẩn xác từng milimet
                 colorStyle = '#ff9f0a'; bgKhung = 'rgba(255,159,10,0.04)';
-                statusText = `⚠️ TOẠ HUNG XUNG ĐỘT SƠN HẬU HẸP`;
-                popExplanation = `Vị trí có sự đan xen phức tạp giữa đất hung và đất cát. Hãy nhấp nút 'Xoay la bàn' để chuyển kim đến Sơn Vị có năng lượng Đắc Cách Trấn Sát.`;
+                statusText = `⚠️ TOẠ HUNG XUNG ĐỘT - CẦN ĐỊNH VỊ THIẾT BỊ XẢ UẾ`;
+                popExplanation = `Khu vực đại thể là cung Hung thích hợp trấn sát. Tuy nhiên có Sơn hoặc Hậu mang khí sạch (màu đỏ). Hãy dùng nút 'Xoay la bàn' dịch chuyển thiết bị xả uế đè chính xác vào Sơn vị có màu xanh dập sát.`;
+            } else {
+                statusText = `🟢 VỊ TRÍ PHÂN BỔ TRẤN SÁT CHUẨN MỰC TỰ NHIÊN`;
+                popExplanation = `Trường khí khu vực trung tính, đảm bảo công năng uế cục vận hành ổn định, không làm ảnh hưởng tổn hại đến long mạch xung quanh.`;
             }
         }
 
         const safePopTitle = `Biện giải Trạch Pháp: ${item.name}`.replace(/'/g, "\\'").replace(/"/g, '&quot;');
         const safePopDesc = popExplanation.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-        const safePopSol = `Khuyên dùng: Điểm số hiện tại phân bổ theo trục ${item.angle}°. Nhấn nút Xoay thử la bàn để định vị cấu trúc Sơn vị hẹp tốt nhất.`.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        const safePopSol = `Khuyên dùng: Biên độ kết cấu yêu cầu ${config.sizeDegree}°. Hãy nhấn nút Xoay thử la bàn bên dưới để dịch chuyển trục lập cực sang phân đoạn Sơn vị hẹp có năng lượng tốt nhất.`.replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
         const div = document.createElement('div');
         div.className = `direction-item`;
@@ -977,16 +983,17 @@ function generateDirectionsList() {
                 </div>
             </div>
             
-            <!-- NÚT BẤM ĐÃ ĐƯỢC TÍCH HỢP AI VI PHÂN SƠN VỊ TOÀN DIỆN -->
+            <!-- NÚT BẤM TÍCH HỢP AI VI PHÂN ĐÃ ĐƯỢC ĐỒNG BỘ DẢI ĐO KIẾN TRÚC -->
             <button class="btn-rotate" 
                 data-click-count="0"
                 data-son-angles="${stringifiedSonAngles}"
                 data-is-cat="${isCatPurpose}"
+                data-size-degree="${config.sizeDegree}"
                 onclick="handleSmartRotate(this)" 
                 style="background:#1a1a1a; color:#dfb76c; border:1px solid #dfb76c; padding:10px; border-radius:8px; font-weight:bold; cursor:pointer; width:100%; font-size:0.85rem; text-align:center; margin-top:4px; transition: all 0.15s ease; outline:none; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"
                 onmousedown="this.style.transform='scale(0.96)'; this.style.background='#2a2a2a';"
                 onmouseup="this.style.transform='scale(1)'; this.style.background='#1a1a1a';">
-                🔄 Xoay la bàn dò Sơn vị (Click để chuyển Sơn)
+                🔄 Xoay la bàn định vị ${config.title} (Vi phân hẹp ${config.sizeDegree}°)
             </button>
         `;
         directionsContainer.appendChild(div);
@@ -5170,11 +5177,6 @@ function executeManualScanConfig(customCenterAngle, customSizeDegree, purposeKey
     }
 }
 
-/**
- * 3. XỬ LÝ KẾT QUẢ QUÉT ĐỘNG VÀ ĐỒ DỮ LIỆU THÔNG MINH LÊN UI
- * PHIÊN BẢN 2026: Tích hợp chế độ Debug hiển thị lỗi trực quan lên màn hình
- */
-/**
  * 3. XỬ LÝ KẾT QUẢ QUÉT ĐỘNG VÀ ĐỒ DỮ LIỆU THÔNG MINH LÊN UI
  * PHIÊN BẢN 2026: Cá nhân hóa vật thể quét, hiển thị chi tiết Định vị Sơn Hậu và tích hợp nút Đóng (✕)
  */
