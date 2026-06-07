@@ -1517,12 +1517,12 @@ mjx-container {
         font-size: 0.85rem;
     }
 }
-/* ================= TỔNG LUẬN FLOATING BUTTON ================= */
+/* ================= TỔNG LUẬN FLOATING BUTTON - PHIÊN BẢN NÂNG CẤP ================= */
 .luangiai-fab-btn {
     position: fixed;
-    bottom: 20px; /* Nằm ngay phía trên nút Cài App (bottom 20px + cao 55px) */
+    bottom: 85px;           /* Tăng một chút để có khoảng cách đẹp với nút PWA */
     right: 20px;
-    background: linear-gradient(135deg, #30d158, #189839); /* Tone xanh ngọc bích quý phái */
+    background: linear-gradient(135deg, #30d158, #189839);
     color: #fff;
     border: 1px solid #71f592;
     border-radius: 50px;
@@ -1534,24 +1534,47 @@ mjx-container {
     gap: 8px;
     box-shadow: 0 4px 15px rgba(48, 209, 88, 0.4);
     z-index: 9999;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    white-space: nowrap;
     -webkit-tap-highlight-color: transparent;
+
+    /* Trạng thái ban đầu - ẩn mượt mà */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.75) translateY(15px);
+
+    /* Hiệu ứng bounce quý phái đồng bộ với nút PWA */
+    transition: 
+        opacity 0.4s ease,
+        visibility 0.4s ease,
+        transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        box-shadow 0.3s ease;
 }
 
+/* Khi nút hiện lên */
+.luangiai-fab-btn.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: scale(1) translateY(0);
+}
+
+/* Hover & Active */
 .luangiai-fab-btn:hover {
-    transform: scale(1.05);
+    transform: scale(1.05) translateY(-2px);
     box-shadow: 0 6px 20px rgba(48, 209, 88, 0.6);
 }
 
 .luangiai-fab-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.92);
+    box-shadow: 0 3px 10px rgba(48, 209, 88, 0.5);
 }
 
+/* Responsive mobile */
 @media (max-width: 480px) {
     .luangiai-fab-btn {
-        bottom: 16px;
-        right: 16px;
+        bottom: 75px;       /* Thu gọn khoảng cách trên mobile */
+        right: 16px;        /* Thu góc lại chút như bạn yêu cầu */
         padding: 10px 16px;
         font-size: 0.85rem;
     }
