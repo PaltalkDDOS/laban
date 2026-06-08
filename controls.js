@@ -3113,20 +3113,79 @@ function closeModal() {
     document.getElementById('infoModal').style.display = 'none';
 }
 
+let autoHideTimer = null;
+
+// Hàm khởi tạo bộ đếm
+function startAutoHide() {
+    clearTimeout(autoHideTimer);
+    autoHideTimer = setTimeout(() => {
+        const wrapper = document.getElementById('mainPanelWrapper');
+        // Chỉ đóng nếu bảng đang MỞ và KHÔNG có gì đang được focus (đang nhập liệu)
+        if (wrapper && !wrapper.classList.contains('collapsed')) {
+            // Kiểm tra thêm: nếu đang focus vào ô input thì không đóng
+            if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || document.activeElement.tagName === 'SELECT') {
+                return; 
+            }
+            togglePanel();
+        }
+    }, 3000);
+}
+
 function togglePanel() {
-    const content = document.getElementById('panelContent');
+    const wrapper = document.getElementById('mainPanelWrapper');
     const arrow = document.getElementById('toggleArrow');
     
-    // Kiểm tra class để đóng/mở
-    if (content.classList.contains('collapsed')) {
-        content.classList.remove('collapsed');
-        arrow.innerHTML = '▲';
+    if (!wrapper || !arrow) return;
+
+    // Loại bỏ class ẩn ngay từ đầu nếu có
+    wrapper.classList.remove('initial-hidden');
+    
+    // Toggle trạng thái đóng/mở
+    wrapper.classList.toggle('collapsed');
+    
+    const isCollapsed = wrapper.classList.contains('collapsed');
+    arrow.innerHTML = isCollapsed ? '▼' : '▲';
+
+    if (!isCollapsed) {
+        startAutoHide();
     } else {
-        content.classList.add('collapsed');
-        arrow.innerHTML = '▼';
+        clearTimeout(autoHideTimer);
     }
 }
-	
+
+// KHỞI TẠO
+document.addEventListener('DOMContentLoaded', () => {
+    const wrapper = document.getElementById('mainPanelWrapper');
+    if (!wrapper) return;
+
+    // 1. Luôn đóng ngay khi load (thêm class trước khi hiển thị)
+    wrapper.classList.add('collapsed');
+    document.getElementById('toggleArrow').innerHTML = '▼';
+
+    // 2. Định nghĩa danh sách các sự kiện cần "đóng băng" bộ đếm
+    // mousedown/touchstart: Click chuột hoặc chạm tay
+    // input/focus: Đang nhập liệu
+    // mouseover: Di chuột vào
+    const events = ['mousedown', 'touchstart', 'input', 'focus', 'mouseover'];
+
+    events.forEach(eventType => {
+        wrapper.addEventListener(eventType, () => {
+            if (!wrapper.classList.contains('collapsed')) {
+                clearTimeout(autoHideTimer); // Dừng đếm khi đang dùng
+            }
+        }, { passive: true });
+    });
+
+    // 3. Khi người dùng buông tay hoặc rời chuột, bắt đầu đếm lại
+    const endEvents = ['mouseup', 'touchend', 'blur', 'mouseout'];
+    endEvents.forEach(eventType => {
+        wrapper.addEventListener(eventType, () => {
+            if (!wrapper.classList.contains('collapsed')) {
+                startAutoHide(); // Bắt đầu đếm khi không còn tương tác
+            }
+        }, { passive: true });
+    });
+});	
 // ====================== HÀM ĐÓNG MỞ GIẢI THÍCH CHI TIẾT ======================
 window.toggleDienGiaiChiTiet = function() {
     const contentDiv = document.getElementById('content-dien-giai-chi-tiet');
@@ -4138,32 +4197,50 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // =========================================================================
-// 🌐 HỆ THỐNG PWA FLOATING ACTION BUTTON - HOÀN TRẢ KIẾN TRÚC GỐC NGUYÊN BẢN
+// 🌐 HỆ THỐNG PWA FULL CONTROL - TỐI ƯU CẬP NHẬT & TOAST NOTIFICATION
 // =========================================================================
-if (typeof deferredPrompt === 'undefined') {
-    var deferredPrompt; 
-}
 
-// 1. Giữ nguyên bản 100% hàm kiểm tra độc lập gốc của bạn
+if (typeof deferredPrompt === 'undefined') { var deferredPrompt; }
+
+// Trung tâm điều khiển
+const AppControl = {
+    showNotification: (message) => {
+        let toast = document.getElementById('pwa-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'pwa-toast';
+            document.body.appendChild(toast);
+        }
+        toast.innerText = message;
+        toast.style.display = 'block';
+        
+        // Hiệu ứng xuất hiện
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.5s';
+        setTimeout(() => toast.style.opacity = '1', 50);
+
+        // Tự động biến mất sau 3 giây
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.style.display = 'none', 500);
+        }, 3000);
+    },
+    showAds: () => {
+        console.log("🚀 Hệ thống Ads đã sẵn sàng để tích hợp");
+    }
+};
+
 function isRunningAsPWA() {
     return window.matchMedia('(display-mode: standalone)').matches || 
            window.navigator.standalone === true ||
            window.matchMedia('(display-mode: fullscreen)').matches;
 }
 
-// 2. Giữ nguyên bản 100% hàm kiểm tra và ẩn nút gốc của bạn
 function kiemTraVaAnNut() {
     const btn = document.getElementById('btn-install-pwa');
-    if (!btn) return false;
-    
-    if (isRunningAsPWA()) {
-        btn.classList.remove('show');
-        return true;
-    }
-    return false;
+    if (btn && isRunningAsPWA()) btn.classList.remove('show');
 }
 
-// 3. Khởi tạo hệ thống lõi - Tích hợp mạch tự động dọn cache khi sửa code
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         if (window.location.protocol === 'file:') return;
@@ -4175,61 +4252,47 @@ if ('serviceWorker' in navigator) {
         link.href = './manifest.json';
         document.head.appendChild(link);
 
-        // Đăng ký Service Worker và tự động F5 làm sạch bộ nhớ nếu bạn đổi v1 thành v2 ở sw.js
         navigator.serviceWorker.register('./sw.js')
             .then((reg) => {
-                reg.onupdatefound = () => {
-                    const installingWorker = reg.installing;
-                    if (installingWorker) {
-                        installingWorker.onstatechange = () => {
-                            if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                console.log('Hệ thống đã tự động nạp khí mới, làm sạch cache cũ thành công!');
-                                window.location.reload(); // Tự động làm mới trang để ăn code mới
-                            }
-                        };
+                // Lắng nghe lệnh từ Service Worker
+                navigator.serviceWorker.addEventListener('message', (event) => {
+                    if (!event.data) return;
+                    if (event.data.type === 'SHOW_ADS') AppControl.showAds();
+                    if (event.data.type === 'SHOW_MSG') AppControl.showNotification(event.data.message);
+                    if (event.data.type === 'VERSION_UPDATED') {
+                        AppControl.showNotification("✨ Hệ thống đã nâng cấp bản mới!");
+                        setTimeout(() => window.location.reload(), 2000);
                     }
+                });
+
+                // Tự động làm mới khi có Service Worker mới
+                reg.onupdatefound = () => {
+                    const worker = reg.installing;
+                    worker.onstatechange = () => {
+                        if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+                            window.location.reload();
+                        }
+                    };
                 };
             })
-            .catch(err => console.error('Lỗi kích hoạt PWA:', err));
+            .catch(err => console.error('Lỗi PWA:', err));
     });
 }
 
-// 4. Lắng nghe sự kiện mời cài đặt (Giữ nguyên bản 100% hàm gốc của bạn)
 window.addEventListener('beforeinstallprompt', (e) => {
-    if (isRunningAsPWA()) return;
-
     e.preventDefault();
     deferredPrompt = e;
-
     const btn = document.getElementById('btn-install-pwa');
-    if (btn) {
-        btn.classList.add('show');
-
-        btn.onclick = async () => {
-            if (!deferredPrompt) return;
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            console.log(`Người dùng chọn: ${outcome}`);
-            
-            if (outcome === 'accepted') {
-                btn.classList.remove('show');
-            }
-            deferredPrompt = null;
-        };
-    }
+    if (btn) btn.classList.add('show');
 });
 
-// 5. Ẩn nút lập tức khi cài xong (Giữ nguyên bản 100% hàm gốc của bạn)
 window.addEventListener('appinstalled', () => {
     const btn = document.getElementById('btn-install-pwa');
     if (btn) btn.classList.remove('show');
 });
 
-// Bộ quét quét lại khi người dùng bật tắt màn hình (Giữ nguyên bản 100% hàm gốc của bạn)
 document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') {
-        setTimeout(kiemTraVaAnNut, 600);
-    }
+    if (document.visibilityState === 'visible') setTimeout(kiemTraVaAnNut, 600);
 });
 
 // Biến toàn cục điều khiển trạng thái la bàn số
