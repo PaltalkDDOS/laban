@@ -1457,6 +1457,7 @@ mjx-container {
     border: none;
     border-radius: 50px;
     padding: 12px 18px;
+	z-index: 9999;
     font-size: 0.9rem;
     font-weight: bold;
     
@@ -1516,6 +1517,23 @@ mjx-container {
         padding: 10px 16px;
         font-size: 0.85rem;
     }
+}
+#pwa-toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #dfb76c;
+    color: #000;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 14px;
+    z-index: 99999;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    display: none;
+    text-align: center;
+    white-space: nowrap;
 }
 /* ================= TỔNG LUẬN FLOATING BUTTON - PHIÊN BẢN NÂNG CẤP ================= */
 .luangiai-fab-btn {
@@ -1707,21 +1725,4 @@ mjx-container {
 /* Khi có class .collapsed thì đè lên max-height trên */
 #mainPanelWrapper.collapsed {
     max-height: 10px !important;
-}
-#pwa-toast {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #dfb76c;
-    color: #000;
-    padding: 12px 25px;
-    border-radius: 30px;
-    font-weight: bold;
-    font-size: 14px;
-    z-index: 99999;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    display: none;
-    text-align: center;
-    white-space: nowrap;
 }
