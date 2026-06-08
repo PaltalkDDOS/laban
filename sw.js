@@ -1,4 +1,4 @@
-const CACHE_NAME = 'laban-pt-v3.1';
+const CACHE_NAME = 'laban-pt-v3.2';
 
 const ASSETS_TO_CACHE = [
   'LabanThanSo.html',
