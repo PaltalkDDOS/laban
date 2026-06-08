@@ -1,4 +1,4 @@
-const CACHE_NAME = 'laban-pt-v3.1';
+const CACHE_NAME = 'laban-pt-v3';
 
 const ASSETS_TO_CACHE = [
   'LabanThanSo.html',
@@ -33,11 +33,16 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
-            return caches.delete(cache);
-          }
+          if (cache !== CACHE_NAME) return caches.delete(cache);
         })
       );
+    }).then(() => {
+        // Gửi lệnh cho toàn bộ tab đang mở
+        self.clients.matchAll().then(clients => {
+            clients.forEach(client => {
+                client.postMessage({ type: 'VERSION_UPDATED' });
+            });
+        });
     })
   );
   self.clients.claim();
