@@ -4197,40 +4197,24 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // =========================================================================
-// 🌐 HỆ THỐNG PWA FULL CONTROL - GIỮ NGUYÊN LOGIC GỐC + TÍNH NĂNG MỚI
+// 🌐 HỆ THỐNG PWA FLOATING ACTION BUTTON - HOÀN TRẢ KIẾN TRÚC GỐC NGUYÊN BẢN
 // =========================================================================
+if (typeof deferredPrompt === 'undefined') {
+    var deferredPrompt; 
+}
 
-if (typeof deferredPrompt === 'undefined') { var deferredPrompt; }
-
-// 1. TRUNG TÂM ĐIỀU KHIỂN (THÔNG BÁO & ADS)
-const AppControl = {
-    showNotification: (message) => {
-        let toast = document.getElementById('pwa-toast');
-        if (!toast) {
-            toast = document.createElement('div');
-            toast.id = 'pwa-toast';
-            document.body.appendChild(toast);
-        }
-        toast.innerText = message;
-        toast.style.display = 'block';
-        toast.animate([{ opacity: 0, transform: 'translate(-50%, -20px)' }, { opacity: 1, transform: 'translate(-50%, 0)' }], { duration: 500, fill: 'forwards' });
-        setTimeout(() => {
-            toast.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500 }).onfinish = () => toast.style.display = 'none';
-        }, 3000);
-    },
-    showAds: () => { console.log("🚀 Ads ready"); }
-};
-
-// 2. LOGIC GỐC (BẤT TỬ)
+// 1. Giữ nguyên bản 100% hàm kiểm tra độc lập gốc của bạn
 function isRunningAsPWA() {
     return window.matchMedia('(display-mode: standalone)').matches || 
            window.navigator.standalone === true ||
            window.matchMedia('(display-mode: fullscreen)').matches;
 }
 
+// 2. Giữ nguyên bản 100% hàm kiểm tra và ẩn nút gốc của bạn
 function kiemTraVaAnNut() {
     const btn = document.getElementById('btn-install-pwa');
     if (!btn) return false;
+    
     if (isRunningAsPWA()) {
         btn.classList.remove('show');
         return true;
@@ -4238,59 +4222,73 @@ function kiemTraVaAnNut() {
     return false;
 }
 
-// 3. KHỞI TẠO LÕI (TÍCH HỢP SERVICE WORKER)
+// 3. Khởi tạo hệ thống lõi - Tích hợp mạch tự động dọn cache khi sửa code
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         if (window.location.protocol === 'file:') return;
+        
         kiemTraVaAnNut();
 
-        navigator.serviceWorker.register('./sw.js').then((reg) => {
-            // Lắng nghe cập nhật từ SW
-            navigator.serviceWorker.addEventListener('message', (event) => {
-                if (event.data && event.data.type === 'VERSION_UPDATED') {
-                    AppControl.showNotification("✨ Ứng dụng đã được cập nhật!");
-                    setTimeout(() => window.location.reload(), 2000);
-                }
-            });
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = './manifest.json';
+        document.head.appendChild(link);
 
-            reg.onupdatefound = () => {
-                const worker = reg.installing;
-                worker.onstatechange = () => {
-                    if (worker.state === 'installed' && navigator.serviceWorker.controller) {
-                        window.location.reload();
+        // Đăng ký Service Worker và tự động F5 làm sạch bộ nhớ nếu bạn đổi v1 thành v2 ở sw.js
+        navigator.serviceWorker.register('./sw.js')
+            .then((reg) => {
+                reg.onupdatefound = () => {
+                    const installingWorker = reg.installing;
+                    if (installingWorker) {
+                        installingWorker.onstatechange = () => {
+                            if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                console.log('Hệ thống đã tự động nạp khí mới, làm sạch cache cũ thành công!');
+                                window.location.reload(); // Tự động làm mới trang để ăn code mới
+                            }
+                        };
                     }
                 };
-            };
-        }).catch(err => console.error('PWA Error:', err));
+            })
+            .catch(err => console.error('Lỗi kích hoạt PWA:', err));
     });
 }
 
-// 4. LẮNG NGHE CÀI ĐẶT (GIỮ NGUYÊN LOGIC GỐC CỦA BẠN)
+// 4. Lắng nghe sự kiện mời cài đặt (Giữ nguyên bản 100% hàm gốc của bạn)
 window.addEventListener('beforeinstallprompt', (e) => {
-    if (isRunningAsPWA()) return; // Không hiển thị nếu đã cài
+    if (isRunningAsPWA()) return;
+
     e.preventDefault();
     deferredPrompt = e;
+
     const btn = document.getElementById('btn-install-pwa');
     if (btn) {
         btn.classList.add('show');
+
         btn.onclick = async () => {
             if (!deferredPrompt) return;
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') btn.classList.remove('show');
+            console.log(`Người dùng chọn: ${outcome}`);
+            
+            if (outcome === 'accepted') {
+                btn.classList.remove('show');
+            }
             deferredPrompt = null;
         };
     }
 });
 
-// 5. CÁC HÀM GIÁM SÁT (GIỮ NGUYÊN)
+// 5. Ẩn nút lập tức khi cài xong (Giữ nguyên bản 100% hàm gốc của bạn)
 window.addEventListener('appinstalled', () => {
     const btn = document.getElementById('btn-install-pwa');
     if (btn) btn.classList.remove('show');
 });
 
+// Bộ quét quét lại khi người dùng bật tắt màn hình (Giữ nguyên bản 100% hàm gốc của bạn)
 document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') setTimeout(kiemTraVaAnNut, 600);
+    if (document.visibilityState === 'visible') {
+        setTimeout(kiemTraVaAnNut, 600);
+    }
 });
 
 // Biến toàn cục điều khiển trạng thái la bàn số
