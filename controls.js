@@ -4544,9 +4544,9 @@ function tuDongTinhCuuTinhLuuNien(sonName, namKhaoSat) {
     if (maSoNam === 0) maSoNam = 9;
 
     let huongNha = DATA_TRACH_NHAT_CAO_CAP.SON_TO_HUONG_MAP[sonName] || "Trung Cung";
-    let cungViNha = DATA_TRACH_NHAT_CAO_CAP.HUONG_TO_SAO_LUU_NIEN[huongNha];
-    
-    let saoDaoPhuong = (maSoNam - (cungViNha - 5) + 9) % 9;
+    let cungViNha = DATA_TRACH_NHAT_CAO_CAP.HUONG_TO_SAO_LUU_NIEN[huongNha];    
+
+	let saoDaoPhuong = (maSoNam + (cungViNha - 5) + 9) % 9;
     if (saoDaoPhuong === 0) saoDaoPhuong = 9;
 
     const tenSaoMap = {
@@ -4922,7 +4922,7 @@ function xayDungBaoCaoLuanGiai(name, degree) {
             thongTin72Hau = Data72Hau[gocChuan72];
         } else {
             let keys = Object.keys(Data72Hau).map(Number);
-            let closest = keys.reduce((prev, curr) => (Math.abs(prev - degree) < Math.abs(prev - degree) ? curr : prev), 0);
+            let closest = keys.reduce((prev, curr) => (Math.abs(curr - degree) < Math.abs(prev - degree) ? curr : prev), 0);
             thongTin72Hau = Data72Hau[closest.toFixed(1)] || thongTin72Hau;
         }
     }
