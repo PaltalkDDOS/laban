@@ -4291,6 +4291,62 @@ document.addEventListener('visibilitychange', () => {
     }
 });
 
+// =========================================================================
+// 🚀 6. THÀNH PHẦN MỞ RỘNG - NHẬN TÍN HIỆU CẬP NHẬT & ADS (KHÔNG ĐỤNG CODE GỐC)
+// =========================================================================
+const AppControl = {
+    // Hàm hiển thị Toast Notification thông minh
+    showNotification: (message) => {
+        let toast = document.getElementById('pwa-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'pwa-toast';
+            document.body.appendChild(toast);
+        }
+        toast.innerText = message;
+        toast.style.display = 'block';
+        
+        // Hiệu ứng mượt mà quý phái
+        toast.animate([
+            { opacity: 0, transform: 'translate(-50%, -20px)' },
+            { opacity: 1, transform: 'translate(-50%, 0)' }
+        ], { duration: 500, fill: 'forwards' });
+
+        // Tự động biến mất sau 3 giây
+        setTimeout(() => {
+            toast.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500 })
+                .onfinish = () => toast.style.display = 'none';
+        }, 3000);
+    },
+    
+    // Hàm chờ sẵn để bạn chèn quảng cáo sau này
+    showAds: () => {
+        console.log("🚀 Hệ thống Ads đã sẵn sàng kích hoạt");
+        // Bạn có thể chèn đoạn code gọi Banner Ads hoặc Popup quảng cáo ở đây
+    }
+};
+
+// Lắng nghe thông điệp độc lập gửi từ sw.js về giao diện công khai
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', (event) => {
+        if (!event.data) return;
+        
+        // Khi sw.js phát tín hiệu đã cập nhật xong dữ liệu cache mới
+        if (event.data.type === 'VERSION_UPDATED') {
+            AppControl.showNotification("✨ Ứng dụng đã được cập nhật bản mới!");
+            
+            // Nếu bạn muốn bật cái popup div HTML lên thay vì Toast chữ, hãy mở comment dòng dưới:
+            // const popup = document.getElementById('update-popup');
+            // if (popup) popup.style.display = 'flex';
+        }
+        
+        // Khi sw.js phát tín hiệu muốn gọi quảng cáo
+        if (event.data.type === 'SHOW_ADS') {
+            AppControl.showAds();
+        }
+    });
+}
+
 // Biến toàn cục điều khiển trạng thái la bàn số
 let isCompassHold = false;
 let holdedHeading = 0;
