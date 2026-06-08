@@ -4539,14 +4539,16 @@ function layThangTietKhiVaTruc(y, m, d, chiNgay) {
     };
 }
 
+// 🚀 ĐỒNG BỘ ĐƯỜNG BAY THUẬN HÀNH CỦA CỬU TINH THEO HÀM LÕI
 function tuDongTinhCuuTinhLuuNien(sonName, namKhaoSat) {
     let maSoNam = (11 - (namKhaoSat % 9)) % 9;
     if (maSoNam === 0) maSoNam = 9;
 
     let huongNha = DATA_TRACH_NHAT_CAO_CAP.SON_TO_HUONG_MAP[sonName] || "Trung Cung";
-    let cungViNha = DATA_TRACH_NHAT_CAO_CAP.HUONG_TO_SAO_LUU_NIEN[huongNha];    
-
-	let saoDaoPhuong = (maSoNam + (cungViNha - 5) + 9) % 9;
+    let cungViNha = DATA_TRACH_NHAT_CAO_CAP.HUONG_TO_SAO_LUU_NIEN[huongNha];
+    
+    // Đã đồng bộ sang dấu "+" để khớp hoàn toàn với lõi tinhDiemTongHop
+    let saoDaoPhuong = (maSoNam + (cungViNha - 5) + 9) % 9;
     if (saoDaoPhuong === 0) saoDaoPhuong = 9;
 
     const tenSaoMap = {
@@ -4731,7 +4733,12 @@ function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat,
     const chiTuoiChuNhaKey = DATA_TRACH_NHAT_CAO_CAP.CHI_QUY_CHUAN[birthYear % 12];
 
     const chiCuaSon = DATA_TRACH_NHAT_CAO_CAP.SON_TO_CHI_MAP[sonName] || "Ty";
-    const huongNhaDaiCuc = DATA_TRACH_NHAT_CAO_CAP.SON_TO_HUONG_MAP[sonName] || "N";
+    const huongNhaCode = DATA_TRACH_NHAT_CAO_CAP.SON_TO_HUONG_MAP[sonName] || "N";
+    
+    // 🚀 VÁ LỖI LOGIC: Bộ chuyển đổi mã code hướng sang tiếng Việt không dấu để khớp khít ma trận Tam Sát
+    const mapCodeSangKhongDau = { "N": "Bac", "S": "Nam", "E": "Dong", "W": "Tay", "NE": "Dong Bac", "SE": "Dong Nam", "SW": "Tay Nam", "NW": "Tay Bac" };
+    const huongNhaDaiCucChuan = mapCodeSangKhongDau[huongNhaCode] || "Bac";
+
     const configHangMuc = typeof ConfigPhongThuy !== 'undefined' ? ConfigPhongThuy[mucDich] : { title: "Hạng mục", isCat: true };
     const isCatPurpose = configHangMuc.isCat;
 
@@ -4747,6 +4754,7 @@ function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat,
     const tenChiNamKhaoSat = satTinhMaTran.thaiTueArr[namKhaoSat % 12];
     const phuongViTamSatNam = satTinhMaTran.tamSat[namKhaoSat % 12 >= 9 || namKhaoSat % 12 <= 2 ? "Than Ty Thin" : namKhaoSat % 12 <= 5 ? "Tỵ Dau Suu" : namKhaoSat % 12 <= 8 ? "Hoi Mao Mui" : "Dan Ngo Tuat"];
 
+    // Gọi hàm tính toán Lưu Niên đồng bộ
     let thongTinSaoLuuNien = typeof tuDongTinhCuuTinhLuuNien === 'function' ? tuDongTinhCuuTinhLuuNien(sonName, namKhaoSat) : { maSao: 1, isHung: false };
 
     for (let ngay = ngayBatDauQuet; ngay <= soNgayTrongThang; ngay++) {
@@ -4760,7 +4768,6 @@ function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat,
         let lyDoPhat = [];
         let biKhoaBoiDaiSat = false;
 
-        let chuoiCanChiNgay = `${canChiNgayObj.can}${canChiNgayObj.chi}`;
         if (hinhXungQuyQuyet.THIEN_LOC[canChuNhaKey] === canChiNgayObj.chi) {
             diemNgay += 15; lyDoThuong.push("Đắc ngày Thiên Lộc (Đại cát tiến bảo, hưng thịnh tài vận)");
         }
@@ -4778,7 +4785,6 @@ function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat,
             diemNgay += 10; lyDoThuong.push("Đắc ngày khí trường Lục Hợp cát khí");
         }
 
-        // Tích hợp kiểm tra hành tương sinh bằng nạp âm 60 hoa giáp chuẩn hoá vẹn toàn
         let hanhNgay = layNapAm60HoaGiap(canChiNgayObj.can, canChiNgayObj.chi);
         let thucTeChuMenh = typeof chủMệnh !== 'undefined' ? chủMệnh : "Kham";
         const maTranNguHanhCungPhi = { "Kham": "Thuy", "Ly": "Hoa", "Chan": "Moc", "Ton": "Moc", "Can": "Kim", "Doai": "Kim", "Cấn": "Tho", "Khon": "Tho" };
@@ -4788,7 +4794,7 @@ function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat,
             diemNgay += 10; lyDoThuong.push("Ngũ hành nạp âm ngày Tương Sinh niên mệnh trạch chủ");
         }
 
-        // ─── ĐẢO CHIỀU TIÊU CHUẨN LỊCH PHÁP TRẠCH NHẬT THEO ĐỘNG CÔNG NĂNG ───
+        // Kiểm tra sao hạn Ngũ Hoàng đóng cung hướng
         if (thongTinSaoLuuNien.maSao === 5) {
             if (isCatPurpose) {
                 diemNgay -= 40; lyDoPhat.push("Hướng nhà phạm Ngũ Hoàng Đại Sát niên tinh đóng cung chính");
@@ -4811,7 +4817,8 @@ function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat,
         const keyChiNgayChuan = satTinhMaTran.chiTiengVietToKey[chiTiengVietNgay] || "Ty";
         const phuongViCuaNgay = satTinhMaTran.phuongViChi[keyChiNgayChuan];
 
-        if (huongNhaDaiCuc === phuongViTamSatNam && phuongViCuaNgay === phuongViTamSatNam) {
+        // 🔥 ĐỀ BÓNG VÁ LỖI LOGIC THÀNH CÔNG: Đã so khớp đồng bộ huongNhaDaiCucChuan tiếng Việt không dấu
+        if (huongNhaDaiCucChuan === phuongViTamSatNam && phuongViCuaNgay === phuongViTamSatNam) {
             diemNgay -= 30; lyDoPhat.push(`Phạm ngày Tam Sát Lưu Nhật phương vị trạch đất`);
         }
         if (hinhXungQuyQuyet.LUC_XUNG[chuanHoaChiKey(keyChiNgayChuan)] === chuanHoaChiKey(tenChiNamKhaoSat)) {
@@ -4842,7 +4849,6 @@ function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat,
 
         diemNgay = Math.max(10, Math.min(100, Math.floor(diemNgay)));
 
-        // Đổ mảng dữ liệu lành nếu ngày đạt chuẩn chất lượng hệ thống
         if (diemNgay >= 80 && !biKhoaBoiDaiSat) {
             let cauHinhGio = DATA_TRACH_NHAT_CAO_CAP.CAN_CHI_DINH_GIO[canChiNgayObj.chi];
             let gioCatTuongReal = [];
@@ -5004,7 +5010,7 @@ function xayDungBaoCaoLuanGiai(name, degree) {
 
             matPhapMuonTuoiHTML = `
             <div style="margin-top:12px; background:rgba(255,159,10,0.06); padding:12px; border-radius:8px; border:1px solid #ff9f0a40; font-size:0.85rem; line-height:1.6;">
-                <b style="color:#ff9f0a; display:block; margin-bottom:4px;">👥 MẬT PHÁP NHÂN KHÍ ĐẠI SỰ - ỦY THÁF MƯỢN TUỔI ĐỘNG THỔ:</b>
+                <b style="color:#ff9f0a; display:block; margin-bottom:4px;">👥 MẬT PHÁP NHÂN KHÍ ĐẠI SỰ - ỦY THÁC MƯỢN TUỔI ĐỘNG THỔ:</b>
                 Gia chủ dính trọng kỵ hạn tuổi trạch pháp: <span style="color:#ff4444; font-weight:bold;">${razones}</span>. Vì đây là hạng mục phá vỡ kết cấu móng long mạch lớn (<b>${config.title}</b>), trạch chủ nên ủy thác một trong các tuổi đại hợp sau đứng tên khởi sự để dẫn truyền năng lượng thịnh vượng:${danhSachTuoiHTML}
             </div>`;
         } else if (!checkHanNhanKhi.isOk && !laHangMucDaiSu) {
@@ -5057,7 +5063,7 @@ function xayDungBaoCaoLuanGiai(name, degree) {
         </div>
 
         <div style="padding: 12px; background: rgba(0,0,0,0.25); border-left: 4px solid ${mauChu}; font-size: 0.88rem; color: #e5e5ea; text-align: justify; line-height: 1.6; margin-bottom: 12px; border-radius: 0 8px 8px 0;">
-            <b>🔮 KHẨU QUYẾT LUẬN GIẢI ĐA TẦNG TỪ BỰC THẦY SỐ:</b><br>
+            <b>🔮 KHẨU QUYẾT TỔNG LUẬN DIỄN GIẢI CHÍNH TÔNG:</b><br>
             ${dienGiaiChuyenSauHTML}
         </div>
 
