@@ -1517,12 +1517,12 @@ mjx-container {
         font-size: 0.85rem;
     }
 }
-/* ================= TỔNG LUẬN FLOATING BUTTON ================= */
+/* ================= TỔNG LUẬN FLOATING BUTTON - PHIÊN BẢN NÂNG CẤP ================= */
 .luangiai-fab-btn {
     position: fixed;
-    bottom: 75px; /* Nằm ngay phía trên nút Cài App (bottom 20px + cao 55px) */
+    bottom: 85px;
     right: 20px;
-    background: linear-gradient(135deg, #30d158, #189839); /* Tone xanh ngọc bích quý phái */
+    background: linear-gradient(135deg, #30d158, #189839);
     color: #fff;
     border: 1px solid #71f592;
     border-radius: 50px;
@@ -1534,23 +1534,45 @@ mjx-container {
     gap: 8px;
     box-shadow: 0 4px 15px rgba(48, 209, 88, 0.4);
     z-index: 9999;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    white-space: nowrap;
     -webkit-tap-highlight-color: transparent;
+
+    /* Trạng thái mặc định: Ẩn mượt */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.75) translateY(15px);
+
+    transition: 
+        opacity 0.4s ease,
+        visibility 0.4s ease,
+        transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        box-shadow 0.3s ease;
 }
 
+/* ========== TRẠNG THÁI HIỆN (quan trọng) ========== */
+.luangiai-fab-btn.show,
+.luangiai-fab-btn.vượng-xuất {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: scale(1) translateY(0);
+}
+
+/* Hover & Active */
 .luangiai-fab-btn:hover {
-    transform: scale(1.05);
+    transform: scale(1.05) translateY(-2px);
     box-shadow: 0 6px 20px rgba(48, 209, 88, 0.6);
 }
 
 .luangiai-fab-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.92);
 }
 
+/* Responsive */
 @media (max-width: 480px) {
     .luangiai-fab-btn {
-        bottom: 65px;
+        bottom: 75px;
         right: 16px;
         padding: 10px 16px;
         font-size: 0.85rem;
@@ -1606,3 +1628,31 @@ mjx-container {
         background: rgba(223, 183, 108, 0.3);
         border-radius: 10px;
     }
+/* Hiệu ứng nhấp nháy Xanh lá khi tìm đúng Sơn Vị Đắc Cách */
+.la-ban-blink-green {
+    animation: blinkGreenEffect 0.4s ease-in-out 4; /* Nhấp nháy 4 lần rồi dừng */
+}
+
+@keyframes blinkGreenEffect {
+    0%, 100% { 
+        filter: drop-shadow(0 0 2px #30d158) brightness(1);
+    }
+    50% { 
+        filter: drop-shadow(0 0 25px #30d158) brightness(1.8);
+        transform: scale(1.03); /* Nhích nhẹ kim lên tạo hiệu ứng kích thích thị giác */
+    }
+}
+
+/* Hiệu ứng nhấp nháy Vàng Cam cho vùng Bình Hòa */
+.la-ban-blink-yellow {
+    animation: blinkYellowEffect 0.5s ease-in-out 3;
+}
+
+@keyframes blinkYellowEffect {
+    0%, 100% { 
+        filter: drop-shadow(0 0 2px #dfb76c) brightness(1);
+    }
+    50% { 
+        filter: drop-shadow(0 0 15px #dfb76c) brightness(1.4);
+    }
+}
