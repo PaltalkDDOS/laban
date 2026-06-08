@@ -34,13 +34,11 @@
         <button class="btn-close-modal" onclick="event.stopPropagation(); toggleTongLuan();">ĐÃ HIỂU MẬT PHÁP</button>
     </div>
 </div>
-<!-- ====================== MAIN PANEL WRAPPER ====================== -->
-<div id="mainPanelWrapper" style="position: relative; border: 1px solid #333; background: #161616; padding: 15px; border-radius: 12px; margin: 10px auto; width: 90%; max-width: 500px; transition: all 0.3s ease;">
+<div id="mainPanelWrapper" class="initial-hidden" style="position: relative; border: 1px solid #333; background: #161616; padding: 15px; border-radius: 12px; margin: 10px auto; width: 90%; max-width: 500px;">
     
-    <!-- Mũi tên thu gọn -->
-   <div id="toggleArrow" onclick="togglePanel()" 
+    <div id="toggleArrow" onclick="togglePanel()" 
          style="position: absolute; bottom: 10px; left: 15px; cursor: pointer; color: #dfb76c; font-size: 16px; font-weight: bold; z-index: 100; padding: 5px;">
-        ▲
+        ▼
     </div>
 
     <div id="panelContent">
@@ -691,6 +689,7 @@
         <button style="width:100%; margin-top:20px; padding:10px; background:#dfb76c; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">ĐÓNG</button>
     </div>
 </div>
+
 <script src="controls.js"></script>
 </body>
 
