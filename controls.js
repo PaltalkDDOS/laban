@@ -5676,3 +5676,12 @@ function triggerBlinkEffect(score, isCatPurpose) {
         needleElement.classList.add('la-ban-blink-yellow');
     }
 }
+//gioi thieu phong thuy
+document.getElementById('openScienceBtn').addEventListener('click', function() {
+    // Gọi hàm khởi tạo và hiển thị khung nội dung khoa học từ file JS riêng biệt
+    if (typeof FengShuiScienceModal !== 'undefined') {
+        FengShuiScienceModal.open();
+    } else {
+        console.error("Chưa nạp file phongthuy_khoahoc.js");
+    }
+});
