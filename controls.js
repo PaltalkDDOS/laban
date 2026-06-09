@@ -4305,7 +4305,7 @@ document.addEventListener('visibilitychange', () => {
 });
 
 // =========================================================================
-// 🔥 HÀM TẠO HIỆU ỨNG GẠT PHẢI ĐỂ XÓA VĨNH VIỄN (SWIPE TO DISMISS)
+// 🔥 HÀM TẠO HIỆU ỨNG GẠT PHẢI ĐỂ XÓA VĨNH VIỄN (SWIPE TO DISMISS) - ĐỘNG 50%
 // =========================================================================
 function khoiTaoTinhNangVuotGat() {
     const btn = document.getElementById('btn-install-pwa');
@@ -4318,7 +4318,7 @@ function khoiTaoTinhNangVuotGat() {
     // Sự kiện bắt đầu chạm tay vào nút
     btn.addEventListener('touchstart', (e) => {
         touchStartX = e.touches[0].clientX;
-        btn.style.transition = 'none'; // Tắt transition để nút bám theo tay mượt mà
+        btn.style.transition = 'none'; // Tắt hoàn toàn hiệu ứng để nút dính chặt theo ngón tay
         isSwiping = true;
     }, { passive: true });
 
@@ -4330,9 +4330,12 @@ function khoiTaoTinhNangVuotGat() {
 
         // Chỉ cho phép gạt sang bên PHẢI (deltaX > 0)
         if (deltaX > 0) {
-            // Tạo hiệu ứng cản tay nhẹ (resist) và mờ dần khi kéo xa
+            // Nút dịch chuyển tuyến tính chính xác theo tọa độ ngón tay
             btn.style.transform = `translateX(${deltaX}px)`;
-            btn.style.opacity = `${1 - (deltaX / 200)}`;
+            
+            // Tính toán độ mờ dựa trên chiều rộng thực tế của phần tử
+            let maxDrag = btn.offsetWidth;
+            btn.style.opacity = `${1 - (deltaX / maxDrag)}`;
         }
     }, { passive: true });
 
@@ -4342,18 +4345,23 @@ function khoiTaoTinhNangVuotGat() {
         isSwiping = false;
         
         let deltaX = touchCurrentX - touchStartX;
-        btn.style.transition = 'transform 0.2s ease, opacity 0.2s ease, max-height 0.3s ease, margin 0.3s ease';
+        
+        // Khôi phục lại các thuộc tính chuyển động mượt mà của CSS gốc khi buông tay
+        btn.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease';
 
-        // Nếu người dùng gạt qua phải một khoảng dài hơn 100px -> Chấp nhận xóa vĩnh viễn
-        if (deltaX > 100) {
+        // TỐI ƯU: Lấy điểm kích hoạt bằng đúng 1/2 chiều rộng thực tế của nút bấm
+        let threshold = btn.offsetWidth / 2;
+
+        if (deltaX > threshold) {
+            // Ngón tay kéo quá nửa nút -> Kích hoạt dọn dẹp vĩnh viễn, tự động thụt mất tiêu
             anVaXoaVinhVien(btn);
         } else {
-            // Không đủ độ dài -> Trả nút về vị trí cũ bản nguyên
+            // Kéo chưa tới một nửa -> Hệ thống tự động nẩy ngược về vị trí cũ quý phái
             btn.style.transform = 'translateX(0)';
             btn.style.opacity = '1';
         }
         
-        // Reset biến tọa độ
+        // Trả các biến trạng thái về tọa độ gốc
         touchStartX = 0;
         touchCurrentX = 0;
     });
