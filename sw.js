@@ -1,4 +1,4 @@
-const CACHE_NAME = 'laban-pt-v3.4';
+const CACHE_NAME = 'laban-pt-v3.5';
 
 const ASSETS_TO_CACHE = [
   'LabanThanSo.html',
@@ -7,6 +7,7 @@ const ASSETS_TO_CACHE = [
   'icon-512.png',
   'ungho.png',
   'style.css',
+  'phongthuy_khoahoc.js',
   'controls.js'
 ];
 
