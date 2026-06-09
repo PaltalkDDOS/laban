@@ -110,22 +110,30 @@ const FengShuiScienceModal = {
         const container = document.createElement('div');
         container.className = 'fs-science-container';
         
-        // Ngăn chặn sự kiện click lan ra ngoài gây đóng khung diện rộng ngoài ý muốn
         container.addEventListener('click', (e) => e.stopPropagation());
 
-        // Nội dung chi tiết bài viết bóc tách khoa học
         container.innerHTML = `
             <div class="fs-science-close-x" onclick="FengShuiScienceModal.close()">&times;</div>
             <h1>🧬 PHONG THỦY:<br>KHOA HỌC KIẾN TRÚC & ĐỊA CHẤT CỔ ĐẠI</h1>
             
             <p>Khi nhắc đến "Phong Thủy", phần lớn đều liên tưởng đến các quy luật huyền bí mang sắc màu tâm linh. Nhưng nếu bóc tách toàn bộ lớp sương mù của thời gian, chúng ta sẽ kinh ngạc nhận ra: <strong>Phong thủy chính là bộ môn khoa học sơ khai nhất của nhân loại về môi trường sống</strong>, sự giao thoa hoàn mỹ giữa Vật lý kiến trúc, Địa chất học và Sinh thái học dựa trên hai trục cốt lõi: <strong>Phong (Khí tượng học)</strong> và <strong>Thủy (Thủy văn học)</strong>.</p>
 
-            <h2>1. BẢN CHẤT ĐẤT ĐAI: SỰ TƯƠNG THÍCH SINH THÁI</h2>
-            <p>Một mảnh đất tự nó là một thực thể vật lý khách quan cấu thành từ địa tầng, cấu trúc nguồn nước và từ trường. Bản thân mảnh đất không có tính thiện ác, cát hung.</p>
+            <h2>1. BẢN CHẤT ĐẤT ĐAI: CÁT HÙNG KHÔNG NẰM Ở NGÔI NHÀ</h2>
+            <p>Nhiều người thường đặt câu hỏi mang tính mê tín: <em>"Tại sao cùng một ngôi nhà hướng Tây, người Tây Tứ Mệnh vào ở thì phất lên (Cát), còn người Đông Tứ Mệnh vào ở lại lụi bại (Hung)? Phải chăng ngôi nhà biết chọn chủ để ban ơn hay hành hạ?"</em></p>
+            
+            <p><strong>Bản chất vật lý khách quan:</strong> Bản thân mảnh đất hay ngôi nhà hoàn toàn là các vật thể vô tri cấu thành từ gạch đá, xi măng, hướng đón nắng và lưu lượng gió. Bản thân nó là thực thể tĩnh, <strong>tuyệt đối không tự sinh ra Cát hay Hung</strong>.</p>
+
             <div class="fs-science-goldbox">
-                <strong>Ví dụ thực tế:</strong> Một mảnh đất cát khô cằn ở miền Trung tự nó không xấu. Nếu đem một cây lúa nước trồng xuống đó, cây sẽ héo úa và chết ngay <span style="color:#ff4d4d;font-weight:bold;">(Hung)</span>. Ngược lại, nếu đem một cây xương rồng hay củ khoai lang đặt vào, chúng lại phát triển rực rỡ <span style="color:#00f2c9;font-weight:bold;">(Cát)</span>.
+                <strong>Góc nhìn Sinh thái học:</strong> Một vùng đất cát khô cằn ở miền Trung tự nó không tốt cũng không xấu. Nếu đem cây lúa nước trồng xuống, cây sẽ héo úa và chết <span style="color:#ff4d4d;font-weight:bold;">(Hung)</span>. Ngược lại, nếu đem cây xương rồng hay củ khoai lang đặt vào, chúng lại phát triển rực rỡ <span style="color:#00f2c9;font-weight:bold;">(Cát)</span>. Vật rực rỡ hay héo chết là do <strong>mức độ tương thích sinh học</strong> của sinh vật đối với môi trường đó, chứ không phải do đất có ma lực.
             </div>
-            <p>Con người chúng ta cũng là một thực thể sinh học. Hệ thống định vị phương vị trên la bàn thực chất là <strong>bộ lọc cố gắng phân loại con người thành các nhóm tần số</strong>, nhằm kiểm tra xem cơ thể họ có tương thích sinh thái với hướng đón nắng, hướng đối lưu gió và từ trường của mảnh đất đó hay không. Đó là mối quan hệ cộng hưởng giữa Chủ thể và Môi trường.</p>
+
+            <p>Con người là một bộ máy sinh học phức tạp chứa nội tiết tố, hệ tuần hoàn máu và các xung thần kinh nhạy cảm với điện từ trường. Khi phân chia Đông Tứ Mệnh và Tây Tứ Mệnh, cổ học thực chất đang dùng một bộ lọc toán học để phân loại cơ thể người theo các nhóm tần số thích nghi vật lý:</p>
+            <ul>
+                <li>Người thuộc <strong>Tây Tứ Mệnh</strong> có cơ địa sinh học, mật độ ion và hệ miễn dịch phù hợp để chịu đựng, chuyển hóa tốt dòng bức xạ nhiệt khô nồng của hướng Tây thành năng lượng hoạt động.</li>
+                <li>Ngược lại, người thuộc <strong>Đông Tứ Mệnh</strong> có thể trạng nhạy cảm với nhiệt độ cao và áp suất từ trường hướng Tây, dẫn đến việc tế bào dễ căng thẳng, mất ngủ, suy giảm đề kháng, từ đó tinh thần sa sút và đưa ra quyết định sai lầm.</li>
+            </ul>
+            
+            <p>Vì vậy, phong thủy không phải là cầu cúng, mà là bộ môn <strong>tìm kiếm sự tương thích sinh thái</strong> giữa Chủ thể (Cơ thể bạn) và Môi trường (Ngôi nhà) nhằm đạt được trạng thái cộng hưởng năng lượng tốt nhất.</p>
 
             <h2>2. THẨM THỔ SẮC: ĐỊA CHẤT HỌC SƠ KHAI</h2>
             <p>Các bậc thầy thực chiến ngày xưa bắt buộc phải đào đất và ngửi đất để thẩm định nền móng, thuật ngữ chuyên ngành cổ gọi là <span class="fs-science-badge">Thẩm thổ sắc</span> và <span class="fs-science-badge">Khứ thổ vị</span>.</p>
@@ -135,8 +143,8 @@ const FengShuiScienceModal = {
             </ul>
 
             <h2>3. VI PHÂN ĐỘ SỐ (24 SƠN, 72 HẬU)</h2>
-            <p>Tại sao cùng một hướng nhà, có người ở tốt, có người ở xấu? Khí trường đỉnh cao không nhìn một hướng lớn chung chung ($45^\circ$), mà <strong>vi phân góc độ sâu chính xác đến từng $5^\circ$</strong> (24 Sơn vị và 72 Hậu long mạch).</p>
-            <p>Dưới góc nhìn của Vật lý kiến trúc, việc lệch đi vài độ số sẽ thay đổi toàn bộ kịch bản không gian vật lý:</p>
+            <p>Tại sao cùng một hướng nhà, hai căn cạnh sát nhau lại có số phận khác biệt? Khí trường đỉnh cao không nhìn một hướng lớn bao quát chung chung (45 độ), mà <strong>vi phân góc độ sâu chính xác đến từng 5 độ</strong> (24 Sơn vị và 72 Hậu long mạch).</p>
+            <p>Dưới góc nhìn của Vật lý kiến trúc, việc lệch đi chỉ từ 2 đến 3 độ số sẽ làm thay đổi toàn bộ kịch bản không gian vật lý xung quanh bạn:</p>
             <ul>
                 <li><strong>Góc đón bức xạ mặt trời:</strong> Quyết định ngôi nhà nhận được bức xạ hồng ngoại ấm áp buổi sớm hay bị thiêu đốt bởi tia UV độc hại lúc chiều muộn.</li>
                 <li><strong>Góc đón gió đối lưu:</strong> Quyết định ngôi nhà có dòng không khí tươi lưu thông tuần hoàn liên tục, hay bị gió lùa độc, gió xoáy gây tổn thương hệ miễn dịch của người ở.</li>
@@ -173,10 +181,7 @@ const FengShuiScienceModal = {
         `;
 
         overlay.appendChild(container);
-        
-        // Sự kiện click ra vùng ngoài overlay màu đen sẽ đóng modal luôn cho nhanh
         overlay.addEventListener('click', () => FengShuiScienceModal.close());
-        
         document.body.appendChild(overlay);
     },
 
@@ -187,7 +192,6 @@ const FengShuiScienceModal = {
             this.initialized = true;
         }
         
-        // Kích hoạt hiển thị mượt mà với class CSS
         const overlay = document.getElementById('fs-science-modal-overlay');
         overlay.style.display = 'flex';
         setTimeout(() => {
@@ -199,7 +203,6 @@ const FengShuiScienceModal = {
         const overlay = document.getElementById('fs-science-modal-overlay');
         if (overlay) {
             overlay.classList.remove('active');
-            // Đợi hiệu ứng fade-out mờ dần 0.3s kết thúc rồi mới ẩn hoàn toàn dòng chảy DOM
             setTimeout(() => {
                 overlay.style.display = 'none';
             }, 300);
