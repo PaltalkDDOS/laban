@@ -4197,11 +4197,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // =========================================================================
-// 🌐 HỆ THỐNG PWA FLOATING ACTION BUTTON - HOÀN TRẢ KIẾN TRÚC GỐC NGUYÊN BẢN
+// 🌐 HỆ THỐNG PWA FLOATING ACTION BUTTON - HỖ TRỢ VUỐT GẠT ẨN VĨNH VIỄN
 // =========================================================================
 if (typeof deferredPrompt === 'undefined') {
     var deferredPrompt; 
 }
+
+// Khóa lưu trữ vĩnh viễn trên trình duyệt này
+const STORAGE_KEY_HIDE_INSTALL = 'pwa_user_dismissed_install';
 
 // 1. Giữ nguyên bản 100% hàm kiểm tra độc lập gốc của bạn
 function isRunningAsPWA() {
@@ -4210,12 +4213,14 @@ function isRunningAsPWA() {
            window.matchMedia('(display-mode: fullscreen)').matches;
 }
 
-// 2. Giữ nguyên bản 100% hàm kiểm tra và ẩn nút gốc của bạn
+// 2. Hàm kiểm tra ẩn nút - Cải tiến: Kiểm tra thêm bộ nhớ vĩnh viễn LocalStorage
 function kiemTraVaAnNut() {
     const btn = document.getElementById('btn-install-pwa');
     if (!btn) return false;
     
-    if (isRunningAsPWA()) {
+    // Nếu người dùng đã từng gạt ẩn vĩnh viễn TRÊN TRÌNH DUYỆT NÀY hoặc đang chạy PWA rồi
+    if (localStorage.getItem(STORAGE_KEY_HIDE_INSTALL) === 'true' || isRunningAsPWA()) {
+        btn.classList.add('swiped-away'); // Sử dụng hiệu ứng biến mất hoàn toàn
         btn.classList.remove('show');
         return true;
     }
@@ -4227,6 +4232,8 @@ if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         if (window.location.protocol === 'file:') return;
         
+        // Kích hoạt tính năng vuốt gạt ngay khi trang tải xong
+        khoiTaoTinhNangVuotGat();
         kiemTraVaAnNut();
 
         const link = document.createElement('link');
@@ -4234,7 +4241,7 @@ if ('serviceWorker' in navigator) {
         link.href = './manifest.json';
         document.head.appendChild(link);
 
-        // Đăng ký Service Worker và tự động F5 làm sạch bộ nhớ nếu bạn đổi v1 thành v2 ở sw.js
+        // Đăng ký Service Worker và tự động F5 làm sạch bộ nhớ
         navigator.serviceWorker.register('./sw.js')
             .then((reg) => {
                 reg.onupdatefound = () => {
@@ -4243,7 +4250,7 @@ if ('serviceWorker' in navigator) {
                         installingWorker.onstatechange = () => {
                             if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
                                 console.log('Hệ thống đã tự động nạp khí mới, làm sạch cache cũ thành công!');
-                                window.location.reload(); // Tự động làm mới trang để ăn code mới
+                                window.location.reload();
                             }
                         };
                     }
@@ -4253,15 +4260,17 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-// 4. Lắng nghe sự kiện mời cài đặt (Giữ nguyên bản 100% hàm gốc của bạn)
+// 4. Lắng nghe sự kiện mời cài đặt (Có lồng điều kiện chặn nếu đã ẩn vĩnh viễn)
 window.addEventListener('beforeinstallprompt', (e) => {
-    if (isRunningAsPWA()) return;
+    // Nếu đang chạy trong PWA hoặc người dùng đã gạt ẩn vĩnh viễn trước đó -> Hủy luôn
+    if (isRunningAsPWA() || localStorage.getItem(STORAGE_KEY_HIDE_INSTALL) === 'true') return;
 
     e.preventDefault();
     deferredPrompt = e;
 
     const btn = document.getElementById('btn-install-pwa');
     if (btn) {
+        btn.classList.remove('swiped-away');
         btn.classList.add('show');
 
         btn.onclick = async () => {
@@ -4271,6 +4280,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
             console.log(`Người dùng chọn: ${outcome}`);
             
             if (outcome === 'accepted') {
+                btn.classList.add('swiped-away');
                 btn.classList.remove('show');
             }
             deferredPrompt = null;
@@ -4278,18 +4288,88 @@ window.addEventListener('beforeinstallprompt', (e) => {
     }
 });
 
-// 5. Ẩn nút lập tức khi cài xong (Giữ nguyên bản 100% hàm gốc của bạn)
+// 5. Ẩn nút lập tức khi cài xong
 window.addEventListener('appinstalled', () => {
     const btn = document.getElementById('btn-install-pwa');
-    if (btn) btn.classList.remove('show');
+    if (btn) {
+        btn.classList.add('swiped-away');
+        btn.classList.remove('show');
+    }
 });
 
-// Bộ quét quét lại khi người dùng bật tắt màn hình (Giữ nguyên bản 100% hàm gốc của bạn)
+// Bộ quét quét lại khi người dùng bật tắt màn hình
 document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
         setTimeout(kiemTraVaAnNut, 600);
     }
 });
+
+// =========================================================================
+// 🔥 HÀM TẠO HIỆU ỨNG GẠT PHẢI ĐỂ XÓA VĨNH VIỄN (SWIPE TO DISMISS)
+// =========================================================================
+function khoiTaoTinhNangVuotGat() {
+    const btn = document.getElementById('btn-install-pwa');
+    if (!btn) return;
+
+    let touchStartX = 0;
+    let touchCurrentX = 0;
+    let isSwiping = false;
+
+    // Sự kiện bắt đầu chạm tay vào nút
+    btn.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        btn.style.transition = 'none'; // Tắt transition để nút bám theo tay mượt mà
+        isSwiping = true;
+    }, { passive: true });
+
+    // Sự kiện di chuyển ngón tay
+    btn.addEventListener('touchmove', (e) => {
+        if (!isSwiping) return;
+        touchCurrentX = e.touches[0].clientX;
+        let deltaX = touchCurrentX - touchStartX;
+
+        // Chỉ cho phép gạt sang bên PHẢI (deltaX > 0)
+        if (deltaX > 0) {
+            // Tạo hiệu ứng cản tay nhẹ (resist) và mờ dần khi kéo xa
+            btn.style.transform = `translateX(${deltaX}px)`;
+            btn.style.opacity = `${1 - (deltaX / 200)}`;
+        }
+    }, { passive: true });
+
+    // Sự kiện khi nhấc ngón tay ra
+    btn.addEventListener('touchend', (e) => {
+        if (!isSwiping) return;
+        isSwiping = false;
+        
+        let deltaX = touchCurrentX - touchStartX;
+        btn.style.transition = 'transform 0.2s ease, opacity 0.2s ease, max-height 0.3s ease, margin 0.3s ease';
+
+        // Nếu người dùng gạt qua phải một khoảng dài hơn 100px -> Chấp nhận xóa vĩnh viễn
+        if (deltaX > 100) {
+            anVaXoaVinhVien(btn);
+        } else {
+            // Không đủ độ dài -> Trả nút về vị trí cũ bản nguyên
+            btn.style.transform = 'translateX(0)';
+            btn.style.opacity = '1';
+        }
+        
+        // Reset biến tọa độ
+        touchStartX = 0;
+        touchCurrentX = 0;
+    });
+}
+
+// Hàm kích hoạt hòm rác vĩnh viễn
+function anVaXoaVinhVien(element) {
+    // 1. Lưu cấu hình vào LocalStorage của trình duyệt hiện tại
+    localStorage.setItem(STORAGE_KEY_HIDE_INSTALL, 'true');
+    
+    // 2. Kích hoạt Class biến mất vĩnh viễn thu hẹp không gian
+    element.classList.add('swiped-away');
+    element.classList.remove('show');
+    
+    console.log('⚡ Đã đưa nút PWA vào hòm rác vĩnh viễn trên trình duyệt này theo yêu cầu của người dùng.');
+}
 
 // =========================================================================
 // 🚀 6. THÀNH PHẦN MỞ RỘNG - NHẬN TÍN HIỆU CẬP NHẬT & ADS (KHÔNG ĐỤNG CODE GỐC)
