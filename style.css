@@ -1446,7 +1446,7 @@ mjx-container {
     opacity: 0;
 }
 /* =========================================================================
-   📲 PWA FLOATING ACTION BUTTON - ĐỒNG BỘ HIỆU ỨNG BOUNCE QUÝ PHÁI VẬN 9
+   📲 PWA FLOATING ACTION BUTTON - NÂNG CẤP HỖ TRỢ VUỐT GẠT BIẾN MẤT VĨNH VIỄN
    ========================================================================= */
 .pwa-fab-btn {
     position: fixed;
@@ -1469,14 +1469,25 @@ mjx-container {
     white-space: nowrap;
     -webkit-tap-highlight-color: transparent;
 
-    /* 🟢 KHỞI TẠI TRẠNG THÁI ẨN MƯỢT MÀ: Cho phép transition hoạt động */
+    /* NÂNG CẤP ĐIỀU HƯỚNG CẢM ỨNG: Cho phép cuộn dọc tự do, chỉ bắt sự kiện gạt ngang */
+    touch-action: pan-y;
+
+    /* 🟢 KHỞI TẠI TRẠNG THÁI ẨN MƯỢT MÀ */
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
     transform: scale(0.8) translateY(10px);
     
-    /* Hiệu ứng bounce nhẹ quý phái đặc trưng của bạn */
-    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    /* Tách biệt transition: transform để JS làm chủ hành trình vuốt theo ngón tay */
+    max-height: 100px;
+    margin: 0;
+    transition: opacity 0.4s ease, 
+                visibility 0.4s ease, 
+                transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.3s ease,
+                max-height 0.4s ease,
+                padding 0.4s ease,
+                margin 0.4s ease;
 }
 
 /* Hiệu ứng khi rê chuột vào (PC) */
@@ -1486,7 +1497,7 @@ mjx-container {
     cursor: pointer;
 }
 
-/* Hiệu ứng khi chạm ngón tay (Mobile) */
+/* Hiệu ứng khi chạm ngón tay (Mobile) - Chỉ kích hoạt khi KHÔNG trong trạng thái vuốt gạt */
 .pwa-fab-btn:active {
     transform: scale(0.95);
     box-shadow: 0 2px 8px rgba(223, 183, 108, 0.4);
@@ -1508,6 +1519,22 @@ mjx-container {
     transform: scale(1) translateY(0);
 }
 
+/* =========================================================================
+   🗑️ [MỚI] CLASS HÒM RÁC VĨNH VIỄN: Kích hoạt khi gạt phải thành công
+   ========================================================================= */
+.pwa-fab-btn.swiped-away {
+    transform: translateX(150%) scale(0.7) !important; /* Đẩy văng ra khỏi màn hình bên phải */
+    opacity: 0 !important;
+    max-height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    border: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+}
+
 /* Tự động thụt lùi một chút trên màn hình điện thoại nhỏ */
 @media (max-width: 480px) {
     .pwa-fab-btn {
@@ -1517,6 +1544,10 @@ mjx-container {
         font-size: 0.85rem;
     }
 }
+
+/* =========================================================================
+   🔔 HỆ THỐNG TOAST THÔNG BÁO TỐI ƯU
+   ========================================================================= */
 #pwa-toast {
     position: fixed;
     top: 20px;
