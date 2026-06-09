@@ -1,4 +1,4 @@
-const CACHE_NAME = 'laban-pt-v1.2';
+const CACHE_NAME = 'laban-pt-v3';
 
 const ASSETS_TO_CACHE = [
   'LabanThanSo.html',
@@ -7,6 +7,8 @@ const ASSETS_TO_CACHE = [
   'icon-512.png',
   'ungho.png',
   'style.css',
+  'phongthuy_khoahoc.js',
+  'fengshui-sweep-controller.js',
   'controls.js'
 ];
 
@@ -33,11 +35,16 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
-            return caches.delete(cache);
-          }
+          if (cache !== CACHE_NAME) return caches.delete(cache);
         })
       );
+    }).then(() => {
+        // Gửi lệnh cho toàn bộ tab đang mở
+        self.clients.matchAll().then(clients => {
+            clients.forEach(client => {
+                client.postMessage({ type: 'VERSION_UPDATED' });
+            });
+        });
     })
   );
   self.clients.claim();
