@@ -15,9 +15,9 @@ const FengShuiScienceModal = {
             .fs-science-overlay {
                 position: fixed;
                 top: 0; left: 0; width: 100%; height: 100%;
-                background: rgba(0, 0, 0, 0.75);
-                backdrop-filter: blur(4px);
-                -webkit-backdrop-filter: blur(4px);
+                background: rgba(0, 0, 0, 0.8);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
                 z-index: 99999;
                 display: flex; justify-content: center; align-items: center;
                 opacity: 0; pointer-events: none;
@@ -26,45 +26,56 @@ const FengShuiScienceModal = {
             .fs-science-overlay.active {
                 opacity: 1; pointer-events: auto;
             }
+            /* Khung hiển thị lột xác với viền chỉ vàng và bóng mờ giống Donate Modal */
             .fs-science-container {
                 position: relative;
                 width: 90%; max-width: 520px; max-height: 82vh;
-                background: #1a1a1a;
-                border: 1px solid #333;
+                background: #121212;
+                border: 1px solid rgba(223, 183, 108, 0.3);
                 border-radius: 14px;
-                padding: 25px; padding-top: 35px;
+                padding: 25px;
                 color: #e0e0e0;
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 line-height: 1.7;
                 overflow-y: auto;
-                box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.8);
                 transform: translateY(20px);
                 transition: transform 0.3s ease;
                 scrollbar-width: thin;
-                scrollbar-color: #dfb76c #1a1a1a;
+                scrollbar-color: #dfb76c #121212;
             }
             .fs-science-overlay.active .fs-science-container {
                 transform: translateY(0);
             }
-            /* Nút đóng hình dấu X Neon góc phải trên */
+            /* Nút đóng phong cách tối giản sang trọng */
             .fs-science-close-x {
                 position: absolute;
-                top: 10px; right: 15px;
-                font-size: 24px; color: #666;
+                top: 12px; right: 20px;
+                font-size: 24px; color: #aaa;
                 cursor: pointer;
                 user-select: none;
                 transition: color 0.2s;
                 font-weight: 300;
                 line-height: 1;
+                z-index: 10;
             }
             .fs-science-close-x:hover {
-                color: #00f2c9;
-                text-shadow: 0 0 8px rgba(0,242,201,0.5);
+                color: #dfb76c;
+                text-shadow: 0 0 8px rgba(223,183,108,0.5);
+            }
+            /* Khối nền lót nhẹ bên trên tiêu đề cực đẹp */
+            .fs-science-header-box {
+                background: linear-gradient(145deg, rgba(223, 183, 108, 0.06), rgba(0, 0, 0, 0));
+                border: 1px solid rgba(223, 183, 108, 0.2);
+                border-radius: 8px;
+                padding: 15px;
+                margin-bottom: 20px;
+                text-align: center;
             }
             .fs-science-container h1 {
-                color: #dfb76c; font-size: 1.35rem; text-align: center;
+                color: #dfb76c; font-size: 1.1rem; text-align: center;
                 text-transform: uppercase; letter-spacing: 1px;
-                margin-top: 5px; border-bottom: 2px dashed #333; padding-bottom: 15px;
+                margin: 0; padding: 0; line-height: 1.5;
             }
             .fs-science-container h2 {
                 color: #00f2c9; font-size: 1.08rem; margin-top: 25px;
@@ -85,13 +96,18 @@ const FengShuiScienceModal = {
                 background: #262626; color: #dfb76c; padding: 1px 6px;
                 border-radius: 4px; font-family: monospace; font-size: 0.85rem; border: 1px solid #444;
             }
+            /* Nút đóng chân phương viền vàng đổ màu gradient đồng bộ */
             .fs-science-btn-footer {
-                display: block; width: 100%; background: #222; color: #aaa;
-                border: 1px solid #333; padding: 10px; border-radius: 8px;
-                cursor: pointer; text-align: center; margin-top: 20px;
-                font-weight: bold; transition: all 0.2s; font-size: 0.9rem;
+                display: block; width: 100%; 
+                background: linear-gradient(135deg, #dfb76c, #b38938); color: #000;
+                border: none; padding: 10px 24px; font-weight: bold; border-radius: 20px;
+                cursor: pointer; font-size: 0.8rem; letter-spacing: 1px; width: 100%;
+                margin-top: 25px; transition: all 0.2s;
             }
-            .fs-science-btn-footer:hover { background: #333; color: #fff; }
+            .fs-science-btn-footer:hover { 
+                opacity: 0.9;
+                box-shadow: 0 4px 15px rgba(223,183,108,0.3);
+            }
             .fs-science-footer {
                 text-align: center; font-size: 0.8rem; color: #555;
                 margin-top: 25px; border-top: 1px solid #333; padding-top: 12px;
@@ -114,11 +130,14 @@ const FengShuiScienceModal = {
 
         container.innerHTML = `
             <div class="fs-science-close-x" onclick="FengShuiScienceModal.close()">&times;</div>
-            <h1>🧬 PHONG THỦY:<br>KHOA HỌC KIẾN TRÚC & ĐỊA CHẤT CỔ ĐẠI</h1>
+            
+            <div class="fs-science-header-box">
+                <h1>🧬 PHONG THỦY:<br>KHOA HỌC KIẾN TRÚC & ĐỊA CHẤT CỔ ĐẠI</h1>
+            </div>
             
             <p>Khi nhắc đến "Phong Thủy", phần lớn đều liên tưởng đến các quy luật huyền bí mang sắc màu tâm linh. Nhưng nếu bóc tách toàn bộ lớp sương mù của thời gian, chúng ta sẽ kinh ngạc nhận ra: <strong>Phong thủy chính là bộ môn khoa học sơ khai nhất của nhân loại về môi trường sống</strong>, sự giao thoa hoàn mỹ giữa Vật lý kiến trúc, Địa chất học và Sinh thái học dựa trên hai trục cốt lõi: <strong>Phong (Khí tượng học)</strong> và <strong>Thủy (Thủy văn học)</strong>.</p>
 
-            <h2>1. BẢN CHẤT ĐẤT ĐAI: CÁT HÙNG KHÔNG NẰM Ở NGÔI NHÀ</h2>
+            <h2>1. BẢN CHẤT ĐẤT ĐAI: CÁT HÙNG KHÔNG NẰ NẰM Ở NGÔI NHÀ</h2>
             <p>Nhiều người thường đặt câu hỏi mang tính mê tín: <em>"Tại sao cùng một ngôi nhà hướng Tây, người Tây Tứ Mệnh vào ở thì phất lên (Cát), còn người Đông Tứ Mệnh vào ở lại lụi bại (Hung)? Phải chăng ngôi nhà biết chọn chủ để ban ơn hay hành hạ?"</em></p>
             
             <p><strong>Bản chất vật lý khách quan:</strong> Bản thân mảnh đất hay ngôi nhà hoàn toàn là các vật thể vô tri cấu thành từ gạch đá, xi măng, hướng đón nắng và lưu lượng gió. Bản thân nó là thực thể tĩnh, <strong>tuyệt đối không tự sinh ra Cát hay Hung</strong>.</p>
