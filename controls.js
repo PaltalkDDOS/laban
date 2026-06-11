@@ -4550,31 +4550,69 @@ function anVaXoaVinhVien(element) {
 }
 
 // =========================================================================
-// 🚀 6. THÀNH PHẦN MỞ RỘNG - NHẬN TÍN HIỆU CẬP NHẬT & ADS (KHÔNG ĐỤNG CODE GỐC)
+// 🚀 6. THÀNH PHẦN MỞ RỘNG - NHẬN TÍN HIỆU CẬP NHẬT & ADS (PHONG CÁCH CHUYÊN NGHIỆP)
 // =========================================================================
 const AppControl = {
-    // Hàm hiển thị Toast Notification thông minh
-    showNotification: (message) => {
+    // Lưu trữ phiên bản hiện tại (Mặc định hoặc nhận từ SW)
+    currentVersion: "1.0.0",
+
+    // Hàm hiển thị Toast Notification thông minh với màu sắc theo trạng thái
+    showNotification: (message, type = 'info') => {
         let toast = document.getElementById('pwa-toast');
         if (!toast) {
             toast = document.createElement('div');
             toast.id = 'pwa-toast';
+            // Thêm style cơ bản cho toast nếu chưa có CSS file
+            Object.assign(toast.style, {
+                position: 'fixed',
+                bottom: '20px',
+                right: '20px',
+                padding: '12px 24px',
+                borderRadius: '8px',
+                color: '#fff',
+                fontFamily: 'sans-serif',
+                zIndex: '9999',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                display: 'none'
+            });
             document.body.appendChild(toast);
         }
+
+        // Định dạng màu sắc toast tùy theo trạng thái
+        switch(type) {
+            case 'success': toast.style.backgroundColor = '#2ecc71'; break; // Xanh lá (Đã cập nhật)
+            case 'warning': toast.style.backgroundColor = '#e67e22'; break; // Cam (Cần reload)
+            case 'process': toast.style.backgroundColor = '#3498db'; break; // Xanh dương (Đang tải)
+            default: toast.style.backgroundColor = '#333'; // Đen xám (Thông báo thường)
+        }
+
         toast.innerText = message;
         toast.style.display = 'block';
         
         // Hiệu ứng mượt mà quý phái
         toast.animate([
-            { opacity: 0, transform: 'translate(-50%, -20px)' },
-            { opacity: 1, transform: 'translate(-50%, 0)' }
-        ], { duration: 500, fill: 'forwards' });
+            { opacity: 0, transform: 'translateY(20px)' },
+            { opacity: 1, transform: 'translateY(0)' }
+        ], { duration: 400, fill: 'forwards' });
 
-        // Tự động biến mất sau 3 giây
-        setTimeout(() => {
-            toast.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500 })
-                .onfinish = () => toast.style.display = 'none';
-        }, 3000);
+        // Tự động ẩn sau 4 giây (trừ khi cần người dùng tương tác reload)
+        if (type !== 'warning') {
+            setTimeout(() => {
+                toast.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400 })
+                    .onfinish = () => toast.style.display = 'none';
+            }, 4000);
+        }
+    },
+
+    // Hàm cập nhật trạng thái văn bản lên giao diện ứng dụng (Nếu bạn có khu vực hiển thị thông tin App)
+    updateVersionUI: (statusText, version) => {
+        if (version) AppControl.currentVersion = version;
+        
+        const txtStatus = document.getElementById('app-status-text');
+        const txtVersion = document.getElementById('app-version-text');
+        
+        if (txtStatus) txtStatus.innerText = statusText;
+        if (txtVersion) txtVersion.innerText = `Phiên bản: ${AppControl.currentVersion}`;
     },
     
     // Hàm chờ sẵn để bạn chèn quảng cáo sau này
@@ -4589,18 +4627,42 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.addEventListener('message', (event) => {
         if (!event.data) return;
         
-        // Khi sw.js phát tín hiệu đã cập nhật xong dữ liệu cache mới
-        if (event.data.type === 'VERSION_UPDATED') {
-            AppControl.showNotification("✨ Ứng dụng đã được cập nhật bản mới!");
-            
-            // Nếu bạn muốn bật cái popup div HTML lên thay vì Toast chữ, hãy mở comment dòng dưới:
-            // const popup = document.getElementById('update-popup');
-            // if (popup) popup.style.display = 'flex';
-        }
-        
-        // Khi sw.js phát tín hiệu muốn gọi quảng cáo
-        if (event.data.type === 'SHOW_ADS') {
-            AppControl.showAds();
+        const { type, version } = event.data;
+
+        switch (type) {
+            case 'CHECKING_FOR_UPDATE':
+                // Khi SW bắt đầu kiểm tra dữ liệu mạng
+                AppControl.updateVersionUI("🔄 Đang kiểm tra bản cập nhật...", version);
+                break;
+
+            case 'UPDATE_AVAILABLE':
+                // Khi SW phát hiện dữ liệu mới và đang tải ngầm vào bộ nhớ cache
+                AppControl.updateVersionUI("📥 Đang tải bản cập nhật mới...", version);
+                AppControl.showNotification("📥 Ứng dụng đang tải dữ liệu cập nhật mới ngầm...", "process");
+                break;
+                
+            case 'VERSION_UPDATED':
+                // Khi sw.js phát tín hiệu đã cập nhật xong dữ liệu cache mới thành công
+                AppControl.updateVersionUI("🚀 Đã tải xong! Chờ kích hoạt.", version);
+                AppControl.showNotification("✨ Ứng dụng đã tải xong bản mới! Vui lòng làm mới trang để áp dụng.", "warning");
+                
+                // Mở popup thông báo nếu bạn có div update-popup trên HTML
+                const popup = document.getElementById('update-popup');
+                if (popup) popup.style.display = 'flex';
+                break;
+
+            case 'ALREADY_UP_TO_DATE':
+                // Khi kiểm tra và không có gì mới, ứng dụng đã là phiên bản mới nhất
+                AppControl.updateVersionUI("✅ Ứng dụng đã ở phiên bản mới nhất.", version);
+                break;
+                
+            case 'SHOW_ADS':
+                // Khi sw.js phát tín hiệu muốn gọi quảng cáo
+                AppControl.showAds();
+                break;
+
+            default:
+                break;
         }
     });
 }
