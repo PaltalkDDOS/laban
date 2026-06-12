@@ -1109,7 +1109,7 @@ function generateDirectionsList() {
                 </div>
                 
                 <div style="margin-bottom:8px; font-size:0.8rem; overflow-x:auto;" class="no-scrollbar">
-                    <span style="color:#dfb76c; font-weight:600;">24 SƠN VỊ THỰC THỜI:</span> ${sonHTML}
+                    <span style="color:#dfb76c; font-weight:600;">24 SƠN VỊ:</span> ${sonHTML}
                 </div>
                 
                 <div style="margin-bottom:6px;">
