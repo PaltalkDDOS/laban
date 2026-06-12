@@ -1193,7 +1193,7 @@ function triggerGhostNeedle(angle) {
         const d = parseInt(dayStr);
         const m = parseInt(monthStr);
         const y = parseInt(yearStr);
-        namAmMệnhChủ = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
+        namAmMệnhChủ = (m < 2 || (m === 2 && d < 4)) ? y - 1 : y;
     }
 
     let tinhChuMenh = (typeof chủMệnh !== 'undefined' && chủMệnh) ? chủMệnh : "Khảm";
@@ -1509,14 +1509,15 @@ function getLuanDoanChiTiet(huong, son) {
 // 3. HÀM updateCompassUI() - ĐỒNG BỘ HOÀN TOÀN CÁC THAM SỐ NGÀY SINH THỜI THỰC
 // =========================================================================
 function updateCompassUI(heading) {
-    // 1. TÍNH GÓC THỰC TẾ (Đã bù trừ độ lệch từ trường tuyệt đối)
-    let trueHeading = (heading + (magneticDeclination % 360) + 360) % 360;
+    // 1. TÍNH GÓC THỰC TẾ (Đã bù trừ độ lệch từ trường tuyệt đối) và Bọc Giáp Giao Diện
+    const magDec = (typeof magneticDeclination !== 'undefined') ? (parseFloat(magneticDeclination) || 0) : 0;
+    let trueHeading = (heading + (magDec % 360) + 360) % 360;
     currentHeading = Math.round(trueHeading);
     
-    // Xoay la bàn theo góc THỰC TẾ và cập nhật thanh trượt
-    if (compass) compass.style.transform = `rotate(${-trueHeading}deg)`;
-    if (needle) needle.style.transform = `rotate(0deg)`;
-    if (compassSlider) compassSlider.value = currentHeading;
+    // Xoay la bàn theo góc THỰC TẾ và cập nhật thanh trượt (Có kiểm tra bảo vệ DOM)
+    if (typeof compass !== 'undefined' && compass) compass.style.transform = `rotate(${-trueHeading}deg)`;
+    if (typeof needle !== 'undefined' && needle) needle.style.transform = `rotate(0deg)`;
+    if (typeof compassSlider !== 'undefined' && compassSlider) compassSlider.value = currentHeading;
 
     // LẤY DỮ LIỆU ĐẦU VÀO ĐỘNG TỪ BIỂU MẪU KHẢO SÁT
     const dayStr = document.getElementById('birthDay')?.value || "";
@@ -1532,13 +1533,13 @@ function updateCompassUI(heading) {
     const txtSurveyYear = document.getElementById('surveyYear'); 
     const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
 
-    // 2. TỰ ĐỘNG CHUẨN HÓA: Tính toán năm âm lịch của mệnh chủ dựa theo Tiết khí Lập Xuân
+    // 2. TỰ ĐỘNG CHUẨN HÓA: Tính toán năm âm lịch của mệnh chủ dựa theo Tiết khí Lập Xuân (Đồng bộ d < 4)
     let namAmMệnhChủ = new Date().getFullYear();
     if (dayStr && monthStr && yearStr && yearStr.length === 4) {
         const d = parseInt(dayStr, 10);
         const m = parseInt(monthStr, 10);
         const y = parseInt(yearStr, 10);
-        namAmMệnhChủ = (m < 2 || (m === 2 && d < 5)) ? y - 1 : y;
+        namAmMệnhChủ = (m < 2 || (m === 2 && d < 4)) ? y - 1 : y;
     }
 
     // TỰ ĐỘNG KHẮC PHỤC LỖI Racing-Condition: Đảm bảo có quẻ mệnh chạy nền không bị undefined
@@ -1572,17 +1573,23 @@ function updateCompassUI(heading) {
 
     // ==================== 2. TRÍCH XUẤT 24 SƠN (15°) + 72 HẬU (5°) ====================
     let gockim = (trueHeading % 360 + 360) % 360;
-    let sơnHiệnTạiObj = SON_24_CONFIG.find(s => {
+    let sơnHiệnTạiObj = (typeof SON_24_CONFIG !== 'undefined') ? SON_24_CONFIG.find(s => {
         if (s.min > s.max) return gockim >= s.min || gockim < s.max;
         return gockim >= s.min && gockim < s.max;
-    }) || SON_24_CONFIG[0];
+    }) : null;
+    
+    if (!sơnHiệnTạiObj) {
+        sơnHiệnTạiObj = (typeof SON_24_CONFIG !== 'undefined' && SON_24_CONFIG[0]) ? SON_24_CONFIG[0] : { name: "Tý", huong: "Bắc" };
+    }
     let sơnHiệnTại = sơnHiệnTạiObj.name;
 
-    const currentHauInfo = getCurrentHauInfo(trueHeading);
+    const currentHauInfo = (typeof getCurrentHauInfo === 'function') ? getCurrentHauInfo(trueHeading) : { ten: "Địa Mạch Ngầm", chatLuong: "Bình Hòa", emoji: "🟡" };
     const mụcĐích = document.getElementById('purpose')?.value || 'house';
     
-    // ĐỒNG BỘ TOÁN PHÁP CHÍNH TÔNG: Truyền đầy đủ cả 5 tham số cốt lõi vào bộ xử lý tính điểm
-    const tongHop = tinhDiemTongHop(tinhChuMenh, trueHeading, namKhaoSatThucTe, mụcĐích, namAmMệnhChủ);
+    // ĐỒNG BỘ TOÁN PHÁP CHÍNH TÔNG: Truyền đầy đủ 6 đối số chuẩn chỉ (thêm số 0 chống lệch trục vi phân)
+    const tongHop = (typeof tinhDiemTongHop === 'function') 
+        ? tinhDiemTongHop(tinhChuMenh, trueHeading, namKhaoSatThucTe, mụcĐích, namAmMệnhChủ, 0)
+        : { diem: 60, level: "BÌNH HOÀ", message: "", hoaGiai: "", hauInfo: currentHauInfo };
 
     // Mốc màu hiển thị số điểm tổng hợp trên thanh la bàn đồng bộ với ngưỡng Đạt Cách 72pt
     let colorDiemRealtime = "#ff4444"; 
@@ -1606,8 +1613,9 @@ function updateCompassUI(heading) {
 
     // ==================== 4. CHẾ ĐỘ CHƯA NHẬP ĐỦ FORM (CHẾ ĐỘ ĐO TỰ DO) ====================
     if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
-        if (elementBox) elementBox.innerHTML = `<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${phươngVịThiếtLập[currentCode]?.ngũHành || 'Không xác định'}</span>`;
-        if (judgmentBox) {
+        const hànhPhuongViTĩnh = (typeof phươngVịThiếtLập !== 'undefined' && phươngVịThiếtLập[currentCode]) ? phươngVịThiếtLập[currentCode].ngũHành : 'Không xác định';
+        if (typeof elementBox !== 'undefined' && elementBox) elementBox.innerHTML = `<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${hànhPhuongViTĩnh}</span>`;
+        if (typeof judgmentBox !== 'undefined' && judgmentBox) {
             judgmentBox.innerText = "ĐO HƯỚNG CHÍNH XÁC";
             judgmentBox.className = "judgment-badge";
             judgmentBox.removeAttribute("style");
@@ -1615,7 +1623,7 @@ function updateCompassUI(heading) {
             judgmentBox.style.color = "var(--gold)";
             judgmentBox.style.border = "1px solid var(--gold)";
         }
-        if (detailBox) {
+        if (typeof detailBox !== 'undefined' && detailBox) {
             detailBox.style.borderLeftColor = "var(--gold)";
             detailBox.innerHTML = `
                 <span style="color:#ffffff; font-family: sans-serif;">Hệ thống đang chạy ở chế độ la bàn thực địa độ phân giải cao Vận 9.<br>
@@ -1652,28 +1660,27 @@ function updateCompassUI(heading) {
         return;
     }
 
-// =========================================================================
+    // =========================================================================
     // 🏛️ NÂNG CẤP ĐỒNG BỘ MỤC 5: CHẾ ĐỘ LUẬN ĐOÁN CAO CẤP PHÂN TẦNG VẬN 9 (UI CHUẨN XÁC)
     // =========================================================================
-    
-    const hànhPhươngVị = phươngVịThiếtLập?.[currentCode]?.ngũHành || "N/A";
+    const hànhPhươngVị = (typeof phươngVịThiếtLập !== 'undefined' && phươngVịThiếtLập[currentCode]) ? phươngVịThiếtLập[currentCode].ngũHành : "N/A";
     
     // TẬP TRUNG HỌC THUẬT: Chuẩn hóa chữ hoa đầu chuỗi (Title Case) để khớp chính xác O(1) cấu trúc mảng ngoài
     let mapKey = tinhChuMenh.trim();
     if (mapKey) {
         mapKey = mapKey.charAt(0).toUpperCase() + mapKey.slice(1).toLowerCase();
     }
-    const hànhMệnhChủ = bátTrạchMap?.[mapKey]?.element || "N/A";
+    const hànhMệnhChủ = (typeof bátTrạchMap !== 'undefined' && bátTrạchMap[mapKey]) ? bátTrạchMap[mapKey].element : "N/A";
     
-    if (elementBox) {
+    if (typeof elementBox !== 'undefined' && elementBox) {
         elementBox.innerHTML = `
             <span class="element-badge" style="background: #3a3a3c; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; color: #fff; font-family: sans-serif;">Phương vị: ${hànhPhươngVị}</span>
             <span class="element-badge" style="background: #2c2c2e; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; color: var(--gold); border: 1px solid rgba(212,175,55,0.3); font-family: sans-serif;">Mệnh: ${hànhMệnhChủ}</span>
         `;
     }
 
-    const cungTrạch = bátTrạchMap?.[mapKey]?.[currentCode] || "Khác";
-    const thôngTinCung = cungPhầnTrăm?.[cungTrạch] || { cát: true, ý_nghĩa: "Thông tin cung vị đang được cập nhật tinh vân." };
+    const cungTrạch = (typeof bátTrạchMap !== 'undefined' && bátTrạchMap[mapKey]) ? (bátTrạchMap[mapKey][currentCode] || "Khác") : "Khác";
+    const thôngTinCung = (typeof cungPhầnTrăm !== 'undefined' && cungPhầnTrăm[cungTrạch]) ? cungPhầnTrăm[cungTrạch] : { cát: true, ý_nghĩa: "Thông tin cung vị đang được cập nhật tinh vân." };
 
     // SỬA LỖI TỬ HUYỆT: Truyền chính xác tên Sơn vị hẹp hòi thay vì hướng lớn đại cục bị lệch Thần Sát
     const ketQua = typeof tinhHanCuuTinhTheoNam === 'function' ? tinhHanCuuTinhTheoNam(sơnHiệnTại, namKhaoSatThucTe) : { thongTinSao: "Chưa có dữ liệu tinh vân", meoGiaiHan: "" };
@@ -1712,7 +1719,7 @@ function updateCompassUI(heading) {
         luanDoanSonChiTiet = `<span style="color:#a0a0a0; font-style:italic;">Tọa độ định vị: ${currentHeading}° | Sơn ${sơnHiệnTại} | Hướng đại cục ${sơnHiệnTạiObj?.huong}.</span>`;
     }
 
-    const config = ConfigPhongThuy[mụcĐích] || { title: "Cung vị", isCat: true };
+    const config = (typeof ConfigPhongThuy !== 'undefined' && ConfigPhongThuy[mụcĐích]) ? ConfigPhongThuy[mụcĐích] : { title: "Cung vị", isCat: true };
 
     // 1. ĐỊNH VỊ CÁI GỐC (Bản chất Địa lý tĩnh Bát Trạch)
     const hungTinhBạtTrach = ["Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"];
@@ -1745,8 +1752,8 @@ function updateCompassUI(heading) {
                 <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; white-space: nowrap; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 5px;">
                     <div style="overflow: hidden; text-overflow: ellipsis; font-size: 0.85rem; display: flex; align-items: center; gap: 4px;">
                         <span style="color: #8a8a8f;">Hậu:</span>
-                        <strong style="color: #ffffff;">${tongHop.hauInfo.ten}</strong>
-                        <span style="color: ${tongHop.hauInfo.emoji === '🟢' ? '#00ff41' : (tongHop.hauInfo.emoji === '🔴' ? '#ff4444' : '#ffd700')}; font-weight: 600;">(${tongHop.hauInfo.chatLuong})</span>
+                        <strong style="color: #ffffff;">${tongHop.hauInfo?.ten || "Địa Mạch Ngầm"}</strong>
+                        <span style="color: ${tongHop.hauInfo?.emoji === '🟢' ? '#00ff41' : (tongHop.hauInfo?.emoji === '🔴' ? '#ff4444' : '#ffd700')}; font-weight: 600;">(${tongHop.hauInfo?.chatLuong || "Bình Hòa"})</span>
                     </div>
                     
                     <div style="font-size: 0.95rem; font-weight: 850; color: ${colorDiemRealtime}; letter-spacing: 0.3px; background: rgba(0,0,0,0.35); padding: 2px 8px; border-radius: 5px; flex-shrink: 0;">
@@ -1756,12 +1763,12 @@ function updateCompassUI(heading) {
             </div>`;
     }
 
-    if (judgmentBox) {
+    if (typeof judgmentBox !== 'undefined' && judgmentBox) {
         judgmentBox.removeAttribute("style");
         judgmentBox.innerText = `${config.title}: ${cungTrạch}`;
         judgmentBox.className = isGoodRealtime ? "judgment-badge bg-good" : "judgment-badge bg-bad";
     }
-    if (detailBox) detailBox.style.borderLeftColor = colorDiemRealtime;
+    if (typeof detailBox !== 'undefined' && detailBox) detailBox.style.borderLeftColor = colorDiemRealtime;
 
     // --- RENDER PHẦN 1: PANEL THÔNG TIN DIỄN GIẢI CHÍNH CỦA ĐỊA LÝ TĨNH BÁT TRẠCH ---
     let noiDungDetail = "";
@@ -1770,7 +1777,6 @@ function updateCompassUI(heading) {
     noiDungDetail += `◆ ${config.isCat ? (isGoodRealtime ? 'CÁT CỤC NẠP KHÍ' : 'HUNG CỤC PHẠM KỴ') : (isGoodRealtime ? 'TỌA HUNG TRẤN SÁT ĐẮC CÁCH' : 'SAI VỊ TIÊU HAO KHÍ TRƯỜNG')} (${cungTrạch.toUpperCase()}) — Chỉ số PT: <span style="color:#ffd700;">${tongHop.diem}pt</span> [${tongHop.level}]:</strong>`;
     noiDungDetail += `<span style="color:#ffffff; font-size:0.9rem; line-height:1.5; display:block; margin-bottom:6px;">${thôngTinCung.ý_nghĩa}</span>`;
     
-    // Nếu lõi thuật toán bóc tách ra lỗi đặc biệt (như dính Không Vong biên hoặc thời tinh quấy nhiễu), bung trực tiếp lên đầu panel
     if (tongHop.message) {
         noiDungDetail += `<div style="font-size:0.83rem; color:#ff9f0a; padding-top:4px; border-top:1px dashed rgba(255,255,255,0.08); line-height:1.4;">🔍 <b>Phân tích vi phân thực địa:</b> ${tongHop.message}</div>`;
     }
@@ -1832,7 +1838,7 @@ function updateCompassUI(heading) {
         noiDungDetail += `<div style="margin-top:10px; font-size:0.85rem; color:#aaa; font-style:italic; font-family: sans-serif;">${sinhLuanGiaiThienThoi(currentCode)}</div>`;
     }
     
-    if (detailBox) detailBox.innerHTML = noiDungDetail;
+    if (typeof detailBox !== 'undefined' && detailBox) detailBox.innerHTML = noiDungDetail;
 
     // ==================== 7. ADVICE BOX DISPLAY CONTROLLER ====================
     if (adviceBox && adviceContent) {
@@ -1876,7 +1882,7 @@ function updateCompassUI(heading) {
         } else {
             ghost.classList.remove('matched-pulse');
             if (adviceTxtEl && adviceTxtEl.innerHTML.includes("🏆")) {
-                let sonHienTaiTxt = tìmSơnHướng(targetAngle);
+                let sonHienTaiTxt = (typeof tìmSơnHướng === 'function') ? tìmSơnHướng(targetAngle) : "Tý";
                 adviceTxtEl.removeAttribute("style");
                 if (scoreBadgeEl) {
                     scoreBadgeEl.style.boxShadow = "none";
