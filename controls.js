@@ -565,73 +565,103 @@ function validateFullDate(day, month, year) {
     }
     return true;
 }
-// =========================================================================
-// 2. HÀM CHÍNH recalculateFate() - TRÍCH XUẤT TIẾT KHÍ LẬP XUÂN & PHÂN TÁCH 2 TRỤC NĂM
-// =========================================================================
 function recalculateFate() {
-    const name = document.getElementById('userName').value.trim() || "Chủ mệnh";
-    const gender = document.getElementById('gender').value;
-    const dayStr = document.getElementById('birthDay').value;
-    const monthStr = document.getElementById('birthMonth').value;
-    const yearStr = document.getElementById('birthYear').value;
-    const mucDich = document.getElementById('purpose').value; 
+    // 1. KIỂM TRA AN TOÀN PHÒNG VỆ TUYỆT ĐỐI CHO CÁC PHẦN TỬ DOM
+    const elName = document.getElementById('userName');
+    const elGender = document.getElementById('gender');
+    const elDay = document.getElementById('birthDay');
+    const elMonth = document.getElementById('birthMonth');
+    const elYear = document.getElementById('birthYear');
+    const elPurpose = document.getElementById('purpose');
+    const elSurveyYear = document.getElementById('surveyYear');
+
+    const name = (elName && elName.value.trim()) ? elName.value.trim() : "Chủ mệnh";
+    const gender = elGender ? elGender.value : "male";
+    const dayStr = elDay ? elDay.value : "";
+    const monthStr = elMonth ? elMonth.value : "";
+    const yearStr = elYear ? elYear.value : "";
+    const mucDich = elPurpose ? elPurpose.value : "house"; 
+
+    // CHỐT CHẶN: Ép kiểu số cho toàn bộ dữ liệu la bàn để tránh lỗi nối chuỗi hình học
+    const curHeading = (typeof currentHeading !== 'undefined') ? (parseFloat(currentHeading) || 0) : 0;
+    const magDec = (typeof magneticDeclination !== 'undefined') ? (parseFloat(magneticDeclination) || 0) : 0;
+    const isOpen = (typeof isDetailOpen !== 'undefined') ? !!isDetailOpen : false;
+    const lockHead = (typeof lockedHeadingAtOpen !== 'undefined') ? lockedHeadingAtOpen : null;
 
     if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
-        fateTxt.innerText = `${name}: Đo hướng tự do cơ bản (Chưa nhập đủ Ngày - Tháng - Năm sinh)`;
-        directionsContainer.innerHTML = `<div style="font-size:0.8rem;color:#8a8a8f;text-align:center;padding:15px;">
-            Vui lòng nhập đủ Ngày, Tháng, Năm sinh để xem phân tích Cát/Hung chi tiết
-        </div>`;
-        listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
+        if (typeof fateTxt !== 'undefined') {
+            fateTxt.innerText = `${name}: Đo hướng tự do cơ bản (Chưa nhập đủ Ngày - Tháng - Năm sinh)`;
+        }
+        if (typeof directionsContainer !== 'undefined') {
+            directionsContainer.innerHTML = `
+                <div style="font-size:0.8rem;color:#8a8a8f;text-align:center;padding:15px;">
+                    Vui lòng nhập đủ Ngày, Tháng, Năm sinh để xem phân tích Cát/Hung chi tiết
+                </div>`;
+        }
+        if (typeof listPanelTitle !== 'undefined') listPanelTitle.innerText = "Danh Sách Hướng Gợi Ý";
         const oldPanel = document.getElementById('dien-giai-bo-sung');
         if (oldPanel) oldPanel.remove();
-        updateCompassUI(currentHeading);
+        if (typeof updateCompassUI === 'function') updateCompassUI(curHeading);
         return;
     }
 
-    let d = parseInt(dayStr);
-    let m = parseInt(monthStr);
-    let y = parseInt(yearStr);
+    const d = parseInt(dayStr, 10);
+    const m = parseInt(monthStr, 10);
+    const y = parseInt(yearStr, 10);
 
-    if (!validateFullDate(d, m, y)) {
-        fateTxt.innerText = `${name}: Lỗi ngày tháng năm sinh (Kiểm tra lại)`;
+    if (typeof validateFullDate === 'function' && !validateFullDate(d, m, y)) {
+        if (typeof fateTxt !== 'undefined') fateTxt.innerText = `${name}: Lỗi ngày tháng năm sinh (Kiểm tra lại)`;
         return;
     }
 
-    // TÍNH TOÁN CỐT LÕI: Xác định Năm Âm lịch chuẩn xác theo Tiết Lập Xuân để bốc quẻ
-    chủMệnh = tínhCungPhi(y, m, d, gender);
+    // 2. THÔNG MINH HÓA THỜI KHÔNG: Đồng bộ mốc Tiết Lập Xuân chuẩn thiên văn (4/2)
+    chủMệnh = (typeof tínhCungPhi === 'function') ? tínhCungPhi(y, m, d, gender) : "Khảm";
     const namAm = (m < 2 || (m === 2 && d < 4)) ? y - 1 : y;
-    const nguHoangInfo = getNguHoangInfo(namAm);
-    const hanHinhCungPhi = bátTrạchMap[chủMệnh]?.element || "Thổ";
-    const nhomMenh = bátTrạchMap[chủMệnh]?.group || "Tây Tứ Mệnh";
+    const nguHoangInfo = (typeof getNguHoangInfo === 'function') ? getNguHoangInfo(namAm) : "";
+    const hanHinhCungPhi = (typeof bátTrạchMap !== 'undefined' && bátTrạchMap[chủMệnh]) ? bátTrạchMap[chủMệnh].element : "Thổ";
+    const nhomMenh = (typeof bátTrạchMap !== 'undefined' && bátTrạchMap[chủMệnh]) ? bátTrạchMap[chủMệnh].group : "Tây Tứ Mệnh";
 
-    fateTxt.innerText = `${name}: Cung ${chủMệnh} (${nhomMenh}) - Bản Mệnh Cung Phi: ${hanHinhCungPhi} | Năm Âm: ${namAm} | ${nguHoangInfo}`;
+    if (typeof fateTxt !== 'undefined') {
+        fateTxt.innerText = `${name}: Cung ${chủMệnh} (${nhomMenh}) - Bản Mệnh Cung Phi: ${hanHinhCungPhi} | Năm Âm: ${namAm} | ${nguHoangInfo}`;
+    }
 
-    let headingToCalculate = isDetailOpen && lockedHeadingAtOpen !== null ? lockedHeadingAtOpen : currentHeading;
-    let rawRealHeading = headingToCalculate + magneticDeclination;
+    // 3. TÍNH TOÁN ĐỘ SỐ THỰC TẾ TRẮC ĐỊA CHÍNH XÁC
+    let headingToCalculate = (isOpen && lockHead !== null) ? lockHead : curHeading;
+    let rawRealHeading = headingToCalculate + magDec;
     const realHeading = ((rawRealHeading % 360) + 360) % 360; 
 
-    const hanhPhuongVi = getHanhByHeading(realHeading);
-    let currentHauInfo = getCurrentHauInfo(realHeading);
-    const sonInfo = layThongTin24Son(realHeading, chủMệnh, namAm);
-    const currentSonHuong = sonInfo.huong;
+    const hanhPhuongVi = (typeof getHanhByHeading === 'function') ? getHanhByHeading(realHeading) : "Thổ";
+    let currentHauInfo = (typeof getCurrentHauInfo === 'function') ? getCurrentHauInfo(realHeading) : { ten: "Địa Mạch", chatLuong: "Bình Hòa" };
+    
+    let currentSonHuong = "Bắc";
+    let sonNameForHau = "Tý";
+    if (typeof layThongTin24Son === 'function') {
+        const sonInfo = layThongTin24Son(realHeading, chủMệnh, namAm);
+        currentSonHuong = sonInfo.huong || "Bắc";
+        sonNameForHau = sonInfo.sonName || "Tý";
+    }
 
-    // ĐỒNG BỘ NĂM KHẢO SÁT THỰC TẾ ĐỂ CHẠY CỬU TINH ĐỘNG
-    const txtSurveyYear = document.getElementById('surveyYear'); 
-    const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value) : new Date().getFullYear();
+    // Đồng bộ năm khảo sát thực tế động để quét ma trận Cửu Tinh Vận 9
+    const namKhaoSatThucTe = (elSurveyYear && elSurveyYear.value.length === 4) ? parseInt(elSurveyYear.value, 10) : new Date().getFullYear();
 
-    // TRUYỀN ĐỒNG THỜI CẢ 2 NĂM: namKhaoSatThucTe (Động) và namAm (Tĩnh) vào hàm tính điểm
-    const tongHop = tinhDiemTongHop(chủMệnh, realHeading, namKhaoSatThucTe, mucDich, namAm);
+    // CHẤM ĐIỂM ĐA TẦNG TOÁN HỌC: Truyền đối số thứ 6 chuẩn chỉ định vị điểm ngọn trung tâm
+    const tongHop = (typeof tinhDiemTongHop === 'function') 
+        ? tinhDiemTongHop(chủMệnh, realHeading, namKhaoSatThucTe, mucDich, namAm, 0) 
+        : { diem: 60, level: "BÌNH HOÀ", message: "Hệ thống đang phân tích dữ liệu...", hoaGiai: "Giữ không gian sạch sẽ thoáng mát.", sonName: sonNameForHau };
 
+    // 4. MẠNH MẼ HÓA LOGIC LUẬN ĐOÁN TRUNG CUNG
     let saoChuQuan = null;
-    const match = nguHoangInfo.match(/Sao (\d+)/);
-    if (match) saoChuQuan = match[1];
+    if (nguHoangInfo) {
+        const match = nguHoangInfo.match(/Sao (\d+)/);
+        if (match) saoChuQuan = match[1];
+    }
 
     let giaiThichSao = "";
     if (saoChuQuan === '5') {
         giaiThichSao = `Năm sinh này phạm sao xấu <b>Ngũ Hoàng</b> đóng tại giữa nhà, mang sát khí hành Thổ rất mạnh. Cần giữ trung tâm nhà yên tĩnh, tránh đập phá, sửa chữa lớn ở khu vực này trong năm.`;
     } else if (saoChuQuan === '2') {
         giaiThichSao = `Năm sinh âm lịch này gặp sao <b>Nhị Hắc</b>, dễ ảnh hưởng sức khỏe. Nên đặt Hồ lô đồng hoặc thạch anh trắng ở trung tâm nhà để hóa giải.`;
-    } else if (nguHoangInfo.includes("Tam Bích") || nguHoangInfo.includes("Tứ Lục") || saoChuQuan === '3' || saoChuQuan === '4') {
+    } else if (saoChuQuan === '3' || saoChuQuan === '4' || (nguHoangInfo && (nguHoangInfo.includes("Tam Bích") || nguHoangInfo.includes("Tứ Lục")))) {
         giaiThichSao = `Năm sinh âm lịch này gặp sao mang năng lượng Mộc quản năm, khi đóng ở giữa tâm nhà (vốn thuộc Thổ) sẽ gây ra sự lệch khí nhẹ ở mức <b>Trung bình</b>. Chỉ cần giữ khu vực giữa nhà hoặc giữa cửa hàng luôn sạch sẽ, thoáng đãng là tự động hóa giải.`;
     } else if (['1','6','8','9'].includes(saoChuQuan)) {
         giaiThichSao = `Năm nay gặp sao Cát, năng lượng Trung Cung tốt, tài lộc, quý nhân hỗ trợ, gia đạo tương đối thuận lợi.`;
@@ -639,28 +669,32 @@ function recalculateFate() {
         giaiThichSao = `Năng lượng chủ quản năm sinh tại trung tâm nhà ở trạng thái ổn định, an lành, không có biến động xấu lớn.`;
     }
 
-    const nguHoangAlert = getNguHoangAlert(currentSonHuong);
+    const nguHoangAlert = (typeof getNguHoangAlert === 'function') ? getNguHoangAlert(currentSonHuong) : "";
 
+    // 5. RENDERING ĐỒNG BỘ GIAO DIỆN KHÔNG TIÊU HAO TÀI NGUYÊN
     let targetContainer = document.getElementById('dien-giai-bo-sung');
     if (!targetContainer) {
         targetContainer = document.createElement('div');
         targetContainer.id = 'dien-giai-bo-sung';
         targetContainer.style.width = '100%';
-        fateTxt.parentNode.insertBefore(targetContainer, fateTxt.nextSibling);
+        if (typeof fateTxt !== 'undefined' && fateTxt.parentNode) {
+            fateTxt.parentNode.insertBefore(targetContainer, fateTxt.nextSibling);
+        }
     }
 
-    const displayStyle = isDetailOpen ? 'block' : 'none';
-    const btnText = isDetailOpen ? '🙈 Đóng giải thích thuật ngữ' : '👁️ Xem giải thích thuật ngữ hiển thị';
-    const btnBkg = isDetailOpen ? 'rgba(223, 183, 108, 0.15)' : 'transparent';
+    const displayStyle = isOpen ? 'block' : 'none';
+    const btnText = isOpen ? '🙈 Đóng giải thích thuật ngữ' : '👁️ Xem giải thích thuật ngữ hiển thị';
+    const btnBkg = isOpen ? 'rgba(223, 183, 108, 0.15)' : 'transparent';
     
-    const currentConfig = ConfigPhongThuy[mucDich] || { title: "Vị trí / Hướng đang chọn", isCat: true };
+    const currentConfig = (typeof ConfigPhongThuy !== 'undefined' && ConfigPhongThuy[mucDich]) ? ConfigPhongThuy[mucDich] : { title: "Vị trí / Hướng đang chọn", isCat: true };
     const tenMucDichBinhDan = currentConfig.title;
 
+    const dynamicSonName = tongHop.sonName || sonNameForHau;
     const vanInfo = `
         <p style="margin:8px 0; color:#ffd700;">
-            🌟 <b>Hậu hiện tại:</b> ${currentHauInfo.ten} — ${currentHauInfo.chatLuong}<br>
-            <small>Đây là khí trường 5° của Sơn ${tongHop.sonName}.
-            ${currentHauInfo.chatLuong.includes("Cát") ? "Thuận lợi cho Đại Vận." : "Cần lưu ý hóa giải bổ sung."}</small>
+            🌟 <b>Hậu hiện tại:</b> ${currentHauInfo.ten || "Địa Mạch"} — ${currentHauInfo.chatLuong || "Bình Hòa"}<br>
+            <small>Đây là khí trường 5° của Sơn ${dynamicSonName}.
+            ${(currentHauInfo.chatLuong && currentHauInfo.chatLuong.includes("Cát")) ? "Thuận lợi cho Đại Vận." : "Cần lưu ý hóa giải bổ sung."}</small>
         </p>
     `;
 
@@ -682,7 +716,7 @@ function recalculateFate() {
                 📖 GIẢI NGHĨA THEO HẠNG MỤC SỬ DỤNG
             </p>
             
-            <p style="margin:8px 0;">📍 <b>Phương vị thực tế (sau hiệu chỉnh):</b> ${realHeading.toFixed(1)}° (Độ lệch từ: ${magneticDeclination}°)</p>
+            <p style="margin:8px 0;">📍 <b>Phương vị thực tế (sau hiệu chỉnh):</b> ${realHeading.toFixed(1)}° (Độ lệch từ: ${magDec}°)</p>
             <p style="margin:8px 0;">📍 <b>Phương vị la bàn:</b> Năng lượng la bàn hành <b>${hanhPhuongVi}</b> (Góc xoay: <b>${Math.round(headingToCalculate)}°</b>).</p>
             <p style="margin:8px 0;">🎯 <b>Mệnh Cung Phi (Hành ${hanHinhCungPhi}):</b> Quẻ mệnh cốt lõi <b>${chủMệnh}</b> (${nhomMenh}).</p>
             
@@ -701,8 +735,8 @@ function recalculateFate() {
         </div>
     `;
 
-    generateDirectionsList();
-    updateCompassUI(currentHeading);
+    if (typeof generateDirectionsList === 'function') generateDirectionsList();
+    if (typeof updateCompassUI === 'function') updateCompassUI(curHeading);
 }
 
 function getCurrentHauInfo(degree) {
