@@ -137,7 +137,7 @@ const FengShuiScienceModal = {
             
             <p>Khi nhắc đến "Phong Thủy", phần lớn đều liên tưởng đến các quy luật huyền bí mang sắc màu tâm linh. Nhưng nếu bóc tách toàn bộ lớp sương mù của thời gian, chúng ta sẽ kinh ngạc nhận ra: <strong>Phong thủy chính là bộ môn khoa học sơ khai nhất của nhân loại về môi trường sống</strong>, sự giao thoa hoàn mỹ giữa Vật lý kiến trúc, Địa chất học và Sinh thái học dựa trên hai trục cốt lõi: <strong>Phong (Khí tượng học)</strong> và <strong>Thủy (Thủy văn học)</strong>.</p>
 
-            <h2>1. BẢN CHẤT ĐẤT ĐAI: CÁT HÙNG KHÔNG NẰM Ở NGÔI NHÀ</h2>
+            <h2>1. BẢN CHẤT ĐẤT ĐAI: CÁT HUNG KHÔNG NẰM Ở NGÔI NHÀ</h2>
             <p>Nhiều người thường đặt câu hỏi mang tính mê tín: <em>"Tại sao cùng một ngôi nhà hướng Tây, người Tây Tứ Mệnh vào ở thì phất lên (Cát), còn người Đông Tứ Mệnh vào ở lại lụi bại (Hung)? Phải chăng ngôi nhà biết chọn chủ để ban ơn hay hành hạ?"</em></p>
             
             <p><strong>Bản chất vật lý khách quan:</strong> Bản thân mảnh đất hay ngôi nhà hoàn toàn là các vật thể vô tri cấu thành từ gạch đá, xi măng, hướng đón nắng và lưu lượng gió. Bản thân nó là thực thể tĩnh, <strong>tuyệt đối không tự sinh ra Cát hay Hung</strong>.</p>
