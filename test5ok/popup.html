@@ -2,30 +2,32 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Paltalk Advanced Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paltalk Advanced Profile Viewer</title>
     <style>
         body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+            font-family: Arial, sans-serif;
             background-color: #f4f4f9;
             margin: 0;
-            padding: 15px;
-            width: 450px;
-            box-sizing: border-box;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
         .container {
             background-color: #fff;
-            padding: 20px;
+            padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
         }
         h2 {
             text-align: center;
             color: #333;
-            margin-top: 0;
-            margin-bottom: 15px;
-            font-size: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            font-size: 22px;
         }
         .search-box {
             display: flex;
@@ -34,96 +36,87 @@
         }
         input[type="text"] {
             flex: 1;
-            padding: 10px 12px;
-            border: 1px solid #ccd0d5;
+            padding: 12px;
+            border: 1px solid #ccc;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 15px;
             outline: none;
-            transition: border 0.2s;
         }
         input[type="text"]:focus {
             border-color: #007bff;
         }
         button {
-            padding: 10px 18px;
+            padding: 12px 20px;
             background-color: #007bff;
             color: white;
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: bold;
             transition: background 0.2s;
         }
         button:hover {
             background-color: #0056b3;
         }
-        .status-msg {
-            text-align: center;
-            color: #718096;
-            font-style: italic;
-            padding: 15px;
-            font-size: 13px;
-        }
         .profile-card {
-            border: 1px solid #edf2f7;
+            border: 1px solid #e0e0e0;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            margin-top: 10px;
-            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-top: 15px;
         }
         .banner {
-            height: 110px;
+            height: 120px;
             background-size: cover;
             background-position: center;
-            background-color: #cbd5e0;
+            background-color: #ccc;
         }
         .avatar-container {
             text-align: center;
-            margin-top: -45px;
+            margin-top: -50px;
             position: relative;
         }
         .avatar {
-            width: 90px;
-            height: 90px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             border: 4px solid #fff;
             object-fit: cover;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         .status-dot {
-            width: 14px;
-            height: 14px;
+            width: 15px;
+            height: 15px;
             border-radius: 50%;
             border: 2px solid #fff;
             position: absolute;
-            bottom: 6px;
-            left: calc(50% + 28px);
+            bottom: 5px;
+            left: calc(50% + 30px);
         }
         .online { background-color: #28a745; }
-        .offline { background-color: #718096; }
+        .offline { background-color: #6c757d; }
         
         .profile-details {
-            padding: 15px 20px;
+            padding: 20px;
         }
         .profile-details h3 {
             text-align: center;
             margin: 0 0 5px 0;
-            color: #2d3748;
-            font-size: 19px;
+            color: #333;
+            font-size: 20px;
         }
         .badge {
             display: block;
             text-align: center;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
             text-transform: uppercase;
             color: #fff;
-            padding: 3px 10px;
-            border-radius: 12px;
+            padding: 3px 8px;
+            border-radius: 10px;
             width: max-content;
-            margin: 0 auto 15px auto;
+            margin: 0 auto 20px auto;
         }
         table {
             width: 100%;
@@ -131,14 +124,14 @@
             margin-bottom: 15px;
         }
         table td {
-            padding: 8px 10px;
+            padding: 10px;
             border-bottom: 1px solid #edf2f7;
-            font-size: 13.5px;
+            font-size: 14px;
         }
         table td:first-child {
             color: #718096;
             font-weight: 500;
-            width: 45%;
+            width: 40%;
         }
         table td:last-child {
             color: #2d3748;
@@ -151,160 +144,93 @@
             background-color: #28a745;
             color: white;
             text-decoration: none;
-            padding: 10px;
+            padding: 12px;
             border-radius: 6px;
             font-weight: bold;
-            font-size: 13.5px;
+            font-size: 14px;
             transition: background 0.2s;
         }
         .action-btn:hover {
             background-color: #218838;
+        }
+        .status-msg {
+            text-align: center;
+            color: #718096;
+            font-style: italic;
+            padding: 20px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Paltalk Professional Finder</h2>
+    <h2>Paltalk Member Realtime Finder</h2>
     
     <div class="search-box">
-        <input type="text" id="usernameInput" placeholder="Nhập tên chính xác (Vd: Carol Nguyen)...">
-        <button id="searchBtn">Tìm Kiếm</button>
+        <input type="text" id="usernameInput" placeholder="Nhập tên tài khoản (Vd: Carol Nguyen)..." onkeydown="checkEnterKey(event)">
+        <button onclick="startPaltalkRequest()">Tìm Kiếm</button>
     </div>
 
+    <!-- Nơi hiển thị kết quả hoặc thông báo đang đợi tải -->
     <div id="resultZone">
-        <div class="status-msg">Nhập từ khóa và bấm Enter hoặc click Tìm Kiếm.</div>
+        <div class="status-msg">Nhập từ khóa và bấm Enter để hệ thống tự động quét dữ liệu.</div>
     </div>
 </div>
 
+<!-- Bạn chỉ cần thay thế phần <script> cũ trong file của bạn bằng đoạn dưới đây -->
 <script>
     const labels = {
-        uid: "Mã Thành Viên (UID)",
-        gender: "Giới Tính",
-        country: "Quốc Gia",
-        birthdate: "Ngày Sinh",
-        location: "Vị Trí Hiện Tại",
-        aboutme: "Lời Giới Thiệu",
-        warning_level: "Mức Cảnh Báo",
-        show_groups_followed: "Công Khai Nhóm",
-        age: "Tuổi",
-        nick_color: "Màu Sắc Biệt Danh",
-        flair_icon: "Biểu Tượng Danh Hiệu",
-        show_me: "Chế Độ Hiển Thị",
-        last_login: "Thời Gian Đăng Nhập",
-        sub_end_date: "Ngày Hết Hạn Gói"
+        uid: "Mã Thành Viên (UID)", gender: "Giới Tính", country: "Quốc Gia",
+        birthdate: "Ngày Sinh", location: "Vị Trí", aboutme: "Giới Thiệu",
+        warning_level: "Cảnh Báo", age: "Tuổi", last_login: "Đăng Nhập Gần Nhất"
     };
 
-    document.getElementById('searchBtn').addEventListener('click', executeSearch);
-    document.getElementById('usernameInput').addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') executeSearch();
-    });
+    function checkEnterKey(event) {
+        if (event.key === "Enter") startPaltalkRequest();
+    }
 
-    function executeSearch() {
+    async function startPaltalkRequest() {
         const inputVal = document.getElementById('usernameInput').value.trim();
         const resultZone = document.getElementById('resultZone');
 
-        if (!inputVal) {
-            alert("Vui lòng nhập tên tài khoản!");
-            return;
-        }
+        if (!inputVal) return alert("Vui lòng nhập tên tài khoản!");
 
-        resultZone.innerHTML = '<div class="status-msg">Đang quét dữ liệu thời gian thực từ Paltalk...</div>';
+        resultZone.innerHTML = '<div class="status-msg">Đang kết nối tới Paltalk API...</div>';
 
-        // Điền động từ khóa thẳng vào link API của bạn
-        const apiUrl = `https://www.paltalk.com/people/api/people/searchUsers/?keyword=${encodeURIComponent(inputVal)}&country=WW&gender=&fromAge=18&toAge=99&offset=0`;
+        const url = `https://www.paltalk.com/people/api/people/searchUsers/?keyword=${encodeURIComponent(inputVal)}&country=WW&gender=&fromAge=18&toAge=99&offset=0`;
 
-        fetch(apiUrl)
-            .then(res => res.json())
-            .then(json => {
-                if (json.statusCode === 200 && json.data && json.data.members && json.data.members.length > 0) {
-                    renderProfessionalCard(json.data.members[0]);
-                } else {
-                    resultZone.innerHTML = '<div class="status-msg">Không tìm thấy thông tin tài khoản này trên hệ thống.</div>';
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                resultZone.innerHTML = '<div class="status-msg" style="color:#c0392b;">Có lỗi xảy ra hoặc API phản hồi không đúng cấu trúc!</div>';
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                credentials: 'include', // Gửi kèm Cookie trình duyệt của bạn
+                headers: { 'Accept': 'application/json' }
             });
+
+            if (!response.ok) throw new Error('Không thể truy cập API');
+
+            const json = await response.json();
+
+            if (json && json.data && json.data.members && json.data.members.length > 0) {
+                renderBeautifulCard(json.data.members[0]);
+            } else {
+                resultZone.innerHTML = '<div class="status-msg">Không tìm thấy tài khoản này!</div>';
+            }
+        } catch (error) {
+            resultZone.innerHTML = `<div class="status-msg" style="color:red;">
+                Lỗi: Không lấy được dữ liệu.<br>
+                1. Hãy chắc chắn bạn đã <b>đăng nhập Paltalk</b> trên trình duyệt này.<br>
+                2. Phải chạy file qua <b>Live Server</b> (không dùng file:///).
+            </div>`;
+        }
     }
 
-    function renderProfessionalCard(member) {
+    function renderBeautifulCard(member) {
+        // ... (Giữ nguyên hàm renderBeautifulCard của bạn, nó đã rất ổn rồi)
+        // Lưu ý: Đảm bảo code của hàm này vẫn nằm trong thẻ <script>
         const resultZone = document.getElementById('resultZone');
-        let tableRows = "";
-
-        const formatDate = (isoStr) => {
-            if (!isoStr) return "Không rõ";
-            const d = new Date(isoStr);
-            if (isNaN(d.getTime())) return isoStr;
-            return `${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')} - ${d.getUTCDate()}/${d.getUTCMonth()+1}/${d.getUTCFullYear()}`;
-        };
-
-        // Quét tất cả các thuộc tính động trả về, có trường nào in đẹp trường đó
-        Object.keys(member).forEach(key => {
-            const val = member[key];
-            
-            if (['nickname', 'subscription', 'primary_image', 'primaryImageUrl', 'bannerDetails', 'has_photo', 'online'].includes(key)) {
-                return;
-            }
-
-            if (val !== null && val !== "" && !(key === 'age' && val === 0)) {
-                let showVal = val;
-                if (key === 'last_login' || key === 'sub_end_date') {
-                    showVal = formatDate(val);
-                }
-                if (key === 'country') {
-                    if (val === 'SG') showVal = 'Singapore (SG)';
-                    else if (val === 'VN') showVal = 'Việt Nam (VN)';
-                    else if (val === 'US') showVal = 'Mỹ (US)';
-                }
-
-                const displayLabel = labels[key] || key;
-                tableRows += `
-                    <tr>
-                        <td>${displayLabel}</td>
-                        <td>${showVal}</td>
-                    </tr>
-                `;
-            }
-        });
-
-        // Xử lý ảnh đại diện nếu nick trống ảnh (ví dụ trường hợp HoangDK)
-        const avatar = member.primaryImageUrl || 'https://www.palassets.com/peopleweb/v2020/images/cover-photo/basic.jpg';
-        const banner = member.bannerDetails?.url || 'https://www.palassets.com/peopleweb/v2020/images/cover-photo/basic.jpg';
-        const isOnline = member.online == 1;
-        const subType = member.subscription ? member.subscription.toUpperCase() : 'BASIC';
-
-        let badgeColor = '#718096';
-        if (subType === 'VIP') badgeColor = '#e44d26';
-        if (subType === 'CROWN') badgeColor = '#ffc107';
-
-        resultZone.innerHTML = `
-            <div class="profile-card">
-                <div class="banner" style="background-image: url('${banner}')"></div>
-                <div class="avatar-container">
-                    <img class="avatar" src="${avatar}" alt="Avatar" onerror="this.src='https://www.palassets.com/peopleweb/v2020/images/cover-photo/basic.jpg'">
-                    <div class="status-dot ${isOnline ? 'online' : 'offline'}"></div>
-                </div>
-                <div class="profile-details">
-                    <h3>${member.nickname}</h3>
-                    <div class="badge" style="background-color: ${badgeColor}">
-                        ${subType} MEMBER
-                    </div>
-                    
-                    <table>
-                        <tbody>
-                            ${tableRows}
-                        </tbody>
-                    </table>
-
-                    <a href="https://www.paltalk.com/g2/user/${member.uid || 0}" target="_blank" class="action-btn">
-                        🔍 Kiểm Tra Room Đang Tham Gia
-                    </a>
-                </div>
-            </div>
-        `;
+        // ... [Giữ nguyên logic dựng giao diện của bạn tại đây] ...
     }
 </script>
+
 </body>
 </html>
