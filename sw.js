@@ -2,6 +2,7 @@ const CACHE_NAME = 'laban-pt-v3';
 
 const ASSETS_TO_CACHE = [
   'LabanThanSo.html',
+  'index.html',
   'manifest.json',
   'icon-192.png',
   'icon-512.png',
