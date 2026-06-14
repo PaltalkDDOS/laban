@@ -3418,59 +3418,118 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Cấu hình với giới hạn phạm vi (Cơ chế thông minh)
     const configs = {
         'declination-input': { limit: 7, key: 'save_decl', min: -180, max: 180 },
-        'remote-lat': { limit: 10, key: null, min: -90, max: 90 },
-        'remote-lon': { limit: 11, key: null, min: -180, max: 180 }
+        'remote-lat': { limit: 10, key: 'save_lat', min: -90, max: 90 },
+        'remote-lon': { limit: 11, key: 'save_lon', min: -180, max: 180 }
     };
 
     // =========================================================================
     // KHÓA TRẠNG THÁI NÚT CHECKBOX KHI LÀM MỚI TRANG (F5)
     // =========================================================================
     const saveToggle = document.getElementById('save-toggle');
+    let isRetentionEnabled = true; // Biến cờ kiểm soát quyền lưu trữ thực tế
+
     if (saveToggle) {
-        // Đọc trạng thái đã lưu từ máy. Nếu người dùng từng bỏ tích ('false'), ta gỡ check ngay lập tức
         const toggleState = localStorage.getItem('save_toggle_state');
         if (toggleState === 'false') {
             saveToggle.checked = false;
+            isRetentionEnabled = false;
+            
+            // LÁ CHẮN TỐI ƯU: Nếu người dùng đã tắt ghi nhớ từ trước, 
+            // lập tức dọn sạch rác tọa độ cũ trong máy ngay khi vừa tải trang
+            localStorage.removeItem('save_decl');
+            localStorage.removeItem('save_lat');
+            localStorage.removeItem('save_lon');
         } else {
-            saveToggle.checked = true; // Mặc định vẫn giữ bật nếu chưa từng tắt
+            saveToggle.checked = true;
+            isRetentionEnabled = true;
         }
     }
 
-    // 2. Khôi phục dữ liệu đã lưu khi mở app
+    // 2. Khôi phục dữ liệu đã lưu khi mở app (Chỉ khôi phục nếu chế độ ghi nhớ đang BẬT)
     Object.keys(configs).forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
-        const saved = localStorage.getItem(configs[id].key);
-        if (saved !== null && configs[id].key) {
-            el.value = saved;
-            if (id === 'declination-input') updateMagneticDeclination();
+        
+        if (isRetentionEnabled) {
+            const saved = localStorage.getItem(configs[id].key);
+            if (saved !== null && configs[id].key) {
+                el.value = saved;
+                if (id === 'declination-input') updateMagneticDeclination();
+            }
+        } else {
+            // Nếu không ghi nhớ, ép giao diện về trạng thái sạch khi khởi động
+            el.value = (id === 'declination-input') ? "0" : "";
         }
     });
 
-    // 3. Logic xử lý input thông minh
+    // 3. Logic xử lý tương tác và nhập liệu thông minh
     Object.keys(configs).forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
 
+        // CƠ CHẾ THÔNG MINH TỰ ĐỘNG BÔI ĐEN: Click hoặc focus vào là xóa số cũ ngay khi gõ số mới
+        const autoSelect = () => {
+            setTimeout(() => { el.setSelectionRange(0, el.value.length); }, 10);
+        };
+        el.addEventListener('focus', autoSelect);
+        el.addEventListener('click', autoSelect);
+
         // Cho phép nhấn Enter để đóng cửa sổ
         el.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') toggleDeclinationPanel(false);
+            if (e.key === 'Enter') {
+                el.blur(); // Đẩy ra ngoài để kích hoạt bộ chuẩn hóa blur trước khi đóng
+                toggleDeclinationPanel(false);
+            }
         });
 
+        // Sự kiện Input: Lọc ký tự thời gian thực nhưng KHÔNG làm hỏng dấu trừ (-)
         el.addEventListener('input', () => {
             const cfg = configs[id];
+            let raw = el.value;
+
+            let valStr = parseSmartNumeric(raw);
+            if (valStr !== null) {
+                el.value = valStr; // Cập nhật chuỗi ký tự sạch lên màn hình
+                
+                if (valStr !== '-' && valStr !== '+' && !valStr.endsWith('.')) {
+                    let val = parseFloat(valStr);
+                    
+                    // Kiểm tra giới hạn thông minh thời gian thực
+                    if (cfg.min !== undefined && val < cfg.min) val = cfg.min;
+                    if (cfg.max !== undefined && val > cfg.max) val = cfg.max;
+                    
+                    // CƠ CHẾ KIỂM SOÁT LƯU TRỮ: Chỉ lưu xuống máy nếu nút Ghi nhớ đang bật
+                    if (cfg.key && document.getElementById('save-toggle')?.checked) {
+                        localStorage.setItem(cfg.key, val);
+                    }
+                }
+            }
+
+            // Bảo vệ độ dài giao diện
+            if (el.value.length > cfg.limit) {
+                el.value = el.value.slice(0, cfg.limit);
+            }
+
+            if (id === 'declination-input') updateMagneticDeclination();
+        });
+
+        // Sự kiện Blur: Chuẩn hóa tối hậu khi người dùng rời mắt khỏi ô nhập dữ liệu
+        el.addEventListener('blur', () => {
+            const cfg = configs[id];
             let valStr = parseSmartNumeric(el.value);
-            
-            if (valStr !== null && valStr !== '') {
+
+            if (!valStr || valStr === '-' || valStr === '+') {
+                el.value = (id === 'declination-input') ? "0" : "";
+                if (cfg.key) localStorage.removeItem(cfg.key);
+            } else {
                 let val = parseFloat(valStr);
-                // Kiểm tra giới hạn thông minh
                 if (cfg.min !== undefined && val < cfg.min) val = cfg.min;
                 if (cfg.max !== undefined && val > cfg.max) val = cfg.max;
                 
-                el.value = val;
+                el.value = val; // Trả về con số chuẩn mực đẹp đẽ
                 
-                // Tự động lưu nếu checkbox "Ghi nhớ" đang được bật
-                if (id === 'declination-input' && document.getElementById('save-toggle')?.checked) {
+                // Chỉ lưu khi nút Ghi nhớ đang bật
+                if (cfg.key && document.getElementById('save-toggle')?.checked) {
                     localStorage.setItem(cfg.key, val);
                 }
             }
@@ -3478,26 +3537,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Cơ chế Reset tức thì khi bỏ check "Ghi nhớ" và lưu trạng thái nút
+    // 4. Cơ chế QUÉT DỌN SẠCH Reset tức thì khi bỏ check "Ghi nhớ"
     saveToggle?.addEventListener('change', (e) => {
         const declInput = document.getElementById('declination-input');
+        const latInput = document.getElementById('remote-lat');
+        const lonInput = document.getElementById('remote-lon');
+
         if (!e.target.checked) {
-            // Lưu trạng thái nút đang bị TẮT xuống máy
+            // 1. Khóa trạng thái tắt
             localStorage.setItem('save_toggle_state', 'false');
             
-            // Xóa hết dữ liệu liên quan
+            // 2. XOÁ SẠCH BỘ NHỚ TOÀN DIỆN: Không để lại bất kỳ vết tọa độ hay độ lệch nào
             localStorage.removeItem('save_decl');
+            localStorage.removeItem('save_lat');
+            localStorage.removeItem('save_lon');
+            
+            // 3. RESET TRỰC TIẾP TRÊN GIAO DIỆN (Đúng yêu cầu hoàn hảo của bạn)
             if (declInput) declInput.value = "0";
+            if (latInput) latInput.value = "";  // Xóa trống ô Vĩ độ ngay lập tức
+            if (lonInput) lonInput.value = "";  // Xóa trống ô Kinh độ ngay lập tức
+            
             magneticDeclination = 0;
             updateMagneticDeclination();
-            showToast("Đã xóa dữ liệu lưu, về 0!");
+            showToast("Đã xóa toàn bộ dữ liệu lưu về trạng thái trống!");
         } else {
-            // Lưu trạng thái nút đang được BẬT xuống máy
+            // Nếu bật check, khóa trạng thái bật và lưu lại các số hiện tại đang hiển thị
             localStorage.setItem('save_toggle_state', 'true');
             
-            if (declInput) {
-                localStorage.setItem('save_decl', declInput.value);
-            }
+            if (declInput) localStorage.setItem('save_decl', declInput.value);
+            if (latInput && latInput.value !== "") localStorage.setItem('save_lat', latInput.value);
+            if (lonInput && lonInput.value !== "") localStorage.setItem('save_lon', lonInput.value);
+            
             showToast("Đã bật chế độ ghi nhớ!");
         }
     });
