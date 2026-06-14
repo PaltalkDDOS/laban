@@ -3441,6 +3441,20 @@ document.addEventListener('DOMContentLoaded', () => {
         'remote-lon': { limit: 11, key: null, min: -180, max: 180 }
     };
 
+    // =========================================================================
+    // KHÓA TRẠNG THÁI NÚT CHECKBOX KHI LÀM MỚI TRANG (F5)
+    // =========================================================================
+    const saveToggle = document.getElementById('save-toggle');
+    if (saveToggle) {
+        // Đọc trạng thái đã lưu từ máy. Nếu người dùng từng bỏ tích ('false'), ta gỡ check ngay lập tức
+        const toggleState = localStorage.getItem('save_toggle_state');
+        if (toggleState === 'false') {
+            saveToggle.checked = false;
+        } else {
+            saveToggle.checked = true; // Mặc định vẫn giữ bật nếu chưa từng tắt
+        }
+    }
+
     // 2. Khôi phục dữ liệu đã lưu khi mở app
     Object.keys(configs).forEach(id => {
         const el = document.getElementById(id);
@@ -3483,17 +3497,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Cơ chế Reset tức thì khi bỏ check "Ghi nhớ"
-    document.getElementById('save-toggle')?.addEventListener('change', (e) => {
+    // 4. Cơ chế Reset tức thì khi bỏ check "Ghi nhớ" và lưu trạng thái nút
+    saveToggle?.addEventListener('change', (e) => {
         const declInput = document.getElementById('declination-input');
         if (!e.target.checked) {
+            // Lưu trạng thái nút đang bị TẮT xuống máy
+            localStorage.setItem('save_toggle_state', 'false');
+            
+            // Xóa hết dữ liệu liên quan
             localStorage.removeItem('save_decl');
-            declInput.value = "0";
+            if (declInput) declInput.value = "0";
             magneticDeclination = 0;
             updateMagneticDeclination();
             showToast("Đã xóa dữ liệu lưu, về 0!");
         } else {
-            localStorage.setItem('save_decl', declInput.value);
+            // Lưu trạng thái nút đang được BẬT xuống máy
+            localStorage.setItem('save_toggle_state', 'true');
+            
+            if (declInput) {
+                localStorage.setItem('save_decl', declInput.value);
+            }
             showToast("Đã bật chế độ ghi nhớ!");
         }
     });
