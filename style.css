@@ -1580,7 +1580,7 @@ mjx-container {
     display: flex;
     align-items: center;
     gap: 8px;
-    box-shadow: 0 4px 15px rgba(48, 209, 88, 0.4);
+    box-shadow: 0 4px 15px rgba(223, 183, 108, 0.4);
     z-index: 99998;
     white-space: nowrap;
     -webkit-tap-highlight-color: transparent;
