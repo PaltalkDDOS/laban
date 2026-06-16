@@ -4492,8 +4492,7 @@ function manualRotate(value) {
 function saveCurrentMember() {
     let nameInput = document.getElementById('userName');
     let name = nameInput ? nameInput.value.trim() : "";
-    const genderSelect = document.getElementById('gender');
-    const gender = genderSelect ? genderSelect.value : "male";
+    const gender = document.getElementById('gender').value;
     const dayStr = document.getElementById('birthDay').value;
     const monthStr = document.getElementById('birthMonth').value;
     const yearStr = document.getElementById('birthYear').value;
@@ -4525,7 +4524,7 @@ function saveCurrentMember() {
     const newMember = {
         id: Date.now(), 
         name: name,
-        gender: gender, // Lưu trữ giá trị chuẩn từ select
+        gender: gender,
         birthDay: dayStr,
         birthMonth: monthStr,
         birthYear: yearStr
@@ -4534,14 +4533,11 @@ function saveCurrentMember() {
     members.push(newMember);
     localStorage.setItem('fengshui_members', JSON.stringify(members));
     
-    // Ghi nhớ luôn thành viên vừa lưu làm trạng thái kích hoạt cuối cùng
-    localStorage.setItem('fengshui_active_member_id', newMember.id);
-    
     showCustomAlert(`Đã mã hóa và lưu thành viên: ${name}`, "✅ Thành Công");
     loadSavedMembers();
 }
 
-// 2. TẢI DANH SÁCH THÀNH VIÊN (Render an toàn, tích hợp Tự động kích hoạt khi mở app)
+// 2. TẢI DANH SÁCH THÀNH VIÊN (Render an toàn, giữ nguyên gốc không tự động load khi mở app)
 function loadSavedMembers() {
     const data = JSON.parse(localStorage.getItem('fengshui_members') || '[]');
     const savedPanel = document.getElementById('savedPanel'); 
@@ -4560,25 +4556,19 @@ function loadSavedMembers() {
     data.forEach(m => {
         const chip = document.createElement('div');
         chip.className = 'saved-chip';
-        // Thêm màu sắc phân biệt trực quan dựa trên giới tính lưu trữ
-        const genderIcon = (String(m.gender).toLowerCase() === 'female' || String(m.gender).toLowerCase() === 'nữ') ? '👩‍💼' : '👨‍💼';
+        
+        // Hiển thị icon trực quan theo giới tính đã lưu của thành viên
+        const genderIcon = (String(m.gender).toLowerCase() === 'female') ? '👩' : '🧑';
+        
         chip.innerHTML = `
             <span onclick="selectMember(${m.id})" style="cursor:pointer;">${genderIcon} ${m.name}</span>
             <span class="del-btn" onclick="deleteMember(event, ${m.id})" style="margin-left:8px; cursor:pointer; font-weight:bold;">×</span>
         `;
         savedContainer.appendChild(chip);
     });
-
-    // ✨ TỰ ĐỘNG KHÔI PHỤC KHI MỞ ỨNG DỤNG VÀO: Lấy lại người active gần nhất
-    const activeId = localStorage.getItem('fengshui_active_member_id');
-    if (activeId && !document.getElementById('userName').dataset.initialized) {
-        // Đánh dấu đã kích hoạt lần đầu để tránh vòng lặp vô hạn (Racing Condition)
-        document.getElementById('userName').dataset.initialized = "true";
-        setTimeout(() => selectMember(parseInt(activeId, 10)), 60);
-    }
 }
 
-// 3. CHỌN THÀNH VIÊN TRONG DANH SÁCH (Đồng bộ tức thì toán pháp & Nhảy giới tính chuẩn xác)
+// 3. CHỌN THÀNH VIÊN TRONG DANH SÁCH (Đồng bộ toán pháp & ép giao diện nút bấm nhảy theo)
 function selectMember(id) {
     const data = JSON.parse(localStorage.getItem('fengshui_members') || '[]');
     const m = data.find(item => item.id === id);
@@ -4590,25 +4580,25 @@ function selectMember(id) {
             txtUser.style.color = '#fff';
         }
         
-        // 🔮 THÔNG MINH CAO CẤP: Ép ô chọn giới tính nhảy chuẩn xác tuyệt đối
-        const genderSelect = document.getElementById('gender');
-        if (genderSelect) {
+        // 🔮 ĐỒNG BỘ GIỚI TÍNH 2 TẦNG: Lưu giá trị ngầm và Ép sáng đèn giao diện nút bấm tương ứng
+        document.getElementById('gender').value = m.gender;
+        
+        const maleDiv = document.getElementById('gender-male');
+        const femaleDiv = document.getElementById('gender-female');
+        if (maleDiv && femaleDiv) {
             let gVal = String(m.gender).trim().toLowerCase();
             if (gVal === 'female' || gVal === 'nữ' || gVal === 'nu') {
-                genderSelect.value = 'female';
+                femaleDiv.classList.add('active');
+                maleDiv.classList.remove('active');
             } else {
-                genderSelect.value = 'male';
+                maleDiv.classList.add('active');
+                femaleDiv.classList.remove('active');
             }
-            // Kích hoạt sự kiện change thủ công để ép DOM cập nhật giao diện trực quan lập tức
-            genderSelect.dispatchEvent(new Event('change'));
         }
 
         document.getElementById('birthDay').value = m.birthDay;
         document.getElementById('birthMonth').value = m.birthMonth;
         document.getElementById('birthYear').value = m.birthYear;
-        
-        // Ghi nhớ ID thực thể đang được xem hiện tại vào bộ nhớ máy
-        localStorage.setItem('fengshui_active_member_id', id);
         
         // Kích hoạt tái tính toán toàn bộ hệ thống ngay khi đổi người
         if (typeof recalculateFate === 'function') {
@@ -4623,17 +4613,10 @@ function deleteMember(event, id) {
     let data = JSON.parse(localStorage.getItem('fengshui_members') || '[]');
     data = data.filter(m => m.id !== id);
     localStorage.setItem('fengshui_members', JSON.stringify(data));
-    
-    // Nếu xóa đúng người đang active, dọn dẹp biến nhớ tạm thời luôn
-    const activeId = localStorage.getItem('fengshui_active_member_id');
-    if (activeId && parseInt(activeId, 10) === id) {
-        localStorage.removeItem('fengshui_active_member_id');
-    }
-
     loadSavedMembers();
 }
 
-// 5. SIÊU RESET: THANH LỌC TOÀN DIỆN BỘ NHỚ RÁC - GIỮ LẠI DANH SÁCH THÀNH VIÊN
+// 5. SIÊU RESET: THANH LỌC TOÀN DIỆN BỘ NHỚ RÁC - ĐƯA FORM VỀ TRẠNG THÁI KHỞI NGUYÊN
 function clearAllData() {
     const btn = document.getElementById('btnReset');
     if (btn) {
@@ -4641,36 +4624,38 @@ function clearAllData() {
         setTimeout(() => btn.classList.remove('executing'), 400);
     }
     
-    // 🚀 BƯỚC ĐỘT PHÁ PHONG THỦY SỐ: TRÍCH XUẤT CẤT GIỮ DANH SÁCH THÀNH VIÊN RA VÙNG CÁCH LY
     const danhSachGiaTocHienTai = localStorage.getItem('fengshui_members');
     
-    // LẬP TỨC TIÊU HỦY TOÀN BỘ KHÔNG GIAN BỘ NHỚ (Xóa sạch mọi rác cấu trúc cũ, biến lỗi khi dev)
     localStorage.clear();
     
-    // KHÔI PHỤC LẠI DUY NHẤT DANH SÁCH THÀNH VIÊN SẠCH SẼ VÀO LẠI STORAGE
     if (danhSachGiaTocHienTai) {
         localStorage.setItem('fengshui_members', danhSachGiaTocHienTai);
     }
 
-    // 🚀 GIẢI PHÓNG TOÀN DIỆN CÁC BỘ NHỚ ĐỆM (CACHE) KHÍ MẠCH TRÊN RAM
     if (typeof hauCache !== 'undefined' && hauCache.clear) {
-        hauCache.clear(); // Xóa sạch bộ nhớ đệm 72 Hậu cũ tránh loãng khí
+        hauCache.clear();
     }
     
-    // ĐƯA CẤU TRÚC FORM VÀ ĐỒ HÌNH LA BÀN VỀ TRẠNG THÁI KHỞI NGUYÊN TỰ DO
     const txtUser = document.getElementById('userName');
     if (txtUser) {
         txtUser.value = 'Người Tầm Phương';
         txtUser.style.color = '#aaa';
-        txtUser.removeAttribute('data-initialized'); // Giải phóng khóa chốt chặn mở app
     }
+    
+    // 🔮 ĐỒNG BỘ RESET KHUNG GIỚI TÍNH VỀ MẶC ĐỊNH BAN ĐẦU
     document.getElementById('gender').value = 'male';
+    const maleDiv = document.getElementById('gender-male');
+    const femaleDiv = document.getElementById('gender-female');
+    if (maleDiv && femaleDiv) {
+        maleDiv.classList.add('active');
+        femaleDiv.classList.remove('active');
+    }
+
     document.getElementById('birthDay').value = '';
     document.getElementById('birthMonth').value = '';
     document.getElementById('birthYear').value = '';
     document.getElementById('purpose').value = '';
     
-    // Tắt chốt chặn kim ảo an toàn tuyệt đối
     if (typeof targetAngle !== 'undefined') targetAngle = null;
     
     const ghost = document.getElementById('ghostNeedle');
@@ -4680,7 +4665,6 @@ function clearAllData() {
         ghost.classList.remove('matched-pulse');
     }
     
-    // Ép hệ thống vẽ lại bản đồ khí cục theo dữ liệu trắc địa thực địa tự do sạch sẽ
     if (typeof recalculateFate === 'function') {
         recalculateFate();
     } else if (typeof updateCompassUI === 'function') {
