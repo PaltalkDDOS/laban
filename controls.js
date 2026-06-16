@@ -354,7 +354,7 @@ function layNamKhaoSatThienVan() {
 }
 
 function tínhCungPhi(năm, tháng, ngày, giớiTính) {
-    // Ép toán bộ về kiểu số để tránh bẫy ký tự của JS
+    // Ép toàn bộ về kiểu số để tránh bẫy ký tự của JS
     const y = Number(năm), m = Number(tháng), d = Number(ngày);
     
     // Thuật toán Lập Xuân chuẩn ngày 4 tháng 2
@@ -379,24 +379,35 @@ function tínhCungPhi(năm, tháng, ngày, giớiTính) {
 
 /**
  * [ID: SAT-NGUHOANG-01] Hàm getNguHoangInfo
- * Bốc sao đại cục quản niên độ Thần sát dựa trên trục năm khảo sát thực tế (Niên độ Vận 9),
- * xác định phương vị bị phạm Ngũ Hoàng Liêm Trinh Sát kịch độc.
+ * ĐÃ SỬA: Thuật toán Cửu Tinh chính tông thế kỷ 21, định vị chuẩn xác sao Nhập Trung Cung 
+ * và phương vị bị phạm Ngũ Hoàng Đại Sát theo từng niên độ.
  */
 function getNguHoangInfo(year) {
     const namTinhVan = (year && !isNaN(year)) ? parseInt(year, 10) : layNamKhaoSatThienVan();
-    let diff = (namTinhVan - 2024) % 9;
-    if (diff < 0) diff += 9;
     
-    let saoNienDai = (7 - diff + 9) % 9;
+    // Thuật toán tìm sao chủ quản nhập Trung Cung chuẩn xác cho thế kỷ 21
+    let saoNienDai = (11 - (namTinhVan % 9)) % 9;
     if (saoNienDai === 0) saoNienDai = 9;
     
-    const mapCodeNguHoang = ["E", "SE", "TrungCung", "NW", "W", "NE", "S", "N", "SW"];
+    // Ma trận định vị phương vị đóng cung của Ngũ Hoàng (Sao số 5) dựa theo sao chủ quản Trung Cung
+    const mapCenterToNguHoangPos = {
+        1: "S",          // Năm sao số 1 nhập trung cung (như 2026) -> Ngũ Hoàng bay về phương Nam
+        2: "NE",         // Năm sao số 2 nhập trung cung (như 2025) -> Ngũ Hoàng bay về Đông Bắc
+        3: "W",          // Năm sao số 3 nhập trung cung (như 2024) -> Ngũ Hoàng bay về phương Tây
+        4: "NW",         // Ngũ Hoàng ở Tây Bắc
+        5: "TrungCung",  // Ngũ Hoàng độc chiếm Trung Cung
+        6: "SE",         // Ngũ Hoàng ở Đông Nam
+        7: "E",          // Ngũ Hoàng ở Chính Đông
+        8: "SW",         // Ngũ Hoàng ở Tây Nam
+        9: "N"           // Ngũ Hoàng ở Chính Bắc
+    };
+    
     const mapTenTiengViet = { 
         "N": "Chính Bắc", "NE": "Đông Bắc", "E": "Chính Đông", "SE": "Đông Nam", 
         "S": "Chính Nam", "SW": "Tây Nam", "W": "Chính Tây", "NW": "Tây Bắc", "TrungCung": "Trung Cung" 
     };
     
-    const codeNguHoang = mapCodeNguHoang[diff];
+    const codeNguHoang = mapCenterToNguHoangPos[saoNienDai] || "TrungCung";
     const viTriNguHoangNamDo = mapTenTiengViet[codeNguHoang] || "Trung Cung";
 
     const info = {
@@ -408,7 +419,7 @@ function getNguHoangInfo(year) {
         6: "Lục Bạch Vũ Khúc (Kim) — Cát Tinh: Vượng quyền lực, quý nhân đại trợ.",
         7: "Thất Xích Phá Quân (Kim) — Hung Tinh: Hao tổn tài sản, đề phòng trộm cướp.",
         8: "Bát Bạch Tả Phù (Thổ) — Bình Hòa Vận 9: Khí trường tích lũy tài lộc ổn định, an lành.",
-        9: "Cửu Tử Hữu Bật (Hỏa) — Đương Vượng Đại Cát: Đương vận tôn quý tối thượng, sinh khí dồi dào."
+        9: "Cửu Tử Hữu Bật (Hỏa) — ĐƯƠNG VƯỢNG TỐI THƯỢNG ĐẠI CÁT TINH VẬN 9: Đương vận tôn quý tối thượng, sinh khí dồi dào."
     };
 
     return `Niên độ Vận 9 [Năm ${namTinhVan}]: Sao Chủ Quản Đại Cục Số ${saoNienDai} [${info[saoNienDai]}] | Phương Vị Phạm Ngũ Hoàng Sát: ${viTriNguHoangNamDo}`;
@@ -416,15 +427,20 @@ function getNguHoangInfo(year) {
 
 /**
  * [ID: SAT-NGUHOANG-02] Hàm getNguHoangAlert
- * Bung chuỗi văn bản cảnh báo trực xung động thổ thời gian thực cho phương vị la bàn số đang ngắm.
+ * ĐÃ SỬA: Đồng bộ hóa hoàn toàn trục tính toán với lõi thiên văn để cảnh báo đập phá thời gian thực chuẩn xác.
  */
 function getNguHoangAlert(currentHuong) {
     if (!currentHuong) return "";
     const namTinhVan = layNamKhaoSatThienVan(); 
-    let diff = (namTinhVan - 2024) % 9;
-    if (diff < 0) diff += 9;
     
-    const codeNguHoang = ["E", "SE", "TrungCung", "NW", "W", "NE", "S", "N", "SW"][diff];
+    let saoNienDai = (11 - (namTinhVan % 9)) % 9;
+    if (saoNienDai === 0) saoNienDai = 9;
+    
+    const mapCenterToNguHoangPos = {
+        1: "S", 2: "NE", 3: "W", 4: "NW", 5: "TrungCung", 6: "SE", 7: "E", 8: "SW", 9: "N"
+    };
+    
+    const codeNguHoang = mapCenterToNguHoangPos[saoNienDai] || "TrungCung";
     const mapChuoiSangCode = {
         "bắc": "N", "chính bắc": "N", "đông bắc": "NE", "đông": "E", "chính đông": "E",
         "đông nam": "SE", "nam": "S", "chính nam": "S", "tây nam": "SW", "tây": "W",
@@ -442,8 +458,8 @@ function getNguHoangAlert(currentHuong) {
 
 /**
  * [ID: SAT-CUUTINH-01] Hàm tinhHanCuuTinhTheoNam
- * Thuật toán vi phân Cửu Tinh niên trạch chính tông đồng trục thời gian thực.
- * Chữa dứt điểm lỗi bốc năm Date() thô bạo làm sai lệch điểm số phần Ngọn.
+ * ĐÃ SỬA: Thay thế công thức rác cũ bằng trục toán học Cửu Tinh đồng bộ, 
+ * giúp tính toán chính xác tuyệt đối cung phi tinh đáo phương vị của từng Sơn vi phân.
  */
 function tinhHanCuuTinhTheoNam(inputDoSoHoacSon, namHienTai) {
     const nam = namHienTai ? parseInt(namHienTai, 10) : layNamKhaoSatThienVan();
@@ -473,14 +489,15 @@ function tinhHanCuuTinhTheoNam(inputDoSoHoacSon, namHienTai) {
         warnings.push(`[${sat.ten}]: ${sat.level} giáng lâm phương vị.`);
     });
 
-    let diff = (nam - 2024) % 9;
-    if (diff < 0) diff += 9;
-    
-    let saoNienDai = (7 - diff + 9) % 9;
+    // Ép trục toán học Cửu Tinh niên đại đồng bộ
+    let saoNienDai = (11 - (nam % 9)) % 9;
     if (saoNienDai === 0) saoNienDai = 9;
     
+    // Chuẩn hóa vị trí cung phi tinh để bắt đường bay Lượng Thiên Xích chuẩn xác
     const huongToPositionMap = { "N": 1, "SW": 2, "E": 3, "SE": 4, "TrungCung": 5, "Trung Cung": 5, "NW": 6, "W": 7, "NE": 8, "S": 9 };
     let pos = huongToPositionMap[codeHuongDaiCuc] || 5;
+    
+    // Thuật toán phi tinh xuôi dòng thời gian thực
     let saoDaoPhuong = (saoNienDai + (pos - 5) + 9) % 9;
     if (saoDaoPhuong === 0) saoDaoPhuong = 9;
 
@@ -490,7 +507,7 @@ function tinhHanCuuTinhTheoNam(inputDoSoHoacSon, namHienTai) {
         3: { ten: "Tam Bích Lộc Tồn (Tử Khí Sát Tinh - Mộc)", hung: true, giaiPhap: "Dễ kích hoạt mâu thuẫn, tiểu nhân. Tránh đặt thiết bị phát âm thanh động tại góc này." },
         4: { ten: "Tứ Lục Văn Xương (Sát Tinh suy khí - Mộc)", hung: true, giaiPhap: "Dễ sinh tư duy trì trệ. Nên bài trí Tháp Văn Xương gỗ chín tầng để thúc vượng văn phong." },
         5: { ten: "Ngũ Hoàng Đại Sát (Chính Quan Sát - Mậu Kỷ Đại Hung Tinh)", hung: true, giaiPhap: "Đại độc hung tinh. Tuyệt đối cấm động thổ đập phá. Treo chuông gió đồng 6 thanh để giải sát." },
-        6: { her: "Lục Bạch Vũ Khúc (Cát Tinh thiên lộc - Kim)", hung: false, giaiPhap: "Quý nhân trợ lực, thiên tài hanh thông. Bố trí vật phẩm gốm sứ hành Thổ để sinh Kim." },
+        6: { ten: "Lục Bạch Vũ Khúc (Cát Tinh thiên lộc - Kim)", hung: false, giaiPhap: "Quý nhân trợ lực, thiên tài hanh thông. Bố trí vật phẩm gốm sứ hành Thổ để sinh Kim." },
         7: { ten: "Thất Xích Phá Quân (Hưu Tù Sát Tinh - Kim)", hung: true, giaiPhap: "Hao tổn tài lộc, họa tai ương. Đặt bình thủy tinh chứa nước an nhẫn (nước muối) tiêu trừ sát khí." },
         8: { ten: "Bát Bạch Tả Phù (Thoái Khí Vận 9 - Thổ)", hung: false, giaiPhap: "Trạng thái bình hòa, ổn định tài lộc cũ, an lành." },
         9: { ten: "Cửu Tử Hữu Bật (ĐƯƠNG VƯỢNG TỐI THƯỢNG ĐẠI CÁT TINH VẬN 9)", hung: false, giaiPhap: "Tối thượng cát tinh nắm giữ sinh mệnh. Bố trí đèn sáng, trải thảm đỏ để nghênh phú quý." }
@@ -527,7 +544,6 @@ function getHanhByHeading(heading) {
     const mapNguHanhViet = { "Thuy": "Thủy", "Moc": "Mộc", "Hoa": "Hỏa", "Tho": "Thổ", "Kim": "Kim" };
     return thongTinLoi ? (mapNguHanhViet[thongTinLoi.nguHanh] || "Thổ") : "Thổ";
 }
-
 // ====================== GLOBAL ELEMENTS ======================
 const compass = document.getElementById('compass');
 const needle = document.getElementById('needle');
