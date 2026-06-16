@@ -1656,12 +1656,17 @@ function getLuanDoanChiTiet(huong, son) {
  * Quét cảm biến trắc địa thực tế, quay đồ hình la bàn, đồng bộ hóa tham số ngày sinh thời thực lên màn hình,
  * tự động bật Led cảnh báo khi kim đỏ thực tế lọt khít dải độ vàng ảo của triggerGhostNeedle.
  */
-function updateCompassUI(heading) {
-    // 1. TÍNH GÓC THỰC TẾ (Đã bù trừ độ lệch từ trường tuyệt đối)
-    let trueHeading = (heading + (magneticDeclination % 360) + 360) % 360;
-    currentHeading = Math.round(trueHeading);
+function updateCompassUI(visualHeading, displayHeading) {
+    // =========================================================================
+    // ⚡ BÓC TÁCH LUỒNG: GÓC XOAY ĐỒ HỌA VS SỐ ĐỘ HIỂN THỊ THÔ
+    // =========================================================================
+    // 1. Góc trueHeading này dùng để xoay mặt la bàn đồ họa và tính ma trận Phong Thủy bên dưới
+    let trueHeading = visualHeading; 
     
-    // Xoay la bàn theo góc THỰC TẾ và cập nhật thanh trượt
+    // 2. Biến currentHeading bây giờ khóa chặt vào số độ thô của máy (MÁY ĐỨNG IM -> SỐ ĐỨNG IM TỰ NHIÊN)
+    currentHeading = Math.round(displayHeading);
+    
+    // Xoay la bàn theo góc đồ họa thực tế và cập nhật thanh trượt theo số độ thô
     if (compass) compass.style.transform = `rotate(${-trueHeading}deg)`;
     if (needle) needle.style.transform = `rotate(0deg)`;
     if (compassSlider) compassSlider.value = currentHeading;
