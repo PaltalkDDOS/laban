@@ -353,49 +353,20 @@ function layNamKhaoSatThienVan() {
     return y;
 }
 
-// =========================================================================
-// 🧮 THUẬT TOÁN ĐỊNH QUẺ MỆNH CUNG PHI ĐÃ ĐƯỢC CHUẨN HÓA THÔNG MINH
-// =========================================================================
 function tínhCungPhi(năm, tháng, ngày, giớiTính) {
-    // 1. ÉP KIỂU SỐ HỌC TUYỆT ĐỐI - Triệt tiêu lỗi dữ liệu String từ UI truyền vào
-    const y = parseInt(năm, 10);
-    const m = parseInt(tháng, 10);
-    const d = parseInt(ngày, 10);
-    
-    if (isNaN(y) || isNaN(m) || isNaN(d)) return "Khảm"; // Fallback an toàn bảo vệ hệ thống
-
-    // 2. MÀNG LỌC GIỚI TÍNH TOÀN NĂNG - Nhận diện thông minh mọi kiểu định dạng đầu vào
-    let isMale = false;
-    if (typeof giớiTính === 'string') {
-        const gClean = giớiTính.trim().toLowerCase();
-        if (gClean === 'male' || gClean === 'nam' || gClean === '1') {
-            isMale = true;
-        }
-    } else if (typeof giớiTính === 'number' && giớiTính === 1) {
-        isMale = true;
-    }
-
-    // 3. ĐỒNG BỘ TRỤC TIẾT KHÍ LẬP XUÂN CHÍNH TÔNG (Chốt chặn chuẩn xác ngày 4 tháng 2)
-    const namTinh = (m < 2 || (m === 2 && d < 4)) ? y - 1 : y;
-
-    // 4. TOÁN THỨC TÍNH SỐ DƯ KINH ĐIỂN CHỐNG SAI LỆCH KỶ NGUYÊN (Áp dụng nhất quán 19xx và 20xx)
+    const namTinh = (tháng < 2 || (tháng === 2 && ngày < 4)) ? năm - 1 : năm;
     let sốDư = namTinh % 9;
     if (sốDư === 0) sốDư = 9;
     
-    let kếtQuả = isMale ? (11 - sốDư) % 9 : (sốDư + 4) % 9;
+    let kếtQuả = (giớiTính === 'male') ? (11 - sốDư) % 9 : (sốDư + 4) % 9;
     if (kếtQuả === 0) kếtQuả = 9;
     
-    // 5. BIỆN CHỨNG TRUNG CUNG (Cung số 5: Nam Khôn vùi -> 2, Nữ Cấn bồi -> 8)
+    // Cung số 5 (Trung Cung) quy đổi biện chứng cho nam/nữ (Nam Khôn vùi, Nữ Cấn bồi)
     if (kếtQuả === 5) {
-        kếtQuả = isMale ? 2 : 8; 
+        kếtQuả = (giớiTính === 'male') ? 2 : 8; 
     }
     
-    // 6. MA TRẬN ĐỐI CHIẾU DANH XƯNG CHUẨN PHONG THỦY HỌC
-    const mapCung = { 
-        1: 'Khảm', 2: 'Khôn', 3: 'Chấn', 4: 'Tốn', 
-        6: 'Càn', 7: 'Đoài', 8: 'Cấn', 9: 'Ly' 
-    };
-    
+    const mapCung = { 1: 'Khảm', 2: 'Khôn', 3: 'Chấn', 4: 'Tốn', 6: 'Càn', 7: 'Đoài', 8: 'Cấn', 9: 'Ly' };
     return mapCung[kếtQuả] || "Khảm";
 }
 
@@ -4521,7 +4492,8 @@ function manualRotate(value) {
 function saveCurrentMember() {
     let nameInput = document.getElementById('userName');
     let name = nameInput ? nameInput.value.trim() : "";
-    const gender = document.getElementById('gender').value;
+    const genderSelect = document.getElementById('gender');
+    const gender = genderSelect ? genderSelect.value : "male";
     const dayStr = document.getElementById('birthDay').value;
     const monthStr = document.getElementById('birthMonth').value;
     const yearStr = document.getElementById('birthYear').value;
@@ -4553,7 +4525,7 @@ function saveCurrentMember() {
     const newMember = {
         id: Date.now(), 
         name: name,
-        gender: gender,
+        gender: gender, // Lưu trữ giá trị chuẩn từ select
         birthDay: dayStr,
         birthMonth: monthStr,
         birthYear: yearStr
@@ -4562,11 +4534,14 @@ function saveCurrentMember() {
     members.push(newMember);
     localStorage.setItem('fengshui_members', JSON.stringify(members));
     
+    // Ghi nhớ luôn thành viên vừa lưu làm trạng thái kích hoạt cuối cùng
+    localStorage.setItem('fengshui_active_member_id', newMember.id);
+    
     showCustomAlert(`Đã mã hóa và lưu thành viên: ${name}`, "✅ Thành Công");
     loadSavedMembers();
 }
 
-// 2. TẢI DANH SÁCH THÀNH VIÊN (Render an toàn, chống sập DOM)
+// 2. TẢI DANH SÁCH THÀNH VIÊN (Render an toàn, tích hợp Tự động kích hoạt khi mở app)
 function loadSavedMembers() {
     const data = JSON.parse(localStorage.getItem('fengshui_members') || '[]');
     const savedPanel = document.getElementById('savedPanel'); 
@@ -4585,16 +4560,25 @@ function loadSavedMembers() {
     data.forEach(m => {
         const chip = document.createElement('div');
         chip.className = 'saved-chip';
-        // Giữ cấu trúc hàm gốc truyền ID vào xử lý sự kiện
+        // Thêm màu sắc phân biệt trực quan dựa trên giới tính lưu trữ
+        const genderIcon = (String(m.gender).toLowerCase() === 'female' || String(m.gender).toLowerCase() === 'nữ') ? '👩‍💼' : '👨‍💼';
         chip.innerHTML = `
-            <span onclick="selectMember(${m.id})" style="cursor:pointer;">👤 ${m.name}</span>
+            <span onclick="selectMember(${m.id})" style="cursor:pointer;">${genderIcon} ${m.name}</span>
             <span class="del-btn" onclick="deleteMember(event, ${m.id})" style="margin-left:8px; cursor:pointer; font-weight:bold;">×</span>
         `;
         savedContainer.appendChild(chip);
     });
+
+    // ✨ TỰ ĐỘNG KHÔI PHỤC KHI MỞ ỨNG DỤNG VÀO: Lấy lại người active gần nhất
+    const activeId = localStorage.getItem('fengshui_active_member_id');
+    if (activeId && !document.getElementById('userName').dataset.initialized) {
+        // Đánh dấu đã kích hoạt lần đầu để tránh vòng lặp vô hạn (Racing Condition)
+        document.getElementById('userName').dataset.initialized = "true";
+        setTimeout(() => selectMember(parseInt(activeId, 10)), 60);
+    }
 }
 
-// 3. CHỌN THÀNH VIÊN TRONG DANH SÁCH (Đồng bộ tức thì toán pháp)
+// 3. CHỌN THÀNH VIÊN TRONG DANH SÁCH (Đồng bộ tức thì toán pháp & Nhảy giới tính chuẩn xác)
 function selectMember(id) {
     const data = JSON.parse(localStorage.getItem('fengshui_members') || '[]');
     const m = data.find(item => item.id === id);
@@ -4605,10 +4589,26 @@ function selectMember(id) {
             txtUser.value = m.name;
             txtUser.style.color = '#fff';
         }
-        document.getElementById('gender').value = m.gender;
+        
+        // 🔮 THÔNG MINH CAO CẤP: Ép ô chọn giới tính nhảy chuẩn xác tuyệt đối
+        const genderSelect = document.getElementById('gender');
+        if (genderSelect) {
+            let gVal = String(m.gender).trim().toLowerCase();
+            if (gVal === 'female' || gVal === 'nữ' || gVal === 'nu') {
+                genderSelect.value = 'female';
+            } else {
+                genderSelect.value = 'male';
+            }
+            // Kích hoạt sự kiện change thủ công để ép DOM cập nhật giao diện trực quan lập tức
+            genderSelect.dispatchEvent(new Event('change'));
+        }
+
         document.getElementById('birthDay').value = m.birthDay;
         document.getElementById('birthMonth').value = m.birthMonth;
         document.getElementById('birthYear').value = m.birthYear;
+        
+        // Ghi nhớ ID thực thể đang được xem hiện tại vào bộ nhớ máy
+        localStorage.setItem('fengshui_active_member_id', id);
         
         // Kích hoạt tái tính toán toàn bộ hệ thống ngay khi đổi người
         if (typeof recalculateFate === 'function') {
@@ -4623,6 +4623,13 @@ function deleteMember(event, id) {
     let data = JSON.parse(localStorage.getItem('fengshui_members') || '[]');
     data = data.filter(m => m.id !== id);
     localStorage.setItem('fengshui_members', JSON.stringify(data));
+    
+    // Nếu xóa đúng người đang active, dọn dẹp biến nhớ tạm thời luôn
+    const activeId = localStorage.getItem('fengshui_active_member_id');
+    if (activeId && parseInt(activeId, 10) === id) {
+        localStorage.removeItem('fengshui_active_member_id');
+    }
+
     loadSavedMembers();
 }
 
@@ -4655,6 +4662,7 @@ function clearAllData() {
     if (txtUser) {
         txtUser.value = 'Người Tầm Phương';
         txtUser.style.color = '#aaa';
+        txtUser.removeAttribute('data-initialized'); // Giải phóng khóa chốt chặn mở app
     }
     document.getElementById('gender').value = 'male';
     document.getElementById('birthDay').value = '';
