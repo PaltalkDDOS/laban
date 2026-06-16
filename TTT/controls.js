@@ -1661,11 +1661,13 @@ function getLuanDoanChiTiet(huong, son) {
  * tự động bật Led cảnh báo khi kim đỏ thực tế lọt khít dải độ vàng ảo của triggerGhostNeedle.
  */
 function updateCompassUI(heading) {
-    // 1. TÍNH GÓC THỰC TẾ (Đã bù trừ độ lệch từ trường tuyệt đối)
+    // 1. TÍNH GÓC THỰC TẾ CỤC BỘ (Chỉ dùng để xoay đĩa la bàn)
     let trueHeading = (heading + (magneticDeclination % 360) + 360) % 360;
-    currentHeading = Math.round(trueHeading);
     
-    // Xoay la bàn theo góc THỰC TẾ và cập nhật thanh trượt
+    // KHÓA CỨNG: Biến toàn cục chỉ giữ góc vật lý gốc (Chữ số tọa độ sẽ đứng im không bị nhảy dồn)
+    currentHeading = Math.round(heading);
+    
+    // Xoay la bàn theo góc thực tế đã bù trừ, nhưng thanh trượt giữ theo hướng máy
     if (compass) compass.style.transform = `rotate(${-trueHeading}deg)`;
     if (needle) needle.style.transform = `rotate(0deg)`;
     if (compassSlider) compassSlider.value = currentHeading;
@@ -2001,9 +2003,10 @@ function updateCompassUI(heading) {
         const scoreBadgeEl = document.getElementById('ghost-score-badge');
         
         ghost.style.opacity = "1";
-        ghost.style.transform = `translate(-50%, -50%) rotate(${targetAngle - currentHeading}deg)`;
+        // Đồng bộ kim ảo theo trueHeading (góc la bàn thực tế sau khi tính toán đa tầng)
+        ghost.style.transform = `translate(-50%, -50%) rotate(${targetAngle - trueHeading}deg)`;
         
-        let saiSoGoc = Math.abs(currentHeading - targetAngle) % 360;
+        let saiSoGoc = Math.abs(trueHeading - targetAngle) % 360;
         if (saiSoGoc > 180) saiSoGoc = 360 - saiSoGoc;
 
         // TIÊU CHUẨN ĐỊA LÝ CAO CẤP: Sai lệch dưới 1.5 độ bọc lót đồng bộ Neon phát quang
@@ -2151,48 +2154,46 @@ function getTamSat24Son(cuc) {
 }
 
 function updateDegreeDisplay(degree) {
-    // 1. Chuẩn hóa góc kim (Đảm bảo không bao giờ tràn số)
-    const normalized = ((degree % 360) + 360) % 360;
-    const currentHeading = Math.round(normalized);
+    // 1. Chuẩn hóa góc kim vật lý (Đảm bảo chữ số tọa độ luôn phản ánh hướng thực tế của thiết bị)
+    const normalizedPhysical = ((degree % 360) + 360) % 360;
+    const currentHeadingRound = Math.round(normalizedPhysical);
 
-    // 2. ĐỒNG BỘ NGUỒN DỮ LIỆU ĐỘNG:
-    // Lấy năm từ surveyYear (năm khảo sát thực) thay vì birthYear (năm sinh mệnh chủ)
+    // 2. Định hình tọa độ Phong Thủy thực thời (True Heading) dùng cho quét Thần Sát và Địa Mạch
+    const trueHeading = ((normalizedPhysical + magneticDeclination) % 360 + 360) % 360;
+
     const txtNamKhaoSat = document.getElementById('surveyYear'); 
     const namKhaoSatThucTe = (txtNamKhaoSat && txtNamKhaoSat.value.length === 4) 
                             ? parseInt(txtNamKhaoSat.value, 10) 
                             : new Date().getFullYear();
 
-    // 3. Truy xuất các thông số cốt tủy
-    const currentCung = getCungName(normalized);
-    const sonObj = getSonObjByDegree(normalized);
+    // TOÀN BỘ MẠNG LƯỚI ĐỊA LÝ PHẢI ĐỌC THEO TRUE HEADING ĐỂ ĐỒNG BỘ VỚI LÕI ĐA TẦNG
+    const currentCung = getCungName(trueHeading);
+    const sonObj = getSonObjByDegree(trueHeading);
     const sonName = sonObj.name;
-    const currentHauInfo = getCurrentHauInfo(normalized);
-    const khongVongInfo = kiemTraKhongVong(normalized);
+    const currentHauInfo = getCurrentHauInfo(trueHeading);
+    const khongVongInfo = kiemTraKhongVong(trueHeading);
 
-    // 4. Tính điểm thực thời (PT) với tham số đầu vào là năm khảo sát thực tế
     let tongDiemHTML = "";
-    let colorDiemRealtime = "#8a8a8f"; // Màu mặc định nếu chưa có dữ liệu
+    let colorDiemRealtime = "#8a8a8f";
 
     if (typeof chủMệnh !== 'undefined' && chủMệnh) {
         const mucDichHienTai = document.getElementById('purpose')?.value || 'house';
-        // Truyền năm khảo sát thực tế vào để hệ thống tự tính biến thiên (K_Van, SatTinh)
-        const tongHop = tinhDiemTongHop(chủMệnh, normalized, namKhaoSatThucTe, mucDichHienTai);
+        // Nhất quán gọi Engine lõi tích hợp Đất và Người
+        const tongHop = tinhDiemTongHop(chủMệnh, trueHeading, namKhaoSatThucTe, mucDichHienTai);
         
-        // MỐC ĐẠT CÁCH VẬN 9 (72PT làm ngưỡng cửa sinh khí)
-        if (tongHop.diem >= 72) colorDiemRealtime = "#30d158"; // Cát Vị trở lên
-        else if (tongHop.diem >= 50) colorDiemRealtime = "#ffd700"; // Trung bình
-        else colorDiemRealtime = "#ff3b30"; // Hung
+        if (tongHop.diem >= 72) colorDiemRealtime = "#30d158";
+        else if (tongHop.diem >= 50) colorDiemRealtime = "#ffd700";
+        else colorDiemRealtime = "#ff3b30";
 
         tongDiemHTML = `<div style="font-size: 0.95rem; font-weight: 850; color: ${colorDiemRealtime}; background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 5px;">${tongHop.diem}pt (${tongHop.level})</div>`;
     }
 
-    // 5. RENDER UI ĐỒNG BỘ
     const degreeTxt = document.getElementById('degree-txt') || document.getElementById('degreeTxt');
     if (degreeTxt) {
         degreeTxt.innerHTML = `
             <div style="display: grid; gap: 4px; font-family: sans-serif;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 1.8rem; font-weight: 900; color: #ffca28;">${currentHeading}°</span>
+                    <span style="font-size: 1.8rem; font-weight: 900; color: #ffca28;">${currentHeadingRound}°</span>
                     <span style="font-size: 0.95rem; font-weight: bold; color: #ffffff;">${currentCung}</span>
                     <span style="font-size: 0.9rem; background: #3a3a3c; padding: 2px 8px; border-radius: 4px;">Sơn: ${sonName}</span>
                 </div>
@@ -2852,11 +2853,9 @@ function handleOrientation(event) {
     });
 }
 
-/**
- * 2. CÁC HÀM CẬP NHẬT GIAO DIỆN LA BÀN (Nâng cấp nhận 2 luồng góc)
- */
 function executeUIUpdate(headingDial, headingText) {
-    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial);
+    // Ép đồng bộ tất cả các hàm hạ tầng sử dụng chung luồng góc vật lý thô (headingText)
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingText);
     if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText);
     if (typeof recalculateFate === 'function') recalculateFate();
 }
@@ -3071,14 +3070,11 @@ function updateMagneticDeclination() {
     let val = input.value;
     magneticDeclination = (val === '-' || val === '.' || val.trim() === '') ? 0 : parseFloat(val) || 0;
     
-    // 🔮 BIỆN CHỨNG TĨNH: Khi nhập số lệch từ, chỉ xoay mặt la bàn và tính lại điểm, KHÔNG chạm vào số chữ hiển thị
-    if (typeof updateCompassUI === 'function' && typeof lastHeading === 'number') {
-        const headingForDial = (lastHeading + magneticDeclination + 360) % 360;
-        
-        updateCompassUI(headingForDial); // 1. Ép mặt la bàn xoay đi theo độ lệch mới
-        if (typeof recalculateFate === 'function') recalculateFate(); // 2. Tái tính toán cát hung theo mặt đĩa mới
-        
-        // Tuyệt đối KHÔNG gọi hàm updateDegreeDisplay ở đây -> Con số tọa độ chữ sẽ đứng im 100%!
+    // Nếu người dùng đã đo đạc trước đó, kích hoạt chuỗi tính toán lại chuẩn xác theo góc thô
+    if (typeof lastHeading === 'number') {
+        if (typeof updateCompassUI === 'function') updateCompassUI(lastHeading);
+        if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(lastHeading);
+        if (typeof recalculateFate === 'function') recalculateFate();
     }
 }
 
