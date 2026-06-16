@@ -4207,11 +4207,14 @@ function render24SonRing() {
         });
     }
 
-    // 4. Vòng 24 Sao Phúc Đức - ĐÃ TỐI ƯU SẠCH (Không chứa filter gây lag)
+    // 4. Vòng 24 Sao Phúc Đức - PHỐI MÀU NEON ĐA TẦNG (Không chứa filter gây lag)
     const phucDucRingSvg = document.getElementById('phucDucRingSvg');
     if (phucDucRingSvg) {
         phucDucRingSvg.innerHTML = "";
         const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
+        
+        // Ma trận trích xuất Cát Tinh chính tông để gán bộ lọc màu
+        const catStars = ["Phúc Đức", "Tấn Tài", "Quan Tước", "Quan Quý", "Vượng Trang", "Hưng Phước", "Vượng Tài", "Đăng Doanh", "Vượng Tâm", "Vinh Phước"];
        
         phucDucNames.forEach((name, index) => {
             const goc = (index * 15) % 360;
@@ -4220,14 +4223,19 @@ function render24SonRing() {
             textNode.setAttribute("y", "72");
             textNode.setAttribute("text-anchor", "middle");
             textNode.setAttribute("font-size", "6.8");
-            textNode.setAttribute("font-weight", "700");
+            textNode.setAttribute("font-weight", "900"); // Đẩy lên 900 để nét chữ dày, giả lập thanh led neon tốt hơn
             textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
             textNode.setAttribute("data-sao-goc", goc.toString());
             textNode.setAttribute("data-base-size", "6.8");
             textNode.textContent = name;
 
-            // Dùng màu vàng đồng nguyên bản, cực nhẹ cho máy quay
-            textNode.setAttribute("fill", "#b8a36f"); 
+            // BIỆN CHỨNG KHỚP LOGIC LED: Sử dụng mã màu tương thích 100% với hàm kichHoatDenLedQuet của bạn
+            // Sao Cát -> Dùng màu #00a525 (Khi la bàn quét qua tự chuyển thành #00ff00 cực mạnh)
+            // Sao Hung -> Dùng màu #ff3b30 (Khi la bàn quét qua tự chuyển thành #ff0000 rực lửa)
+            const color = catStars.includes(name) ? "#00a525" : "#ff3b30";
+            
+            textNode.setAttribute("fill", color);
+            textNode.setAttribute("data-color", color); // Bắt buộc phải có để hàm quét nhận diện đổi màu
             phucDucRingSvg.appendChild(textNode);
         });
     }
@@ -4253,12 +4261,12 @@ function render24SonRing() {
 
             let color;
             if (hau.chatLuong.includes("Cát")) {
-                color = "#a8c46f"; 
-            } else if (hau.chatLuong.includes("Hung")) {
-                color = "#e07a5f"; 
-            } else {
-                color = "#d4af37"; 
-            }
+                color = "#0e6b0e"; // Xanh lá đại ngàn (Tĩnh trầm, khi trúng LED quét hóa Vàng rực sẽ cực nổi)
+           } else if (hau.chatLuong.includes("Hung")) {
+                color = "#8b0000"; // Đỏ đô / Đỏ rượu chát (Trầm ấm, huyền bí, không bị lòe loẹt)
+           } else {
+                color = "#7a631d"; // Vàng đồng trầm nguyên bản
+           }
             
             textNode.setAttribute("fill", color);
             textNode.setAttribute("data-original-fill", color);
