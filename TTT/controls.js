@@ -1802,7 +1802,8 @@ function updateCompassUI(heading) {
         }
 
         if (adviceBox) adviceBox.style.display = 'none';
-        if (typeof kichHoatDenLedQuet === 'function') kichHoatDenLedQuet(currentHeading);
+        // ĐÃ SỬA: Chuyển sang trueHeading để chế độ đo tự do cũng sáng đúng tâm khi lệch từ
+        if (typeof kichHoatDenLedQuet === 'function') kichHoatDenLedQuet(Math.round(trueHeading));
         return;
     }
 
@@ -1994,7 +1995,8 @@ function updateCompassUI(heading) {
     }
 
     // ==================== 8. TRIGGER REALTIME EFFECTS ====================
-    if (typeof kichHoatDenLedQuet === 'function') kichHoatDenLedQuet(currentHeading);
+    // ĐÃ SỬA: Chuyển sang trueHeading để chế độ luận đoán nâng cao sáng khớp trục tâm la bàn
+    if (typeof kichHoatDenLedQuet === 'function') kichHoatDenLedQuet(Math.round(trueHeading));
     
     // ==================== 9. SMART GHOST NEEDLE REALTIME ALIGNMENT ====================
     if (typeof targetAngle !== 'undefined' && targetAngle !== null && document.getElementById('ghostNeedle')) {
