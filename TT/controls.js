@@ -673,10 +673,12 @@ function recalculateFate() {
         </div>`;
         listPanelTitle.innerText = "Mạng lưới phương vị la bàn";
         const oldPanel = document.getElementById('dien-giai-bo-sung');
-        if (oldPanel) oldPanel.remove();
-        updateCompassUI(currentHeading);
-        return;
-    }
+if (oldPanel) oldPanel.remove();
+
+// Tính góc đồ họa (đã bù trừ lệch từ) để mặt la bàn xoay, số độ thô giữ nguyên
+const visualHeading = ((currentHeading + (magneticDeclination || 0)) % 360 + 360) % 360;
+updateCompassUI(visualHeading, currentHeading); // ✅ ĐÚNG: Truyền đủ bộ đôi (Đồ họa, Số thô)
+return;
 
     let d = parseInt(dayStr, 10);
     let m = parseInt(monthStr, 10);
@@ -794,7 +796,10 @@ function recalculateFate() {
     `;
 
     generateDirectionsList();
-    updateCompassUI(currentHeading);
+    
+    // Trong hàm của bạn đã tính sẵn góc địa lý thực tế rất chuẩn ở biến `realHeading` rồi
+    // Giờ ta chỉ cần truyền `realHeading` để xoay đồ họa, và `headingToCalculate` để khóa im số độ hiển thị
+    updateCompassUI(realHeading, headingToCalculate); // ✅ ĐÚNG: Mặt la bàn xoay, tọa độ chữ đứng im
 }
 
 function getCurrentHauInfo(degree, mucDich = 'house', namKhaoSat = null, cungPhi = 'Khảm', namAm = null) {
@@ -1656,17 +1661,12 @@ function getLuanDoanChiTiet(huong, son) {
  * Quét cảm biến trắc địa thực tế, quay đồ hình la bàn, đồng bộ hóa tham số ngày sinh thời thực lên màn hình,
  * tự động bật Led cảnh báo khi kim đỏ thực tế lọt khít dải độ vàng ảo của triggerGhostNeedle.
  */
-function updateCompassUI(visualHeading, displayHeading) {
-    // =========================================================================
-    // ⚡ BÓC TÁCH LUỒNG: GÓC XOAY ĐỒ HỌA VS SỐ ĐỘ HIỂN THỊ THÔ
-    // =========================================================================
-    // 1. Góc trueHeading này dùng để xoay mặt la bàn đồ họa và tính ma trận Phong Thủy bên dưới
-    let trueHeading = visualHeading; 
+function updateCompassUI(heading) {
+    // 1. TÍNH GÓC THỰC TẾ (Đã bù trừ độ lệch từ trường tuyệt đối)
+    let trueHeading = (heading + (magneticDeclination % 360) + 360) % 360;
+    currentHeading = Math.round(trueHeading);
     
-    // 2. Biến currentHeading bây giờ khóa chặt vào số độ thô của máy (MÁY ĐỨNG IM -> SỐ ĐỨNG IM TỰ NHIÊN)
-    currentHeading = Math.round(displayHeading);
-    
-    // Xoay la bàn theo góc đồ họa thực tế và cập nhật thanh trượt theo số độ thô
+    // Xoay la bàn theo góc THỰC TẾ và cập nhật thanh trượt
     if (compass) compass.style.transform = `rotate(${-trueHeading}deg)`;
     if (needle) needle.style.transform = `rotate(0deg)`;
     if (compassSlider) compassSlider.value = currentHeading;
