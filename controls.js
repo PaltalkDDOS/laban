@@ -2192,12 +2192,14 @@ function getTamSat24Son(cuc) {
 }
 
 function updateDegreeDisplay(degree) {
+    // FIX TỬ HUYỆT 1: Ép hạ tầng hiển thị thời gian thực bám chặt góc thô màn hình của ông chỉ
     const normalizedPhysical = ((degree % 360) + 360) % 360;
     const currentHeadingRound = Math.round(normalizedPhysical);
 
     const txtNamKhaoSat = document.getElementById('surveyYear'); 
     const namKhaoSatThucTe = (txtNamKhaoSat && txtNamKhaoSat.value.length === 4) ? parseInt(txtNamKhaoSat.value, 10) : new Date().getFullYear();
 
+    // TOÀN BỘ MẠNG LƯỚI ĐỊA LÝ ĐỌC THEO ĐÚNG ĐỘ GỐC TRÊN MÀN HÌNH ĐỂ TRÁNH LỆCH PHA DỮ LIỆU
     const currentCung = getCungName(normalizedPhysical);
     const sonObj = PhongThuyCore.getSonObj(normalizedPhysical);
     const sonName = sonObj.name;
@@ -2217,6 +2219,7 @@ function updateDegreeDisplay(degree) {
 
     if (typeof chủMệnh !== 'undefined' && chủMệnh) {
         const mucDichHienTai = document.getElementById('purpose')?.value || 'house';
+        // Gọi thẳng toạ độ thực tế gốc không nhồi thêm độ lệch từ phụ
         const tongHop = tinhDiemTongHop(chủMệnh, normalizedPhysical, namKhaoSatThucTe, mucDichHienTai, namAmMệnhChủ);
         
         if (tongHop.diem >= 72) colorDiemRealtime = "#30d158";
@@ -2844,6 +2847,7 @@ function handleOrientation(event) {
     if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
     lastUpdateTime = now;
 
+    // TRẢ LẠI NGUYÊN BẢN: Giữ nguyên hàm khởi tạo đầu chuẩn xác nạp độ lệch từ của ông
     if (lastHeading === null) {
         lastHeading = rawHeading;
         const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360;
@@ -2867,9 +2871,11 @@ function handleOrientation(event) {
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
 
+    // FIX TỬ HUYỆT 1: Số hiển thị và số góc tính toán giữ đồng trục toạ độ máy chỉ
     const headingForText = lastHeading; 
     const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
 
+    // ĐỒNG BỘ LUỒNG TOÀN HỆ THỐNG: Khóa chặt currentHeading bám theo trục chữ số máy chỉ
     if (typeof currentHeading !== 'undefined') currentHeading = headingForText;
 
     if (absDiff > 0.4) {
@@ -2888,8 +2894,8 @@ function handleOrientation(event) {
 }
 
 function executeUIUpdate(headingDial, headingText) {
-    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial); 
-    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); 
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial); // Xoay đĩa la bàn ảo chịu lệch từ
+    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); // In chữ và tính điểm theo số thực tế
     if (typeof recalculateFate === 'function') recalculateFate();
 }
 
