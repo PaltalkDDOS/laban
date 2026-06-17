@@ -2858,11 +2858,11 @@ function handleOrientation(event) {
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
 
-    // [GIAO THỨC CHỐNG LOẠN PHƯƠNG VỊ]: Tách luồng góc độc lập dữ liệu và giao diện
-    const headingRawPhysical = lastHeading; 
-    const headingTrueGeographic = (lastHeading + (magneticDeclination || 0) + 360) % 360;
+    // GIAO THỨC PHÂN TÁCH GÓC: Chữ số hiển thị và lõi tính toán bám chặt vào góc thô vật lý máy chỉ
+    const headingForText = lastHeading; 
+    const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
 
-    if (typeof currentHeading !== 'undefined') currentHeading = headingTrueGeographic;
+    if (typeof currentHeading !== 'undefined') currentHeading = headingForText;
 
     if (absDiff > 0.4) {
         const btnTongLuan = document.getElementById('btn-tong-luan');
@@ -2873,14 +2873,14 @@ function handleOrientation(event) {
 
     if (rafId) cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(() => {
-        executeUIUpdate(headingTrueGeographic, headingRawPhysical);
+        executeUIUpdate(headingForDial, headingForText);
     });
 }
 
-function executeUIUpdate(headingTrue, headingRaw) {
-    // Trực tiếp bơm góc cấu trúc đã phân tách rõ ràng vào hạ tầng hiển thị và tính toán
-    if (typeof updateCompassUI === 'function') updateCompassUI(headingRaw);
-    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingRaw);
+function executeUIUpdate(headingDial, headingText) {
+    // updateCompassUI nhận góc thô để tính toán địa chất tĩnh bên trong, tự bù từ riêng cho mặt đĩa đồ họa
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingText); 
+    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); 
     if (typeof recalculateFate === 'function') recalculateFate();
 }
 
