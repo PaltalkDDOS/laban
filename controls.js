@@ -4448,6 +4448,9 @@ function getSvgArcPath(cx, cy, rIn, rOut, startAngle, endAngle) {
 // =========================================================================
 // 🎨 ENGINE CẬP NHẬT MÀU NỀN HUNG CÁT (ĐÃ TỐI ƯU HÓA HIỆU NĂNG CAO)
 // =========================================================================
+// =========================================================================
+// 🎨 ENGINE CẬP NHẬT MÀU NỀN HUNG CÁT (HIỆU ỨNG ĐÈN NEON SÁNG CHỐNG CHÓI)
+// =========================================================================
 function updateBatTrachBackground(cungPhi) {
     const bgGroup = document.getElementById('batTrachBackgroundRing');
     if (!bgGroup) return;
@@ -4456,10 +4459,13 @@ function updateBatTrachBackground(cungPhi) {
     let existingPaths = bgGroup.querySelectorAll('path');
     const isInitialized = existingPaths.length === 8;
 
-    // Nếu chưa nhập năm sinh hoặc dữ liệu trống, chỉ ẩn màu đi chứ không xóa DOM để giữ hiệu năng
+    // Nếu chưa nhập năm sinh hoặc dữ liệu trống, ẩn màu và viền đi để giữ hiệu năng
     if (!cungPhi) {
         if (isInitialized) {
-            existingPaths.forEach(path => path.setAttribute('fill', 'none'));
+            existingPaths.forEach(path => {
+                path.setAttribute('fill', 'none');
+                path.setAttribute('stroke', 'none');
+            });
         } else {
             bgGroup.innerHTML = "";
         }
@@ -4483,37 +4489,50 @@ function updateBatTrachBackground(cungPhi) {
     
     if (!mapTrach) {
         if (isInitialized) {
-            existingPaths.forEach(path => path.setAttribute('fill', 'none'));
+            existingPaths.forEach(path => {
+                path.setAttribute('fill', 'none');
+                path.setAttribute('stroke', 'none');
+            });
         } else {
             bgGroup.innerHTML = "";
         }
         return;
     }
     
-    // NẾU ĐÃ KHỞI TẠO: Chỉ cập nhật thuộc tính màu sắc (Siêu nhanh, không tính toán lại)
+    // NẾU ĐÃ KHỞI TẠO: Chỉ cập nhật thuộc tính màu sắc & viền Neon (Tốc độ tối đa)
     if (isInitialized) {
         directions.forEach((dir, index) => {
             const cungTrạch = mapTrach[dir.code];
             const isCat = cungPhầnTrăm[cungTrạch]?.cát;
-            const fillColor = isCat ? "rgba(48, 209, 88, 0.22)" : "rgba(255, 59, 48, 0.22)";
             
-            // Thay đổi trực tiếp thuộc tính màu của phần tử DOM có sẵn
+            // 💡 CẤU HÌNH MÀU NEON CHỐNG CHÓI CHỮ:
+            // - Mảng Cát (Xanh): Mã màu gốc #00ffaa phát sáng mạnh, hạ Alpha nền xuống 0.12, giữ viền sáng 0.7
+            // - Mảng Hung (Đỏ):  Mã màu gốc #ff1744 đỏ điện tử cực tươi, hạ Alpha nền xuống 0.12, giữ viền sáng 0.7
+            const fillColor = isCat ? "rgba(0, 255, 170, 0.12)" : "rgba(255, 23, 68, 0.12)";
+            const strokeColor = isCat ? "rgba(0, 255, 170, 0.70)" : "rgba(255, 23, 68, 0.70)";
+            
+            // Thay đổi trực tiếp các thuộc tính hiển thị đồ họa nền có sẵn
             existingPaths[index].setAttribute('fill', fillColor);
+            existingPaths[index].setAttribute('stroke', strokeColor);
+            existingPaths[index].setAttribute('stroke-width', '1.2');
         });
         return; 
     }
     
-    // NẾU CHƯA KHỞI TẠO (Chỉ chạy duy nhất một lần đầu tiên khi tải dữ liệu)
+    // NẾU CHƯA KHỞI TẠO (Chỉ chạy duy nhất một lần đầu tiên khi dựng đĩa la bàn)
     let html = "";
     const cx = 250, cy = 250, rIn = 185, rOut = 244;
     
     directions.forEach(dir => {
         const cungTrạch = mapTrach[dir.code];
         const isCat = cungPhầnTrăm[cungTrạch]?.cát;
-        const fillColor = isCat ? "rgba(48, 209, 88, 0.22)" : "rgba(255, 59, 48, 0.22)";
+        
+        // Đồng bộ cấu hình màu Neon cho lượt tạo đầu tiên
+        const fillColor = isCat ? "rgba(0, 255, 170, 0.12)" : "rgba(255, 23, 68, 0.12)";
+        const strokeColor = isCat ? "rgba(0, 255, 170, 0.70)" : "rgba(255, 23, 68, 0.70)";
         
         const pathStr = getSvgArcPath(cx, cy, rIn, rOut, dir.start, dir.end);
-        html += `<path d="${pathStr}" fill="${fillColor}" stroke="none" />`;
+        html += `<path d="${pathStr}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="1.2" />`;
     });
     
     bgGroup.innerHTML = html;
