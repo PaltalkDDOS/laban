@@ -2859,12 +2859,12 @@ function handleOrientation(event) {
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
 
-    // PHÂN TÁCH LUỒNG: headingForText giữ góc thô vật lý, headingForDial chịu độ lệch từ để xoay đĩa
-    const headingForText = lastHeading; 
-    const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
+    // [GIAO THỨC PHÂN TÁCH GÓC]: Tách biệt rõ ràng trục đĩa la bàn và trục số liệu tính toán
+    const headingRawPhysical = lastHeading; 
+    const headingTrueGeographic = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
 
-    // Khóa cứng currentHeading theo hướng vật lý thô để chặn đứng hiện tượng nhảy số hệ thống
-    if (typeof currentHeading !== 'undefined') currentHeading = headingForText;
+    // Khóa chặt currentHeading theo trục số thực tế địa chất nằm im của máy chỉ
+    if (typeof currentHeading !== 'undefined') currentHeading = headingRawPhysical;
 
     if (absDiff > 0.4) {
         const btnTongLuan = document.getElementById('btn-tong-luan');
@@ -2875,14 +2875,14 @@ function handleOrientation(event) {
 
     if (rafId) cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(() => {
-        executeUIUpdate(headingForDial, headingForText);
+        executeUIUpdate(headingTrueGeographic, headingRawPhysical);
     });
 }
 
 function executeUIUpdate(headingDial, headingText) {
-    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial); // Chỉ đĩa la bàn được phép xoay tịnh tiến
-    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); // Chữ số realtime giữ nguyên góc thô
-    if (typeof recalculateFate === 'function') recalculateFate(); // Logic tính toán bám chặt góc thô địa tầng
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial); // Đĩa xoay nhận góc tịnh tiến bù lệch từ
+    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); // Số hiển thị bám chặt góc thô vật lý
+    if (typeof recalculateFate === 'function') recalculateFate(); // Lõi tính luận đoán dùng góc thô vật lý cố định
 }
 
 // Cập nhật trạng thái nhiễu dành riêng cho phần cứng iOS (Đã tối ưu giảm tải DOM)
