@@ -2859,12 +2859,12 @@ function handleOrientation(event) {
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
 
-    // [GIAO THỨC PHÂN TÁCH GÓC]: Tách biệt rõ ràng trục đĩa la bàn và trục số liệu tính toán
-    const headingRawPhysical = lastHeading; 
-    const headingTrueGeographic = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
+    // PHÂN TÁCH LUỒNG GÓC TUYỆT ĐỐI THEO TRIẾT LÝ CỦA ÔNG
+    const headingForText = lastHeading; // 1. Góc thô vật lý cố định (địa chất nằm im)
+    const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; // 2. Góc tịnh tiến dành riêng cho mặt đĩa xoay
 
-    // Khóa chặt currentHeading theo trục số thực tế địa chất nằm im của máy chỉ
-    if (typeof currentHeading !== 'undefined') currentHeading = headingRawPhysical;
+    // KHÓA CHẶT: Toàn bộ công thức tính toán phong thủy số chỉ được phép ăn theo ĐỘ THÔ
+    if (typeof currentHeading !== 'undefined') currentHeading = headingForText;
 
     if (absDiff > 0.4) {
         const btnTongLuan = document.getElementById('btn-tong-luan');
@@ -2875,14 +2875,14 @@ function handleOrientation(event) {
 
     if (rafId) cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(() => {
-        executeUIUpdate(headingTrueGeographic, headingRawPhysical);
+        executeUIUpdate(headingForDial, headingForText);
     });
 }
 
 function executeUIUpdate(headingDial, headingText) {
-    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial); // Đĩa xoay nhận góc tịnh tiến bù lệch từ
-    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); // Số hiển thị bám chặt góc thô vật lý
-    if (typeof recalculateFate === 'function') recalculateFate(); // Lõi tính luận đoán dùng góc thô vật lý cố định
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial); // Chỉ đĩa la bàn xoay tịnh tiến chịu lệch từ
+    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); // Chữ số hiển thị giữ cứng ĐỘ THÔ
+    if (typeof recalculateFate === 'function') recalculateFate(); // Lõi tính toán giữ cứng ĐỘ THÔ
 }
 
 // Cập nhật trạng thái nhiễu dành riêng cho phần cứng iOS (Đã tối ưu giảm tải DOM)
