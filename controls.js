@@ -2836,10 +2836,11 @@ function handleOrientation(event) {
     if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
     lastUpdateTime = now;
 
+    // Khởi tạo lần đầu: Đồng bộ phân tách đĩa xoay chịu lệch từ ngay từ frame đầu tiên
     if (lastHeading === null) {
         lastHeading = rawHeading;
-        const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360;
-        executeUIUpdate(headingForDial, lastHeading);
+        const headingForDialInit = (lastHeading + (magneticDeclination || 0) + 360) % 360;
+        executeUIUpdate(headingForDialInit, lastHeading);
         return;
     }
 
@@ -2859,12 +2860,12 @@ function handleOrientation(event) {
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
 
-    // PHÂN TÁCH LUỒNG GÓC TUYỆT ĐỐI THEO TRIẾT LÝ CỦA ÔNG
-    const headingForText = lastHeading; // 1. Góc thô vật lý cố định (địa chất nằm im)
-    const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; // 2. Góc tịnh tiến dành riêng cho mặt đĩa xoay
+    // [GIAO THỨC CHỐNG LOẠN PHƯƠNG VỊ PHONG THỦY SỐ]
+    const headingRawPhysical = lastHeading; // Hướng thô vật lý cố định địa tầng để in số và tính toán
+    const headingTrueGeographic = (lastHeading + (magneticDeclination || 0) + 360) % 360; // Chỉ dùng để xoay mặt đĩa la bàn
 
-    // KHÓA CHẶT: Toàn bộ công thức tính toán phong thủy số chỉ được phép ăn theo ĐỘ THÔ
-    if (typeof currentHeading !== 'undefined') currentHeading = headingForText;
+    // KHÓA CHẶT currentHeading theo toạ độ thô vật lý (Địa chất nằm im, không ăn theo độ lệch từ)
+    if (typeof currentHeading !== 'undefined') currentHeading = headingRawPhysical;
 
     if (absDiff > 0.4) {
         const btnTongLuan = document.getElementById('btn-tong-luan');
@@ -2875,14 +2876,15 @@ function handleOrientation(event) {
 
     if (rafId) cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(() => {
-        executeUIUpdate(headingForDial, headingForText);
+        executeUIUpdate(headingTrueGeographic, headingRawPhysical);
     });
 }
 
 function executeUIUpdate(headingDial, headingText) {
-    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial); // Chỉ đĩa la bàn xoay tịnh tiến chịu lệch từ
-    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); // Chữ số hiển thị giữ cứng ĐỘ THÔ
-    if (typeof recalculateFate === 'function') recalculateFate(); // Lõi tính toán giữ cứng ĐỘ THÔ
+    // Phân phối chính xác tham số vào các hàm hạ tầng
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial);     // Mặt đĩa nhận góc tịnh tiến -> Xoay bù từ tự động
+    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); // Chữ số nhận góc thô -> Cố định không nhảy số
+    if (typeof recalculateFate === 'function') recalculateFate();               // Lõi quét ma trận chạy theo trục thô vật lý
 }
 
 // Cập nhật trạng thái nhiễu dành riêng cho phần cứng iOS (Đã tối ưu giảm tải DOM)
