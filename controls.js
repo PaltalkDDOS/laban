@@ -693,6 +693,10 @@ function recalculateFate() {
         listPanelTitle.innerText = "Mạng lưới phương vị la bàn";
         const oldPanel = document.getElementById('dien-giai-bo-sung');
         if (oldPanel) oldPanel.remove();
+        
+        // Trả nền la bàn về trạng thái cổ điển sạch khi chưa có dữ liệu năm sinh
+        updateBatTrachBackground(null);
+        
         updateCompassUI(currentHeading);
         return;
     }
@@ -706,7 +710,10 @@ function recalculateFate() {
         return;
     }
 
+    // Tính toán Quẻ mệnh thực tế và kích hoạt ma trận đổ màu nền tự động
     chủMệnh = tínhCungPhi(y, m, d, gender);
+    updateBatTrachBackground(chủMệnh);
+
     const namAmMệnhChủ = (m < 2 || (m === 2 && d < 4)) ? y - 1 : y;
     const hanHinhCungPhi = bátTrạchMap[chủMệnh]?.element || "Thổ";
     const nhomMenh = bátTrạchMap[chủMệnh]?.group || "Tây Tứ Mệnh";
@@ -2838,8 +2845,7 @@ function handleOrientation(event) {
 
     if (lastHeading === null) {
         lastHeading = rawHeading;
-        const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360;
-        executeUIUpdate(headingForDial, lastHeading);
+        executeUIUpdate(lastHeading, lastHeading);
         return;
     }
 
@@ -2859,12 +2865,11 @@ function handleOrientation(event) {
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
 
-    // PHÂN TÁCH LUỒNG: Định vị rõ ràng 2 trục độc lập
-    const headingRawPhysical = lastHeading; // Hướng thô máy chỉ (Địa chất nằm im)
-    const headingTrueGeographic = (lastHeading + (magneticDeclination || 0) + 360) % 360; // Hướng đĩa ảo cần xoay bù từ
+    // GIAO THỨC PHÂN TÁCH GÓC: Chữ số hiển thị và lõi tính toán bám chặt vào góc thô vật lý máy chỉ
+    const headingForText = lastHeading; 
+    const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
 
-    // KHÓA CHẶT: Biến toàn cục hệ thống bắt buộc chạy theo tọa độ gốc thực tế
-    if (typeof currentHeading !== 'undefined') currentHeading = headingRawPhysical;
+    if (typeof currentHeading !== 'undefined') currentHeading = headingForText;
 
     if (absDiff > 0.4) {
         const btnTongLuan = document.getElementById('btn-tong-luan');
@@ -2875,13 +2880,13 @@ function handleOrientation(event) {
 
     if (rafId) cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(() => {
-        executeUIUpdate(headingTrueGeographic, headingRawPhysical);
+        executeUIUpdate(headingForDial, headingForText);
     });
 }
 
 function executeUIUpdate(headingDial, headingText) {
-    // Phân bổ đúng vai trò: Đĩa nhận góc bù từ để xoay - Chữ số và Lõi toán nhận góc thô cố định
-    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial); 
+    // updateCompassUI nhận góc thô để tính toán địa chất tĩnh bên trong, tự bù từ riêng cho mặt đĩa đồ họa
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingText); 
     if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); 
     if (typeof recalculateFate === 'function') recalculateFate();
 }
@@ -4401,6 +4406,80 @@ function manualRotate(value) {
     rafId = requestAnimationFrame(() => {
         updateCompassUI(lastHeading);
     });
+}
+// =========================================================================
+// 📐 HÀM VẼ PH N VÙNG VÀNH KHĂN (RING SECTOR ARC MULTI-LAYER)
+// =========================================================================
+function getSvgArcPath(cx, cy, rIn, rOut, startAngle, endAngle) {
+    const angleToRad = (angle) => (angle - 90) * Math.PI / 180.0;
+    const sIn = angleToRad(startAngle);
+    const eIn = angleToRad(endAngle);
+    
+    const x1_out = cx + rOut * Math.cos(sIn);
+    const y1_out = cy + rOut * Math.sin(sIn);
+    const x2_out = cx + rOut * Math.cos(eIn);
+    const y2_out = cy + rOut * Math.sin(eIn);
+    
+    const x1_in = cx + rIn * Math.cos(eIn);
+    const y1_in = cy + rIn * Math.sin(eIn);
+    const x2_in = cx + rIn * Math.cos(sIn);
+    const y2_in = cy + rIn * Math.sin(sIn);
+    
+    const largeArcFlag = (endAngle - startAngle) > 180 ? 1 : 0;
+    
+    return `M ${x1_out} ${y1_out} 
+            A ${rOut} ${rOut} 0 ${largeArcFlag} 1 ${x2_out} ${y2_out} 
+            L ${x1_in} ${y1_in} 
+            A ${rIn} ${rIn} 0 ${largeArcFlag} 0 ${x2_in} ${y2_in} Z`;
+}
+
+// =========================================================================
+// 🎨 ENGINE CẬP NHẬT MÀU NỀN HUNG CÁT L THIÊN THEO MỆNH CHỦ
+// =========================================================================
+function updateBatTrachBackground(cungPhi) {
+    const bgGroup = document.getElementById('batTrachBackgroundRing');
+    if (!bgGroup) return;
+    
+    // Nếu chưa nhập năm sinh hoặc dữ liệu trống, reset nền la bàn về trạng thái sạch tinh khiết
+    if (!cungPhi) {
+        bgGroup.innerHTML = "";
+        return;
+    }
+    
+    // Định biên tọa độ góc 8 hướng lớn đồng trục với đĩa xoay la bàn số
+    const directions = [
+        { code: 'N',  start: 337.5, end: 382.5 }, // Hướng Bắc (Khảm) bọc qua mốc thiên tâm
+        { code: 'NE', start: 22.5,  end: 67.5  }, // Đông Bắc (Cấn)
+        { code: 'E',  start: 67.5,  end: 112.5 }, // Đông (Chấn)
+        { code: 'SE', start: 112.5, end: 157.5 }, // Đông Nam (Tốn)
+        { code: 'S',  start: 157.5, end: 202.5 }, // Nam (Ly)
+        { code: 'SW', start: 202.5, end: 247.5 }, // Tây Nam (Khôn)
+        { code: 'W',  start: 247.5, end: 292.5 }, // Tây (Đoài)
+        { code: 'NW', start: 292.5, end: 337.5 }  // Tây Bắc (Càn)
+    ];
+    
+    let html = "";
+    const cx = 250, cy = 250, rIn = 185, rOut = 244;
+    const safeCungPhi = cungPhi.trim().charAt(0).toUpperCase() + cungPhi.trim().slice(1).toLowerCase();
+    const mapTrach = bátTrạchMap[safeCungPhi];
+    
+    if (!mapTrach) {
+        bgGroup.innerHTML = "";
+        return;
+    }
+    
+    directions.forEach(dir => {
+        const cungTrạch = mapTrach[dir.code];
+        const isCat = cungPhầnTrăm[cungTrạch]?.cát;
+        
+        // Phối tone màu Pastel bán trong suốt cao cấp (Alpha 0.22) không gây mỏi mắt, giữ nguyên nét chữ la bàn
+        const fillColor = isCat ? "rgba(48, 209, 88, 0.22)" : "rgba(255, 59, 48, 0.22)";
+        
+        const pathStr = getSvgArcPath(cx, cy, rIn, rOut, dir.start, dir.end);
+        html += `<path d="${pathStr}" fill="${fillColor}" stroke="none" />`;
+    });
+    
+    bgGroup.innerHTML = html;
 }
 
 // =========================================================================
