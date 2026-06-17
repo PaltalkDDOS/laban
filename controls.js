@@ -682,6 +682,7 @@ function recalculateFate() {
     const yearStr = document.getElementById('birthYear').value;
     const mucDich = document.getElementById('purpose').value; 
 
+    // ĐỒNG BỘ NĂM KHẢO SÁT THỰC TẾ TRƯỚC ĐỂ LÀM TRỤC QUÉT THỜI KHÔNG NIÊN TRẠCH
     const txtSurveyYear = document.getElementById('surveyYear'); 
     const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
 
@@ -693,10 +694,7 @@ function recalculateFate() {
         listPanelTitle.innerText = "Mạng lưới phương vị la bàn";
         const oldPanel = document.getElementById('dien-giai-bo-sung');
         if (oldPanel) oldPanel.remove();
-        
-        // FIX LỖI ĐÈ GÓC UI: Đồng bộ đĩa xoay theo đúng góc đĩa công nghệ đã bù từ trường
-        const headingDialCorrect = (currentHeading + (magneticDeclination || 0) + 360) % 360;
-        updateCompassUI(headingDialCorrect);
+        updateCompassUI(currentHeading);
         return;
     }
 
@@ -709,27 +707,37 @@ function recalculateFate() {
         return;
     }
 
+    // =========================================================================
+    // TRỤC 1: NHÂN MỆNH TĨNH - Năm sinh Âm lịch chuẩn xác theo Tiết Lập Xuân
+    // =========================================================================
     chủMệnh = tínhCungPhi(y, m, d, gender);
     const namAmMệnhChủ = (m < 2 || (m === 2 && d < 4)) ? y - 1 : y;
     const hanHinhCungPhi = bátTrạchMap[chủMệnh]?.element || "Thổ";
     const nhomMenh = bátTrạchMap[chủMệnh]?.group || "Tây Tứ Mệnh";
 
+    // =========================================================================
+    // TRỤC 2: THIÊN THỜI ĐỘNG - Bốc sao đại cục dựa theo NĂM KHẢO SÁT THỰC TẾ
+    // =========================================================================
     const nguHoangInfo = getNguHoangInfo(namKhaoSatThucTe); 
 
+    // Cập nhật Banner thông tin trần trạch cốt lõi
     fateTxt.innerText = `${name}: Cung ${chủMệnh} (${nhomMenh}) - Bản Mệnh Ngũ Hành: ${hanHinhCungPhi} | Năm sinh Âm: ${namAmMệnhChủ} | Thần sát Lưu Niên: ${nguHoangInfo}`;
 
     let headingToCalculate = isDetailOpen && lockedHeadingAtOpen !== null ? lockedHeadingAtOpen : currentHeading;
+    
+    // SỬA LỖI TỬ HUYỆT: currentHeading vốn đã được tích hợp magneticDeclination từ hàm handleOrientation,
+    // do đó sử dụng trực tiếp để tránh lỗi cộng dồn sai lệch tọa độ địa mạch.
     const realHeading = ((headingToCalculate % 360) + 360) % 360; 
 
     const hanhPhuongVi = getHanhByHeading(realHeading);
     const sonInfo = layThongTin24Son(realHeading, chủMệnh, namAmMệnhChủ);
     const currentSonHuong = sonInfo.huong;
 
-    // Ném thẳng góc tọa độ màn hình vào lõi đa tầng (Triệt tiêu hoàn toàn cộng dồn sai số lệch từ)
+    // TRUYỀN ĐỒNG THỜI CẢ 2 NĂM RẠCH RÒI VÀO ENGINE TÍNH ĐIỂM ĐA TẦNG
     const tongHop = tinhDiemTongHop(chủMệnh, realHeading, namKhaoSatThucTe, mucDich, namAmMệnhChủ);
 
     let saoChuQuan = null;
-    const match = nguHoangInfo.match(/Số (\d+)/); 
+    const match = nguHoangInfo.match(/Số (\d+)/); // Đồng bộ bốc sao chủ quản năm khảo sát từ chuỗi text
     if (match) saoChuQuan = match[1];
 
     let giaiThichSao = "";
@@ -743,6 +751,7 @@ function recalculateFate() {
         giaiThichSao = `Năng lượng niên hạn chủ quản năm tại vị trí trung cung đạt trạng thái an định, thuần khiết cát tường, không xuất hiện cấu trúc xung đột biến động lớn.`;
     }
 
+    // ĐỌC CẢNH BÁO PHƯƠNG VỊ PHẠM SÁT THEO NĂM KHẢO SÁT THỰC TẾ TRÊN LA BÀN
     const nguHoangAlert = getNguHoangAlert(currentSonHuong);
 
     let targetContainer = document.getElementById('dien-giai-bo-sung');
@@ -767,6 +776,7 @@ function recalculateFate() {
         </p>
     `;
 
+    // Ngưỡng đạt cách phong thủy số nâng cấp từ 72pt trở lên báo xanh cát lợi
     const activeColor = tongHop.diem >= 72 ? '#30d158' : '#ff3b30';
 
     targetContainer.innerHTML = `
@@ -805,10 +815,7 @@ function recalculateFate() {
     `;
 
     generateDirectionsList();
-    
-    // FIX LỖI ĐÈ GÓC UI: Mặt đĩa xoay đồng bộ góc Dial chuẩn xác để chặn đứng hiện tượng giật rung đĩa
-    const headingDialCorrect = (realHeading + (magneticDeclination || 0) + 360) % 360;
-    updateCompassUI(headingDialCorrect);
+    updateCompassUI(currentHeading);
 }
 
 function getCurrentHauInfo(degree, mucDich = 'house', namKhaoSat = null, cungPhi = 'Khảm', namAm = null) {
@@ -2185,14 +2192,12 @@ function getTamSat24Son(cuc) {
 }
 
 function updateDegreeDisplay(degree) {
-    // FIX TỬ HUYỆT 1: Ép hạ tầng hiển thị thời gian thực bám chặt góc thô màn hình của ông chỉ
     const normalizedPhysical = ((degree % 360) + 360) % 360;
     const currentHeadingRound = Math.round(normalizedPhysical);
 
     const txtNamKhaoSat = document.getElementById('surveyYear'); 
     const namKhaoSatThucTe = (txtNamKhaoSat && txtNamKhaoSat.value.length === 4) ? parseInt(txtNamKhaoSat.value, 10) : new Date().getFullYear();
 
-    // TOÀN BỘ MẠNG LƯỚI ĐỊA LÝ ĐỌC THEO ĐÚNG ĐỘ GỐC TRÊN MÀN HÌNH ĐỂ TRÁNH LỆCH PHA DỮ LIỆU
     const currentCung = getCungName(normalizedPhysical);
     const sonObj = PhongThuyCore.getSonObj(normalizedPhysical);
     const sonName = sonObj.name;
@@ -2212,7 +2217,6 @@ function updateDegreeDisplay(degree) {
 
     if (typeof chủMệnh !== 'undefined' && chủMệnh) {
         const mucDichHienTai = document.getElementById('purpose')?.value || 'house';
-        // Gọi thẳng toạ độ thực tế gốc không nhồi thêm độ lệch từ phụ
         const tongHop = tinhDiemTongHop(chủMệnh, normalizedPhysical, namKhaoSatThucTe, mucDichHienTai, namAmMệnhChủ);
         
         if (tongHop.diem >= 72) colorDiemRealtime = "#30d158";
@@ -2822,7 +2826,6 @@ function handleOrientation(event) {
            (accuracy > 15 && lastAccuracy <= 15) || 
            (accuracy > 30 && lastAccuracy <= 30) ||
            (accuracy <= 15 && lastAccuracy > 15)) {
-            
             lastAccuracy = accuracy;
             updateMagneticStatus(accuracy); 
         }
@@ -2840,11 +2843,9 @@ function handleOrientation(event) {
     if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
     lastUpdateTime = now;
 
-    // TRẢ LẠI NGUYÊN BẢN: Giữ nguyên hàm khởi tạo đầu chuẩn xác nạp độ lệch từ của ông
     if (lastHeading === null) {
         lastHeading = rawHeading;
-        const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360;
-        executeUIUpdate(headingForDial, lastHeading);
+        executeUIUpdate(lastHeading, lastHeading);
         return;
     }
 
@@ -2864,31 +2865,29 @@ function handleOrientation(event) {
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
 
-    // FIX TỬ HUYỆT 1: Số hiển thị và số góc tính toán giữ đồng trục toạ độ máy chỉ
-    const headingForText = lastHeading; 
-    const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
+    // [GIAO THỨC CHỐNG LOẠN PHƯƠNG VỊ]: Tách luồng góc độc lập dữ liệu và giao diện
+    const headingRawPhysical = lastHeading; 
+    const headingTrueGeographic = (lastHeading + (magneticDeclination || 0) + 360) % 360;
 
-    // ĐỒNG BỘ LUỒNG TOÀN HỆ THỐNG: Khóa chặt currentHeading bám theo trục chữ số máy chỉ
-    if (typeof currentHeading !== 'undefined') currentHeading = headingForText;
+    if (typeof currentHeading !== 'undefined') currentHeading = headingTrueGeographic;
 
     if (absDiff > 0.4) {
         const btnTongLuan = document.getElementById('btn-tong-luan');
-        if (btnTongLuan) {
-            btnTongLuan.classList.remove('vượng-xuất');
-        }
+        if (btnTongLuan) btnTongLuan.classList.remove('vượng-xuất');
         clearTimeout(dừngKimTimeout);
         kichHoatBoDemDungKim();
     }
 
     if (rafId) cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(() => {
-        executeUIUpdate(headingForDial, headingForText);
+        executeUIUpdate(headingTrueGeographic, headingRawPhysical);
     });
 }
 
-function executeUIUpdate(headingDial, headingText) {
-    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial); // Xoay đĩa la bàn ảo chịu lệch từ
-    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); // In chữ và tính điểm theo số thực tế
+function executeUIUpdate(headingTrue, headingRaw) {
+    // Trực tiếp bơm góc cấu trúc đã phân tách rõ ràng vào hạ tầng hiển thị và tính toán
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingRaw);
+    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingRaw);
     if (typeof recalculateFate === 'function') recalculateFate();
 }
 
