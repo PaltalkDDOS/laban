@@ -2838,7 +2838,8 @@ function handleOrientation(event) {
 
     if (lastHeading === null) {
         lastHeading = rawHeading;
-        executeUIUpdate(lastHeading, lastHeading);
+        const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360;
+        executeUIUpdate(headingForDial, lastHeading);
         return;
     }
 
@@ -2858,11 +2859,12 @@ function handleOrientation(event) {
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
 
-    // GIAO THỨC PHÂN TÁCH GÓC: Chữ số hiển thị và lõi tính toán bám chặt vào góc thô vật lý máy chỉ
-    const headingForText = lastHeading; 
-    const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
+    // PHÂN TÁCH LUỒNG: Định vị rõ ràng 2 trục độc lập
+    const headingRawPhysical = lastHeading; // Hướng thô máy chỉ (Địa chất nằm im)
+    const headingTrueGeographic = (lastHeading + (magneticDeclination || 0) + 360) % 360; // Hướng đĩa ảo cần xoay bù từ
 
-    if (typeof currentHeading !== 'undefined') currentHeading = headingForText;
+    // KHÓA CHẶT: Biến toàn cục hệ thống bắt buộc chạy theo tọa độ gốc thực tế
+    if (typeof currentHeading !== 'undefined') currentHeading = headingRawPhysical;
 
     if (absDiff > 0.4) {
         const btnTongLuan = document.getElementById('btn-tong-luan');
@@ -2873,13 +2875,13 @@ function handleOrientation(event) {
 
     if (rafId) cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(() => {
-        executeUIUpdate(headingForDial, headingForText);
+        executeUIUpdate(headingTrueGeographic, headingRawPhysical);
     });
 }
 
 function executeUIUpdate(headingDial, headingText) {
-    // updateCompassUI nhận góc thô để tính toán địa chất tĩnh bên trong, tự bù từ riêng cho mặt đĩa đồ họa
-    if (typeof updateCompassUI === 'function') updateCompassUI(headingText); 
+    // Phân bổ đúng vai trò: Đĩa nhận góc bù từ để xoay - Chữ số và Lõi toán nhận góc thô cố định
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial); 
     if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); 
     if (typeof recalculateFate === 'function') recalculateFate();
 }
