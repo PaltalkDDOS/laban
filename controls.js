@@ -544,7 +544,6 @@ function getHanhByHeading(heading) {
     const mapNguHanhViet = { "Thuy": "Thủy", "Moc": "Mộc", "Hoa": "Hỏa", "Tho": "Thổ", "Kim": "Kim" };
     return thongTinLoi ? (mapNguHanhViet[thongTinLoi.nguHanh] || "Thổ") : "Thổ";
 }
-
 // ====================== GLOBAL ELEMENTS ======================
 const compass = document.getElementById('compass');
 const needle = document.getElementById('needle');
@@ -675,7 +674,7 @@ function validateFullDate(day, month, year) {
 // =========================================================================
 // 2. HÀM CHÍNH recalculateFate() - TRÍCH XUẤT TIẾT KHÍ LẬP XUÂN & PHÂN TÁCH 2 TRỤC NĂM
 // =========================================================================
-function recalculateFate() {
+() {
     const name = document.getElementById('userName').value.trim() || "Chủ mệnh";
     const gender = document.getElementById('gender').value;
     const dayStr = document.getElementById('birthDay').value;
@@ -2845,7 +2844,6 @@ function handleOrientation(event) {
     if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
     lastUpdateTime = now;
 
-    // TRẢ LẠI NGUYÊN BẢN: Giữ nguyên hàm khởi tạo đầu chuẩn xác nạp độ lệch từ của ông
     if (lastHeading === null) {
         lastHeading = rawHeading;
         const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360;
@@ -2869,11 +2867,9 @@ function handleOrientation(event) {
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
 
-    // FIX TỬ HUYỆT 1: Số hiển thị và số góc tính toán giữ đồng trục toạ độ máy chỉ
     const headingForText = lastHeading; 
     const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
 
-    // ĐỒNG BỘ LUỒNG TOÀN HỆ THỐNG: Khóa chặt currentHeading bám theo trục chữ số máy chỉ
     if (typeof currentHeading !== 'undefined') currentHeading = headingForText;
 
     if (absDiff > 0.4) {
@@ -2892,8 +2888,8 @@ function handleOrientation(event) {
 }
 
 function executeUIUpdate(headingDial, headingText) {
-    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial); // Xoay đĩa la bàn ảo chịu lệch từ
-    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); // In chữ và tính điểm theo số thực tế
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial); 
+    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); 
     if (typeof recalculateFate === 'function') recalculateFate();
 }
 
