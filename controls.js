@@ -4408,72 +4408,116 @@ function manualRotate(value) {
     });
 }
 // =========================================================================
-// 📐 HÀM VẼ PH N VÙNG VÀNH KHĂN (RING SECTOR ARC MULTI-LAYER)
+// 📐 HÀM VẼ PH N VÙNG VÀNH KHĂN (ĐÃ N NG CẤP CACHE & NÉN TỌA ĐỘ)
 // =========================================================================
+// Bộ lưu trữ toàn cục để giữ lại các hình vành khăn đã tính, triệt tiêu hoàn toàn việc tính lại lượng giác
+const _arcPathCache = {};
+
 function getSvgArcPath(cx, cy, rIn, rOut, startAngle, endAngle) {
+    // Tạo mã định danh (Key) độc nhất cho cấu hình vành khăn này
+    const cacheKey = `${cx}_${cy}_${rIn}_${rOut}_${startAngle}_${endAngle}`;
+    
+    // Nếu cấu hình góc này đã từng được tính, trả về kết quả ngay lập tức (Tốc độ tối đa)
+    if (_arcPathCache[cacheKey]) {
+        return _arcPathCache[cacheKey];
+    }
+
     const angleToRad = (angle) => (angle - 90) * Math.PI / 180.0;
     const sIn = angleToRad(startAngle);
     const eIn = angleToRad(endAngle);
     
-    const x1_out = cx + rOut * Math.cos(sIn);
-    const y1_out = cy + rOut * Math.sin(sIn);
-    const x2_out = cx + rOut * Math.cos(eIn);
-    const y2_out = cy + rOut * Math.sin(eIn);
+    // Áp dụng .toFixed(1) để nén gọn chuỗi tọa độ dữ liệu SVG.
+    // Giảm tải dung lượng DOM, giúp phần cứng thiết bị xử lý đồ họa mượt mà hơn.
+    const x1_out = (cx + rOut * Math.cos(sIn)).toFixed(1);
+    const y1_out = (cy + rOut * Math.sin(sIn)).toFixed(1);
+    const x2_out = (cx + rOut * Math.cos(eIn)).toFixed(1);
+    const y2_out = (cy + rOut * Math.sin(eIn)).toFixed(1);
     
-    const x1_in = cx + rIn * Math.cos(eIn);
-    const y1_in = cy + rIn * Math.sin(eIn);
-    const x2_in = cx + rIn * Math.cos(sIn);
-    const y2_in = cy + rIn * Math.sin(sIn);
+    const x1_in = (cx + rIn * Math.cos(eIn)).toFixed(1);
+    const y1_in = (cy + rIn * Math.sin(eIn)).toFixed(1);
+    const x2_in = (cx + rIn * Math.cos(sIn)).toFixed(1);
+    const y2_in = (cy + rIn * Math.sin(sIn)).toFixed(1);
     
     const largeArcFlag = (endAngle - startAngle) > 180 ? 1 : 0;
     
-    return `M ${x1_out} ${y1_out} 
-            A ${rOut} ${rOut} 0 ${largeArcFlag} 1 ${x2_out} ${y2_out} 
-            L ${x1_in} ${y1_in} 
-            A ${rIn} ${rIn} 0 ${largeArcFlag} 0 ${x2_in} ${y2_in} Z`;
+    // Tổng hợp chuỗi vẽ đường bọc vành khăn cốt lõi
+    const pathStr = `M ${x1_out} ${y1_out} ` +
+                    `A ${rOut} ${rOut} 0 ${largeArcFlag} 1 ${x2_out} ${y2_out} ` +
+                    `L ${x1_in} ${y1_in} ` +
+                    `A ${rIn} ${rIn} 0 ${largeArcFlag} 0 ${x2_in} ${y2_in} Z`;
+    
+    // Ghi nhớ vào bộ đệm trước khi trả kết quả ra ngoài
+    _arcPathCache[cacheKey] = pathStr;
+    
+    return pathStr;
 }
 
 // =========================================================================
-// 🎨 ENGINE CẬP NHẬT MÀU NỀN HUNG CÁT L THIÊN THEO MỆNH CHỦ
+// 🎨 ENGINE CẬP NHẬT MÀU NỀN HUNG CÁT (ĐÃ TỐI ƯU HÓA HIỆU NĂNG CAO)
 // =========================================================================
 function updateBatTrachBackground(cungPhi) {
     const bgGroup = document.getElementById('batTrachBackgroundRing');
     if (!bgGroup) return;
     
-    // Nếu chưa nhập năm sinh hoặc dữ liệu trống, reset nền la bàn về trạng thái sạch tinh khiết
+    // Kiểm tra xem 8 mảng của la bàn đã được dựng sẵn chưa
+    let existingPaths = bgGroup.querySelectorAll('path');
+    const isInitialized = existingPaths.length === 8;
+
+    // Nếu chưa nhập năm sinh hoặc dữ liệu trống, chỉ ẩn màu đi chứ không xóa DOM để giữ hiệu năng
     if (!cungPhi) {
-        bgGroup.innerHTML = "";
+        if (isInitialized) {
+            existingPaths.forEach(path => path.setAttribute('fill', 'none'));
+        } else {
+            bgGroup.innerHTML = "";
+        }
         return;
     }
     
     // Định biên tọa độ góc 8 hướng lớn đồng trục với đĩa xoay la bàn số
     const directions = [
-        { code: 'N',  start: 337.5, end: 382.5 }, // Hướng Bắc (Khảm) bọc qua mốc thiên tâm
-        { code: 'NE', start: 22.5,  end: 67.5  }, // Đông Bắc (Cấn)
-        { code: 'E',  start: 67.5,  end: 112.5 }, // Đông (Chấn)
-        { code: 'SE', start: 112.5, end: 157.5 }, // Đông Nam (Tốn)
-        { code: 'S',  start: 157.5, end: 202.5 }, // Nam (Ly)
-        { code: 'SW', start: 202.5, end: 247.5 }, // Tây Nam (Khôn)
-        { code: 'W',  start: 247.5, end: 292.5 }, // Tây (Đoài)
-        { code: 'NW', start: 292.5, end: 337.5 }  // Tây Bắc (Càn)
+        { code: 'N',  start: 337.5, end: 382.5 }, 
+        { code: 'NE', start: 22.5,  end: 67.5  }, 
+        { code: 'E',  start: 67.5,  end: 112.5 }, 
+        { code: 'SE', start: 112.5, end: 157.5 }, 
+        { code: 'S',  start: 157.5, end: 202.5 }, 
+        { code: 'SW', start: 202.5, end: 247.5 }, 
+        { code: 'W',  start: 247.5, end: 292.5 }, 
+        { code: 'NW', start: 292.5, end: 337.5 }  
     ];
     
-    let html = "";
-    const cx = 250, cy = 250, rIn = 185, rOut = 244;
     const safeCungPhi = cungPhi.trim().charAt(0).toUpperCase() + cungPhi.trim().slice(1).toLowerCase();
     const mapTrach = bátTrạchMap[safeCungPhi];
     
     if (!mapTrach) {
-        bgGroup.innerHTML = "";
+        if (isInitialized) {
+            existingPaths.forEach(path => path.setAttribute('fill', 'none'));
+        } else {
+            bgGroup.innerHTML = "";
+        }
         return;
     }
+    
+    // NẾU ĐÃ KHỞI TẠO: Chỉ cập nhật thuộc tính màu sắc (Siêu nhanh, không tính toán lại)
+    if (isInitialized) {
+        directions.forEach((dir, index) => {
+            const cungTrạch = mapTrach[dir.code];
+            const isCat = cungPhầnTrăm[cungTrạch]?.cát;
+            const fillColor = isCat ? "rgba(48, 209, 88, 0.40)" : "rgba(185, 25, 25, 0.45)";
+            
+            // Thay đổi trực tiếp thuộc tính màu của phần tử DOM có sẵn
+            existingPaths[index].setAttribute('fill', fillColor);
+        });
+        return; 
+    }
+    
+    // NẾU CHƯA KHỞI TẠO (Chỉ chạy duy nhất một lần đầu tiên khi tải dữ liệu)
+    let html = "";
+    const cx = 250, cy = 250, rIn = 185, rOut = 244;
     
     directions.forEach(dir => {
         const cungTrạch = mapTrach[dir.code];
         const isCat = cungPhầnTrăm[cungTrạch]?.cát;
-        
-        // Phối tone màu Pastel bán trong suốt cao cấp (Alpha 0.22) không gây mỏi mắt, giữ nguyên nét chữ la bàn
-        const fillColor = isCat ? "rgba(48, 209, 88, 0.22)" : "rgba(255, 59, 48, 0.22)";
+        const fillColor = isCat ? "rgba(48, 209, 88, 0.40)" : "rgba(185, 25, 25, 0.45)";
         
         const pathStr = getSvgArcPath(cx, cy, rIn, rOut, dir.start, dir.end);
         html += `<path d="${pathStr}" fill="${fillColor}" stroke="none" />`;
