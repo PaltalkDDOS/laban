@@ -3022,26 +3022,40 @@ function calculateRemoteDeclination() {
     const rBtn = document.getElementById('remote-calc-btn');
     
     if (!latEl || !lonEl) return;
-    const latStr = latEl.value.trim();
-    const lonStr = lonEl.value.trim();
+    let latStr = latEl.value.trim();
+    let lonStr = lonEl.value.trim();
 
     if (latStr === '' || lonStr === '') {
         showToast("⚠️ Vui lòng nhập đủ tọa độ!", true);
         return;
     }
 
-    const latV = parseFloat(latStr);
-    const lonV = parseFloat(lonStr);
+    let latV = parseFloat(latStr);
+    let lonV = parseFloat(lonStr);
 
     if (isNaN(latV) || isNaN(lonV) || (latV === 0 && lonV === 0)) {
         showToast("⚠️ Tọa độ không hợp lệ!", true);
         return;
     }
 
+    // =========================================================================
+    // MẮT QUÉT THÔNG MINH: TỰ ĐỘNG PHÁT HIỆN & ĐẢO NGƯỢC KINH/VĨ ĐỘ KHI NHẬP TAY
+    // =========================================================================
+    // Vĩ độ không bao giờ vượt quá 90. Nếu ô vĩ độ > 90, chắc chắn người dùng đã nhập lộn ô Kinh độ vào đây
+    if (Math.abs(latV) > 90 && Math.abs(lonV) <= 90) {
+        let temp = latV;
+        latV = lonV;
+        lonV = temp;
+        
+        // Cập nhật ngược lại giao diện HTML để người dùng thấy la bàn tự sửa lỗi trực quan
+        latEl.value = latV;
+        lonEl.value = lonV;
+        showToast("🔄 Phát hiện ngược tọa độ! Đã tự động đảo lại Vĩ độ & Kinh độ");
+    }
+
     const decl = calculateGlobalDeclination(latV, lonV);
     magneticDeclination = decl;
     
-    // Bọc an toàn để tránh lỗi nếu vô tình đổi ID trong HTML
     const inputEl = document.getElementById('declination-input');
     if (inputEl) inputEl.value = decl.toFixed(2);
     
@@ -3124,9 +3138,21 @@ async function autoDetectDeclination() {
             return;
         }
 
+        // =========================================================================
+        // MẮT QUÉT THÔNG MINH: LỌC TỌA ĐỘ LỖI TỪ SENSOR / IP CỦA HỆ ĐIỀU HÀNH
+        // =========================================================================
+        let checkedLat = parseFloat(lat);
+        let checkedLon = parseFloat(lon);
+
+        if (Math.abs(checkedLat) > 90 && Math.abs(checkedLon) <= 90) {
+            let temp = checkedLat;
+            checkedLat = checkedLon;
+            checkedLon = temp;
+        }
+
         // ÉP CỨNG CHUẨN 3 CHỮ SỐ THẬP PHÂN ĐỂ ĐỒNG BỘ VỚI NOAA
-        const cleanLat = parseFloat(parseFloat(lat).toFixed(3));
-        const cleanLon = parseFloat(parseFloat(lon).toFixed(3));
+        const cleanLat = parseFloat(checkedLat.toFixed(3));
+        const cleanLon = parseFloat(checkedLon.toFixed(3));
 
         // Đồng bộ lưu trữ tọa độ gốc động xuống máy
         localStorage.setItem('save_lat', cleanLat);
@@ -3158,6 +3184,7 @@ async function autoDetectDeclination() {
         }
     };
 
+    // ... (Giữ nguyên toàn bộ phần navigator.geolocation.getCurrentPosition bên dưới)
     if (!navigator.geolocation) {
         const ip = await fallbackIPGeolocation();
         apply(ip.lat, ip.lon, ip.src);
@@ -3165,150 +3192,169 @@ async function autoDetectDeclination() {
     }
 
     navigator.geolocation.getCurrentPosition(
-        (pos) => {
-            apply(pos.coords.latitude, pos.coords.longitude, "GPS");
-        },
-        async () => {
-            const ip = await fallbackIPGeolocation();
-            apply(ip.lat, ip.lon, ip.src);
-        },
-        { 
-            timeout: 7000, 
-            enableHighAccuracy: true, 
-            maximumAge: 0              
-        } 
+        (pos) => { apply(pos.coords.latitude, pos.coords.longitude, "GPS"); },
+        async () => { const ip = await fallbackIPGeolocation(); apply(ip.lat, ip.lon, ip.src); },
+        { timeout: 7000, enableHighAccuracy: true, maximumAge: 0 } 
     );
 }
 
 function calculateGlobalDeclination(lat, lon, altKm = 0) {
     try {
-        // Khóa chặt đầu vào: Đọc trực tiếp dữ liệu từ 2 ô hiển thị thực tế trên màn hình HTML
+        // =========================================================================
+        // STEP 1: BỘ PHÂN GIẢI TOÀN NĂNG - TỰ ĐỘNG CHUẨN HÓA TOÀN BỘ ĐẦU VÀO
+        // =========================================================================
         const latEl = document.getElementById('remote-lat');
         const lonEl = document.getElementById('remote-lon');
         
-        let cleanLat = latEl && latEl.value.trim() !== "" ? parseFloat(latEl.value) : parseFloat(lat);
-        let cleanLon = lonEl && lonEl.value.trim() !== "" ? parseFloat(lonEl.value) : parseFloat(lon);
+        let rawLat = latEl && latEl.value.trim() !== "" ? latEl.value : lat;
+        let rawLon = lonEl && lonEl.value.trim() !== "" ? lonEl.value : lon;
 
-        // Lá chắn thông minh chống đảo lộn Kinh/Vĩ độ
+        // Hàm nội bộ giải mã nhanh nếu đầu vào là chuỗi dạng NOAA (DMS hoặc chứa ký tự N/S/E/W)
+        const parseToDecimal = (val, type) => {
+            if (!val || String(val).trim() === '') return 0;
+            let str = String(val).trim().toUpperCase();
+            let isNegative = (str.includes('S') || str.includes('W'));
+            str = str.replace(/[NSEW°'"’”]/g, ' ').trim();
+            let parts = str.split(/\s+/).map(p => parseFloat(p)).filter(p => !isNaN(p));
+            if (parts.length === 0) return 0;
+            let dec = parts.length >= 2 ? (Math.abs(parts[0]) + (parts[1] / 60) + (parts[2] || 0) / 3600) : parts[0];
+            return (isNegative && dec > 0) ? -dec : dec;
+        };
+
+        let cleanLat = parseToDecimal(rawLat, 'lat');
+        let cleanLon = parseToDecimal(rawLon, 'lon');
+
+        // Lá chắn thông minh: Tự động đảo ô Kinh/Vĩ nếu người dùng nhập ngược vị trí
         if (Math.abs(cleanLat) > 90 && Math.abs(cleanLon) <= 90) {
-            let temp = cleanLat;
-            cleanLat = cleanLon;
-            cleanLon = temp;
+            let temp = cleanLat; cleanLat = cleanLon; cleanLon = temp;
+            if (latEl && lonEl) { latEl.value = cleanLat; lonEl.value = cleanLon; }
         }
 
+        // =========================================================================
+        // STEP 2: TÍNH THỜI GIAN NĂM THẬP PHÂN CHUẨN QUỐC TẾ (DECIMAL YEAR)
+        // =========================================================================
         const now = new Date();
         const year = now.getFullYear();
         const start = new Date(year, 0, 1);
         const daysPassed = (now.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
         const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
         const decimalYear = year + (daysPassed / (isLeap ? 366 : 365));
-        
         const dt = decimalYear - WMM_COEFFS.epoch;
+
+        // Đổi góc sang Radian để nạp vào ma trận lượng giác
         const latRad = cleanLat * Math.PI / 180;
         const lonRad = cleanLon * Math.PI / 180;
         
-        const a = 6378.137;
-        const b = 6356.7523142;
-        const re = 6371.2;
-        
+        // =========================================================================
+        // STEP 3: THIẾT LẬP HÌNH HỌC ELLIPSOID WGS84 CHUẨN KHÔNG TƯỞNG
+        // =========================================================================
+        const a = 6378.137;                 // Bán trục lớn chuẩn WGS84 (Bắt buộc dùng làm re)
+        const b = 6356.7523142;             // Bán trục nhỏ chuẩn WGS84
+        const e2 = 1.0 - (b * b) / (a * a); // Bình phương độ lệch tâm ellipsoid
+
         const sinLat = Math.sin(latRad);
         const cosLat = Math.cos(latRad);
-        const rc = a / Math.sqrt(1 - (1 - (b * b) / (a * a)) * sinLat * sinLat);
-        const x = (rc + altKm) * cosLat;
-        const z = (rc * (b * b) / (a * a) + altKm) * sinLat;
-        const r = Math.sqrt(x * x + z * z);
-        const phi = Math.asin(z / r);
-        const psi = latRad - phi; 
         
-        // Legendre
-        const P = Array.from({ length: 13 }, () => new Array(13).fill(0));
-        const dP = Array.from({ length: 13 }, () => new Array(13).fill(0));
-        P[0][0] = 1; P[1][0] = Math.sin(phi); P[1][1] = Math.cos(phi);
-        dP[1][0] = Math.cos(phi); dP[1][1] = -Math.sin(phi);
+        // Chuyển đổi hệ tọa độ Trắc địa mặt đất (Geodetic) sang Tâm Trái Đất (Geocentric)
+        const rc = a / Math.sqrt(1.0 - e2 * sinLat * sinLat);
+        const xp = (rc + altKm) * cosLat;
+        const zp = (rc * (1.0 - e2) + altKm) * sinLat;
         
+        const r = Math.sqrt(xp * xp + zp * zp);
+        const phiPrime = Math.asin(zp / r); // Vĩ độ tâm cấu trúc hình cầu
+        const psi = latRad - phiPrime;      // Góc lệch cấu trúc giữa 2 hệ quy chiếu
+
+        const sinPhi = Math.sin(phiPrime);
+        const cosPhi = Math.cos(phiPrime);
+
+        // =========================================================================
+        // STEP 4: THUẬT TOÁN ĐỆ QUY LÕI SCHMIDT SEMI-NORMALIZED LEGENDRE
+        // =========================================================================
+        const P = Array.from({ length: 14 }, () => new Array(14).fill(0));
+        const dP = Array.from({ length: 14 }, () => new Array(14).fill(0));
+        
+        P[0][0] = 1.0;
+        dP[0][0] = 0.0;
+        P[1][0] = sinPhi;
+        dP[1][0] = cosPhi;
+        P[1][1] = cosPhi;
+        dP[1][1] = -sinPhi;
+
         for (let n = 2; n <= 12; n++) {
-            for (let m = 0; m <= n; m++) {
-                if (m === n) {
-                    P[n][m] = Math.cos(phi) * P[n - 1][m - 1];
-                    dP[n][m] = Math.cos(phi) * dP[n - 1][m - 1] - Math.sin(phi) * P[n - 1][m - 1];
-                } else {
-                    const k = ((n - 1) * (n - 1) - m * m) / ((2 * n - 1) * (2 * n - 3));
-                    P[n][m] = Math.sin(phi) * P[n - 1][m] - k * P[n - 2][m];
-                    dP[n][m] = Math.sin(phi) * dP[n - 1][m] + Math.cos(phi) * P[n - 1][m] - k * dP[n - 2][m];
-                }
+            // Trường hợp biên chéo m = n
+            P[n][n] = Math.sqrt((2 * n - 1) / (2 * n)) * cosPhi * P[n - 1][n - 1];
+            dP[n][n] = Math.sqrt((2 * n - 1) / (2 * n)) * (cosPhi * dP[n - 1][n - 1] - sinPhi * P[n - 1][n - 1]);
+            
+            // Trường hợp m < n
+            for (let m = 0; m < n; m++) {
+                const g1 = (2 * n - 1) / Math.sqrt(n * n - m * m);
+                const g2 = Math.sqrt((n - 1) * (n - 1) - m * m) / Math.sqrt(n * n - m * m);
+                
+                P[n][m] = g1 * sinPhi * P[n - 1][m] - g2 * P[n - 2][m];
+                dP[n][m] = g1 * (sinPhi * dP[n - 1][m] + cosPhi * P[n - 1][m]) - g2 * dP[n - 2][m];
             }
         }
+
+        // =========================================================================
+        // STEP 5: TÍNH TOÁN MA TRẬN VECTOR LỰC ĐỊA TỪ TOÀN CẦU
+        // =========================================================================
+        const g_coeff = Array.from({ length: 13 }, () => new Array(13).fill(0));
+        const h_coeff = Array.from({ length: 13 }, () => new Array(13).fill(0));
         
-        const S = Array.from({ length: 13 }, () => new Array(13).fill(1));
-        for (let n = 1; n <= 12; n++) {
-            for (let m = 1; m <= n; m++) {
-                S[n][m] = S[n][m - 1] * Math.sqrt((n - m + 1) * (m === 1 ? 2 : 1) / (n + m));
-            }
-        }
-        
-        const g = Array.from({ length: 13 }, () => new Array(13).fill(0));
-        const h = Array.from({ length: 13 }, () => new Array(13).fill(0));
+        // Cập nhật biến thiên từ trường theo thời gian thực (Secular Variation)
         WMM_COEFFS.data.forEach(([n, m, g0, h0, dg, dh]) => {
-            g[n][m] = g0 + dt * dg;
-            h[n][m] = h0 + dt * dh;
+            g_coeff[n][m] = g0 + dt * dg;
+            h_coeff[n][m] = h0 + dt * dh;
         });
-        
-        let X = 0, Y = 0, Z = 0;
+
+        let X_gc = 0, Y_gc = 0, Z_gc = 0;
+
         for (let n = 1; n <= 12; n++) {
-            const ratio = Math.pow(re / r, n + 2);
+            const ratio = Math.pow(a / r, n + 2); // Sửa đổi tối thượng: Dùng bán kính chuẩn 'a' thay vì re
+            let sumX = 0, sumY = 0, sumZ = 0;
+
             for (let m = 0; m <= n; m++) {
                 const cosM = Math.cos(m * lonRad);
                 const sinM = Math.sin(m * lonRad);
-                
-                const p = P[n][m] * S[n][m];
-                const dp = dP[n][m] * S[n][m];
-                
-                const gCos = g[n][m] * cosM + h[n][m] * sinM;
-                const gSin = g[n][m] * sinM - h[n][m] * cosM;
-                
-                X += ratio * gCos * dp;
-                Y += ratio * (m * gSin * p) / Math.cos(phi);
-                Z += ratio * (n + 1) * gCos * p;
+
+                const g_tm = g_coeff[n][m];
+                const h_tm = h_coeff[n][m];
+
+                const c_m = g_tm * cosM + h_tm * sinM;
+                const d_m = g_tm * sinM - h_tm * cosM;
+
+                sumX += c_m * dP[n][m];
+                sumZ += c_m * P[n][m];
+                if (m > 0) {
+                    sumY += m * d_m * P[n][m];
+                }
             }
+
+            X_gc -= ratio * sumX; 
+            Y_gc += ratio * sumY;
+            Z_gc -= ratio * (n + 1) * sumZ;
         }
-        
-        // Hệ quy chiếu xoay nguyên bản của bạn
-        const cosPsi = Math.cos(psi);
-        const sinPsi = Math.sin(psi);
-        const Xn = -X * cosPsi + Z * sinPsi; 
-        const Ye = Y; 
-        
-        let decl = Math.atan2(Ye, Xn) * (180 / Math.PI);
+
+        // Chuẩn hóa thành phần lực phương Đông theo mặt phẳng vĩ độ tâm hình cầu
+        Y_gc = Y_gc / (cosPhi || 1e-5);
+
+        // =========================================================================
+        // STEP 6: XOAY VECTOR TRỞ LẠI BỀ MẶT THỰC TẾ (ĐỒNG BỘ HOÀN HẢO ĐỊA HÌNH)
+        // =========================================================================
+        const X_gd = X_gc * Math.cos(psi) + Z_gc * Math.sin(psi); // Sửa dấu (+) chuẩn NOAA
+        const Y_gd = Y_gc;
+
+        // =========================================================================
+        // STEP 7: KIỂM SOÁT GÓC XOAY ĐỘ LỆCH TỪ CUỐI CÙNG
+        // =========================================================================
+        let decl = Math.atan2(Y_gd, X_gd) * (180 / Math.PI);
 
         if (decl > 180) decl -= 360;
         if (decl < -180) decl += 360;
 
-        if (cleanLat < 0) {
-            decl = -decl; 
-        }
-
-        // =========================================================================
-        // THUẬT TOÁN BIẾN THIÊN PHƯƠNG VỊ ĐA CHÂU LỤC TỰ ĐỘNG (THÔNG MINH TOÀN CẦU)
-        // =========================================================================
-        if (cleanLon < 0) {
-            // [TÂY BÁN CẦU - KHU VỰC CHÂU MỸ / THÁI BÌNH DƯƠNG]
-            // Tự động đồng bộ chuẩn xác cho cả Kịch bản 1 (Mỹ Bắc) và Kịch bản 4 (Mỹ Nam)
-            decl += 3.65;
-        } else {
-            // [ĐÔNG BÁN CẦU - KHU VỰC CHÂU Á / CHÂU ÂU / CHÂU ÚC]
-            if (cleanLat >= 0) {
-                // Ma trận biến thiên tuyến tính mượt mà theo vĩ độ từ Xích đạo lên cực Bắc
-                // Giúp Việt Nam tự động phân rã 3 miền chuẩn xác và Nhật Bản tự khớp số
-                let asiaLinearOffset = 5.08 - (0.348 * cleanLat);
-                decl += asiaLinearOffset;
-            } else {
-                // Nam bán cầu phía Đông (Khu vực Châu Úc / Sydney)
-                decl += 1.67;
-            }
-        }
-        
         return parseFloat(decl.toFixed(2));
     } catch (e) {
+        console.error("Lỗi lõi trắc địa tối cao WMM:", e);
         return 0;
     }
 }
@@ -3327,6 +3373,12 @@ function toggleDeclinationPanel(show) {
     }
 }
 
+// =========================================================================
+// 1. HÀM LỌC SỐ THUẦN TÚY (Giữ nguyên vẹn thuật toán gốc của bạn cho ô Độ lệch từ)
+// =========================================================================
+// =========================================================================
+// 1. HÀM LỌC SỐ THUẦN TÚY (Dùng để kiểm tra nhanh số khi người dùng gõ số âm/dương)
+// =========================================================================
 function parseSmartNumeric(val) {
     if (!val || val.trim() === '') return null;
     let str = val.trim().replace(/,/g, '.');
@@ -3344,28 +3396,70 @@ function parseSmartNumeric(val) {
     const regex = /^[+-]?\d*\.?\d*$/;
     return regex.test(finalStr) ? finalStr : null;
 }
+
+// =========================================================================
+// 2. BỘ LỌC KÝ TỰ THÔNG MINH TOÀN DIỆN (Cho phép nhập cả chữ W, E, N, S và ký hiệu độ)
+// =========================================================================
+function parseSmartCoordinateText(val) {
+    if (!val) return '';
+    return val.replace(/[^0-9.\-\+\sNSEWnsew°'"’”]/g, '').replace(/,/g, '.');
+}
+
+// =========================================================================
+// 3. BỘ CHUYỂN ĐỔI VẠN NĂNG (DMS / NOAA TEXT -> SỐ THẬP PHÂN)
+// Hỗ trợ dịch cả Kinh/Vĩ độ và Độ lệch từ dạng "0° 55' W" thành số âm/dương
+// =========================================================================
+function convertToDecimalDegrees(val) {
+    if (!val || String(val).trim() === '') return null;
+    let str = String(val).trim().toUpperCase();
+    
+    // Nếu có chữ S (Nam) hoặc W (Tây / Độ lệch Tây) thì kết quả cuối cùng phải là số âm
+    let isNegative = false;
+    if (str.includes('S') || str.includes('W')) {
+        isNegative = true;
+    }
+    
+    str = str.replace(/[NSEW°'"’”]/g, ' ').trim();
+    let parts = str.split(/\s+/).map(p => parseFloat(p)).filter(p => !isNaN(p));
+    if (parts.length === 0) return null;
+    
+    let decimalValue = 0;
+    if (parts.length === 1) {
+        decimalValue = parts[0];
+    } else if (parts.length >= 2) {
+        let d = parts[0] || 0;
+        let m = parts[1] || 0;
+        let s = parts[2] || 0;
+        decimalValue = Math.abs(d) + (m / 60) + (s / 3600);
+        if (d < 0) isNegative = !isNegative;
+    }
+    
+    if (isNegative && decimalValue > 0) {
+        decimalValue = -decimalValue;
+    }
+    return decimalValue;
+}
+
+// =========================================================================
+// 4. KHỞI TẠO VÀ QUẢN LÝ SỰ KIỆN GIAO DIỆN DIỄN RA TRONG DOM
+// =========================================================================
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Cấu hình với giới hạn phạm vi (Cơ chế thông minh)
+    // CẤU HÌNH ĐÃ ĐƯỢC NÂNG CẤP: Ô lệch từ đã mở khóa sang chế độ gõ ký tự chữ (limit: 14)
     const configs = {
-        'declination-input': { limit: 7, key: 'save_decl', min: -180, max: 180 },
-        'remote-lat': { limit: 10, key: 'save_lat', min: -90, max: 90 },
-        'remote-lon': { limit: 11, key: 'save_lon', min: -180, max: 180 }
+        'declination-input': { limit: 14, key: 'save_decl', min: -180, max: 180, mode: 'coordinate' },
+        'remote-lat': { limit: 14, key: 'save_lat', min: -90, max: 90, mode: 'coordinate' },
+        'remote-lon': { limit: 15, key: 'save_lon', min: -180, max: 180, mode: 'coordinate' }
     };
 
-    // =========================================================================
-    // KHÓA TRẠNG THÁI NÚT CHECKBOX KHI LÀM MỚI TRANG (F5)
-    // =========================================================================
+    // Khóa trạng thái nút checkbox khi làm mới trang (F5)
     const saveToggle = document.getElementById('save-toggle');
-    let isRetentionEnabled = true; // Biến cờ kiểm soát quyền lưu trữ thực tế
+    let isRetentionEnabled = true;
 
     if (saveToggle) {
         const toggleState = localStorage.getItem('save_toggle_state');
         if (toggleState === 'false') {
             saveToggle.checked = false;
             isRetentionEnabled = false;
-            
-            // LÁ CHẮN TỐI ƯU: Nếu người dùng đã tắt ghi nhớ từ trước, 
-            // lập tức dọn sạch rác tọa độ cũ trong máy ngay khi vừa tải trang
             localStorage.removeItem('save_decl');
             localStorage.removeItem('save_lat');
             localStorage.removeItem('save_lon');
@@ -3375,7 +3469,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Khôi phục dữ liệu đã lưu khi mở app (Chỉ khôi phục nếu chế độ ghi nhớ đang BẬT)
+    // Khôi phục dữ liệu đã lưu khi mở app
     Object.keys(configs).forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -3384,121 +3478,131 @@ document.addEventListener('DOMContentLoaded', () => {
             const saved = localStorage.getItem(configs[id].key);
             if (saved !== null && configs[id].key) {
                 el.value = saved;
-                if (id === 'declination-input') updateMagneticDeclination();
+                if (id === 'declination-input') {
+                    magneticDeclination = parseFloat(saved) || 0;
+                    updateMagneticDeclination();
+                }
             }
         } else {
-            // Nếu không ghi nhớ, ép giao diện về trạng thái sạch khi khởi động
             el.value = (id === 'declination-input') ? "0" : "";
         }
     });
 
-    // 3. Logic xử lý tương tác và nhập liệu thông minh
+    // Logic xử lý tương tác nhập liệu thông minh cho toàn bộ các ô
     Object.keys(configs).forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
 
-        // CƠ CHẾ THÔNG MINH TỰ ĐỘNG BÔI ĐEN: Click hoặc focus vào là xóa số cũ ngay khi gõ số mới
+        // Tự động bôi đen toàn bộ văn bản khi click vào ô
         const autoSelect = () => {
             setTimeout(() => { el.setSelectionRange(0, el.value.length); }, 10);
         };
         el.addEventListener('focus', autoSelect);
         el.addEventListener('click', autoSelect);
 
-        // Cho phép nhấn Enter để đóng cửa sổ
+        // Nhấn Enter để lưu cấu hình và đóng bảng điều khiển
         el.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                el.blur(); // Đẩy ra ngoài để kích hoạt bộ chuẩn hóa blur trước khi đóng
-                toggleDeclinationPanel(false);
+                el.blur(); 
+                if (typeof toggleDeclinationPanel === 'function') toggleDeclinationPanel(false);
             }
         });
 
-        // Sự kiện Input: Lọc ký tự thời gian thực nhưng KHÔNG làm hỏng dấu trừ (-)
+        // Sự kiện Input: Lọc ký tự thời gian thực không cho gõ ký tự bậy
         el.addEventListener('input', () => {
             const cfg = configs[id];
             let raw = el.value;
 
-            let valStr = parseSmartNumeric(raw);
-            if (valStr !== null) {
-                el.value = valStr; // Cập nhật chuỗi ký tự sạch lên màn hình
-                
-                if (valStr !== '-' && valStr !== '+' && !valStr.endsWith('.')) {
-                    let val = parseFloat(valStr);
-                    
-                    // Kiểm tra giới hạn thông minh thời gian thực
-                    if (cfg.min !== undefined && val < cfg.min) val = cfg.min;
-                    if (cfg.max !== undefined && val > cfg.max) val = cfg.max;
-                    
-                    // CƠ CHẾ KIỂM SOÁT LƯU TRỮ: Chỉ lưu xuống máy nếu nút Ghi nhớ đang bật
-                    if (cfg.key && document.getElementById('save-toggle')?.checked) {
-                        localStorage.setItem(cfg.key, val);
-                    }
-                }
-            }
-
-            // Bảo vệ độ dài giao diện
+            // Áp dụng bộ lọc chữ thông minh vạn năng cho cả 3 ô
+            el.value = parseSmartCoordinateText(raw);
+            
             if (el.value.length > cfg.limit) {
                 el.value = el.value.slice(0, cfg.limit);
             }
 
-            if (id === 'declination-input') updateMagneticDeclination();
-        });
-
-        // Sự kiện Blur: Chuẩn hóa tối hậu khi người dùng rời mắt khỏi ô nhập dữ liệu
-        el.addEventListener('blur', () => {
-            const cfg = configs[id];
-            let valStr = parseSmartNumeric(el.value);
-
-            if (!valStr || valStr === '-' || valStr === '+') {
-                el.value = (id === 'declination-input') ? "0" : "";
-                if (cfg.key) localStorage.removeItem(cfg.key);
-            } else {
-                let val = parseFloat(valStr);
-                if (cfg.min !== undefined && val < cfg.min) val = cfg.min;
-                if (cfg.max !== undefined && val > cfg.max) val = cfg.max;
+            // Hỗ trợ cập nhật thời gian thực nếu người dùng gõ số thập phân thuần túy
+            let checkNum = parseFloat(el.value);
+            if (!isNaN(checkNum) && /^[\-\+]?\d*\.?\d+$/.test(el.value)) {
+                if (cfg.min !== undefined && checkNum < cfg.min) checkNum = cfg.min;
+                if (cfg.max !== undefined && checkNum > cfg.max) checkNum = cfg.max;
                 
-                el.value = val; // Trả về con số chuẩn mực đẹp đẽ
-                
-                // Chỉ lưu khi nút Ghi nhớ đang bật
+                if (id === 'declination-input') {
+                    magneticDeclination = checkNum;
+                    updateMagneticDeclination();
+                }
                 if (cfg.key && document.getElementById('save-toggle')?.checked) {
-                    localStorage.setItem(cfg.key, val);
+                    localStorage.setItem(cfg.key, checkNum);
                 }
             }
-            if (id === 'declination-input') updateMagneticDeclination();
+        });
+
+        // Sự kiện Blur: Biên dịch chuỗi văn bản (DMS / NOAA) thành số khi rời ô nhập
+        el.addEventListener('blur', () => {
+            const cfg = configs[id];
+            let rawStr = el.value.trim();
+
+            let finalDecimal = convertToDecimalDegrees(rawStr);
+            
+            if (finalDecimal === null || isNaN(finalDecimal)) {
+                el.value = (id === 'declination-input') ? "0" : "";
+                if (id === 'declination-input') magneticDeclination = 0;
+                if (cfg.key) localStorage.removeItem(cfg.key);
+            } else {
+                if (cfg.min !== undefined && finalDecimal < cfg.min) finalDecimal = cfg.min;
+                if (cfg.max !== undefined && finalDecimal > cfg.max) finalDecimal = cfg.max;
+                
+                // Quy ước làm tròn: Ô độ lệch góc làm tròn 2 chữ số, ô Kinh/Vĩ làm tròn 5 chữ số
+                let roundedVal = (id === 'declination-input') ? 
+                                 parseFloat(finalDecimal.toFixed(2)) : 
+                                 parseFloat(finalDecimal.toFixed(5));
+                
+                el.value = roundedVal;
+                
+                if (id === 'declination-input') {
+                    magneticDeclination = roundedVal;
+                }
+
+                if (cfg.key && document.getElementById('save-toggle')?.checked) {
+                    localStorage.setItem(cfg.key, roundedVal);
+                }
+            }
+            
+            // Kích hoạt hàm dựng la bàn tương ứng
+            if (id === 'declination-input') {
+                updateMagneticDeclination();
+            } else {
+                if (typeof calculateRemoteDeclination === 'function') {
+                    calculateRemoteDeclination();
+                }
+            }
         });
     });
 
-    // 4. Cơ chế QUÉT DỌN SẠCH Reset tức thì khi bỏ check "Ghi nhớ"
+    // Cơ chế quét sạch dữ liệu khi bỏ chọn checkbox "Ghi nhớ"
     saveToggle?.addEventListener('change', (e) => {
         const declInput = document.getElementById('declination-input');
         const latInput = document.getElementById('remote-lat');
         const lonInput = document.getElementById('remote-lon');
 
         if (!e.target.checked) {
-            // 1. Khóa trạng thái tắt
             localStorage.setItem('save_toggle_state', 'false');
-            
-            // 2. XOÁ SẠCH BỘ NHỚ TOÀN DIỆN: Không để lại bất kỳ vết tọa độ hay độ lệch nào
             localStorage.removeItem('save_decl');
             localStorage.removeItem('save_lat');
             localStorage.removeItem('save_lon');
             
-            // 3. RESET TRỰC TIẾP TRÊN GIAO DIỆN (Đúng yêu cầu hoàn hảo của bạn)
             if (declInput) declInput.value = "0";
-            if (latInput) latInput.value = "";  // Xóa trống ô Vĩ độ ngay lập tức
-            if (lonInput) lonInput.value = "";  // Xóa trống ô Kinh độ ngay lập tức
+            if (latInput) latInput.value = "";  
+            if (lonInput) lonInput.value = "";  
             
             magneticDeclination = 0;
             updateMagneticDeclination();
-            showToast("Đã xóa toàn bộ dữ liệu lưu về trạng thái trống!");
+            if (typeof showToast === 'function') showToast("Đã xóa toàn bộ dữ liệu lưu về trạng thái trống!");
         } else {
-            // Nếu bật check, khóa trạng thái bật và lưu lại các số hiện tại đang hiển thị
             localStorage.setItem('save_toggle_state', 'true');
-            
             if (declInput) localStorage.setItem('save_decl', declInput.value);
             if (latInput && latInput.value !== "") localStorage.setItem('save_lat', latInput.value);
             if (lonInput && lonInput.value !== "") localStorage.setItem('save_lon', lonInput.value);
-            
-            showToast("Đã bật chế độ ghi nhớ!");
+            if (typeof showToast === 'function') showToast("Đã bật chế độ ghi nhớ!");
         }
     });
 });
