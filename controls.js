@@ -4168,8 +4168,19 @@ function handleDateInput(currentInput, nextInputId) {
     }
 }
 
+// =========================================================================
+// 🚀 HỆ THỐNG BIẾN TOÀN CỤC LƯU TRỮ BỘ NHỚ ĐỆM ĐA TẦNG (HIGH-PERFORMANCE CACHE)
+// =========================================================================
+let sonTextsCache = null;
+let huongLonTextsCache = null;
+let saoTextsCache = null;
+let hau72TextsCache = null;
+
+// =========================================================================
+// 🏗️ 1. HÀM DỰNG CÁC VÒNG LA BÀN (TỐI ƯU STRING RENDER - SIÊU NHẸ)
+// =========================================================================
 function render24SonRing() {
-    // 1. Vạch độ ngoài cùng (Giữ nguyên)
+    // 1. Vạch độ ngoài cùng
     const vachDoRing = document.getElementById('vachDoRing');
     if (vachDoRing) {
         let linesHtml = "";
@@ -4180,7 +4191,7 @@ function render24SonRing() {
         vachDoRing.innerHTML = linesHtml;
     }
 
-    // 2. Vạch ngăn 24 Sơn (Giữ nguyên)
+    // 2. Vạch ngăn 24 Sơn
     const khe24SonRing = document.getElementById('khe24SonRing');
     if (khe24SonRing) {
         let lines24Html = "";
@@ -4191,208 +4202,190 @@ function render24SonRing() {
         khe24SonRing.innerHTML = lines24Html;
     }
 
-    // 3. Chữ 24 Sơn (Giữ nguyên)
+    // 3. Chữ 24 Sơn (Nối chuỗi thần tốc thay thế createElementNS)
     const sonRingSvg = document.getElementById('sonRingSvg');
     if (sonRingSvg) {
-        sonRingSvg.innerHTML = "";
+        let sonHtml = "";
         SON_24_CONFIG.forEach((son, index) => {
             const goc = (index * 15) % 360;
-            const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250"); 
-            textNode.setAttribute("y", "114");
-            textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "10");
-            textNode.setAttribute("font-weight", "900");
-            textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
-            textNode.setAttribute("data-son-goc", goc.toString());
-            textNode.setAttribute("data-base-size", "10");
-            textNode.textContent = son.name;
-            
             const color = ["Cấn", "Tốn", "Khôn", "Càn"].includes(son.name) ? "#ff3b30" :
                           ["Tý", "Mão", "Ngọ", "Dậu"].includes(son.name) ? "#00a525" : "#5c4314";
-            textNode.setAttribute("fill", color);
-            textNode.setAttribute("data-color", color);
-            sonRingSvg.appendChild(textNode);
+            
+            sonHtml += `<text x="250" y="114" text-anchor="middle" font-size="10" font-weight="900" ` +
+                       `transform="rotate(${goc}, 250, 250)" data-son-goc="${goc}" data-base-size="10" ` +
+                       `fill="${color}" data-color="${color}">${son.name}</text>`;
         });
+        sonRingSvg.innerHTML = sonHtml;
     }
 
-    // 4. Vòng 24 Sao Phúc Đức - PHỐI MÀU NEON ĐA TẦNG (Không chứa filter gây lag)
+    // 4. Vòng 24 Sao Phúc Đức
     const phucDucRingSvg = document.getElementById('phucDucRingSvg');
     if (phucDucRingSvg) {
-        phucDucRingSvg.innerHTML = "";
         const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
-        
-        // Ma trận trích xuất Cát Tinh chính tông để gán bộ lọc màu
         const catStars = ["Phúc Đức", "Tấn Tài", "Quan Tước", "Quan Quý", "Vượng Trang", "Hưng Phước", "Vượng Tài", "Đăng Doanh", "Vượng Tâm", "Vinh Phước"];
-       
+        
+        let phucDucHtml = "";
         phucDucNames.forEach((name, index) => {
             const goc = (index * 15) % 360;
-            const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250");
-            textNode.setAttribute("y", "72");
-            textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "6.8");
-            textNode.setAttribute("font-weight", "900"); // Đẩy lên 900 để nét chữ dày, giả lập thanh led neon tốt hơn
-            textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
-            textNode.setAttribute("data-sao-goc", goc.toString());
-            textNode.setAttribute("data-base-size", "6.8");
-            textNode.textContent = name;
-
-            // BIỆN CHỨNG KHỚP LOGIC LED: Sử dụng mã màu tương thích 100% với hàm kichHoatDenLedQuet của bạn
-            // Sao Cát -> Dùng màu #00a525 (Khi la bàn quét qua tự chuyển thành #00ff00 cực mạnh)
-            // Sao Hung -> Dùng màu #ff3b30 (Khi la bàn quét qua tự chuyển thành #ff0000 rực lửa)
             const color = catStars.includes(name) ? "#00a525" : "#ff3b30";
             
-            textNode.setAttribute("fill", color);
-            textNode.setAttribute("data-color", color); // Bắt buộc phải có để hàm quét nhận diện đổi màu
-            phucDucRingSvg.appendChild(textNode);
+            phucDucHtml += `<text x="250" y="72" text-anchor="middle" font-size="6.8" font-weight="900" ` +
+                           `transform="rotate(${goc}, 250, 250)" data-sao-goc="${goc}" data-base-size="6.8" ` +
+                           `fill="${color}" data-color="${color}">${name}</text>`;
         });
+        phucDucRingSvg.innerHTML = phucDucHtml;
     }
 
     // 5. Vòng 72 Hậu - CHUẨN XÁC ĐỒNG TRỤC CHÍNH SƠN
     const hauRing = document.getElementById('hau72RingSvg');
     if (hauRing) {
-        hauRing.innerHTML = "";
-        
+        let hauHtml = "";
         Object.keys(Data72Hau).forEach(degStr => {
             const hau = Data72Hau[degStr];
             const degVisual = parseFloat(degStr);
             
-            const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250"); 
-            textNode.setAttribute("y", "95");
-            textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "3.2"); 
-            textNode.setAttribute("font-weight", "700");
-            textNode.setAttribute("transform", `rotate(${degVisual}, 250, 250)`);
-            textNode.setAttribute("data-hau-goc", degStr); 
-            textNode.setAttribute("data-base-size", "3.2");
-
-            let color;
+            let color = "#7a631d";
             if (hau.chatLuong.includes("Cát")) {
-                color = "#0e6b0e"; // Xanh lá đại ngàn (Tĩnh trầm, khi trúng LED quét hóa Vàng rực sẽ cực nổi)
-           } else if (hau.chatLuong.includes("Hung")) {
-                color = "#8b0000"; // Đỏ đô / Đỏ rượu chát (Trầm ấm, huyền bí, không bị lòe loẹt)
-           } else {
-                color = "#7a631d"; // Vàng đồng trầm nguyên bản
-           }
+                color = "#0e6b0e";
+            } else if (hau.chatLuong.includes("Hung")) {
+                color = "#8b0000";
+            }
             
-            textNode.setAttribute("fill", color);
-            textNode.setAttribute("data-original-fill", color);
-            
-            // Tối ưu chuỗi: Nhặt chữ cái đầu + số (Ví dụ: "Nhâm Hậu 1" -> "N1")
             const tenGoc = hau.ten || "";
-            const soHau = tenGoc.match(/\d+/); // Nhặt số ở cuối
-            const chuDau = tenGoc.charAt(0);  // Nhặt chữ cái đầu tiên (N, T, Q, S...)
-            textNode.textContent = soHau ? (chuDau + soHau[0]) : tenGoc;
-
-            hauRing.appendChild(textNode);
+            const soHau = tenGoc.match(/\d+/);
+            const chuDau = tenGoc.charAt(0);
+            const textContent = soHau ? (chuDau + soHau[0]) : tenGoc;
+            
+            hauHtml += `<text x="250" y="95" text-anchor="middle" font-size="3.2" font-weight="700" ` +
+                       `transform="rotate(${degVisual}, 250, 250)" data-hau-goc="${degStr}" data-base-size="3.2" ` +
+                       `fill="${color}" data-original-fill="${color}">${textContent}</text>`;
         });
+        hauRing.innerHTML = hauHtml;
     }
 
-    // QUAN TRỌNG: Cập nhật lại bộ nhớ đệm Cache ngay sau khi tạo mới DOM để hàm LED quét chạy đúng
-    if (typeof cacheCompassElements === 'function') {
-        cacheCompassElements();
-    }
+    // Đồng bộ kích hoạt lưu bộ nhớ đệm ngay lập tức sau khi dựng xong giao diện
+    cacheCompassElements(true);
 }
 
-// ====================== HÀM LÀM SÁNG LED QUÉT (ĐỒNG BỘ MƯỢT MÀ) ======================
+// =========================================================================
+// 🗄️ 2. HÀM CHUYỂN ĐỔI VÀ NẠP BỘ NHỚ ĐỆM TỪ DOM VÀO RAM (CHẠY 1 LẦN DUY NHẤT)
+// =========================================================================
+function cacheCompassElements(forceRefresh = false) {
+    if (!forceRefresh && sonTextsCache && sonTextsCache.length > 0) return; 
+
+    // Cache cấu trúc dữ liệu 24 Sơn
+    sonTextsCache = Array.from(document.querySelectorAll("#sonRingSvg text")).map(txt => ({
+        el: txt,
+        goc: parseFloat(txt.getAttribute("data-son-goc")) || 0,
+        baseSize: parseFloat(txt.getAttribute("data-base-size")) || 10,
+        color: txt.getAttribute("data-color") || "#5c4314"
+    }));
+
+    // Cache cấu trúc dữ liệu 24 Sao Phúc Đức
+    saoTextsCache = Array.from(document.querySelectorAll("#phucDucRingSvg text")).map(txt => ({
+        el: txt,
+        goc: parseFloat(txt.getAttribute("data-sao-goc")) || 0,
+        baseSize: parseFloat(txt.getAttribute("data-base-size")) || 6.8,
+        color: txt.getAttribute("data-color") || "#ff3b30"
+    }));
+
+    // Cache cấu trúc dữ liệu 72 Hậu
+    hau72TextsCache = Array.from(document.querySelectorAll("#hau72RingSvg text")).map(txt => ({
+        el: txt,
+        goc: parseFloat(txt.getAttribute("data-hau-goc")) || 0,
+        baseSize: parseFloat(txt.getAttribute("data-base-size")) || 3.2,
+        originalFill: txt.getAttribute("data-original-fill") || txt.getAttribute("fill") || "#7a631d"
+    }));
+
+    // Cache cấu trúc dữ liệu 8 Hướng Lớn (Triệt tiêu toàn bộ getAttribute phức tạp)
+    huongLonTextsCache = Array.from(document.querySelectorAll("#chuHuongLonG text")).map(txt => {
+        const textGoc = parseFloat(txt.getAttribute("data-goc")) || 0;
+        const fillAttr = txt.getAttribute("fill") || "";
+        const transform = txt.getAttribute("transform") || "";
+        const isChinhPhuong = txt.parentNode?.getAttribute("id") === "textChinhPhuong";
+        
+        let defaultFill = "#6b4e18";
+        if (isChinhPhuong) {
+            defaultFill = (transform.includes("rotate(90") || transform.includes("rotate(270")) ? "#00a525" : "#ff3b30";
+        }
+
+        return {
+            el: txt,
+            goc: textGoc,
+            isGreenByDefault: (fillAttr === "#00a525" || defaultFill === "#00a525"),
+            defaultFill: defaultFill
+        };
+    });
+}
+
+// =========================================================================
+// ⚡ 3. HÀM LÀM SÁNG LED QUÉT TIÊU CHUẨN ENGINE GAME (SIÊU MƯỢT, KHÔNG HÚT CPU)
+// =========================================================================
 function kichHoatDenLedQuet(heading) {
     const ledTargetAngle = ((heading % 360) + 360) % 360;
 
-    // Hàm phụ trợ xử lý hiệu ứng đổi màu và phóng to chữ khi trúng tia quét
-    const applyEffect = (elements, attrGoc, range, zoomScale) => {
-        if (!elements || !elements.forEach) return; // Chốt chặn an toàn chống crash
+    // Hàm phụ trợ xử lý hiệu ứng đổi màu bằng dữ liệu RAM - KHÔNG ĐỌC DOM
+    const applyEffect = (cachedArray, range, zoomScale, isHau = false) => {
+        if (!cachedArray) return;
         
-        elements.forEach(txt => {
-            const goc = parseFloat(txt.getAttribute(attrGoc)) || 0;
-            let phanSai = Math.abs(ledTargetAngle - goc);
+        const len = cachedArray.length;
+        for (let i = 0; i < len; i++) {
+            const item = cachedArray[i];
+            let phanSai = Math.abs(ledTargetAngle - item.goc);
             if (phanSai > 180) phanSai = 360 - phanSai;
 
-            const baseSize = parseFloat(txt.getAttribute("data-base-size")) || 10;
-            
+            const style = item.el.style;
             if (phanSai <= range) {
-                // Trạng thái Khi quét trúng cung
-                txt.style.opacity = "1";
-                txt.style.fontSize = (baseSize * zoomScale) + "px";
-                txt.style.fontWeight = "900";
+                // Khi quét trúng cung mục tiêu
+                style.opacity = "1";
+                style.fontSize = (item.baseSize * zoomScale) + "px";
+                style.fontWeight = "900";
                 
-                if (txt.hasAttribute("data-original-fill")) {
-                    txt.style.fill = "#ffff00"; // Đổi sang vàng LED rực rỡ khi trúng mạch Hậu
-                } else if (txt.getAttribute("data-color")) {
-                    const color = txt.getAttribute("data-color");
-                    txt.style.fill = (color === "#5c4314") ? "#ffcc00" : (color === "#ff3b30" ? "#ff0000" : "#00ff00");
+                if (isHau) {
+                    style.fill = "#ffff00"; 
+                } else {
+                    const color = item.color;
+                    style.fill = (color === "#5c4314") ? "#ffcc00" : (color === "#ff3b30" ? "#ff0000" : "#00ff00");
                 }
             } else {
-                // Trạng thái Bình thường quay về tĩnh
-                txt.style.opacity = "0.6";
-                txt.style.fontSize = baseSize + "px";
-                txt.style.fontWeight = "700";
-                txt.style.fill = txt.getAttribute("data-original-fill") || txt.getAttribute("data-color") || "#8a8a8f";
+                // Trạng thái tĩnh bình thường bên ngoài tia quét
+                style.opacity = "0.6";
+                style.fontSize = item.baseSize + "px";
+                style.fontWeight = "700";
+                style.fill = item.originalFill || item.color || "#8a8a8f";
             }
-        });
+        }
     };
 
-    // 1. Xử lý 8 Hướng Lớn (Giữ nguyên logic gốc của bạn)
-    if (typeof huongLonTextsCache !== 'undefined') {
-        huongLonTextsCache.forEach(txt => {
-            const textGoc = parseFloat(txt.getAttribute("data-goc")) || 0;
-            let phanSai = Math.abs(ledTargetAngle - textGoc);
+    // 1. Xử lý chuyên biệt cho 8 Hướng Lớn bằng vòng lặp Core For tối ưu tốc độ
+    if (huongLonTextsCache) {
+        const lenHL = huongLonTextsCache.length;
+        for (let i = 0; i < lenHL; i++) {
+            const item = huongLonTextsCache[i];
+            let phanSai = Math.abs(ledTargetAngle - item.goc);
             if (phanSai > 180) phanSai = 360 - phanSai;
+
+            const style = item.el.style;
             if (phanSai <= 22.5) {
-                txt.style.opacity = "1"; txt.style.fontWeight = "900";
-                txt.style.fill = (txt.getAttribute("fill") === "#00a525") ? "#00ff37" : "#ff1a00";
+                style.opacity = "1"; 
+                style.fontWeight = "900";
+                style.fill = item.isGreenByDefault ? "#00ff37" : "#ff1a00";
             } else {
-                txt.style.opacity = "0.5"; txt.style.fontWeight = "normal";
-                const transform = txt.getAttribute("transform") || "";
-                if (txt.parentNode?.getAttribute("id") === "textChinhPhuong") {
-                    txt.style.fill = (transform.includes("rotate(90") || transform.includes("rotate(270")) ? "#00a525" : "#ff3b30";
-                } else { txt.style.fill = "#6b4e18"; }
+                style.opacity = "0.5"; 
+                style.fontWeight = "normal";
+                style.fill = item.defaultFill;
             }
-        });
+        }
     }
 
     // 2. Xử lý 24 Sơn (Phóng to 1.3 lần)
-    if (typeof sonTextsCache !== 'undefined') {
-        applyEffect(sonTextsCache, "data-son-goc", 7.5, 1.3);
-    }
+    applyEffect(sonTextsCache, 7.5, 1.3, false);
 
     // 3. Xử lý Sao Phúc Đức (Phóng to 1.2 lần)
-    if (typeof saoTextsCache !== 'undefined') {
-        applyEffect(saoTextsCache, "data-sao-goc", 7.5, 1.2);
-    }
+    applyEffect(saoTextsCache, 7.5, 1.2, false);
 
     // 4. Xử lý 72 Hậu (Quét trúng cung quản 2.5 độ, phóng to 1.65 lần nổi bật)
-    if (typeof hau72TextsCache !== 'undefined') {
-        applyEffect(hau72TextsCache, "data-hau-goc", 2.5, 1.65); 
-    }
-}
-
-// ====================== CACHE ELEMENTS - TỐI ƯU HIỆU SUẤT CHUẨN VẬN 9 ======================
-// Đảm bảo khai báo đủ 4 biến mảng toàn cục ở đầu file (hoặc trước hàm)
-let sonTextsCache = null;
-let huongLonTextsCache = null;
-let saoTextsCache = null;
-let hau72TextsCache = null; // Khai báo thêm biến này nếu chưa có ở đầu file
-
-function cacheCompassElements(forceRefresh = false) {
-    // NẾU KHÔNG ÉP BUỘC LÀM MỚI và đã có dữ liệu -> Bỏ qua để tiết kiệm CPU
-    if (!forceRefresh && sonTextsCache && sonTextsCache.length > 0) return; 
-
-    // Thực hiện quét nạp bộ nhớ đệm từ DOM
-    sonTextsCache = document.querySelectorAll("#sonRingSvg text");
-    huongLonTextsCache = document.querySelectorAll("#chuHuongLonG text");
-    saoTextsCache = document.querySelectorAll("#phucDucRingSvg text");
-    hau72TextsCache = document.querySelectorAll("#hau72RingSvg text");
-
-    // Lưu lưu lượng màu gốc của 72 Hậu phục vụ cho hàm trả màu LED quét
-    if (hau72TextsCache) {
-        hau72TextsCache.forEach(txt => {
-            if (!txt.hasAttribute("data-original-fill")) {
-                txt.setAttribute("data-original-fill", txt.getAttribute("fill") || "#ffcc77");
-            }
-        });
-    }
+    applyEffect(hau72TextsCache, 2.5, 1.65, true);
 }
 
 // ====================== MANUAL ROTATE (KÉO SLIDER) ======================
@@ -4502,7 +4495,7 @@ function updateBatTrachBackground(cungPhi) {
         directions.forEach((dir, index) => {
             const cungTrạch = mapTrach[dir.code];
             const isCat = cungPhầnTrăm[cungTrạch]?.cát;
-            const fillColor = isCat ? "rgba(48, 209, 88, 0.40)" : "rgba(185, 25, 25, 0.45)";
+            const fillColor = isCat ? "rgba(48, 209, 88, 0.22)" : "rgba(255, 59, 48, 0.22)";
             
             // Thay đổi trực tiếp thuộc tính màu của phần tử DOM có sẵn
             existingPaths[index].setAttribute('fill', fillColor);
@@ -4517,7 +4510,7 @@ function updateBatTrachBackground(cungPhi) {
     directions.forEach(dir => {
         const cungTrạch = mapTrach[dir.code];
         const isCat = cungPhầnTrăm[cungTrạch]?.cát;
-        const fillColor = isCat ? "rgba(48, 209, 88, 0.40)" : "rgba(185, 25, 25, 0.45)";
+        const fillColor = isCat ? "rgba(48, 209, 88, 0.22)" : "rgba(255, 59, 48, 0.22)";
         
         const pathStr = getSvgArcPath(cx, cy, rIn, rOut, dir.start, dir.end);
         html += `<path d="${pathStr}" fill="${fillColor}" stroke="none" />`;
