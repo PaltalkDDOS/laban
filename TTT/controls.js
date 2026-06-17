@@ -2838,8 +2838,7 @@ function handleOrientation(event) {
 
     if (lastHeading === null) {
         lastHeading = rawHeading;
-        const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360;
-        executeUIUpdate(headingForDial, lastHeading);
+        executeUIUpdate(lastHeading, lastHeading);
         return;
     }
 
@@ -2859,12 +2858,11 @@ function handleOrientation(event) {
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
 
-    // [GIAO THỨC PHÂN TÁCH GÓC]: Tách biệt rõ ràng trục đĩa la bàn và trục số liệu tính toán
+    // [GIAO THỨC CHỐNG LOẠN PHƯƠNG VỊ]: Tách luồng góc độc lập dữ liệu và giao diện
     const headingRawPhysical = lastHeading; 
-    const headingTrueGeographic = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
+    const headingTrueGeographic = (lastHeading + (magneticDeclination || 0) + 360) % 360;
 
-    // Khóa chặt currentHeading theo trục số thực tế địa chất nằm im của máy chỉ
-    if (typeof currentHeading !== 'undefined') currentHeading = headingRawPhysical;
+    if (typeof currentHeading !== 'undefined') currentHeading = headingTrueGeographic;
 
     if (absDiff > 0.4) {
         const btnTongLuan = document.getElementById('btn-tong-luan');
@@ -2879,10 +2877,11 @@ function handleOrientation(event) {
     });
 }
 
-function executeUIUpdate(headingDial, headingText) {
-    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial); // Đĩa xoay nhận góc tịnh tiến bù lệch từ
-    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); // Số hiển thị bám chặt góc thô vật lý
-    if (typeof recalculateFate === 'function') recalculateFate(); // Lõi tính luận đoán dùng góc thô vật lý cố định
+function executeUIUpdate(headingTrue, headingRaw) {
+    // Trực tiếp bơm góc cấu trúc đã phân tách rõ ràng vào hạ tầng hiển thị và tính toán
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingRaw);
+    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingRaw);
+    if (typeof recalculateFate === 'function') recalculateFate();
 }
 
 // Cập nhật trạng thái nhiễu dành riêng cho phần cứng iOS (Đã tối ưu giảm tải DOM)
