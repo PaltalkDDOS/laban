@@ -674,7 +674,7 @@ function validateFullDate(day, month, year) {
 // =========================================================================
 // 2. HÀM CHÍNH recalculateFate() - TRÍCH XUẤT TIẾT KHÍ LẬP XUÂN & PHÂN TÁCH 2 TRỤC NĂM
 // =========================================================================
-() {
+function recalculateFate() {
     const name = document.getElementById('userName').value.trim() || "Chủ mệnh";
     const gender = document.getElementById('gender').value;
     const dayStr = document.getElementById('birthDay').value;
