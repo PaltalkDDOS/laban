@@ -2859,11 +2859,11 @@ function handleOrientation(event) {
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
 
-    // GIAO THỨC PHÂN TÁCH: Mặt đĩa xoay chịu lệch từ, tọa độ chữ và số dùng để tính toán giữ nguyên góc thô
+    // PHÂN TÁCH LUỒNG: headingForText giữ góc thô vật lý, headingForDial chịu độ lệch từ để xoay đĩa
     const headingForText = lastHeading; 
     const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
 
-    // Khóa currentHeading theo trục số thực tế của máy chỉ (địa chất nằm im)
+    // Khóa cứng currentHeading theo hướng vật lý thô để chặn đứng hiện tượng nhảy số hệ thống
     if (typeof currentHeading !== 'undefined') currentHeading = headingForText;
 
     if (absDiff > 0.4) {
@@ -2880,10 +2880,9 @@ function handleOrientation(event) {
 }
 
 function executeUIUpdate(headingDial, headingText) {
-    // Chỉ truyền góc tịnh tiến vào đĩa xoay hiển thị, các hàm tính toán và hiển thị số bám theo góc thô vật lý
-    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial); 
-    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); 
-    if (typeof recalculateFate === 'function') recalculateFate();
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial); // Chỉ đĩa la bàn được phép xoay tịnh tiến
+    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); // Chữ số realtime giữ nguyên góc thô
+    if (typeof recalculateFate === 'function') recalculateFate(); // Logic tính toán bám chặt góc thô địa tầng
 }
 
 // Cập nhật trạng thái nhiễu dành riêng cho phần cứng iOS (Đã tối ưu giảm tải DOM)
