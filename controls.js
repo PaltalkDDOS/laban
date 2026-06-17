@@ -543,8 +543,7 @@ function getHanhByHeading(heading) {
     const thongTinLoi = DATA_THANSAT.MA_TRAN_24_SON_VI[sonObj.name];
     const mapNguHanhViet = { "Thuy": "Thủy", "Moc": "Mộc", "Hoa": "Hỏa", "Tho": "Thổ", "Kim": "Kim" };
     return thongTinLoi ? (mapNguHanhViet[thongTinLoi.nguHanh] || "Thổ") : "Thổ";
-}========================================================================
-
+}
 
 // ====================== GLOBAL ELEMENTS ======================
 const compass = document.getElementById('compass');
