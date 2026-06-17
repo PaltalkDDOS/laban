@@ -2836,11 +2836,9 @@ function handleOrientation(event) {
     if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
     lastUpdateTime = now;
 
-    // BẢO TOÀN KHỞI TẠO ĐẦU HÀM 1: Bù góc ngay từ khung hình đầu tiên để chặn đứng hiện tượng giật đĩa
     if (lastHeading === null) {
         lastHeading = rawHeading;
-        const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360;
-        executeUIUpdate(headingForDial, lastHeading);
+        executeUIUpdate(lastHeading, lastHeading);
         return;
     }
 
@@ -2860,12 +2858,11 @@ function handleOrientation(event) {
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
 
-    // TRỤC TOÁN PHÁP ĐỒNG NHẤT KHÓA CỨNG ĐỊA CHẤT
-    const headingForText = lastHeading; // Hướng thô vật lý thực tế (Số hiển thị và số tính điểm bám vào đây)
-    const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; // Hướng tịnh tiến dùng riêng cho mặt đĩa xoay
+    // [GIAO THỨC CHỐNG LOẠN PHƯƠNG VỊ]: Tách luồng góc độc lập dữ liệu và giao diện
+    const headingRawPhysical = lastHeading; 
+    const headingTrueGeographic = (lastHeading + (magneticDeclination || 0) + 360) % 360;
 
-    // Ép lõi hệ thống bám chặt góc thô vật lý để tính quẻ mệnh chuẩn trắc địa
-    if (typeof currentHeading !== 'undefined') currentHeading = headingForText;
+    if (typeof currentHeading !== 'undefined') currentHeading = headingTrueGeographic;
 
     if (absDiff > 0.4) {
         const btnTongLuan = document.getElementById('btn-tong-luan');
@@ -2876,19 +2873,15 @@ function handleOrientation(event) {
 
     if (rafId) cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(() => {
-        executeUIUpdate(headingForDial, headingForText);
+        executeUIUpdate(headingTrueGeographic, headingRawPhysical);
     });
 }
 
-function executeUIUpdate(headingDial, headingText) {
-    // 1. Chữ số hiển thị nhận góc thô headingText -> Không bao giờ bị nhảy số khi thay đổi độ lệch từ
-    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); 
-    
-    // 2. Chạy hàm luận đoán -> Sử dụng currentHeading (đã khóa cứng theo góc thô vật lý)
-    if (typeof recalculateFate === 'function') recalculateFate(); 
-    
-    // 3. ĐĨA XOAY CHỐT CHẶN CUỐI: Đặt ở cuối cùng để ghi đè lệnh xoay đĩa thô nằm bên trong recalculateFate
-    if (typeof updateCompassUI === 'function') updateCompassUI(headingDial); 
+function executeUIUpdate(headingTrue, headingRaw) {
+    // Trực tiếp bơm góc cấu trúc đã phân tách rõ ràng vào hạ tầng hiển thị và tính toán
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingRaw);
+    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingRaw);
+    if (typeof recalculateFate === 'function') recalculateFate();
 }
 
 // Cập nhật trạng thái nhiễu dành riêng cho phần cứng iOS (Đã tối ưu giảm tải DOM)
