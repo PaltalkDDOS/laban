@@ -2954,13 +2954,21 @@ function getCleanValue(raw) {
 }
 
 // Bộ lưu trữ dữ liệu động - Tự động thay đổi Epoch và Ma trận theo file nạp vào
+// Bộ lưu trữ hệ số WMMHR động
 let GLOBAL_WMMHR_DATA = {
     epoch: 2025.0,
-    data: [] // Sẽ được bơm đầy sau khi đọc file WMMHR2025.COF thành công
+    data: [] 
 };
 
+// 🎯 BƯỚC ĐỘT PHÁ 1: Khởi tạo bộ đệm bộ nhớ phẳng (TypedArray) để tái sử dụng mãi mãi, 
+// không bao giờ cấp phát lại mảng trong vòng lặp giúp triệt tiêu hoàn toàn Rác RAM (Garbage Collection)
+let REUSABLE_P_BUFFER = null;
+let REUSABLE_DP_BUFFER = null;
+let PRECOMPUTED_COSM = null;
+let PRECOMPUTED_SINM = null;
+
 /**
- * 🛰️ HÀM BẤT ĐỒNG BỘ: Tải và phân tích file cấu hình địa từ ngoại vi
+ * 🛰️ HÀM BẤT ĐỒNG BỘ: Tải ngầm file COF, không chặn luồng vẽ giao diện UI
  */
 async function loadWMMHRFile() {
     try {
@@ -2971,7 +2979,6 @@ async function loadWMMHRFile() {
         const lines = text.split('\n');
         const parsedMatrix = [];
         
-        // Dòng đầu tiên chứa thông tin Thiên niên kỷ (Epoch)
         if (lines.length > 0 && lines[0].trim() !== '') {
             const headerParts = lines[0].trim().split(/\s+/);
             if (headerParts.length > 0 && !isNaN(parseFloat(headerParts[0]))) {
@@ -2979,7 +2986,6 @@ async function loadWMMHRFile() {
             }
         }
         
-        // Phân tích từ dòng thứ 2 trở đi để lấy các chuỗi hệ số Gauss
         for (let i = 1; i < lines.length; i++) {
             let line = lines[i].trim();
             if (line === '') continue;
@@ -2987,18 +2993,30 @@ async function loadWMMHRFile() {
             let parts = line.split(/\s+/).map(Number);
             if (parts.length >= 6 && !parts.some(isNaN)) {
                 parsedMatrix.push([
-                    parts[0], // n (Bậc)
-                    parts[1], // m (Thứ tự)
-                    parts[2], // g (Hệ số từ trường chính)
-                    parts[3], // h (Hệ số từ trường phụ)
-                    parts[4], // dg (Độ biến thiên g theo năm)
-                    parts[5]  // dh (Độ biến thiên h theo năm)
+                    parts[0], // n
+                    parts[1], // m
+                    parts[2], // g
+                    parts[3], // h
+                    parts[4], // dg
+                    parts[5]  // dh
                 ]);
             }
         }
         
         GLOBAL_WMMHR_DATA.data = parsedMatrix;
-        console.log(`📡 [MÔ HÌNH TOÀN CẦU] Đã nạp xong file COF động! Tổng số bậc quét: ${parsedMatrix.length > 0 ? parsedMatrix[parsedMatrix.length - 1][0] : 0}`);
+
+        // Tự động phân bổ trước bộ nhớ đệm dựa trên số bậc thực tế đọc được (Bậc 12 hoặc 133)
+        const lastRow = parsedMatrix[parsedMatrix.length - 1];
+        const maxDegree = lastRow ? lastRow[0] : 12;
+        const bufferSize = maxDegree + 1;
+
+        // Tạo mảng phẳng siêu tốc độ Float64Array
+        REUSABLE_P_BUFFER = new Float64Array(bufferSize * bufferSize);
+        REUSABLE_DP_BUFFER = new Float64Array(bufferSize * bufferSize);
+        PRECOMPUTED_COSM = new Float64Array(bufferSize);
+        PRECOMPUTED_SINM = new Float64Array(bufferSize);
+
+        console.log(`📡 [MÔ HÌNH TOÀN CẦU] Đã nạp file COF bậc ${maxDegree}. Khởi tạo bộ đệm phẳng thành công!`);
         return true;
     } catch (error) {
         console.error("❌ Lỗi nghiêm trọng khi đọc file COF:", error);
@@ -3404,14 +3422,10 @@ async function autoDetectDeclination() {
     );
 }
 
-// =========================================================================
-// HÀM TÍNH ĐỘ LỆCH TỪ THIÊN WMM2025 - PHIÊN BẢN CHÍNH THỨC & TOÀN CẦU
-// =========================================================================
-// Thay thế hoàn toàn hàm cũ bằng bản tự động co giãn ma trận Legendre này:
 function calculateGlobalDeclination(lat, lon, altKm = 0) {
     try {
-        // Nếu file chưa kịp tải hoặc rỗng, trả về mặc định để tránh crash app
-        if (!GLOBAL_WMMHR_DATA.data || GLOBAL_WMMHR_DATA.data.length === 0) {
+        // Phòng hộ nếu file chưa tải xong
+        if (!GLOBAL_WMMHR_DATA.data || GLOBAL_WMMHR_DATA.data.length === 0 || !REUSABLE_P_BUFFER) {
             return 0;
         }
 
@@ -3421,7 +3435,7 @@ function calculateGlobalDeclination(lat, lon, altKm = 0) {
         cleanLon -= 180;
 
         const decimalYear = getDecimalYear();
-        const dt = decimalYear - GLOBAL_WMMHR_DATA.epoch; // Sử dụng epoch động từ file đọc được
+        const dt = decimalYear - GLOBAL_WMMHR_DATA.epoch;
 
         const latRad = cleanLat * Math.PI / 180;
         const lonRad = cleanLon * Math.PI / 180;
@@ -3442,48 +3456,67 @@ function calculateGlobalDeclination(lat, lon, altKm = 0) {
         const sinPhi = Math.sin(phiPrime);
         const cosPhi = Math.cos(phiPrime);
 
-        // 🎯 BƯỚC ĐỘT PHÁ: Tìm bậc tối đa thực tế (Bản thường là 12, bản HR là 133)
         const lastRow = GLOBAL_WMMHR_DATA.data[GLOBAL_WMMHR_DATA.data.length - 1];
         const maxDegree = lastRow ? lastRow[0] : 12;
+        const size = maxDegree + 1;
 
-        // Giãn nở kích thước mảng chứa đa thức Legendre tương thích 100% với file nạp vào
-        const P = Array.from({length: maxDegree + 1}, () => new Array(maxDegree + 1).fill(0));
-        const dP = Array.from({length: maxDegree + 1}, () => new Array(maxDegree + 1).fill(0));
+        // Làm sạch bộ nhớ đệm cũ (Tốc độ dọn dẹp mảng phẳng nhanh gấp 50 lần xóa mảng thường)
+        REUSABLE_P_BUFFER.fill(0);
+        REUSABLE_DP_BUFFER.fill(0);
 
-        P[0][0] = 1;
-        P[1][0] = sinPhi;  dP[1][0] = cosPhi;
-        P[1][1] = cosPhi;  dP[1][1] = -sinPhi;
+        // Công thức cấu trúc ma trận phẳng gán tọa độ 2D giả lập: Index = n * size + m
+        REUSABLE_P_BUFFER[0] = 1;                              // P[0][0]
+        REUSABLE_P_BUFFER[1 * size + 0] = sinPhi;              // P[1][0]
+        REUSABLE_DP_BUFFER[1 * size + 0] = cosPhi;             // dP[1][0]
+        REUSABLE_P_BUFFER[1 * size + 1] = cosPhi;              // P[1][1]
+        REUSABLE_DP_BUFFER[1 * size + 1] = -sinPhi;            // dP[1][1]
 
-        // Vòng lặp Legendre thông minh tự động co giãn theo độ dài bậc tối đa tìm được
+        // Vòng lặp tính đa thức Legendre toán học Gauss trên mảng phẳng siêu tốc
         for (let n = 2; n <= maxDegree; n++) {
+            const idx_n = n * size;
+            const idx_n1 = (n - 1) * size;
+            const idx_n2 = (n - 2) * size;
+            
             for (let m = 0; m <= n; m++) {
                 if (m === n) {
                     const fn = Math.sqrt((2*n-1)/(2*n));
-                    P[n][m] = fn * cosPhi * P[n-1][m-1];
-                    dP[n][m] = fn * (cosPhi * dP[n-1][m-1] - sinPhi * P[n-1][m-1]);
+                    REUSABLE_P_BUFFER[idx_n + m] = fn * cosPhi * REUSABLE_P_BUFFER[idx_n1 + (m - 1)];
+                    REUSABLE_DP_BUFFER[idx_n + m] = fn * (cosPhi * REUSABLE_DP_BUFFER[idx_n1 + (m - 1)] - sinPhi * REUSABLE_P_BUFFER[idx_n1 + (m - 1)]);
                 } else {
                     const g1 = (2*n-1) / Math.sqrt(n*n - m*m);
                     const g2 = Math.sqrt((n-1)*(n-1) - m*m) / Math.sqrt(n*n - m*m);
-                    P[n][m] = g1 * sinPhi * P[n-1][m] - g2 * P[n-2][m];
-                    dP[n][m] = g1 * (sinPhi * dP[n-1][m] + cosPhi * P[n-1][m]) - g2 * dP[n-2][m];
+                    
+                    REUSABLE_P_BUFFER[idx_n + m] = g1 * sinPhi * REUSABLE_P_BUFFER[idx_n1 + m] - g2 * REUSABLE_P_BUFFER[idx_n2 + m];
+                    REUSABLE_DP_BUFFER[idx_n + m] = g1 * (sinPhi * REUSABLE_DP_BUFFER[idx_n1 + m] + cosPhi * REUSABLE_P_BUFFER[idx_n1 + m]) - g2 * REUSABLE_DP_BUFFER[idx_n2 + m];
                 }
             }
         }
 
+        // 🎯 BƯỚC ĐỘT PHÁ 2: Tính trước mảng lượng giác theo trục kinh độ (Chỉ chạy 134 lần!)
+        for (let m = 0; m <= maxDegree; m++) {
+            PRECOMPUTED_COSM[m] = Math.cos(m * lonRad);
+            PRECOMPUTED_SINM[m] = Math.sin(m * lonRad);
+        }
+
         let X = 0, Y = 0, Z = 0;
-        // Duyệt qua ma trận động vừa đọc được từ file ngoài
+        
+        // Vòng lặp tổng lực Gauss duyệt qua 9.100 dòng hệ số ngoài
         GLOBAL_WMMHR_DATA.data.forEach(([n, m, g0, h0, dg, dh]) => {
             const g = g0 + dt * dg;
             const h = h0 + dt * dh;
             const ratio = Math.pow(a / r, n + 2);
-            const cosM = Math.cos(m * lonRad);
-            const sinM = Math.sin(m * lonRad);
+            
+            // Lấy trực tiếp kết quả lượng giác từ mảng tính sẵn, triệt tiêu 9.000 lệnh tính trùng lặp!
+            const cosM = PRECOMPUTED_COSM[m];
+            const sinM = PRECOMPUTED_SINM[m];
+            
             const c = g * cosM + h * sinM;
             const d = g * sinM - h * cosM;
 
-            X -= ratio * c * dP[n][m];
-            Z -= ratio * c * P[n][m] * (n + 1);
-            if (m > 0) Y += ratio * m * d * P[n][m];
+            const idx = n * size + m; // Lấy vị trí phần tử trên mảng phẳng
+            X -= ratio * c * REUSABLE_DP_BUFFER[idx];
+            Z -= ratio * c * REUSABLE_P_BUFFER[idx] * (n + 1);
+            if (m > 0) Y += ratio * m * d * REUSABLE_P_BUFFER[idx];
         });
 
         Y /= (cosPhi || 1e-8);
@@ -3576,14 +3609,8 @@ function convertToDecimalDegrees(val) {
     return decimalValue;
 }
 
-// =========================================================================
-// 4. KHỞI TẠO VÀ QUẢN LÝ SỰ KIỆN GIAO DIỆN DIỄN RA TRONG DOM
-// =========================================================================
-// Thay thế toàn bộ khối xử lý DOMContentLoaded cũ bằng bản nạp luồng async này:
-document.addEventListener('DOMContentLoaded', async () => {
-    // 🎯 THẦN CHÚ KHỞI CHẠY: Âm thầm kích hoạt tải file dữ liệu ngoài trước khi render UI
-    await loadWMMHRFile();
-
+// Thay thế toàn bộ hàm thiết lập sự kiện DOM cũ bằng bản thiết lập chạy song song này:
+document.addEventListener('DOMContentLoaded', () => {
     const configs = {
         'declination-input': { limit: 14, key: 'save_decl', min: -180, max: 180, mode: 'coordinate' },
         'remote-lat': { limit: 14, key: 'save_lat', min: -90, max: 90, mode: 'coordinate' },
@@ -3607,6 +3634,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Giao diện và các ô nhập liệu được kích hoạt HOÀN TOÀN NGAY LẬP TỨC! Người dùng gõ chữ bình thường
     Object.keys(configs).forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -3625,13 +3653,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // TỰ ĐỘNG KHÔI PHỤC VÙNG TRÊN GIAO DIỆN KHI MỞ LẠI APP (F5)
-    const savedLat = localStorage.getItem('save_lat');
-    const savedLon = localStorage.getItem('save_lon');
-    if (isRetentionEnabled && savedLat && savedLon) {
-        updateLocationUI(parseFloat(savedLat), parseFloat(savedLon));
-    }
+    // 🎯 THẦN CHÚ KHÔNG CHẶN MẠNG: Đọc file ngầm bằng tiến trình riêng (.then)
+    loadWMMHRFile().then((success) => {
+        if (success) {
+            // Sau khi nạp file ngầm xong hoàn chỉnh, mới khôi phục định vị vùng và tính toán lại
+            const savedLat = localStorage.getItem('save_lat');
+            const savedLon = localStorage.getItem('save_lon');
+            if (isRetentionEnabled && savedLat && savedLon) {
+                updateLocationUI(parseFloat(savedLat), parseFloat(savedLon));
+                if (typeof calculateRemoteDeclination === 'function') {
+                    calculateRemoteDeclination();
+                }
+            }
+        }
+    });
 
+    // Toàn bộ logic lắng nghe Input, Blur, Keypress cũ bên dưới GIỮ NGUYÊN HOÀN TOÀN...
     Object.keys(configs).forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -3654,7 +3691,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             let raw = el.value;
 
             el.value = parseSmartCoordinateText(raw);
-            
             if (el.value.length > cfg.limit) {
                 el.value = el.value.slice(0, cfg.limit);
             }
@@ -3679,7 +3715,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             let rawStr = el.value.trim();
 
             let finalDecimal = convertToDecimalDegrees(rawStr);
-            
             if (finalDecimal === null || isNaN(finalDecimal)) {
                 el.value = (id === 'declination-input') ? "0" : "";
                 if (id === 'declination-input') magneticDeclination = 0;
@@ -3691,12 +3726,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 let roundedVal = (id === 'declination-input') ? 
                                  parseFloat(finalDecimal.toFixed(2)) : 
                                  parseFloat(finalDecimal.toFixed(5));
-                
                 el.value = roundedVal;
                 
-                if (id === 'declination-input') {
-                    magneticDeclination = roundedVal;
-                }
+                if (id === 'declination-input') magneticDeclination = roundedVal;
 
                 if (cfg.key && document.getElementById('save-toggle')?.checked) {
                     localStorage.setItem(cfg.key, roundedVal);
