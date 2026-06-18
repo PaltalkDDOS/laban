@@ -1,1 +1,6644 @@
-const _0x3793e5=_0x2f80;(function(_0x597c0b,_0x55b1ba){const _0x4fafdd=_0x2f80,_0x3ab154=_0x597c0b();while(!![]){try{const _0x1a3cdd=parseInt(_0x4fafdd(0x161))/0x1+-parseInt(_0x4fafdd(0x530))/0x2*(parseInt(_0x4fafdd(0x58e))/0x3)+parseInt(_0x4fafdd(0x67b))/0x4+parseInt(_0x4fafdd(0x29e))/0x5+parseInt(_0x4fafdd(0x7be))/0x6*(parseInt(_0x4fafdd(0x1cf))/0x7)+-parseInt(_0x4fafdd(0x804))/0x8+-parseInt(_0x4fafdd(0x1ef))/0x9*(parseInt(_0x4fafdd(0x6cb))/0xa);if(_0x1a3cdd===_0x55b1ba)break;else _0x3ab154['push'](_0x3ab154['shift']());}catch(_0x2196cf){_0x3ab154['push'](_0x3ab154['shift']());}}}(_0x44ea,0x1cb73));const _0x5f059c=(function(){let _0x5e758e=!![];return function(_0xffd994,_0x152e1b){const _0x406b38=_0x5e758e?function(){const _0x8da104=_0x2f80;if(_0x152e1b){const _0xec1c99=_0x152e1b[_0x8da104(0x1a8)](_0xffd994,arguments);return _0x152e1b=null,_0xec1c99;}}:function(){};return _0x5e758e=![],_0x406b38;};}()),_0x1e65c8=_0x5f059c(this,function(){const _0x2695af=_0x2f80;return _0x1e65c8[_0x2695af(0x191)]()[_0x2695af(0x1ed)](_0x2695af(0x84f))[_0x2695af(0x191)]()[_0x2695af(0x2d9)](_0x1e65c8)[_0x2695af(0x1ed)]('(((.+)+)+)+$');});_0x1e65c8();const _0x78227f=(function(){let _0x20897f=!![];return function(_0x291a0d,_0x3e27fe){const _0x561332=_0x20897f?function(){if(_0x3e27fe){const _0x2a692f=_0x3e27fe['apply'](_0x291a0d,arguments);return _0x3e27fe=null,_0x2a692f;}}:function(){};return _0x20897f=![],_0x561332;};}()),_0x1a6ab8=_0x78227f(this,function(){const _0x10bc52=_0x2f80,_0xa800e6=function(){const _0x6d75b6=_0x2f80;let _0x3c405c;try{_0x3c405c=Function('return\x20(function()\x20'+_0x6d75b6(0x402)+');')();}catch(_0x4f5ad8){_0x3c405c=window;}return _0x3c405c;},_0x152fcc=_0xa800e6(),_0x332269=new RegExp('[fwVCTUzyqZwTNvGQSIvKIVjqUvBxNeKWzQFCxAFNNjGNLHZSFvRTwDEInmzzEqDnYVNwKfCGvQMjmqIHFFIVz]','g'),_0x1a41ad=_0x10bc52(0x5cb)['replace'](_0x332269,'')[_0x10bc52(0x888)](';');let _0x4f6b70,_0x24ace8,_0x3771fd,_0x3e5065;const _0x17498b=function(_0x276f82,_0x5410f5,_0x408ca2){const _0x6e17ee=_0x10bc52;if(_0x276f82[_0x6e17ee(0x110)]!=_0x5410f5)return![];for(let _0x552267=0x0;_0x552267<_0x5410f5;_0x552267++){for(let _0x7476e0=0x0;_0x7476e0<_0x408ca2['length'];_0x7476e0+=0x2){if(_0x552267==_0x408ca2[_0x7476e0]&&_0x276f82[_0x6e17ee(0x5db)](_0x552267)!=_0x408ca2[_0x7476e0+0x1])return![];}}return!![];},_0x30c715=function(_0x5f3b95,_0x543fc5,_0x5d3e9d){return _0x17498b(_0x543fc5,_0x5d3e9d,_0x5f3b95);},_0x381c4c=function(_0x38c318,_0x32d2ab,_0x580d36){return _0x30c715(_0x32d2ab,_0x38c318,_0x580d36);},_0x472bc6=function(_0x42e6bb,_0x1a8c4b,_0x3b5b68){return _0x381c4c(_0x1a8c4b,_0x3b5b68,_0x42e6bb);};for(let _0x15d270 in _0x152fcc){if(_0x17498b(_0x15d270,0x8,[0x7,0x74,0x5,0x65,0x3,0x75,0x0,0x64])){_0x4f6b70=_0x15d270;break;}}for(let _0x1aa5b2 in _0x152fcc[_0x4f6b70]){if(_0x472bc6(0x6,_0x1aa5b2,[0x5,0x6e,0x0,0x64])){_0x24ace8=_0x1aa5b2;break;}}for(let _0x59f76f in _0x152fcc[_0x4f6b70]){if(_0x381c4c(_0x59f76f,[0x7,0x6e,0x0,0x6c],0x8)){_0x3771fd=_0x59f76f;break;}}if(!('~'>_0x24ace8))for(let _0x50dc09 in _0x152fcc[_0x4f6b70][_0x3771fd]){if(_0x30c715([0x7,0x65,0x0,0x68],_0x50dc09,0x8)){_0x3e5065=_0x50dc09;break;}}if(!_0x4f6b70||!_0x152fcc[_0x4f6b70])return;const _0x16d016=_0x152fcc[_0x4f6b70][_0x24ace8],_0x48600a=!!_0x152fcc[_0x4f6b70][_0x3771fd]&&_0x152fcc[_0x4f6b70][_0x3771fd][_0x3e5065],_0x138baa=_0x16d016||_0x48600a;if(!_0x138baa)return;let _0x86a90=![];for(let _0x3ee0bd=0x0;_0x3ee0bd<_0x1a41ad['length'];_0x3ee0bd++){const _0x704ca5=_0x1a41ad[_0x3ee0bd],_0x59c2dd=_0x704ca5[0x0]===String[_0x10bc52(0x86c)](0x2e)?_0x704ca5['slice'](0x1):_0x704ca5,_0x5d63c7=_0x138baa[_0x10bc52(0x110)]-_0x59c2dd[_0x10bc52(0x110)],_0xea5678=_0x138baa[_0x10bc52(0x129)](_0x59c2dd,_0x5d63c7),_0x1079d6=_0xea5678!==-0x1&&_0xea5678===_0x5d63c7;_0x1079d6&&((_0x138baa['length']==_0x704ca5['length']||_0x704ca5[_0x10bc52(0x129)]('.')===0x0)&&(_0x86a90=!![]));}if(!_0x86a90){const _0x5865c5=new RegExp(_0x10bc52(0x380),'g'),_0x7ca497=_0x10bc52(0x6ac)[_0x10bc52(0x820)](_0x5865c5,'');_0x152fcc[_0x4f6b70][_0x3771fd]=_0x7ca497;}});_0x1a6ab8();const _0x1869b6=(function(){let _0x71798a=!![];return function(_0x1756e3,_0xcaf298){const _0x42e9db=_0x71798a?function(){const _0x46daf6=_0x2f80;if(_0xcaf298){const _0x367971=_0xcaf298[_0x46daf6(0x1a8)](_0x1756e3,arguments);return _0xcaf298=null,_0x367971;}}:function(){};return _0x71798a=![],_0x42e9db;};}());(function(){const _0x4b21e9=_0x2f80,_0x39cfc0=function(){const _0x30c4ef=_0x2f80;let _0x511a99;try{_0x511a99=Function(_0x30c4ef(0x399)+_0x30c4ef(0x402)+');')();}catch(_0x55a8b0){_0x511a99=window;}return _0x511a99;},_0xbee249=_0x39cfc0();_0xbee249[_0x4b21e9(0x706)](_0x34061e,0x7d0);}()),(function(){_0x1869b6(this,function(){const _0x4a5627=_0x2f80,_0x440752=new RegExp(_0x4a5627(0x4ec)),_0x163c82=new RegExp(_0x4a5627(0x8d7),'i'),_0x1146a3=_0x34061e(_0x4a5627(0x4d8));!_0x440752[_0x4a5627(0x6e5)](_0x1146a3+_0x4a5627(0x194))||!_0x163c82['test'](_0x1146a3+_0x4a5627(0x36f))?_0x1146a3('0'):_0x34061e();})();}());const _0x56fc86=(function(){let _0x55cb5e=!![];return function(_0xdf0fa5,_0x11ece0){const _0x440432=_0x55cb5e?function(){const _0x388fab=_0x2f80;if(_0x11ece0){const _0x2197ed=_0x11ece0[_0x388fab(0x1a8)](_0xdf0fa5,arguments);return _0x11ece0=null,_0x2197ed;}}:function(){};return _0x55cb5e=![],_0x440432;};}()),_0x58963d=_0x56fc86(this,function(){const _0x399cbf=_0x2f80,_0x40d78f=function(){const _0x2bbcbb=_0x2f80;let _0x1336c6;try{_0x1336c6=Function(_0x2bbcbb(0x399)+_0x2bbcbb(0x402)+');')();}catch(_0x36773e){_0x1336c6=window;}return _0x1336c6;},_0x1d4043=_0x40d78f(),_0x5cc0ab=_0x1d4043['console']=_0x1d4043[_0x399cbf(0x2ed)]||{},_0x1362c1=[_0x399cbf(0x536),_0x399cbf(0x292),'info',_0x399cbf(0x601),_0x399cbf(0x319),'table',_0x399cbf(0x33e)];for(let _0x1ef21d=0x0;_0x1ef21d<_0x1362c1['length'];_0x1ef21d++){const _0x2e6345=_0x56fc86[_0x399cbf(0x2d9)]['prototype'][_0x399cbf(0x254)](_0x56fc86),_0x4ee9da=_0x1362c1[_0x1ef21d],_0xdbc368=_0x5cc0ab[_0x4ee9da]||_0x2e6345;_0x2e6345[_0x399cbf(0x476)]=_0x56fc86['bind'](_0x56fc86),_0x2e6345[_0x399cbf(0x191)]=_0xdbc368[_0x399cbf(0x191)][_0x399cbf(0x254)](_0xdbc368),_0x5cc0ab[_0x4ee9da]=_0x2e6345;}});_0x58963d();const MaTranMinhChau={'Khảm':{'Nhâm':{'loai':_0x3793e5(0x43d),'diem':0x58,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x8a2),'hanh':_0x3793e5(0x331),'goc_do_min':337.5,'goc_do_max':352.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b),_0x3793e5(0x484),_0x3793e5(0x3f9)],'doi_tuong':['nam_chu',_0x3793e5(0x139)],'text':_0x3793e5(0x5d0),'giaiphap':_0x3793e5(0x63d)},'Tý':{'loai':_0x3793e5(0x43d),'diem':0x5d,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x3f2),'hanh':_0x3793e5(0x331),'goc_do_min':352.5,'goc_do_max':7.5,'icon':'star-green','linhvuc':['tai_loc',_0x3793e5(0x44e)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x4c5),'giaiphap':_0x3793e5(0x813)},'Quý':{'loai':_0x3793e5(0x2d5),'diem':0x20,'cap_do':'Tiểu\x20Hung','nhom':'Họa\x20Hại','hanh':_0x3793e5(0x331),'goc_do_min':7.5,'goc_do_max':22.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x7af),_0x3793e5(0x3f9)],'doi_tuong':[_0x3793e5(0x36b),_0x3793e5(0x1d2)],'text':_0x3793e5(0x7a7),'giaiphap':_0x3793e5(0x7b4)},'Sửu':{'loai':_0x3793e5(0x2d5),'diem':0x26,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x4d7),'goc_do_min':22.5,'goc_do_max':37.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x19b),'gia_dao'],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0xfc),'giaiphap':_0x3793e5(0x6f5)},'Cấn':{'loai':_0x3793e5(0x2d5),'diem':0x19,'cap_do':'Đại\x20Hung','nhom':'Ngũ\x20Quỷ','hanh':'Thổ','goc_do_min':37.5,'goc_do_max':52.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x19b),_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x168),'giaiphap':_0x3793e5(0x7f0)},'Dần':{'loai':_0x3793e5(0x2d5),'diem':0x1e,'cap_do':'Tiểu\x20Hung','nhom':_0x3793e5(0x7a5),'hanh':_0x3793e5(0x252),'goc_do_min':52.5,'goc_do_max':67.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x3f9),_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x5ad),'giaiphap':'An\x20bài\x20đôi\x20Uyên\x20Ương\x20đồng\x20hoặc\x20hồ\x20lô\x20đồng\x20để\x20nạp\x20phúc,\x20kết\x20nối\x20gia\x20đạo.'},'Giáp':{'loai':_0x3793e5(0x43d),'diem':0x54,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x36a),'hanh':'Mộc','goc_do_min':67.5,'goc_do_max':82.5,'icon':_0x3793e5(0x57d),'linhvuc':['cong_danh',_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x144),'giaiphap':'Kích\x20hoạt\x20bằng\x20tranh\x20Mã\x20Đáo\x20hoặc\x20Tháp\x20Văn\x20Xương\x20để\x20vượng\x20khí.'},'Mão':{'loai':_0x3793e5(0x43d),'diem':0x56,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x252),'goc_do_min':82.5,'goc_do_max':97.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b),_0x3793e5(0x3f9)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x198),'giaiphap':_0x3793e5(0x1f6)},'Ất':{'loai':'Hung','diem':0x24,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x252),'goc_do_min':97.5,'goc_do_max':112.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x484)],'doi_tuong':['gia_dinh'],'text':_0x3793e5(0x4fc),'giaiphap':_0x3793e5(0x4ed)},'Thìn':{'loai':_0x3793e5(0x2d5),'diem':0x22,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':_0x3793e5(0x4d7),'goc_do_min':112.5,'goc_do_max':127.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x30a),'giaiphap':'Dùng\x20rèm\x20cửa\x20tối\x20màu\x20hoặc\x20thạch\x20anh\x20khói\x20để\x20tĩnh\x20khí,\x20giảm\x20xung\x20đột.'},'Tốn':{'loai':_0x3793e5(0x2d5),'diem':0x16,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x663),'hanh':'Mộc','goc_do_min':127.5,'goc_do_max':142.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':['nam_chu'],'text':'Phạm\x20Tuyệt\x20Mệnh\x20sát\x20phương,\x20sức\x20khỏe\x20tổn\x20hại,\x20cần\x20đặc\x20biệt\x20lưu\x20tâm.','giaiphap':_0x3793e5(0x8ce)},'Tỵ':{'loai':_0x3793e5(0x2d5),'diem':0x1f,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':_0x3793e5(0x6f0),'goc_do_min':142.5,'goc_do_max':157.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x669),'giaiphap':_0x3793e5(0x7ed)},'Bính':{'loai':_0x3793e5(0x43d),'diem':0x59,'cap_do':'Đại\x20Cát','nhom':_0x3793e5(0x693),'hanh':_0x3793e5(0x6f0),'goc_do_min':157.5,'goc_do_max':172.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x139)],'text':'Thiên\x20Y\x20đắc\x20vị,\x20sức\x20khỏe\x20dồi\x20dào,\x20bệnh\x20tật\x20tiêu\x20trừ,\x20thân\x20tâm\x20an\x20lạc.','giaiphap':'An\x20bài\x20hồ\x20lô\x20đồng\x20hoặc\x20thạch\x20anh\x20vàng\x20để\x20kích\x20hoạt\x20sức\x20khỏe.'},'Ngọ':{'loai':_0x3793e5(0x43d),'diem':0x55,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x6f0),'goc_do_min':172.5,'goc_do_max':187.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x368),'giaiphap':_0x3793e5(0x7eb)},'Đinh':{'loai':'Cát','diem':0x5f,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x3f2),'hanh':_0x3793e5(0x6f0),'goc_do_min':187.5,'goc_do_max':202.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b),'nhan_dinh'],'doi_tuong':[_0x3793e5(0x492),_0x3793e5(0x139)],'text':_0x3793e5(0x7e4),'giaiphap':_0x3793e5(0x189)},'Mùi':{'loai':_0x3793e5(0x2d5),'diem':0x21,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x12a),'hanh':'Thổ','goc_do_min':202.5,'goc_do_max':217.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x3f9)],'doi_tuong':[_0x3793e5(0x139)],'text':'Phạm\x20thế\x20Bạch\x20Hổ,\x20tổn\x20thương\x20nhân\x20đinh,\x20đề\x20phòng\x20huyết\x20quang.','giaiphap':_0x3793e5(0x699)},'Khôn':{'loai':_0x3793e5(0x2d5),'diem':0x18,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x663),'hanh':'Thổ','goc_do_min':217.5,'goc_do_max':232.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b),_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x492)],'text':'Phạm\x20Tuyệt\x20Mệnh\x20sát\x20khí,\x20tài\x20sản\x20tiêu\x20tán,\x20gia\x20đạo\x20ly\x20tán.','giaiphap':_0x3793e5(0x294)},'Thân':{'loai':_0x3793e5(0x2d5),'diem':0x23,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x848),'goc_do_min':232.5,'goc_do_max':247.5,'icon':_0x3793e5(0x278),'linhvuc':['gia_dao'],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x554),'giaiphap':_0x3793e5(0x76f)},'Canh':{'loai':_0x3793e5(0x43d),'diem':0x53,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x848),'goc_do_min':247.5,'goc_do_max':262.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':'Đắc\x20vị\x20tiến\x20tài,\x20kinh\x20doanh\x20phát\x20đạt,\x20sự\x20nghiệp\x20hưng\x20thịnh.','giaiphap':_0x3793e5(0x62d)},'Dậu':{'loai':_0x3793e5(0x43d),'diem':0x51,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x8a2),'hanh':_0x3793e5(0x848),'goc_do_min':262.5,'goc_do_max':277.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x44e)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x8de),'giaiphap':'Sử\x20dụng\x20tranh\x20Phúc\x20Lộc\x20hoặc\x20tượng\x20Quan\x20Công\x20để\x20củng\x20cố\x20quý\x20nhân.'},'Tân':{'loai':_0x3793e5(0x2d5),'diem':0x25,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':_0x3793e5(0x848),'goc_do_min':277.5,'goc_do_max':292.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x3ef),'giaiphap':_0x3793e5(0x4a9)},'Tuất':{'loai':_0x3793e5(0x2d5),'diem':0x1d,'cap_do':'Tiểu\x20Hung','nhom':_0x3793e5(0x842),'hanh':'Thổ','goc_do_min':292.5,'goc_do_max':307.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b),_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x139)],'text':'Phạm\x20Lục\x20Sát\x20chi\x20khí,\x20trộm\x20cắp\x20hao\x20tài,\x20gia\x20đạo\x20bất\x20an.','giaiphap':_0x3793e5(0x7f6)},'Càn':{'loai':'Hung','diem':0x1f,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x848),'goc_do_min':307.5,'goc_do_max':322.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':'Phạm\x20Lục\x20Sát\x20phương\x20vị,\x20tình\x20duyên\x20trục\x20trặc,\x20hao\x20tổn\x20tâm\x20trí.','giaiphap':'Sử\x20dụng\x20rèm\x20tối\x20màu\x20và\x20bình\x20nước\x20để\x20tiết\x20khí,\x20làm\x20dịu\x20khí\x20trường.'},'Hợi':{'loai':_0x3793e5(0x441),'diem':0x3a,'cap_do':_0x3793e5(0x6b9),'nhom':_0x3793e5(0x441),'hanh':_0x3793e5(0x331),'goc_do_min':322.5,'goc_do_max':337.5,'icon':_0x3793e5(0x2ca),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x179),'giaiphap':_0x3793e5(0x88e)}},'Khôn':{'Nhâm':{'loai':_0x3793e5(0x2d5),'diem':0x1a,'cap_do':'Đại\x20Hung','nhom':'Tuyệt\x20Mệnh','hanh':_0x3793e5(0x4d7),'goc_do_min':337.5,'goc_do_max':352.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x7af),_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x822),'giaiphap':'Sử\x20dụng\x20gương\x20Bát\x20Quái\x20và\x20chuông\x20gió\x20đồng\x206\x20thanh\x20để\x20hóa\x20giải\x20hung\x20sát.'},'Tý':{'loai':'Hung','diem':0x1e,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x331),'goc_do_min':352.5,'goc_do_max':7.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x563),'giaiphap':_0x3793e5(0x76b)},'Quý':{'loai':_0x3793e5(0x2d5),'diem':0x1c,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x12a),'hanh':_0x3793e5(0x331),'goc_do_min':7.5,'goc_do_max':22.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484),_0x3793e5(0x7af)],'doi_tuong':['gia_dinh'],'text':_0x3793e5(0x2a7),'giaiphap':'An\x20bài\x20cặp\x20Kỳ\x20Lân\x20đồng\x20để\x20trấn\x20trạch\x20và\x20bình\x20ổn\x20khí\x20trường.'},'Sửu':{'loai':_0x3793e5(0x43d),'diem':0x5a,'cap_do':_0x3793e5(0x81f),'nhom':'Sinh\x20Khí','hanh':_0x3793e5(0x4d7),'goc_do_min':22.5,'goc_do_max':37.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b),_0x3793e5(0x3f9)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x3eb),'giaiphap':_0x3793e5(0x57c)},'Cấn':{'loai':_0x3793e5(0x43d),'diem':0x5b,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x3f2),'hanh':_0x3793e5(0x4d7),'goc_do_min':37.5,'goc_do_max':52.5,'icon':_0x3793e5(0x57d),'linhvuc':['tai_loc',_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x6cf),'giaiphap':_0x3793e5(0x2e7)},'Dần':{'loai':_0x3793e5(0x43d),'diem':0x57,'cap_do':'Đại\x20Cát','nhom':_0x3793e5(0x693),'hanh':'Mộc','goc_do_min':52.5,'goc_do_max':67.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x11c),'giaiphap':_0x3793e5(0x800)},'Giáp':{'loai':_0x3793e5(0x2d5),'diem':0x23,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':'Mộc','goc_do_min':67.5,'goc_do_max':82.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x6d3),'giaiphap':_0x3793e5(0xf4)},'Mão':{'loai':_0x3793e5(0x2d5),'diem':0x18,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x663),'hanh':'Mộc','goc_do_min':82.5,'goc_do_max':97.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x492)],'text':'Phạm\x20Tuyệt\x20Mệnh\x20sát\x20phương,\x20hung\x20sát\x20mạnh,\x20ảnh\x20hưởng\x20trực\x20tiếp\x20đến\x20sức\x20khỏe\x20và\x20nam\x20chủ.','giaiphap':_0x3793e5(0x52c)},'Ất':{'loai':_0x3793e5(0x2d5),'diem':0x21,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':'Mộc','goc_do_min':97.5,'goc_do_max':112.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x139)],'text':'Phạm\x20thế\x20Họa\x20Hại,\x20khí\x20trường\x20trì\x20trệ,\x20gia\x20familie\x20dễ\x20cảm\x20thấy\x20bất\x20an,\x20mệt\x20mỏi.','giaiphap':_0x3793e5(0x13a)},'Thìn':{'loai':_0x3793e5(0x43d),'diem':0x52,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x4d7),'goc_do_min':112.5,'goc_do_max':127.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x484),_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x139)],'text':'Diên\x20Niên\x20đắc\x20cách,\x20gia\x20đạo\x20thuận\x20hòa,\x20công\x20việc\x20kinh\x20doanh\x20phát\x20triển.','giaiphap':_0x3793e5(0x6de)},'Tốn':{'loai':_0x3793e5(0x2d5),'diem':0x1d,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x12a),'hanh':_0x3793e5(0x252),'goc_do_min':127.5,'goc_do_max':142.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x637),'giaiphap':_0x3793e5(0x3de)},'Tỵ':{'loai':_0x3793e5(0x2d5),'diem':0x1f,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x6f0),'goc_do_min':142.5,'goc_do_max':157.5,'icon':'alert-red','linhvuc':['gia_dao'],'doi_tuong':['gia_dinh'],'text':'Phạm\x20Lục\x20Sát,\x20gia\x20đình\x20dễ\x20gặp\x20chuyện\x20kiện\x20tụng,\x20tranh\x20chấp\x20thị\x20phi.','giaiphap':'Sử\x20dụng\x20rèm\x20tối\x20màu\x20hoặc\x20vật\x20phẩm\x20hành\x20Thổ\x20để\x20an\x20định\x20lại\x20khí\x20trường.'},'Bính':{'loai':_0x3793e5(0x2d5),'diem':0x17,'cap_do':'Đại\x20Hung','nhom':_0x3793e5(0x663),'hanh':_0x3793e5(0x6f0),'goc_do_min':157.5,'goc_do_max':172.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x1d3),'giaiphap':_0x3793e5(0x4af)},'Ngọ':{'loai':_0x3793e5(0x2d5),'diem':0x22,'cap_do':_0x3793e5(0x143),'nhom':'Họa\x20Hại','hanh':_0x3793e5(0x6f0),'goc_do_min':172.5,'goc_do_max':187.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x5bf),'giaiphap':_0x3793e5(0x70d)},'Đinh':{'loai':_0x3793e5(0x2d5),'diem':0x20,'cap_do':'Tiểu\x20Hung','nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x6f0),'goc_do_min':187.5,'goc_do_max':202.5,'icon':_0x3793e5(0x278),'linhvuc':['gia_dao'],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x547),'giaiphap':_0x3793e5(0x34c)},'Mùi':{'loai':_0x3793e5(0x43d),'diem':0x50,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x8a2),'hanh':_0x3793e5(0x4d7),'goc_do_min':202.5,'goc_do_max':217.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x1aa),'giaiphap':_0x3793e5(0x2c3)},'Khôn':{'loai':_0x3793e5(0x43d),'diem':0x55,'cap_do':'Tiểu\x20Cát','nhom':_0x3793e5(0x8a2),'hanh':_0x3793e5(0x4d7),'goc_do_min':217.5,'goc_do_max':232.5,'icon':'star-green','linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x2d3),'giaiphap':_0x3793e5(0x6c2)},'Thân':{'loai':_0x3793e5(0x43d),'diem':0x53,'cap_do':_0x3793e5(0x502),'nhom':'Thiên\x20Y','hanh':_0x3793e5(0x848),'goc_do_min':232.5,'goc_do_max':247.5,'icon':'star-green','linhvuc':[_0x3793e5(0x7af),_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x139)],'text':'Thiên\x20Y\x20đắc\x20vị,\x20cơ\x20thể\x20khỏe\x20mạnh,\x20tài\x20vận\x20hanh\x20thông,\x20công\x20việc\x20thuận\x20lợi.','giaiphap':_0x3793e5(0x2c1)},'Canh':{'loai':_0x3793e5(0x2d5),'diem':0x24,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':_0x3793e5(0x848),'goc_do_min':247.5,'goc_do_max':262.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x414),'giaiphap':_0x3793e5(0x3dd)},'Dậu':{'loai':_0x3793e5(0x2d5),'diem':0x1b,'cap_do':'Đại\x20Hung','nhom':_0x3793e5(0x12a),'hanh':_0x3793e5(0x848),'goc_do_min':262.5,'goc_do_max':277.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x5df),'giaiphap':_0x3793e5(0x681)},'Tân':{'loai':'Hung','diem':0x1e,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x848),'goc_do_min':277.5,'goc_do_max':292.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x49e),'giaiphap':'Đặt\x20bình\x20nước\x20phong\x20thủy\x20để\x20tĩnh\x20tâm,\x20hòa\x20hợp\x20các\x20mối\x20quan\x20hệ.'},'Tuất':{'loai':'Cát','diem':0x54,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x4d7),'goc_do_min':292.5,'goc_do_max':307.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x484),_0x3793e5(0x44e)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x812),'giaiphap':_0x3793e5(0x429)},'Càn':{'loai':_0x3793e5(0x43d),'diem':0x52,'cap_do':'Tiểu\x20Cát','nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x848),'goc_do_min':307.5,'goc_do_max':322.5,'icon':_0x3793e5(0x57d),'linhvuc':['tai_loc','gia_dao'],'doi_tuong':['nam_chu'],'text':_0x3793e5(0x64f),'giaiphap':'Treo\x20tranh\x20phong\x20thủy\x20cát\x20tường\x20để\x20kích\x20hoạt\x20tài\x20lộc.'},'Hợi':{'loai':_0x3793e5(0x441),'diem':0x39,'cap_do':_0x3793e5(0x6b9),'nhom':_0x3793e5(0x441),'hanh':_0x3793e5(0x331),'goc_do_min':322.5,'goc_do_max':337.5,'icon':_0x3793e5(0x2ca),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x889),'giaiphap':_0x3793e5(0x589)}},'Chấn':{'Nhâm':{'loai':_0x3793e5(0x43d),'diem':0x5a,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x3f2),'hanh':_0x3793e5(0x252),'goc_do_min':337.5,'goc_do_max':352.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x12d),'giaiphap':'Kích\x20hoạt\x20bằng\x20chậu\x20cây\x20xanh\x20lớn\x20hoặc\x20vật\x20phẩm\x20hành\x20Mộc.'},'Tý':{'loai':_0x3793e5(0x43d),'diem':0x5e,'cap_do':'Đại\x20Cát','nhom':_0x3793e5(0x3f2),'hanh':_0x3793e5(0x331),'goc_do_min':352.5,'goc_do_max':7.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x3f9),_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x139)],'text':'Sinh\x20Khí\x20tối\x20thượng,\x20nhân\x20đinh\x20hưng\x20vượng,\x20con\x20cái\x20thông\x20tuệ,\x20gia\x20vận\x20phát\x20triển.','giaiphap':_0x3793e5(0x417)},'Quý':{'loai':_0x3793e5(0x2d5),'diem':0x23,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':_0x3793e5(0x331),'goc_do_min':7.5,'goc_do_max':22.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x32b),'giaiphap':_0x3793e5(0x746)},'Sửu':{'loai':_0x3793e5(0x2d5),'diem':0x21,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x4d7),'goc_do_min':22.5,'goc_do_max':37.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x2ae),'giaiphap':_0x3793e5(0x406)},'Cấn':{'loai':_0x3793e5(0x2d5),'diem':0x1d,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x4d7),'goc_do_min':37.5,'goc_do_max':52.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x492)],'text':'Phạm\x20Lục\x20Sát\x20phương\x20vị,\x20tinh\x20thần\x20dễ\x20bất\x20ổn,\x20cần\x20chú\x20trọng\x20nghỉ\x20ngơi.','giaiphap':_0x3793e5(0x2ea)},'Dần':{'loai':'Hung','diem':0x17,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x663),'hanh':_0x3793e5(0x252),'goc_do_min':52.5,'goc_do_max':67.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x3f9)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x373),'giaiphap':_0x3793e5(0x30e)},'Giáp':{'loai':_0x3793e5(0x43d),'diem':0x51,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x8a2),'hanh':'Mộc','goc_do_min':67.5,'goc_do_max':82.5,'icon':_0x3793e5(0x57d),'linhvuc':['gia_dao'],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x407),'giaiphap':_0x3793e5(0xe4)},'Mão':{'loai':_0x3793e5(0x43d),'diem':0x53,'cap_do':'Tiểu\x20Cát','nhom':'Phục\x20Vị','hanh':'Mộc','goc_do_min':82.5,'goc_do_max':97.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x44e)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x13c),'giaiphap':_0x3793e5(0x126)},'Ất':{'loai':_0x3793e5(0x43d),'diem':0x56,'cap_do':_0x3793e5(0x81f),'nhom':'Thiên\x20Y','hanh':_0x3793e5(0x252),'goc_do_min':97.5,'goc_do_max':112.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':['gia_dinh'],'text':_0x3793e5(0x262),'giaiphap':_0x3793e5(0x5d6)},'Thìn':{'loai':_0x3793e5(0x2d5),'diem':0x1e,'cap_do':_0x3793e5(0x143),'nhom':'Ngũ\x20Quỷ','hanh':_0x3793e5(0x4d7),'goc_do_min':112.5,'goc_do_max':127.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x47b),'giaiphap':_0x3793e5(0x37b)},'Tốn':{'loai':_0x3793e5(0x43d),'diem':0x54,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x252),'goc_do_min':127.5,'goc_do_max':142.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x1ba),'giaiphap':'Đặt\x20đôi\x20Uyên\x20Ương\x20đồng\x20để\x20tăng\x20cường\x20sợi\x20dây\x20liên\x20kết\x20gia\x20đạo.'},'Tỵ':{'loai':_0x3793e5(0x43d),'diem':0x52,'cap_do':_0x3793e5(0x502),'nhom':'Diên\x20Niên','hanh':_0x3793e5(0x6f0),'goc_do_min':142.5,'goc_do_max':157.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x44e),'tai_loc'],'doi_tuong':['nam_chu'],'text':'Diên\x20Niên\x20đắc\x20vị,\x20sự\x20nghiệp\x20thăng\x20tiến,\x20ngoại\x20giao\x20thuận\x20lợi.','giaiphap':_0x3793e5(0x726)},'Bính':{'loai':_0x3793e5(0x2d5),'diem':0x1b,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x12a),'hanh':_0x3793e5(0x6f0),'goc_do_min':157.5,'goc_do_max':172.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x3cf),'giaiphap':_0x3793e5(0x81a)},'Ngọ':{'loai':_0x3793e5(0x2d5),'diem':0x19,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x663),'hanh':'Hỏa','goc_do_min':172.5,'goc_do_max':187.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x3f9)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x878),'giaiphap':_0x3793e5(0x237)},'Đinh':{'loai':_0x3793e5(0x2d5),'diem':0x20,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':'Hỏa','goc_do_min':187.5,'goc_do_max':202.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x8be),'giaiphap':_0x3793e5(0x147)},'Mùi':{'loai':_0x3793e5(0x2d5),'diem':0x1c,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x663),'hanh':_0x3793e5(0x4d7),'goc_do_min':202.5,'goc_do_max':217.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':['gia_dinh'],'text':_0x3793e5(0x34f),'giaiphap':_0x3793e5(0x7c2)},'Khôn':{'loai':_0x3793e5(0x2d5),'diem':0x22,'cap_do':'Tiểu\x20Hung','nhom':_0x3793e5(0x784),'hanh':_0x3793e5(0x4d7),'goc_do_min':217.5,'goc_do_max':232.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x427),'giaiphap':_0x3793e5(0x7f4)},'Thân':{'loai':_0x3793e5(0x2d5),'diem':0x1f,'cap_do':'Tiểu\x20Hung','nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x848),'goc_do_min':232.5,'goc_do_max':247.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':['gia_dinh'],'text':'Phạm\x20Lục\x20Sát\x20phương\x20vị,\x20tình\x20cảm\x20dễ\x20gặp\x20hiểu\x20lầm,\x20thiếu\x20sự\x20gắn\x20kết.','giaiphap':_0x3793e5(0x66f)},'Canh':{'loai':_0x3793e5(0x2d5),'diem':0x17,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x663),'hanh':_0x3793e5(0x848),'goc_do_min':247.5,'goc_do_max':262.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':'Phạm\x20Tuyệt\x20Mệnh\x20hung\x20phương,\x20cần\x20đặc\x20biệt\x20tránh\x20động\x20thổ\x20hoặc\x20thay\x20đổi\x20lớn.','giaiphap':_0x3793e5(0x19d)},'Dậu':{'loai':_0x3793e5(0x2d5),'diem':0x1d,'cap_do':_0x3793e5(0x143),'nhom':'Ngũ\x20Quỷ','hanh':_0x3793e5(0x848),'goc_do_min':262.5,'goc_do_max':277.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x577),'giaiphap':_0x3793e5(0x4a2)},'Tân':{'loai':_0x3793e5(0x2d5),'diem':0x23,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':'Kim','goc_do_min':277.5,'goc_do_max':292.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x14b),'giaiphap':_0x3793e5(0x586)},'Tuất':{'loai':_0x3793e5(0x43d),'diem':0x55,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x693),'hanh':_0x3793e5(0x4d7),'goc_do_min':292.5,'goc_do_max':307.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x318),'giaiphap':_0x3793e5(0x8e2)},'Càn':{'loai':_0x3793e5(0x43d),'diem':0x53,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x848),'goc_do_min':307.5,'goc_do_max':322.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b),'cong_danh'],'doi_tuong':['nam_chu'],'text':_0x3793e5(0x715),'giaiphap':_0x3793e5(0x104)},'Hợi':{'loai':'Bình','diem':0x38,'cap_do':'Bình\x20Hòa','nhom':_0x3793e5(0x441),'hanh':_0x3793e5(0x331),'goc_do_min':322.5,'goc_do_max':337.5,'icon':_0x3793e5(0x2ca),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x68f),'giaiphap':'Giữ\x20không\x20gian\x20cân\x20bằng,\x20không\x20cần\x20can\x20thiệp\x20mạnh.'}},'Tốn':{'Nhâm':{'loai':_0x3793e5(0x43d),'diem':0x59,'cap_do':'Đại\x20Cát','nhom':_0x3793e5(0x3f2),'hanh':'Mộc','goc_do_min':337.5,'goc_do_max':352.5,'icon':'star-green','linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x34d),'giaiphap':_0x3793e5(0x684)},'Tý':{'loai':_0x3793e5(0x43d),'diem':0x5b,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x3f2),'hanh':_0x3793e5(0x331),'goc_do_min':352.5,'goc_do_max':7.5,'icon':_0x3793e5(0x57d),'linhvuc':['tai_loc',_0x3793e5(0x3f9)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x39b),'giaiphap':_0x3793e5(0x2b6)},'Quý':{'loai':_0x3793e5(0x2d5),'diem':0x22,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':'Thủy','goc_do_min':7.5,'goc_do_max':22.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x22c),'giaiphap':'Sử\x20dụng\x20thạch\x20anh\x20đen\x20để\x20hóa\x20giải\x20khí\x20trường\x20tiêu\x20cực.'},'Sửu':{'loai':_0x3793e5(0x2d5),'diem':0x1c,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x12a),'hanh':_0x3793e5(0x4d7),'goc_do_min':22.5,'goc_do_max':37.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x4cb),'giaiphap':'Sử\x20dụng\x20gương\x20Bát\x20Quái\x20gỗ\x20đào\x20để\x20trấn\x20trạch\x20và\x20bảo\x20hộ\x20gia\x20đình.'},'Cấn':{'loai':_0x3793e5(0x2d5),'diem':0x1a,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x663),'hanh':_0x3793e5(0x4d7),'goc_do_min':37.5,'goc_do_max':52.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x3f9)],'doi_tuong':['nam_chu'],'text':_0x3793e5(0x545),'giaiphap':_0x3793e5(0x2da)},'Dần':{'loai':_0x3793e5(0x2d5),'diem':0x1b,'cap_do':'Đại\x20Hung','nhom':_0x3793e5(0x663),'hanh':'Mộc','goc_do_min':52.5,'goc_do_max':67.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':['nam_chu'],'text':_0x3793e5(0x7d5),'giaiphap':'Treo\x20gương\x20Bát\x20Quái\x20để\x20hóa\x20giải\x20xung\x20sát,\x20giữ\x20vững\x20nguồn\x20lực.'},'Giáp':{'loai':_0x3793e5(0x43d),'diem':0x53,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x252),'goc_do_min':67.5,'goc_do_max':82.5,'icon':'star-green','linhvuc':['gia_dao'],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x569),'giaiphap':_0x3793e5(0x16c)},'Mão':{'loai':_0x3793e5(0x43d),'diem':0x52,'cap_do':_0x3793e5(0x502),'nhom':'Diên\x20Niên','hanh':_0x3793e5(0x252),'goc_do_min':82.5,'goc_do_max':97.5,'icon':_0x3793e5(0x57d),'linhvuc':['tai_loc'],'doi_tuong':['nam_chu'],'text':_0x3793e5(0x53e),'giaiphap':_0x3793e5(0x529)},'Ất':{'loai':_0x3793e5(0x43d),'diem':0x5c,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x3f2),'hanh':_0x3793e5(0x252),'goc_do_min':97.5,'goc_do_max':112.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b),'nhan_dinh'],'doi_tuong':['gia_dinh'],'text':_0x3793e5(0x1c8),'giaiphap':_0x3793e5(0x56a)},'Thìn':{'loai':_0x3793e5(0x43d),'diem':0x51,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x8a2),'hanh':_0x3793e5(0x4d7),'goc_do_min':112.5,'goc_do_max':127.5,'icon':_0x3793e5(0x57d),'linhvuc':['gia_dao'],'doi_tuong':[_0x3793e5(0x139)],'text':'Phục\x20Vị\x20đắc\x20cách,\x20không\x20gian\x20sống\x20yên\x20bình,\x20gia\x20đình\x20an\x20ninh.','giaiphap':_0x3793e5(0x74b)},'Tốn':{'loai':_0x3793e5(0x43d),'diem':0x54,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x8a2),'hanh':_0x3793e5(0x252),'goc_do_min':127.5,'goc_do_max':142.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x4a6),'giaiphap':_0x3793e5(0x78a)},'Tỵ':{'loai':_0x3793e5(0x43d),'diem':0x58,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x693),'hanh':_0x3793e5(0x6f0),'goc_do_min':142.5,'goc_do_max':157.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':['gia_dinh'],'text':_0x3793e5(0x137),'giaiphap':'Đặt\x20hồ\x20lô\x20đồng\x20để\x20nạp\x20phúc,\x20dưỡng\x20khí.'},'Bính':{'loai':_0x3793e5(0x2d5),'diem':0x21,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':_0x3793e5(0x6f0),'goc_do_min':157.5,'goc_do_max':172.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x792),'giaiphap':_0x3793e5(0x7c3)},'Ngọ':{'loai':'Hung','diem':0x20,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':'Hỏa','goc_do_min':172.5,'goc_do_max':187.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':['gia_dinh'],'text':_0x3793e5(0x48b),'giaiphap':_0x3793e5(0x55b)},'Đinh':{'loai':_0x3793e5(0x2d5),'diem':0x1e,'cap_do':'Tiểu\x20Hung','nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x6f0),'goc_do_min':187.5,'goc_do_max':202.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':'Phạm\x20thế\x20Lục\x20Sát,\x20gia\x20đạo\x20cần\x20chú\x20trọng\x20sự\x20đoàn\x20kết,\x20tránh\x20những\x20thị\x20phi\x20ngoài\x20ý\x20muốn.','giaiphap':_0x3793e5(0x16b)},'Mùi':{'loai':_0x3793e5(0x2d5),'diem':0x1d,'cap_do':_0x3793e5(0x143),'nhom':'Ngũ\x20Quỷ','hanh':'Thổ','goc_do_min':202.5,'goc_do_max':217.5,'icon':_0x3793e5(0x278),'linhvuc':['tai_loc'],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x1b2),'giaiphap':_0x3793e5(0x647)},'Khôn':{'loai':_0x3793e5(0x2d5),'diem':0x1c,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x12a),'hanh':_0x3793e5(0x4d7),'goc_do_min':217.5,'goc_do_max':232.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':'Phạm\x20thế\x20Ngũ\x20Quỷ,\x20tránh\x20những\x20quyết\x20định\x20vội\x20vàng,\x20nên\x20giữ\x20sự\x20điềm\x20tĩnh.','giaiphap':_0x3793e5(0x4e2)},'Thân':{'loai':_0x3793e5(0x2d5),'diem':0x1f,'cap_do':'Tiểu\x20Hung','nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x848),'goc_do_min':232.5,'goc_do_max':247.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x553),'giaiphap':_0x3793e5(0x598)},'Canh':{'loai':_0x3793e5(0x2d5),'diem':0x18,'cap_do':'Đại\x20Hung','nhom':_0x3793e5(0x663),'hanh':_0x3793e5(0x848),'goc_do_min':247.5,'goc_do_max':262.5,'icon':_0x3793e5(0x278),'linhvuc':['suc_khoe'],'doi_tuong':['nam_chu'],'text':'Phạm\x20Tuyệt\x20Mệnh\x20hung\x20phương,\x20cần\x20ưu\x20tiên\x20sự\x20an\x20toàn\x20và\x20sức\x20khỏe.','giaiphap':_0x3793e5(0xf8)},'Dậu':{'loai':_0x3793e5(0x2d5),'diem':0x17,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x663),'hanh':_0x3793e5(0x848),'goc_do_min':262.5,'goc_do_max':277.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x3f9)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x886),'giaiphap':_0x3793e5(0x6b3)},'Tân':{'loai':'Hung','diem':0x22,'cap_do':_0x3793e5(0x143),'nhom':'Họa\x20Hại','hanh':_0x3793e5(0x848),'goc_do_min':277.5,'goc_do_max':292.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':['nam_chu'],'text':_0x3793e5(0x512),'giaiphap':'Đặt\x20thạch\x20anh\x20trắng\x20để\x20thu\x20giữ\x20và\x20ổn\x20định\x20tài\x20vận.'},'Tuất':{'loai':_0x3793e5(0x43d),'diem':0x56,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x693),'hanh':_0x3793e5(0x4d7),'goc_do_min':292.5,'goc_do_max':307.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x82b),'giaiphap':_0x3793e5(0x310)},'Càn':{'loai':_0x3793e5(0x43d),'diem':0x57,'cap_do':_0x3793e5(0x81f),'nhom':'Thiên\x20Y','hanh':_0x3793e5(0x848),'goc_do_min':307.5,'goc_do_max':322.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x492)],'text':'Thiên\x20Y\x20chính\x20vị,\x20cơ\x20thể\x20tráng\x20kiện,\x20tinh\x20thần\x20minh\x20mẫn,\x20phúc\x20lộc\x20dài\x20lâu.','giaiphap':_0x3793e5(0x29a)},'Hợi':{'loai':_0x3793e5(0x441),'diem':0x37,'cap_do':'Bình\x20Hòa','nhom':_0x3793e5(0x441),'hanh':_0x3793e5(0x331),'goc_do_min':322.5,'goc_do_max':337.5,'icon':_0x3793e5(0x2ca),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x139)],'text':'Thế\x20bình\x20hòa,\x20mọi\x20sự\x20ở\x20mức\x20ổn\x20định,\x20không\x20có\x20biến\x20động\x20lớn.','giaiphap':'Duy\x20trì\x20sự\x20cân\x20bằng,\x20không\x20gian\x20sống\x20hài\x20hòa.'}},'Càn':{'Nhâm':{'loai':_0x3793e5(0x2d5),'diem':0x20,'cap_do':_0x3793e5(0x143),'nhom':'Lục\x20Sát','hanh':_0x3793e5(0x331),'goc_do_min':337.5,'goc_do_max':352.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x2f4),'giaiphap':'Sử\x20dụng\x20rèm\x20cửa\x20tối\x20màu\x20để\x20trấn\x20an,\x20làm\x20dịu\x20khí\x20trường.'},'Tý':{'loai':'Hung','diem':0x1e,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x331),'goc_do_min':352.5,'goc_do_max':7.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':'Phạm\x20thế\x20Lục\x20Sát,\x20gia\x20đạo\x20cần\x20sự\x20minh\x20bạch\x20và\x20chân\x20thành\x20để\x20tránh\x20thị\x20phi.','giaiphap':_0x3793e5(0x14f)},'Quý':{'loai':_0x3793e5(0x2d5),'diem':0x1f,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x331),'goc_do_min':7.5,'goc_do_max':22.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x4cf),'giaiphap':_0x3793e5(0x8e6)},'Sửu':{'loai':_0x3793e5(0x2d5),'diem':0x23,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':_0x3793e5(0x4d7),'goc_do_min':22.5,'goc_do_max':37.5,'icon':_0x3793e5(0x278),'linhvuc':['tai_loc'],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x2a5),'giaiphap':_0x3793e5(0x360)},'Cấn':{'loai':_0x3793e5(0x43d),'diem':0x58,'cap_do':'Đại\x20Cát','nhom':_0x3793e5(0x693),'hanh':'Thổ','goc_do_min':37.5,'goc_do_max':52.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x75f),'giaiphap':_0x3793e5(0x793)},'Dần':{'loai':_0x3793e5(0x43d),'diem':0x56,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x693),'hanh':'Mộc','goc_do_min':52.5,'goc_do_max':67.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x7af),'tai_loc'],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x8c6),'giaiphap':_0x3793e5(0x51a)},'Giáp':{'loai':_0x3793e5(0x2d5),'diem':0x1b,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x12a),'hanh':_0x3793e5(0x252),'goc_do_min':67.5,'goc_do_max':82.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x138),'giaiphap':'Sử\x20dụng\x20gương\x20Bát\x20Quái\x20gỗ\x20đào\x20để\x20trấn\x20trạch\x20và\x20hóa\x20giải\x20xung\x20sát.'},'Mão':{'loai':_0x3793e5(0x2d5),'diem':0x1d,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x12a),'hanh':_0x3793e5(0x252),'goc_do_min':82.5,'goc_do_max':97.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x8e4),'giaiphap':_0x3793e5(0x1c7)},'Ất':{'loai':_0x3793e5(0x2d5),'diem':0x1c,'cap_do':'Tiểu\x20Hung','nhom':_0x3793e5(0x12a),'hanh':'Mộc','goc_do_min':97.5,'goc_do_max':112.5,'icon':_0x3793e5(0x278),'linhvuc':['suc_khoe'],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x64b),'giaiphap':_0x3793e5(0x78e)},'Thìn':{'loai':_0x3793e5(0x2d5),'diem':0x16,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x663),'hanh':'Thổ','goc_do_min':112.5,'goc_do_max':127.5,'icon':_0x3793e5(0x278),'linhvuc':['suc_khoe'],'doi_tuong':[_0x3793e5(0x492)],'text':'Phạm\x20Tuyệt\x20Mệnh\x20hung\x20phương,\x20cần\x20đặc\x20biệt\x20thận\x20trọng\x20với\x20mọi\x20thay\x20đổi\x20lớn.','giaiphap':_0x3793e5(0x528)},'Tốn':{'loai':_0x3793e5(0x2d5),'diem':0x18,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x663),'hanh':_0x3793e5(0x252),'goc_do_min':127.5,'goc_do_max':142.5,'icon':_0x3793e5(0x278),'linhvuc':['suc_khoe'],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x3db),'giaiphap':'Sử\x20dụng\x20gương\x20phong\x20thủy\x20để\x20phản\x20xạ\x20và\x20hóa\x20giải\x20sát\x20khí.'},'Tỵ':{'loai':_0x3793e5(0x2d5),'diem':0x17,'cap_do':'Đại\x20Hung','nhom':_0x3793e5(0x663),'hanh':'Hỏa','goc_do_min':142.5,'goc_do_max':157.5,'icon':_0x3793e5(0x278),'linhvuc':['nhan_dinh'],'doi_tuong':['gia_dinh'],'text':_0x3793e5(0x405),'giaiphap':_0x3793e5(0x2f7)},'Bính':{'loai':'Bình','diem':0x3c,'cap_do':'Bình\x20Hòa','nhom':'Bình','hanh':_0x3793e5(0x6f0),'goc_do_min':157.5,'goc_do_max':172.5,'icon':_0x3793e5(0x2ca),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x1f8),'giaiphap':_0x3793e5(0x270)},'Ngọ':{'loai':_0x3793e5(0x441),'diem':0x3a,'cap_do':_0x3793e5(0x6b9),'nhom':'Bình','hanh':_0x3793e5(0x6f0),'goc_do_min':172.5,'goc_do_max':187.5,'icon':_0x3793e5(0x2ca),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x1a1),'giaiphap':_0x3793e5(0x62a)},'Đinh':{'loai':_0x3793e5(0x43d),'diem':0x5b,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x3f2),'hanh':_0x3793e5(0x6f0),'goc_do_min':187.5,'goc_do_max':202.5,'icon':_0x3793e5(0x57d),'linhvuc':['tai_loc'],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x59a),'giaiphap':_0x3793e5(0x485)},'Mùi':{'loai':'Cát','diem':0x5d,'cap_do':'Đại\x20Cát','nhom':_0x3793e5(0x3f2),'hanh':_0x3793e5(0x4d7),'goc_do_min':202.5,'goc_do_max':217.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x3f9)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x700),'giaiphap':_0x3793e5(0x7a6)},'Khôn':{'loai':_0x3793e5(0x43d),'diem':0x55,'cap_do':'Tiểu\x20Cát','nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x4d7),'goc_do_min':217.5,'goc_do_max':232.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x38f),'giaiphap':_0x3793e5(0x77f)},'Thân':{'loai':_0x3793e5(0x43d),'diem':0x54,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x848),'goc_do_min':232.5,'goc_do_max':247.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x44e)],'doi_tuong':['nam_chu'],'text':_0x3793e5(0x22d),'giaiphap':_0x3793e5(0x5c2)},'Canh':{'loai':_0x3793e5(0x43d),'diem':0x50,'cap_do':_0x3793e5(0x502),'nhom':'Phục\x20Vị','hanh':_0x3793e5(0x848),'goc_do_min':247.5,'goc_do_max':262.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x64d),'giaiphap':_0x3793e5(0x5ee)},'Dậu':{'loai':_0x3793e5(0x43d),'diem':0x51,'cap_do':'Tiểu\x20Cát','nhom':_0x3793e5(0x8a2),'hanh':'Kim','goc_do_min':262.5,'goc_do_max':277.5,'icon':'star-green','linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x3ab),'giaiphap':'Kích\x20hoạt\x20bằng\x20các\x20vật\x20phẩm\x20phong\x20thủy\x20hành\x20Kim.'},'Tân':{'loai':_0x3793e5(0x43d),'diem':0x4f,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x8a2),'hanh':_0x3793e5(0x848),'goc_do_min':277.5,'goc_do_max':292.5,'icon':'star-green','linhvuc':[_0x3793e5(0x44e)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x260),'giaiphap':_0x3793e5(0x859)},'Tuất':{'loai':_0x3793e5(0x2d5),'diem':0x24,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':_0x3793e5(0x4d7),'goc_do_min':292.5,'goc_do_max':307.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x3ce),'giaiphap':_0x3793e5(0x29d)},'Càn':{'loai':_0x3793e5(0x2d5),'diem':0x21,'cap_do':'Tiểu\x20Hung','nhom':'Họa\x20Hại','hanh':_0x3793e5(0x848),'goc_do_min':307.5,'goc_do_max':322.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x557),'giaiphap':_0x3793e5(0xea)},'Hợi':{'loai':_0x3793e5(0x2d5),'diem':0x22,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':_0x3793e5(0x331),'goc_do_min':322.5,'goc_do_max':337.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':['nam_chu'],'text':_0x3793e5(0x83d),'giaiphap':_0x3793e5(0x31f)}},'Đoài':{'Nhâm':{'loai':_0x3793e5(0x2d5),'diem':0x22,'cap_do':'Tiểu\x20Hung','nhom':_0x3793e5(0x784),'hanh':_0x3793e5(0x331),'goc_do_min':337.5,'goc_do_max':352.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0xef),'giaiphap':_0x3793e5(0x4c3)},'Tý':{'loai':_0x3793e5(0x2d5),'diem':0x21,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':_0x3793e5(0x331),'goc_do_min':352.5,'goc_do_max':7.5,'icon':_0x3793e5(0x278),'linhvuc':['suc_khoe'],'doi_tuong':[_0x3793e5(0x139)],'text':'Phạm\x20thế\x20Họa\x20Hại,\x20khí\x20trường\x20dễ\x20ảnh\x20hưởng\x20sức\x20khỏe\x20người\x20trong\x20gia\x20đạo.','giaiphap':_0x3793e5(0x132)},'Quý':{'loai':_0x3793e5(0x2d5),'diem':0x20,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':_0x3793e5(0x331),'goc_do_min':7.5,'goc_do_max':22.5,'icon':'alert-red','linhvuc':['tai_loc'],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x496),'giaiphap':'Treo\x20chuông\x20gió\x20để\x20tán\x20sát,\x20giữ\x20vững\x20nguồn\x20tài\x20chính.'},'Sửu':{'loai':_0x3793e5(0x43d),'diem':0x53,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x4d7),'goc_do_min':22.5,'goc_do_max':37.5,'icon':'star-green','linhvuc':['gia_dao'],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x8f1),'giaiphap':_0x3793e5(0x7f9)},'Cấn':{'loai':_0x3793e5(0x43d),'diem':0x52,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x4d7),'goc_do_min':37.5,'goc_do_max':52.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x53e),'giaiphap':_0x3793e5(0x529)},'Dần':{'loai':'Cát','diem':0x54,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x252),'goc_do_min':52.5,'goc_do_max':67.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':'Diên\x20Niên\x20vượng\x20khí,\x20gia\x20đình\x20yên\x20ấm,\x20không\x20khí\x20sống\x20hài\x20hòa.','giaiphap':_0x3793e5(0x62b)},'Giáp':{'loai':'Hung','diem':0x17,'cap_do':'Đại\x20Hung','nhom':_0x3793e5(0x663),'hanh':_0x3793e5(0x252),'goc_do_min':67.5,'goc_do_max':82.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x3f9)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x567),'giaiphap':_0x3793e5(0x5d7)},'Mão':{'loai':_0x3793e5(0x2d5),'diem':0x19,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x663),'hanh':_0x3793e5(0x252),'goc_do_min':82.5,'goc_do_max':97.5,'icon':'alert-red','linhvuc':['suc_khoe'],'doi_tuong':['nam_chu'],'text':_0x3793e5(0x852),'giaiphap':_0x3793e5(0x8db)},'Ất':{'loai':_0x3793e5(0x2d5),'diem':0x18,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x663),'hanh':_0x3793e5(0x252),'goc_do_min':97.5,'goc_do_max':112.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x3f9)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x3c1),'giaiphap':_0x3793e5(0x5d2)},'Thìn':{'loai':_0x3793e5(0x2d5),'diem':0x1f,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':'Thổ','goc_do_min':112.5,'goc_do_max':127.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':['gia_dinh'],'text':_0x3793e5(0x8d2),'giaiphap':_0x3793e5(0x678)},'Tốn':{'loai':_0x3793e5(0x2d5),'diem':0x1e,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x252),'goc_do_min':127.5,'goc_do_max':142.5,'icon':'alert-red','linhvuc':['gia_dao'],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x26d),'giaiphap':'Đặt\x20bình\x20nước\x20phong\x20thủy\x20để\x20hóa\x20giải\x20xung\x20đột\x20khí\x20trường.'},'Tỵ':{'loai':_0x3793e5(0x2d5),'diem':0x1d,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x6f0),'goc_do_min':142.5,'goc_do_max':157.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x40d),'giaiphap':_0x3793e5(0x4c4)},'Bính':{'loai':_0x3793e5(0x43d),'diem':0x50,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x8a2),'hanh':_0x3793e5(0x6f0),'goc_do_min':157.5,'goc_do_max':172.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x3ad),'giaiphap':_0x3793e5(0x74b)},'Ngọ':{'loai':'Cát','diem':0x51,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x8a2),'hanh':'Hỏa','goc_do_min':172.5,'goc_do_max':187.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x33c),'giaiphap':'Kích\x20hoạt\x20bằng\x20vật\x20phẩm\x20hành\x20Hỏa\x20hoặc\x20đỏ\x20để\x20tăng\x20năng\x20lượng.'},'Đinh':{'loai':_0x3793e5(0x43d),'diem':0x4f,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x8a2),'hanh':'Hỏa','goc_do_min':187.5,'goc_do_max':202.5,'icon':'star-green','linhvuc':[_0x3793e5(0x44e)],'doi_tuong':['nam_chu'],'text':'Phục\x20Vị\x20vượng\x20vị,\x20công\x20việc\x20tiến\x20triển\x20ổn\x20định,\x20danh\x20tiếng\x20bền\x20vững.','giaiphap':_0x3793e5(0x184)},'Mùi':{'loai':_0x3793e5(0x2d5),'diem':0x1c,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x12a),'hanh':_0x3793e5(0x4d7),'goc_do_min':202.5,'goc_do_max':217.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x5d5),'giaiphap':'Treo\x20gương\x20Bát\x20Quái\x20để\x20trấn\x20trạch,\x20đẩy\x20lùi\x20vận\x20xui.'},'Khôn':{'loai':_0x3793e5(0x2d5),'diem':0x1d,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x12a),'hanh':_0x3793e5(0x4d7),'goc_do_min':217.5,'goc_do_max':232.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x2ce),'giaiphap':_0x3793e5(0x4f2)},'Thân':{'loai':_0x3793e5(0x2d5),'diem':0x1e,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x12a),'hanh':_0x3793e5(0x848),'goc_do_min':232.5,'goc_do_max':247.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x695),'giaiphap':'Treo\x20chuông\x20gió\x20đồng\x20để\x20tiết\x20chế\x20khí\x20Ngũ\x20Quỷ.'},'Canh':{'loai':_0x3793e5(0x43d),'diem':0x5a,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x3f2),'hanh':_0x3793e5(0x848),'goc_do_min':247.5,'goc_do_max':262.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':['nam_chu'],'text':_0x3793e5(0x5f8),'giaiphap':_0x3793e5(0x3f4)},'Dậu':{'loai':_0x3793e5(0x43d),'diem':0x5e,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x3f2),'hanh':_0x3793e5(0x848),'goc_do_min':262.5,'goc_do_max':277.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x3f9)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x471),'giaiphap':_0x3793e5(0x501)},'Tân':{'loai':'Cát','diem':0x59,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x3f2),'hanh':_0x3793e5(0x848),'goc_do_min':277.5,'goc_do_max':292.5,'icon':'star-green','linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x307),'giaiphap':_0x3793e5(0x6e7)},'Tuất':{'loai':_0x3793e5(0x43d),'diem':0x57,'cap_do':_0x3793e5(0x81f),'nhom':'Thiên\x20Y','hanh':_0x3793e5(0x4d7),'goc_do_min':292.5,'goc_do_max':307.5,'icon':'star-green','linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x808),'giaiphap':_0x3793e5(0x3ea)},'Càn':{'loai':_0x3793e5(0x43d),'diem':0x56,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x693),'hanh':_0x3793e5(0x848),'goc_do_min':307.5,'goc_do_max':322.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x517),'giaiphap':'Đặt\x20thạch\x20anh\x20vàng\x20để\x20kích\x20hoạt\x20năng\x20lượng\x20tích\x20cực,\x20may\x20mắn.'},'Hợi':{'loai':_0x3793e5(0x441),'diem':0x39,'cap_do':_0x3793e5(0x6b9),'nhom':_0x3793e5(0x441),'hanh':_0x3793e5(0x331),'goc_do_min':322.5,'goc_do_max':337.5,'icon':_0x3793e5(0x2ca),'linhvuc':['tai_loc'],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x3b1),'giaiphap':_0x3793e5(0x4ca)}},'Cấn':{'Nhâm':{'loai':_0x3793e5(0x2d5),'diem':0x1c,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x12a),'hanh':'Thủy','goc_do_min':337.5,'goc_do_max':352.5,'icon':_0x3793e5(0x278),'linhvuc':['gia_dao'],'doi_tuong':[_0x3793e5(0x139)],'text':'Phạm\x20Ngũ\x20Quỷ\x20đại\x20sát,\x20gia\x20vận\x20dễ\x20bất\x20ổn,\x20cần\x20chú\x20trọng\x20sự\x20đoàn\x20kết.','giaiphap':_0x3793e5(0x454)},'Tý':{'loai':'Hung','diem':0x1d,'cap_do':'Tiểu\x20Hung','nhom':_0x3793e5(0x12a),'hanh':_0x3793e5(0x331),'goc_do_min':352.5,'goc_do_max':7.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x30f),'giaiphap':_0x3793e5(0x7fb)},'Quý':{'loai':_0x3793e5(0x2d5),'diem':0x1e,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x12a),'hanh':_0x3793e5(0x331),'goc_do_min':7.5,'goc_do_max':22.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':['gia_dinh'],'text':'Phạm\x20Ngũ\x20Quỷ\x20khí,\x20cần\x20giữ\x20tâm\x20thế\x20bình\x20hòa,\x20tránh\x20thị\x20phi\x20ngoài\x20ý\x20muốn.','giaiphap':_0x3793e5(0x622)},'Sửu':{'loai':_0x3793e5(0x43d),'diem':0x50,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x8a2),'hanh':_0x3793e5(0x4d7),'goc_do_min':22.5,'goc_do_max':37.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x83f),'giaiphap':_0x3793e5(0x88b)},'Cấn':{'loai':_0x3793e5(0x43d),'diem':0x52,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x8a2),'hanh':_0x3793e5(0x4d7),'goc_do_min':37.5,'goc_do_max':52.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x315),'giaiphap':_0x3793e5(0x4f8)},'Dần':{'loai':_0x3793e5(0x43d),'diem':0x51,'cap_do':'Tiểu\x20Cát','nhom':_0x3793e5(0x8a2),'hanh':_0x3793e5(0x252),'goc_do_min':52.5,'goc_do_max':67.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x44e)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x286),'giaiphap':_0x3793e5(0x757)},'Giáp':{'loai':_0x3793e5(0x2d5),'diem':0x20,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x252),'goc_do_min':67.5,'goc_do_max':82.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x4ff),'giaiphap':_0x3793e5(0x170)},'Mão':{'loai':'Hung','diem':0x1f,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x252),'goc_do_min':82.5,'goc_do_max':97.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x21e),'giaiphap':_0x3793e5(0x1ae)},'Ất':{'loai':'Hung','diem':0x1e,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':'Mộc','goc_do_min':97.5,'goc_do_max':112.5,'icon':_0x3793e5(0x278),'linhvuc':['gia_dao'],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x4e0),'giaiphap':'Treo\x20chuông\x20gió\x20để\x20phân\x20tán\x20sát\x20khí,\x20giữ\x20sự\x20bình\x20yên.'},'Thìn':{'loai':_0x3793e5(0x2d5),'diem':0x23,'cap_do':'Tiểu\x20Hung','nhom':_0x3793e5(0x784),'hanh':_0x3793e5(0x4d7),'goc_do_min':112.5,'goc_do_max':127.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':'Phạm\x20thế\x20Họa\x20Hại,\x20cần\x20cẩn\x20trọng\x20trong\x20giao\x20tiếp,\x20tránh\x20tranh\x20chấp\x20không\x20đáng\x20có.','giaiphap':_0x3793e5(0x360)},'Tốn':{'loai':'Hung','diem':0x21,'cap_do':_0x3793e5(0x143),'nhom':'Họa\x20Hại','hanh':_0x3793e5(0x252),'goc_do_min':127.5,'goc_do_max':142.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x297),'giaiphap':_0x3793e5(0x614)},'Tỵ':{'loai':'Hung','diem':0x20,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':_0x3793e5(0x6f0),'goc_do_min':142.5,'goc_do_max':157.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':['nam_chu'],'text':_0x3793e5(0x6f1),'giaiphap':'Treo\x20chuông\x20gió\x20đồng\x20để\x20tán\x20sát,\x20bảo\x20vệ\x20nguồn\x20tài\x20lộc.'},'Bính':{'loai':_0x3793e5(0x2d5),'diem':0x16,'cap_do':'Đại\x20Hung','nhom':_0x3793e5(0x663),'hanh':_0x3793e5(0x6f0),'goc_do_min':157.5,'goc_do_max':172.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x157),'giaiphap':'Trấn\x20trạch\x20bằng\x20gương\x20Bát\x20Quái\x20gỗ\x20đào\x20để\x20hóa\x20giải\x20sát\x20khí\x20nặng.'},'Ngọ':{'loai':_0x3793e5(0x2d5),'diem':0x18,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x663),'hanh':_0x3793e5(0x6f0),'goc_do_min':172.5,'goc_do_max':187.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x3f9)],'doi_tuong':[_0x3793e5(0x139)],'text':'Phạm\x20Tuyệt\x20Mệnh\x20sát\x20phương,\x20sức\x20khỏe\x20gia\x20chủ\x20cần\x20được\x20ưu\x20tiên\x20hàng\x20đầu.','giaiphap':_0x3793e5(0x2d8)},'Đinh':{'loai':_0x3793e5(0x2d5),'diem':0x17,'cap_do':_0x3793e5(0x674),'nhom':'Tuyệt\x20Mệnh','hanh':_0x3793e5(0x6f0),'goc_do_min':187.5,'goc_do_max':202.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x3f9)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x220),'giaiphap':_0x3793e5(0xdf)},'Mùi':{'loai':_0x3793e5(0x43d),'diem':0x54,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x4d7),'goc_do_min':202.5,'goc_do_max':217.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':['gia_dinh'],'text':'Diên\x20Niên\x20đắc\x20vị,\x20gia\x20đình\x20hòa\x20hợp,\x20phú\x20quý\x20bền\x20vững.','giaiphap':_0x3793e5(0x6e4)},'Khôn':{'loai':_0x3793e5(0x43d),'diem':0x53,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x4d7),'goc_do_min':217.5,'goc_do_max':232.5,'icon':_0x3793e5(0x57d),'linhvuc':['tai_loc'],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x516),'giaiphap':_0x3793e5(0x8ec)},'Thân':{'loai':'Cát','diem':0x55,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x848),'goc_do_min':232.5,'goc_do_max':247.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x24c),'giaiphap':_0x3793e5(0x391)},'Canh':{'loai':_0x3793e5(0x43d),'diem':0x5b,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x3f2),'hanh':_0x3793e5(0x848),'goc_do_min':247.5,'goc_do_max':262.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x5f8),'giaiphap':_0x3793e5(0x3f4)},'Dậu':{'loai':'Cát','diem':0x5e,'cap_do':'Đại\x20Cát','nhom':_0x3793e5(0x3f2),'hanh':_0x3793e5(0x848),'goc_do_min':262.5,'goc_do_max':277.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x3f9)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x471),'giaiphap':_0x3793e5(0x8ae)},'Tân':{'loai':_0x3793e5(0x43d),'diem':0x5a,'cap_do':_0x3793e5(0x81f),'nhom':'Sinh\x20Khí','hanh':_0x3793e5(0x848),'goc_do_min':277.5,'goc_do_max':292.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x307),'giaiphap':'Trưng\x20bày\x20cây\x20xanh\x20để\x20tăng\x20cường\x20năng\x20lượng\x20sinh\x20sôi.'},'Tuất':{'loai':_0x3793e5(0x2d5),'diem':0x23,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x7a5),'hanh':_0x3793e5(0x4d7),'goc_do_min':292.5,'goc_do_max':307.5,'icon':'alert-red','linhvuc':['gia_dao'],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x762),'giaiphap':_0x3793e5(0x214)},'Càn':{'loai':_0x3793e5(0x43d),'diem':0x59,'cap_do':'Đại\x20Cát','nhom':_0x3793e5(0x693),'hanh':_0x3793e5(0x848),'goc_do_min':307.5,'goc_do_max':322.5,'icon':'star-green','linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x418),'giaiphap':_0x3793e5(0x56c)},'Hợi':{'loai':'Bình','diem':0x37,'cap_do':_0x3793e5(0x6b9),'nhom':_0x3793e5(0x441),'hanh':_0x3793e5(0x331),'goc_do_min':322.5,'goc_do_max':337.5,'icon':_0x3793e5(0x2ca),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':['gia_dinh'],'text':_0x3793e5(0x469),'giaiphap':_0x3793e5(0x627)}},'Ly':{'Nhâm':{'loai':_0x3793e5(0x2d5),'diem':0x1c,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x12a),'hanh':_0x3793e5(0x331),'goc_do_min':337.5,'goc_do_max':352.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':['gia_dinh'],'text':_0x3793e5(0x128),'giaiphap':_0x3793e5(0x454)},'Tý':{'loai':_0x3793e5(0x2d5),'diem':0x1d,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x12a),'hanh':_0x3793e5(0x331),'goc_do_min':352.5,'goc_do_max':7.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x30f),'giaiphap':'Đặt\x20Tỳ\x20Hưu\x20để\x20chiêu\x20tài\x20và\x20bảo\x20hộ\x20tài\x20sản\x20gia\x20chủ.'},'Quý':{'loai':_0x3793e5(0x2d5),'diem':0x1e,'cap_do':'Tiểu\x20Hung','nhom':_0x3793e5(0x12a),'hanh':_0x3793e5(0x331),'goc_do_min':7.5,'goc_do_max':22.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x89a),'giaiphap':'Treo\x20chuông\x20gió\x20đồng\x20để\x20tiết\x20chế\x20năng\x20lượng\x20tiêu\x20cực.'},'Sửu':{'loai':_0x3793e5(0x2d5),'diem':0x23,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x784),'hanh':'Thổ','goc_do_min':22.5,'goc_do_max':37.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0xef),'giaiphap':_0x3793e5(0x4c3)},'Cấn':{'loai':'Hung','diem':0x21,'cap_do':_0x3793e5(0x143),'nhom':'Họa\x20Hại','hanh':_0x3793e5(0x4d7),'goc_do_min':37.5,'goc_do_max':52.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x38b),'giaiphap':_0x3793e5(0x132)},'Dần':{'loai':_0x3793e5(0x2d5),'diem':0x20,'cap_do':'Tiểu\x20Hung','nhom':_0x3793e5(0x784),'hanh':_0x3793e5(0x252),'goc_do_min':52.5,'goc_do_max':67.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x496),'giaiphap':'Treo\x20chuông\x20gió\x20để\x20tán\x20sát,\x20giữ\x20vững\x20nguồn\x20tài\x20chính.'},'Giáp':{'loai':_0x3793e5(0x43d),'diem':0x5b,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x3f2),'hanh':_0x3793e5(0x252),'goc_do_min':67.5,'goc_do_max':82.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x5f8),'giaiphap':_0x3793e5(0x3f4)},'Mão':{'loai':_0x3793e5(0x43d),'diem':0x5e,'cap_do':'Đại\x20Cát','nhom':_0x3793e5(0x3f2),'hanh':_0x3793e5(0x252),'goc_do_min':82.5,'goc_do_max':97.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x3f9)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x471),'giaiphap':_0x3793e5(0x8ae)},'Ất':{'loai':_0x3793e5(0x43d),'diem':0x5a,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x3f2),'hanh':_0x3793e5(0x252),'goc_do_min':97.5,'goc_do_max':112.5,'icon':'star-green','linhvuc':['tai_loc'],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x307),'giaiphap':_0x3793e5(0x6e7)},'Thìn':{'loai':_0x3793e5(0x43d),'diem':0x57,'cap_do':_0x3793e5(0x81f),'nhom':'Thiên\x20Y','hanh':_0x3793e5(0x4d7),'goc_do_min':112.5,'goc_do_max':127.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x808),'giaiphap':'Đặt\x20hồ\x20lô\x20đồng\x20để\x20nạp\x20phúc,\x20dưỡng\x20vượng\x20sức\x20khỏe.'},'Tốn':{'loai':_0x3793e5(0x43d),'diem':0x56,'cap_do':_0x3793e5(0x81f),'nhom':_0x3793e5(0x693),'hanh':_0x3793e5(0x252),'goc_do_min':127.5,'goc_do_max':142.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x4f0),'giaiphap':_0x3793e5(0x29a)},'Tỵ':{'loai':_0x3793e5(0x43d),'diem':0x58,'cap_do':'Đại\x20Cát','nhom':_0x3793e5(0x693),'hanh':_0x3793e5(0x6f0),'goc_do_min':142.5,'goc_do_max':157.5,'icon':_0x3793e5(0x57d),'linhvuc':['suc_khoe'],'doi_tuong':[_0x3793e5(0x139)],'text':'Thiên\x20Y\x20vượng\x20vị,\x20bệnh\x20tật\x20thuyên\x20giảm,\x20gia\x20vận\x20bình\x20an.','giaiphap':'Đặt\x20hồ\x20lô\x20đồng\x20để\x20trấn\x20trạch,\x20dưỡng\x20phúc.'},'Bính':{'loai':_0x3793e5(0x43d),'diem':0x50,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x8a2),'hanh':_0x3793e5(0x6f0),'goc_do_min':157.5,'goc_do_max':172.5,'icon':'star-green','linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x3ad),'giaiphap':_0x3793e5(0x74b)},'Ngọ':{'loai':'Cát','diem':0x51,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x8a2),'hanh':_0x3793e5(0x6f0),'goc_do_min':172.5,'goc_do_max':187.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x33c),'giaiphap':'Kích\x20hoạt\x20bằng\x20vật\x20phẩm\x20hành\x20Hỏa\x20hoặc\x20đỏ\x20để\x20tăng\x20năng\x20lượng.'},'Đinh':{'loai':_0x3793e5(0x43d),'diem':0x4f,'cap_do':'Tiểu\x20Cát','nhom':_0x3793e5(0x8a2),'hanh':_0x3793e5(0x6f0),'goc_do_min':187.5,'goc_do_max':202.5,'icon':'star-green','linhvuc':[_0x3793e5(0x44e)],'doi_tuong':['nam_chu'],'text':_0x3793e5(0x351),'giaiphap':_0x3793e5(0x184)},'Mùi':{'loai':'Hung','diem':0x20,'cap_do':'Tiểu\x20Hung','nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x4d7),'goc_do_min':202.5,'goc_do_max':217.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x8d2),'giaiphap':_0x3793e5(0x678)},'Khôn':{'loai':_0x3793e5(0x2d5),'diem':0x1f,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x4d7),'goc_do_min':217.5,'goc_do_max':232.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':'Phạm\x20thế\x20Lục\x20Sát,\x20gia\x20đạo\x20cần\x20sự\x20minh\x20bạch\x20để\x20tránh\x20tà\x20khí\x20quấy\x20nhiễu.','giaiphap':'Đặt\x20bình\x20nước\x20phong\x20thủy\x20để\x20hóa\x20giải\x20xung\x20đột\x20khí\x20trường.'},'Thân':{'loai':_0x3793e5(0x2d5),'diem':0x1e,'cap_do':_0x3793e5(0x143),'nhom':_0x3793e5(0x842),'hanh':_0x3793e5(0x848),'goc_do_min':232.5,'goc_do_max':247.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x484)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x894),'giaiphap':_0x3793e5(0x4c4)},'Canh':{'loai':_0x3793e5(0x2d5),'diem':0x16,'cap_do':'Đại\x20Hung','nhom':_0x3793e5(0x663),'hanh':_0x3793e5(0x848),'goc_do_min':247.5,'goc_do_max':262.5,'icon':_0x3793e5(0x278),'linhvuc':['suc_khoe'],'doi_tuong':['nam_chu'],'text':_0x3793e5(0x567),'giaiphap':_0x3793e5(0x5d7)},'Dậu':{'loai':_0x3793e5(0x2d5),'diem':0x18,'cap_do':_0x3793e5(0x674),'nhom':_0x3793e5(0x663),'hanh':_0x3793e5(0x848),'goc_do_min':262.5,'goc_do_max':277.5,'icon':'alert-red','linhvuc':[_0x3793e5(0x7af)],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x852),'giaiphap':_0x3793e5(0x8db)},'Tân':{'loai':_0x3793e5(0x2d5),'diem':0x17,'cap_do':'Đại\x20Hung','nhom':_0x3793e5(0x663),'hanh':_0x3793e5(0x848),'goc_do_min':277.5,'goc_do_max':292.5,'icon':_0x3793e5(0x278),'linhvuc':[_0x3793e5(0x3f9)],'doi_tuong':['gia_dinh'],'text':'Phạm\x20Tuyệt\x20Mệnh\x20phương\x20vị,\x20dễ\x20xảy\x20ra\x20bất\x20lợi,\x20cần\x20thận\x20trọng\x20trong\x20mọi\x20quyết\x20định.','giaiphap':'Kết\x20hợp\x20gương\x20và\x20Tỳ\x20Hưu\x20để\x20trấn\x20áp\x20sát\x20khí\x20nặng.'},'Tuất':{'loai':_0x3793e5(0x43d),'diem':0x54,'cap_do':'Tiểu\x20Cát','nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x4d7),'goc_do_min':292.5,'goc_do_max':307.5,'icon':'star-green','linhvuc':['gia_dao'],'doi_tuong':[_0x3793e5(0x139)],'text':_0x3793e5(0x8f1),'giaiphap':'Đặt\x20đôi\x20Uyên\x20Ương\x20đồng\x20để\x20củng\x20cố\x20sợi\x20dây\x20tình\x20cảm\x20gia\x20đình.'},'Càn':{'loai':_0x3793e5(0x43d),'diem':0x53,'cap_do':_0x3793e5(0x502),'nhom':_0x3793e5(0x36a),'hanh':_0x3793e5(0x848),'goc_do_min':307.5,'goc_do_max':322.5,'icon':_0x3793e5(0x57d),'linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x492)],'text':_0x3793e5(0x53e),'giaiphap':_0x3793e5(0x529)},'Hợi':{'loai':_0x3793e5(0x441),'diem':0x38,'cap_do':_0x3793e5(0x6b9),'nhom':_0x3793e5(0x441),'hanh':'Thủy','goc_do_min':322.5,'goc_do_max':337.5,'icon':'circle-yellow','linhvuc':[_0x3793e5(0x19b)],'doi_tuong':[_0x3793e5(0x139)],'text':'Thế\x20bình\x20hòa,\x20vận\x20trình\x20ổn\x20định,\x20thuận\x20lợi\x20ở\x20mức\x20vừa\x20phải.','giaiphap':_0x3793e5(0x4ca)}}},Data72Hau={'340':{'ten':_0x3793e5(0x671),'chatLuong':_0x3793e5(0x81f),'hanh':_0x3793e5(0x331),'ynghia':_0x3793e5(0x48d),'diem':0x5c,'giaiphap':_0x3793e5(0x2f5),'interactionLevel':_0x3793e5(0x266),'overrideIf':null},'345':{'ten':_0x3793e5(0x73b),'chatLuong':'Đại\x20Cát','hanh':_0x3793e5(0x331),'ynghia':_0x3793e5(0x7ef),'diem':0x58,'giaiphap':_0x3793e5(0x5be),'interactionLevel':_0x3793e5(0x6fe),'overrideIf':null},'350':{'ten':_0x3793e5(0x3f6),'chatLuong':_0x3793e5(0x43d),'hanh':_0x3793e5(0x331),'ynghia':'Tài\x20lộc\x20ổn\x20định,\x20ngoại\x20giao\x20thuận\x20lợi.','diem':0x4e,'giaiphap':_0x3793e5(0x1d9),'interactionLevel':_0x3793e5(0x393),'overrideIf':null},'355':{'ten':_0x3793e5(0x5ae),'chatLuong':_0x3793e5(0x81f),'hanh':_0x3793e5(0x331),'ynghia':_0x3793e5(0x7fa),'diem':0x5f,'giaiphap':_0x3793e5(0x6e8),'interactionLevel':_0x3793e5(0x67c),'overrideIf':null},'0':{'ten':_0x3793e5(0x106),'chatLuong':_0x3793e5(0x81f),'hanh':_0x3793e5(0x331),'ynghia':_0x3793e5(0x869),'diem':0x59,'giaiphap':_0x3793e5(0x585),'interactionLevel':'Cao','overrideIf':null},'5':{'ten':_0x3793e5(0x33d),'chatLuong':_0x3793e5(0x43d),'hanh':_0x3793e5(0x331),'ynghia':_0x3793e5(0x621),'diem':0x52,'giaiphap':_0x3793e5(0x897),'interactionLevel':'Trung\x20bình\x20cao','overrideIf':null},'10':{'ten':'Quý\x20Hậu\x201','chatLuong':_0x3793e5(0x143),'hanh':_0x3793e5(0x331),'ynghia':_0x3793e5(0x696),'diem':0x2d,'giaiphap':_0x3793e5(0x62e),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':'Nếu\x20gặp\x20Ngũ\x20Hoàng\x20→\x20Đại\x20Hung'},'15':{'ten':_0x3793e5(0x1b0),'chatLuong':_0x3793e5(0x143),'hanh':_0x3793e5(0x331),'ynghia':_0x3793e5(0x4d4),'diem':0x2a,'giaiphap':_0x3793e5(0x1b7),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'20':{'ten':_0x3793e5(0x36c),'chatLuong':_0x3793e5(0x441),'hanh':'Thủy','ynghia':'Trung\x20bình,\x20quản\x20lý\x20tài\x20chính\x20thận\x20trọng.','diem':0x3a,'giaiphap':_0x3793e5(0x83e),'interactionLevel':_0x3793e5(0x78c),'overrideIf':null},'25':{'ten':_0x3793e5(0x1bc),'chatLuong':'Tiểu\x20Hung','hanh':_0x3793e5(0x4d7),'ynghia':_0x3793e5(0x3b3),'diem':0x30,'giaiphap':'Đặt\x20thạch\x20anh\x20hồng\x20hoặc\x20chuông\x20gió.','interactionLevel':_0x3793e5(0x4a4),'overrideIf':_0x3793e5(0x31c)},'30':{'ten':_0x3793e5(0x76e),'chatLuong':_0x3793e5(0x143),'hanh':'Thổ','ynghia':_0x3793e5(0x866),'diem':0x2c,'giaiphap':_0x3793e5(0x10d),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'35':{'ten':_0x3793e5(0x2d4),'chatLuong':_0x3793e5(0x2d5),'hanh':_0x3793e5(0x4d7),'ynghia':'Cần\x20hóa\x20giải\x20để\x20tránh\x20tranh\x20chấp.','diem':0x26,'giaiphap':_0x3793e5(0x71f),'interactionLevel':_0x3793e5(0x534),'overrideIf':null},'40':{'ten':_0x3793e5(0x2cf),'chatLuong':_0x3793e5(0x674),'hanh':_0x3793e5(0x4d7),'ynghia':_0x3793e5(0x13d),'diem':0x12,'giaiphap':_0x3793e5(0x7a3),'interactionLevel':_0x3793e5(0x3dc),'overrideIf':'Luôn\x20Đại\x20Hung'},'45':{'ten':_0x3793e5(0x32d),'chatLuong':_0x3793e5(0x674),'hanh':'Thổ','ynghia':_0x3793e5(0x887),'diem':0x10,'giaiphap':_0x3793e5(0x539),'interactionLevel':_0x3793e5(0x3dc),'overrideIf':null},'50':{'ten':'Cấn\x20Hậu\x203','chatLuong':_0x3793e5(0x674),'hanh':'Thổ','ynghia':_0x3793e5(0x78b),'diem':0xf,'giaiphap':_0x3793e5(0x631),'interactionLevel':_0x3793e5(0x644),'overrideIf':_0x3793e5(0x80f)},'55':{'ten':_0x3793e5(0x2f1),'chatLuong':_0x3793e5(0x143),'hanh':_0x3793e5(0x252),'ynghia':_0x3793e5(0x40c),'diem':0x2f,'giaiphap':_0x3793e5(0x2f3),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'60':{'ten':_0x3793e5(0x5c3),'chatLuong':_0x3793e5(0x143),'hanh':_0x3793e5(0x252),'ynghia':_0x3793e5(0x710),'diem':0x2b,'giaiphap':_0x3793e5(0x312),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'65':{'ten':_0x3793e5(0x617),'chatLuong':_0x3793e5(0x2d5),'hanh':_0x3793e5(0x252),'ynghia':_0x3793e5(0x142),'diem':0x27,'giaiphap':_0x3793e5(0x478),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'70':{'ten':_0x3793e5(0x63c),'chatLuong':_0x3793e5(0x502),'hanh':_0x3793e5(0x252),'ynghia':_0x3793e5(0x827),'diem':0x48,'giaiphap':_0x3793e5(0x551),'interactionLevel':_0x3793e5(0x393),'overrideIf':null},'75':{'ten':_0x3793e5(0x108),'chatLuong':_0x3793e5(0x502),'hanh':_0x3793e5(0x252),'ynghia':_0x3793e5(0x60f),'diem':0x4b,'giaiphap':_0x3793e5(0x6d2),'interactionLevel':_0x3793e5(0x393),'overrideIf':null},'80':{'ten':_0x3793e5(0xe1),'chatLuong':_0x3793e5(0x43d),'hanh':_0x3793e5(0x252),'ynghia':_0x3793e5(0x322),'diem':0x44,'giaiphap':_0x3793e5(0x2a4),'interactionLevel':_0x3793e5(0x78c),'overrideIf':null},'85':{'ten':_0x3793e5(0x7bd),'chatLuong':_0x3793e5(0x502),'hanh':'Mộc','ynghia':_0x3793e5(0x2b4),'diem':0x4a,'giaiphap':_0x3793e5(0x782),'interactionLevel':'Trung\x20bình\x20cao','overrideIf':null},'90':{'ten':_0x3793e5(0x35c),'chatLuong':_0x3793e5(0x502),'hanh':_0x3793e5(0x252),'ynghia':_0x3793e5(0x593),'diem':0x4c,'giaiphap':'Đặt\x20tượng\x20gia\x20tiên\x20hoặc\x20cây\x20xanh.','interactionLevel':'Trung\x20bình\x20cao','overrideIf':null},'95':{'ten':_0x3793e5(0x8b4),'chatLuong':_0x3793e5(0x43d),'hanh':_0x3793e5(0x252),'ynghia':_0x3793e5(0x212),'diem':0x46,'giaiphap':'Bình\x20thường.','interactionLevel':'Trung\x20bình','overrideIf':null},'100':{'ten':_0x3793e5(0x7db),'chatLuong':_0x3793e5(0x143),'hanh':_0x3793e5(0x252),'ynghia':_0x3793e5(0x3e6),'diem':0x2e,'giaiphap':_0x3793e5(0x845),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'105':{'ten':_0x3793e5(0x7e3),'chatLuong':_0x3793e5(0x143),'hanh':_0x3793e5(0x252),'ynghia':'Dễ\x20vướng\x20kiện\x20tụng\x20tranh\x20chấp.','diem':0x2c,'giaiphap':_0x3793e5(0x765),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'110':{'ten':'Ất\x20Hậu\x203','chatLuong':_0x3793e5(0x2d5),'hanh':_0x3793e5(0x252),'ynghia':_0x3793e5(0x335),'diem':0x23,'giaiphap':'Tránh\x20dùng\x20cho\x20giường\x20ngủ.','interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'115':{'ten':_0x3793e5(0x895),'chatLuong':_0x3793e5(0x143),'hanh':_0x3793e5(0x4d7),'ynghia':_0x3793e5(0x716),'diem':0x2f,'giaiphap':_0x3793e5(0x401),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'120':{'ten':_0x3793e5(0xe7),'chatLuong':_0x3793e5(0x143),'hanh':_0x3793e5(0x4d7),'ynghia':_0x3793e5(0x1c0),'diem':0x2b,'giaiphap':_0x3793e5(0x61c),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'125':{'ten':_0x3793e5(0x879),'chatLuong':_0x3793e5(0x2d5),'hanh':_0x3793e5(0x4d7),'ynghia':_0x3793e5(0x401),'diem':0x26,'giaiphap':_0x3793e5(0x768),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'130':{'ten':_0x3793e5(0x6e2),'chatLuong':_0x3793e5(0x674),'hanh':'Mộc','ynghia':_0x3793e5(0x893),'diem':0xe,'giaiphap':_0x3793e5(0x817),'interactionLevel':_0x3793e5(0x5a7),'overrideIf':_0x3793e5(0x663)},'135':{'ten':_0x3793e5(0x3ba),'chatLuong':_0x3793e5(0x674),'hanh':_0x3793e5(0x252),'ynghia':'Cần\x20trấn\x20trạch\x20mạnh.','diem':0x10,'giaiphap':_0x3793e5(0x306),'interactionLevel':_0x3793e5(0x644),'overrideIf':null},'140':{'ten':_0x3793e5(0x1e3),'chatLuong':_0x3793e5(0x2d5),'hanh':_0x3793e5(0x252),'ynghia':_0x3793e5(0x3df),'diem':0x20,'giaiphap':_0x3793e5(0x48e),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'145':{'ten':_0x3793e5(0x717),'chatLuong':_0x3793e5(0x143),'hanh':_0x3793e5(0x6f0),'ynghia':_0x3793e5(0x43b),'diem':0x2e,'giaiphap':_0x3793e5(0x4fb),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'150':{'ten':'Tỵ\x20Hậu\x202','chatLuong':_0x3793e5(0x143),'hanh':'Hỏa','ynghia':_0x3793e5(0x3b7),'diem':0x2c,'giaiphap':_0x3793e5(0x268),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'155':{'ten':'Tỵ\x20Hậu\x203','chatLuong':_0x3793e5(0x2d5),'hanh':'Hỏa','ynghia':'Đặt\x20Tỳ\x20Hưu\x20hoặc\x20gậy\x20Như\x20Ý.','diem':0x25,'giaiphap':_0x3793e5(0x656),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'160':{'ten':_0x3793e5(0x8b8),'chatLuong':'Đại\x20Cát','hanh':_0x3793e5(0x6f0),'ynghia':_0x3793e5(0x1c4),'diem':0x5d,'giaiphap':_0x3793e5(0x3fb),'interactionLevel':'Rất\x20Cao','overrideIf':null},'165':{'ten':'Bính\x20Hậu\x202','chatLuong':_0x3793e5(0x81f),'hanh':_0x3793e5(0x6f0),'ynghia':_0x3793e5(0x87b),'diem':0x5a,'giaiphap':'Đặt\x20hồ\x20lô\x20đồng\x20hoặc\x20thạch\x20anh\x20vàng.','interactionLevel':_0x3793e5(0x6fe),'overrideIf':null},'170':{'ten':'Bính\x20Hậu\x203','chatLuong':_0x3793e5(0x43d),'hanh':_0x3793e5(0x6f0),'ynghia':_0x3793e5(0x84c),'diem':0x51,'giaiphap':'Tốt.','interactionLevel':_0x3793e5(0x393),'overrideIf':null},'175':{'ten':_0x3793e5(0x51f),'chatLuong':_0x3793e5(0x502),'hanh':_0x3793e5(0x6f0),'ynghia':'Diên\x20Niên\x20chính\x20khí,\x20gia\x20đạo\x20hòa\x20hợp.','diem':0x49,'giaiphap':_0x3793e5(0x2d6),'interactionLevel':_0x3793e5(0x393),'overrideIf':null},'180':{'ten':_0x3793e5(0x66c),'chatLuong':_0x3793e5(0x502),'hanh':_0x3793e5(0x6f0),'ynghia':_0x3793e5(0x322),'diem':0x47,'giaiphap':_0x3793e5(0x64c),'interactionLevel':_0x3793e5(0x78c),'overrideIf':null},'185':{'ten':_0x3793e5(0x44a),'chatLuong':_0x3793e5(0x43d),'hanh':_0x3793e5(0x6f0),'ynghia':_0x3793e5(0x2d6),'diem':0x45,'giaiphap':_0x3793e5(0x493),'interactionLevel':_0x3793e5(0x78c),'overrideIf':null},'190':{'ten':_0x3793e5(0x323),'chatLuong':_0x3793e5(0x81f),'hanh':'Hỏa','ynghia':_0x3793e5(0x40e),'diem':0x60,'giaiphap':_0x3793e5(0x27f),'interactionLevel':_0x3793e5(0x67c),'overrideIf':null},'195':{'ten':_0x3793e5(0x799),'chatLuong':_0x3793e5(0x81f),'hanh':_0x3793e5(0x6f0),'ynghia':'Nhân\x20đinh\x20hưng\x20vượng.','diem':0x5b,'giaiphap':_0x3793e5(0x3cb),'interactionLevel':_0x3793e5(0x6fe),'overrideIf':null},'200':{'ten':_0x3793e5(0x643),'chatLuong':_0x3793e5(0x43d),'hanh':_0x3793e5(0x6f0),'ynghia':'Cây\x20xanh\x20và\x20Tháp\x20Văn\x20Xương.','diem':0x53,'giaiphap':_0x3793e5(0x745),'interactionLevel':'Trung\x20bình\x20cao','overrideIf':null},'205':{'ten':_0x3793e5(0x111),'chatLuong':_0x3793e5(0x143),'hanh':_0x3793e5(0x4d7),'ynghia':_0x3793e5(0x877),'diem':0x29,'giaiphap':_0x3793e5(0x507),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'210':{'ten':'Mùi\x20Hậu\x202','chatLuong':_0x3793e5(0x143),'hanh':_0x3793e5(0x4d7),'ynghia':_0x3793e5(0x507),'diem':0x27,'giaiphap':_0x3793e5(0x656),'interactionLevel':'Thấp','overrideIf':null},'215':{'ten':_0x3793e5(0x787),'chatLuong':_0x3793e5(0x2d5),'hanh':'Thổ','ynghia':'Tránh\x20vị\x20trí\x20này\x20cho\x20giường\x20ngủ.','diem':0x22,'giaiphap':'Tránh.','interactionLevel':'Thấp','overrideIf':null},'220':{'ten':_0x3793e5(0x392),'chatLuong':_0x3793e5(0x674),'hanh':_0x3793e5(0x4d7),'ynghia':_0x3793e5(0x85c),'diem':0xc,'giaiphap':_0x3793e5(0x10a),'interactionLevel':_0x3793e5(0x5a7),'overrideIf':_0x3793e5(0x5bd)},'225':{'ten':_0x3793e5(0x7e9),'chatLuong':_0x3793e5(0x674),'hanh':_0x3793e5(0x4d7),'ynghia':_0x3793e5(0x37f),'diem':0xe,'giaiphap':_0x3793e5(0x6a9),'interactionLevel':_0x3793e5(0x5a7),'overrideIf':null},'230':{'ten':_0x3793e5(0x876),'chatLuong':_0x3793e5(0x674),'hanh':_0x3793e5(0x4d7),'ynghia':_0x3793e5(0x38d),'diem':0xd,'giaiphap':'Tránh.','interactionLevel':_0x3793e5(0x644),'overrideIf':null},'235':{'ten':'Thân\x20Hậu\x201','chatLuong':_0x3793e5(0x143),'hanh':_0x3793e5(0x848),'ynghia':_0x3793e5(0x247),'diem':0x2d,'giaiphap':_0x3793e5(0x898),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'240':{'ten':_0x3793e5(0x742),'chatLuong':_0x3793e5(0x143),'hanh':_0x3793e5(0x848),'ynghia':_0x3793e5(0x6d7),'diem':0x2b,'giaiphap':'Hóa\x20giải.','interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'245':{'ten':_0x3793e5(0x80a),'chatLuong':_0x3793e5(0x2d5),'hanh':_0x3793e5(0x848),'ynghia':'Bình\x20gốm\x20hành\x20Thổ.','diem':0x24,'giaiphap':_0x3793e5(0x656),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'250':{'ten':'Canh\x20Hậu\x201','chatLuong':_0x3793e5(0x502),'hanh':_0x3793e5(0x848),'ynghia':'Diên\x20Niên,\x20kinh\x20doanh\x20phát\x20đạt.','diem':0x47,'giaiphap':_0x3793e5(0x206),'interactionLevel':_0x3793e5(0x393),'overrideIf':null},'255':{'ten':_0x3793e5(0x47e),'chatLuong':_0x3793e5(0x502),'hanh':_0x3793e5(0x848),'ynghia':'Sự\x20nghiệp\x20hưng\x20thịnh.','diem':0x49,'giaiphap':'Tốt\x20cho\x20kinh\x20doanh.','interactionLevel':_0x3793e5(0x393),'overrideIf':null},'260':{'ten':'Canh\x20Hậu\x203','chatLuong':_0x3793e5(0x43d),'hanh':_0x3793e5(0x848),'ynghia':_0x3793e5(0x206),'diem':0x45,'giaiphap':_0x3793e5(0x64c),'interactionLevel':_0x3793e5(0x78c),'overrideIf':null},'265':{'ten':_0x3793e5(0x1a9),'chatLuong':_0x3793e5(0x502),'hanh':_0x3793e5(0x848),'ynghia':_0x3793e5(0x1cd),'diem':0x4a,'giaiphap':_0x3793e5(0x4ae),'interactionLevel':_0x3793e5(0x393),'overrideIf':null},'270':{'ten':'Dậu\x20Hậu\x202','chatLuong':'Tiểu\x20Cát','hanh':_0x3793e5(0x848),'ynghia':_0x3793e5(0x7f8),'diem':0x48,'giaiphap':_0x3793e5(0x493),'interactionLevel':'Trung\x20bình\x20cao','overrideIf':null},'275':{'ten':'Dậu\x20Hậu\x203','chatLuong':_0x3793e5(0x43d),'hanh':_0x3793e5(0x848),'ynghia':_0x3793e5(0x4ae),'diem':0x46,'giaiphap':_0x3793e5(0x493),'interactionLevel':_0x3793e5(0x78c),'overrideIf':null},'280':{'ten':_0x3793e5(0x6f2),'chatLuong':'Tiểu\x20Hung','hanh':_0x3793e5(0x848),'ynghia':_0x3793e5(0x5e9),'diem':0x30,'giaiphap':_0x3793e5(0x51d),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'285':{'ten':'Tân\x20Hậu\x202','chatLuong':_0x3793e5(0x143),'hanh':'Kim','ynghia':_0x3793e5(0x244),'diem':0x2e,'giaiphap':_0x3793e5(0x268),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'290':{'ten':_0x3793e5(0x49a),'chatLuong':_0x3793e5(0x2d5),'hanh':'Kim','ynghia':'Thạch\x20anh\x20trắng\x20hoặc\x20gậy\x20Như\x20Ý.','diem':0x25,'giaiphap':_0x3793e5(0x656),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'295':{'ten':_0x3793e5(0xe6),'chatLuong':'Tiểu\x20Hung','hanh':'Thổ','ynghia':_0x3793e5(0x561),'diem':0x2f,'giaiphap':'Chuỗi\x20tiền\x20Ngũ\x20Đế\x20và\x20thạch\x20anh\x20đen.','interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'300':{'ten':_0x3793e5(0x155),'chatLuong':'Tiểu\x20Hung','hanh':_0x3793e5(0x4d7),'ynghia':'Gia\x20đạo\x20bất\x20an.','diem':0x2d,'giaiphap':_0x3793e5(0x656),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'305':{'ten':_0x3793e5(0x3d9),'chatLuong':_0x3793e5(0x2d5),'hanh':_0x3793e5(0x4d7),'ynghia':_0x3793e5(0x383),'diem':0x24,'giaiphap':_0x3793e5(0x26c),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'310':{'ten':_0x3793e5(0x64e),'chatLuong':_0x3793e5(0x143),'hanh':'Kim','ynghia':_0x3793e5(0x8f3),'diem':0x31,'giaiphap':_0x3793e5(0x7bf),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'315':{'ten':'Càn\x20Hậu\x202','chatLuong':_0x3793e5(0x143),'hanh':_0x3793e5(0x848),'ynghia':_0x3793e5(0x840),'diem':0x2f,'giaiphap':_0x3793e5(0x656),'interactionLevel':_0x3793e5(0x4a4),'overrideIf':null},'320':{'ten':_0x3793e5(0x6d9),'chatLuong':'Hung','hanh':'Kim','ynghia':'Rèm\x20tối\x20màu\x20và\x20bình\x20nước.','diem':0x26,'giaiphap':_0x3793e5(0x656),'interactionLevel':'Thấp','overrideIf':null},'325':{'ten':'Hợi\x20Hậu\x201','chatLuong':_0x3793e5(0x441),'hanh':_0x3793e5(0x331),'ynghia':_0x3793e5(0x7dc),'diem':0x3e,'giaiphap':'Giữ\x20cân\x20bằng.','interactionLevel':'Trung\x20bình','overrideIf':null},'330':{'ten':'Hợi\x20Hậu\x202','chatLuong':_0x3793e5(0x441),'hanh':_0x3793e5(0x331),'ynghia':_0x3793e5(0x7bc),'diem':0x3c,'giaiphap':_0x3793e5(0x268),'interactionLevel':_0x3793e5(0x78c),'overrideIf':null},'335':{'ten':_0x3793e5(0x8c7),'chatLuong':_0x3793e5(0x441),'hanh':'Thủy','ynghia':_0x3793e5(0x565),'diem':0x3b,'giaiphap':_0x3793e5(0x775),'interactionLevel':_0x3793e5(0x78c),'overrideIf':null}};function layNamKhaoSatThienVan(){const _0x140f56=_0x3793e5,_0xca67eb=new Date(),_0x589dc0=_0xca67eb['getDate'](),_0xca95a3=_0xca67eb[_0x140f56(0x2d0)]()+0x1,_0x515bf2=_0xca67eb['getFullYear']();if(_0xca95a3<0x2||_0xca95a3===0x2&&_0x589dc0<0x4)return _0x515bf2-0x1;return _0x515bf2;}function tínhCungPhi(_0x44080a,_0x43fe12,_0x19ee1a,_0xf825f9){const _0x5d898d=_0x3793e5,_0x195b81=Number(_0x44080a),_0x48d8a5=Number(_0x43fe12),_0x39a812=Number(_0x19ee1a),_0x378cf1=_0x48d8a5<0x2||_0x48d8a5===0x2&&_0x39a812<0x4?_0x195b81-0x1:_0x195b81;let _0x27aef0=_0x378cf1%0x9;if(_0x27aef0===0x0)_0x27aef0=0x9;const _0x100258=_0xf825f9===_0x5d898d(0x5bc)||_0xf825f9===_0x5d898d(0x514);let _0x1c6d09=_0x100258?(0xb-_0x27aef0)%0x9:(_0x27aef0+0x4)%0x9;if(_0x1c6d09===0x0)_0x1c6d09=0x9;_0x1c6d09===0x5&&(_0x1c6d09=_0x100258?0x2:0x8);const _0x164bcc={0x1:_0x5d898d(0x6a4),0x2:_0x5d898d(0xf2),0x3:_0x5d898d(0x7c8),0x4:_0x5d898d(0x8a1),0x6:'Càn',0x7:_0x5d898d(0x124),0x8:_0x5d898d(0x6ef),0x9:'Ly'};return _0x164bcc[_0x1c6d09]||_0x5d898d(0x6a4);}function getNguHoangInfo(_0xf418e2){const _0x2a305b=_0x3793e5,_0x54e43b=_0xf418e2&&!isNaN(_0xf418e2)?parseInt(_0xf418e2,0xa):layNamKhaoSatThienVan();let _0x47360b=(0xb-_0x54e43b%0x9)%0x9;if(_0x47360b===0x0)_0x47360b=0x9;const _0x2d1908={0x1:'S',0x2:'NE',0x3:'W',0x4:'NW',0x5:'TrungCung',0x6:'SE',0x7:'E',0x8:'SW',0x9:'N'},_0x2e1252={'N':_0x2a305b(0x47f),'NE':_0x2a305b(0x22a),'E':_0x2a305b(0x376),'SE':_0x2a305b(0x72f),'S':'Chính\x20Nam','SW':_0x2a305b(0x8c5),'W':_0x2a305b(0x861),'NW':_0x2a305b(0x2e2),'TrungCung':_0x2a305b(0x6b6)},_0x3f4344=_0x2d1908[_0x47360b]||_0x2a305b(0x499),_0x5669d1=_0x2e1252[_0x3f4344]||'Trung\x20Cung',_0x4c139c={0x1:_0x2a305b(0x489),0x2:_0x2a305b(0x7a1),0x3:_0x2a305b(0x32a),0x4:_0x2a305b(0x343),0x5:_0x2a305b(0x24a),0x6:'Lục\x20Bạch\x20Vũ\x20Khúc\x20(Kim)\x20—\x20Cát\x20Tinh:\x20Vượng\x20quyền\x20lực,\x20quý\x20nhân\x20đại\x20trợ.',0x7:_0x2a305b(0x21f),0x8:_0x2a305b(0x1b4),0x9:_0x2a305b(0x1eb)};return'Niên\x20độ\x20Vận\x209\x20[Năm\x20'+_0x54e43b+_0x2a305b(0x410)+_0x47360b+'\x20['+_0x4c139c[_0x47360b]+_0x2a305b(0x758)+_0x5669d1;}function getNguHoangAlert(_0x62d650){const _0x133a2e=_0x3793e5;if(!_0x62d650)return'';const _0x48bfcb=layNamKhaoSatThienVan();let _0x2e70d3=(0xb-_0x48bfcb%0x9)%0x9;if(_0x2e70d3===0x0)_0x2e70d3=0x9;const _0x5ef727={0x1:'S',0x2:'NE',0x3:'W',0x4:'NW',0x5:_0x133a2e(0x499),0x6:'SE',0x7:'E',0x8:'SW',0x9:'N'},_0xdd9ba2=_0x5ef727[_0x2e70d3]||_0x133a2e(0x499),_0x4132a0={'bắc':'N','chính\x20bắc':'N','đông\x20bắc':'NE','đông':'E','chính\x20đông':'E','đông\x20nam':'SE','nam':'S','chính\x20nam':'S','tây\x20nam':'SW','tây':'W','chính\x20tây':'W','tây\x20bắc':'NW','trung\x20cung':_0x133a2e(0x499),'tâm\x20trạch':_0x133a2e(0x499)},_0x481b98=_0x4132a0[_0x62d650[_0x133a2e(0x50b)]()[_0x133a2e(0x1b9)]()]||'';if(!_0x481b98||_0x481b98!==_0xdd9ba2)return'';if(_0x481b98===_0x133a2e(0x499))return _0x133a2e(0x197)+_0x48bfcb+'\x20Ngũ\x20Hoàng\x20nhập\x20Trung\x20Cung.\x20Giữ\x20tâm\x20nhà\x20tĩnh\x20lặng,\x20tránh\x20cải\x20tạo\x20lớn\x20tại\x20không\x20gian\x20cốt\x20lõi\x20này.';return'⚠️\x20[THIÊN\x20THỜI\x20PHẠM\x20SÁT]:\x20Phương\x20vị\x20'+_0x62d650[_0x133a2e(0x23a)]()+_0x133a2e(0x5d9)+_0x48bfcb+'\x20phạm\x20NGŨ\x20HOÀNG\x20LIÊM\x20TRINH\x20ĐẠI\x20SÁT.\x20Tuyệt\x20đối\x20bất\x20khả\x20động\x20thổ\x20đập\x20phá\x20kết\x20cấu\x20nền\x20móng\x20để\x20tránh\x20kích\x20động\x20hung\x20khí\x20nguy\x20hiểm.';}function tinhHanCuuTinhTheoNam(_0xdf6348,_0x531321){const _0x1f3e8b=_0x3793e5,_0x57ef58=_0x531321?parseInt(_0x531321,0xa):layNamKhaoSatThienVan();if(_0xdf6348===undefined||_0xdf6348===null)return{'thongTinSao':_0x1f3e8b(0x770),'meoGiaiHan':''};let _0x42f7a5=typeof _0xdf6348==='number'?typeof dịchĐộSốThànhTênSơn===_0x1f3e8b(0x60a)?dịchĐộSốThànhTênSơn(_0xdf6348):'Tý':_0xdf6348[_0x1f3e8b(0x50b)]();const _0x49b440=typeof DATA_THANSAT!==_0x1f3e8b(0x677)&&DATA_THANSAT[_0x1f3e8b(0x19f)][_0x42f7a5]?DATA_THANSAT[_0x1f3e8b(0x19f)][_0x42f7a5]:null;if(!_0x49b440)return{'thongTinSao':'Tọa\x20độ\x20Sơn\x20'+_0x42f7a5+_0x1f3e8b(0x366),'meoGiaiHan':''};const _0x5e7277=_0x49b440[_0x1f3e8b(0x7f1)];let _0x30cee4=[];const _0x14d022=getPhongThuySatTinh(_0x42f7a5,_0x57ef58);_0x14d022[_0x1f3e8b(0x242)](_0x3da364=>{const _0x4c2594=_0x1f3e8b;_0x30cee4['push']('['+_0x3da364[_0x4c2594(0x5f9)]+_0x4c2594(0x1de)+_0x3da364[_0x4c2594(0x145)]+_0x4c2594(0x46d));});let _0x378e7a=(0xb-_0x57ef58%0x9)%0x9;if(_0x378e7a===0x0)_0x378e7a=0x9;const _0x586c37={'N':0x1,'SW':0x2,'E':0x3,'SE':0x4,'TrungCung':0x5,'Trung\x20Cung':0x5,'NW':0x6,'W':0x7,'NE':0x8,'S':0x9};let _0x2eca62=_0x586c37[_0x5e7277]||0x5,_0x455655=(_0x378e7a+(_0x2eca62-0x5)+0x9)%0x9;if(_0x455655===0x0)_0x455655=0x9;const _0x457a5c={0x1:{'ten':'Nhất\x20Bạch\x20Tham\x20Lang\x20(Tiến\x20Khí\x20Cát\x20Tinh\x20-\x20Thủy)','hung':![],'giaiPhap':_0x1f3e8b(0x58f)},0x2:{'ten':_0x1f3e8b(0x4eb),'hung':![],'giaiPhap':_0x1f3e8b(0x8c4)},0x3:{'ten':_0x1f3e8b(0x40b),'hung':!![],'giaiPhap':'Dễ\x20kích\x20hoạt\x20mâu\x20thuẫn,\x20tiểu\x20nhân.\x20Tránh\x20đặt\x20thiết\x20bị\x20phát\x20âm\x20thanh\x20động\x20tại\x20góc\x20này.'},0x4:{'ten':_0x1f3e8b(0x437),'hung':!![],'giaiPhap':_0x1f3e8b(0x300)},0x5:{'ten':_0x1f3e8b(0x835),'hung':!![],'giaiPhap':_0x1f3e8b(0x3af)},0x6:{'ten':_0x1f3e8b(0x7b5),'hung':![],'giaiPhap':_0x1f3e8b(0x57a)},0x7:{'ten':_0x1f3e8b(0x6c9),'hung':!![],'giaiPhap':'Hao\x20tổn\x20tài\x20lộc,\x20họa\x20tai\x20ương.\x20Đặt\x20bình\x20thủy\x20tinh\x20chứa\x20nước\x20an\x20nhẫn\x20(nước\x20muối)\x20tiêu\x20trừ\x20sát\x20khí.'},0x8:{'ten':_0x1f3e8b(0x24e),'hung':![],'giaiPhap':_0x1f3e8b(0x4c9)},0x9:{'ten':_0x1f3e8b(0x27a),'hung':![],'giaiPhap':_0x1f3e8b(0x6ee)}},_0x487dfb=_0x457a5c[_0x455655];_0x487dfb[_0x1f3e8b(0x7fd)]&&!_0x30cee4[_0x1f3e8b(0x154)](_0x3edbed=>_0x3edbed['includes']('Phi\x20Tinh'))&&_0x30cee4[_0x1f3e8b(0x65b)]('[Lưu\x20Niên\x20Phi\x20Tinh]:\x20Phương\x20vị\x20gặp\x20phải\x20sát\x20khí\x20của\x20'+_0x487dfb[_0x1f3e8b(0x5f9)]+'.');if(_0x30cee4[_0x1f3e8b(0x110)]===0x0)return{'thongTinSao':_0x1f3e8b(0x6b8)+_0x57ef58+_0x1f3e8b(0x7c0)+_0x42f7a5+_0x1f3e8b(0x482)+_0x5e7277+')\x20Đạt\x20Trạng\x20Thái\x20Bình\x20Hòa\x20Cát\x20Lành.\x20Phương\x20vị\x20đón\x20nhận\x20sinh\x20khí\x20của\x20ngôi\x20sao\x20cát:\x20'+_0x487dfb[_0x1f3e8b(0x5f9)]+'.','meoGiaiHan':'💡\x20Bố\x20trí\x20trạch\x20pháp\x20Vận\x209:\x20'+_0x487dfb[_0x1f3e8b(0x60e)]};return{'thongTinSao':_0x1f3e8b(0x166)+_0x57ef58+':\x20Khu\x20vực\x20tọa\x20độ\x20Sơn\x20'+_0x42f7a5+_0x1f3e8b(0x151)+_0x30cee4['join'](_0x1f3e8b(0x67d)),'meoGiaiHan':_0x1f3e8b(0x4e6)+_0x487dfb[_0x1f3e8b(0x60e)]};}function getHanhByHeading(_0x4a19f1){const _0xa4c606=_0x3793e5;if(_0x4a19f1===null||_0x4a19f1===undefined)return _0xa4c606(0x88a);const _0x42240a=(_0x4a19f1%0x168+0x168)%0x168,_0x543733=SON_24_CONFIG[_0xa4c606(0x580)](_0x2974de=>{const _0x8d41c9=_0xa4c606;if(_0x2974de[_0x8d41c9(0x1dc)]>_0x2974de[_0x8d41c9(0x4db)])return _0x42240a>=_0x2974de[_0x8d41c9(0x1dc)]||_0x42240a<_0x2974de[_0x8d41c9(0x4db)];return _0x42240a>=_0x2974de['min']&&_0x42240a<_0x2974de[_0x8d41c9(0x4db)];})||SON_24_CONFIG[0x0],_0x5accb8=DATA_THANSAT['MA_TRAN_24_SON_VI'][_0x543733[_0xa4c606(0x3bc)]],_0x18f0b7={'Thuy':_0xa4c606(0x331),'Moc':_0xa4c606(0x252),'Hoa':'Hỏa','Tho':_0xa4c606(0x4d7),'Kim':_0xa4c606(0x848)};return _0x5accb8?_0x18f0b7[_0x5accb8[_0xa4c606(0x5ec)]]||_0xa4c606(0x4d7):_0xa4c606(0x4d7);}const compass=document['getElementById'](_0x3793e5(0x5c0)),needle=document[_0x3793e5(0x27c)](_0x3793e5(0x81e)),ghostNeedle=document[_0x3793e5(0x27c)](_0x3793e5(0x4f6)),degreeTxt=document[_0x3793e5(0x27c)](_0x3793e5(0x4d2)),elementBox=document['getElementById'](_0x3793e5(0x5af)),fateTxt=document['getElementById'](_0x3793e5(0x8f6)),judgmentBox=document['getElementById'](_0x3793e5(0x422)),detailBox=document['getElementById'](_0x3793e5(0x1a7)),compassSlider=document[_0x3793e5(0x27c)](_0x3793e5(0x685)),permBtn=document[_0x3793e5(0x27c)](_0x3793e5(0x4ee)),directionsContainer=document['getElementById'](_0x3793e5(0x774)),listPanelTitle=document[_0x3793e5(0x27c)]('list-panel-title'),sonRing=document[_0x3793e5(0x27c)](_0x3793e5(0x3e5)),savedContainer=document[_0x3793e5(0x27c)]('savedContainer'),savedPanel=document[_0x3793e5(0x27c)](_0x3793e5(0x754)),SON_24_CONFIG=[{'name':'Tý','min':352.5,'max':7.5,'huong':_0x3793e5(0x555)},{'name':_0x3793e5(0x295),'min':7.5,'max':22.5,'huong':_0x3793e5(0x555)},{'name':'Sửu','min':22.5,'max':37.5,'huong':_0x3793e5(0x22a)},{'name':_0x3793e5(0x6ef),'min':37.5,'max':52.5,'huong':_0x3793e5(0x22a)},{'name':_0x3793e5(0x202),'min':52.5,'max':67.5,'huong':_0x3793e5(0x22a)},{'name':'Giáp','min':67.5,'max':82.5,'huong':_0x3793e5(0x475)},{'name':_0x3793e5(0x8d6),'min':82.5,'max':97.5,'huong':_0x3793e5(0x475)},{'name':'Ất','min':97.5,'max':112.5,'huong':_0x3793e5(0x475)},{'name':_0x3793e5(0x8bf),'min':112.5,'max':127.5,'huong':_0x3793e5(0x72f)},{'name':_0x3793e5(0x8a1),'min':127.5,'max':142.5,'huong':_0x3793e5(0x72f)},{'name':'Tỵ','min':142.5,'max':157.5,'huong':_0x3793e5(0x72f)},{'name':'Bính','min':157.5,'max':172.5,'huong':_0x3793e5(0x2c9)},{'name':_0x3793e5(0x7e8),'min':172.5,'max':187.5,'huong':_0x3793e5(0x2c9)},{'name':_0x3793e5(0x479),'min':187.5,'max':202.5,'huong':_0x3793e5(0x2c9)},{'name':_0x3793e5(0x1fb),'min':202.5,'max':217.5,'huong':'Tây\x20Nam'},{'name':_0x3793e5(0xf2),'min':217.5,'max':232.5,'huong':'Tây\x20Nam'},{'name':_0x3793e5(0x73d),'min':232.5,'max':247.5,'huong':_0x3793e5(0x8c5)},{'name':_0x3793e5(0x611),'min':247.5,'max':262.5,'huong':_0x3793e5(0x8b7)},{'name':'Dậu','min':262.5,'max':277.5,'huong':_0x3793e5(0x8b7)},{'name':_0x3793e5(0x6ed),'min':277.5,'max':292.5,'huong':_0x3793e5(0x8b7)},{'name':'Tuất','min':292.5,'max':307.5,'huong':_0x3793e5(0x2e2)},{'name':_0x3793e5(0x623),'min':307.5,'max':322.5,'huong':_0x3793e5(0x2e2)},{'name':_0x3793e5(0x609),'min':322.5,'max':337.5,'huong':_0x3793e5(0x2e2)},{'name':_0x3793e5(0x2be),'min':337.5,'max':352.5,'huong':_0x3793e5(0x555)}],bátTrạchMap={'Khảm':{'N':_0x3793e5(0x8a2),'NE':_0x3793e5(0x12a),'E':'Thiên\x20Y','SE':'Sinh\x20Khí','S':_0x3793e5(0x36a),'SW':'Tuyệt\x20Mệnh','W':_0x3793e5(0x784),'NW':_0x3793e5(0x842),'group':_0x3793e5(0x6f7),'element':_0x3793e5(0x331)},'Ly':{'N':_0x3793e5(0x36a),'NE':'Họa\x20Hại','E':_0x3793e5(0x3f2),'SE':_0x3793e5(0x693),'S':_0x3793e5(0x8a2),'SW':'Lục\x20Sát','W':_0x3793e5(0x12a),'NW':_0x3793e5(0x663),'group':_0x3793e5(0x6f7),'element':'Hỏa'},'Chấn':{'N':'Thiên\x20Y','NE':_0x3793e5(0x842),'E':_0x3793e5(0x8a2),'SE':_0x3793e5(0x36a),'S':'Sinh\x20Khí','SW':_0x3793e5(0x784),'W':_0x3793e5(0x663),'NW':_0x3793e5(0x12a),'group':_0x3793e5(0x6f7),'element':_0x3793e5(0x252)},'Tốn':{'N':_0x3793e5(0x3f2),'NE':_0x3793e5(0x663),'E':_0x3793e5(0x36a),'SE':_0x3793e5(0x8a2),'S':'Thiên\x20Y','SW':_0x3793e5(0x12a),'W':_0x3793e5(0x842),'NW':_0x3793e5(0x784),'group':_0x3793e5(0x6f7),'element':_0x3793e5(0x252)},'Càn':{'N':'Lục\x20Sát','NE':_0x3793e5(0x693),'E':_0x3793e5(0x12a),'SE':_0x3793e5(0x784),'S':_0x3793e5(0x663),'SW':_0x3793e5(0x36a),'W':_0x3793e5(0x3f2),'NW':_0x3793e5(0x8a2),'group':_0x3793e5(0x1a4),'element':_0x3793e5(0x848)},'Khôn':{'N':'Tuyệt\x20Mệnh','NE':_0x3793e5(0x3f2),'E':_0x3793e5(0x784),'SE':_0x3793e5(0x12a),'S':'Lục\x20Sát','SW':_0x3793e5(0x8a2),'W':_0x3793e5(0x693),'NW':_0x3793e5(0x36a),'group':'Tây\x20Tứ\x20Mệnh','element':_0x3793e5(0x4d7)},'Đoài':{'N':_0x3793e5(0x784),'NE':_0x3793e5(0x36a),'E':_0x3793e5(0x663),'SE':_0x3793e5(0x842),'S':_0x3793e5(0x12a),'SW':_0x3793e5(0x693),'W':_0x3793e5(0x8a2),'NW':_0x3793e5(0x3f2),'group':_0x3793e5(0x1a4),'element':_0x3793e5(0x848)},'Cấn':{'N':_0x3793e5(0x12a),'NE':_0x3793e5(0x8a2),'E':_0x3793e5(0x842),'SE':_0x3793e5(0x784),'S':_0x3793e5(0x663),'SW':_0x3793e5(0x3f2),'W':_0x3793e5(0x36a),'NW':_0x3793e5(0x693),'group':'Tây\x20Tứ\x20Mệnh','element':'Thổ'}},cungPhầnTrăm={'Sinh\x20Khí':{'cát':!![],'ngũHành':_0x3793e5(0x252),'ý_nghĩa':_0x3793e5(0x435)},'Thiên\x20Y':{'cát':!![],'ngũHành':_0x3793e5(0x4d7),'ý_nghĩa':_0x3793e5(0x8f7)},'Diên\x20Niên':{'cát':!![],'ngũHành':_0x3793e5(0x848),'ý_nghĩa':_0x3793e5(0x6e9)},'Phục\x20Vị':{'cát':!![],'ngũHành':_0x3793e5(0x252),'ý_nghĩa':_0x3793e5(0x5c1)},'Tuyệt\x20Mệnh':{'cát':![],'ngũHành':_0x3793e5(0x848),'ý_nghĩa':_0x3793e5(0xe8)},'Ngũ\x20Quỷ':{'cát':![],'ngũHành':_0x3793e5(0x6f0),'ý_nghĩa':_0x3793e5(0x455)},'Lục\x20Sát':{'cát':![],'ngũHành':_0x3793e5(0x331),'ý_nghĩa':_0x3793e5(0x338)},'Họa\x20Hại':{'cát':![],'ngũHành':_0x3793e5(0x4d7),'ý_nghĩa':'Cung\x20Tiểu\x20Hung:\x20Thường\x20mang\x20lại\x20rủi\x20ro\x20vụn\x20vặt,\x20mệt\x20mỏi,\x20trắc\x20trở\x20bởi\x20chuyện\x20tiểu\x20nhân\x20quấy\x20phá,\x20hao\x20mòn\x20tài\x20lộc.'}},phươngVịThiếtLập={'N':{'tên':_0x3793e5(0x26b),'ngũHành':_0x3793e5(0x331)},'NE':{'tên':_0x3793e5(0x616),'ngũHành':_0x3793e5(0x4d7)},'E':{'tên':_0x3793e5(0x256),'ngũHành':'Mộc'},'SE':{'tên':'ĐÔNG\x20NAM','ngũHành':_0x3793e5(0x252)},'S':{'tên':_0x3793e5(0x231),'ngũHành':'Hỏa'},'SW':{'tên':_0x3793e5(0x5b7),'ngũHành':_0x3793e5(0x4d7)},'W':{'tên':_0x3793e5(0x2e8),'ngũHành':_0x3793e5(0x848)},'NW':{'tên':'TÂY\x20BẮC','ngũHành':_0x3793e5(0x848)}},directionMeta=[{'code':'N','name':_0x3793e5(0x8e9),'angle':0x0},{'code':'NE','name':_0x3793e5(0x74a),'angle':0x2d},{'code':'E','name':_0x3793e5(0x7ae),'angle':0x5a},{'code':'SE','name':_0x3793e5(0x77e),'angle':0x87},{'code':'S','name':'NAM\x20(Ly)','angle':0xb4},{'code':'SW','name':_0x3793e5(0x8bd),'angle':0xe1},{'code':'W','name':_0x3793e5(0x45b),'angle':0x10e},{'code':'NW','name':_0x3793e5(0x649),'angle':0x13b}];let chủMệnh=_0x3793e5(0x6a4),currentCode='N',currentHeading=0x0,targetAngle=null,debounceTimer=null;function debounceRecalculate(){clearTimeout(debounceTimer),debounceTimer=setTimeout(()=>{recalculateFate();},0x12c);}function validateFullDate(_0x54039c,_0x4836ff,_0x1abad9){const _0x316503=_0x3793e5,_0x340826=parseInt(_0x54039c,0xa),_0x3aef55=parseInt(_0x4836ff,0xa),_0x57e31d=parseInt(_0x1abad9,0xa);if(isNaN(_0x340826)||isNaN(_0x3aef55)||isNaN(_0x57e31d))return![];if(_0x3aef55<0x1||_0x3aef55>0xc)return![];const _0x3f80a6=[0x1f,_0x57e31d%0x4===0x0&&(_0x57e31d%0x64!==0x0||_0x57e31d%0x190===0x0)?0x1d:0x1c,0x1f,0x1e,0x1f,0x1e,0x1f,0x1f,0x1e,0x1f,0x1e,0x1f];if(_0x340826<0x1||_0x340826>_0x3f80a6[_0x3aef55-0x1])return![];if(_0x57e31d<0x708)return typeof showCustomAlert===_0x316503(0x60a)&&showCustomAlert(_0x316503(0x79e)+_0x57e31d+_0x316503(0x497),_0x316503(0x633)),!![];return!![];}function recalculateFate(){const _0x3fb45f=_0x3793e5,_0x1add90=document['getElementById'](_0x3fb45f(0x5e7))[_0x3fb45f(0x832)]['trim']()||'Chủ\x20mệnh',_0x1b5b17=document[_0x3fb45f(0x27c)](_0x3fb45f(0x365))[_0x3fb45f(0x832)],_0xc41d83=document[_0x3fb45f(0x27c)](_0x3fb45f(0x135))['value'],_0xb38a9d=document[_0x3fb45f(0x27c)](_0x3fb45f(0x118))[_0x3fb45f(0x832)],_0x37f9e2=document[_0x3fb45f(0x27c)](_0x3fb45f(0x68c))[_0x3fb45f(0x832)],_0x3e27cd=document['getElementById'](_0x3fb45f(0x54b))[_0x3fb45f(0x832)],_0x4262a1=document[_0x3fb45f(0x27c)](_0x3fb45f(0x5a4)),_0x3f4488=_0x4262a1&&_0x4262a1[_0x3fb45f(0x832)][_0x3fb45f(0x110)]===0x4?parseInt(_0x4262a1['value'],0xa):new Date()[_0x3fb45f(0x8e3)]();if(!_0xc41d83||!_0xb38a9d||!_0x37f9e2||_0x37f9e2['length']<0x4){fateTxt[_0x3fb45f(0x342)]=_0x1add90+_0x3fb45f(0x2bb),directionsContainer[_0x3fb45f(0x2d1)]=_0x3fb45f(0x865),listPanelTitle[_0x3fb45f(0x342)]='Mạng\x20lưới\x20phương\x20vị\x20la\x20bàn';const _0xf95270=document[_0x3fb45f(0x27c)]('dien-giai-bo-sung');if(_0xf95270)_0xf95270[_0x3fb45f(0x59f)]();updateBatTrachBackground(null),updateCompassUI(currentHeading);return;}let _0x528e6a=parseInt(_0xc41d83,0xa),_0x52f82b=parseInt(_0xb38a9d,0xa),_0xb2c05c=parseInt(_0x37f9e2,0xa);if(!validateFullDate(_0x528e6a,_0x52f82b,_0xb2c05c)){fateTxt[_0x3fb45f(0x342)]=_0x1add90+_0x3fb45f(0x828);return;}chủMệnh=tínhCungPhi(_0xb2c05c,_0x52f82b,_0x528e6a,_0x1b5b17),updateBatTrachBackground(chủMệnh);const _0x57dc86=_0x52f82b<0x2||_0x52f82b===0x2&&_0x528e6a<0x4?_0xb2c05c-0x1:_0xb2c05c,_0x1ace8c=bátTrạchMap[chủMệnh]?.[_0x3fb45f(0x785)]||'Thổ',_0x415e9e=bátTrạchMap[chủMệnh]?.[_0x3fb45f(0x131)]||_0x3fb45f(0x1a4),_0x17f96d=getNguHoangInfo(_0x3f4488);fateTxt[_0x3fb45f(0x342)]=_0x1add90+_0x3fb45f(0x1bb)+chủMệnh+'\x20('+_0x415e9e+')\x20-\x20Bản\x20Mệnh\x20Ngũ\x20Hành:\x20'+_0x1ace8c+_0x3fb45f(0x571)+_0x57dc86+_0x3fb45f(0x5ef)+_0x17f96d;let _0x44b98c=isDetailOpen&&lockedHeadingAtOpen!==null?lockedHeadingAtOpen:currentHeading;const _0x15d768=(_0x44b98c%0x168+0x168)%0x168,_0x4cc0db=getHanhByHeading(_0x15d768),_0x34bccc=layThongTin24Son(_0x15d768,chủMệnh,_0x57dc86),_0x33e077=_0x34bccc[_0x3fb45f(0x218)],_0x4719c2=tinhDiemTongHop(chủMệnh,_0x15d768,_0x3f4488,_0x3e27cd,_0x57dc86);let _0x240b88=null;const _0x445732=_0x17f96d[_0x3fb45f(0x82d)](/Số (\d+)/);if(_0x445732)_0x240b88=_0x445732[0x1];let _0x42d178='';if(_0x240b88==='5')_0x42d178=_0x3fb45f(0x290)+_0x3f4488+_0x3fb45f(0x7ff);else{if(_0x240b88==='2')_0x42d178='Niên\x20hạn\x20năm\x20khảo\x20sát\x20'+_0x3f4488+_0x3fb45f(0x767);else['3','4'][_0x3fb45f(0x4c0)](_0x240b88)?_0x42d178=_0x3fb45f(0x43a):_0x42d178=_0x3fb45f(0x358);}const _0x452c93=getNguHoangAlert(_0x33e077);let _0x4c34cd=document['getElementById']('dien-giai-bo-sung');!_0x4c34cd&&(_0x4c34cd=document[_0x3fb45f(0x7cd)](_0x3fb45f(0x196)),_0x4c34cd['id']=_0x3fb45f(0x355),_0x4c34cd[_0x3fb45f(0xf0)][_0x3fb45f(0x2e9)]=_0x3fb45f(0x8e7),fateTxt[_0x3fb45f(0x659)][_0x3fb45f(0x103)](_0x4c34cd,fateTxt['nextSibling']));const _0x1cef4f=isDetailOpen?_0x3fb45f(0x63a):_0x3fb45f(0x4e4),_0x5d49fd=isDetailOpen?_0x3fb45f(0x387):_0x3fb45f(0x564),_0x279ff6=isDetailOpen?_0x3fb45f(0x46a):_0x3fb45f(0x69d),_0x3f0b9a=ConfigPhongThuy[_0x3e27cd]||{'title':_0x3fb45f(0x16a),'isCat':!![]},_0x5a3756=_0x3f0b9a['title'],_0x1992d6='\x0a\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22margin:8px\x200;\x20color:#ffd700;\x20font-family:\x20sans-serif;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20🌟\x20<b>Mạch\x20Long\x20Khí\x2072\x20Hậu:</b>\x20'+_0x4719c2[_0x3fb45f(0x2c2)][_0x3fb45f(0x5f9)]+_0x3fb45f(0x77b)+(_0x4719c2[_0x3fb45f(0x2c2)][_0x3fb45f(0x341)]==='🔴'?_0x3fb45f(0x1ac):_0x3fb45f(0x303))+'\x22>'+_0x4719c2['hauInfo'][_0x3fb45f(0x7c7)]+_0x3fb45f(0x72d)+_0x4719c2[_0x3fb45f(0x2c2)][_0x3fb45f(0x7b1)]+_0x3fb45f(0x652),_0x2e483a=_0x4719c2['diem']>=0x48?_0x3fb45f(0x303):'#ff3b30';let _0x258289='';_0x4719c2[_0x3fb45f(0x761)]&&(_0x258289=_0x3fb45f(0x71a)+_0x4719c2['khongVong']['loai']+_0x3fb45f(0x592)),_0x4c34cd['innerHTML']='\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22text-align:\x20center;\x20margin:\x2010px\x200;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20id=\x22btn-toggle-fengshui\x22\x20onclick=\x22toggleDienGiaiChiTiet()\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20style=\x22background:\x20'+_0x279ff6+_0x3fb45f(0x75d)+_0x5d49fd+_0x3fb45f(0x790)+_0x1cef4f+_0x3fb45f(0x2c7)+_0x15d768[_0x3fb45f(0x3a2)](0x1)+_0x3fb45f(0x543)+magneticDeclination+_0x3fb45f(0x61a)+_0x4cc0db+_0x3fb45f(0x2bd)+Math['round'](_0x44b98c)+_0x3fb45f(0x232)+_0x1ace8c+_0x3fb45f(0x1ca)+chủMệnh+_0x3fb45f(0x115)+_0x415e9e+_0x3fb45f(0x552)+_0x1992d6+_0x3fb45f(0x5c7)+_0x258289+_0x3fb45f(0x186)+_0x2e483a+_0x3fb45f(0x36e)+_0x5a3756+_0x3fb45f(0x121)+_0x2e483a+_0x3fb45f(0x386)+_0x4719c2[_0x3fb45f(0x7b1)]+_0x3fb45f(0x413)+_0x2e483a+_0x3fb45f(0x3c3)+_0x4719c2[_0x3fb45f(0x145)]+'</span><br>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<small\x20style=\x22color:#8a8a8f;\x22>(Điểm\x20số\x20tích\x20hợp\x20tự\x20động\x20bóc\x20tách\x20từ\x20đồ\x20hình\x20ma\x20trận\x20đa\x20tầng\x20bệ\x20đỡ\x20Đất\x20và\x20chu\x20kỳ\x20chuyển\x20động\x20của\x20Thời\x20Vận)</small>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22margin:8px\x200;\x20text-align:justify;\x22>🌟\x20<b>Luận\x20đoán\x20Minh\x20Châu\x20Sơn\x20vị:</b>\x20'+_0x4719c2[_0x3fb45f(0x4b3)]+_0x3fb45f(0x619)+_0x42d178+_0x3fb45f(0x2e3)+(_0x452c93?_0x3fb45f(0x50a)+_0x452c93+_0x3fb45f(0x668):'')+_0x3fb45f(0x5dc),generateDirectionsList(),updateCompassUI(currentHeading);}function getCurrentHauInfo(_0x150e8e,_0x243368='house',_0x564b00=null,_0x592ec2='Khảm',_0x24423f=null){const _0x5bf5f2=_0x3793e5,_0x48a028=(_0x150e8e%0x168+0x168)%0x168,_0x329f7b=_0x48a028[_0x5bf5f2(0x3a2)](0x1),_0x2452de=Math[_0x5bf5f2(0x7c1)](_0x48a028/0x5)*0x5%0x168,_0x1b40eb=Data72Hau[_0x2452de[_0x5bf5f2(0x191)]()]||{'ten':'Xung\x20Không\x20Hậu','chatLuong':_0x5bf5f2(0x6b9),'diem':0x3c,'ynghia':_0x5bf5f2(0x1fd)},_0x1df60d=typeof ConfigPhongThuy!==_0x5bf5f2(0x677)&&ConfigPhongThuy[_0x243368]?ConfigPhongThuy[_0x243368]:{'isCat':!![]},_0x3f8b2c=_0x1df60d[_0x5bf5f2(0x248)],_0x27e94d=_0x1b40eb['chatLuong']||_0x5bf5f2(0x6b9);let _0x3c37ec=0x0;if(_0x27e94d[_0x5bf5f2(0x4c0)](_0x5bf5f2(0x81f)))_0x3c37ec=0xc;else{if(_0x27e94d['includes'](_0x5bf5f2(0x43d)))_0x3c37ec=0x6;else{if(_0x27e94d[_0x5bf5f2(0x4c0)]('Tiểu\x20Hung'))_0x3c37ec=-0xf;else{if(_0x27e94d[_0x5bf5f2(0x4c0)](_0x5bf5f2(0x674))||_0x27e94d[_0x5bf5f2(0x4c0)](_0x5bf5f2(0x317))||_0x27e94d['includes'](_0x5bf5f2(0x654)))_0x3c37ec=-0x23;}}}let _0x5737ab={'ten':_0x1b40eb['ten']||'Xung\x20Không\x20Hậu','chatLuongStatic':_0x27e94d,'ynghia':_0x1b40eb['ynghia']||'Khí\x20trường\x20chuyển\x20dịch\x20luân\x20hồi.','diemGoc':Number(_0x1b40eb[_0x5bf5f2(0x7b1)])||0x3c,'deltaH72':_0x3c37ec,'giaiphap':String(_0x1b40eb[_0x5bf5f2(0x353)]||_0x5bf5f2(0x736)),'emoji':'🟡','chatLuong':_0x5bf5f2(0x6b9)};const _0x54b0a3=_0x27e94d[_0x5bf5f2(0x4c0)](_0x5bf5f2(0x2d5))||_0x27e94d[_0x5bf5f2(0x4c0)](_0x5bf5f2(0x317))||_0x27e94d['includes'](_0x5bf5f2(0x654));if(_0x3f8b2c){if(_0x54b0a3)_0x5737ab[_0x5bf5f2(0x7c7)]=_0x5bf5f2(0x434),_0x5737ab[_0x5bf5f2(0x341)]='🔴';else _0x27e94d[_0x5bf5f2(0x4c0)](_0x5bf5f2(0x43d))?(_0x5737ab[_0x5bf5f2(0x7c7)]=_0x5bf5f2(0x541),_0x5737ab[_0x5bf5f2(0x341)]='🟢'):(_0x5737ab[_0x5bf5f2(0x7c7)]=_0x5bf5f2(0x7a4),_0x5737ab['emoji']='🟡');}else{if(_0x54b0a3)_0x5737ab[_0x5bf5f2(0x7c7)]=_0x5bf5f2(0x420),_0x5737ab[_0x5bf5f2(0x341)]='🟢';else _0x27e94d[_0x5bf5f2(0x4c0)](_0x5bf5f2(0x43d))?(_0x5737ab[_0x5bf5f2(0x7c7)]='PHẠM\x20CÁT',_0x5737ab['emoji']='🔴'):(_0x5737ab[_0x5bf5f2(0x7c7)]=_0x5bf5f2(0x51b),_0x5737ab['emoji']='🟡');}if(typeof kiemTraKhongVong===_0x5bf5f2(0x60a)){const _0x834278=kiemTraKhongVong(_0x48a028);_0x834278&&(_0x5737ab[_0x5bf5f2(0x59b)]=_0x834278[_0x5bf5f2(0x734)],_0x5737ab[_0x5bf5f2(0x3c4)]=_0x834278[_0x5bf5f2(0x4b3)],_0x834278[_0x5bf5f2(0x734)]===_0x5bf5f2(0x41b)?(_0x5737ab[_0x5bf5f2(0x7c7)]=_0x3f8b2c?'TUYỆT\x20MẠCH':'TỬ\x20TUYẾN',_0x5737ab[_0x5bf5f2(0x341)]=_0x3f8b2c?'☠️':'🔮',_0x5737ab[_0x5bf5f2(0x353)]=_0x3f8b2c?_0x5bf5f2(0x612):_0x5bf5f2(0x3d4)):(_0x5737ab['chatLuong']=_0x3f8b2c?_0x5bf5f2(0x748):_0x5bf5f2(0x7e6),_0x5737ab[_0x5bf5f2(0x341)]='⚠️',_0x5737ab[_0x5bf5f2(0x353)]=_0x3f8b2c?'Chủ\x20động\x20xoay\x20vi\x20phân\x20kết\x20cấu\x20xây\x20dựng\x20lệch\x20sang\x20trái\x20hoặc\x20phải\x20từ\x201.5°\x20đến\x202.5°\x20để\x20thoát\x20vạch\x20nhiễu\x20khí.':_0x5bf5f2(0x53f)));}return typeof hauCache!=='undefined'&&hauCache&&hauCache[_0x5bf5f2(0x4c7)]&&hauCache[_0x5bf5f2(0x4c7)](_0x329f7b,_0x5737ab),_0x5737ab;}function layThongTin24Son(_0xdc34a9,_0x4c94b4,_0x612444){const _0x3f81f3=_0x3793e5;let _0x5dc23b=(_0xdc34a9%0x168+0x168)%0x168,_0x14a1a6=SON_24_CONFIG[_0x3f81f3(0x580)](_0x31b48f=>{const _0x521fc4=_0x3f81f3;if(_0x31b48f[_0x521fc4(0x1dc)]>_0x31b48f[_0x521fc4(0x4db)])return _0x5dc23b>=_0x31b48f['min']||_0x5dc23b<_0x31b48f[_0x521fc4(0x4db)];return _0x5dc23b>=_0x31b48f[_0x521fc4(0x1dc)]&&_0x5dc23b<_0x31b48f[_0x521fc4(0x4db)];})||SON_24_CONFIG[0x0];const _0x5eab9d=document['getElementById'](_0x3f81f3(0x5a4)),_0x28c415=_0x5eab9d&&_0x5eab9d[_0x3f81f3(0x832)][_0x3f81f3(0x110)]===0x4?parseInt(_0x5eab9d[_0x3f81f3(0x832)],0xa):new Date()[_0x3f81f3(0x8e3)](),_0x119cef=document[_0x3f81f3(0x27c)]('purpose')?.[_0x3f81f3(0x832)]||'house',_0x17ebb2=_0x4c94b4?_0x4c94b4[_0x3f81f3(0x50b)]()['charAt'](0x0)[_0x3f81f3(0x23a)]()+_0x4c94b4[_0x3f81f3(0x50b)]()[_0x3f81f3(0x173)](0x1)[_0x3f81f3(0x1b9)]():_0x3f81f3(0x6a4),_0x38d2a4=tinhDiemTongHop(_0x17ebb2,_0x5dc23b,_0x28c415,_0x119cef,_0x612444,0x0),_0x2d5395={'Bắc':'N','Đông\x20Bắc':'NE','Đông':'E','Đông\x20Nam':'SE','Nam':'S','Tây\x20Nam':'SW','Tây':'W','Tây\x20Bắc':'NW'},_0x2acf31=_0x2d5395[_0x14a1a6['huong']]||'N',_0x5e31f7=bátTrạchMap[_0x17ebb2]?.[_0x2acf31]||_0x3f81f3(0x8a2),_0x78d5cb=cungPhầnTrăm[_0x5e31f7],_0x4ff41d=_0x78d5cb?_0x78d5cb[_0x3f81f3(0x640)]:!![],_0x112940=MaTranMinhChau[_0x17ebb2]?.[_0x14a1a6[_0x3f81f3(0x3bc)]];let _0x163f0c=_0x38d2a4[_0x3f81f3(0x4b3)]||(_0x112940?_0x3f81f3(0x304)+_0x5e31f7+']\x20—\x20Khí\x20cục\x20đặc\x20biệt.':_0x3f81f3(0x30d)+_0x14a1a6[_0x3f81f3(0x3bc)]+'\x20thuộc\x20hướng\x20'+_0x14a1a6['huong']+_0x3f81f3(0x778)+_0x5e31f7+'].'),_0x201f68=_0x38d2a4[_0x3f81f3(0x737)]||(_0x112940?_0x112940[_0x3f81f3(0x353)]:_0x4ff41d?_0x3f81f3(0x8cc):'Bố\x20trí\x20cấu\x20trúc\x20không\x20gian\x20phù\x20hợp\x20để\x20hóa\x20sát.');return{'son':_0x14a1a6[_0x3f81f3(0x3bc)],'huong':_0x14a1a6[_0x3f81f3(0x218)],'luanDoan':_0x163f0c,'hoaGiai':_0x201f68,'isCatBatTrach':_0x4ff41d,'saoBatTrach':_0x5e31f7,'cap_do':_0x112940?_0x112940[_0x3f81f3(0x339)]:_0x4ff41d?_0x3f81f3(0x608):_0x3f81f3(0x44b),'diem':_0x38d2a4[_0x3f81f3(0x7b1)],'level':_0x38d2a4[_0x3f81f3(0x145)],'hauChiTiet':_0x38d2a4[_0x3f81f3(0x2c2)]};}const ConfigPhongThuy={'house':{'title':_0x3793e5(0x45d),'isCat':!![],'sizeDegree':0xf},'gate':{'title':_0x3793e5(0x873),'isCat':!![],'sizeDegree':0xf},'altar':{'title':_0x3793e5(0x65c),'isCat':!![],'sizeDegree':0x2},'altar_room':{'title':_0x3793e5(0x1a3),'isCat':!![],'sizeDegree':0xf},'bed':{'title':'Hướng\x20Đầu\x20Giường\x20Ngủ','isCat':!![],'sizeDegree':0xa},'livingroom':{'title':_0x3793e5(0x826),'isCat':!![],'sizeDegree':0xf},'bedroom_master':{'title':_0x3793e5(0x4f3),'isCat':!![],'sizeDegree':0xf},'bedroom_child':{'title':_0x3793e5(0x8e1),'isCat':!![],'sizeDegree':0xa},'balcony':{'title':_0x3793e5(0x6f6),'isCat':!![],'sizeDegree':0xc},'workspace':{'title':_0x3793e5(0x1fe),'isCat':!![],'sizeDegree':0xa},'ceo_office':{'title':_0x3793e5(0x7df),'isCat':!![],'sizeDegree':0xf},'study_desk':{'title':_0x3793e5(0x838),'isCat':!![],'sizeDegree':0x8},'bookcase':{'title':_0x3793e5(0x7dd),'isCat':!![],'sizeDegree':0xa},'signboard':{'title':_0x3793e5(0x70c),'isCat':!![],'sizeDegree':0xf},'counter':{'title':_0x3793e5(0x636),'isCat':!![],'sizeDegree':0xa},'safe':{'title':_0x3793e5(0x296),'isCat':!![],'sizeDegree':0x4},'machinery':{'title':_0x3793e5(0x1ec),'isCat':!![],'sizeDegree':0xc},'bakery':{'title':_0x3793e5(0x250),'isCat':!![],'sizeDegree':0xa},'coffee':{'title':_0x3793e5(0x6c3),'isCat':!![],'sizeDegree':0xa},'restaurant':{'title':'Hướng\x20Nhà\x20Hàng\x20/\x20Quán\x20Ăn','isCat':!![],'sizeDegree':0xf},'shop':{'title':_0x3793e5(0x309),'isCat':!![],'sizeDegree':0xf},'salon':{'title':_0x3793e5(0x4d6),'isCat':!![],'sizeDegree':0xc},'kitchen':{'title':_0x3793e5(0x1b8),'isCat':![],'sizeDegree':0xa},'toilet':{'title':'Vị\x20trí\x20Nhà\x20Vệ\x20Sinh','isCat':![],'sizeDegree':0xf},'septic_tank':{'title':'Vị\x20trí\x20Hầm\x20Tự\x20Hoại\x20/\x20Bể\x20Phốt','isCat':![],'sizeDegree':0xf},'pipe_shaft':{'title':_0x3793e5(0x6fb),'isCat':![],'sizeDegree':0x6},'storage':{'title':_0x3793e5(0x483),'isCat':![],'sizeDegree':0xf},'trash_area':{'title':'Vị\x20trí\x20Thùng\x20Rác\x20/\x20Phế\x20Liệu','isCat':![],'sizeDegree':0x8}};function generateDirectionsList(){const _0x50df92=_0x3793e5,_0xb88b62=document[_0x50df92(0x27c)](_0x50df92(0x54b)),_0x2333b7=_0xb88b62?_0xb88b62[_0x50df92(0x832)]:'',_0x4f9e81=document['getElementById'](_0x50df92(0x1bf))||(typeof directionsContainer!==_0x50df92(0x677)?directionsContainer:null),_0xd7c7aa=typeof ConfigPhongThuy!=='undefined'?ConfigPhongThuy:typeof PhongThuyCore!==_0x50df92(0x677)&&PhongThuyCore['data']?.[_0x50df92(0x741)]?PhongThuyCore['data'][_0x50df92(0x741)]:{},_0xb627e=_0xd7c7aa[_0x2333b7];if(!_0x2333b7||!_0xb627e){_0x4f9e81&&(_0x4f9e81[_0x50df92(0x2d1)]=_0x50df92(0x525));return;}const _0x2c6165=_0xb627e[_0x50df92(0x248)];let _0x2645d0=[];const _0xf0084b=document[_0x50df92(0x27c)](_0x50df92(0x135))?.[_0x50df92(0x832)]||'',_0x18f5fb=document[_0x50df92(0x27c)]('birthMonth')?.[_0x50df92(0x832)]||document['getElementById'](_0x50df92(0x747))?.[_0x50df92(0x832)]||'',_0x5015ea=document[_0x50df92(0x27c)]('birthYear')?.[_0x50df92(0x832)]||document[_0x50df92(0x27c)](_0x50df92(0x85d))?.[_0x50df92(0x832)]||'',_0x14232d=document['getElementById'](_0x50df92(0x5a4)),_0x5a1e34=_0x14232d&&_0x14232d[_0x50df92(0x832)][_0x50df92(0x110)]===0x4?parseInt(_0x14232d['value'],0xa):new Date()[_0x50df92(0x8e3)]();let _0x316cb2=new Date()[_0x50df92(0x8e3)]();_0xf0084b&&_0x18f5fb&&_0x5015ea&&_0x5015ea[_0x50df92(0x110)]===0x4&&(_0x316cb2=parseInt(_0x18f5fb,0xa)<0x2||parseInt(_0x18f5fb,0xa)===0x2&&parseInt(_0xf0084b,0xa)<0x4?parseInt(_0x5015ea,0xa)-0x1:parseInt(_0x5015ea,0xa));let _0x208723=_0x50df92(0x6a4);if(typeof chủMệnh!=='undefined'&&chủMệnh)_0x208723=chủMệnh;else typeof chủMệnhToànCục!==_0x50df92(0x677)&&chủMệnhToànCục&&(_0x208723=chủMệnhToànCục);_0x208723=_0x208723[_0x50df92(0x50b)]()[_0x50df92(0x42a)](0x0)[_0x50df92(0x23a)]()+_0x208723[_0x50df92(0x173)](0x1)[_0x50df92(0x1b9)]();const _0x39b7df=[_0x50df92(0x3f2),_0x50df92(0x36a),'Thiên\x20Y',_0x50df92(0x8a2)],_0x1f25c4=[_0x50df92(0x663),'Ngũ\x20Quỷ','Lục\x20Sát',_0x50df92(0x784)],_0x1c6066=typeof directionMeta!=='undefined'?directionMeta:[{'name':_0x50df92(0x47f),'code':'N','angle':0x0},{'name':_0x50df92(0x22a),'code':'NE','angle':0x2d},{'name':_0x50df92(0x376),'code':'E','angle':0x5a},{'name':_0x50df92(0x72f),'code':'SE','angle':0x87},{'name':'Chính\x20Nam','code':'S','angle':0xb4},{'name':_0x50df92(0x8c5),'code':'SW','angle':0xe1},{'name':_0x50df92(0x861),'code':'W','angle':0x10e},{'name':_0x50df92(0x2e2),'code':'NW','angle':0x13b}],_0x15988a=typeof bátTrạchMap!==_0x50df92(0x677)?bátTrạchMap:typeof PhongThuyCore!==_0x50df92(0x677)&&PhongThuyCore[_0x50df92(0x588)]?.[_0x50df92(0xe9)]?PhongThuyCore['data'][_0x50df92(0xe9)]:{};_0x1c6066['forEach'](_0x161c11=>{const _0x3d3efc=_0x50df92,_0x29396f=_0x15988a[_0x208723]?_0x15988a[_0x208723][_0x161c11['code']]||_0x3d3efc(0x56e):_0x3d3efc(0x56e);if(_0x2c6165){if(!_0x39b7df['includes'](_0x29396f))return;}else{if(!_0x1f25c4[_0x3d3efc(0x4c0)](_0x29396f))return;}if(typeof tinhDiemTongHop===_0x3d3efc(0x60a)){const _0x2f69aa=tinhDiemTongHop(_0x208723,_0x161c11[_0x3d3efc(0xf6)],_0x5a1e34,_0x2333b7,_0x316cb2,0x0);_0x2645d0[_0x3d3efc(0x65b)]({..._0x161c11,'cungTrạch':_0x29396f,'diemTongHop':_0x2f69aa[_0x3d3efc(0x7b1)],'level':_0x2f69aa[_0x3d3efc(0x145)],'satTinhs':_0x2f69aa['satTinhs']||[],'khongVong':_0x2f69aa[_0x3d3efc(0x761)]||null,'hau':_0x2f69aa['hauInfo'],'phanTichGoc':_0x2f69aa['message']||_0x3d3efc(0x837),'priority':_0x2f69aa['diem']});}}),_0x2645d0['sort']((_0x4a8035,_0x473f11)=>_0x473f11[_0x50df92(0x702)]-_0x4a8035[_0x50df92(0x702)]);const _0x16d94f=document['getElementById']('listPanelTitle')||(typeof listPanelTitle!=='undefined'?listPanelTitle:null);_0x16d94f&&(_0x16d94f[_0x50df92(0x342)]=_0x50df92(0x641)+_0xb627e[_0x50df92(0x70a)]);if(!_0x4f9e81)return;_0x4f9e81[_0x50df92(0x2d1)]='';if(_0x2645d0[_0x50df92(0x110)]===0x0){_0x4f9e81['innerHTML']=_0x50df92(0x433);return;}_0x2645d0['forEach'](_0x1271b7=>{const _0x16b8d5=_0x50df92,_0x21ad44={'N':[_0x16b8d5(0x2be),'Tý',_0x16b8d5(0x295)],'NE':[_0x16b8d5(0x7d7),_0x16b8d5(0x6ef),'Dần'],'E':[_0x16b8d5(0x3f0),_0x16b8d5(0x8d6),'Ất'],'SE':[_0x16b8d5(0x8bf),_0x16b8d5(0x8a1),'Tỵ'],'S':[_0x16b8d5(0x5eb),_0x16b8d5(0x7e8),_0x16b8d5(0x479)],'SW':[_0x16b8d5(0x1fb),'Khôn',_0x16b8d5(0x73d)],'W':[_0x16b8d5(0x611),'Dậu',_0x16b8d5(0x6ed)],'NW':[_0x16b8d5(0x560),_0x16b8d5(0x623),_0x16b8d5(0x609)]};let _0x168a24=_0x21ad44[_0x1271b7[_0x16b8d5(0xe0)][_0x16b8d5(0x23a)]()['trim']()]||[_0x16b8d5(0x2be),'Tý',_0x16b8d5(0x295)],_0x4df831=0x0,_0x999d0c=0x0,_0x430219=0x0,_0x2ffdde='';_0x168a24[_0x16b8d5(0x242)]((_0x362691,_0x51fdc7)=>{const _0x42f793=_0x16b8d5;let _0x2cf4ac=(_0x1271b7['angle']+(_0x51fdc7-0x1)*0xf+0x168)%0x168,_0x4c2a0d=0x3c,_0x292a62='',_0x2d0908=null;typeof tinhDiemTongHop===_0x42f793(0x60a)&&(_0x2d0908=tinhDiemTongHop(_0x208723,_0x2cf4ac,_0x5a1e34,_0x2333b7,_0x316cb2,0x0),_0x4c2a0d=_0x2d0908[_0x42f793(0x7b1)]);if(_0x2d0908&&_0x2d0908[_0x42f793(0x281)]&&_0x2d0908[_0x42f793(0x281)]['length']>0x0){let _0x38e903=_0x2d0908[_0x42f793(0x281)][_0x42f793(0x583)](_0x5b27d0=>_0x5b27d0[_0x42f793(0x5f9)])['join'](',\x20');_0x292a62=_0x42f793(0x3b2)+_0x38e903+_0x42f793(0x35d);}else _0x292a62=_0x42f793(0x520);let _0xb18eda=_0x42f793(0x7ea)+_0x362691+'\x20[Điểm\x20lập\x20cực:\x20'+_0x4c2a0d+_0x42f793(0x367),_0x3e29df='',_0x46ca8e='',_0x2dd0f5='#dfb76c';if(_0x2c6165){if(_0x4c2a0d>=0x46)_0x2dd0f5=_0x42f793(0x303),_0x4df831++,_0x3e29df=_0x42f793(0x31d)+_0x362691+_0x42f793(0x798)+_0x4c2a0d+_0x42f793(0x5e6)+_0x292a62,_0x46ca8e=_0x42f793(0x2a8);else _0x4c2a0d>=0x32?(_0x2dd0f5=_0x42f793(0x2e0),_0x999d0c++,_0x3e29df=_0x42f793(0x273)+_0x362691+_0x42f793(0x65f)+_0x4c2a0d+_0x42f793(0x313)+_0x292a62,_0x46ca8e=_0x42f793(0x140)):(_0x2dd0f5=_0x42f793(0x1ac),_0x430219++,_0x3e29df=_0x42f793(0x11b)+_0x362691+_0x42f793(0x14e)+_0x4c2a0d+_0x42f793(0x87f)+_0x292a62,_0x46ca8e=_0x42f793(0x171));}else{if(_0x4c2a0d>=0x46)_0x2dd0f5=_0x42f793(0x303),_0x4df831++,_0xb18eda=_0x42f793(0x440)+_0x362691+_0x42f793(0x657),_0x3e29df=_0x42f793(0x255),_0x46ca8e='Quy\x20hoạch:\x20Kết\x20cấu\x20hoàn\x20hảo\x20về\x20mặt\x20trạch\x20pháp\x20kiến\x20trúc.\x20Hãy\x20đặt\x20uế\x20cục\x20kiên\x20cố\x20tại\x20đây.';else _0x4c2a0d>=0x32?(_0x2dd0f5=_0x42f793(0x2e0),_0x999d0c++,_0xb18eda=_0x42f793(0x440)+_0x362691+'\x20[Bình\x20Hòa]',_0x3e29df=_0x42f793(0x1be)+_0x362691+_0x42f793(0x2ad)+_0x4c2a0d+_0x42f793(0x841),_0x46ca8e=_0x42f793(0x334)):(_0x2dd0f5='#ff3b30',_0x430219++,_0xb18eda='⚠️\x20TRƯỜNG\x20KHÍ\x20THANH\x20SẠCH\x20CẦN\x20BẢO\x20VỆ',_0x3e29df=_0x42f793(0x857)+_0x4c2a0d+_0x42f793(0x125),_0x46ca8e=_0x42f793(0x519));}const _0x6c619e=_0x25cd4e=>_0x25cd4e?_0x25cd4e['replace'](/\\/g,'\x5c\x5c')[_0x42f793(0x820)](/'/g,'\x5c\x27')[_0x42f793(0x820)](/"/g,_0x42f793(0x2c0)):'',_0xfa95e0=_0x6c619e(_0xb18eda),_0x37f523=_0x6c619e(_0x3e29df),_0x2db3b7=_0x6c619e(_0x46ca8e);_0x2ffdde+=_0x42f793(0x175)+_0xfa95e0+_0x42f793(0x81b)+_0x37f523+_0x42f793(0x81b)+_0x2db3b7+_0x42f793(0x71c)+(_0x42f793(0x3a9)+_0x2dd0f5+_0x42f793(0x562)+_0x362691+_0x42f793(0x474))+(_0x42f793(0x12c)+_0x4c2a0d+'pt)</span></span>');if(_0x51fdc7<_0x168a24[_0x42f793(0x110)]-0x1)_0x2ffdde+=_0x42f793(0x8e0);});let _0x50c8a2=_0x1271b7[_0x16b8d5(0xf6)],_0x5c5e67=(_0x50c8a2-0x5+0x168)%0x168,_0x306dec=(_0x50c8a2+0x5)%0x168,_0x35c8ed=typeof getCurrentHauInfo===_0x16b8d5(0x60a)?getCurrentHauInfo(_0x5c5e67,_0x2333b7,_0x5a1e34,_0x208723,_0x316cb2):{'ten':_0x16b8d5(0x18e),'chatLuongStatic':_0x16b8d5(0x6b9),'diemGoc':0x3c,'emoji':'🟡','chatLuong':_0x16b8d5(0x6b9),'ynghia':'','giaiphap':''},_0x5e12b9=typeof getCurrentHauInfo==='function'?getCurrentHauInfo(_0x50c8a2,_0x2333b7,_0x5a1e34,_0x208723,_0x316cb2):{'ten':_0x16b8d5(0x18e),'chatLuongStatic':_0x16b8d5(0x6b9),'diemGoc':0x3c,'emoji':'🟡','chatLuong':'Bình\x20Hòa','ynghia':'','giaiphap':''},_0x4a585f=typeof getCurrentHauInfo===_0x16b8d5(0x60a)?getCurrentHauInfo(_0x306dec,_0x2333b7,_0x5a1e34,_0x208723,_0x316cb2):{'ten':_0x16b8d5(0x18e),'chatLuongStatic':_0x16b8d5(0x6b9),'diemGoc':0x3c,'emoji':'🟡','chatLuong':_0x16b8d5(0x6b9),'ynghia':'','giaiphap':''};const _0x1f3dcd=(_0x244518,_0x36e1ae)=>{const _0x22c5f8=_0x16b8d5;let _0x145647=0x1;if(typeof PhongThuyCore!==_0x22c5f8(0x677)&&typeof VAN_DATA!==_0x22c5f8(0x677)){const _0x233435=PhongThuyCore[_0x22c5f8(0x459)](_0x244518),_0x19cd2e={'Bắc':'N','Đông\x20Bắc':'NE','Đông':'E','Đông\x20Nam':'SE','Nam':'S','Tây\x20Nam':'SW','Tây':'W','Tây\x20Bắc':'NW'},_0x46523a=_0x19cd2e[_0x233435['huong']]||'N';let _0x56e06f=Math[_0x22c5f8(0x3b6)]((_0x5a1e34-0x748)/0x14)%0x9+0x1;if(VAN_DATA[_0x56e06f]?.[_0x46523a]){const _0x262b92=VAN_DATA[_0x56e06f][_0x46523a];if(_0x262b92[_0x22c5f8(0x734)]===_0x22c5f8(0x576))_0x145647=1.15;else{if(_0x262b92[_0x22c5f8(0x734)]==='good')_0x145647=1.08;else{if(_0x262b92[_0x22c5f8(0x734)]===_0x22c5f8(0x7e0))_0x145647=0.88;else{if(_0x262b92[_0x22c5f8(0x734)]===_0x22c5f8(0x1f4))_0x145647=0.75;}}}}}let _0x191c50=0x0;const _0x80a3f=typeof PhongThuyCore!=='undefined'?PhongThuyCore['getSonObj'](_0x244518):{'name':'Tý'},_0x45244d=typeof getPhongThuySatTinh===_0x22c5f8(0x60a)?getPhongThuySatTinh(_0x80a3f[_0x22c5f8(0x3bc)],_0x5a1e34):[];return _0x45244d[_0x22c5f8(0x242)](_0x4e486c=>{const _0x334030=_0x22c5f8;if(_0x4e486c[_0x334030(0x5f9)][_0x334030(0x4c0)](_0x334030(0x28e)))_0x191c50+=0x19;else{if(_0x4e486c[_0x334030(0x5f9)][_0x334030(0x4c0)](_0x334030(0x384)))_0x191c50+=0x12;else{if(_0x4e486c[_0x334030(0x5f9)][_0x334030(0x4c0)](_0x334030(0x68a)))_0x191c50+=0xc;else{if(_0x4e486c[_0x334030(0x5f9)][_0x334030(0x4c0)](_0x334030(0x6b5)))_0x191c50+=0xf;}}}}),{'diemDong':Math[_0x22c5f8(0x4db)](0x5,Math[_0x22c5f8(0x1dc)](0x62,Math[_0x22c5f8(0x7c1)](_0x36e1ae['diemGoc']*_0x145647-_0x191c50*0.5))),'satList':_0x45244d};};let _0x59c9e0=_0x1f3dcd(_0x5c5e67,_0x35c8ed),_0x11c0f4=_0x1f3dcd(_0x50c8a2,_0x5e12b9),_0x370f30=_0x1f3dcd(_0x306dec,_0x4a585f);const _0x341135=_0x1aa080=>{const _0x3f1de7=_0x16b8d5,_0x3f1ea4=_0x1aa080[_0x3f1de7(0x341)]||'🟡';let _0x1cbf9d='#dfb76c';if(_0x3f1ea4==='🟢'||_0x3f1ea4==='🔮')_0x1cbf9d=_0x3f1de7(0x303);if(_0x3f1ea4==='🔴'||_0x3f1ea4==='☠️')_0x1cbf9d=_0x3f1de7(0x1ac);if(_0x3f1ea4==='🟡'||_0x3f1ea4==='⚠️')_0x1cbf9d='#dfb76c';return{'color':_0x1cbf9d,'label':_0x1aa080[_0x3f1de7(0x7c7)]};},_0x79673e=_0x341135(_0x35c8ed),_0x2a3151=_0x341135(_0x5e12b9),_0x112020=_0x341135(_0x4a585f),_0x949589=(_0x533d14,_0xd22e96,_0x48fcfa,_0x330694)=>{const _0x383be3=_0x16b8d5;let _0x4b08d5=_0x48fcfa&&_0x48fcfa[_0x383be3(0x110)]>0x0?_0x383be3(0x2a1)+_0xd22e96+_0x383be3(0x4ad):_0x383be3(0x101),_0x3685cc=_0x533d14[_0x383be3(0x3c4)]||_0x383be3(0x233),_0x2b9d11='Giữ\x20khu\x20vực\x20thông\x20thoáng,\x20điều\x20hòa\x20dòng\x20khí\x20ngầm\x20sàn.';const _0x1acf36=_0x533d14[_0x383be3(0x59b)][_0x383be3(0x4c0)](_0x383be3(0x2d5))||_0x533d14[_0x383be3(0x59b)][_0x383be3(0x4c0)]('Không\x20Vong')||_0x533d14[_0x383be3(0x59b)][_0x383be3(0x4c0)](_0x383be3(0x654));return _0x330694?_0x1acf36?_0x2b9d11=_0x383be3(0x6a2):_0x2b9d11=_0x383be3(0x5b2):_0x1acf36?(_0x3685cc='Địa\x20tầng\x20ngầm\x20bản\x20chất\x20dính\x20ác\x20khí\x20nguy\x20hiểm\x20('+_0x533d14[_0x383be3(0x59b)]+_0x383be3(0x875),_0x2b9d11=_0x383be3(0x5b8)):(_0x3685cc=_0x383be3(0x1d4)+_0x533d14['chatLuongStatic']+_0x383be3(0x53c),_0x2b9d11=_0x383be3(0x82c)),_0x383be3(0x833)+_0x533d14[_0x383be3(0x5f9)]+_0x383be3(0x8d1)+_0xd22e96+'pt</b>.<br><br>🔍\x20<b>BIỆN\x20GIẢI\x20PHONG\x20THỦY\x20ĐA\x20TẦNG:</b>\x20'+_0x3685cc+_0x4b08d5+_0x383be3(0x8cb)+_0x2b9d11;},_0x206b9f=_0x111f10=>_0x111f10?_0x111f10[_0x16b8d5(0x820)](/\\/g,'\x5c\x5c')[_0x16b8d5(0x820)](/'/g,'\x5c\x27')[_0x16b8d5(0x820)](/"/g,_0x16b8d5(0x2c0)):'';let _0x51ae79=_0x16b8d5(0x532)+_0x206b9f(_0x35c8ed[_0x16b8d5(0x5f9)])+_0x16b8d5(0x81b)+_0x206b9f(_0x949589(_0x35c8ed,_0x59c9e0[_0x16b8d5(0x570)],_0x59c9e0[_0x16b8d5(0x187)],_0x2c6165))+_0x16b8d5(0x6a1)+_0x35c8ed[_0x16b8d5(0x5f9)][_0x16b8d5(0x888)]('\x20')[0x0]+'\x20('+Math[_0x16b8d5(0x7c1)](_0x5c5e67)+_0x16b8d5(0x707)+_0x79673e[_0x16b8d5(0x498)]+_0x16b8d5(0x5e3)+_0x79673e[_0x16b8d5(0x885)]+_0x16b8d5(0x85f)+_0x206b9f(_0x5e12b9['ten'])+_0x16b8d5(0x81b)+_0x206b9f(_0x949589(_0x5e12b9,_0x11c0f4[_0x16b8d5(0x570)],_0x11c0f4[_0x16b8d5(0x187)],_0x2c6165))+_0x16b8d5(0x518)+_0x5e12b9[_0x16b8d5(0x5f9)][_0x16b8d5(0x888)]('\x20')[0x0]+'\x20('+Math[_0x16b8d5(0x7c1)](_0x50c8a2)+_0x16b8d5(0x707)+_0x2a3151['color']+_0x16b8d5(0x5e3)+_0x2a3151[_0x16b8d5(0x885)]+_0x16b8d5(0x85f)+_0x206b9f(_0x4a585f[_0x16b8d5(0x5f9)])+_0x16b8d5(0x81b)+_0x206b9f(_0x949589(_0x4a585f,_0x370f30['diemDong'],_0x370f30[_0x16b8d5(0x187)],_0x2c6165))+_0x16b8d5(0x6a1)+_0x4a585f['ten']['split']('\x20')[0x0]+'\x20('+Math['round'](_0x306dec)+_0x16b8d5(0x707)+_0x112020[_0x16b8d5(0x498)]+_0x16b8d5(0x5e3)+_0x112020[_0x16b8d5(0x885)]+_0x16b8d5(0x599),_0x24c9b0=_0x1271b7[_0x16b8d5(0x183)]>=0x46?'#30d158':_0x1271b7[_0x16b8d5(0x183)]>=0x32?_0x16b8d5(0x2e0):_0x16b8d5(0x1ac),_0x33edcb=_0x1271b7[_0x16b8d5(0x183)]>=0x46?_0x16b8d5(0x711):_0x1271b7[_0x16b8d5(0x183)]>=0x32?_0x16b8d5(0x2b1):_0x16b8d5(0x258),_0x33c18f='',_0x2c8215='',_0x23d116='',_0x56546d=_0x1271b7['satTinhs']&&_0x1271b7[_0x16b8d5(0x281)][_0x16b8d5(0x110)]>0x0?_0x16b8d5(0x511)+_0x1271b7[_0x16b8d5(0x183)]+_0x16b8d5(0x4ef)+_0x1271b7['satTinhs']['map'](_0x280930=>_0x280930[_0x16b8d5(0x5f9)])[_0x16b8d5(0x727)](',\x20')+_0x16b8d5(0x19a):_0x16b8d5(0x378)+_0x5a1e34+',\x20khí\x20trường\x20cực\x20kỳ\x20kiên\x20cố\x20an\x20tịnh.';if(_0x2c6165){if(_0x1271b7[_0x16b8d5(0x183)]>=0x46)_0x33c18f=_0x16b8d5(0x8eb),_0x2c8215=_0x16b8d5(0x4a5)+_0x1271b7['cungTrạch']+'].'+_0x56546d,_0x23d116=_0x16b8d5(0x2b3);else{if(_0x1271b7['diemTongHop']<0x32&&_0x4df831>0x0)_0x33c18f=_0x16b8d5(0x6a7),_0x2c8215=_0x16b8d5(0x41f)+_0x56546d,_0x23d116=_0x16b8d5(0x31b);else _0x430219===0x3||_0x1271b7[_0x16b8d5(0x183)]<0x32?(_0x33c18f='⚠️\x20KHÍ\x20TRƯỜNG\x20SUY\x20KIỆT\x20—\x20LƯU\x20Ý\x20HÓA\x20GIẢI',_0x2c8215=_0x16b8d5(0x487)+_0x56546d,_0x23d116=_0x16b8d5(0x26a)):(_0x33c18f=_0x16b8d5(0x150),_0x2c8215=_0x16b8d5(0x1cb)+_0x56546d,_0x23d116=_0x16b8d5(0x2ee));}}else{if(_0x1271b7[_0x16b8d5(0x183)]>=0x4b)_0x33c18f=_0x16b8d5(0x201),_0x2c8215=_0x16b8d5(0x5a3)+_0x56546d,_0x23d116=_0x16b8d5(0x14d);else _0x430219>0x0?(_0x33c18f=_0x16b8d5(0x71d),_0x2c8215=_0x16b8d5(0x676)+_0x56546d,_0x23d116=_0x16b8d5(0x20c)):(_0x33c18f=_0x16b8d5(0x673),_0x2c8215=_0x16b8d5(0x176)+_0x56546d,_0x23d116=_0x16b8d5(0x521));}const _0x565344=_0x206b9f(_0x16b8d5(0x53d)+_0x1271b7[_0x16b8d5(0x3bc)]+'\x20['+_0x1271b7[_0x16b8d5(0x630)]+']'),_0x38ac62=_0x206b9f(_0x2c8215),_0xb8d6f2=_0x206b9f(_0x23d116),_0x1743f4=document['createElement'](_0x16b8d5(0x196));_0x1743f4[_0x16b8d5(0x766)]=_0x16b8d5(0x5e5),_0x1743f4[_0x16b8d5(0xf0)][_0x16b8d5(0x7da)]='border-left:4px\x20solid\x20'+_0x24c9b0+_0x16b8d5(0x858)+_0x33edcb+_0x16b8d5(0x8c8),_0x1743f4[_0x16b8d5(0x2d1)]=_0x16b8d5(0x70f)+_0x565344+_0x16b8d5(0x81b)+_0x38ac62+_0x16b8d5(0x81b)+_0xb8d6f2+'\x27)\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Hướng\x20'+_0x1271b7[_0x16b8d5(0x3bc)]+_0x16b8d5(0x4ab)+_0x24c9b0+';\x22>'+_0x1271b7[_0x16b8d5(0x630)]+_0x16b8d5(0x63f)+_0x24c9b0+_0x16b8d5(0x442)+_0x24c9b0+';\x20white-space:nowrap;\x20cursor:pointer;\x22\x20onclick=\x22showExplanation(\x27'+_0x565344+_0x16b8d5(0x81b)+_0x38ac62+_0x16b8d5(0x81b)+_0xb8d6f2+'\x27)\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x1271b7[_0x16b8d5(0x183)]+_0x16b8d5(0x3fd)+_0x2ffdde+_0x16b8d5(0x856)+_0x51ae79+_0x16b8d5(0x181)+_0x24c9b0+';\x20font-size:0.82rem;\x20font-weight:bold;\x20padding-top:4px;\x20line-height:1.4;\x20display:flex;\x20align-items:center;\x20gap:4px;\x20cursor:pointer;\x22\x20onclick=\x22showExplanation(\x27'+_0x565344+_0x16b8d5(0x81b)+_0x38ac62+'\x27,\x20\x27'+_0xb8d6f2+_0x16b8d5(0x77c)+_0x33c18f+_0x16b8d5(0x1fc)+_0x1271b7['angle']+_0x16b8d5(0x4fe),_0x4f9e81[_0x16b8d5(0x33b)](_0x1743f4);});}function triggerGhostNeedle(_0x53213b){const _0x5df58b=_0x3793e5;targetAngle=_0x53213b;const _0x2841e7=document[_0x5df58b(0x27c)]('ghostNeedle');_0x2841e7&&(_0x2841e7[_0x5df58b(0xf0)][_0x5df58b(0x345)]=_0x5df58b(0x63a),_0x2841e7[_0x5df58b(0xf0)][_0x5df58b(0x3a5)]='1',_0x2841e7[_0x5df58b(0x3c2)][_0x5df58b(0x59f)]('matched-pulse'),_0x2841e7[_0x5df58b(0xf0)][_0x5df58b(0x855)]=_0x5df58b(0x2ac)+_0x53213b+_0x5df58b(0x261));const _0x3fea05=document[_0x5df58b(0x27c)](_0x5df58b(0x135))?.[_0x5df58b(0x832)]||'',_0x361c6b=document[_0x5df58b(0x27c)](_0x5df58b(0x118))?.['value']||'',_0x495f05=document[_0x5df58b(0x27c)](_0x5df58b(0x68c))?.[_0x5df58b(0x832)]||'',_0x1b91aa=document[_0x5df58b(0x27c)](_0x5df58b(0x5a4)),_0x284b8c=_0x1b91aa&&_0x1b91aa[_0x5df58b(0x832)]['length']===0x4?parseInt(_0x1b91aa[_0x5df58b(0x832)],0xa):new Date()[_0x5df58b(0x8e3)]();let _0x5ca1cc=new Date()['getFullYear']();if(_0x3fea05&&_0x361c6b&&_0x495f05&&_0x495f05[_0x5df58b(0x110)]===0x4){const _0x3b2beb=parseInt(_0x3fea05,0xa),_0x45ca68=parseInt(_0x361c6b,0xa),_0x4451de=parseInt(_0x495f05,0xa);_0x5ca1cc=_0x45ca68<0x2||_0x45ca68===0x2&&_0x3b2beb<0x4?_0x4451de-0x1:_0x4451de;}let _0x40134c=typeof chủMệnh!==_0x5df58b(0x677)&&chủMệnh?chủMệnh:_0x5df58b(0x6a4);_0x3fea05&&_0x361c6b&&_0x495f05&&_0x495f05[_0x5df58b(0x110)]===0x4&&(typeof tínhCungPhi==='function'&&(_0x40134c=tínhCungPhi(parseInt(_0x495f05,0xa),parseInt(_0x361c6b,0xa),parseInt(_0x3fea05,0xa),document[_0x5df58b(0x27c)](_0x5df58b(0x365))?.[_0x5df58b(0x832)]||_0x5df58b(0x5bc))));const _0x43a2f7=document[_0x5df58b(0x27c)](_0x5df58b(0x54b))?.[_0x5df58b(0x832)]||_0x5df58b(0x41a),_0x28f27b=tinhDiemTongHop(_0x40134c,_0x53213b,_0x284b8c,_0x43a2f7,_0x5ca1cc,0x0);let _0x328c98=_0x5df58b(0x1ac);if(_0x28f27b[_0x5df58b(0x7b1)]>=0x48)_0x328c98=_0x5df58b(0x303);else _0x28f27b[_0x5df58b(0x7b1)]>=0x32&&(_0x328c98=_0x5df58b(0x595));let _0x48cac5=tìmSơnHướng(_0x53213b);const _0x105617=document[_0x5df58b(0x27c)](_0x5df58b(0x4ce))||(typeof detailBox!==_0x5df58b(0x677)?detailBox:null);_0x105617&&(_0x105617[_0x5df58b(0xf0)][_0x5df58b(0x385)]=_0x328c98,_0x105617[_0x5df58b(0xf0)][_0x5df58b(0x48a)]=_0x5df58b(0x7b7),_0x105617['innerHTML']=_0x5df58b(0x3fe)+_0x53213b+_0x5df58b(0x43c)+_0x328c98+_0x5df58b(0x724)+_0x28f27b['diem']+_0x5df58b(0x4bf)+_0x48cac5+'</strong>.<br>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22color:#aaa;\x20font-size:0.82rem;\x20display:block;\x20margin-top:5px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20👉\x20Hãy\x20cầm\x20điện\x20thoại\x20xoay\x20người\x20từ\x20từ\x20sao\x20cho\x20<b>Kim\x20Đỏ\x20thực\x20tế\x20khớp\x20thẳng\x20trục\x20với\x20tia\x20Vàng\x20ảo</b>\x20để\x20đón\x20đúng\x20cát\x20khí.\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20'),typeof updateCompassUI===_0x5df58b(0x60a)&&updateCompassUI(typeof currentHeading!==_0x5df58b(0x677)?currentHeading:_0x53213b);}function tìmSơnHướng(_0x3e03fa){const _0x5f38ef=_0x3793e5,_0x3bcf49=(_0x3e03fa%0x168+0x168)%0x168,_0x50dfb7=SON_24_CONFIG[_0x5f38ef(0x580)](_0x55b1f0=>{const _0x1ebf97=_0x5f38ef;if(_0x55b1f0[_0x1ebf97(0x1dc)]>_0x55b1f0[_0x1ebf97(0x4db)])return _0x3bcf49>=_0x55b1f0[_0x1ebf97(0x1dc)]||_0x3bcf49<_0x55b1f0[_0x1ebf97(0x4db)];return _0x3bcf49>=_0x55b1f0[_0x1ebf97(0x1dc)]&&_0x3bcf49<_0x55b1f0[_0x1ebf97(0x4db)];});return _0x50dfb7?_0x50dfb7[_0x5f38ef(0x3bc)]:'Tý';}const VAN_DATA={0x1:{'N':{'sao':'Nhất\x20Bạch','hanh':'Thủy','loai':'best','y_nghia':_0x3793e5(0x8c2)},'NE':{'sao':_0x3793e5(0x56f),'hanh':'Thổ','loai':_0x3793e5(0x7e0),'y_nghia':_0x3793e5(0x60b)},'E':{'sao':_0x3793e5(0x490),'hanh':'Mộc','loai':'neutral','y_nghia':'Năng\x20lượng\x20bình\x20hòa,\x20thích\x20hợp\x20cho\x20các\x20công\x20việc\x20liên\x20quan\x20đến\x20trí\x20óc\x20và\x20sáng\x20tạo.'},'SE':{'sao':_0x3793e5(0x1d1),'hanh':_0x3793e5(0x252),'loai':_0x3793e5(0x3b4),'y_nghia':'Cát\x20tinh\x20văn\x20xương,\x20trợ\x20lực\x20rất\x20tốt\x20cho\x20đường\x20học\x20hành,\x20thi\x20cử\x20và\x20danh\x20tiếng.'},'S':{'sao':_0x3793e5(0x896),'hanh':'Thổ','loai':_0x3793e5(0x1f4),'y_nghia':'Phạm\x20Ngũ\x20Hoàng\x20Đại\x20Sát,\x20đại\x20hung\x20tinh\x20tích\x20tụ\x20tai\x20họa,\x20tuyệt\x20đối\x20tránh\x20động\x20thổ.'},'SW':{'sao':_0x3793e5(0x5b4),'hanh':_0x3793e5(0x848),'loai':'good','y_nghia':_0x3793e5(0x7e2)},'W':{'sao':_0x3793e5(0x6f4),'hanh':_0x3793e5(0x848),'loai':_0x3793e5(0x7e0),'y_nghia':'Thoái\x20khí\x20hung\x20tinh,\x20dễ\x20gặp\x20họa\x20lừa\x20gạt,\x20tranh\x20chấp\x20lời\x20nói\x20và\x20hao\x20hụt\x20của\x20cải.'},'NW':{'sao':_0x3793e5(0x83b),'hanh':_0x3793e5(0x4d7),'loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x5fc)}},0x2:{'N':{'sao':_0x3793e5(0x56f),'hanh':_0x3793e5(0x4d7),'loai':_0x3793e5(0x7e0),'y_nghia':_0x3793e5(0x8d4)},'NE':{'sao':_0x3793e5(0x490),'hanh':_0x3793e5(0x252),'loai':_0x3793e5(0x39d),'y_nghia':_0x3793e5(0x7b0)},'E':{'sao':_0x3793e5(0x1d1),'hanh':_0x3793e5(0x252),'loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x7b9)},'SE':{'sao':_0x3793e5(0x896),'hanh':_0x3793e5(0x4d7),'loai':'worst','y_nghia':_0x3793e5(0x816)},'S':{'sao':_0x3793e5(0x5b4),'hanh':_0x3793e5(0x848),'loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x12f)},'SW':{'sao':_0x3793e5(0x6f4),'hanh':_0x3793e5(0x848),'loai':_0x3793e5(0x7e0),'y_nghia':'Đề\x20phòng\x20tiểu\x20nhân\x20quấy\x20phá,\x20hao\x20tổn\x20tài\x20sản\x20ngoài\x20ý\x20muốn\x20hoặc\x20tai\x20bay\x20vạ\x20gió.'},'W':{'sao':_0x3793e5(0x83b),'hanh':_0x3793e5(0x4d7),'loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x4f9)},'NW':{'sao':_0x3793e5(0x6d0),'hanh':_0x3793e5(0x6f0),'loai':_0x3793e5(0x576),'y_nghia':_0x3793e5(0x7e7)}},0x3:{'N':{'sao':_0x3793e5(0x490),'hanh':'Mộc','loai':_0x3793e5(0x39d),'y_nghia':_0x3793e5(0x615)},'NE':{'sao':_0x3793e5(0x1d1),'hanh':_0x3793e5(0x252),'loai':'good','y_nghia':_0x3793e5(0x20a)},'E':{'sao':_0x3793e5(0x896),'hanh':'Thổ','loai':_0x3793e5(0x1f4),'y_nghia':_0x3793e5(0x12b)},'SE':{'sao':_0x3793e5(0x5b4),'hanh':_0x3793e5(0x848),'loai':'good','y_nghia':_0x3793e5(0x527)},'S':{'sao':_0x3793e5(0x6f4),'hanh':_0x3793e5(0x848),'loai':_0x3793e5(0x7e0),'y_nghia':_0x3793e5(0x7d9)},'SW':{'sao':_0x3793e5(0x83b),'hanh':_0x3793e5(0x4d7),'loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x21b)},'W':{'sao':'Cửu\x20Tử','hanh':'Hỏa','loai':_0x3793e5(0x576),'y_nghia':_0x3793e5(0x8ed)},'NW':{'sao':_0x3793e5(0x2f8),'hanh':_0x3793e5(0x331),'loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x7b6)}},0x4:{'N':{'sao':_0x3793e5(0x1d1),'hanh':_0x3793e5(0x252),'loai':_0x3793e5(0x3b4),'y_nghia':'Khí\x20trường\x20thanh\x20cao,\x20chủ\x20về\x20thông\x20minh,\x20học\x20vấn\x20hanh\x20thông,\x20danh\x20tài\x20vẹn\x20toàn.'},'NE':{'sao':_0x3793e5(0x896),'hanh':_0x3793e5(0x4d7),'loai':_0x3793e5(0x1f4),'y_nghia':'Hung\x20tinh\x20sát\x20khí\x20cực\x20độ,\x20cần\x20giữ\x20phương\x20vị\x20này\x20yên\x20tĩnh,\x20không\x20nên\x20động\x20thổ.'},'E':{'sao':_0x3793e5(0x5b4),'hanh':_0x3793e5(0x848),'loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x836)},'SE':{'sao':'Thất\x20Xích','hanh':_0x3793e5(0x848),'loai':_0x3793e5(0x7e0),'y_nghia':_0x3793e5(0x86f)},'S':{'sao':'Bát\x20Bạch','hanh':'Thổ','loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x7b2)},'SW':{'sao':_0x3793e5(0x6d0),'hanh':_0x3793e5(0x6f0),'loai':_0x3793e5(0x576),'y_nghia':_0x3793e5(0x12e)},'W':{'sao':_0x3793e5(0x2f8),'hanh':_0x3793e5(0x331),'loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x7c6)},'NW':{'sao':_0x3793e5(0x56f),'hanh':_0x3793e5(0x4d7),'loai':_0x3793e5(0x7e0),'y_nghia':_0x3793e5(0x192)}},0x5:{'N':{'sao':_0x3793e5(0x896),'hanh':_0x3793e5(0x4d7),'loai':_0x3793e5(0x1f4),'y_nghia':_0x3793e5(0x88c)},'NE':{'sao':_0x3793e5(0x5b4),'hanh':'Kim','loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x731)},'E':{'sao':'Thất\x20Xích','hanh':_0x3793e5(0x848),'loai':_0x3793e5(0x7e0),'y_nghia':_0x3793e5(0x4c2)},'SE':{'sao':'Bát\x20Bạch','hanh':'Thổ','loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0xed)},'S':{'sao':_0x3793e5(0x6d0),'hanh':_0x3793e5(0x6f0),'loai':_0x3793e5(0x576),'y_nghia':'Đón\x20nhận\x20đại\x20cát\x20khí,\x20vượng\x20đường\x20danh\x20tiếng,\x20gia\x20đạo\x20có\x20nhiều\x20tin\x20vui.'},'SW':{'sao':_0x3793e5(0x2f8),'hanh':_0x3793e5(0x331),'loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x84a)},'W':{'sao':_0x3793e5(0x56f),'hanh':_0x3793e5(0x4d7),'loai':_0x3793e5(0x7e0),'y_nghia':_0x3793e5(0x302)},'NW':{'sao':_0x3793e5(0x490),'hanh':_0x3793e5(0x252),'loai':_0x3793e5(0x39d),'y_nghia':_0x3793e5(0x225)}},0x6:{'N':{'sao':'Lục\x20Bạch','hanh':'Kim','loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x5f6)},'NE':{'sao':'Thất\x20Xích','hanh':'Kim','loai':_0x3793e5(0x7e0),'y_nghia':'Khí\x20mạch\x20tiềm\x20ẩn\x20nguy\x20cơ\x20tranh\x20chấp\x20lời\x20nói,\x20kiêng\x20kị\x20việc\x20kiện\x20tụng.'},'E':{'sao':_0x3793e5(0x83b),'hanh':_0x3793e5(0x4d7),'loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x20f)},'SE':{'sao':'Cửu\x20Tử','hanh':_0x3793e5(0x6f0),'loai':_0x3793e5(0x576),'y_nghia':_0x3793e5(0x600)},'S':{'sao':_0x3793e5(0x2f8),'hanh':_0x3793e5(0x331),'loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x350)},'SW':{'sao':_0x3793e5(0x56f),'hanh':_0x3793e5(0x4d7),'loai':'bad','y_nghia':_0x3793e5(0x282)},'W':{'sao':_0x3793e5(0x490),'hanh':_0x3793e5(0x252),'loai':_0x3793e5(0x39d),'y_nghia':_0x3793e5(0x3f1)},'NW':{'sao':_0x3793e5(0x1d1),'hanh':_0x3793e5(0x252),'loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x1b5)}},0x7:{'N':{'sao':_0x3793e5(0x6f4),'hanh':'Kim','loai':_0x3793e5(0x7e0),'y_nghia':'Sát\x20khí\x20tiềm\x20ẩn,\x20dễ\x20gây\x20thất\x20thoát\x20tiền\x20bạc\x20hoặc\x20vướng\x20vào\x20họa\x20miệng\x20lưỡi.'},'NE':{'sao':_0x3793e5(0x83b),'hanh':'Thổ','loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x178)},'E':{'sao':_0x3793e5(0x6d0),'hanh':'Hỏa','loai':_0x3793e5(0x576),'y_nghia':_0x3793e5(0x3b5)},'SE':{'sao':_0x3793e5(0x2f8),'hanh':_0x3793e5(0x331),'loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x264)},'S':{'sao':_0x3793e5(0x56f),'hanh':_0x3793e5(0x4d7),'loai':_0x3793e5(0x7e0),'y_nghia':_0x3793e5(0x13e)},'SW':{'sao':_0x3793e5(0x490),'hanh':_0x3793e5(0x252),'loai':_0x3793e5(0x39d),'y_nghia':_0x3793e5(0x2aa)},'W':{'sao':'Tứ\x20Lục','hanh':_0x3793e5(0x252),'loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x2a3)},'NW':{'sao':_0x3793e5(0x896),'hanh':_0x3793e5(0x4d7),'loai':'worst','y_nghia':'Phạm\x20Ngũ\x20Hoàng\x20đại\x20kỵ,\x20tuyệt\x20đối\x20không\x20được\x20tác\x20động\x20lực\x20mạnh\x20phá\x20vỡ\x20khí\x20trường.'}},0x8:{'N':{'sao':_0x3793e5(0x83b),'hanh':'Thổ','loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x53a)},'NE':{'sao':'Cửu\x20Tử','hanh':'Hỏa','loai':'best','y_nghia':'Đón\x20nhận\x20vận\x20may\x20lớn,\x20danh\x20tiếng\x20vang\x20xa,\x20mưu\x20cầu\x20tài\x20lộc\x20dễ\x20đắc\x20ý.'},'E':{'sao':_0x3793e5(0x2f8),'hanh':_0x3793e5(0x331),'loai':_0x3793e5(0x3b4),'y_nghia':'Trí\x20tuệ\x20mẫn\x20tiệp,\x20hỗ\x20trợ\x20rất\x20tốt\x20cho\x20đường\x20quan\x20lộ\x20và\x20công\x20việc\x20thuận\x20buồm\x20xuôi\x20gió.'},'SE':{'sao':_0x3793e5(0x56f),'hanh':_0x3793e5(0x4d7),'loai':_0x3793e5(0x7e0),'y_nghia':_0x3793e5(0xe3)},'S':{'sao':_0x3793e5(0x490),'hanh':_0x3793e5(0x252),'loai':'neutral','y_nghia':_0x3793e5(0x1ad)},'SW':{'sao':'Tứ\x20Lục','hanh':_0x3793e5(0x252),'loai':'good','y_nghia':_0x3793e5(0x786)},'W':{'sao':_0x3793e5(0x896),'hanh':'Thổ','loai':_0x3793e5(0x1f4),'y_nghia':_0x3793e5(0x27e)},'NW':{'sao':_0x3793e5(0x5b4),'hanh':_0x3793e5(0x848),'loai':_0x3793e5(0x3b4),'y_nghia':'Quyền\x20lực\x20nội\x20tại\x20tăng\x20cao,\x20củng\x20cố\x20vị\x20thế\x20vững\x20vàng\x20trong\x20công\x20việc.'}},0x9:{'N':{'sao':_0x3793e5(0x2f8),'hanh':_0x3793e5(0x331),'loai':_0x3793e5(0x3b4),'y_nghia':_0x3793e5(0x8c1)},'NE':{'sao':_0x3793e5(0x6f4),'hanh':_0x3793e5(0x848),'loai':_0x3793e5(0x7e0),'y_nghia':'Sao\x20thất\x20vận\x20dồn\x20tụ\x20khí\x20xấu,\x20đề\x20phòng\x20phát\x20sinh\x20thị\x20phi,\x20tranh\x20chấp\x20hao\x20tổn\x20tài\x20sản.'},'E':{'sao':_0x3793e5(0x5b4),'hanh':_0x3793e5(0x848),'loai':_0x3793e5(0x39d),'y_nghia':_0x3793e5(0x336)},'SE':{'sao':_0x3793e5(0x56f),'hanh':'Thổ','loai':'neutral','y_nghia':'Bệnh\x20tinh\x20gặp\x20thời\x20vận\x209\x20làm\x20giảm\x20bớt\x20tính\x20hung\x20độc,\x20tuy\x20nhiên\x20cần\x20lưu\x20ý\x20bảo\x20vệ\x20hệ\x20tiêu\x20hóa.'},'S':{'sao':_0x3793e5(0x6d0),'hanh':_0x3793e5(0x6f0),'loai':'best','y_nghia':_0x3793e5(0x2c5)},'SW':{'sao':'Bát\x20Bạch','hanh':_0x3793e5(0x4d7),'loai':_0x3793e5(0x39d),'y_nghia':_0x3793e5(0x8f8)},'W':{'sao':_0x3793e5(0x896),'hanh':_0x3793e5(0x4d7),'loai':_0x3793e5(0x1f4),'y_nghia':_0x3793e5(0x20b)},'NW':{'sao':_0x3793e5(0x1d1),'hanh':_0x3793e5(0x252),'loai':'bad','y_nghia':'Sao\x20suy\x20thoái\x20khí,\x20cần\x20đề\x20phòng\x20vận\x20trình\x20học\x20hành\x20thi\x20cử\x20xuất\x20hiện\x20dấu\x20hiệu\x20trì\x20trệ.'}}};function sinhLuanGiaiThienThoi(_0x161897,_0x5a3703){const _0xb9d90f=_0x3793e5;let _0x2b5a36;if(_0x5a3703)_0x2b5a36=parseInt(_0x5a3703,0xa);else{const _0x1160a2=document[_0xb9d90f(0x27c)](_0xb9d90f(0x5a4));_0x2b5a36=_0x1160a2&&_0x1160a2[_0xb9d90f(0x832)][_0xb9d90f(0x110)]===0x4?parseInt(_0x1160a2[_0xb9d90f(0x832)],0xa):layNamKhaoSatThienVan();}let _0x4656aa=Math[_0xb9d90f(0x3b6)]((_0x2b5a36-0x748)/0x14)%0x9+0x1;const _0x3a4143=VAN_DATA[_0x4656aa]?.[_0x161897];if(!_0x3a4143)return _0xb9d90f(0x47a);const _0x3afb9d=_0x539615=>{const _0x3f3bf1=_0xb9d90f,_0x45b96a={'best':_0x3f3bf1(0x229),'good':_0x3f3bf1(0x1f0),'neutral':_0x3f3bf1(0x626),'bad':_0x3f3bf1(0x638),'worst':_0x3f3bf1(0x6dc)};return _0x45b96a[_0x539615]||'';},_0x525dd1={'best':_0xb9d90f(0x303),'good':_0xb9d90f(0x25c),'neutral':'#e0e0e0','bad':_0xb9d90f(0x595),'worst':'#ff3b30'}[_0x3a4143[_0xb9d90f(0x734)]]||_0xb9d90f(0x67f);return'\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22background:\x20rgba(255,255,255,0.01);\x20padding:\x2015px;\x20border-radius:\x2012px;\x20border:\x201px\x20solid\x20rgba(223,183,108,0.2);\x20margin-top:\x2015px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22color:\x20var(--gold);\x20font-size:\x200.8rem;\x20text-transform:\x20uppercase;\x20letter-spacing:\x201.5px;\x20margin-bottom:\x205px;\x20font-weight:bold;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20◆\x20HUYỀN\x20KHÔNG\x20VẬN\x20'+_0x4656aa+_0xb9d90f(0x1bd)+_0x2b5a36+_0xb9d90f(0x772)+_0x525dd1+_0xb9d90f(0x6ec)+_0x3a4143[_0xb9d90f(0x1e8)]+_0xb9d90f(0xe2)+_0x3a4143[_0xb9d90f(0x234)]+'</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22color:\x20#ddd;\x20font-size:\x200.88rem;\x20line-height:\x201.6;\x20margin-bottom:\x2012px;\x22>'+_0x3a4143[_0xb9d90f(0x70e)]+_0xb9d90f(0x219)+_0x525dd1+_0xb9d90f(0x7ac)+_0x525dd1+_0xb9d90f(0x1e9)+_0x3afb9d(_0x3a4143['loai'])+_0xb9d90f(0x38c);}const DATA_HOA_GIAI={'Tuyệt\x20Mệnh':{'Mộc':{'phap':_0x3793e5(0x2fd),'vat':_0x3793e5(0xf3)},'Hỏa':{'phap':_0x3793e5(0x23b),'vat':_0x3793e5(0x276)},'Thổ':{'phap':_0x3793e5(0x8f2),'vat':_0x3793e5(0x851)},'Kim':{'phap':_0x3793e5(0x444),'vat':_0x3793e5(0x409)},'Thủy':{'phap':_0x3793e5(0x6bd),'vat':_0x3793e5(0x628)}},'Ngũ\x20Quỷ':{'Kim':{'phap':_0x3793e5(0x17d),'vat':_0x3793e5(0x713)},'Mộc':{'phap':'Ngũ\x20Quỷ\x20Hỏa\x20tinh\x20rút\x20cạn\x20tinh\x20huyết\x20năng\x20lượng\x20của\x20Cung\x20Mệnh\x20Mộc\x20(Mộc\x20phải\x20sinh\x20xuất\x20cho\x20Hỏa\x20sát),\x20khiến\x20gia\x20chủ\x20hao\x20mòn\x20trí\x20lực,\x20kinh\x20doanh\x20thua\x20lỗ,\x20gia\x20đạo\x20lục\x20đục\x20không\x20yên.','vat':_0x3793e5(0x3c0)},'Thủy':{'phap':_0x3793e5(0x6b0),'vat':_0x3793e5(0x50d)},'Hỏa':{'phap':_0x3793e5(0x5f2),'vat':'Bố\x20trí\x20một\x20<strong>Lu\x20Nước\x20Phong\x20Thủy\x20Tuần\x20Hoàn\x20Màu\x20Đen</strong>\x20hoặc\x20đặt\x20<strong>Quả\x20Cầu\x20Thạch\x20Anh\x20Tím\x20trên\x20Đế\x20Thạch\x20Anh\x20Thô</strong>\x20(thuộc\x20hành\x20Thổ)\x20giúp\x20hấp\x20thu\x20toàn\x20bộ\x20nhiệt\x20lượng\x20tiêu\x20cực\x20dư\x20thừa,\x20bình\x20ổn\x20hoàn\x20toàn\x20trật\x20tự\x20năng\x20lượng.'},'Thổ':{'phap':_0x3793e5(0x73f),'vat':_0x3793e5(0xf7)}},'Lục\x20Sát':{'Hỏa':{'phap':_0x3793e5(0x141),'vat':_0x3793e5(0x5de)},'Kim':{'phap':_0x3793e5(0x689),'vat':_0x3793e5(0x371)},'Thổ':{'phap':'Mệnh\x20Thổ\x20của\x20gia\x20chủ\x20phải\x20vắt\x20kiệt\x20sức\x20lực\x20để\x20ngăn\x20chặn\x20Lục\x20Sát\x20Thủy\x20tinh\x20quấy\x20phá\x20phương\x20vị,\x20dẫn\x20tới\x20bản\x20thể\x20bị\x20kiệt\x20quệ,\x20sự\x20nghiệp\x20gặp\x20bế\x20tắc\x20và\x20tiểu\x20nhân\x20hãm\x20hại\x20sau\x20lưng.','vat':_0x3793e5(0x4cd)},'Mộc':{'phap':_0x3793e5(0x8b6),'vat':_0x3793e5(0x1e0)},'Thủy':{'phap':_0x3793e5(0x190),'vat':'Bố\x20trí\x20<strong>Tháp\x20Cây\x20Xanh\x20Vạn\x20Niên\x20Thanh\x20Thủy\x20Sinh</strong>\x20hoặc\x20đặt\x20<strong>Cặp\x20Tỳ\x20Hưu\x20bằng\x20Gỗ\x20Đào\x20Kinh\x20Chú</strong>\x20(thuộc\x20hành\x20Mộc)\x20để\x20làm\x20vật\x20trung\x20gian\x20hút\x20bớt\x20hung\x20tính\x20dữ\x20dội\x20của\x20dòng\x20nước\x20lũ\x20phong\x20thủy\x20này.'}},'Họa\x20Hại':{'Thủy':{'phap':'Họa\x20Hại\x20Thổ\x20sát\x20vùi\x20lấp\x20hoàn\x20toàn\x20mạch\x20tài\x20lộc\x20và\x20Cung\x20Mệnh\x20Thủy\x20của\x20gia\x20chủ,\x20bóp\x20nghẹt\x20các\x20cơ\x20hội\x20thăng\x20tiến,\x20khiến\x20cuộc\x20sống\x20ngập\x20tràn\x20rủi\x20ro\x20vụn\x20vặt\x20bực\x20dọc.','vat':_0x3793e5(0x6a8)},'Mộc':{'phap':_0x3793e5(0x419),'vat':_0x3793e5(0x738)},'Hỏa':{'phap':_0x3793e5(0x680),'vat':_0x3793e5(0x771)},'Kim':{'phap':_0x3793e5(0x388),'vat':_0x3793e5(0x314)},'Thổ':{'phap':_0x3793e5(0x868),'vat':_0x3793e5(0x52a)}}};function sinhMatPhapHoaGiai(_0x42b0ed,_0x496009,_0x4d4701,_0x26913d,_0x1a86c3){const _0x46f491=_0x3793e5;let _0x18f017=typeof phươngVịThiếtLập!==_0x46f491(0x677)&&phươngVịThiếtLập[_0x1a86c3]?phươngVịThiếtLập[_0x1a86c3][_0x46f491(0x661)]:_0x46f491(0x4d7),_0x190c92=_0x4d4701;if(_0x4d4701===_0x46f491(0x331))_0x190c92=_0x46f491(0x751);if(_0x4d4701===_0x46f491(0x6f0))_0x190c92='Hoa';if(_0x4d4701==='Mộc')_0x190c92=_0x46f491(0x666);if(_0x4d4701===_0x46f491(0x4d7))_0x190c92=_0x46f491(0x381);if(_0x4d4701===_0x46f491(0x848))_0x190c92=_0x46f491(0x848);let _0x1675b6=DATA_HOA_GIAI[_0x496009]?DATA_HOA_GIAI[_0x496009][_0x190c92]:null;!_0x1675b6&&(_0x1675b6={'phap':_0x46f491(0x357)+_0x4d4701+_0x46f491(0x556)+_0x26913d+'\x20mang\x20năng\x20lượng\x20của\x20uế\x20tinh\x20'+_0x496009+'.','vat':_0x46f491(0x1c6)});let _0x2bab0f=_0x1675b6['phap'][_0x46f491(0x820)](/\${phuongHuong}/g,_0x26913d)[_0x46f491(0x820)](/\${hanhPhuongVi}/g,_0x18f017),_0x46d6c9=_0x1675b6['vat'];const _0x1ef49f=ConfigPhongThuy[_0x42b0ed]||{'title':_0x46f491(0x5c5),'isCat':!![]};let _0x2110f1='';if(_0x1ef49f[_0x46f491(0x248)])_0x2110f1='Cấu\x20trúc\x20đang\x20thiết\x20lập\x20nhìn\x20về\x20phương\x20vị\x20bị\x20phạm\x20đại\x20kỵ\x20Sát\x20tinh\x20<strong>'+_0x496009+_0x46f491(0x180)+_0x2bab0f;else _0x42b0ed===_0x46f491(0x163)?_0x2110f1=_0x46f491(0x4b4)+_0x2bab0f:_0x2110f1=_0x46f491(0x5b9)+_0x2bab0f;return _0x46f491(0x6c8)+_0x2110f1+_0x46f491(0x321)+_0x46d6c9+_0x46f491(0x2fe);}function getLuanDoanChiTiet(_0x1dcde1,_0x59e515){const _0x2b1360=_0x3793e5,_0x184cba=MaTranMinhChau[_0x1dcde1],_0x461b92=_0x184cba&&_0x184cba[_0x59e515]?_0x184cba[_0x59e515]:null;if(!_0x461b92)return _0x2b1360(0x7ba);const _0x2c08be=_0x461b92[_0x2b1360(0x734)]===_0x2b1360(0x43d),_0x4bedc3=_0x2c08be?_0x2b1360(0x303):'#ff3b30',_0x481f50=_0x2c08be?_0x2b1360(0x730):_0x2b1360(0x160);return _0x2b1360(0x2cc)+_0x481f50+';\x20padding:\x2015px;\x20border-radius:\x2012px;\x20border:\x201px\x20solid\x20'+_0x4bedc3+_0x2b1360(0x453)+_0x4bedc3+_0x2b1360(0x780)+_0x461b92[_0x2b1360(0x734)]+_0x2b1360(0x714)+_0x461b92[_0x2b1360(0x339)]+_0x2b1360(0x880)+_0x4bedc3+_0x2b1360(0x664)+_0x461b92[_0x2b1360(0x7b1)]+_0x2b1360(0x28d)+_0x461b92[_0x2b1360(0x80e)]+_0x2b1360(0x646)+(_0x461b92[_0x2b1360(0x353)]?_0x2b1360(0x625)+_0x4bedc3+_0x2b1360(0x51e)+_0x4bedc3+_0x2b1360(0x61e)+_0x461b92[_0x2b1360(0x353)]+_0x2b1360(0x74e):'')+_0x2b1360(0x8d0);}function updateCompassUI(_0x13e04c){const _0x443e4a=_0x3793e5;let _0x40b5c4=(_0x13e04c+magneticDeclination%0x168+0x168)%0x168;currentHeading=Math[_0x443e4a(0x7c1)](_0x13e04c);if(compass)compass[_0x443e4a(0xf0)][_0x443e4a(0x855)]=_0x443e4a(0x8dc)+-_0x40b5c4+_0x443e4a(0x261);if(needle)needle[_0x443e4a(0xf0)]['transform']=_0x443e4a(0x2e1);if(compassSlider)compassSlider[_0x443e4a(0x832)]=currentHeading;const _0x54ea28=document[_0x443e4a(0x27c)](_0x443e4a(0x135))?.['value']||'',_0x4b663=document['getElementById'](_0x443e4a(0x118))?.[_0x443e4a(0x832)]||'',_0x5c682f=document[_0x443e4a(0x27c)](_0x443e4a(0x68c))?.[_0x443e4a(0x832)]||'',_0x54fbf1=document[_0x443e4a(0x27c)](_0x443e4a(0x415)),_0x54b21d=document[_0x443e4a(0x27c)](_0x443e4a(0x153)),_0x4cf180=document['getElementById'](_0x443e4a(0x5a4)),_0x498b3f=_0x4cf180&&_0x4cf180['value'][_0x443e4a(0x110)]===0x4?parseInt(_0x4cf180['value'],0xa):new Date()['getFullYear']();let _0x37bdd6=new Date()[_0x443e4a(0x8e3)]();if(_0x54ea28&&_0x4b663&&_0x5c682f&&_0x5c682f[_0x443e4a(0x110)]===0x4){const _0x74f291=parseInt(_0x54ea28,0xa),_0x7d4538=parseInt(_0x4b663,0xa),_0x23e2fa=parseInt(_0x5c682f,0xa);_0x37bdd6=_0x7d4538<0x2||_0x7d4538===0x2&&_0x74f291<0x4?_0x23e2fa-0x1:_0x23e2fa;}let _0x5a3a37=typeof chủMệnh!==_0x443e4a(0x677)&&chủMệnh?chủMệnh:_0x443e4a(0x6a4);_0x54ea28&&_0x4b663&&_0x5c682f&&_0x5c682f[_0x443e4a(0x110)]===0x4&&(typeof tínhCungPhi===_0x443e4a(0x60a)&&(_0x5a3a37=tínhCungPhi(parseInt(_0x5c682f,0xa),parseInt(_0x4b663,0xa),parseInt(_0x54ea28,0xa),document[_0x443e4a(0x27c)](_0x443e4a(0x365))?.[_0x443e4a(0x832)]||_0x443e4a(0x5bc))));const _0x3acac8=(currentHeading%0x168+0x168)%0x168;let _0x324fb7='',_0x38a621='';if(_0x3acac8>=337.5||_0x3acac8<22.5)_0x324fb7='KHẢM\x20(BẮC)',_0x38a621='N';else{if(_0x3acac8>=22.5&&_0x3acac8<67.5)_0x324fb7='CẤN\x20(ĐÔNG\x20BẮC)',_0x38a621='NE';else{if(_0x3acac8>=67.5&&_0x3acac8<112.5)_0x324fb7=_0x443e4a(0x58a),_0x38a621='E';else{if(_0x3acac8>=112.5&&_0x3acac8<157.5)_0x324fb7=_0x443e4a(0x660),_0x38a621='SE';else{if(_0x3acac8>=157.5&&_0x3acac8<202.5)_0x324fb7='LY\x20(NAM)',_0x38a621='S';else{if(_0x3acac8>=202.5&&_0x3acac8<247.5)_0x324fb7=_0x443e4a(0x74d),_0x38a621='SW';else{if(_0x3acac8>=247.5&&_0x3acac8<292.5)_0x324fb7='ĐOÀI\x20(TÂY)',_0x38a621='W';else _0x3acac8>=292.5&&_0x3acac8<337.5&&(_0x324fb7=_0x443e4a(0x5b3),_0x38a621='NW');}}}}}}let _0x34a8f3=_0x3acac8,_0x1ad583=SON_24_CONFIG[_0x443e4a(0x580)](_0x1dfae0=>{const _0x2cc716=_0x443e4a;if(_0x1dfae0['min']>_0x1dfae0[_0x2cc716(0x4db)])return _0x34a8f3>=_0x1dfae0[_0x2cc716(0x1dc)]||_0x34a8f3<_0x1dfae0[_0x2cc716(0x4db)];return _0x34a8f3>=_0x1dfae0[_0x2cc716(0x1dc)]&&_0x34a8f3<_0x1dfae0[_0x2cc716(0x4db)];})||SON_24_CONFIG[0x0],_0x56e0a5=_0x1ad583[_0x443e4a(0x3bc)];const _0x539aad=getCurrentHauInfo(_0x3acac8),_0x1b8d3a=document[_0x443e4a(0x27c)](_0x443e4a(0x54b))?.[_0x443e4a(0x832)]||_0x443e4a(0x41a),_0x137425=tinhDiemTongHop(_0x5a3a37,_0x3acac8,_0x498b3f,_0x1b8d3a,_0x37bdd6);let _0x8da128=_0x443e4a(0x25d);if(_0x137425[_0x443e4a(0x7b1)]>=0x48)_0x8da128=_0x443e4a(0x303);else _0x137425['diem']>=0x32&&(_0x8da128=_0x443e4a(0x6db));const _0x1cd0f7={'Sinh\x20Khí':_0x443e4a(0x7aa),'Thiên\x20Y':_0x443e4a(0x8d8),'Diên\x20Niên':_0x443e4a(0x11d),'Phục\x20Vị':_0x443e4a(0x3ee),'Tuyệt\x20Mệnh':_0x443e4a(0x5f7),'Ngũ\x20Quỷ':_0x443e4a(0x4b6),'Lục\x20Sát':_0x443e4a(0x133),'Họa\x20Hại':_0x443e4a(0x24b)};if(!_0x54ea28||!_0x4b663||!_0x5c682f||_0x5c682f[_0x443e4a(0x110)]<0x4){if(elementBox)elementBox[_0x443e4a(0x2d1)]='<span\x20class=\x22element-badge\x22\x20style=\x22background:\x20#3a3a3c;\x22>Phương\x20vị:\x20'+(phươngVịThiếtLập[_0x38a621]?.[_0x443e4a(0x661)]||_0x443e4a(0x89e))+_0x443e4a(0x474);judgmentBox&&(judgmentBox[_0x443e4a(0x342)]=_0x443e4a(0x1e6),judgmentBox[_0x443e4a(0x766)]=_0x443e4a(0x446),judgmentBox['removeAttribute'](_0x443e4a(0xf0)),judgmentBox[_0x443e4a(0xf0)]['backgroundColor']='#222',judgmentBox[_0x443e4a(0xf0)]['color']=_0x443e4a(0x4d1),judgmentBox[_0x443e4a(0xf0)][_0x443e4a(0x8b3)]=_0x443e4a(0x117));detailBox&&(detailBox[_0x443e4a(0xf0)][_0x443e4a(0x385)]=_0x443e4a(0x4d1),detailBox[_0x443e4a(0x2d1)]=_0x443e4a(0x84d)+currentHeading+_0x443e4a(0x27b)+_0x324fb7+_0x443e4a(0x5c6)+_0x56e0a5+_0x443e4a(0x5a9));const _0x46dc0b=document[_0x443e4a(0x27c)](_0x443e4a(0x4d2))||document[_0x443e4a(0x27c)](_0x443e4a(0x326));_0x46dc0b&&(_0x46dc0b[_0x443e4a(0x2d1)]=_0x443e4a(0x558)+currentHeading+_0x443e4a(0x5d1)+_0x324fb7+'</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:\x20flex;\x20align-items:\x20center;\x20gap:\x204px;\x20flex-shrink:\x200;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-size:\x200.9rem;\x20color:\x20#8a8a8f;\x22>Sơn:</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-size:\x200.9rem;\x20font-weight:\x20800;\x20padding:\x202px\x2010px;\x20border-radius:\x205px;\x20background:\x20linear-gradient(135deg,\x20#1c1c1e\x200%,\x20#2c2c2e\x2040%,\x20#3a3a3c\x2055%,\x20#1c1c1e\x20100%);\x20color:\x20#e5e5ea;\x20border:\x201px\x20solid\x20#48484a;\x20box-shadow:\x20inset\x200\x201px\x200\x20rgba(255,255,255,0.1),\x200\x201px\x203px\x20rgba(0,0,0,0.5);\x20text-shadow:\x20-1px\x20-1px\x200\x20rgba(0,0,0,0.8);\x20letter-spacing:\x200.3px;\x22>'+_0x56e0a5+_0x443e4a(0x257)+_0x539aad[_0x443e4a(0x5f9)]+_0x443e4a(0x428)+(_0x539aad[_0x443e4a(0x341)]==='🟢'?_0x443e4a(0x1dd):_0x539aad[_0x443e4a(0x341)]==='🔴'?_0x443e4a(0x25d):_0x443e4a(0x6db))+_0x443e4a(0x34a)+_0x539aad[_0x443e4a(0x7c7)]+_0x443e4a(0x24d));if(_0x54fbf1)_0x54fbf1[_0x443e4a(0xf0)][_0x443e4a(0x345)]=_0x443e4a(0x4e4);if(typeof kichHoatDenLedQuet===_0x443e4a(0x60a))kichHoatDenLedQuet(Math['round'](_0x40b5c4));return;}const _0x34fb0c=phươngVịThiếtLập?.[_0x38a621]?.['ngũHành']||_0x443e4a(0x15e);let _0x36e8e2=_0x5a3a37[_0x443e4a(0x50b)]();_0x36e8e2&&(_0x36e8e2=_0x36e8e2[_0x443e4a(0x42a)](0x0)[_0x443e4a(0x23a)]()+_0x36e8e2['slice'](0x1)['toLowerCase']());const _0x2520c6=bátTrạchMap?.[_0x36e8e2]?.['element']||_0x443e4a(0x15e);elementBox&&(elementBox[_0x443e4a(0x2d1)]=_0x443e4a(0x624)+_0x34fb0c+_0x443e4a(0x20e)+_0x2520c6+_0x443e4a(0x686));const _0x257eae=bátTrạchMap?.[_0x36e8e2]?.[_0x38a621]||_0x443e4a(0x56e),_0x303c25=cungPhầnTrăm?.[_0x257eae]||{'cát':!![],'ý_nghĩa':_0x443e4a(0x809)},_0x16dc53=typeof tinhHanCuuTinhTheoNam===_0x443e4a(0x60a)?tinhHanCuuTinhTheoNam(_0x56e0a5,_0x498b3f):{'thongTinSao':_0x443e4a(0x267),'meoGiaiHan':''};let _0x4ba9ec='',_0x356e22='';const _0x5d8ef6='margin-top:10px;\x20padding:10px;\x20border-radius:6px;\x20font-size:0.85rem;\x20line-height:1.4;\x20font-family:\x20sans-serif;';_0x16dc53[_0x443e4a(0x4be)]['includes']('⚠️')?(_0x4ba9ec=_0x443e4a(0x4b2)+_0x5d8ef6+_0x443e4a(0x362)+_0x498b3f+':</b>'+_0x16dc53[_0x443e4a(0x4be)][_0x443e4a(0x820)](/⚠️/g,'•')+_0x443e4a(0x42b),_0x16dc53[_0x443e4a(0xee)]&&(_0x356e22=_0x443e4a(0x66a)+_0x16dc53[_0x443e4a(0xee)][_0x443e4a(0x820)](_0x443e4a(0x610),'')+_0x443e4a(0x42b))):_0x4ba9ec=_0x443e4a(0x4b2)+_0x5d8ef6+_0x443e4a(0x3a3)+_0x16dc53[_0x443e4a(0x4be)]+_0x443e4a(0x42b);let _0x4ec71b='';if(typeof MaTranMinhChau!==_0x443e4a(0x677)&&MaTranMinhChau[_0x36e8e2]?.[_0x56e0a5]){const _0x1548a7=MaTranMinhChau[_0x36e8e2][_0x56e0a5],_0x1ad344=tinhDiemTongHop(_0x36e8e2,_0x34a8f3,_0x498b3f,_0x1b8d3a,_0x37bdd6,0x0)[_0x443e4a(0x7b1)],_0x12a319=_0x1ad344>=0x46?_0x443e4a(0x303):_0x1ad344>=0x32?_0x443e4a(0x2e0):_0x443e4a(0x1ac),_0x277e02=_0x1ad344>=0x46?_0x443e4a(0x590):_0x1ad344>=0x32?'[MINH\x20CHÂU\x20BÌNH\x20HÒA\x20SƠN]':_0x443e4a(0x4a3),_0x6620a2=_0x443e4a(0x2ef)+_0x56e0a5+'\x20('+_0x1ad583?.[_0x443e4a(0x218)]+'):</span>';_0x4ec71b=_0x443e4a(0x5ca)+_0x12a319+_0x443e4a(0x20d)+_0x277e02+_0x443e4a(0x230)+_0x6620a2+'\x20<span\x20style=\x22color:#ffffff;\x22>'+_0x1548a7[_0x443e4a(0x80e)]+'</span>',_0x1548a7[_0x443e4a(0x353)]&&(_0x4ec71b+='<br><br><span\x20style=\x22color:'+_0x12a319+_0x443e4a(0x6cd)+_0x1548a7[_0x443e4a(0x353)]+_0x443e4a(0x474));}else _0x4ec71b='<span\x20style=\x22color:#a0a0a0;\x20font-style:italic;\x22>Tọa\x20độ\x20định\x20vị:\x20'+currentHeading+'°\x20|\x20Sơn\x20'+_0x56e0a5+_0x443e4a(0x3c9)+_0x1ad583?.[_0x443e4a(0x218)]+_0x443e4a(0x756);const _0x192df2=ConfigPhongThuy[_0x1b8d3a]||{'title':'Cung\x20vị','isCat':!![]},_0x4e4284=[_0x443e4a(0x663),_0x443e4a(0x12a),_0x443e4a(0x842),'Họa\x20Hại'],_0x4eb328=_0x4e4284['includes'](_0x257eae),_0x26a72f=_0x192df2[_0x443e4a(0x248)]?!_0x4eb328:_0x4eb328,_0x456273=_0x137425[_0x443e4a(0x7b1)]>=0x46;_0x8da128=_0x137425['diem']>=0x46?_0x443e4a(0x303):_0x137425['diem']>=0x32?'#dfb76c':_0x443e4a(0x1ac);const _0x1c9091=document[_0x443e4a(0x27c)](_0x443e4a(0x4d2))||document[_0x443e4a(0x27c)](_0x443e4a(0x326));_0x1c9091&&(_0x1c9091[_0x443e4a(0x2d1)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:\x20grid;\x20grid-template-rows:\x20auto\x20auto;\x20gap:\x206px;\x20font-family:\x20sans-serif;\x20width:\x20100%;\x20box-sizing:\x20border-box;\x20overflow:\x20hidden;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:\x20flex;\x20align-items:\x20center;\x20justify-content:\x20space-between;\x20gap:\x208px;\x20white-space:\x20nowrap;\x20overflow:\x20hidden;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:\x20flex;\x20align-items:\x20center;\x20gap:\x206px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-size:\x201.8rem;\x20font-weight:\x20900;\x20color:\x20#ffca28;\x20letter-spacing:\x20-0.5px;\x20line-height:\x201;\x22>'+currentHeading+_0x443e4a(0x769)+_0x324fb7+'</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:\x20flex;\x20align-items:\x20center;\x20gap:\x204px;\x20flex-shrink:\x200;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-size:\x200.9rem;\x20color:\x20#8a8a8f;\x22>Sơn:</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-size:\x200.9rem;\x20font-weight:\x20800;\x20padding:\x202px\x2010px;\x20border-radius:\x205px;\x20background:\x20linear-gradient(135deg,\x20#1c1c1e\x200%,\x20#2c2c2e\x2040%,\x20#3a3a3c\x2055%,\x20#1c1c1e\x20100%);\x20color:\x20#e5e5ea;\x20border:\x201px\x20solid\x20#48484a;\x20box-shadow:\x20inset\x200\x201px\x200\x20rgba(255,255,255,0.1),\x200\x201px\x203px\x20rgba(0,0,0,0.5);\x20text-shadow:\x20-1px\x20-1px\x200\x20rgba(0,0,0,0.8);\x20letter-spacing:\x200.3px;\x22>'+_0x56e0a5+_0x443e4a(0x86d)+_0x137425['hauInfo'][_0x443e4a(0x5f9)]+_0x443e4a(0x428)+(_0x137425[_0x443e4a(0x2c2)]['emoji']==='🟢'?_0x443e4a(0x1dd):_0x137425[_0x443e4a(0x2c2)]['emoji']==='🔴'?_0x443e4a(0x25d):_0x443e4a(0x6db))+_0x443e4a(0x34a)+_0x137425[_0x443e4a(0x2c2)][_0x443e4a(0x7c7)]+_0x443e4a(0x1cc)+_0x8da128+';\x20letter-spacing:\x200.3px;\x20background:\x20rgba(0,0,0,0.35);\x20padding:\x202px\x208px;\x20border-radius:\x205px;\x20flex-shrink:\x200;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x137425[_0x443e4a(0x7b1)]+_0x443e4a(0x506)+_0x137425['level']+')\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>');judgmentBox&&(judgmentBox[_0x443e4a(0x5b1)](_0x443e4a(0xf0)),judgmentBox[_0x443e4a(0x342)]=_0x192df2[_0x443e4a(0x70a)]+':\x20'+_0x257eae,judgmentBox[_0x443e4a(0x766)]=_0x456273?'judgment-badge\x20bg-good':'judgment-badge\x20bg-bad');if(detailBox)detailBox[_0x443e4a(0xf0)][_0x443e4a(0x385)]=_0x8da128;let _0x32fa60='';_0x32fa60+=_0x443e4a(0x280)+_0x8da128+_0x443e4a(0x3a1),_0x32fa60+=_0x443e4a(0x892)+_0x8da128+';\x20font-size:\x201.05rem;\x20display:block;\x20margin-bottom:5px;\x22>',_0x32fa60+='◆\x20'+(_0x192df2[_0x443e4a(0x248)]?_0x456273?_0x443e4a(0x42e):_0x443e4a(0x679):_0x456273?_0x443e4a(0x134):'SAI\x20VỊ\x20TIÊU\x20HAO\x20KHÍ\x20TRƯỜNG')+'\x20('+_0x257eae[_0x443e4a(0x23a)]()+_0x443e4a(0x5bb)+_0x137425['diem']+'pt</span>\x20['+_0x137425[_0x443e4a(0x145)]+_0x443e4a(0x1d0),_0x32fa60+=_0x443e4a(0x10e)+_0x303c25[_0x443e4a(0xf1)]+_0x443e4a(0x474);_0x137425[_0x443e4a(0x4b3)]&&(_0x32fa60+=_0x443e4a(0x789)+_0x137425[_0x443e4a(0x4b3)]+_0x443e4a(0x42b));_0x32fa60+='</div>';if(!_0x26a72f||!_0x456273||_0x137425['khongVong']){_0x32fa60+=_0x443e4a(0x467);if(_0x137425[_0x443e4a(0x761)])_0x32fa60+='<h4\x20style=\x22color:#ff3b30;\x20margin:0\x200\x208px\x200;\x20font-size:\x200.95rem;\x20font-weight:bold;\x22>☠️\x20BIỆN\x20CHỨNG\x20TỬ\x20TUYẾN\x20KHÔNG\x20VONG\x20LẬP\x20CỰC</h4>',_0x32fa60+=_0x443e4a(0x195)+_0x137425[_0x443e4a(0x4b3)]+_0x443e4a(0x42b),_0x32fa60+=_0x443e4a(0x6b7)+_0x137425['hoaGiai']+_0x443e4a(0x42b);else{if(!_0x26a72f){const _0x2aba78=typeof sinhMatPhapHoaGiai===_0x443e4a(0x60a)?sinhMatPhapHoaGiai(_0x1b8d3a,_0x257eae,_0x2520c6,_0x324fb7,_0x38a621):'',_0x30ef53=_0x1cd0f7[_0x257eae]||'';_0x32fa60+=_0x443e4a(0x7fe),_0x32fa60+=_0x443e4a(0x395)+_0x2aba78,_0x30ef53&&(_0x32fa60+=_0x443e4a(0x49d)+_0x30ef53[_0x443e4a(0x820)](/👉 <em>.*?<\/em>:<br>/,'')+_0x443e4a(0x42b)),_0x32fa60+=_0x443e4a(0x42b);}else _0x32fa60+=_0x443e4a(0x7bb),_0x32fa60+='<div\x20style=\x22color:#ffffff;\x20font-size:0.88rem;\x20line-height:1.5;\x22>',!_0x192df2[_0x443e4a(0x248)]?(_0x32fa60+=_0x443e4a(0x4c8)+_0x192df2[_0x443e4a(0x70a)]+_0x443e4a(0x26e)+_0x257eae+_0x443e4a(0x275),_0x32fa60+=_0x443e4a(0x605)+_0x137425[_0x443e4a(0x7b1)]+_0x443e4a(0x862)):_0x32fa60+=_0x443e4a(0x5e4)+_0x257eae+'</b>).\x20Tuy\x20nhiên,\x20niên\x20độ\x20khảo\x20sát\x20hiện\x20hành\x20đang\x20gặp\x20từ\x20trường\x20suy\x20hao\x20do\x20vướng\x20đại\x20sát\x20tinh\x20lưu\x20niên\x20đáo\x20phương\x20(Chỉ\x20số\x20sụt\x20giảm\x20thực\x20thời\x20còn\x20<b>'+_0x137425[_0x443e4a(0x7b1)]+_0x443e4a(0x8a3),_0x32fa60+='<br><b\x20style=\x22color:#30d158;\x22>💡\x20Giải\x20pháp\x20hóa\x20giải\x20&\x20Trợ\x20lực\x20khí\x20trường\x20từ\x20Thuật\x20Toán:</b>',_0x32fa60+=_0x443e4a(0x1f5)+(_0x137425[_0x443e4a(0x737)]||_0x443e4a(0x7f7))+_0x443e4a(0x42b),_0x32fa60+=_0x443e4a(0x42b);}_0x32fa60+=_0x443e4a(0x42b);}_0x32fa60+=_0x443e4a(0x450),_0x32fa60+=_0x443e4a(0x796),_0x32fa60+=_0x443e4a(0x3fc),_0x32fa60+=_0x443e4a(0x49c)+_0x4ec71b+'</div>',_0x32fa60+=_0x443e4a(0x42b),_0x32fa60+=_0x443e4a(0x349),_0x32fa60+='<b\x20style=\x22color:var(--gold);\x20font-size:\x200.95rem;\x20display:block;\x20padding-bottom:4px;\x22>⏳\x20BIẾN\x20THIÊN\x20CỬU\x20TINH\x20NIÊN\x20TRẠCH\x20(ĐỘNG\x20KHẢO\x20SÁT\x20'+_0x498b3f+_0x443e4a(0x39a),_0x32fa60+=_0x443e4a(0x5a5)+_0x4ba9ec+_0x356e22+_0x443e4a(0x42b),_0x32fa60+=_0x443e4a(0x42b),_0x32fa60+=_0x443e4a(0x42b);typeof sinhLuanGiaiThienThoi===_0x443e4a(0x60a)&&(_0x32fa60+=_0x443e4a(0x333)+sinhLuanGiaiThienThoi(_0x38a621)+'</div>');if(detailBox)detailBox[_0x443e4a(0x2d1)]=_0x32fa60;if(_0x54fbf1&&_0x54b21d){_0x54fbf1[_0x443e4a(0xf0)][_0x443e4a(0x345)]=_0x1cd0f7[_0x257eae]?'block':_0x443e4a(0x4e4);if(_0x1cd0f7[_0x257eae])_0x54b21d[_0x443e4a(0x2d1)]=_0x1cd0f7[_0x257eae];}if(typeof kichHoatDenLedQuet===_0x443e4a(0x60a))kichHoatDenLedQuet(Math[_0x443e4a(0x7c1)](_0x40b5c4));if(typeof targetAngle!==_0x443e4a(0x677)&&targetAngle!==null&&document[_0x443e4a(0x27c)](_0x443e4a(0x4f6))){const _0x38868d=document['getElementById'](_0x443e4a(0x4f6)),_0x504a6d=document[_0x443e4a(0x27c)](_0x443e4a(0x5f0)),_0x1e95f9=document[_0x443e4a(0x27c)](_0x443e4a(0x6eb));_0x38868d[_0x443e4a(0xf0)][_0x443e4a(0x3a5)]='1',_0x38868d[_0x443e4a(0xf0)][_0x443e4a(0x855)]='translate(-50%,\x20-50%)\x20rotate('+(targetAngle-_0x40b5c4)+'deg)';let _0x396daf=Math['abs'](_0x40b5c4-targetAngle)%0x168;if(_0x396daf>0xb4)_0x396daf=0x168-_0x396daf;if(_0x396daf<=1.5)_0x38868d[_0x443e4a(0x3c2)][_0x443e4a(0x245)]('matched-pulse'),_0x504a6d&&!_0x504a6d[_0x443e4a(0x2d1)][_0x443e4a(0x4c0)]('🏆')&&(_0x504a6d[_0x443e4a(0xf0)][_0x443e4a(0x498)]=_0x443e4a(0x303),_0x504a6d[_0x443e4a(0x2d1)]=_0x443e4a(0x1ea),_0x1e95f9&&(_0x1e95f9[_0x443e4a(0xf0)][_0x443e4a(0x509)]='0\x200\x2012px\x20#30d158',_0x1e95f9[_0x443e4a(0xf0)][_0x443e4a(0x855)]=_0x443e4a(0x4c1)));else{_0x38868d[_0x443e4a(0x3c2)][_0x443e4a(0x59f)](_0x443e4a(0x3e2));if(_0x504a6d&&_0x504a6d[_0x443e4a(0x2d1)][_0x443e4a(0x4c0)]('🏆')){let _0x8e20b0=tìmSơnHướng(targetAngle);_0x504a6d[_0x443e4a(0x5b1)](_0x443e4a(0xf0)),_0x1e95f9&&(_0x1e95f9[_0x443e4a(0xf0)][_0x443e4a(0x509)]='none',_0x1e95f9[_0x443e4a(0xf0)][_0x443e4a(0x855)]=_0x443e4a(0x58c)),_0x504a6d[_0x443e4a(0x2d1)]=_0x443e4a(0x6e1)+_0x8e20b0+_0x443e4a(0x791);}}}}function getPhongThuySatTinh(_0x259b95,_0x21a618){const _0x2a1392=_0x3793e5,_0x889ff5=[];if(!_0x259b95)return _0x889ff5;const _0x50cbd9=parseInt(_0x21a618,0xa)||(typeof GlobalTime!==_0x2a1392(0x677)?parseInt(GlobalTime[_0x2a1392(0x426)]||GlobalTime[_0x2a1392(0x514)],0xa):null)||(typeof layNamKhaoSatThienVan===_0x2a1392(0x60a)?layNamKhaoSatThienVan():new Date()[_0x2a1392(0x8e3)]());if(!_0x50cbd9||isNaN(_0x50cbd9))return _0x889ff5;const _0x503113=DATA_THANSAT[_0x2a1392(0x19f)][_0x259b95],_0x7f0bec=_0x503113?_0x503113[_0x2a1392(0x7f1)]:'N',_0x1f4301={'N':_0x2a1392(0x555),'NE':'Đông\x20Bắc','E':_0x2a1392(0x475),'SE':_0x2a1392(0x72f),'S':_0x2a1392(0x2c9),'SW':_0x2a1392(0x8c5),'W':_0x2a1392(0x8b7),'NW':_0x2a1392(0x2e2)},_0x46ea11=_0x1f4301[_0x7f0bec]||_0x2a1392(0x6b6);let _0x2818fc=(_0x50cbd9-0x7e8)%0x9;if(_0x2818fc<0x0)_0x2818fc+=0x9;const _0x26d4cc=[_0x2a1392(0x8b7),_0x2a1392(0x22a),_0x2a1392(0x2c9),_0x2a1392(0x555),_0x2a1392(0x8c5),_0x2a1392(0x475),'Đông\x20Nam',_0x2a1392(0x6b6),_0x2a1392(0x2e2)];_0x46ea11===_0x26d4cc[_0x2818fc]&&_0x889ff5[_0x2a1392(0x65b)]({'ten':'NGŨ\x20HOÀNG\x20ĐẠI\x20SÁT','color':_0x2a1392(0x1ac),'level':_0x2a1392(0x674),'giaiPhap':_0x2a1392(0x559)});const _0x460283=DATA_THANSAT[_0x2a1392(0x41e)][_0x50cbd9%0xc];_0x259b95===_0x460283&&_0x889ff5[_0x2a1392(0x65b)]({'ten':_0x2a1392(0x3c6),'color':'#ff453a','level':_0x2a1392(0x674),'giaiPhap':_0x2a1392(0x301)});_0x259b95===getDoiXungDiaChi(_0x460283)&&_0x889ff5[_0x2a1392(0x65b)]({'ten':_0x2a1392(0x860),'color':_0x2a1392(0x595),'level':_0x2a1392(0x2d5),'giaiPhap':_0x2a1392(0x2fa)});const _0x424631=getTamHopCuc(_0x460283),_0x10a194=_0x503113?_0x503113[_0x2a1392(0x8a8)]:'',_0x46d80b={'ThânTýThìn':['Tỵ',_0x2a1392(0x7e8),_0x2a1392(0x1fb)],'DầnNgọTuất':[_0x2a1392(0x609),'Tý',_0x2a1392(0x7d7)],'HợiMãoMùi':[_0x2a1392(0x73d),_0x2a1392(0x2f2),'Tuất'],'TỵDậuSửu':[_0x2a1392(0x202),_0x2a1392(0x8d6),_0x2a1392(0x8bf)]},_0x4e1713=_0x46d80b[_0x424631]||[];if(_0x4e1713[_0x2a1392(0x4c0)](_0x259b95)||_0x4e1713['includes'](_0x10a194)){let _0xdb2562=_0x2a1392(0x42d);const _0x58278e=_0x4e1713['indexOf'](_0x10a194)!==-0x1?_0x4e1713[_0x2a1392(0x129)](_0x10a194):_0x4e1713[_0x2a1392(0x129)](_0x259b95);if(_0x58278e!==-0x1){const _0x5798f4=[_0x2a1392(0x374),_0x2a1392(0x75b),_0x2a1392(0x6c7)];_0xdb2562=_0x5798f4[_0x58278e];}_0x889ff5[_0x2a1392(0x65b)]({'ten':_0x2a1392(0x1d7)+_0xdb2562[_0x2a1392(0x23a)](),'color':_0x2a1392(0x76c),'level':'Hung','giaiPhap':_0x2a1392(0x2f0)});}return _0x889ff5;}function getDoiXungDiaChi(_0x347880){const _0x1740ef=_0x3793e5,_0x5d797c={'Tý':_0x1740ef(0x7e8),'Ngọ':'Tý','Mão':_0x1740ef(0x2f2),'Dậu':_0x1740ef(0x8d6),'Dần':_0x1740ef(0x73d),'Thân':_0x1740ef(0x202),'Thìn':_0x1740ef(0x560),'Tuất':'Thìn','Tỵ':_0x1740ef(0x609),'Hợi':'Tỵ','Sửu':_0x1740ef(0x1fb),'Mùi':_0x1740ef(0x7d7)};return _0x5d797c[_0x347880]||'';}function getTamHopCuc(_0x2d33b9){const _0x58d665=_0x3793e5;if(['Thân','Tý',_0x58d665(0x8bf)][_0x58d665(0x4c0)](_0x2d33b9))return _0x58d665(0x452);if(['Dần','Ngọ',_0x58d665(0x560)][_0x58d665(0x4c0)](_0x2d33b9))return'DầnNgọTuất';if(['Hợi',_0x58d665(0x8d6),_0x58d665(0x1fb)][_0x58d665(0x4c0)](_0x2d33b9))return _0x58d665(0x42f);if(['Tỵ',_0x58d665(0x2f2),_0x58d665(0x7d7)][_0x58d665(0x4c0)](_0x2d33b9))return _0x58d665(0x4c6);return'';}function getTamSat24Son(_0x40f635){const _0x7485ad=_0x3793e5,_0xb325d9={'ThânTýThìn':['Tỵ',_0x7485ad(0x7e8),_0x7485ad(0x1fb)],'DầnNgọTuất':[_0x7485ad(0x609),'Tý',_0x7485ad(0x7d7)],'HợiMãoMùi':[_0x7485ad(0x73d),_0x7485ad(0x2f2),_0x7485ad(0x560)],'TỵDậuSửu':[_0x7485ad(0x202),'Mão',_0x7485ad(0x8bf)]};return _0xb325d9[_0x40f635]||[];}function updateDegreeDisplay(_0x367b36){const _0x1038f8=_0x3793e5,_0x4238cf=(_0x367b36%0x168+0x168)%0x168,_0x20e17e=Math['round'](_0x4238cf),_0x27e875=document[_0x1038f8(0x27c)](_0x1038f8(0x5a4)),_0x56b07e=_0x27e875&&_0x27e875[_0x1038f8(0x832)][_0x1038f8(0x110)]===0x4?parseInt(_0x27e875[_0x1038f8(0x832)],0xa):new Date()['getFullYear'](),_0xa21bcd=getCungName(_0x4238cf),_0x4a38a3=PhongThuyCore[_0x1038f8(0x459)](_0x4238cf),_0x10e87a=_0x4a38a3['name'],_0x23f2a6=getCurrentHauInfo(_0x4238cf),_0x4efc02=kiemTraKhongVong(_0x4238cf);let _0x17b6c4='',_0x346879=_0x1038f8(0x488);const _0x32d1eb=document[_0x1038f8(0x27c)](_0x1038f8(0x135))?.[_0x1038f8(0x832)]||'',_0x5218d3=document[_0x1038f8(0x27c)](_0x1038f8(0x118))?.[_0x1038f8(0x832)]||'',_0x1c2b36=document[_0x1038f8(0x27c)](_0x1038f8(0x68c))?.[_0x1038f8(0x832)]||'';let _0x48c3ac=null;_0x32d1eb&&_0x5218d3&&_0x1c2b36&&_0x1c2b36[_0x1038f8(0x110)]===0x4&&(_0x48c3ac=parseInt(_0x5218d3,0xa)<0x2||parseInt(_0x5218d3,0xa)===0x2&&parseInt(_0x32d1eb,0xa)<0x4?parseInt(_0x1c2b36,0xa)-0x1:parseInt(_0x1c2b36,0xa));if(typeof chủMệnh!==_0x1038f8(0x677)&&chủMệnh){const _0x2b11cb=document[_0x1038f8(0x27c)](_0x1038f8(0x54b))?.[_0x1038f8(0x832)]||_0x1038f8(0x41a),_0x15d0a8=tinhDiemTongHop(chủMệnh,_0x4238cf,_0x56b07e,_0x2b11cb,_0x48c3ac);if(_0x15d0a8[_0x1038f8(0x7b1)]>=0x48)_0x346879=_0x1038f8(0x303);else{if(_0x15d0a8[_0x1038f8(0x7b1)]>=0x32)_0x346879=_0x1038f8(0x6db);else _0x346879=_0x1038f8(0x1ac);}_0x17b6c4=_0x1038f8(0x75a)+_0x346879+_0x1038f8(0x305)+_0x15d0a8[_0x1038f8(0x7b1)]+_0x1038f8(0x506)+_0x15d0a8[_0x1038f8(0x145)]+')</div>';}const _0x545f87=document[_0x1038f8(0x27c)](_0x1038f8(0x4d2))||document['getElementById'](_0x1038f8(0x326));_0x545f87&&(_0x545f87['innerHTML']=_0x1038f8(0x4bb)+_0x20e17e+_0x1038f8(0x3f3)+_0xa21bcd+_0x1038f8(0x2b0)+_0x10e87a+_0x1038f8(0x1c5)+(_0x23f2a6[_0x1038f8(0x341)]==='🟢'?_0x1038f8(0x749):'#ff4444')+'\x22>'+_0x23f2a6[_0x1038f8(0x5f9)][_0x1038f8(0x888)]('\x20')[0x0]+_0x1038f8(0x59d)+(_0x4efc02?_0x1038f8(0x61f)+_0x4efc02[_0x1038f8(0x734)]+_0x1038f8(0x474):'')+_0x1038f8(0x4b1)+_0x17b6c4+_0x1038f8(0x46b));}function getCungName(_0xfb029){const _0x2dd9bf=_0x3793e5;let _0xe04a60=(_0xfb029%0x168+0x168)%0x168;if(_0xe04a60>=337.5||_0xe04a60<22.5)return _0x2dd9bf(0x50c);if(_0xe04a60>=22.5&&_0xe04a60<67.5)return _0x2dd9bf(0x48f);if(_0xe04a60>=67.5&&_0xe04a60<112.5)return _0x2dd9bf(0x58a);if(_0xe04a60>=112.5&&_0xe04a60<157.5)return _0x2dd9bf(0x660);if(_0xe04a60>=157.5&&_0xe04a60<202.5)return _0x2dd9bf(0x8ab);if(_0xe04a60>=202.5&&_0xe04a60<247.5)return _0x2dd9bf(0x74d);if(_0xe04a60>=247.5&&_0xe04a60<292.5)return _0x2dd9bf(0x1f9);return _0x2dd9bf(0x5b3);}const DATA_THANSAT={'tamSat':{'Dần\x20Ngọ\x20Tuất':'Bắc','Thân\x20Tý\x20Thìn':_0x3793e5(0x2c9),'Tỵ\x20Dậu\x20Sửu':_0x3793e5(0x475),'Hợi\x20Mão\x20Mùi':_0x3793e5(0x8b7)},'thaiTue':[_0x3793e5(0x73d),_0x3793e5(0x2f2),_0x3793e5(0x560),_0x3793e5(0x609),'Tý',_0x3793e5(0x7d7),_0x3793e5(0x202),_0x3793e5(0x8d6),_0x3793e5(0x8bf),'Tỵ',_0x3793e5(0x7e8),'Mùi'],'phuongVi':{'Tý':_0x3793e5(0x555),'Ngọ':_0x3793e5(0x2c9),'Mão':_0x3793e5(0x475),'Dậu':'Tây','Dần':_0x3793e5(0x22a),'Thân':_0x3793e5(0x8c5),'Tỵ':_0x3793e5(0x72f),'Hợi':_0x3793e5(0x2e2),'Sửu':_0x3793e5(0x22a),'Mùi':_0x3793e5(0x8c5),'Thìn':_0x3793e5(0x72f),'Tuất':_0x3793e5(0x2e2)},'THAP_NHI_CHI_ARR':['Ty',_0x3793e5(0x829),_0x3793e5(0x486),_0x3793e5(0x849),'Thin','Tỵ','Ngo',_0x3793e5(0x728),_0x3793e5(0x4fd),_0x3793e5(0x5d8),_0x3793e5(0x15c),_0x3793e5(0x7fc)],'THAP_NHI_CHI_VIET':['Tý',_0x3793e5(0x7d7),_0x3793e5(0x202),_0x3793e5(0x8d6),_0x3793e5(0x8bf),'Tỵ',_0x3793e5(0x7e8),'Mùi','Thân',_0x3793e5(0x2f2),_0x3793e5(0x560),_0x3793e5(0x609)],'BO_CHUYEN_DOI_NGON_NGU':{'Tý':'Ty','Sửu':_0x3793e5(0x829),'Dần':_0x3793e5(0x486),'Mão':_0x3793e5(0x849),'Thìn':_0x3793e5(0x451),'Tỵ':'Tỵ','Ngọ':_0x3793e5(0x4dd),'Mùi':_0x3793e5(0x728),'Thân':_0x3793e5(0x4fd),'Dậu':_0x3793e5(0x5d8),'Tuất':_0x3793e5(0x15c),'Hợi':_0x3793e5(0x7fc)},'tamSatPhanCham':{'Dan\x20Ngo\x20Tuat':{'huongChuQuet':'N','canhcai':[_0x3793e5(0x7fc),'Ty',_0x3793e5(0x829)],'text':_0x3793e5(0x66e)},'Than\x20Ty\x20Thin':{'huongChuQuet':'S','canhcai':['Tỵ',_0x3793e5(0x4dd),_0x3793e5(0x728)],'text':_0x3793e5(0x85a)},'Tỵ\x20Dau\x20Suu':{'huongChuQuet':'E','canhcai':[_0x3793e5(0x486),_0x3793e5(0x849),_0x3793e5(0x451)],'text':_0x3793e5(0x30c)},'Hoi\x20Mao\x20Mui':{'huongChuQuet':'W','canhcai':[_0x3793e5(0x4fd),'Dau',_0x3793e5(0x15c)],'text':'Vùng\x20Sát\x20Khí\x20chạy\x20dọc\x20Phương\x20Tây\x20(Tây\x20Nam\x20-\x20Chính\x20Tây\x20-\x20Tây\x20Bắc)'}},'MA_TRAN_24_SON_VI':{'Nhâm':{'huongDaiCuc':'N','diaChiLienQuoi':'Ty','nguHanh':_0x3793e5(0x751)},'Tý':{'huongDaiCuc':'N','diaChiLienQuoi':'Ty','nguHanh':_0x3793e5(0x751)},'Quý':{'huongDaiCuc':'N','diaChiLienQuoi':'Ty','nguHanh':_0x3793e5(0x751)},'Sửu':{'huongDaiCuc':'NE','diaChiLienQuoi':'Suu','nguHanh':_0x3793e5(0x381)},'Cấn':{'huongDaiCuc':'NE','diaChiLienQuoi':_0x3793e5(0x829),'nguHanh':_0x3793e5(0x381)},'Dần':{'huongDaiCuc':'NE','diaChiLienQuoi':'Dan','nguHanh':_0x3793e5(0x666)},'Giáp':{'huongDaiCuc':'E','diaChiLienQuoi':'Dan','nguHanh':_0x3793e5(0x666)},'Mão':{'huongDaiCuc':'E','diaChiLienQuoi':_0x3793e5(0x849),'nguHanh':_0x3793e5(0x666)},'Ất':{'huongDaiCuc':'E','diaChiLienQuoi':_0x3793e5(0x849),'nguHanh':_0x3793e5(0x666)},'Thìn':{'huongDaiCuc':'SE','diaChiLienQuoi':_0x3793e5(0x451),'nguHanh':_0x3793e5(0x381)},'Tốn':{'huongDaiCuc':'SE','diaChiLienQuoi':_0x3793e5(0x451),'nguHanh':_0x3793e5(0x666)},'Tỵ':{'huongDaiCuc':'SE','diaChiLienQuoi':'Tỵ','nguHanh':_0x3793e5(0x2cd)},'Bính':{'huongDaiCuc':'S','diaChiLienQuoi':'Tỵ','nguHanh':'Hoa'},'Ngọ':{'huongDaiCuc':'S','diaChiLienQuoi':'Ngo','nguHanh':_0x3793e5(0x2cd)},'Đinh':{'huongDaiCuc':'S','diaChiLienQuoi':'Ngo','nguHanh':_0x3793e5(0x2cd)},'Mùi':{'huongDaiCuc':'SW','diaChiLienQuoi':_0x3793e5(0x728),'nguHanh':_0x3793e5(0x381)},'Khôn':{'huongDaiCuc':'SW','diaChiLienQuoi':_0x3793e5(0x728),'nguHanh':_0x3793e5(0x381)},'Thân':{'huongDaiCuc':'SW','diaChiLienQuoi':'Than','nguHanh':'Kim'},'Canh':{'huongDaiCuc':'W','diaChiLienQuoi':_0x3793e5(0x4fd),'nguHanh':_0x3793e5(0x848)},'Dậu':{'huongDaiCuc':'W','diaChiLienQuoi':'Dau','nguHanh':'Kim'},'Tân':{'huongDaiCuc':'W','diaChiLienQuoi':_0x3793e5(0x5d8),'nguHanh':'Kim'},'Tuất':{'huongDaiCuc':'NW','diaChiLienQuoi':_0x3793e5(0x15c),'nguHanh':'Tho'},'Càn':{'huongDaiCuc':'NW','diaChiLienQuoi':_0x3793e5(0x15c),'nguHanh':_0x3793e5(0x848)},'Hợi':{'huongDaiCuc':'NW','diaChiLienQuoi':'Hoi','nguHanh':'Thuy'}}};function getChiTietTamSat(_0x5f471a,_0x33526a){const _0x19f637=_0x3793e5,_0xaa0396={'ThânTýThìn':{'Tỵ':_0x19f637(0x806),'Ngọ':_0x19f637(0x5a8),'Mùi':_0x19f637(0x193)},'DầnNgọTuất':{'Hợi':'Kiếp\x20Sát\x20(Hao\x20tài,\x20thương\x20tổn)','Tý':_0x19f637(0x5a8),'Sửu':_0x19f637(0x193)},'HợiMãoMùi':{'Thân':_0x19f637(0x806),'Dậu':_0x19f637(0x5a8),'Tuất':_0x19f637(0x193)},'TỵDậuSửu':{'Dần':_0x19f637(0x806),'Mão':_0x19f637(0x5a8),'Thìn':_0x19f637(0x193)}};return _0xaa0396[_0x5f471a]?.[_0x33526a]||_0x19f637(0x620);}function dịchĐộSốThànhTênSơn(_0x5cb741){const _0x2f0423=_0x3793e5,_0x39c8dc=(_0x5cb741%0x168+0x168)%0x168,_0x3547fd=['Tý',_0x2f0423(0x295),'Sửu',_0x2f0423(0x6ef),_0x2f0423(0x202),_0x2f0423(0x3f0),_0x2f0423(0x8d6),'Ất',_0x2f0423(0x8bf),'Tốn','Tỵ',_0x2f0423(0x5eb),_0x2f0423(0x7e8),_0x2f0423(0x479),_0x2f0423(0x1fb),'Khôn',_0x2f0423(0x73d),_0x2f0423(0x611),_0x2f0423(0x2f2),_0x2f0423(0x6ed),_0x2f0423(0x560),_0x2f0423(0x623),_0x2f0423(0x609),'Nhâm'];let _0x44178c=Math[_0x2f0423(0x3b6)]((_0x39c8dc+7.5)%0x168/0xf);return _0x3547fd[_0x44178c]||'Tý';}function getHuongDoiXung(_0x5ef5c8){const _0x31218e=_0x3793e5,_0x12505f={'Bắc':'Nam','Nam':_0x31218e(0x555),'Đông':'Tây','Tây':_0x31218e(0x475),'Đông\x20Bắc':_0x31218e(0x8c5),'Tây\x20Nam':_0x31218e(0x22a),'Đông\x20Nam':_0x31218e(0x2e2),'Tây\x20Bắc':_0x31218e(0x72f)};return _0x12505f[_0x5ef5c8]||_0x5ef5c8;}function renderMultiLayerDetail(_0xab3a9e,_0x5aafd5,_0x11f505){const _0x19c5d1=_0x3793e5;if(!_0xab3a9e)return;const {diem:_0x2818c6,level:_0x213c62,message:_0x38d44d,hoaGiai:_0x36b6e,khongVong:_0x285d53,satTinhs:_0x4ae199,sonName:_0x4bf263,hauInfo:_0x31c2cc}=_0xab3a9e,_0x46f517=document[_0x19c5d1(0x27c)](_0x19c5d1(0x54b))?.[_0x19c5d1(0x832)]||'house',_0x35030c=typeof ConfigPhongThuy!==_0x19c5d1(0x677)?ConfigPhongThuy:typeof PhongThuyCore!=='undefined'&&PhongThuyCore[_0x19c5d1(0x588)]?.[_0x19c5d1(0x741)]?PhongThuyCore[_0x19c5d1(0x588)][_0x19c5d1(0x741)]:{},_0x277415=_0x35030c[_0x46f517]||{'title':_0x19c5d1(0x5ac),'isCat':!![]},_0x1278b1=_0x277415[_0x19c5d1(0x248)];let _0x3bf649=_0x19c5d1(0x1ac);if(_0x2818c6>=0x48)_0x3bf649=_0x2818c6>=0x55?_0x19c5d1(0x303):_0x19c5d1(0x55e);else _0x2818c6>=0x32&&_0x1278b1&&(_0x3bf649=_0x19c5d1(0x2e0));let _0x5355a7=_0x19c5d1(0x2a2);_0x5355a7+=_0x19c5d1(0x81c)+_0x3bf649+_0x19c5d1(0x5cc)+_0x3bf649+'10;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22font-size:0.75rem;\x20color:#888;\x20text-transform:uppercase;\x20letter-spacing:\x202px;\x20font-weight:\x20bold;\x22>Chỉ\x20số\x20Thống\x20kê\x20PT\x20['+_0x277415[_0x19c5d1(0x70a)]+_0x19c5d1(0x8a4)+_0x3bf649+';\x20margin:\x205px\x200;\x20text-shadow:\x200\x200\x2010px\x20'+_0x3bf649+'20;\x22>'+_0x2818c6+_0x19c5d1(0x199)+_0x3bf649+';\x20letter-spacing:\x201px;\x20padding:\x204px\x2016px;\x20background:\x20'+_0x3bf649+_0x19c5d1(0x655)+_0x3bf649+'30;\x22>'+_0x213c62+_0x19c5d1(0x44c)+(_0x1278b1?'-':'+')+_0x19c5d1(0x325);if(_0x285d53||_0x4ae199&&_0x4ae199[_0x19c5d1(0x110)]>0x0){_0x5355a7+=_0x19c5d1(0x5e1);if(_0x285d53){let _0x12c9a7=_0x1278b1?_0x19c5d1(0x332):_0x19c5d1(0x25a),_0x205fd2=_0x1278b1?_0x19c5d1(0x1ac):_0x19c5d1(0x303),_0x1de8a2=_0x1278b1?_0x19c5d1(0x31e)+_0x285d53['loai']:_0x19c5d1(0x708)+_0x285d53[_0x19c5d1(0x734)],_0xb15d50=_0x1278b1?'Hạng\x20mục\x20cấu\x20trúc\x20đang\x20đặt\x20đè\x20trúng\x20trục\x20đứt\x20gãy\x20năng\x20lượng\x20của\x20vòng\x20Không\x20Vong,\x20khiến\x20dòng\x20sinh\x20khí\x20bị\x20xé\x20toạc,\x20hỗn\x20tạp,\x20phá\x20tài\x20tốn\x20đinh.':_0x19c5d1(0x480);_0x5355a7+=_0x19c5d1(0x8e5)+_0x12c9a7+_0x19c5d1(0x17f)+_0x205fd2+_0x19c5d1(0x7cc)+_0x205fd2+_0x19c5d1(0x361)+_0x1de8a2+_0x19c5d1(0x3a4)+_0xb15d50+'</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>';}_0x4ae199&&_0x4ae199['length']>0x0&&_0x4ae199[_0x19c5d1(0x242)](_0x4f8913=>{const _0x3cae59=_0x19c5d1;let _0x47a186=_0x1278b1?_0x4f8913[_0x3cae59(0x498)]||_0x3cae59(0x595):_0x3cae59(0x303),_0x49205e=_0x1278b1?_0x3cae59(0x224):_0x3cae59(0x14a),_0x7cd74b=_0x1278b1?_0x3cae59(0x51c)+_0x4f8913['ten']:_0x3cae59(0x2c4)+_0x4f8913[_0x3cae59(0x5f9)],_0x27774b=_0x1278b1?_0x4f8913[_0x3cae59(0x60e)]||_0x3cae59(0x221):_0x3cae59(0x112);_0x5355a7+='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22background:'+_0x49205e+';\x20padding:10px\x2015px;\x20border-radius:10px;\x20border-left:4px\x20solid\x20'+_0x47a186+';\x20border-top:\x201px\x20solid\x20'+_0x47a186+_0x3cae59(0x398)+_0x47a186+_0x3cae59(0x2df)+_0x47a186+_0x3cae59(0x21a)+_0x47a186+_0x3cae59(0x7f5)+_0x7cd74b+_0x3cae59(0x431)+_0x27774b+_0x3cae59(0x18b);}),_0x5355a7+=_0x19c5d1(0x42b);}_0x5355a7+=_0x19c5d1(0x1e1)+(_0x4bf263||'Tý')+'\x20('+_0x11f505+_0x19c5d1(0x2b5)+(_0x38d44d||_0x19c5d1(0x591))+_0x19c5d1(0x847)+(_0x36b6e||_0x19c5d1(0x773))+_0x19c5d1(0x4e7);const _0x455f1a=typeof Data72Hau!==_0x19c5d1(0x677)?Data72Hau:typeof PhongThuyCore!==_0x19c5d1(0x677)&&PhongThuyCore[_0x19c5d1(0x588)]?.[_0x19c5d1(0x32f)]?PhongThuyCore['data'][_0x19c5d1(0x32f)]:null;if(_0x31c2cc&&_0x455f1a){let _0x326049=Math[_0x19c5d1(0x7c1)](_0x11f505/0x5)*0x5;if(_0x326049>=0x168)_0x326049=0x0;let _0x4e3e62=(_0x326049-0x5+0x168)%0x168,_0x1a1df5=(_0x326049+0x5)%0x168,_0x39f0a5=_0x455f1a[_0x4e3e62[_0x19c5d1(0x191)]()]||{'ten':_0x19c5d1(0x776),'chatLuong':'Bình\x20Hòa','diem':0x3c},_0x1215d8=_0x455f1a[_0x326049['toString']()]||{'ten':_0x19c5d1(0x5e8),'chatLuong':_0x19c5d1(0x6b9),'diem':0x3c},_0x3bbec0=_0x455f1a[_0x1a1df5[_0x19c5d1(0x191)]()]||{'ten':_0x19c5d1(0x299),'chatLuong':_0x19c5d1(0x6b9),'diem':0x3c};const _0x32f09f=_0x2e7386=>_0x2e7386['includes']('Cát')?_0x19c5d1(0x303):_0x2e7386[_0x19c5d1(0x4c0)](_0x19c5d1(0x2d5))?'#ff3b30':_0x19c5d1(0x2e0);let _0x1a02d4=_0x19c5d1(0x2f6)+(_0x39f0a5[_0x19c5d1(0x5f9)]||_0x19c5d1(0x18e))[_0x19c5d1(0x888)]('\x20')[0x0]+'\x20('+_0x4e3e62+'°)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22font-size:\x200.68rem;\x20color:\x20'+(_0x1278b1?_0x32f09f(_0x39f0a5[_0x19c5d1(0x7c7)]):_0x39f0a5[_0x19c5d1(0x7c7)][_0x19c5d1(0x4c0)](_0x19c5d1(0x2d5))?'#30d158':'#ff3b30')+_0x19c5d1(0x83a)+(_0x1278b1?_0x39f0a5['chatLuong']['replace'](_0x19c5d1(0x5ba),'Đ.')[_0x19c5d1(0x820)]('Tiểu\x20','T.'):_0x39f0a5['chatLuong'][_0x19c5d1(0x4c0)](_0x19c5d1(0x2d5))?_0x19c5d1(0x420):_0x19c5d1(0x871))+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22flex:\x201;\x20text-align:\x20center;\x20background:\x20rgba(255,255,255,0.08);\x20padding:\x208px\x204px;\x20border-radius:\x208px;\x20border:\x201px\x20solid\x20'+(_0x1278b1?_0x32f09f(_0x1215d8[_0x19c5d1(0x7c7)]):_0x1215d8[_0x19c5d1(0x7c7)][_0x19c5d1(0x4c0)](_0x19c5d1(0x2d5))?_0x19c5d1(0x303):_0x19c5d1(0x1ac))+';\x20box-shadow:\x200\x200\x208px\x20'+(_0x1278b1?_0x32f09f(_0x1215d8[_0x19c5d1(0x7c7)]):_0x1215d8[_0x19c5d1(0x7c7)]['includes'](_0x19c5d1(0x2d5))?_0x19c5d1(0x303):_0x19c5d1(0x1ac))+_0x19c5d1(0x55d)+(_0x1215d8[_0x19c5d1(0x5f9)]||_0x19c5d1(0x18e))[_0x19c5d1(0x888)]('\x20')[0x0]+'\x20('+_0x326049+_0x19c5d1(0x566)+(_0x1278b1?_0x32f09f(_0x1215d8[_0x19c5d1(0x7c7)]):_0x1215d8['chatLuong'][_0x19c5d1(0x4c0)]('Hung')?_0x19c5d1(0x303):_0x19c5d1(0x1ac))+_0x19c5d1(0x83a)+(_0x1278b1?_0x1215d8[_0x19c5d1(0x7c7)][_0x19c5d1(0x820)](_0x19c5d1(0x5ba),'Đ.')[_0x19c5d1(0x820)](_0x19c5d1(0x6aa),'T.'):_0x1215d8[_0x19c5d1(0x7c7)][_0x19c5d1(0x4c0)]('Hung')?_0x19c5d1(0x420):'K.\x20NÊN\x20ĐẶT')+_0x19c5d1(0x146)+(_0x3bbec0[_0x19c5d1(0x5f9)]||_0x19c5d1(0x18e))[_0x19c5d1(0x888)]('\x20')[0x0]+'\x20('+_0x1a1df5+_0x19c5d1(0x566)+(_0x1278b1?_0x32f09f(_0x3bbec0['chatLuong']):_0x3bbec0[_0x19c5d1(0x7c7)][_0x19c5d1(0x4c0)](_0x19c5d1(0x2d5))?_0x19c5d1(0x303):_0x19c5d1(0x1ac))+';\x20font-weight:\x20bold;\x20text-transform:\x20uppercase;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+(_0x1278b1?_0x3bbec0['chatLuong'][_0x19c5d1(0x820)](_0x19c5d1(0x5ba),'Đ.')[_0x19c5d1(0x820)]('Tiểu\x20','T.'):_0x3bbec0['chatLuong'][_0x19c5d1(0x4c0)](_0x19c5d1(0x2d5))?_0x19c5d1(0x420):_0x19c5d1(0x871))+_0x19c5d1(0x375);_0x5355a7+='\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22margin-top:20px;\x20padding:15px;\x20background:rgba(0,255,120,0.02);\x20border-radius:12px;\x20border:1px\x20solid\x20rgba(0,255,170,0.15);\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<strong\x20style=\x22color:#00ffaa;\x20font-size:0.9rem;\x20letter-spacing:\x200.3px;\x20display:\x20block;\x22>🌟\x20PHAN\x20PHỐI\x20ĐỊA\x20KHÍ\x20ĐỘNG:\x20LONG\x20MẠCH\x2072\x20HẬU\x20(Bước\x205°)</strong>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-size:\x200.8rem;\x20color:\x20#8a8a8f;\x20margin-top:\x202px;\x20display:\x20block;\x22>Mạch\x20long\x20khí\x20chạy\x20ngầm\x20cố\x20định\x20dưới\x20nền\x20đất:</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x1a02d4+_0x19c5d1(0x15d)+_0x31c2cc[_0x19c5d1(0x5f9)]+_0x19c5d1(0x65d)+_0x31c2cc['chatLuong']+_0x19c5d1(0x2a6)+_0x31c2cc[_0x19c5d1(0x7b1)]+'pt).<br>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22color:#eee;\x20font-style:\x20italic;\x20display:\x20block;\x20margin-top:\x203px;\x22>➔\x20Bản\x20chất:\x20'+_0x31c2cc[_0x19c5d1(0x3c4)]+'</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>';}_0x5355a7+=_0x19c5d1(0x42b);const _0x222fa1=document[_0x19c5d1(0x27c)](_0x19c5d1(0x4ce))||document[_0x19c5d1(0x27c)](_0x19c5d1(0x1a7));if(_0x222fa1)_0x222fa1[_0x19c5d1(0x2d1)]=_0x5355a7;}function kiemTraKhongVong(_0x1f9991){const _0x5530a1=_0x3793e5,_0x4ef7db=(_0x1f9991%0x168+0x168)%0x168,_0x2ed12f=[_0x5530a1(0x324),_0x5530a1(0x8af),_0x5530a1(0x63b),'Tốn\x20(Đông\x20Nam)',_0x5530a1(0x356),_0x5530a1(0x522),'Đoài\x20(Chính\x20Tây)',_0x5530a1(0x662)],_0x4c077b=['Tý',_0x5530a1(0x295),'Sửu','Cấn',_0x5530a1(0x202),_0x5530a1(0x3f0),_0x5530a1(0x8d6),'Ất',_0x5530a1(0x8bf),'Tốn','Tỵ',_0x5530a1(0x5eb),'Ngọ','Đinh',_0x5530a1(0x1fb),_0x5530a1(0xf2),_0x5530a1(0x73d),_0x5530a1(0x611),_0x5530a1(0x2f2),_0x5530a1(0x6ed),'Tuất',_0x5530a1(0x623),'Hợi',_0x5530a1(0x2be)];let _0x4a1dbb=(_0x4ef7db-22.5)%0x2d;if(_0x4a1dbb<0x0)_0x4a1dbb+=0x2d;_0x4a1dbb=Math[_0x5530a1(0x1dc)](_0x4a1dbb,0x2d-_0x4a1dbb),_0x4a1dbb=Math[_0x5530a1(0x7c1)](_0x4a1dbb*0x2710)/0x2710;if(_0x4a1dbb<=0.5){const _0xa53cbf=(Math['round']((_0x4ef7db-22.5)/0x2d)+0x8)%0x8;return{'loai':_0x5530a1(0x41b),'mucDo':_0x5530a1(0x5d4),'saiLech':_0x4a1dbb,'toaDoTuyến':(Math['round']((_0x4ef7db-22.5)/0x2d)*0x2d+22.5)%0x168,'message':_0x5530a1(0x13b)+_0x4ef7db+_0x5530a1(0x15f)+_0x2ed12f[_0xa53cbf]+_0x5530a1(0x67e)+_0x2ed12f[(_0xa53cbf+0x1)%0x8]+_0x5530a1(0x523)};}let _0x24620c=(_0x4ef7db-7.5)%0xf;if(_0x24620c<0x0)_0x24620c+=0xf;_0x24620c=Math['min'](_0x24620c,0xf-_0x24620c),_0x24620c=Math[_0x5530a1(0x7c1)](_0x24620c*0x2710)/0x2710;if(_0x24620c<=0.6){const _0x5c6751=(Math[_0x5530a1(0x7c1)]((_0x4ef7db-7.5)/0xf)+0x18)%0x18;return{'loai':_0x5530a1(0x29f),'mucDo':_0x5530a1(0x818),'saiLech':_0x24620c,'toaDoTuyến':(Math[_0x5530a1(0x7c1)]((_0x4ef7db-7.5)/0xf)*0xf+7.5)%0x168,'message':_0x5530a1(0x2de)+_0x4c077b[_0x5c6751]+_0x5530a1(0xfe)+_0x4c077b[(_0x5c6751+0x1)%0x18]+'].\x20Khí\x20trường\x20nghèo\x20nàn,\x20lộn\x20xộn\x20Âm\x20Dương.'};}return null;}function layPhanLoaiKhiCuc(_0x1d0b21){const _0x40dcdd=_0x3793e5;if(!_0x1d0b21||typeof ConfigPhongThuy===_0x40dcdd(0x677))return _0x40dcdd(0x17e);const _0x42d463=ConfigPhongThuy[_0x1d0b21];if(!_0x42d463||_0x42d463['isCat']===![])return _0x40dcdd(0x28c);const _0x449b93=_0x42d463['title']||'';if(/Nhà|Cửa|Cổng|Ban Công|Biển Hiệu|Showroom/i[_0x40dcdd(0x6e5)](_0x449b93))return _0x40dcdd(0x461);if(/Bàn Làm Việc|Sếp|Lãnh Đạo|Học|Phòng Khách|Phòng Ngủ Chính|Không Gian/i[_0x40dcdd(0x6e5)](_0x449b93))return _0x40dcdd(0x17e);if(/Thờ|Thần Tài|Giường|Két Sắt|Quầy|Lò Nướng/i[_0x40dcdd(0x6e5)](_0x449b93))return _0x40dcdd(0x6be);return _0x40dcdd(0x17e);}const PhongThuyCore={'data':{'Son24':typeof SON_24_CONFIG!=='undefined'?SON_24_CONFIG:[],'MinhChau':typeof MaTranMinhChau!==_0x3793e5(0x677)?MaTranMinhChau:{},'Hau72':typeof Data72Hau!==_0x3793e5(0x677)?Data72Hau:{},'Van':typeof VAN_DATA!==_0x3793e5(0x677)?VAN_DATA:{},'Sat':typeof DATA_THANSAT!==_0x3793e5(0x677)?DATA_THANSAT:{},'BatTrachMap':typeof bátTrạchMap!==_0x3793e5(0x677)?bátTrạchMap:{},'Config':typeof ConfigPhongThuy!==_0x3793e5(0x677)?ConfigPhongThuy:{}},'getNormalizedDegree':function(_0x1edb7b){const _0x55cbad=_0x3793e5;if(typeof _0x1edb7b!==_0x55cbad(0x6ad)||isNaN(_0x1edb7b))return 0x0;return(_0x1edb7b%0x168+0x168)%0x168;},'getSonObj':function(_0x2cbfae){const _0x517a77=_0x3793e5,_0xee868c=this[_0x517a77(0x5cd)](_0x2cbfae);return this[_0x517a77(0x588)][_0x517a77(0x4dc)][_0x517a77(0x580)](_0x32a369=>{const _0x394cd3=_0x517a77;if(_0x32a369[_0x394cd3(0x1dc)]>_0x32a369[_0x394cd3(0x4db)])return _0xee868c>=_0x32a369[_0x394cd3(0x1dc)]||_0xee868c<_0x32a369[_0x394cd3(0x4db)];return _0xee868c>=_0x32a369[_0x394cd3(0x1dc)]&&_0xee868c<_0x32a369[_0x394cd3(0x4db)];})||this['data'][_0x517a77(0x4dc)][0x0];}};function getSonObjByDegree(_0x28cb6a){const _0x2a73bc=_0x3793e5;return PhongThuyCore[_0x2a73bc(0x459)](_0x28cb6a);}function tinhDiemTongHop(_0x18d595,_0x3a7558,_0x1ce7e3,_0x2540f9,_0x490f0d,_0x117607){const _0xf6e763=_0x3793e5,_0x24b4f3=_0x1f7581=>{let _0x3927b1=(_0x1f7581%0x168+0x168)%0x168,_0x373dc7=_0x3927b1%0xf;if(_0x373dc7<0.5||_0x373dc7>14.5)return!![];return![];},_0x44bf9d=_0xcd75fa=>{const _0x31b3e0=_0x2f80,_0x265e09=(_0xcd75fa%0x168+0x168)%0x168,_0x5b9d0a=PhongThuyCore['getSonObj'](_0x265e09),_0x2ab804=_0x5b9d0a['name'],_0x40f0e3=_0x1ce7e3?parseInt(_0x1ce7e3,0xa):typeof layNamKhaoSatThienVan===_0x31b3e0(0x60a)?layNamKhaoSatThienVan():new Date()['getFullYear'](),_0x57a3dc=PhongThuyCore[_0x31b3e0(0x588)][_0x31b3e0(0x741)][_0x2540f9]||{'title':_0x31b3e0(0x6d1),'isCat':!![]},_0x52cff0=_0x57a3dc[_0x31b3e0(0x248)];let _0x10e021=typeof _0x117607===_0x31b3e0(0x6ad)&&_0x117607>0x0?_0x117607:0x0;const _0x44ac9b={'Bắc':'N','Đông\x20Bắc':'NE','Đông':'E','Đông\x20Nam':'SE','Nam':'S','Tây\x20Nam':'SW','Tây':'W','Tây\x20Bắc':'NW'},_0x3d005e=_0x44ac9b[_0x5b9d0a[_0x31b3e0(0x218)]]||'N',_0x4f9783=_0x18d595?_0x18d595[_0x31b3e0(0x50b)]()[_0x31b3e0(0x42a)](0x0)[_0x31b3e0(0x23a)]()+_0x18d595[_0x31b3e0(0x50b)]()[_0x31b3e0(0x173)](0x1)[_0x31b3e0(0x1b9)]():_0x31b3e0(0x6a4),_0x3ab9c0=PhongThuyCore[_0x31b3e0(0x588)]['BatTrachMap'][_0x4f9783]?PhongThuyCore[_0x31b3e0(0x588)][_0x31b3e0(0xe9)][_0x4f9783][_0x3d005e]||_0x31b3e0(0x8a2):_0x31b3e0(0x8a2),_0x438959=[_0x31b3e0(0x6a4),'Ly','Chấn','Tốn'],_0x54c8a5=['Càn','Khôn',_0x31b3e0(0x6ef),_0x31b3e0(0x124)],_0xb8a76f=_0x438959['includes'](_0x4f9783),_0x18cc5f=['N','S','E','SE'][_0x31b3e0(0x4c0)](_0x3d005e);let _0x543182='';_0x52cff0&&((_0xb8a76f&&!_0x18cc5f||!_0xb8a76f&&_0x18cc5f)&&(_0x543182=_0x31b3e0(0x13f)+_0x5b9d0a[_0x31b3e0(0x218)]+_0x31b3e0(0x4d3)+_0x4f9783+'.'));const _0x338fd0=typeof layPhanLoaiKhiCuc===_0x31b3e0(0x60a)?layPhanLoaiKhiCuc(_0x2540f9):'TỤ_KHÍ_ĐỊNH_VỊ';let _0x554dc2={'batTrach':0.35,'son':0.35,'hau':0.3};switch(_0x338fd0){case _0x31b3e0(0x461):_0x554dc2={'batTrach':0.25,'son':0.3,'hau':0.45};break;case _0x31b3e0(0x6be):_0x554dc2={'batTrach':0.35,'son':0.45,'hau':0.2};break;case _0x31b3e0(0x17e):_0x554dc2={'batTrach':0.5,'son':0.35,'hau':0.15};break;case _0x31b3e0(0x28c):_0x554dc2={'batTrach':0.4,'son':0.3,'hau':0.3};break;}const _0x47ac15={'Sinh\x20Khí':0x5f,'Diên\x20Niên':0x5a,'Thiên\x20Y':0x55,'Phục\x20Vị':0x50,'Họa\x20Hại':0x28,'Lục\x20Sát':0x1e,'Ngũ\x20Quỷ':0x14,'Tuyệt\x20Mệnh':0xa};let _0x21d441=_0x47ac15[_0x3ab9c0]||0x3c;const _0x563184=MaTranMinhChau[_0x4f9783]||MaTranMinhChau[_0x31b3e0(0x6a4)],_0x197e61=_0x563184[_0x2ab804]||{'diem':0x46,'text':_0x31b3e0(0x837)};let _0x347b9b=_0x197e61[_0x31b3e0(0x7b1)];const _0x672f7f=getCurrentHauInfo(_0x265e09,_0x2540f9,_0x40f0e3,_0x4f9783,_0x490f0d);let _0x1a2ff6=_0x672f7f[_0x31b3e0(0x136)],_0x174a60=_0x347b9b+_0x1a2ff6;if(_0x490f0d&&!isNaN(_0x490f0d)){const _0x44394e=[_0x31b3e0(0x73d),_0x31b3e0(0x2f2),_0x31b3e0(0x560),_0x31b3e0(0x609),'Tý',_0x31b3e0(0x7d7),_0x31b3e0(0x202),'Mão',_0x31b3e0(0x8bf),'Tỵ',_0x31b3e0(0x7e8),'Mùi'],_0x121fde=_0x44394e[parseInt(_0x490f0d,0xa)%0xc];typeof getDoiXungDiaChi===_0x31b3e0(0x60a)&&_0x2ab804===getDoiXungDiaChi(_0x121fde)&&(_0x174a60-=0xc);}let _0x422a32=0x1;const _0x52a4ef=Math[_0x31b3e0(0x3b6)]((_0x40f0e3-0x748)/0x14)%0x9+0x1;if(PhongThuyCore['data']['Van'][_0x52a4ef]?.[_0x3d005e]){const _0x3f34e5=PhongThuyCore['data'][_0x31b3e0(0x682)][_0x52a4ef][_0x3d005e];if(_0x3f34e5[_0x31b3e0(0x734)]===_0x31b3e0(0x576))_0x422a32=1.15;else{if(_0x3f34e5[_0x31b3e0(0x734)]==='good')_0x422a32=1.08;else{if(_0x3f34e5['loai']===_0x31b3e0(0x7e0))_0x422a32=0.88;else{if(_0x3f34e5['loai']==='worst')_0x422a32=0.75;}}}}let _0x1aa062=0x0;const _0x375781=typeof getPhongThuySatTinh===_0x31b3e0(0x60a)?getPhongThuySatTinh(_0x2ab804,_0x40f0e3):[];_0x375781['forEach'](_0x12e536=>{const _0x82461b=_0x31b3e0;if(_0x12e536[_0x82461b(0x5f9)][_0x82461b(0x4c0)](_0x82461b(0x28e)))_0x1aa062+=0x19;else{if(_0x12e536['ten']['includes'](_0x82461b(0x384)))_0x1aa062+=0x12;else{if(_0x12e536[_0x82461b(0x5f9)][_0x82461b(0x4c0)]('TUẾ\x20PHÁ'))_0x1aa062+=0xc;else{if(_0x12e536[_0x82461b(0x5f9)][_0x82461b(0x4c0)](_0x82461b(0x6b5)))_0x1aa062+=0xf;}}}});let _0x475331;if(_0x52cff0){let _0x224355=_0x174a60*_0x422a32-_0x1aa062;_0x475331=_0x21d441*_0x554dc2[_0x31b3e0(0x777)]+_0x224355*(_0x554dc2[_0x31b3e0(0x87d)]+_0x554dc2['hau']);}else{let _0x3e6e43=0x64-_0x21d441,_0xb1cdb8=0x64-_0x347b9b,_0x1dc30e=_0xb1cdb8+_0x1a2ff6*-1.2*_0x422a32+_0x1aa062*0.6;_0x475331=_0x3e6e43*_0x554dc2[_0x31b3e0(0x777)]+_0x1dc30e*(_0x554dc2[_0x31b3e0(0x87d)]+_0x554dc2[_0x31b3e0(0x1c9)]);}let _0x167066=![],_0x21d79='',_0x4712f9=new Set(),_0x16d334=[],_0x33908b=_0x265e09-_0x10e021/0x2,_0x51380c=_0x265e09+_0x10e021/0x2;for(let _0x2b3e90=_0x33908b;_0x2b3e90<=_0x51380c;_0x2b3e90+=0.5){let _0x330f9b=(_0x2b3e90%0x168+0x168)%0x168,_0x498b62=getCurrentHauInfo(_0x330f9b,_0x2540f9,_0x40f0e3,_0x4f9783,_0x490f0d),_0x2bd9ff=Math[_0x31b3e0(0x7c1)](_0x330f9b/0x5)*0x5%0x168;if(!_0x4712f9[_0x31b3e0(0x481)](_0x2bd9ff)){_0x4712f9[_0x31b3e0(0x245)](_0x2bd9ff);let _0x3d6b47=Math[_0x31b3e0(0x4db)](0x5,Math[_0x31b3e0(0x1dc)](0x62,Math[_0x31b3e0(0x7c1)](_0x498b62[_0x31b3e0(0x45e)]*_0x422a32-_0x1aa062*0.5)));_0x16d334[_0x31b3e0(0x65b)]({'moc':_0x2bd9ff,'ten':_0x498b62[_0x31b3e0(0x5f9)],'diem':_0x3d6b47});}if(typeof kiemTraKhongVong===_0x31b3e0(0x60a)){let _0x3ac5fa=kiemTraKhongVong(_0x330f9b);_0x3ac5fa&&(_0x167066=!![],_0x21d79=_0x3ac5fa[_0x31b3e0(0x734)]);}}if(_0x167066){if(_0x21d79===_0x31b3e0(0x41b))_0x475331=0xc;else _0x475331=Math[_0x31b3e0(0x4db)](0xf,_0x475331-0x1e);}let _0x599472=Math[_0x31b3e0(0x4db)](0x5,Math[_0x31b3e0(0x1dc)](0x62,Math[_0x31b3e0(0x7c1)](_0x475331))),_0x333e24={'ten':_0x672f7f['ten'],'diem':Math[_0x31b3e0(0x4db)](0x5,Math[_0x31b3e0(0x1dc)](0x62,Math[_0x31b3e0(0x7c1)](_0x672f7f['diemGoc']*_0x422a32-_0x1aa062*0.5))),'chatLuong':_0x672f7f[_0x31b3e0(0x7c7)],'emoji':_0x672f7f[_0x31b3e0(0x341)],'ynghia':_0x672f7f[_0x31b3e0(0x3c4)],'giaiphap':_0x197e61[_0x31b3e0(0x353)]||_0x672f7f[_0x31b3e0(0x353)]||_0x31b3e0(0x363)},_0x3aa449=_0x599472>=0x55?_0x31b3e0(0x604):_0x599472>=0x48?_0x31b3e0(0x5d3):_0x599472>=0x32?_0x31b3e0(0x8bc):'HUNG\x20CỤC';return{'diem':_0x599472,'level':_0x3aa449,'message':(_0x543182?_0x543182+'\x20':'')+(_0x197e61[_0x31b3e0(0x80e)]||''),'hoaGiai':_0x197e61[_0x31b3e0(0x353)]||'','khongVong':_0x167066?{'loai':_0x21d79}:null,'sonName':_0x2ab804,'hauInfo':_0x333e24,'satTinhs':_0x375781,'chiTietCacHauBiChiem':_0x16d334};};if(_0x24b4f3(_0x3a7558)){let _0x46e62f=_0x44bf9d(_0x3a7558-0.5),_0x2c48d8=_0x44bf9d(_0x3a7558+0.5),_0x51d1e4=Object[_0xf6e763(0x60c)]({},_0x46e62f);return _0x51d1e4[_0xf6e763(0x7b1)]=Math[_0xf6e763(0x4db)](0x5,Math[_0xf6e763(0x1dc)](0x62,Math[_0xf6e763(0x7c1)]((_0x46e62f[_0xf6e763(0x7b1)]+_0x2c48d8[_0xf6e763(0x7b1)])/0x2))),_0x51d1e4[_0xf6e763(0x145)]=_0x51d1e4[_0xf6e763(0x7b1)]>=0x55?_0xf6e763(0x604):_0x51d1e4[_0xf6e763(0x7b1)]>=0x48?_0xf6e763(0x5d3):_0x51d1e4[_0xf6e763(0x7b1)]>=0x32?_0xf6e763(0x8bc):_0xf6e763(0x8a0),_0x51d1e4[_0xf6e763(0x4f4)]=_0x46e62f[_0xf6e763(0x4f4)],_0x51d1e4;}return _0x44bf9d(_0x3a7558);}let lastHeading=null,orientationListenerAdded=![],rafId=null,lastUpdateTime=0x0;const SMOOTH_MIN=0.08,SMOOTH_MAX=0.55,THROTTLE_MS=0x10;let magneticDeclination=0x0,lastAccuracy=0x0,isMagneticWarningActive=![];function handleOrientation(_0x3512ca){const _0x5c5816=_0x3793e5;if(window[_0x5c5816(0x18c)]){if(typeof window[_0x5c5816(0x105)]!==_0x5c5816(0x677)){lastHeading=window['holdedHeading'];if(typeof currentHeading!==_0x5c5816(0x677))currentHeading=window[_0x5c5816(0x105)];if(rafId)cancelAnimationFrame(rafId);rafId=requestAnimationFrame(()=>{const _0x158c4e=_0x5c5816;executeUIUpdate(window[_0x158c4e(0x105)],window[_0x158c4e(0x105)]);});}return;}let _0x375a15=null;const _0x13fa28=Date[_0x5c5816(0x57f)](),_0x22bd30=_0x3512ca[_0x5c5816(0x814)];_0x22bd30!==undefined&&_0x22bd30!==null&&_0x22bd30>=0x0&&((Math[_0x5c5816(0x330)](_0x22bd30-lastAccuracy)>0x3||_0x22bd30>0xf&&lastAccuracy<=0xf||_0x22bd30>0x1e&&lastAccuracy<=0x1e||_0x22bd30<=0xf&&lastAccuracy>0xf)&&(lastAccuracy=_0x22bd30,updateMagneticStatus(_0x22bd30)));if(_0x3512ca[_0x5c5816(0x55a)]!==undefined&&_0x3512ca[_0x5c5816(0x55a)]!==null)_0x375a15=_0x3512ca[_0x5c5816(0x55a)];else _0x3512ca[_0x5c5816(0x8a7)]!==undefined&&_0x3512ca[_0x5c5816(0x8a7)]!==null&&(_0x375a15=(0x168-_0x3512ca[_0x5c5816(0x8a7)])%0x168);if(_0x375a15===null)return;if(document[_0x5c5816(0x805)]?.['id']===_0x5c5816(0x685))return;if(_0x13fa28-lastUpdateTime<THROTTLE_MS&&lastHeading!==null)return;lastUpdateTime=_0x13fa28;if(lastHeading===null){lastHeading=_0x375a15,executeUIUpdate(lastHeading,lastHeading);return;}let _0x44849c=_0x375a15-lastHeading;if(_0x44849c>0xb4)_0x44849c-=0x168;if(_0x44849c<-0xb4)_0x44849c+=0x168;const _0x4208ec=Math[_0x5c5816(0x330)](_0x44849c);let _0x146de1=SMOOTH_MIN;if(_0x4208ec>0xc)_0x146de1=SMOOTH_MAX;else _0x4208ec>1.5&&(_0x146de1=SMOOTH_MIN+_0x4208ec/0xc*(SMOOTH_MAX-SMOOTH_MIN));const _0x1ccf38=lastHeading+_0x44849c*_0x146de1;lastHeading=(_0x1ccf38%0x168+0x168)%0x168;const _0x1d23c3=lastHeading,_0x5257e0=(lastHeading+(magneticDeclination||0x0)+0x168)%0x168;if(typeof currentHeading!==_0x5c5816(0x677))currentHeading=_0x1d23c3;if(_0x4208ec>0.4){const _0x5d106e=document[_0x5c5816(0x27c)](_0x5c5816(0x3d6));if(_0x5d106e)_0x5d106e[_0x5c5816(0x3c2)][_0x5c5816(0x59f)](_0x5c5816(0x473));clearTimeout(dừngKimTimeout),kichHoatBoDemDungKim();}if(rafId)cancelAnimationFrame(rafId);rafId=requestAnimationFrame(()=>{executeUIUpdate(_0x5257e0,_0x1d23c3);});}function executeUIUpdate(_0x54cc40,_0x425461){const _0x461ab5=_0x3793e5;if(typeof updateCompassUI==='function')updateCompassUI(_0x425461);if(typeof updateDegreeDisplay===_0x461ab5(0x60a))updateDegreeDisplay(_0x425461);if(typeof recalculateFate==='function')recalculateFate();}function updateMagneticStatus(_0x32c007){const _0x448be6=_0x3793e5,_0x42da25=document[_0x448be6(0x27c)](_0x448be6(0x14c)),_0x37755f=document[_0x448be6(0x27c)](_0x448be6(0x794));if(!_0x42da25||!_0x37755f)return;let _0x4f3b41='#4caf50',_0x1464ee=_0x448be6(0x3f5);if(_0x32c007>0xf&&_0x32c007<=0x1e)_0x4f3b41=_0x448be6(0x85e),_0x1464ee='NHIỄU\x20NHẸ';else _0x32c007>0x1e&&(_0x4f3b41=_0x448be6(0x60d),_0x1464ee=_0x448be6(0x287),typeof showToast===_0x448be6(0x60a)&&!isMagneticWarningActive&&(showToast(_0x448be6(0x5da),!![]),isMagneticWarningActive=!![],setTimeout(()=>{isMagneticWarningActive=![];},0x2710)));_0x37755f[_0x448be6(0x342)]!==_0x1464ee&&(_0x42da25[_0x448be6(0xf0)]['background']=_0x4f3b41,_0x37755f['innerText']=_0x1464ee);}function showToast(_0x122a4f,_0xdfc6f2=![]){const _0x533eb7=_0x3793e5,_0x4550f2=document[_0x533eb7(0x27c)](_0x533eb7(0x6f3));if(!_0x4550f2)return;const _0x34a975=document[_0x533eb7(0x7cd)]('div');_0x34a975[_0x533eb7(0xf0)]['cssText']=_0x533eb7(0x162)+(_0xdfc6f2?_0x533eb7(0x8e8):_0x533eb7(0x729))+_0x533eb7(0x30b)+(_0xdfc6f2?'#f8d7da':_0x533eb7(0x2e0))+';\x0a\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20'+(_0xdfc6f2?'#f5c6cb':_0x533eb7(0x2e0))+_0x533eb7(0x788),_0x34a975[_0x533eb7(0x342)]=_0x122a4f,_0x4550f2[_0x533eb7(0x33b)](_0x34a975),setTimeout(()=>_0x34a975[_0x533eb7(0x59f)](),0xbb8);}if(typeof window!==_0x3793e5(0x677)){const styleSheet=document[_0x3793e5(0x7cd)](_0x3793e5(0xf0));styleSheet[_0x3793e5(0x342)]=_0x3793e5(0x211),document[_0x3793e5(0x692)][_0x3793e5(0x33b)](styleSheet);}function getCleanValue(_0x2bb7b5){const _0xa830dd=_0x3793e5;if(!_0x2bb7b5)return'';let _0xe7519=String(_0x2bb7b5)[_0xa830dd(0x50b)]()[_0xa830dd(0x820)](/,/g,'.'),_0x1d7a24=_0xe7519['startsWith']('-'),_0x1c98a4=_0x1d7a24?_0xe7519[_0xa830dd(0x403)](0x1):_0xe7519,_0x33083a='',_0x3a2eb0=0x0;for(let _0x1a0279=0x0;_0x1a0279<_0x1c98a4[_0xa830dd(0x110)];_0x1a0279++){let _0x2264e7=_0x1c98a4[_0x1a0279];if(_0x2264e7>='0'&&_0x2264e7<='9')_0x33083a+=_0x2264e7;else{if(_0x2264e7==='.'&&_0x3a2eb0===0x0)_0x33083a+=_0x2264e7,_0x3a2eb0=0x1;else break;}}if(_0x33083a['endsWith']('.'))_0x33083a=_0x33083a[_0xa830dd(0x173)](0x0,-0x1);let _0x14ed29=(_0x1d7a24?'-':'')+(_0x33083a||'');return _0x14ed29==='-'||_0x14ed29===''?'':_0x14ed29;}const WMM_COEFFS={'epoch':0x7e9,'data':[[0x1,0x0,-29351.8,0x0,0xc,0x0],[0x1,0x1,-1410.8,4545.4,9.7,-21.5],[0x2,0x0,-2556.6,0x0,-11.6,0x0],[0x2,0x1,2951.1,-3133.6,-5.2,-27.7],[0x2,0x2,1649.3,-815.1,-0x8,-12.1],[0x3,0x0,0x551,0x0,-1.3,0x0],[0x3,0x1,-2404.1,-56.6,-4.2,0x4],[0x3,0x2,1243.8,237.5,0.4,-0.3],[0x3,0x3,453.6,-549.5,-15.6,-4.1],[0x4,0x0,0x37f,0x0,-1.6,0x0],[0x4,0x1,799.5,278.6,-2.4,-1.1],[0x4,0x2,55.7,-133.9,-0x6,4.1],[0x4,0x3,-281.1,0xd4,5.6,1.6],[0x4,0x4,12.1,-375.6,-0x7,-4.4],[0x5,0x0,-233.2,0x0,0.6,0x0],[0x5,0x1,368.9,45.4,1.4,-0.5],[0x5,0x2,187.2,220.2,0x0,2.2],[0x5,0x3,-138.7,-122.9,0.6,0.4],[0x5,0x4,-0x8e,0x2b,2.2,1.7],[0x5,0x5,20.9,106.1,0.9,1.9],[0x6,0x0,64.4,0x0,-0.2,0x0],[0x6,0x1,63.8,-18.4,-0.4,0.3],[0x6,0x2,76.9,16.8,0.9,-1.6],[0x6,0x3,-115.7,48.8,1.2,-0.4],[0x6,0x4,-40.9,-59.8,-0.9,0.9],[0x6,0x5,14.9,10.9,0.3,0.7],[0x6,0x6,-60.7,72.7,0.9,0.9],[0x7,0x0,79.5,0x0,-0x0,0x0],[0x7,0x1,-0x4d,-48.9,-0.1,0.6],[0x7,0x2,-8.8,-14.4,-0.1,0.5],[0x7,0x3,59.3,-0x1,0.5,-0.8],[0x7,0x4,15.8,23.4,-0.1,0x0],[0x7,0x5,2.5,-7.4,-0.8,-0x1],[0x7,0x6,-11.1,-25.1,-0.8,0.6],[0x7,0x7,14.2,-2.3,0.8,-0.2],[0x8,0x0,23.2,0x0,-0.1,0x0],[0x8,0x1,10.8,7.1,0.2,-0.2],[0x8,0x2,-17.5,-12.6,0x0,0.5],[0x8,0x3,0x2,11.4,0.5,-0.4],[0x8,0x4,-21.7,-9.7,-0.1,0.4],[0x8,0x5,16.9,12.7,0.3,-0.5],[0x8,0x6,0xf,0.7,0.2,-0.6],[0x8,0x7,-16.8,-5.2,-0x0,0.3],[0x8,0x8,0.9,3.9,0.2,0.2],[0x9,0x0,4.6,0x0,-0x0,0x0],[0x9,0x1,7.8,-24.8,-0.1,-0.3],[0x9,0x2,0x3,12.2,0.1,0.3],[0x9,0x3,-0.2,8.3,0.3,-0.3],[0x9,0x4,-2.5,-3.3,-0.3,0.3],[0x9,0x5,-13.1,-5.2,0x0,0.2],[0x9,0x6,2.4,7.2,0.3,-0.1],[0x9,0x7,8.6,-0.6,-0.1,-0.2],[0x9,0x8,-8.7,0.8,0.1,0.4],[0x9,0x9,-12.9,0xa,-0.1,0.1],[0xa,0x0,-1.3,0x0,0.1,0x0],[0xa,0x1,-6.4,3.3,0x0,0x0],[0xa,0x2,0.2,0x0,0.1,-0x0],[0xa,0x3,0x2,2.4,0.1,-0.2],[0xa,0x4,-0x1,5.3,-0x0,0.1],[0xa,0x5,-0.6,-9.1,-0.3,-0.1],[0xa,0x6,-0.9,0.4,0x0,0.1],[0xa,0x7,1.5,-4.2,-0.1,0x0],[0xa,0x8,0.9,-3.8,-0.1,-0.1],[0xa,0x9,-2.7,0.9,-0x0,0.2],[0xa,0xa,-3.9,-9.1,-0x0,-0x0],[0xb,0x0,2.9,0x0,0x0,0x0],[0xb,0x1,-1.5,0x0,-0x0,-0x0],[0xb,0x2,-2.5,2.9,0x0,0.1],[0xb,0x3,2.4,-0.6,0x0,-0x0],[0xb,0x4,-0.6,0.2,0x0,0.1],[0xb,0x5,-0.1,0.5,-0.1,-0x0],[0xb,0x6,-0.6,-0.3,0x0,-0x0],[0xb,0x7,-0.1,-1.2,-0x0,0.1],[0xb,0x8,1.1,-1.7,-0.1,-0x0],[0xb,0x9,-0x1,-2.9,-0.1,0x0],[0xb,0xa,-0.2,-1.8,-0.1,0x0],[0xb,0xb,2.6,-2.3,-0.1,0x0],[0xc,0x0,-0x2,0x0,0x0,0x0],[0xc,0x1,-0.2,-1.3,0x0,-0x0],[0xc,0x2,0.3,0.7,-0x0,0x0],[0xc,0x3,1.2,0x1,-0x0,-0.1],[0xc,0x4,-1.3,-1.4,-0x0,0.1],[0xc,0x5,0.6,-0x0,-0x0,-0x0],[0xc,0x6,0.6,0.6,0.1,-0x0],[0xc,0x7,0.5,-0.1,-0x0,-0x0],[0xc,0x8,-0.1,0.8,0x0,0x0],[0xc,0x9,-0.4,0.1,0x0,-0x0],[0xc,0xa,-0.2,-0x1,-0.1,-0x0],[0xc,0xb,-1.3,0.1,-0x0,0x0],[0xc,0xc,-0.7,0.2,-0.1,-0.1]]},TRAC_DIA_CORE={'ZONES':{'HN':0x69,'DDN':0x6c,'HCM':106.6,'CT':0x69,'102':0x66,'111':0x6f},'getZone'(_0x598471){const _0x365bc8=_0x3793e5;if(typeof _0x598471===_0x365bc8(0x8ac)&&this[_0x365bc8(0x10b)][_0x598471])return this[_0x365bc8(0x10b)][_0x598471];return _0x598471||0x69;},'tmerc_en'(_0x2f5f0a){const _0x2008a2=new Float64Array(0x5);_0x2008a2[0x0]=0x1-_0x2f5f0a*(0.25+_0x2f5f0a*(0.046875+_0x2f5f0a*(0.01953125+_0x2f5f0a*0.01068115234375))),_0x2008a2[0x1]=_0x2f5f0a*(0.75-_0x2f5f0a*(0.046875+_0x2f5f0a*(0.01953125+_0x2f5f0a*0.01068115234375)));const _0x3847e4=_0x2f5f0a*_0x2f5f0a;return _0x2008a2[0x2]=_0x3847e4*(0.46875-_0x2f5f0a*(0.013020833333333334+_0x2f5f0a*0.007120768229166667)),_0x2008a2[0x3]=_0x3847e4*_0x2f5f0a*(0.3645833333333333-_0x2f5f0a*0.005696614583333333),_0x2008a2[0x4]=_0x3847e4*_0x2f5f0a*_0x2f5f0a*0.3076171875,_0x2008a2;},'pj_mlfn'(_0x573614,_0x2293de,_0x39b959,_0x2b1334){return _0x39b959*=_0x2293de,_0x2293de*=_0x2293de,_0x2b1334[0x0]*_0x573614-_0x39b959*(_0x2b1334[0x1]+_0x2293de*(_0x2b1334[0x2]+_0x2293de*(_0x2b1334[0x3]+_0x2293de*_0x2b1334[0x4])));},'pj_inv_mlfn'(_0x4c273c,_0x2d8ec1,_0xd30e7e){const _0x213e4e=_0x3793e5,_0xc8b1f0=1e-10,_0xae58aa=0x1/(0x1-_0x2d8ec1);let _0x4a0d0=_0x4c273c;for(let _0x256550=0x14;_0x256550>0x0;--_0x256550){let _0x407981=Math[_0x213e4e(0x347)](_0x4a0d0),_0x496bd3=0x1-_0x2d8ec1*_0x407981*_0x407981,_0x4e2f32=(this[_0x213e4e(0x843)](_0x4a0d0,_0x407981,Math[_0x213e4e(0x22f)](_0x4a0d0),_0xd30e7e)-_0x4c273c)*(_0x496bd3*Math['sqrt'](_0x496bd3))*_0xae58aa;_0x4a0d0-=_0x4e2f32;if(Math[_0x213e4e(0x330)](_0x4e2f32)<_0xc8b1f0)return _0x4a0d0;}return _0x4a0d0;},'vn2000ToWGS84'(_0x110a0b,_0x38a082,_0x1b2882=0x69){const _0xd74378=_0x3793e5;try{const _0x18d65a=this[_0xd74378(0x744)](_0x1b2882),_0x4d3fca=0x615299,_0x394f6e=0x1/298.257223563,_0xbf1d85=0x2*_0x394f6e-_0x394f6e*_0x394f6e,_0x1030e6=_0xbf1d85/(0x1-_0xbf1d85),_0x8dd52a=this[_0xd74378(0x172)](_0xbf1d85),_0x45635d=(_0x110a0b-0x7a120)/0.9999,_0x25709a=_0x38a082/0.9999,_0x2e2be7=this[_0xd74378(0x4cc)](_0x25709a/_0x4d3fca,_0xbf1d85,_0x8dd52a);if(Math['abs'](_0x2e2be7)>=Math['PI']/0x2)return{'lat':0x0,'lon':_0x18d65a,'error':'Out\x20of\x20range'};const _0x574e94=Math[_0xd74378(0x347)](_0x2e2be7),_0x21a9e3=Math['cos'](_0x2e2be7),_0x336fd8=Math['tan'](_0x2e2be7),_0xd7d48d=_0x336fd8*_0x336fd8,_0x2b9fd9=_0x1030e6*_0x21a9e3*_0x21a9e3,_0x559c3d=0x1-_0xbf1d85*_0x574e94*_0x574e94,_0x296df4=_0x4d3fca/Math[_0xd74378(0x670)](_0x559c3d),_0x35fdea=_0x296df4*(0x1-_0xbf1d85)/_0x559c3d,_0x407bb8=_0x45635d/_0x296df4,_0x28a6cc=_0x407bb8*_0x407bb8,_0x35bee0=_0x28a6cc*_0x28a6cc,_0x12311f=_0x35bee0*_0x28a6cc;let _0x39d3d0=_0x2e2be7-_0x296df4*_0x336fd8/_0x35fdea*(_0x28a6cc/0x2-(0x5+0x3*_0xd7d48d+0xa*_0x2b9fd9-0x4*_0x2b9fd9*_0x2b9fd9-0x9*_0xd7d48d*_0x2b9fd9)*_0x35bee0/0x18+(0x3d+0x5a*_0xd7d48d+0x2d*_0xd7d48d*_0xd7d48d+0x12a*_0x2b9fd9-0xfc*_0xd7d48d*_0x2b9fd9-0x3*_0x2b9fd9*_0x2b9fd9)*_0x12311f/0x2d0),_0x2fa733=(_0x407bb8-(0x1+0x2*_0xd7d48d+_0x2b9fd9)*(_0x28a6cc*_0x407bb8)/0x6+(0x5-0x2*_0x2b9fd9+0x1c*_0xd7d48d-0x3*_0x2b9fd9*_0x2b9fd9+0x8*_0xd7d48d*_0x2b9fd9+0x18*_0xd7d48d*_0xd7d48d)*(_0x35bee0*_0x407bb8)/0x78)/_0x21a9e3;return _0x39d3d0=_0x39d3d0*(0xb4/Math['PI']),_0x2fa733=_0x2fa733*(0xb4/Math['PI'])+_0x18d65a,{'lat':parseFloat(_0x39d3d0['toFixed'](0x8)),'lon':parseFloat(_0x2fa733[_0xd74378(0x3a2)](0x8)),'zone':_0x18d65a,'zoneName':Object[_0xd74378(0x3e9)](this[_0xd74378(0x10b)])[_0xd74378(0x580)](_0x15c803=>this[_0xd74378(0x10b)][_0x15c803]===_0x18d65a)||_0x18d65a};}catch(_0x312003){return console[_0xd74378(0x601)](_0xd74378(0x5b5),_0x312003),{'lat':0x0,'lon':0x0,'error':_0x312003[_0xd74378(0x4b3)]};}},'autoConvertToWGS84'(_0x1ec93f,_0x293606,_0x5e1986=0x69){const _0x4b63c2=_0x3793e5;if(Math[_0x4b63c2(0x330)](_0x1ec93f)>0x5a||Math[_0x4b63c2(0x330)](_0x293606)>0x5a)return this[_0x4b63c2(0x263)](_0x1ec93f,_0x293606,_0x5e1986);return{'lat':parseFloat(_0x1ec93f[_0x4b63c2(0x3a2)](0x8)),'lon':parseFloat(_0x293606[_0x4b63c2(0x3a2)](0x8)),'note':_0x4b63c2(0x5a0)};},'getZoneList'(){return{'Hà\x20Nội\x20/\x20Bắc\x20Bộ':0x69,'Đà\x20Nẵng\x20/\x20Trung\x20Bộ':0x6c,'Tây\x20Nguyên':0x6b,'TP.HCM\x20/\x20Nam\x20Bộ':106.6,'Tây\x20Bắc':0x66,'Đông\x20Nam\x20Bộ':0x6f,'Cần\x20Thơ':0x69};}};function getDecimalYear(_0x15e35b=new Date()){const _0x1bd3ee=_0x3793e5,_0x58abdd=_0x15e35b[_0x1bd3ee(0x8e3)](),_0x3409be=new Date(_0x58abdd,0x0,0x1),_0x3f0955=_0x15e35b[_0x1bd3ee(0x466)]()-_0x3409be[_0x1bd3ee(0x466)](),_0x7167bc=_0x3f0955/(0x3e8*0x3c*0x3c*0x18),_0x322a6e=_0x58abdd%0x4===0x0&&_0x58abdd%0x64!==0x0||_0x58abdd%0x190===0x0;return _0x58abdd+_0x7167bc/(_0x322a6e?0x16e:0x16d);}async function updateLocationUI(_0x46747e,_0x36c24f){const _0x5b4976=_0x3793e5;let _0x518323=document['getElementById'](_0x5b4976(0x72c));if(!_0x518323){const _0x3d67ba=document['getElementById']('remote-lon'),_0x4432aa=document[_0x5b4976(0x27c)](_0x5b4976(0x182));if(_0x3d67ba){let _0x37bded=_0x3d67ba[_0x5b4976(0x659)];_0x4432aa&&_0x4432aa[_0x5b4976(0x659)]!==_0x3d67ba['parentNode']&&(_0x37bded=_0x3d67ba[_0x5b4976(0x659)][_0x5b4976(0x659)]),_0x518323=document['createElement'](_0x5b4976(0x196)),_0x518323['id']=_0x5b4976(0x72c),_0x518323[_0x5b4976(0xf0)]['display']=_0x5b4976(0x63a),_0x518323[_0x5b4976(0xf0)][_0x5b4976(0x2e9)]=_0x5b4976(0x8e7),_0x518323['style'][_0x5b4976(0x73a)]=_0x5b4976(0x3e8),_0x518323[_0x5b4976(0xf0)][_0x5b4976(0x6c0)]='12px',_0x518323[_0x5b4976(0xf0)][_0x5b4976(0x498)]=_0x5b4976(0x2e0),_0x518323[_0x5b4976(0xf0)][_0x5b4976(0x3da)]=_0x5b4976(0x369),_0x518323['style'][_0x5b4976(0x416)]=_0x5b4976(0x3d8),_0x518323['style'][_0x5b4976(0x1a5)]=_0x5b4976(0x883),_0x518323['style'][_0x5b4976(0x6ab)]=_0x5b4976(0x701),_0x518323[_0x5b4976(0xf0)][_0x5b4976(0x735)]=_0x5b4976(0x149),_0x37bded[_0x5b4976(0x86a)](_0x5b4976(0x884),_0x518323);}}if(!_0x518323)return;_0x518323[_0x5b4976(0x342)]=_0x5b4976(0x59e);const _0x301c57=Math[_0x5b4976(0x7c1)](_0x46747e*0x3e8)/0x3e8,_0x4c9b1=Math['round'](_0x36c24f*0x3e8)/0x3e8;if(_0x301c57===11.564&&_0x4c9b1===108.991){_0x518323[_0x5b4976(0x342)]=_0x5b4976(0x4aa);return;}if(_0x301c57===21.028&&_0x4c9b1===105.834){_0x518323[_0x5b4976(0x342)]=_0x5b4976(0x867);return;}if(Math[_0x5b4976(0x330)](_0x46747e-0x21)<0.5&&Math['abs'](_0x36c24f- -0x76)<0.5){_0x518323[_0x5b4976(0x342)]=_0x5b4976(0x246);return;}if(Math[_0x5b4976(0x330)](_0x46747e- -0x25)<0.5&&Math[_0x5b4976(0x330)](_0x36c24f-0x8c)<0.5){_0x518323[_0x5b4976(0x342)]='📍\x20South\x20Australia,\x20AU';return;}if(Math[_0x5b4976(0x330)](_0x46747e-0x2a)<0.5&&Math['abs'](_0x36c24f- -0x13)<0.5){_0x518323[_0x5b4976(0x342)]='📍\x20North\x20Atlantic,\x20EU';return;}if(Math[_0x5b4976(0x330)](_0x46747e- -0x34)<0.5&&Math[_0x5b4976(0x330)](_0x36c24f- -0x4b)<0.5){_0x518323[_0x5b4976(0x342)]=_0x5b4976(0x819);return;}if(navigator[_0x5b4976(0x5fa)])try{const _0x3af6ff=await fetch(_0x5b4976(0x645)+_0x46747e+_0x5b4976(0x581)+_0x36c24f+_0x5b4976(0x222));if(_0x3af6ff['ok']){const _0x135310=await _0x3af6ff[_0x5b4976(0x85b)](),_0x46a60c=_0x135310[_0x5b4976(0x240)]||_0x135310[_0x5b4976(0x1b6)]||'',_0x3fcf18=(_0x135310[_0x5b4976(0x38a)]||'')[_0x5b4976(0x23a)]();if(_0x46a60c&&_0x3fcf18){_0x518323[_0x5b4976(0x342)]=_0x5b4976(0x10f)+_0x46a60c+',\x20'+_0x3fcf18;return;}}}catch(_0x1e3692){}_0x518323[_0x5b4976(0x342)]=_0x5b4976(0x7f2)+_0x46747e[_0x5b4976(0x3a2)](0x2)+',\x20'+_0x36c24f['toFixed'](0x2)+')';}function calculateRemoteDeclination(){const _0x20b41a=_0x3793e5,_0xbbc5f1=document[_0x20b41a(0x27c)](_0x20b41a(0x182)),_0x3e1826=document[_0x20b41a(0x27c)]('remote-lon'),_0x35d570=document[_0x20b41a(0x27c)](_0x20b41a(0x1e2));if(!_0xbbc5f1||!_0x3e1826)return;let _0x33f807=_0xbbc5f1[_0x20b41a(0x832)][_0x20b41a(0x50b)](),_0x438347=_0x3e1826[_0x20b41a(0x832)]['trim']();if(_0x33f807===''||_0x438347===''){showToast(_0x20b41a(0x4a8),!![]);return;}let _0x139822=convertToDecimalDegrees(_0x33f807),_0x3d89ec=convertToDecimalDegrees(_0x438347);if(_0x139822===null||_0x3d89ec===null||isNaN(_0x139822)||isNaN(_0x3d89ec)||_0x139822===0x0&&_0x3d89ec===0x0){showToast(_0x20b41a(0xf5),!![]);return;}if(Math[_0x20b41a(0x330)](_0x139822)>0x7d0||Math['abs'](_0x3d89ec)>0x7d0){let _0x50da20=_0x139822<_0x3d89ec?_0x139822:_0x3d89ec,_0x400b8a=_0x139822<_0x3d89ec?_0x3d89ec:_0x139822;const _0x1e214b=TRAC_DIA_CORE[_0x20b41a(0x263)](_0x50da20,_0x400b8a,0x69);_0x139822=_0x1e214b[_0x20b41a(0x47d)],_0x3d89ec=_0x1e214b[_0x20b41a(0x87c)],_0xbbc5f1[_0x20b41a(0x832)]=_0x139822[_0x20b41a(0x3a2)](0x5),_0x3e1826[_0x20b41a(0x832)]=_0x3d89ec[_0x20b41a(0x3a2)](0x5),showToast(_0x20b41a(0x3d1));}else{if(Math[_0x20b41a(0x330)](_0x139822)>0x5a&&Math[_0x20b41a(0x330)](_0x3d89ec)<=0x5a){let _0x4dd961=_0x139822;_0x139822=_0x3d89ec,_0x3d89ec=_0x4dd961,_0xbbc5f1[_0x20b41a(0x832)]=_0x139822,_0x3e1826['value']=_0x3d89ec,showToast(_0x20b41a(0x1f3));}}const _0x5c121=calculateGlobalDeclination(_0x139822,_0x3d89ec);magneticDeclination=_0x5c121;const _0x37f648=document[_0x20b41a(0x27c)](_0x20b41a(0x69b));if(_0x37f648)_0x37f648[_0x20b41a(0x832)]=_0x5c121[_0x20b41a(0x3a2)](0x2);updateMagneticDeclination(),updateLocationUI(_0x139822,_0x3d89ec),showToast(_0x20b41a(0x73e)+_0x5c121[_0x20b41a(0x3a2)](0x2)+'°'),_0x35d570&&(_0x35d570[_0x20b41a(0x342)]=_0x20b41a(0x2bf),_0x35d570[_0x20b41a(0xf0)][_0x20b41a(0x781)]=_0x20b41a(0x2fc),setTimeout(()=>{const _0x3be8e0=_0x20b41a;_0x35d570[_0x3be8e0(0x342)]=_0x3be8e0(0x5ab),_0x35d570[_0x3be8e0(0xf0)][_0x3be8e0(0x781)]=_0x3be8e0(0x2e0);},0x7d0));}async function fallbackIPGeolocation(){const _0x1564bc=_0x3793e5;if(navigator[_0x1564bc(0x5fa)]){const _0x8a3b0b=new AbortController(),_0x3b2e7c=setTimeout(()=>_0x8a3b0b[_0x1564bc(0x821)](),0xbb8);try{const _0x4a389f=await fetch(_0x1564bc(0x114),{'signal':_0x8a3b0b[_0x1564bc(0x550)]});if(!_0x4a389f['ok'])throw new Error(_0x1564bc(0x3d3));const _0x33a52e=await _0x4a389f[_0x1564bc(0x85b)]();clearTimeout(_0x3b2e7c);if(_0x33a52e&&_0x33a52e[_0x1564bc(0x316)]&&_0x33a52e[_0x1564bc(0x119)])return{'lat':_0x33a52e[_0x1564bc(0x316)],'lon':_0x33a52e[_0x1564bc(0x119)],'src':_0x1564bc(0x76d)};}catch(_0x3da686){clearTimeout(_0x3b2e7c);}}try{const _0x201e44=Intl[_0x1564bc(0x279)]()[_0x1564bc(0x537)]()[_0x1564bc(0x8c3)];if(_0x201e44){if(_0x201e44[_0x1564bc(0x4c0)](_0x1564bc(0x156))||_0x201e44[_0x1564bc(0x4c0)](_0x1564bc(0x6df))||_0x201e44[_0x1564bc(0x4c0)](_0x1564bc(0x4fa)))return{'lat':14.05,'lon':108.27,'src':_0x1564bc(0x3ca)};}}catch(_0x2325ad){}return{'lat':0x0,'lon':0x0,'src':_0x1564bc(0x79f)};}function updateMagneticDeclination(){const _0x2b9904=_0x3793e5,_0xf5bec6=document[_0x2b9904(0x27c)](_0x2b9904(0x69b));if(!_0xf5bec6)return;let _0x1f1085=_0xf5bec6[_0x2b9904(0x832)];magneticDeclination=_0x1f1085==='-'||_0x1f1085==='.'||_0x1f1085[_0x2b9904(0x50b)]()===''?0x0:parseFloat(_0x1f1085)||0x0;if(typeof lastHeading===_0x2b9904(0x6ad)){if(typeof updateCompassUI===_0x2b9904(0x60a))updateCompassUI(lastHeading);if(typeof updateDegreeDisplay===_0x2b9904(0x60a))updateDegreeDisplay(lastHeading);if(typeof recalculateFate==='function')recalculateFate();}}async function autoDetectDeclination(){const _0x3376c0=_0x3793e5,_0x6b7deb=document[_0x3376c0(0x27c)](_0x3376c0(0x291));_0x6b7deb&&(_0x6b7deb[_0x3376c0(0x342)]=_0x3376c0(0x109),_0x6b7deb[_0x3376c0(0x424)]=!![]);const _0x3aaa6f=(_0x1cc59d,_0x169e34,_0x1516c2)=>{const _0x400388=_0x3376c0;if(!_0x1cc59d||!_0x169e34||_0x1cc59d===0x0&&_0x169e34===0x0){showToast(_0x400388(0x83c));_0x6b7deb&&(_0x6b7deb[_0x400388(0x342)]=_0x400388(0x7a8),_0x6b7deb[_0x400388(0x424)]=![]);return;}let _0x226d5e=parseFloat(_0x1cc59d),_0xec7c93=parseFloat(_0x169e34);if(Math['abs'](_0x226d5e)>0x5a&&Math[_0x400388(0x330)](_0xec7c93)<=0x5a){let _0x5bca3b=_0x226d5e;_0x226d5e=_0xec7c93,_0xec7c93=_0x5bca3b;}const _0x5d1ea4=parseFloat(_0x226d5e[_0x400388(0x3a2)](0x3)),_0x1ce7a5=parseFloat(_0xec7c93['toFixed'](0x3));localStorage[_0x400388(0x503)](_0x400388(0x52d),_0x5d1ea4),localStorage[_0x400388(0x503)]('save_lon',_0x1ce7a5);const _0x468c06=document[_0x400388(0x27c)](_0x400388(0x182)),_0x50131=document['getElementById'](_0x400388(0x3ac));if(_0x468c06)_0x468c06[_0x400388(0x832)]=_0x5d1ea4;if(_0x50131)_0x50131[_0x400388(0x832)]=_0x1ce7a5;const _0x499706=calculateGlobalDeclination(_0x5d1ea4,_0x1ce7a5);magneticDeclination=_0x499706;const _0x3a00fe=document[_0x400388(0x27c)](_0x400388(0x69b));if(_0x3a00fe)_0x3a00fe[_0x400388(0x832)]=_0x499706[_0x400388(0x3a2)](0x2);document[_0x400388(0x27c)](_0x400388(0x597))?.[_0x400388(0x412)]&&localStorage[_0x400388(0x503)](_0x400388(0x667),_0x499706[_0x400388(0x3a2)](0x2)),updateMagneticDeclination(),updateLocationUI(_0x5d1ea4,_0x1ce7a5),showToast(_0x400388(0x100)+_0x1516c2+':\x20'+_0x499706[_0x400388(0x3a2)](0x2)+'°'),_0x6b7deb&&(_0x6b7deb[_0x400388(0x342)]=_0x400388(0x54f)+_0x1516c2+'\x20✓',setTimeout(()=>{const _0x5f257=_0x400388;_0x6b7deb[_0x5f257(0x342)]='🛰️\x20TỰ\x20ĐỘNG\x20XÁC\x20ĐỊNH',_0x6b7deb[_0x5f257(0x424)]=![];},0x7d0));};if(!navigator[_0x3376c0(0x72b)]){const _0xa11098=await fallbackIPGeolocation();_0x3aaa6f(_0xa11098['lat'],_0xa11098[_0x3376c0(0x87c)],_0xa11098['src']);return;}navigator[_0x3376c0(0x72b)][_0x3376c0(0x6af)](_0x2ee81e=>{const _0xf1ce15=_0x3376c0;_0x3aaa6f(_0x2ee81e[_0xf1ce15(0x8f0)][_0xf1ce15(0x316)],_0x2ee81e[_0xf1ce15(0x8f0)]['longitude'],_0xf1ce15(0xf9));},async()=>{const _0x34b52b=_0x3376c0,_0x17cdcd=await fallbackIPGeolocation();_0x3aaa6f(_0x17cdcd[_0x34b52b(0x47d)],_0x17cdcd['lon'],_0x17cdcd[_0x34b52b(0x4b7)]);},{'timeout':0x1b58,'enableHighAccuracy':!![],'maximumAge':0x0});}function calculateGlobalDeclination(_0x2979ef,_0x11edcf,_0x199a4f=0x0){const _0x1f7d40=_0x3793e5;try{let _0x8863da=Math[_0x1f7d40(0x4db)](-0x5a,Math[_0x1f7d40(0x1dc)](0x5a,parseFloat(_0x2979ef)||0x0)),_0xc20cf3=((parseFloat(_0x11edcf)||0x0)+0xb4)%0x168;if(_0xc20cf3<0x0)_0xc20cf3+=0x168;_0xc20cf3-=0xb4;const _0x34d7db=getDecimalYear(),_0x1343da=_0x34d7db-WMM_COEFFS[_0x1f7d40(0x1d6)],_0x285ad0=_0x8863da*Math['PI']/0xb4,_0x97e7b3=_0xc20cf3*Math['PI']/0xb4,_0x45b58b=6378.137,_0x5a7bee=6356.7523142,_0x13c086=0x1-_0x5a7bee*_0x5a7bee/(_0x45b58b*_0x45b58b),_0x334138=Math[_0x1f7d40(0x347)](_0x285ad0),_0x137e60=Math[_0x1f7d40(0x22f)](_0x285ad0),_0x4e36c1=_0x45b58b/Math['sqrt'](0x1-_0x13c086*_0x334138*_0x334138),_0x28c719=(_0x4e36c1+(_0x199a4f||0x0))*_0x137e60,_0x2a8c9e=(_0x4e36c1*(0x1-_0x13c086)+(_0x199a4f||0x0))*_0x334138,_0x344a04=Math[_0x1f7d40(0x670)](_0x28c719*_0x28c719+_0x2a8c9e*_0x2a8c9e),_0x57ef6a=Math[_0x1f7d40(0x872)](_0x2a8c9e/_0x344a04),_0x3dae41=_0x285ad0-_0x57ef6a,_0x33bf54=Math[_0x1f7d40(0x347)](_0x57ef6a),_0x4c5ce6=Math[_0x1f7d40(0x22f)](_0x57ef6a),_0x181619=Array['from']({'length':0xd},()=>new Array(0xd)[_0x1f7d40(0x4a1)](0x0)),_0x127e11=Array['from']({'length':0xd},()=>new Array(0xd)[_0x1f7d40(0x4a1)](0x0));_0x181619[0x0][0x0]=0x1,_0x181619[0x1][0x0]=_0x33bf54,_0x127e11[0x1][0x0]=_0x4c5ce6,_0x181619[0x1][0x1]=_0x4c5ce6,_0x127e11[0x1][0x1]=-_0x33bf54;for(let _0x291cf4=0x2;_0x291cf4<=0xc;_0x291cf4++){for(let _0x19551a=0x0;_0x19551a<=_0x291cf4;_0x19551a++){if(_0x19551a===_0x291cf4){const _0x3cff0b=Math[_0x1f7d40(0x670)]((0x2*_0x291cf4-0x1)/(0x2*_0x291cf4));_0x181619[_0x291cf4][_0x19551a]=_0x3cff0b*_0x4c5ce6*_0x181619[_0x291cf4-0x1][_0x19551a-0x1],_0x127e11[_0x291cf4][_0x19551a]=_0x3cff0b*(_0x4c5ce6*_0x127e11[_0x291cf4-0x1][_0x19551a-0x1]-_0x33bf54*_0x181619[_0x291cf4-0x1][_0x19551a-0x1]);}else{const _0xbab839=(0x2*_0x291cf4-0x1)/Math[_0x1f7d40(0x670)](_0x291cf4*_0x291cf4-_0x19551a*_0x19551a),_0x419c7e=Math['sqrt']((_0x291cf4-0x1)*(_0x291cf4-0x1)-_0x19551a*_0x19551a)/Math[_0x1f7d40(0x670)](_0x291cf4*_0x291cf4-_0x19551a*_0x19551a);_0x181619[_0x291cf4][_0x19551a]=_0xbab839*_0x33bf54*_0x181619[_0x291cf4-0x1][_0x19551a]-_0x419c7e*_0x181619[_0x291cf4-0x2][_0x19551a],_0x127e11[_0x291cf4][_0x19551a]=_0xbab839*(_0x33bf54*_0x127e11[_0x291cf4-0x1][_0x19551a]+_0x4c5ce6*_0x181619[_0x291cf4-0x1][_0x19551a])-_0x419c7e*_0x127e11[_0x291cf4-0x2][_0x19551a];}}}let _0x606e7a=0x0,_0x55b60a=0x0,_0x49adf6=0x0;WMM_COEFFS[_0x1f7d40(0x588)][_0x1f7d40(0x242)](([_0x1eeb55,_0x552dd5,_0x1c2df1,_0x3b7511,_0x10a19c,_0x43bd28])=>{const _0x5eaad5=_0x1f7d40,_0x48b286=_0x1c2df1+_0x1343da*_0x10a19c,_0x15d1ad=_0x3b7511+_0x1343da*_0x43bd28,_0x267f5b=Math['pow'](_0x45b58b/_0x344a04,_0x1eeb55+0x2),_0x59510a=Math[_0x5eaad5(0x22f)](_0x552dd5*_0x97e7b3),_0x2c8f5d=Math[_0x5eaad5(0x347)](_0x552dd5*_0x97e7b3),_0x1ab3ee=_0x48b286*_0x59510a+_0x15d1ad*_0x2c8f5d,_0x21bd29=_0x48b286*_0x2c8f5d-_0x15d1ad*_0x59510a;_0x606e7a-=_0x267f5b*_0x1ab3ee*_0x127e11[_0x1eeb55][_0x552dd5],_0x49adf6-=_0x267f5b*_0x1ab3ee*_0x181619[_0x1eeb55][_0x552dd5]*(_0x1eeb55+0x1);if(_0x552dd5>0x0)_0x55b60a+=_0x267f5b*_0x552dd5*_0x21bd29*_0x181619[_0x1eeb55][_0x552dd5];}),_0x55b60a/=_0x4c5ce6||1e-8;const _0x135974=_0x606e7a*Math[_0x1f7d40(0x22f)](_0x3dae41)+_0x49adf6*Math['sin'](_0x3dae41);let _0x103d4d=Math[_0x1f7d40(0x712)](_0x55b60a,_0x135974)*(0xb4/Math['PI']);if(_0x103d4d>0xb4)_0x103d4d-=0x168;if(_0x103d4d<-0xb4)_0x103d4d+=0x168;return parseFloat(_0x103d4d[_0x1f7d40(0x3a2)](0x2));}catch(_0x187ff0){return console['error'](_0x1f7d40(0x6a0),_0x187ff0),0x0;}}function toggleDeclinationPanel(_0x21deff){const _0x3d6538=_0x3793e5,_0x437dc3=document[_0x3d6538(0x27c)](_0x3d6538(0x4b5));if(_0x437dc3)_0x437dc3[_0x3d6538(0xf0)][_0x3d6538(0x345)]=_0x21deff?'flex':_0x3d6538(0x4e4);typeof manageMagnetometerSensor===_0x3d6538(0x60a)&&manageMagnetometerSensor(_0x21deff);}function parseSmartNumeric(_0x5a2af2){const _0x5718e8=_0x3793e5;if(!_0x5a2af2||_0x5a2af2[_0x5718e8(0x50b)]()==='')return null;let _0x3159b7=_0x5a2af2['trim']()['replace'](/,/g,'.'),_0x549c93=_0x3159b7[_0x5718e8(0x64a)]('-'),_0x66bbfa=_0x3159b7[_0x5718e8(0x64a)]('+'),_0x480740=_0x3159b7['replace'](/[^0-9.]/g,''),_0x498344=0x0,_0x2c4a76='';for(let _0x47ba62=0x0;_0x47ba62<_0x480740[_0x5718e8(0x110)];_0x47ba62++){_0x480740[_0x47ba62]==='.'?_0x498344===0x0&&(_0x2c4a76+='.',_0x498344=0x1):_0x2c4a76+=_0x480740[_0x47ba62];}let _0x1ce74f=(_0x549c93?'-':_0x66bbfa?'+':'')+_0x2c4a76;const _0x39ed0c=/^[+-]?\d*\.?\d*$/;return _0x39ed0c[_0x5718e8(0x6e5)](_0x1ce74f)?_0x1ce74f:null;}function parseSmartCoordinateText(_0x1f59f5){const _0x5cff5f=_0x3793e5;if(!_0x1f59f5)return'';return _0x1f59f5[_0x5cff5f(0x820)](/[^0-9.\-\+\sNSEWnsew°'"’”]/g,'')[_0x5cff5f(0x820)](/,/g,'.');}function convertToDecimalDegrees(_0x2dd347){const _0x4e3feb=_0x3793e5;if(!_0x2dd347||String(_0x2dd347)[_0x4e3feb(0x50b)]()==='')return null;let _0x2c7f39=String(_0x2dd347)[_0x4e3feb(0x50b)]()[_0x4e3feb(0x23a)](),_0xf37272=_0x2c7f39[_0x4e3feb(0x4c0)]('S')||_0x2c7f39['includes']('W'),_0x517d8a=_0x2c7f39[_0x4e3feb(0x4c0)]('-'),_0x5b0b26=_0x2c7f39['replace'](/[^0-9.]/g,'\x20')[_0x4e3feb(0x50b)](),_0x41934b=_0x5b0b26['split'](/\s+/)[_0x4e3feb(0x583)](_0x211bc1=>parseFloat(_0x211bc1))[_0x4e3feb(0x3ec)](_0x2d71a5=>!isNaN(_0x2d71a5));if(_0x41934b['length']===0x0)return null;let _0x15961f=0x0;if(_0x41934b[_0x4e3feb(0x110)]===0x1)_0x15961f=_0x41934b[0x0];else{let _0x2d1b5f=_0x41934b[0x0]||0x0,_0x2be8d0=_0x41934b[0x1]||0x0,_0x12491c=_0x41934b[0x2]||0x0;_0x15961f=_0x2d1b5f+_0x2be8d0/0x3c+_0x12491c/0xe10;}return _0x15961f=Math[_0x4e3feb(0x330)](_0x15961f),(_0x517d8a||_0xf37272)&&(_0x15961f=-_0x15961f),_0x15961f;}document[_0x3793e5(0x396)](_0x3793e5(0x6d8),()=>{const _0x230fda=_0x3793e5,_0x36b760={'declination-input':{'limit':0xe,'key':_0x230fda(0x667),'min':-0xb4,'max':0xb4,'mode':_0x230fda(0x7d6)},'remote-lat':{'limit':0xe,'key':_0x230fda(0x52d),'min':-0x5a,'max':0x5a,'mode':_0x230fda(0x7d6)},'remote-lon':{'limit':0xf,'key':_0x230fda(0x650),'min':-0xb4,'max':0xb4,'mode':_0x230fda(0x7d6)}},_0x18ac28=document[_0x230fda(0x27c)](_0x230fda(0x597));let _0x2975e9=!![];if(_0x18ac28){const _0xdb3dae=localStorage['getItem'](_0x230fda(0x2af));_0xdb3dae===_0x230fda(0x1ee)?(_0x18ac28[_0x230fda(0x412)]=![],_0x2975e9=![],localStorage['removeItem'](_0x230fda(0x667)),localStorage[_0x230fda(0x2b2)](_0x230fda(0x52d)),localStorage[_0x230fda(0x2b2)]('save_lon')):(_0x18ac28[_0x230fda(0x412)]=!![],_0x2975e9=!![]);}Object[_0x230fda(0x3e9)](_0x36b760)[_0x230fda(0x242)](_0x32a840=>{const _0x4ff447=_0x230fda,_0x3d1383=document[_0x4ff447(0x27c)](_0x32a840);if(!_0x3d1383)return;if(_0x2975e9){const _0x59f701=localStorage[_0x4ff447(0x6fc)](_0x36b760[_0x32a840][_0x4ff447(0x8b2)]);_0x59f701!==null&&_0x36b760[_0x32a840][_0x4ff447(0x8b2)]&&(_0x3d1383[_0x4ff447(0x832)]=_0x59f701,_0x32a840===_0x4ff447(0x69b)&&(magneticDeclination=parseFloat(_0x59f701)||0x0,updateMagneticDeclination()));}else _0x3d1383[_0x4ff447(0x832)]=_0x32a840===_0x4ff447(0x69b)?'0':'';});const _0x24c8e2=localStorage[_0x230fda(0x6fc)](_0x230fda(0x52d)),_0x587273=localStorage['getItem'](_0x230fda(0x650));_0x2975e9&&_0x24c8e2&&_0x587273&&updateLocationUI(parseFloat(_0x24c8e2),parseFloat(_0x587273)),Object[_0x230fda(0x3e9)](_0x36b760)[_0x230fda(0x242)](_0x2bd37d=>{const _0x290ae0=_0x230fda,_0x5a8e78=document[_0x290ae0(0x27c)](_0x2bd37d);if(!_0x5a8e78)return;const _0x3cb698=()=>{setTimeout(()=>{const _0x25821b=_0x2f80;_0x5a8e78['setSelectionRange'](0x0,_0x5a8e78[_0x25821b(0x832)]['length']);},0xa);};_0x5a8e78['addEventListener']('focus',_0x3cb698),_0x5a8e78[_0x290ae0(0x396)](_0x290ae0(0x2ec),_0x3cb698),_0x5a8e78[_0x290ae0(0x396)](_0x290ae0(0x6a6),_0x194a23=>{const _0x39c375=_0x290ae0;if(_0x194a23[_0x39c375(0x8b2)]===_0x39c375(0x449)){_0x5a8e78['blur']();if(typeof toggleDeclinationPanel==='function')toggleDeclinationPanel(![]);}}),_0x5a8e78[_0x290ae0(0x396)](_0x290ae0(0x36f),()=>{const _0x1e0baa=_0x290ae0,_0x28b0c0=_0x36b760[_0x2bd37d];let _0x4c91a2=_0x5a8e78['value'];_0x5a8e78[_0x1e0baa(0x832)]=parseSmartCoordinateText(_0x4c91a2);_0x5a8e78[_0x1e0baa(0x832)][_0x1e0baa(0x110)]>_0x28b0c0[_0x1e0baa(0x2ba)]&&(_0x5a8e78[_0x1e0baa(0x832)]=_0x5a8e78[_0x1e0baa(0x832)][_0x1e0baa(0x173)](0x0,_0x28b0c0[_0x1e0baa(0x2ba)]));let _0x4098ce=parseFloat(_0x5a8e78[_0x1e0baa(0x832)]);if(!isNaN(_0x4098ce)&&/^[\-\+]?\d*\.?\d+$/[_0x1e0baa(0x6e5)](_0x5a8e78[_0x1e0baa(0x832)])){if(_0x28b0c0['min']!==undefined&&_0x4098ce<_0x28b0c0['min'])_0x4098ce=_0x28b0c0[_0x1e0baa(0x1dc)];if(_0x28b0c0[_0x1e0baa(0x4db)]!==undefined&&_0x4098ce>_0x28b0c0[_0x1e0baa(0x4db)])_0x4098ce=_0x28b0c0[_0x1e0baa(0x4db)];_0x2bd37d==='declination-input'&&(magneticDeclination=_0x4098ce,updateMagneticDeclination()),_0x28b0c0[_0x1e0baa(0x8b2)]&&document['getElementById']('save-toggle')?.[_0x1e0baa(0x412)]&&localStorage[_0x1e0baa(0x503)](_0x28b0c0[_0x1e0baa(0x8b2)],_0x4098ce);}}),_0x5a8e78[_0x290ae0(0x396)](_0x290ae0(0x3ed),()=>{const _0x2a6657=_0x290ae0,_0x4abeff=_0x36b760[_0x2bd37d];let _0xc62339=_0x5a8e78['value']['trim'](),_0x2f9f23=convertToDecimalDegrees(_0xc62339);if(_0x2f9f23===null||isNaN(_0x2f9f23)){_0x5a8e78[_0x2a6657(0x832)]=_0x2bd37d===_0x2a6657(0x69b)?'0':'';if(_0x2bd37d===_0x2a6657(0x69b))magneticDeclination=0x0;if(_0x4abeff['key'])localStorage[_0x2a6657(0x2b2)](_0x4abeff[_0x2a6657(0x8b2)]);}else{if(_0x4abeff[_0x2a6657(0x1dc)]!==undefined&&_0x2f9f23<_0x4abeff[_0x2a6657(0x1dc)])_0x2f9f23=_0x4abeff[_0x2a6657(0x1dc)];if(_0x4abeff[_0x2a6657(0x4db)]!==undefined&&_0x2f9f23>_0x4abeff[_0x2a6657(0x4db)])_0x2f9f23=_0x4abeff[_0x2a6657(0x4db)];let _0x355488=_0x2bd37d===_0x2a6657(0x69b)?parseFloat(_0x2f9f23[_0x2a6657(0x3a2)](0x2)):parseFloat(_0x2f9f23['toFixed'](0x5));_0x5a8e78[_0x2a6657(0x832)]=_0x355488,_0x2bd37d===_0x2a6657(0x69b)&&(magneticDeclination=_0x355488),_0x4abeff[_0x2a6657(0x8b2)]&&document[_0x2a6657(0x27c)]('save-toggle')?.[_0x2a6657(0x412)]&&localStorage[_0x2a6657(0x503)](_0x4abeff[_0x2a6657(0x8b2)],_0x355488);}_0x2bd37d==='declination-input'?updateMagneticDeclination():typeof calculateRemoteDeclination===_0x2a6657(0x60a)&&calculateRemoteDeclination();});}),_0x18ac28?.[_0x230fda(0x396)](_0x230fda(0x456),_0x515c3b=>{const _0x54b258=_0x230fda,_0x3dd900=document[_0x54b258(0x27c)]('declination-input'),_0x4f629b=document[_0x54b258(0x27c)]('remote-lat'),_0x2b9531=document[_0x54b258(0x27c)](_0x54b258(0x3ac)),_0x277a4a=document[_0x54b258(0x27c)](_0x54b258(0x72c));if(!_0x515c3b[_0x54b258(0x8ea)][_0x54b258(0x412)]){localStorage[_0x54b258(0x503)](_0x54b258(0x2af),_0x54b258(0x1ee)),localStorage[_0x54b258(0x2b2)](_0x54b258(0x667)),localStorage[_0x54b258(0x2b2)](_0x54b258(0x52d)),localStorage['removeItem'](_0x54b258(0x650));if(_0x3dd900)_0x3dd900['value']='0';if(_0x4f629b)_0x4f629b[_0x54b258(0x832)]='';if(_0x2b9531)_0x2b9531[_0x54b258(0x832)]='';if(_0x277a4a)_0x277a4a[_0x54b258(0x342)]='';magneticDeclination=0x0,updateMagneticDeclination();if(typeof showToast===_0x54b258(0x60a))showToast('Đã\x20xóa\x20toàn\x20bộ\x20dữ\x20liệu\x20lưu\x20về\x20trạng\x20thái\x20trống!');}else{localStorage[_0x54b258(0x503)](_0x54b258(0x2af),'true');if(_0x3dd900)localStorage[_0x54b258(0x503)]('save_decl',_0x3dd900[_0x54b258(0x832)]);if(_0x4f629b&&_0x4f629b[_0x54b258(0x832)]!=='')localStorage[_0x54b258(0x503)](_0x54b258(0x52d),_0x4f629b[_0x54b258(0x832)]);if(_0x2b9531&&_0x2b9531[_0x54b258(0x832)]!=='')localStorage[_0x54b258(0x503)](_0x54b258(0x650),_0x2b9531[_0x54b258(0x832)]);if(typeof showToast===_0x54b258(0x60a))showToast(_0x54b258(0x208));}});});function showExplanation(_0x2baec4,_0x2e1f4f,_0x1939ae){const _0x5117cf=_0x3793e5,_0x21081a=document[_0x5117cf(0x27c)](_0x5117cf(0x25f));_0x21081a[_0x5117cf(0x2d1)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22modal-content\x22\x20style=\x22background:#1c1c1e;\x20color:#fff;\x20border-radius:15px;\x20width:90%;\x20max-width:500px;\x20max-height:85vh;\x20display:flex;\x20flex-direction:column;\x20margin:auto;\x20overflow:hidden;\x20position:relative;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:flex;\x20justify-content:space-between;\x20align-items:center;\x20padding:12px\x2015px;\x20border-bottom:1px\x20solid\x20#444;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-weight:bold;\x20font-size:1.1rem;\x20color:#dfb76c;\x22>Giải\x20Thích:\x20'+_0x2baec4+_0x5117cf(0x107)+_0x2e1f4f+'</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22margin:0;\x20color:#30d158;\x22><strong>Giải\x20pháp:</strong>\x20'+_0x1939ae+_0x5117cf(0x635),_0x21081a[_0x5117cf(0x72e)]=function(_0x544dd8){const _0x446caa=_0x5117cf;if(_0x544dd8[_0x446caa(0x8ea)]===_0x21081a)closeModal();},_0x21081a[_0x5117cf(0xf0)]['display']=_0x5117cf(0x634);}function closeModal(){const _0x333b32=_0x3793e5;document[_0x333b32(0x27c)](_0x333b32(0x25f))[_0x333b32(0xf0)][_0x333b32(0x345)]='none';}let autoHideTimer=null;function startAutoHide(){clearTimeout(autoHideTimer),autoHideTimer=setTimeout(()=>{const _0xb2e151=_0x2f80,_0x595ef8=document[_0xb2e151(0x27c)]('mainPanelWrapper');if(_0x595ef8&&!_0x595ef8[_0xb2e151(0x3c2)][_0xb2e151(0x16d)](_0xb2e151(0x389))){if(document[_0xb2e151(0x805)]['tagName']===_0xb2e151(0x82a)||document[_0xb2e151(0x805)][_0xb2e151(0x1d8)]===_0xb2e151(0x8ef)||document[_0xb2e151(0x805)][_0xb2e151(0x1d8)]==='SELECT')return;togglePanel();}},0xbb8);}function _0x44ea(){const _0x20af8b=['ugJdOM4GDUg7IYbi4BQTDsbT4BQHy2GGXjhHU4THihtHUQDUzYbUz+g6P206idXIpG','vgJdRg4Gkda3Ac0WowGP','tMFfQsbiB8oGBMCGXjdHUQfPifpdOxqGkenOW61UAcbrDwfUifpdOxqGlsbn4BQTDsbl4BU3imsq4BQHAsbiDw5NifrPBMGP','vSAW4BUJBMCGCxxdVsbUAmoIBIb0Aw5OlcbJW7rUzYb2AEg7H2mGBmoGBsdeG24Gy8oZihpHU7eGBSoIBMCGXjhHU6eSihrP4BQ/BIb0CMNHU4nUihrODEg6Rw4GBog7O2KU','s2JdRsb0CSAW4BUDBMCGySoSBMGGAmoYyq','smAW4BUBBMCGqSoGBIbi4BUnyYbwXinUifJgSmAHBMC','twfU','oYbMB250lxDLAwDODdOGyM9SzdSGDgv4Dc10CMfUC2zVCM06ihvWCgvYy2fZztSIpGOGicaGicaGicaGicaGicaGicaGicaGica','qSoHDcbc4BQHy2G','4PQG77IpieTOW7rUzYb0Aog7GYb04BUXimsr4BUzBMCGEmoHyYdeKEg7I25OihBHU4SGDhldRs4GvNvPigZdSM5Nig5O4BQTCcb0yxKU','ugJHUQfTihrO4BQ/ieJHU41HieJHUQfPlcb0W6bPignOW61UAcbJ4BQNBIb0Aog6Rw4GDhlHU41UzYWGDhldOw5OigpdOwmGA2HV4BQJBIbJAgKGDgNdQNuGA2JdTg5NigpHUQDUihrOAEg6V3qU','r2NHU68Gy8oIBIbI4BQXBMCSihrYW6fUAcdeKEg6P3uGDmAWigZHU5TUlG','ugJHU6vJifBHU4SGXjhHUQ9JigpdOwnOlcbRAmo0BMCGz2LHBIbZ4BUrBMCGyw4GECoQBIWGz2LHimsr4BQHBYbOW7jHihrODEg6Rw4U','sgfVihtHU5vUihtdOM0GDhldRs4','ChqPlcdeKEg6T3qGy8o0BMCGBSsdBMCGCgJHU6uGDgJHUQnPihxHUR8Gyw4GDg/dOg4SigTOW7rUzYbZAw5OihrHAsbO4BUnys4','tog7PwmGu8oHDa','CgPFBwXMBG','ugJdUMmGXjdHU6LJ','rmo5BMCGDgJHUQfJAcbHBMGGXjfLBIbOB+g6T2mGySoSBMGGBSAW4BUByYbTDEg7KwKU','mc41','pc9KAxy+cIaGicaGicaGpgrPDIbZDhLSzt0IBwfYz2LUlxrVCdOXmNb4oYbJB2XVCJOJzMzKnZaWoYbMB250lxnPEMu6mc44nxjLBtSGyM9YzgvYlxrVCdOXChGGC29SAwqGCMDIysGYntuSmJu1ldi1nsWWlJa4ktSGCgfKzgLUzY10B3a6mtbWEdSGBgLUzs1OzwLNAhq6ideUndu7iJ4kicaGicaGicaGicaGpgiGC3r5Bgu9iMnVBg9YoInKzMi3nMm7igrPC3bSyxK6igjSB2nRoYbTyxjNAw4TyM90Dg9ToIaZChG7iJ7WN5kHifbOW6fWiglHUQnViglHU5eGDhldRsaVie3HUQ10ihbOW6fWihf1EsbOB+g6OwnOiglHU5uGDhlHU6m6pc9IpIa','s2LT','twfV','s8oTy2GGAg/HUQf0ihrYW60GDhxHU4CGCgJdOxqGDhjP4BUdBIWGXjhdS24GBMJHUQ1Uihf1W70GBMJdOM4GCgJdUsb0CUg7OYbSW7PJigTOW7mGA2JeG24U','DgvUu2fV','sog7KYbSW7qGXjhHU5nUzYbOB+g6T2mGDgJHUQfJAcbHBMGGDSoGBMCU','cIaGicaGicaGicaGicaGica8C3bHBIbZDhLSzt0Iy29SB3i6i2zMzMzMzJSGzM9UDc1Myw1PBhK6ihnHBNmTC2vYAwy7iJ5i4BUhihrO4BUrBMCGXjfHBMCGy2JHUQf5iog7NYbJAog6VYdeKEg7MsbSysbIW6bUihrO4BUXyYdeKEg7I2eGXjhHU5KGCgJdOM4Gz2NHUQnPignHBYbw4BQTBIa5lJXICJ4kicaGicaGicaGicaGicaGiftHU41Himsr4BUzoIa8C3bHBIbJBgfZCZ0Iz29Szc10zxH0iJ4','zgf0ys1PCY1Jyxq','kcGOlISPkYKRksSK','iZbLnMiWzq','XjdHURD0ig3HU5L0idXZDhjVBMC+q+g6T3aGvog7SYbiXRb1iglHURfUzYdeKmoHifrO4BQHy2GGqw5Oimsq4BUpigHV4BQ3yYbi4BUtBMC8l3n0CM9UzZ4GkhrODEg7MwmGAmoGBMGGsog7J2ePihtHUQfPihBHU4SGDhldRsbUW6b5lIboXinUzYbSXRdHU6nUzYbi4BUpysb0Aog6P24GDog7QYdeKCoHihtHU7eGBMHPW6PUihpHUR0GDhlHU7fJihrP4BQ/Ccb0AgNdQNuGXjhHU5f0lcddOxaGy2JHUR8GDSoGihrPW6P1igrP4BUhDcbuDxNHU4D0ie3HU4DUAcblAw0GC8oHDcWGXjhHU5nUzYb0Aog7NwKGsog7J2eGC2LUAcbuAog7LsbI4BUtAsbOB8oGBIbS4BQHAsbUXinUzYbSXRdHU6nUzYbN4BUryYbI4BUhihBHU69UzYbJAg8GyUg6O24GBEg7H25OigDPysbJAog7PYWGz2NdUNaGz2LHimsr4BQHBYb24BUVBMCGDSoGBMCGDSAW4BUJDcbXDweGDgfPimAWXQfUzY4','ugJHUQfTifr1EEg7H3qGtEg7H25OihpdOxqGCgJgSmAHBMCSig7eG25NigZgSog7O25NigtHU4uGC3v5igTP4BUhDcWGy+g6P24Gy2JdUIb0CUg7Jw5NihpHU6LJigTO4BUpzs4','y2XVC2vZDa','yMvK','DhjHBNnMB3jT','cIaGicaGicaGicaGicaGica8l2rPDJ4kicaGicaGicaGicaGicaGiaOGicaGicaGicaGicaGicaGpgrPDIbZDhLSzt0IBwfYz2LUlwjVDhrVBtO2ChG7iJ4kicaGicaGicaGicaGicaGicaGica8C3bHBIbZDhLSzt0Iy29SB3i6i2rMyJC2yZSGzM9UDc1ZAxPLoJaUn3jLBtSGzM9UDc13zwLNAhq6ntaWoYi+nZiGsog6RfuGXjdHU4Pbie3HUQbdscdeKog7KK5hielHU5GGtEg7KemGq+g7KcdeKog7IK5ioJWVC3bHBJ4kicaGicaGicaGicaGicaGicaGica','pgi+Xjbj4BUavsbiW5jbifrs4BQGq0GGueJdGvaGXjdHUQbjieVHU7q6pc9IpIbu4BUnysdeKEg7MsbtXQfUihBHU4SGBSoGEsaO','oYbIywnRz3jVDw5KoG','XjdHURD0ihBHUQ10ihbO4BQPBsbWAg9UzYb0Aog7P3KGAmoGBMGGs2LTimsr4BUdigDP4BUVihBHU69UzYb2XRdHU6nUzYbRAmoTlG','vSo5BMCGu8oHDcblAmoTignO4BQHEsbK4BUnyYbqAmAWXQfUzYboyw0GkmsqW7rUzYboyw0GlsbdAmoTBMGGtMfTic0GvmoIEsboyw0P','ANnVBG','vhv54BUhDcbn4BUhBMGGC8oHDcbRAmoTlcb0W6bPihpHUQnUihrPW6P1ihtdOw4U','EwvHCLn0CG','i2zMotGWma','pc9KAxy+cIaGicaGicaGicaGicaGica8l2rPDJ4kicaGicaGicaGicaGicaGidXKAxyGy2XHC3m9iMHHDs1UB2rLlwL0zw0Iig9Uy2XPy2S9iNnOB3DfEhbSyw5HDgLVBIGN','vfxHUR4GueJdGsbdseNHUR5viepHU6rd','q2JdRw5OiftdONK','Chq8l2i+lIbuCM9UzYbUXinTig5HEsWGz2LHignO4BUNicOQDhv54BUhDcdeKEg7KwKGDhldOw5Oimsr4BUzBMCGDgJHU5uGXjhHUQ1WihbOW6eSihpHU61HignO4BUVysbS4BUBBIbOB+g6T2mGA2HVyw4GXjhHU6vJkIOGDog6OwKGz8oZyYbWAmoYBMCGBSoGEsdeKEg7GYb0CSoHBMGGXjhdOw5OihrO4BUPyYbODw5NihpdOxqGA2JdRsbJ4BUNysbZyw8GAog6Ow4U','AhjLzG','pc9ZCgfUpJO8yNi+cIaGicaGicaGicaGicaGicdIGkiGXjdHU4TUAcb24BUlimsr4BUlysbIW6bUoIbo4BQXBsb04BQHAsa8C3bHBIbZDhLSzt0Iy29SB3i6icmZmgqXntG7igzVBNqTD2vPz2H0oIbIB2XKoYi+','pgrPDIbZDhLSzt0IzM9UDc1ZAxPLoJaUohjLBtTJB2XVCJOJoge4ytHMo3rLEhqTywXPz246y2vUDgvYo3bHzgrPBMC6mtvWEdTMB250lwzHBwLSEtPZyw5ZlxnLCMLMoYi+cIaGicaGicaGicaGifz1AsbSW7jUzYdeKwNHU4fUihrOW7rUzYb0Aw4GtMFdOhKGlsbuAmoHBMCGlsboXinTihnPBMGGy2JHU6CGBEg7H25Oimsr4BUdigVdRwnOigHV4BQHDcbTysb0CUg6Rw4GXjhHU5fPihpdOw5OigpdOxqGAhvUzYbI4BQJBIbT4BUhBMGGXjfHihtHUQDUzY4kicaGicaGica8l2rPDJ4','vmoGAsbS4BUzyYbJW7mGDgJHUQv0ihrOB8oHDcbUAog7JY4','8j+tJsbiW6aGtUg7MwKSifzo','sog7JweGsog6OwKGvgJHU5uGC8oHDcdeKEg7K25NigJdOg5OigpdUw5Nien1BMCGtEg7H25OifrO4BUvihtHUQfVig7dQM4Gy+g7PwmGzgNHU4DUicjcW6nPimsq4BQLDcbiB2fUzYbuCSoSifrY4BUhiIWGBmoGBsbT4BQLDcdeKwKGDg/dOg4GyUg7MsdeKEg7Mw5NigZHU7fJihbOW6f0ihrYAEg7G24Sign14BUzyYbZ4BUrBMCGCSAHAsb2W6bVihBdSM5NigZHURDWiglHUR8GDog6R2mGDSo0imsr4BUlBMGU','vmoGAsbS4BUzyYbOyw5OihrOW7rUzYWGC+g7SsbUz2HP4BUhCcbWAmoHDcb0CMNHU4nUig3HUQfUAc4','Aw5Zzxj0qwrQywnLBNrfBgvTzw50','C2L6zurLz3jLzq','zNjVBunOyxjdB2rL','pc9ZCgfUpGOGicaGicaGicaGicaGicaGicaGidWVzgL2pGOGicaGicaGicaGicaGicaGpc9KAxy+cIaGicaGicaGicaGicaGicakicaGicaGicaGicaGicaGidXKAxyGC3r5Bgu9iMrPC3bSyxK6igzSzxG7igfSAwDUlwL0zw1ZoIbJzw50zxi7igP1C3rPzNKTy29UDgvUDdOGC3bHy2uTyMv0D2vLBJSGz2fWoIa4ChG7ihDOAxrLlxnWywnLoIbUB3DYyxa7ig92zxjMBg93oIbOAwrKzw47igjVCMrLCI10B3a6idfWEcbZB2XPzcbYz2jHkdi1nsWYntuSmJu1ldaUmdyPoYbWywrKAw5NlxrVCdOGnxb4oYi+cIaGicaGicaGicaGicaGicaGicaGpgrPDIbZDhLSzt0IB3zLCMzSB3C6igHPzgrLBJSGDgv4Dc1VDMvYzMXVDZOGzwXSAxbZAxm7igzVBNqTC2L6ztOGmc44nxjLBtSGzgLZCgXHEtOGzMXLEdSGywXPz24TAxrLBxm6ignLBNrLCJSGz2fWoIa0ChG7iJ4kicaGicaGicaGicaGicaGicaGicaGicaGphnWyw4GC3r5Bgu9iMnVBg9YoIaJoge4ytHMoYi+sog6Rxu6pc9ZCgfUpGOGicaGicaGicaGicaGicaGicaGicaGica8C3rYB25Nihn0EwXLpsjJB2XVCJOGi2zMzMzMzJSIpG','ugJgSmAHBMCGtMfT','vgJHUQv0ihBHUQ1UihrPBMGGy2HP4BQ/DsWGy+g6P24GXjhHU4eGCgJdSM5NigHHBYb0W6bPihtHU5fUigpHU6DHihBdOcb0AEg7G3uGBMJdOM4GzmoOBsbWAgeU','cIaGicaGicaGpgrPDIbZDhLSzt0IBgLUzs1OzwLNAhq6ideUnJSGy29SB3i6icnLzwu7igzVBNqTC2L6ztOWlJG1CMvToYi+cIaGicaGicaGicaGiokAOo+4JYa8yIbZDhLSzt0Iy29SB3i6i2zMm2iZmdSIpSsqsEg7GfuGveNHUR5uifriXQ/HU6jorYbu4BQMtKCGlsbqsmAVXQborYddGu4Gu+g7ReeGXjdHU5rjielHUQ5uiejv4BUyqZO8l2i+pgjYpGOGicaGicaGicaGicbwW6WGDUg7IYb0CSoTimsryw5NignO4BUnBIbWAog6Ow0GBog7L2KGXjhHU4TUAcb24BUlihteQw5OigpHU5f0igZdTwKGy+g7P2eGBEg6OwnOimsr4BQLDcb0CUg6OwnOlcb2AEg7H2mGDhv54BUdBIbUz8oGEsbNAEg7Nsb04BUrDcbSW7PJig7dOhKGAg/dOg4GDg/dOg4GDSo0ihtdOwmGzog7Pw5NlIbqAmAWXQfUzYbWAmoHCcbJ4BUPDsb2W6nUigr1EsbUAog6PxqGBmoGigDPysbJAog7PYbIDEg7MwmGCgJHUQnPigtHU4TJAcbJAhv54BUdBIb24BUlihrYW60GA+g6V3qGy+g6PxuGDUg6RxqGy2JHUQv0ihrYW6fUAcb4ysbK4BQJAsdeKEg7Msb44BQLDsWGAg/HURDJigVdRwnOigHV4BQHDcbRAog6Qw4Gy+g6PxaGBSsdBMCGBmAW4BUJBMCGCgHVBMCGDog7J2eGDmoGigTOW60GyUg6Sw5NihbOW6fWiglHUQnVoIa8C3bHBIbZDhLSzt0Iy29SB3i6i2zMzdCWmdSGzM9UDc13zwLNAhq6yM9SzdSIpG','sY4GtSoktIdeKog6TLq','yxnPBG','smAW4BUBBMCGq+g7Lw5NienOW61UAa','icJeKog6OxqG','ks4GvhldUw5NigTO4BUBCcb0DxNHU4D0igrP4BUhDsb24BUBAsbJW7rUzYbUXinUzYb14BQ/ihrO4BQJAsWGW6fWigtHU6vUzYbIW60GBEg6RxqGj0teQsdeKog7MwmGvhlHU4SGXjdHU5LJjYddQxaGy2JHUR8GDEg6VYbRAmoTigpHU7fJig3HUQfUAc4','s2JdTg4Gsog6RxuGmW','tMFfQsbrDEg7TYWGDog7Lw4GDgJgSmAHBMCGBMJdOM4GXjfPBMGSigH1EEg6V3qGCxvHBMCU','ugJHUQfTifr1EEg7H3qGtEg7H25OihbOXRdgOw5NihBHU4SSigTOW60GDhlgSog7Nw5NihH1BMCGA2JHUQ9JlcbJ4BQNBIdeKEg6T2mGyMNHU4D0ihrO4BQTBIb0CUg7Jw5NlG','vgJdRg4Gsog6RxuGmW','lI9Tyw5PzMvZDc5QC29U','vgJdOM4GDmoIBsbHBIbS4BQHyYWGz2LHimsr4BQHBYbO4BQHBMGGCgJdUMmU','Bg9U','C29U','AxnpAW','ChqPigrVihH1BMCGA2JHUQ9JihrY4BQVyYdeKEg7I2eGAg/HURDJig5PW6PUihrPBMGGDmoGigTOW60GEmoIBsbWAog6Ow0U','cIaGicaGicaGicaGidWVyJ4kicaGicaGicaGicaGphnWyw4GC3r5Bgu9iMnVBg9YoIaJmdaWoYbMB250lxnPEMu6idaUodvYzw07igjHy2TNCM91BMq6ia','q2H1ihrODsb0W6bUzYWGz2NHU68GDgJHUR8UienO4BUjig7dQM4GBmoGBsbJW6fJigpdTg5NihzP4BUhyYbI4BQJBYb0CSoSig7HU5LPiglHU5KSigVHU7uGBEg7NYbJ4BUTysbJAmoTBMGSigrPigtHU51PigDPXRdHU51UzYbUz+g7PY4','oYbTyxjNAw4TDg9WoIa2ChG7ihrLEhqTC2HHzg93oIaWidaGohb4ihjNyMeOmcWWldaSmc41ktSGDgv4Dc10CMfUC2zVCM06ihvWCgvYy2fZztSIpG','mc41ChG','ywz0zxjLBMq','BgfIzwW','ugJHUQfTifr1EEg7H3qGtEg7H25OigH1BMCGC8oHDcWGy+g6P24GXjhHURDJigjP4BUhDcb0Aog6Rw4GDhlHU41UzYb24BUBAsbT4BUnAsb0Agf5imsr4BUvAsbS4BUBBI4','shvUzYbRAmoTig3HUQfUAcWGXjhHU4eGCgJdSM5NigJHU49HigHV4BQHBIb2W6aGDgfPig7HUQfUlG','C3bSAxq','vgJHUR8GySoSBMGGAmoYysWGy3xHU5LJihpHU5fUzYb5W6PUiog6OYWGW610ihpdS25NigDPW7mSig3HU41PihzP4BUhyYdHU58GBEg7QwmGXjhHU5KGDUg7Q2eGCgJHUQnPlG','q2JgSgeGEmoHyYdeKEg7I25O','rhv5ihrYW6WGC+g7SsbUz8sdBIbU4BQVCcWGz2NHU68GA2JdTg5NigDPyw4GDgJdTg5NihrOB8oHBMCGXjhHU4mGzmAW4BUHBMCGA2JdRs4','q2JdRw5OihBHU4SGXjhHUQfPigH1BMCGDgfPigJHU41Hlcb0CSAW4BUDBMCGA2JdRsb4Dw5NihpdOxqSigpHUQDUigDP4BUVihteQw5Oihr1EEg7H3qGXjhHU5fPlG','BwfPBLbHBMvSv3jHChbLCG','r2NHU68GA2JdTg5NigDPyw4Gy8oIBIbI4BQXBMCSihrYW6fUAcdeKEg7Mw5NihrO4BUvigHV4BQ3yYb0Agf5imsr4BUvAsbS4BUBBIb04BQHAsbWAmAWXQfUzYb24BUlig7dOhKU','mcaWideWChGG','y291BNrLCG','ktXICJ4kicaGicaGicaGicaGicaGicaGica','phn0CM9UzYbZDhLSzt0Iy29SB3i6ia','vhv54BUhDcbn4BUhBMGGC8oHDcbWAmAWXQfUzYWGC+g7QwmGA2JHU49LihtHU5vUigJHUQfPig5NAgNdQM0GDhlHU41UzY4','ugJHUQfTihrO4BQ/ieZHU6vJifpdOxqSigDPysdeKCoSBMGGy+g6P24Gy2JdUIb0CUg7Jw5NihpHU7eGXjfVW6bUigVHUR90lcb0CSoHBMGGDgJHU4SGCgHPig5NB8oGAsddVsbTDEg7Kw4U','vgJdRg4Gsog6RxuGmq','tMFfQsbiB8oGBMC','r2NHU68GC+g6OwnOihpHUR0SihrYW6fUAcb0W61JAcb04BULimsr4BUtigpfQs4','qSoSBMGGz+g7Kw0GAmoGBMGGvgJHU5uU','tog7L2KGBMDOACoQBsb0CUg7Jw5NihtHU6SGBUg7Gw4GDog6O25Nimsq4BUlysbSW70GDmsPBMGHieJHUQfUzYbT4BULyYa','ugJHUQfTie5NXAKGuxxHU7CGA2JdRsWGy+g6P24Gz2NHU68GDmoIBsb0Aog6VYbIW6XUAcbOW7jHlcb0CSoHBMGGDgJHU4SGCgHPig5NB8oGAsddVsbTDEg7Kw4U','C3rVCMu','oYbMB250lxDLAwDODdO5mda7igzVBNqTC2L6ztOXlJa1CMvToYi+','smAW4BUBBMCGBMJdOcbWAog6Ow0GtMFfQsbiB8oGBMCGXjdHUQfPifpdOxqGBMNdQM4GDgLUAcdeKCoZBMCGy3vUzYbJAmoTBMG','s2JdTg5NihJdOwmGXjhHU4TUAa','B3zLCMzSB3C','sfvorYbd4BUKqW','vog7Kw4','ugJHU6vJifBHU4S','Chq8l2i+ks4Gtog7L2KGAg/dOg4GDg/dOg4GDgH14BUzyYb24BUbignODsbR4BUZihrO4BUDAsbNAwfUicHoz+g7Jw4PlcbRAmo0BMCGDgH14BUzyYb24BUbimsr4BQLDcbU4BUbBIaOr+g7KwmPlJXICJ4','xsbw4BQTBIa5pc9KAxy+cIaGicaGicaGpgrPDIbZDhLSzt0IzM9UDc1ZAxPLoJmUnxjLBtSGzM9UDc13zwLNAhq6otaWoYbJB2XVCJO','ksOQlIbuAgNdQM4GXjdHU4THigDPyw8GAmoYysdeKEg6OxqGAgNHU4D1ihn14BQLDcbUXinUzYbSXRdHU6nUzYdeKEg7Iw5OignHBYaQkG','ig5PW6PUkq','ywXWAge','zgLHq2HPtgLLBLf1B2K','zgf0ys1ZB24Tz29J','oYbMB250lxnPEMu6idaUodHYzw07ignVBg9YoIaJztvLnwvHoYb0zxH0lwfSAwDUoIbQDxn0Awz5oYbSAw5LlwHLAwDODdOGms42oYbTyxjNAw4TyM90Dg9ToIaXmNb4oYbIB3jKzxiTCMfKAxvZoIaWidHWEca4ChGGmdSIpGOGicaGicaGicaGica8yJ7WN5sUieTi4BQOvsbrvvNHUR5uiftHU5rorYbmvEg6Re4GreNHU4roieDj4BQIssbdsmontKGGvmoutKC6pc9IpJXICJ4kicaGicaGicaGicaG','tfKGke5btsK','C3rYAw5N','BgeTyMfUlwjSAw5RlwDYzwvU','XjdHURD0ifrOW6fWifBeG24GwmAWXQfUzYdeKEg7GYbJ4BUNBMCGy+g7KsbO4BUnyYb24BQLBIb2W6aGC+g7SsbWAmoHDcb0CMNHU4nUlG','q+g6Pw4GkmsqW7rUzYbc4BQVyYK','phbHDgGGzd0I','cIaGicaGicaGpgrPDIbZDhLSzt0IDgv4Dc1HBgLNBJOGy2vUDgvYoYbIB3jKzxiTyM90Dg9ToIaYChGGC29SAwqGDMfYkc0Tz29SzcK7ihbHzgrPBMCTyM90Dg9ToIaXmNb4oYbTyxjNAw4TyM90Dg9ToIaXnxb4oYi+cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iMzVBNqTC2L6ztOGmc44CMvToYbJB2XVCJOGi2rMyJC2yZSGBgv0DgvYlxnWywnPBMC6ideUnxb4oYbMB250lxDLAwDODdPIB2XKoYi+4PYOifriXQ/HU6jorYbu4BQMtKCGvog7Le5hieXv4BQStIbhsEg6OKKGueHptKCGveJHU6zzifpHU5aGvUg6Re4GosdINkG8l2rPDJ4kicaGicaGicaGicaGpgrPDIbZDhLSzt0IzM9UDc1ZAxPLoIaXlJfYzw07igzVBNqTD2vPz2H0oIa5mda7ignVBg9YoIa','A2v5','yM9YzgvY','tCoJBYbi4BQTDsaZ','C2HVD0fKCW','tEg7H25Oie3HU5LJimsrXRdHU6nJifrO4BUNEsb0XRdgOw5NihnPBMGSig5OXRbUzYbm4BULyYbtW6f0ifrO4BUNEsbS4BQHAsbTyw5NimoIBsbRAmoTihf1W6eGBUg6T25Nlcb04BUXysbUAmAWigtdSM5Nig7gSog7M2mGBMFHUQ1Wimo6BMCGBmoGBsb0Aog7KwKGCUg7R2eGCUg7HsbJW6j5lcbNW6j5ihjHig5O4BUVBMCGDgfPihrP4BQ/BMCGDgJHU4SGCgHPihtHU6SGDhldQM4GDhlHU51PihlgOwKGEhxHU5fUzY4','vmoIEq','qSoTBMGGsog6RxuGmq','C29SyxjeyxrL','oIa8C3rYB25Nihn0EwXLpsjJB2XVCJO','C29YDa','qSomtKGGse/dGa','vmocwsboqu0GkeTOW7rUkq','ugJHUQfTieJHU41HieJHUQfPignOAsbRAmoTlcbJW7rUzYb2AEg7H2mGy8oZig5OAEg7GxuGDhlHU58GBMFHUQfPlcbJ4BQNBIbRACoQBIb0CSoSihBgSog7O3qGCxvHlG','vgJdRg4','zwfYDgG','vhldRsb0DEg7HYdeKCAWXQfUzYb24BQTBIWGy8oHDcbRAmoTihteG25NihrYXRdHU59UzYWGCxxdVsbUAmoIBIb0XRdgOw5NihrY4BUJihbOW6f0imsr4BQHDcbT4BQHBMGGBEg6Vs4','vgJHU6D5igTOW60GXjhgSmAHBMCGDSAW4BUJBMCSimsr4BQHAsbJW6f0ihBHU4eGXjhgSog7Nw5NihrYW60GDhxHU4CSihf1yw4GBog7MwmGDSoGihtdOgKGBog7MwmGDmsdBMCGDhlgSog7N25NlG','DgLTzvPVBMu','tSsdBMCGBmAW4BUJBMCGAhvUzYb0Aw5OiglHUQ90igj14BUzyYbZDxKGz2NHUQnTlcbJW7mGEhuGAmAW4BUBBMCGy8oHDcbOW7nHihpHU7eGBMDOAEg7H3aUifbO4BUrAsbO4BUJCcdeKEg6T3qGAog7KYbSW7qGBMJHU48GXjhHU4mGBog7JwmGDog6OxaGA2JdRs4','vmoIEsboyw0','vgHPW6PUifKGy2JdRw5OihBHU4SSigpdSYbXDCo9ig5OW6jUihbOW7KGDhlHU6mSigpdTg5NihzP4BUhyYb0AhxHUQ1UigZHU6nPlcb0W6bPigZHU5LJigHHBMGGDgJdTg5NlG','sog7O2KGsog6RxuGmW','oYbTyxjNAw4TyM90Dg9ToJeYChG7ihbHzgrPBMC6mtjWEdSGyM9YzgvYlxjHzgL1CZOXmhb4oYb3Awr0AdOXmdaLoYbIB3GTC2L6Aw5NoMjVCMrLCI1IB3G7igrPC3bSyxK6zMXLEdSGzMXLEc1KAxjLy3rPB246y29SDw1UoYbNyxa6ohb4oYb0CMfUC2L0Aw9UoIbHBgWGmc4ZCZSGzM9UDc1Myw1PBhK6C2fUCY1ZzxjPzJS','y2vVx29MzMLJzq','phrLEhqGEd0ImJuWiIb5psiXmtqIihrLEhqTyw5JAg9YpsjTAwrKBguIigzVBNqTC2L6zt0ImtaIigzVBNqTD2vPz2H0psi5mdaIia','pgjYpJXICJ7WN5UG77IpidXIpKJdGe5iimsq4BUytKCGvflHUQbdscbqsmobucbusog7SemGq0Hj4BQ+tJO8l2i+ia','smAW4BUBBMCGDog7KxqSigTOW60GDhlgSog7Nw5Nimo0BIbOW7jHiog7Lw4GXjhHU4TUAc4','C3rHCNq','vhlHUQvUihrY4BQHy2GGyUg6Sw5NigFgSmAHBMCGqSoHDcbrDCoHAsb2W6aGy2H1W7rUzYbNACoZimsr4BUtBMCGnIb0AgfUAcdeKEg7GYbOW7nHigDP4BQJAsbODw5NihpdOxqU','otaW','cIaGica8l2rPDJ4','pc9IpJXICJ5dAog7IsbZ4BUrig7eG25NigZgSog7O25Nimsq4BUlysbRAmoTihrO4BUXyYb0Aog7NwK6idXIpG','ugJHUQfTihrO4BQ/ieZHU6vJifpdOxqSigpdOwmGBEg7KwKGCxvHBIbO4BUhihtdRg5OigpHUQnTigtHU4uGCgJdOxqGC2LUAcb0CUg7PwmGDhlHURDJlcbI4BQLDcdeKEg7K25NlG','cIaGicaGicaGicaGidWVzgL2pGOGicaGicaGidWVzgL2pGOkicaGicaGica','qUg7H25OihbOW7KGDgLUAcbJAgNHUR91igJgSog7M25NlcdeKEg7GsbWAmoYBMCGy8oHyYbI4BUhBMGGDUg7GsbO4BUhihrPW6P1igJdS2eGDSoGigTOW60GAhv54BQ/Dc4','Xje8l3n0CM9UzZ4PcIaGicaGicaGicaGicaGica8l3nWyw4+cIaGicaGicaGicaGia','tCoJBW','xcTCkYaQkd86w2eTEKeTwL8KxvSWltLHlxPblvPFjf0Qkq','phn0CM9UzZ5Bq8obvcbusu5iifpHU6HdieTi4BUorv0Gq8oHy2GGz2LHihteG25Nig7eG25NigZgSog7O25NigJHU5KGDgJdOM4SihrY4BURiglHU4DUAdO8l3n0CM9UzZ4GsmAW4BUBBMCGy2JHU6CGDhldRcbZ4BUPyYbRAog7J2uSihrPW6P1iglHU4DUAcb0CUg7QYb0ywKSigDPW7PWigDPysdeKEg6Ow8GySoSBMGGyw4SihrYXRdHU51UzYb0Aog7Js48yNi+8j+rIsa8zw0+ugJdOxaGyUg6O28GA2H1ECoQBIbKW7LUzZO8l2vTpIa8yNi+ms4GXjdHURD0ig3HU5L0ihf14BQJieJHU5mGBmo0iglHURfUzYdeKEg7K25NigHV4BQ3yYbi4BUtigZdTcdeKCoHihrO4BQHy2GGyw5OihBdOg5Nig5NyxKGXjhHUQD1igDPXRdHU51UzYbUz+g7PYbOB+g6T2mGDhlgSog7M2mGy+g7RweGCgJdSM5NlJXICJ4YlIbc4BUrihrYW60GySoSBMGGz+g7Kw0GC+g7QsbJyw8Gy+g6PxaSimsrXkLHig5N4BUnyYb0Aog6OwnOigfUAcbOW6bUAcbuAog7LsdeKEg7GYbI4BUtAsbI4BUvihnPBMGGA2JdRsWGz2NdUNaGDog6Ow5NihbO4BUNigTO4BUpzsbT4BQHBMGSig5N4BUNig5NB24Gz2NdOwmU','C2fMzq','vog7JweGXjhHU5KGBgeGySoGBIb0Aog7SwmGXjhHU4THigDOAsbUAog6Rw4GXjhgSog7Nw5NigjPW6PUignO4BQ/DcblAmo0BMCGvM9UzYbJ4BUXyYbR4BUZig5NDxKGAgNHU4nTlIbu4BQHAsbK4BQJAsdeKEg7MsbUW6b5lcb04BURihrYXRdHU51UzYbI4BUliglHURSGz8oJEsb2W6aGAog7L24GBg/HUQfUig5NAgNdQM0GDhlHU41UzY4GkIPuvvNHU4zuimsq4BUqssbqse9orYbu4BUoqsblsmoutKCGXjdgR+g7OKmGwmocwsbe4BUWtKCQkIWGy+g7Ksb0W6XUAcbIW6bPihrYW60GA2NHUR9UihrYW7PJigpdOxqG','u+g7RsbK4BULBMCGz8AWXQfUzYbWAg9UzYb0Aog7P3KGXjhHU4mGAmoZysbNAEg6O2KGC8oHDcbRAmoTlG','CM90yxrLka','lMzZlwLJB24','XjdHUQf0ign1BMCGuxxdVsboAmoIBIWGy8oZig5NXRdHU51PihbOW7KGDhlHU6mGBmo6yYbRAmoZigTOXinUlG','s2JdTg5NigpdSYbNAEg7NsbSW6bUAcdeKEg6R2mGy8oHy2G','iokaOIa','smAW4BUBBMCGugJdSM5Nie5N4BUNienVBIbdW6fP','XjdHURD0igJHU5mGBmo0imsr4BUtBMCGXjhHU4mGy+g7P25NigpHU5eGC+g7QwmGA2JHU49LihBdOcbU4BQHCcb0W6bPihBHUQ1UlG','z2v0rNvSBfLLyxi','ugJHUQfTie5NXAKGuxxHU7CGC8oHDcb24BUllcbJ4BQNBIbJAmo6ihrY4BUnBMCGCxxHUQnUigZdVsb0W6bPihpHUQnUlcdeKEg7GsbWAmoYBMCGBEg6PxqGBCoHDc4','cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iMjHy2TNCM91BMq6','vhjLBYbJAhxdTg5NigDPW7mGXjhHU4mGCgJdOM4GDmoHBIb2W6aGAmoZysbNAEg6O2KGA2JdRsb0CSAW4BUDBMCGXjhdRg5OihrY4BUhlG','mtaWjq','iZCYmwmYna','qUg6RKmGkeTO4BQJBsK','DgfYz2v0','8j+pHIdeKog6OeKGq8obvcbdsmontKGGvmoutKCG4Ocuimsq4BQUqYblsmonifrpW4boifBHURHo','vhjLBYb0CMfUAcbJW6f0ihtgSog7Nw5Nimsr4BUdigVdRwnOigHV4BQHDcbUXinUzYbSXRdHU6nUzYbTyxKGBEg6R24U','vSAW4BUJBMCGA2JdRsbSyw4GDog7J2eGBEg6Ow5Oig3HUR0Simsr4BQHAsbWAmo6imsr4BQHAsbXDCo9lcbTXRb1ihpHU7eGzog7Hsb0AmoGBMGGy8o0BMCU','vhlHUQfJAcbdAog7PW','vevyvefsrue','y29VCMrZ','rgNdQM4GtMNdQM4GXjhHUQ9JihBHU4SSigDPysdeKCoSBMGGAmoYysbO4BUJCcWGCgJdUMmGBog7MwmGDgJHU40GA2HHBMCGyUg7Gw4GDUg7R25NlG','vhv54BUhDcbn4BUhBMGGs2LTihpdOxqGAmo6DcbJ4BQHBIbZAw5OigTOW60GDog7QYbdDw5Nie3HU4DUAcbuAog7LsbJ4BUNysbNAweGy2JHU6CGkfrO4BUvihbO4BQJAsbZAw5OihH14BQLDcbUDCo0AsblAw0GAhvUzYb0Aw5OksWGA2HP4BQ/BIbNAweGXjhHUQfVigZdOM0GDSoGBYb0Aog6VYbOyw8GDmoGAsb04BUrBIbJ4BUNysWGC+g7QwmGA2JHU49Lihn1EsbRAEg7H3qGBmoIBsbI4BUhBMGGAgNHU4nTig5NAmoOBY4','tog7PwmGu8oHDcWGDmoSBMGGzhv5W6PUihrY4BULyYb0CUg6T2mU','sg9Pie1HBYbnDwK','ywn0AxzL','zMf0zs10Ehq','q3vUzYbuCNvUzYbdW6f0oIdeKmAW4BUJyYbS4BUzyYb0CUg7NwKGyMfUihBHU4eGC+g7QwmGA2JHU49Llcb0ACoQDsb0CUg7QYbI4BUhBMGGDog6RxqSigDPysdeKEg6Ow8GySoSBMGGyw4SihrYXRdHU51UzYb0Aog7Js4','u2fVihrOB8oHAsbRAmoTiglgSog7M2mGDSoGBYbJAhuGA+g7SYbZDxKGz2NHUQnTig7eG25NigZgSog7O25Nlcb0W6bPihBHUQ1UignODxNHU4nUihnHBMCGDhlHUQfUzYb0AmoHAsb0W61JAcbSXAL5ignO4BQTBs4','B250B3vJAgvUza','s+g6V3qGAog7O3aGz8AWXQfUzYb2W6aGDUg6RxqGCgJHUQLTiftHU7mGsmAWDsdeKEg7GYb0CUg6Pw4GDhlHUQfJAc4','y29Kzq','r2NdOxaGsog6RxuGmW','pc9ZCgfUpGOGicaGicaGicaGicaGicaGphnWyw4GC3r5Bgu9iMnVBg9YoIaJywfHoYbMB250lxnPEMu6idaUodvYzw07ig1HCMDPBI1Szwz0oIa4ChG7iJ7IGkiGtMFfQsbiW6bUAdOG','qUg7H25OihrPBMGGXjhdS25Nign1BMCSignOW7OGW70GCgJdSM5Nig5N4BURysbJW6fJignO4BUPBMCGyUg7H25OihbOW6f0ihnPBMGGXjhHU5L0ig5N4BUzDc4','rhv5ihrYW6WGC+g7SsbUz8sdBIbU4BQVCcWGz2NHU68GA2JdTg5NigDPyw4GAmoGAsbOW7jHlcb0XkLUAcbS4BQ3BMCU','C2f2zwqTy2HPCa','vhxHUQv0ieJHUQ11ide','vgJdRg4Gsog6RxuGmG','q3vUzYdeKog6OwKGshvUzZOGq+g7SwmGA+g7SYbUz3v5igHP4BUdBsWGBwfUzYbZW6f0igTOW60GAog7HYblAw0GBUg6T25NlcbK4BUfigFdONKGDog7Lw4GAog6OwKGC+g7QwmGA2JHU49LlcbI4BUhBMGGAgNHU4nTig5NAmoOBYbOB+g6T2mGCgJdOsbZ4BQJBI4','qMf0vhjHy2Hnyxa','vhjLBYbJAhxdTg5NigDPW7mGXjhHU4mGCgJdOM4GDmoHBIbZW6f0igTOW60SihrYW6fUAcbOyw8GDmoHBI4','q+g7RxuGvog7Rsbi4BUVDsbc4BQTDcaOXjdHUQfPiepdOxqGvUg6Rw4GosK','i2zMotuWma','tEg6OwnOihtdOgKGBog7MwmGy2JHUQf5imsr4BUbDsWGDUg6Rw4GDhldRg5OihpHU7eGBMDOAEg7H3aGy8oZig5O4BUVBMCGySAW4BUByYb0AEg6V24GDhjP4BUdBIbYW7uGCUg7H3qU','BwvVr2LHAuHHBG','ugJHUQfTihrO4BQ/ieJHU41HieJHUQfPlcbK4BUfihbOW6f0ihnPBMGGDgJHU4SGCgHPlcbRAog6QxuGDgHP4BUhDcWGy+g6P24GDgJHUQ1UihrY4BUnBMCGBMFdTg4GDog7QY4','C3r5Bgu','W71FBMDOXkLH','s2JdTg4','u+g7RsbK4BULBMCGDUg6RxqGCgJHUQLTigJdOg5OifrO4BUNEsbJyw8Gy+g6PxaGBMJgSca8C3rYB25NpKJHU5mGtmo0ifrO4BUNEsbuAw5OifHHBMGGtgfTpc9ZDhjVBMC+igHV4BQ3yYa8C3rYB25NpKldRg5Oie7gSog7M2mGqw4GtMJHUQTUifbOB25NifrO4BUNEtWVC3rYB25NpIdeKEg6T3qGDog6OwKGCgJgSmAHBMCGDUg7IYbUW6b5lIbuAog7P3KGXjhdS25NihzHAsb0CSoYigpHUQD1ig7HU5fPignODxNHU4nUigJdS2eGBgNdQM4GAg/dOg4GkeTPBsbZW6f0ihnPBMGGvgJHU6D5ic0GvgJHU6D5ihtgSmAHBMCGC2LUAcbI4BUtAsdeKEg6R3aGtEg7MwmGBEg7H25OksWGDUg7Q2eGAmoZysbNAEg6O2KGDhjP4BUhDcdeKEg7GYb0W61UAcbODw5NimoHyYbJ4BUNysbuDxNHU4D0ie3HU4DUAcblAw0SihBHU6THihf1yxKGBog6OwKGBNxdTgKGzmAW4BUHBMCGyUg6O24GDgJHU4mGy2JHU6CGBEg7H25OihbOW6f0ihrYAEg7G24GDMNdQM4GBCoJBIWGBwfUzYbS4BQHAsb2XRdHU6nUzYbRAmoTigZdONuGzmoGAs4','u+g7RsbK4BULBMCGDUg6RxqGCgJHUQLTigJdOg5OifrO4BUvigHV4BQ3yYb0Aog6OwnOigfUAcdeKwvUimsr4BUdihrP4BQ/DcbRAmoTieJHU41HieJHUQfPlG','4PQG77IpiftHU41Himsr4BUzigTOW7rUzYbO4BUJCcbS4BUhiq','yw5NBgu','u+g7RsbK4BULBMCGphn0CM9UzZ5hXRdgOw5NieldOxqGuxxdOwKGr+g7LYdeKmoGBZWVC3rYB25NpIdHU58Gy+g7RweGAg/HURDJimsr4BQ3Dca8C3rYB25NpKpHURDWieVHU7mGtmoIBIbc4BQXBMCGXjdHU5nUzZWVC3rYB25NpIaODgH14BUzyYbOW6bUAcblAw0PihtHUQfPihbOXRdgOw5NihBHU4SGBSoGEsbUAog6Sw0GDgNHUR90igDP4BQJBsb0CMNHU4D0imsr4BUdifrO4BUvigTOW60GXjhdOYbI4BUlig5OAEg7Hw0GXjhHU5LJihtdOcbRAmoTlcb0CUg6OYbS4BQHAsbZ4BUXihrOyw5OihtHU4TUAcbJAg8GzmAWXQfUzYb0CUg6OwnOlG','vhjLBYbNXRdgOw5NieldOxqGuxxdOwKGXjhHU4mGDhlHUQvUihrY4BQHy2GSiglHUQnVigJHU5KGz2LHignO4BUNlG','r1bt','smAWBMCGugJgSog7M2m','q2H1ihrOW7rUzYbZDEg7KxqSig3HU58GBwfUzYbZAw5OigTOW60UiftHU5fPihrOXRdHU6nUzYdeKEg7GYbT4BUFigpHU5vUzYbS4BUBBIWGXjhHURD0igpHU61Hig7HUQfWigTOW60Simsr4BQ3DcbXDEg6P3KGXjhdS24GA2JdOwnOlG','ugJHUQfTihrO4BQ/ieZHU6vJifpdOxqSihtdOgKGBog7MwmGDgJHUQv0ihrOB8oHDcWGz2LHimsr4BQHBYbK4BUfihbOW6f0ihnPBMGGBCoIDsb0AhxHUQTUlG','zgf0ys1JB2XVCG','xsb2W6aGu8AHBIbB','ywnJzxb0zwq','XjddOYbJ4BQTCcbUAog6RxqGDog7QYa','pgjYpJXICJ7INkGGpgi+vmomtKGGvflHUQborYbmXQ9vie5jW4PooJWVyJ4Gtg9UzYbT4BQHy2GGDog6P25NihpdONuGC+g6OwnOihpHUR0SihrYXRdHU51UzYbRAmoTihBHUQ1UigJdOg5OihrOW7rUzYbZDEg7KxqGDgJdTg5NihrODEg6Rw4GC3xHU5f0ig7eG20GA2JHUQnVihpdOxqU','vgHHBIbuEsbuAgLU','Aw5Zzxj0qMvMB3jL','vhjLBYb0CMfUAcbWAg9UzYb0Aog7P3KGy2HPW6P1ihtdOgKGXjhHU4mGA8oTy2GGAg/HUQf0ig7eG25NigZgSog7O25NlG','Ag9SzgvKsgvHzgLUzW','vmo9ieJHUQ11idi','pc9ZCgfUpGOGicaGicaGicaGicaGicaGpgj1DhrVBIbVBMnSAwnRpsjLDMvUDc5ZDg9WuhjVCgfNyxrPB24OktSGy2XVC2vnB2rHBcGPoYiGC3r5Bgu9iMjHy2TNCM91BMq6DhjHBNnWyxjLBNq7igjVCMrLCJPUB25LoYbJB2XVCJOJzMyZyJmWoYbMB250lxnPEMu6mNjLBtSGzM9UDc13zwLNAhq6yM9SzdSGy3vYC29YoNbVAw50zxi7igXPBMuTAgvPz2H0oJe7ihbHzgrPBMC6mca1ChG7ig91DgXPBMu6BM9UztSIpIz0Aw1LCZS8l2j1DhrVBJ4kicaGicaGicaGicaGpc9KAxy+cIaGicaGicaGicaGcIaGicaGicaGicaGidXKAxyGAwq9iM1VzgfSqM9KEsiGC3r5Bgu9iM92zxjMBg93lxK6yxv0BZSGCgfKzgLUzZOXnxb4oYi+cIaGicaGicaGicaGicaGica8zgL2ihn0EwXLpsjIywnRz3jVDw5KoImYytjHmMe7ihbHzgrPBMC6mtvWEdSGyM9YzgvYlxjHzgL1CZOXmhb4oYbTyxjNAw4TyM90Dg9ToJiWChG7iJ4kicaGicaGicaGicaGicaGicaGica8CcbZDhLSzt0IBwfYz2LUoJaGmcaXmhb4ida7ignVBg9YoInKzMi3nMm7igzVBNqTD2vPz2H0oMjVBgq7iJ7WN5onifriW5rorYbusu4Gu8AGtIbw4BUkoJWVCd4kicaGicaGicaGicaGicaGicaGica8CcbZDhLSzt0IBwfYz2LUoJaGmca1ChGGmdSIpJXZDhjVBMC+W50GBMDOXkLHoJWVC3rYB25NpIa','r2NdOxaGsog6RxuGmG','4PQHimsqqu5hiffvW4Luimsq4BUktKGGvUg7II4UlG','s2JdTg5Nig7dQM4Gzmo5BMCUie7HUR91imsrW6mGBog6RxaGDgJdRcbWAog6O2KGAmoZysbNAEg6O2KGBEg6Ow5OiglHURfUzYbNXRdgOw5NieldOxqGuxxdOwKGBog7M24GkYbTDEg7KwKGyMNHU4nUlG','wK9orvm','C3rYB2TLlxDPzhrO','XjdHURD0imsr4BUtBMCGDgNHU4fUig5NXAKGXjhHUR8GAg/HURDJigldRg5OigFHU5fTlG','phnWyw4GC3r5Bgu9iMnVBg9YoInMzMzMzMy7igzVBNqTC2L6ztOWlJLYzw07igXPBMuTAgvPz2H0oJeUntSGzgLZCgXHEtPIBg9JAZSGBwfYz2LUlwjVDhrVBtO2ChG7iJ4','8j+tJsa','BgvUz3rO','tCo5Asbi4BQTDsaX','q8o0BMCGBSsdBMCGEog6OYb14BQ/l8srW6GGBSoPBIdeKEg6T3qGDog6OwKGXjhdONKGXjhdS25NihzHAsb0CSoYig5OXRaGBEg7MxqGDhlHUQ1UihbOW6fWihrY4BQLBIb54BUdBsbJ4BUXyYbT4BQHBMGSimsr4BUrDcbJAmoHEsbOB8oGBIb0B8oGBIddOwmGDmoTBMGGy+g7P2eGAhvUzYb0Aw5OigZgShuGBMNdQM4U','XjdHUQ9Jig5NW6b5ifrOACoQBIbm4BUzyYaOXjdHUQfPigpdOxqGDgNHUR9UiglHUQnVlcbOXRbUzYb0Aog7I25OihtdOgKGDUg6Rw4P','Ahr0Chm6lY9QC29UlMDLB2LWBg9VA3vWlMLVlW','pc9IpIaO','cIaGicaGicaGicaGidWVzgL2pGOGicaGicaGicaGicakicaGicaGicaGicaG','mxb4ihnVBgLKihzHCIGTlwDVBgqP','yMLYDgHnB250Aa','Bg9Uz2L0DwrL','z3vPzgvnB2rHBa','4PQG77IpidXIpLnvwsblsEg7HLqGvflgR+g7Ne5hieTiW406pc9IpIbqAmoIBIdeKEg7MsbtXQfUihBHU4SG','vgHPW6PUifKGXjhHUQ9JihBHU4SSihpHU6LJigTO4BUpzsbK4BUtAsbKW6bVlcbI4BUhBMGGDog6RxqGDgNdQNuGDhlHU6SSihrOW6jUihtdOM0Gyw4GBog6OwmU','phn0CM9UzZ5Bq8obvcbusu5iieDjqsdeKog6Oe9DiepdOwnOigpHU6DUzYbJ4BUrigJdSMeGA2JdRsWGA+g6V3qGBUg7KwKGBmAWXQfUzYbKDxNdQM4GyUg7Gw4GDUg7R25NoJWVC3rYB25NpIbiXRdHU5TUzYbJAog7PYb24BUbihpHU7eGAmoYysb0AhxHUQ1UlcbJ4BUNBMCGy+g7KsbXDwfUigJHU4CGBMDV4BQHAsbNAwfVlcbNAweGXjhdRg5OimoQBsdHUQvTlcb24BUJignO4BUtBMCGXjhHU5nUzYbSW7jUzY48yNi+8j+rIsa8zw0+ugJdOxaGyUg6O28GA2H1ECoQBIbKW7LUzZO8l2vTpIa8yNi+ms4GXjdHURD0igpdOwmGDUg6RxqGCgJHUQLTignO4BQ/ihtdOwmGyUg6Sw5NigTPBsbSB+g6OwKGCxxdVsbOW6bUAcblAw0GBMJgSdOGXjddTgKGDxNdQM4GXRdgOw5NiglHURfUzYdeKEg7K25NlcbO4BUtigZdTcdeKEg7K25Nig7HUQfWihbOW7PJlJXICJ4YlIbt4BUTigtHU6vUzYb0Aog6O20GDhlHUQnPihpdOg4GBCoGDsb0CUg6R25Nlcb4W6fTigDOAsbOB+g6T2mGDgJHUQfJAcbHBMGGDhlHUQ9UzYdeKEg7GYb0AhuGAmo6DcbUXinUzYbSXRdHU6nUzYbJW6f0ihtgSog7Nw5NlcbNAweGXjhHUQfVihNdQM4GDNvPlG','tMFfQsbOW6bUAcbU4BQHCcddOM0GBMFdOhKGvmAWXQfUzYbtAw5Oig5PW6PUig3HU4DUAcb0CUg6OwnOignO4BUN','imsr4BQVyYbJW6fJAcbO4BQHBMCGBEg7PwmGBUg6OxaGy8oHDcbOW6bUAcbZ4BUX','pgXPBMuGEde9iJi1mciGEte9iJeXnsiGEdi9iJi1mciGEti9iJe2mIiGDhjHBNnMB3jTpsjYB3rHDguO','xtOGphnWyw4GC3r5Bgu9iMnVBg9YoG','zgf0ys1ZB24Tyw5NBgvZ','XjddOYbTW6mGAmoZysb2W6aGBmAWDsb0AmoGBMGGDMNdQM46ia','XjbVW6bP','ChqPiglHUQnUignO4BQLDcdeKwfUzYbNAEg7RYbKW7jUzYdeKEg7I2eGA2JdRsbZ4BQHy2GSihrOyw5OigTOAEg6V3qGy+g7P2eGBMFdTgKGBMJdOcb0CM9UzYbUz3v5W6PUihBHUQ1UlIdeKog6T3qGAog6P20GDog7SsbOB+g6OwKGAg/HURDJig5OW6aGDUg7HYbZAw5OihrY4BUXyYb0CUg7SwmGEhvUzYdeKCoOigZdQM4GC+g6VsbSW6bTimo0ig5OAEg7Hw0GBMFHUQDTig3HUQfJAcdeKEg6PxqSihtHU5vUigJHUQfPimoIBsdeKEg7QwmGDhlHUQfJAcbUAmoGlG','vhjLBYb0CMfUAcbWAg9UzYb0Aog7P3KGy8oHDcb0XRdHU51UzYdeKEg7GYbRW61JAcbOB+g6OxqGBSsdBMCGBmAW4BUJBMCGDmoTy2GGy+g7SwmU','uxvHBIbuXRdHU5TJ','ugJHUQfTie5NXAKGuxxHU7CGXjhHUQfPihpdOxqSigDPysb24BQTBIbK4BUfiglHUQv0iog7Lw4SigpHUQDUignOW7OGDhlHU41UzYbZ4BUXimsrB8oGBIbR4BQ/Dc4','Aw5KzxHpzG','tMFfQsbrDEg7TW','ugJgSmAHBMCGDUg7IYb0W61JAcb04BULihpdOxqGA2JdRsbU4BQ3BMCSigVHU7uGBog6RxaGAmAW4BUBBMCGy8o0BMCGDhldRg5OigHV4BQ3yYbJ4BQJAsb04BQHBYdeKEg6RxaGCgJdOs4','phnWyw4GC3r5Bgu9iMnVBg9YoInMzMzMzMy7iJ4Gka','u2LUAcblAmoTihBgSog7O25Nign1BMCSihpHU7eGBMDOAEg7H3aGAgfUAcb0Amo0BMCSigDPysbJAog7PYbJW7rUzYbKyw5OigHP4BUdBIdeKEg6OxqU','XjddS24GBMJHUQ1UihnPBMGGA2JdRsbJXRdHU51UzYdeKEg6OwKSigDPysb0XinUzYbO4BU3ihpHU7eGDSoGigXHBIb04BUpysb0AEg6V25NihteG20GXjfPihHHlG','q8oZigpgOsbO4BUzAsdeKCoZBIbXDCo9ig5OW6jUihrY4BUJigDPW7PWlcbXDxNHU4fUigZHU7fJig7HU5LPihtHUQfPimsrXRdHU6nJigpHU6DUzYbJ4BUrihBHU69UzYbJAog6R2mU','pc9IpIKSihrY4BQHy2GGy2JHU6CGBSoQBIdHU6D5ihrOW6fJig3HU5L0ihrYB25NigpdOwmGDhxHU5vPimsr4BQHAsbO4BUJCcbZyxuGXjhHU6LUzYb0W6PUigTO4BUFAsbZ4BUXimsr4BUdigtHUQTUihrYDxNHU4fUig7eG25NigZgSog7O25NihrO4BUlBMGGDSAW4BUJBMC6','z3jVDxa','XjdHURD0igldRg5OigFHU5fTihbOB25NihrO4BUNEsdeKEg7GYdeKwNHU4f1ihrP4BQ/DcWG4BUvBIdeKEg7I25OihrYXRdHU51UzYbRAmoTlG','phn0CM9UzZ5BsfvorYbusu5iifrs4BUKqYbuuUg6TKnDiepdOwnOigJdS2eGz2NHUQnPiglHUQv0igJdSMeGz2LHimsr4BQHBYb2W6aGBCoIDsb0AhxHUQTUihtdRg5OigpHUQnToJWVC3rYB25NpIbhW6j5ihrYyw5OignO4BQLCcb4W61JAcbTW61JAcb0ywKGDgNHUR9UzYWGDgLUAcb0Aog6P24GDsb14BQLDcWGDmoSBMGGzhv5W6PUigZHUQ1Uimsr4BQTBI48yNi+8j+rIsa8zw0+q8oHyYbNAEg6O2KGCgJdOxaGAmoZysbNAEg6O2KGBgLUAcbOB+g6OxqGkenO4BUnBIaXihrYB25NigpdOwmGy8oHy2GGC2f1ktO8l2vTpJXICJ4XlIdeKog6T3qGBEg7MxqGyUg7GYbJW6eGCgHVBMCGDgJHU6D5igHV4BQ3yYbWAg9UzYb0Aog7P3KGBhxdOM4GkgJdOg5OifrO4BUNEsbRAmoTihtHU5f0ksb04BQHAsbWAmAWXQfUzYb24BUlig7dOhKGXjhHU4mGy2H1EEg7G24GAmoZysbUXinUzYbSXRdHU6nUzYb4Dw5NigTO4BQVyYb0AmoGBMGGzmoYBMCGy2JHUQn5imoQBsbK4BUlDs48yNi+mI4Gu+g7RsbK4BULBMCGy8oHyYdeKEg7KYb24BQTDcb0CMfUzYb0CSoTig1HBMCGC+g6R2mGEgfUAcbKXRdgOw5NlcdeKwvUigHV4BQ3yYb0AhuGAmo6Dcb0W6aGA2JdRsbI4BQXBMCGy8oHy2GGDhjLBYbYW6HTigpHU61Hig3dOhuGDog7KwKU','vog7JeeGsfvorYbuuUg6Pe4Gu8obvcdeKog6RKmGq8obq0G','yMLYDgHeyxK','zgvSDgfinZi','vgHPW6PUifKGXjhHUQ9JihBHU4SSihpHU6LJigTO4BUpzsbK4BUtAsbKW6bVlcb0W6jTihrYW60GBwLUAcbT4BQRBIWGyw4GECoQBIb0CM9UzYbJDEg7MwmGC+g7Kw5NlG','ugJHUQfTie5NXAKGuxxHU7CGXjhHUQfPihpdOxqSigpHUQDUigDP4BUVihrOW6fPimsr4BUzimsrAEg7Gw0GDmsPBMGSihrYW6fUAcbJW6fJihf1EEg6V3qGXjhHU4TUAcbUW7nUzYb24BUzAs4','z2LHx2rPBMG','XjdHURD0igldRg5OigFHU5fTigJdOg5OifrO4BUvimsr4BUdihrP4BQ/DcbI4BUBDcbT4BUzyYbRAmoTlcbJW6jUiglHURfUzYbUXinUzYbSXRdHU6nUzY4','vog7JweGXjhHU5KGz8oZyYbUz+g6R20Gka','ugJHU6vJifBHU4SGy2JdRw5OihBHU4SSigrHBMGGDgNHUR9UzYdeKCAW4BUJyYbJ4BUNBMCGy+g7KsWGy8o0BMCGDMNHU4DJihbOW6f0ihrYAEg7G24GyUg7Gw4GDUg7R25NlG','tMFfQsbrDEg7TYdeKEg6OwKGC8oHDcWGz2LHignO4BUNihtHU5vUihtdOgKSihrP4BUdDsbUAmoIBIbXDEg6PxKGCgJdOs4','vhlHUQfJAcbRAmoTimoIBsbOW6bUihn1Esb54BQ/DsWGy+g6P24Gy2JdUIddVsbUW6jUzYbJyw8GC+g7QwmGXjhHU4eGA2JdOw5NignOBYbJXQeGDgJHU4mU','4PQG77IpiepHUQnUAcbIW6fVoIbiXRdHU5TUzYa','vgHP4BQ/DcbR4BQ/oIbbBIb0W6jTiglHU5eGDhldRsbJW7rUzYbUXinUzYbZAw5OigHV4BQHDcbU4BUzAsbJ4BULyYWGy8oZihrO4BUdihbO4BUrAsbTW6b1ig5NXAKGAmoGBMGGDmAWXQfUzYbZAw5Oimsr4BUdiglHU5uGDhlHU6mGA2JdRs4','tog7PwmGu8oHDcbuAog7P3KGDgLUAcbK4BQTCcb04BQVDcbOB8oGBIb0B8oGBIbZAw5OigJHU49Hien1BMCGtEg7H25OigpHU6DHigDPysbJAog7PYWGC2LUAcbYysb0Aog6VYb0CUg6Rw4GiKJdOg4GqSsdBMCGvgJHUQvTiepHU5f0iIWGz8oIEsbJAog7Qw5NimsryxuGXjhHUQD1igTPBMGGBMNdQM4Sig3dONuGDgH14BQRBIbU4BUzAsbI4BUzigDPysdeKCoSBMGGz2f5igFHUQ90ihBdOcbJ4BQVDcdeKEg7QxqGBEg6OwnOihtdRg5Oigr1ECoQBIbUAmoIBIbKDxNdQM4GDog7KxqGXjhHURLWlG','rmo5BMCGvxNdQM4GXQ/gOw5NigHV4BQ3yYbO4BUtigZdTcdeKEg7GYbU4BQHCcbWAmo6yY4','vgNHU4n1ieH1BMC','rgNdQM4GtMNdQM4GCxxdVsbUAmoIBIbWAmoYihrY4BUJlcbJW7rUzYbKyw5OigHHBMGGDgJdTg5NlcbNAweGBMDOAEg7H3aGyUg7Gw4GDUg7R25NlG','Bgv2zwW','cIaGicaGicaGicaGicaGicaGicaGpc9KAxy+cIaGicaGicaGicaGicaGica8l2rPDJ4kicaGicaGicaGicaGicaGidXKAxyGC3r5Bgu9iMzSzxG6ide7ihrLEhqTywXPz246ignLBNrLCJSGyMfJA2DYB3vUzdOGCMDIysGYntuSmJu1ldi1nsWWlJaZktSGCgfKzgLUzZOGohb4idrWEdSGyM9YzgvYlxjHzgL1CZOGohb4oYbIB3jKzxi6idfWEcbZB2XPzcbYz2jHkdi1nsWYntuSmJu1ldaUmdyPoYi+cIaGicaGicaGicaGicaGicaGicaGpgrPDIbZDhLSzt0IzM9UDc1ZAxPLoIaWlJC1CMvToYbJB2XVCJOGi2zMzJSGzM9UDc13zwLNAhq6idCWmdSGBwfYz2LUlwjVDhrVBtOGmNb4oYi+','XjdHURD0ihrO4BQHy2GGyw5Oimsrzw4GXjhHU4mGDhlHUQvUimsr4BUlBMGSigJdS2eGz2NHUQnPihpHU7eGyUg6PxqGyw4Gy+g7P2eGsog7JweGsog6OwKU','vgf5','yM9YzgvYlwjVEa','CMDIysG0ocWYmdKSodGSmc4WnIK','ugJHUQfTieJHU41HieJHUQfPihrHAsdgSmAHBMCSihrP4BUbBIbI4BQHyYbK4BUfihrO4BQLDcb0Ag/dOxqSigpHUQDUihf14BQJBIbSW70GDmoGAsbJAmoTBMGGDgJdTg5Nig1PBMGU','ywnJDxjHy3KTzg90','r2NHUQnPihbOW6fWoIbd4BQLDsb0CSo6yYbS4BQTCcbJ4BUXyYbSW70GDmAW4BUFBMCGDUg7GsbT4BQ3DcbRAEg6V24GDhldUMmGCgHVBMCGDgJHU6D5lcbNAEg7RYbUz3v5W6PUihBHU4SGDhldRsbJW7rUzYbUXinUzY4','ignO4BUjimsr4BQHDcbJAog7IsbZ4BUrihrO4BQLCcaO','XjdHURD0igldRg5Oig7gSog7M2mGBxxHU5fPimsr4BUdigJHUQvWihrO4BULig7eG25NigZgSog7O25NihrPW6P1igpHU7fJlcbSW6bTihpHUQfJAcbRAmo0BMCGz2LHBI4','8j+FOIbuuSAV4BUCtKCGs0JdJsbcW4XoscbiW5jbiokaLcbbtIbuW4jnimsq4BUktKGGvUg7IG','ihbO4BQHBsbWAog6O2KGy+g6PxuGDhldUMmGA2JdRsb0CSAW4BUDBMCGEog6Pxu6pgjYpUkaOIa','4PQG77IpifTusog7NeKGveLoscbrvEg6PfKGtKHj4BUevsaTiepHUQzoifrs4BQKtIbbtIbit+g6TKmGrog7NeKGtKFdGfLD','ywr2AwnLlwnVBNrLBNq','C29Tzq','vhxHUQv0ieJHUQ11idi','u2fPz29U','ugJHUQfTifr1EEg7H3qGtEg7H25OigH1BMCGCgJgSmAHBMCSigpHUQDUimsr4BQ3yYbIAEg7H3qGDgJHUQ1UihrY4BUnBMCGDUg7M2KGC+g7QwmGA2JHU49LihBdOcbHBIb0B8oGBI4','iIbKyxrHlw9YAwDPBMfSlwzPBgW9iG','BgeTyMfUlwjSAw5RlxLLBgXVDW','q+g7RweGy2JdRw5O','8j+uKYbhAEg6O2KGCgJdS25Nig3HUQfJAcbRAmoTisbmysbIW6bUimsrBYdeKEg7Mw5NihrO4BUXyYb0Aog7NwKU','vhvHDa','cIaGicaGicaGicaGiaOGicaGicaGicaGica8zgL2ihn0EwXLpsjMB250lxnPEMu6mc44m3jLBtSGy29SB3i6i2jIyJSGBwfYz2LUlxrVCdOXmNb4oYbSAw5LlwHLAwDODdOGms41oYbIywnRz3jVDw5KoIbYz2jHkdaSmcWWldaUmtuPoYbWywrKAw5NoIa4ChGGmtjWEdSGyM9YzgvYlxjHzgL1CZOGnNb4oYbIB3jKzxiTBgvMDdOGm3b4ihnVBgLKicmWmgzMywe7iJ4kicaGicaGicaGicaGicaGimsq4BUlysbT4BQHy2GGvgNHUR90igTOW60GBEg7KwmGDmoIBtOGpgi+','tI9b','WRaPihbO4BQHBsb2W6bVimsr4BQHAsb04BUTihr1EEg6V24Gvhv54BUhDcbn4BQHy2GGz2NHU69HidiGCxxHURSGwW','CMDIysGYntuSidu5lca0ocWGmc4WnIK','mJmYndG3D05nwgvx','cIaGicaGicaGyMfJA2DYB3vUzdOG','A2L0y2HLBG','DgfTvgfP','ugJgSmAHBMCGXjddTg5NielHUQ9J','4PQG77IpiepHUQjoscbcW4fpie5jW4PoieJHUQboie7eGK0G','DhjHBNnSyxrLkc01mcuSidaP','ugJHUQfTie5NXAKGuxxHU7CGXjhHUQfPihpdOxqSigDPysbJAog7PYb04BUvBIb0W6bPlcdeKEg7GsbWAmoYBMCGDgNHU4n1ig5OW6jUihf14BQLEsbWAmoHihBdOcbO4BUpysbOB+g6Ow4U','CgfNzvK','vUg7IYb0CSoTic8GsmAW4BUBBMCGXjfHBMCGy2JHU41U','u+g7RsbK4BULBMCGCSoOBsb04BUrAsbTW6b1imsr4BUdigZdOg0Gzog7I3uGDSoGiglHUQnVihBHU4CGA2JdTg5NigDPyw4GCMNdQM5NihtgSc4','XjdHURD0imsrW7rPifv5W6PUimAVXQfUzYdeKEg7K25Nimsr4BUdihteG25NigpgSog7Nw5NihpHU6nPigtdONKGDmoSBMGGy+g6O20Gz2LHimsr4BQHBY4','y29UDgfPBNm','q2H1igldRg5OigJdSMeSiog7Lw4GXjhHU4TUAc4GvgJdRwnOigJHU6nWigVdQIbIW6bUigZdOg0GDMNHU4DJlcbKDxKGDhldRcb0CSAW4BUDBMCGA2JdRsb0XkLUAcWGy+g6Qw4GDgJHUQ1UihrYyw5OignO4BQLCc4','iZvJndmXna','u+g7RsbK4BULBMCGCSoOBsbJ4BUTysb04BUrAsbTW6b1imsr4BUdigZdOg0Gzog7I3uGDSoGihrY4BQLBIbHBIbRAmo0BMCGz2LHBI4','XjbP4BUbDsb0AEg6V3q6ifrYW6fUAcdeKEg6T3qGy8oHyYb54BQ/Dsb04BUrig7HUQfWigTOW60Gy2JdRw5OihtHUQfPigtHUQnPimsr4BUzig7dOhKUie7HUR91igVHUR90igpHUQv1igpHU5eGXjhHU4TUAcWGzmo5BMCGDUg6RxqGCgJHUQLTig5NXAKGAmoGBMGGy2H1EEg7G24GAmoZysbRAmoTlG','Dg1LCMnFzw4','C2XPy2u','DgHLBG','phnWyw4GC3r5Bgu9iMrPC3bSyxK6Aw5SAw5LlwjSB2nRoYb3AgL0zs1ZCgfJztPUB3DYyxa7ign1CNnVCJPWB2LUDgvYoYiGB25JBgLJAZ0IC2HVD0v4CgXHBMf0Aw9UkcC','s2JdRsb0CSAW4BUDBMCGA2H1ihBHU7fJimsr4BQHDcdeKEg7MsbJW7qGBog6RxaG4BUvBIdeKEg7I25OlIdeKog6O20GyUg6O28Gy8o0BMCGBSsdBMCGDEg6VYb0Aog6O2KGDUg6Rw4GAmoGBMGGDhlgOw4GDhj1ig3dOcbRAmo0BMCGBmoGBsdHUQnUAcbOXRdHU59UzYbZyw5NigTOW7rUzYbNAwfUigVHU4eGy+g6Rw4U','Dg9PBgv0','r2NHU68GDUg7R25Nig7HU4fUihtHUQnUzYb0W6bPignOW61UAcWGy8o0BMCGDMNHU4DJigrP4BUfBIbYysdeKEg7GxuGXjhHURDUlcddRxqGyMNHUR9Uimsr4BUzBMCU','vgJHUR8GySoSBMGGAmoYysb0AEg7G3uGAog6Ow4SihtdOgKGBog7MwmGDhj1BMCGySoSBMGSig7dQM4GCxxHUQnUigZdVsb0W6bPignOW61UAcb0Aog6Rw4GDhlHU41UzY4','CgfNzvG','DhjHBNnMB3jTidaUm3mGzwfZzq','zNvUzxjHBa','tMFfQsbrDEg7TYbi4BUpysb0Aw5OihrOACoQDsdeKEg7KxqGDhlHU7fJigrP4BUhBIbdDw5Nie3HU4DUAcblAw0Gy+g7P2eGz2LHignO4BUNlcb04BQHBYb0Aog6VYb0CUg6Rw4GiKZHU61HifrOACoQDsbd4BUrDcbu4BUNEsiSihnPBMGGCMeGDgfPigJHU41HigHV4BQHBIbU4BQHBIdHUQ1Wimsr4BQ/BIbI4BQLDcbUz+g7NsWGDgJHU4SGCgHPihf14BQLEsbWAmoHigTO4BUryYbSAEg7H3qGDSoGigHHBYb0W6fUihtdOgKGC+g6O24GDgJHUQDUihtHU5fJlG','tKJdGK5FveJHUQzox1tHU4Xbx0TiW40','oYbWywrKAw5NoJeYChGGmtvWEdSGyM9YzgvYlxjHzgL1CZOXmNb4oYbIB3jKzxi6mxb4ihnVBgLKia','pc9ZDhjVBMC+lIbqAmAWXQfUzYddOw4GXjfP4BUbDsbOW7jHigTOW60GDhlgSog7Nw5NoIa','cIaGicaGicaGicaGicaGica8l2rPDJ4kicaGicaGicaGicaGicaGiaOGicaGicaGicaGicaGicaGpgrPDIbZDhLSzt0Iy29SB3i6','CMvTB3rLlwXHDa','zgLLBvrVBMDiB3a','XjdHURD0ihBHUQ10ihbO4BQPBsbOW6bUAcblAw0GXjhHU4mGy8oIBIbI4BQXBMCSigJHU5CGDhlHU6mGDSAW4BUJBMCGA2JdRs4','Aw5WDxrBBMfTzt0Iz2vUzgvYiL06y2HLy2TLza','cIaGicaGicaGicaGiaOGicaGicaGicaGica8CcbZDhLSzt0IBwfYz2LUoJeYChGGmdSGCgfKzgLUzZOXmhb4oYbIywnRz3jVDw5KoNjNyMeOmJu1ldiXnsWWldaUmdmPoYbIB3jKzxiTCMfKAxvZoJzWEdSGyM9YzgvYlwXLzNq6nhb4ihnVBgLKia','C2f0tgLZDa','vhlHU7fJia','s8oTy2GGAg/HUQf0iglHURfUzYbJW6j5ihHHBMGGDSoGifrOW6fWifBeG24GwmAWXQfUzYdeKEg7GYb2XRdHU6nUzYbUAmoIBIdeKwLUAc4','cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iM1HCMDPBI10B3a6mtjWEdSGyMfJA2DYB3vUzdPYz2jHkdq4ldiWosW4ocWWlJa1ktSGCgfKzgLUzZOXmNb4oYbIB3jKzxiTCMfKAxvZoJHWEdSGyM9YzgvYoJfWEcbZB2XPzcaJmZbKmtu4mZa7igzVBNqTC2L6ztOWlJG1CMvToYbJB2XVCJOJzwvLoYi+cIaGicaGicaGicaGicaGicdINiuGpgi+tKJdGK4Gs0JdJsbusefoscbt4BQGq0G6pc9IpIbc4BQJBIbT4BUhBMGGDhxHU5vPimsrXRdgOw5NihpHU5eGDSo0igpdUw5Nihf1yw5NimsrW6nUzYWGA2JdTg5NihbO4BQHBsb0yw0GDgfPlcbRAw0GBmoIDsWGAg/dOg5Niog7KwmSihpHURvUihpdOg5NihtHU7eGDgf5ihrO4BUXyYbOAEg7H24GBog6RxaGy+g7SwmGDSoGimsr4BUzBMCGDgJHU5uGy8oHDcb0XRdHU51UzY4kicaGicaGicaGicaGpc9KAxy+','pc9ZCgfUpGOGicaGicaGicaGicaGicaGpc9KAxy+','AxndB21WyxnZsg9Sza','4PQHimsqW6mGXjhgSgeGBSo6Dcbqv0eGDSoGBYbOW7jTihldOwmGDSsPBMGGDMNHU4vUihrYW6PUihrYW6XUAcbKDxNHU4D0ig7dOhKGDgHLBYb5W6P1igpHUQD1igpHU6DHig5NXRdHU51PigtdUw5NlG','sog6Rxu','tufFvfjbtL9usefox1nbvf9usu5i','tog7PwmGu8oHDcbuAog7P3KGDgLUAcbOW7jHigpdUw5Nien1BMCGtEg7H25OifrO4BUNEsb04BQHBYb0AmoGBMGGDgJHUR8GBmwPihf1W6L0ign14BUrBIb0CSo0AsbOB8oGBIb0B8oGBIbNAweGC+g6O24SigpHU6DHigpHUQnPihtdRwnOigZfQxKGDSoGihbOW6eGDUg7OsbZ4BUXigldRg5OihNdQM4GDUg7Kw4Gy8oZlG','Dg9tDhjPBMC','s2JdRsb0CSAW4BUDBMCGC3v5ihNHUR91lcbJ4BQPBIb0Aog6Rw4G4BQJBMGGAmAW4BUFBMCGDgNdQNuGy+g7SwmGXjhHUR9UihpHU6LJigTO4BUpzsbJW6fJihrOW6bUAcb2ACoQBI4','vhxHUR8Gu8oHDcaOvhldRcb0CUg7HYWGCxvHBIbWAgKP','y2HHAw4','pgrPDIbZDhLSzt0Iy29SB3i6i2u1ztvLytSGzM9UDc1ZAxPLoJaUodvYzw07igXPBMuTAgvPz2H0oJeUntSGBwfYz2LUlwjVDhrVBtO4ChG7iJ4','zgL2','4PQG77IpifTmXQ9vie5jW4PoienisEg6VLuGq+g7PenDoIboACoQBIdeKEg7Msb0AgNdQM4GDSsdBIa','rgNdQM4GtMNdQM4GDgNHUR9UimsrAEg7Gw4GDmoGAsWGz2LHihpHUQnUihteG25NihrP4BQ/BIWGy29UigpdOwKGDgJdOg5Oimsr4BQHDc4','phnWyw4GC3r5Bgu9iMzVBNqTC2L6ztOXlJjYzw07igzVBNqTD2vPz2H0oJqWmdSIpNb0pc9ZCgfUpJWVzgL2pGOGicaGicaGidXKAxyGC3r5Bgu9iMzVBNqTD2vPz2H0oJCWmdSGy29SB3i6','xsKUifrY4BQHy2GGXjhHUQv0igFHU5fJihBHUQTUihBgSog7O25NihtHU5f0lcbXDweGBSsdBsbO4BQHBIbZyw8Gzog7NwKGXjfPihrYXRdHU51UzYbRAmoTihpHUR0Gy8oHDcbOyw5OihbO4BULyYbO4BUtAsbT4BQHBMGGBEg6Vs4','DgfPx2XVyW','pc9KAxy+cIaGicaGicaGpc9KAxy+cGOGicaGicaGidXKAxyGC3r5Bgu9iMzVBNqTC2L6ztOGmc45CMvToYbSAw5LlwHLAwDODdOGms43oYbJB2XVCJOGi2zMzJSGyMfJA2DYB3vUzdOGCMDIysGYntuSmJu1ldi1nsWWlJaYktSGCgfKzgLUzZOGmtjWEdSGyM9YzgvYlxjHzgL1CZOGohb4oYbIB3jKzxi6idfWEcbZB2XPzcbYz2jHkdi1nsWYntuSmJu1ldaUmdyPoYbTyxjNAw4TyM90Dg9ToIaXmNb4oYi+cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iNrLEhqTywXPz246y2vUDgvYoYi+','vhlHUQvUihrY4BQHy2GGyUg6Sw5NigFgSmAHBMCGDSoGiftHU7mGsmAWDsdeKEg7GYbOW7nHigDP4BQJAsbZW6f0igTOW60GBUg6T25NlG','pt09ielHUQ5uimsq4BQMvsby4BUSieZdNsbl4BQ+vcbrvEg6OIbrvCojvcbusog7SemGXjdHU4Pbid09pq','tufFvfjbtL8Ynf9tt05FvKK','rgLUAa','ugJgSmAHBMCGDUg7IYbIW6XUAcbOW7jHlcb24BQTBIb0CSoSBMGGAgfUAcb0Amo0BMCSigTOW7rUzYbJW7mGyMNHUR9Uimsr4BUzBMCU','WRaUieJdO3KGEg9HEsb0W6jTigDP4BUVysdeKwNHU4DUihrOB+g6OwKGBMJHUQ9TihrO4BQZBMCGDSoGBYbnW6LWifbO4BQJAs4','s2JdTg5NieDPyw4GugJdSM5NifrO4BUD','vmoIEsbu4BUPie3HU4DUAa','Bgv0DgvYu3bHy2LUzW','vgfTieldRwnOieZHU5LJiftHU5nUicHiDw5Nkq','zgv0ywLSlwjVEa','yxbWBhK','rog6RxuGsog6RxuGmq','ugJHU6vJifBHU4SGXjhHUQ9JigpdOwnOlcbNAweGXjhHUQfVigfUig5PBMGSig3HU41PihzP4BUhyYdHU5vUimsr4BUlBMGSihtdOgKGBog7MwmGDUg7R25NignO4BQVyY4','ugJdOxaGvhlgSog7Nw5N','i2zMm2iZma','tSsdBMCGBmAW4BUJBMCG4BUFig3HU6LJihrYDw5NigldRg5Olcb0AEg6V24GDhldRg5OigpdTg5NihzP4BUhyYbJ4BQNBIbZ4BUXigTPW6PUihrYW6WG4BUvBIdeKEg7I25OlG','XjdHURD0igldRg5Oig7gSog7M2mGCgHVBMCGDgJHU6D5imsr4BUdigJHUQvWihrO4BULlcbSW6bTihpHUQfJAcbRAmoTihrYXRdHU51UzY4','DhjHBNnMB3jTpsjYB3rHDguO','uxxdVsbi4BQTDsaY','DMfJAerVuMLUzW','ugJHUQfTihrO4BQ/ie5NXAKGuxxHU7CSimsr4BUbihbOW7jUzYbJW6fJigjP4BQ/BIdeKEg7Mw5NiglHUQv0ig5N4BUDlcbJ4BQNBIb0Aog6Rw4GDhlHU41UzYb0CM9UzYbNAwfVigtHU4TJAc4','vefnx0Hpuf9dvum','qSoHDcbc4BQHy2GGvog6OYbqAmo5icHuAog7LsKG4OcuieldRg5OieJdSMeGvUg6Rw4GotOGs2JdRsb0CSAW4BUDBMCGDmoTy2GGBmwPEsb0W6bPigZHU5LJiog7Lw4GXjhHU4TUAcWGyw4GBmoGBMGU','vhlgSog7Nw5NigTOW60GDgHHBMGGDog7I25OlcbTyw5NigZHUQfPig1HEsbT4BQVBIbS4BUBBIbJAg8GXjhgSog7Nw5NigJHU41JihBHUQvUihBdOcbRAg9HiglHUQnUzY4','y2L0Eq','rmo5BMCGDgJHUQfJAcbHBMGGA2JdS2KGAg/HURDJignODCo0BMCGz2NdSY4','vUg7IYb0CSoTimsq4BQ3Dcbc4BQ/Ccbo4BQLDq','Dg9mB3DLCKnHC2u','rgNdQM4GtMNdQM4GDSAW4BUJBMCGA2JdRsWGz2LHimsrW6XUAcbOW7jHigJHU6nWlcb0W6XUAcbJ4BQJBsbN4BQVBIbR4BQ/DcbI4BUbBIbJAog6T3qU','oIbdDw5Nia','u+g7RxuGsog6RxuGmq','iokaLcbosCoktIdeKog7Mcbm4BUkq0GGueJdGvaG','pgi+vfjvtKCGvmontKGGsmotqsbtW4fuoJWVyJ4Gs2H1ihBHU7fJigtHUQnPimsr4BUzifpgOw4GDUg7IYa','zgLYzwn0Aw9UC0nVBNrHAw5LCG','rog7Hsb2XRdHU5TUzYb0Aog7IYbWAgKGCgJdOxaGBhxHUQ10lG','i3nVBLjPBMDtDMCGDgv4Da','yMf0vhjHy2HcywnRz3jVDw5KuMLUzW','CMDIysGYntuSidiZlca2ocWGmc4XmIK','vgHPW6PUifKGXjhHUQ9JihBHU4SSihpHU6LJigTO4BUpzsbK4BUtAsbKW6bVlcbI4BUhBMGGDog6RxqGDgNdQNuGDhlHU6SU','pc9ZCgfUpGOGicaGicaGicaGicaGicaGpc9KAxy+cIaGicaGicaGicaGicaGica8zgL2ihn0EwXLpsjKAxnWBgf5oIbMBgv4oYbQDxn0Awz5lwnVBNrLBNq6ihnWywnLlwjLDhDLzw47igfSAwDUlwL0zw1ZoIbJzw50zxi7igjVCMrLCI10B3a6idfWEcbZB2XPzcaJndq0oYbWywrKAw5NlxrVCdOGnhb4oYi+cIaGicaGicaGicaGicaGicaGicaGphnWyw4GC3r5Bgu9iMzVBNqTC2L6ztOGmc44nxjLBtSGy29SB3i6icnHywe7iJ5i4BQTDtOGpgiGC3r5Bgu9iMnVBg9YoIa','q2H1W7rUzYbhACoZimsq4BUtBMCGvgJHUQv0ifrPBMGGAg/HURDJiff14BQJiepHUQD1ifrO4BQHy2GGqw5Oig3dOhuGDhj1BMCGDmoTBMGGXjhHU4mGDhj1BMCGAmoYysdeKEg7I2eGBg9UzYbT4BQHy2G','XjdHURD0ihBHUQ10ihbO4BQPBsbu4BUZieJgShuGXjhHU4mGy2HPW6P1ihtdOgKGDSoGiglHUQnVigJHU5KGDmoGAsbZ4BQJBI4','u2LUAcblAmoTihBgSog7O25NigTOW60SihbOW7PJigZHU5LJihtdRg0GXjhHUR9Uig5Oyw5OignOW7nUzYWGz2LHihBHUQ1UigHHBMGGDgJdTg5NlG','Agf1','ktO8l2i+ien1BMCGCgHPigpHU5f0igZdTwKGpgi+','vhlgSog7Nw5NigTOW60GA2H1ihBHU7fJimsr4BQHDcdeKEg7MsdHU5vUimsr4BUlBMGGDhj1BMCGDmoTBMGGDog7KxqUiepHUQv1ihrYW7PJihzPihbOW6jUig7HU5LPihtHUQfPigpdOM4GyUg6Sw5NlcdHU5vUimsr4BUlBMGGA2JdRsb0CSAW4BUDBMCU','ktWVC3bHBJ4kicaGicaGicaGicaGicaGicaGica8l2rPDJ4kicaGicaGicaGicaGicaGicaGicakicaGicaGicaGicaGicaGicaGica8zgL2ihn0EwXLpsjMB250lxnPEMu6idaUotvYzw07igzVBNqTD2vPz2H0oIa4nta7ignVBg9YoIa','ugJHU6vJifBHU4SSihf1W70GBMJdOM4GCgJdUsb0CUg7OY4','y3vZDg9TqwXLCNrnC2C','mtr5sersvhG','xtO8l3n0CM9UzZ4','vog7Qsbm4BULyW','y29Ux2nHAq','ugJHUQfTifr1EEg7H3qGtEg7H25OlcbODw5NihpdOxqGBMDOACoQBsb0CUg7Jw5NlcbJ4BQNBIb0CSoHBMGGXjhHU5LUzYb0Aog7LsWGy2JdUIb0CUg7Jw5NihpHU6LJigTO4BUpzs4','XjdHU4THig3HUQfJAcbUz+g6P20GyUg6O24Gy2JHUQv0ihBgSog7O25NigTOW60GCgJdUMmGXjhHU6LJihpHUQfJAcb0AgfUAcbRAgNHUR90icG','u09ox1rpx0nisv9nqva','zxbVy2G','vefnifpdGvqGlsbqsog6Oe0G','DgfNtMfTzq','XjdHURD0igpdONKGEgfUAcbOB+g6T2mGXjhHU5nUzYb0AEg7Gw4GBMFfQsdeKEg6VY4','CMvKDwnL','Bwf0y2HLCW','BwLU','iZaWzMy0mq','xtOG','C3rVCMfNzq','vgHP4BQ/DcbS4BQTCcbO4BUhihrO4BUrBMCGphn0CM9UzZ7eKmoOBIbdAgNHUR91ifpdOw5Niff1yw5NifbO4BUviog6Pg0Gq8AW4BUDBMCGXjdHU5KGq2fVpc9ZDhjVBMC+icH0AhxHU5LJigJdOg5OieJHU49HksbR4BQ/DcbO4BUJCcbJW6fJidXZDhjVBMC+vgJHUQnTifrY4BQJAsbnW6b1imsq4BUpl0JHU5nUzZWVC3rYB25NpIb04BQHAsbWAmAWXQfUzYb24BUlig7dOhKGBMJHURfTigtdUw5NigtgSmAHBMCGAog7J2eGDgHPW6P1imsr4BUrDcWGC+g6PxKGA2JdTcb0W61UAcbJAog6PxqGW6jTigJdOg4SigZHUQfUAcbS4BQ9BYbODw5NigHP4BUdBsbJ4BUNysbuAog7P3KGC8oHDc4','cIaGica8zgL2ihn0EwXLpsjIywnRz3jVDw5KoNjNyMeOmJu1ldi1nsWYntuSmc4WmsK7ihbHzgrPBMC6mtvWEdSGyM9YzgvYlxjHzgL1CZOXmNb4oYbIB3jKzxi6mxb4ihnVBgLKihjNyMeOmJu1ldi1nsWYntuSmc4WocK7igjVEc1ZAgfKB3C6idaGnhb4ideYChGGCMDIysGWldaSmcWWlJi1ktSIpGOGicaGicaGidXZDhjVBMCGC3r5Bgu9iMnVBg9YoInKzMi3nMm7igrPC3bSyxK6yMXVy2S7ig1HCMDPBI1IB3r0B206ohb4oYbMB250lxnPEMu6mc45CMvToYbSzxr0zxiTC3bHy2LUzZOGmc41ChG7iJ7IL4yGs+g6VLqGuvxHUQiGXjbpimsq4BQGqZOGu8AGtIbw4BUkia','CMvTB3rLlwnHBgmTyNrU','vog7Kw4Gsog6RxuGmW','pc9ZCgfUpIdeKEg7GYbI4BQJBYb24BUhihrY4BULyYbT4BQHy2GGA2JdRs4kicaGicaGica8l2rPDJ4','i2zMy2eYoa','XjbpieJgR+g7MK5hieniW41oscbyW4fd','sfvorW','C2fV','oYbMB250lxDLAwDODdO1mda7iJ4kicaGicaGicaGicaGicaGia','cIaGicaGicaGicaGicaGicaGicaGphnWyw4GC3r5Bgu9iMnVBg9YoImZmgqXntG7igzVBNqTD2vPz2H0oMjVBgq7igrPC3bSyxK6yMXVy2S7ig1HCMDPBI1IB3r0B206nhb4oYbMB250lwzHBwLSEtOGC2fUCY1ZzxjPzJSIpGOGicaGicaGicaGicaGicaGicaGicaGicdWN4+gieTi4BUAucbuuUg7PemGte9orYbn4BQGq0GG4OcuifbiXQ/gOe5hifBHU4OGXjdHUQ5difBHU4OGveJdGeniiepdLe5hiqOGicaGicaGicaGicaGicaGicaGidWVC3bHBJ4kicaGicaGicaGicaGicaGicaGica8C3bHBIbZDhLSzt0Iy29SB3i6i2zMzJSGzM9UDc1ZAxPLoJaUodvYzw07igzVBNqTzMfTAwX5oIbZyw5ZlxnLCMLMoYi+cIaGicaGicaGicaGicaGicaGicaGicaGiftHU41Himsr4BUzihrO4BUXyYdeKEg7I2eGXjhdOYb0CSo5BMCGA2JHU5TWigHVW6bUihrVW6bUihBHU5TPihrY4BULyYbU4BQHCcbRAmoTigZdVsb0XRdHU59UzY4GXjdgSmAHBMCGC+g7KsbOW6n5igDP4BUVig5NDxNdQM4Gz8oZyYbTW6f5ig7dOhKGXjhHU4mGDgNHUR9UigJdOg5OigZHUQ1WigJgSog7M25Nl2fUihBHU4SGA+g6V3qGy+g6PxuGA2JdTg5NigDPyw4UcIaGicaGicaGicaGicaGicaGicaGpc9ZCgfUpG','q+g7RxuGvog7Rsbi4BUVDsbc4BQTDcaOsog7J2ePiokaLcdeKmAVXQborYbwXQ/HU6jorYbu4BUqssbusmAV4BUItKCGXjdHUQbjiepdGvqGveLoscbw4BQStIa5oIdeKmAWXQfUzYb24BQTBIb0W7rUihf1W70GDog7KwKGDgJgSog7O25NlcbZAw5OigTOW60Gzog7K2KGzmoGBY4','sog7HYbuAog7Kw5Nie3dOxKGtCoZyYaVietdONKGq2H1EEg7Gw4','C2vHCMnO','zMfSC2u','mtaWntnWAenPqNC','8j+rIsbw4BQTBIbRAmoTigHHBMGGDgJdTg5Nlcb0CSAW4BUDBMCGA2JdRsbJW7mGC+g7Ssb0XinUzYb0CSAW4BUFBMCSihrOW61JAcbO4BUJCcdeKEg7GYbWAmoHDcb0CMNHU4nUigJHU41JihtHUQ1WlG','C2nHBK1LDhjPy3m','cIaGicaVkIblAmoZysb0W61UAcbUXinUzYbS4BUXysbJAog7Jw4GDSsdBIbI4BQJBIbNW6j5igHP4BUhBIb0XRdHU6nUzYbWB3b1CcbJB3b5igpHU6DHigJHU4CGXjfP4BUbDsbOW6bUAcaQlWOGicaGi2nVBxbHC3mSic5JB21WyxnZlwnVBNrHAw5LCIWGyM9KEsb7cIaGicaGicaGlxDLyMTPDc10B3vJAc1JywXSB3v0oIbUB25LicfPBxbVCNrHBNq7ic8QigLpuYbtywzHCMKGkI8kicaGicaGicaTD2vIA2L0lxvZzxiTC2vSzwn0oIbUB25LicfPBxbVCNrHBNq7icaGlYOGu2fMyxjPicOVcIaGicaGicaGlwTODg1SlxvZzxiTC2vSzwn0oIbUB25LicfPBxbVCNrHBNq7icaGic8QieTVBNf1zxjVCIbive1micOVcIaGicaGicaGlw1VEI11C2vYlxnLBgvJDdOGBM9UzsaHAw1WB3j0yw50oYaGicaGlYOGrMLYzwzVEcaQlWOGicaGicaGic1TCY11C2vYlxnLBgvJDdOGBM9UzsaHAw1WB3j0yw50oYaGicaGic8QieLUDgvYBMv0iev4CgXVCMvYl0vKz2uGkI8kicaGicaGicb1C2vYlxnLBgvJDdOGBM9UzsaHAw1WB3j0yw50oYaGicaGicaGicaVkIbdW7rUzYb0Aog7QwmGy2H14BQPBIaQlWOGicaGFqOGicaGlMX1yw5NAwfPlwzHyI1IDg4GEWOGicaGicaGihbVC2L0Aw9UoIbMAxHLzdSkicaGicaGicbIB3r0B206idmWChG7cIaGicaGicaGCMLNAhq6idmWChG7cIaGicaGicaGEI1PBMrLEdOGotK5oWOGicaGicaGig9WywnPDhK6ida7cIaGicaGicaGCg9PBNrLCI1LDMvUDhm6ig5VBMu7cIaGicaGicaGDhjHBNnMB3jToIb0CMfUC2XHDgvzkde1ChGPihnJywXLkdaUosK7cIaGicaGicaGDhjHBNnPDgLVBJOGB3bHy2L0EsaWlJrZign1yMLJlwjLEMLLCIGWlJi1lcaXlcaWlJuSidePlcakicaGicaGicaGicaGicaGicaGicb0CMfUC2zVCM0Gmc40CYbJDwjPyY1IzxPPzxiOmc4YnsWGmsWGmc41lcaXktSkicaGih0kicaGic5SDwfUz2LHAs1MywiTyNrUlNBgSog7O25NlxH14BQLDcb7cIaGicaGicaGB3bHy2L0EtOGmtSkicaGicaGicbWB2LUDgvYlwv2zw50CZOGyxv0BZSkicaGicaGicb0CMfUC2zVCM06ihrYyw5ZBgf0zvKOmcKGC2nHBguOmsK7cIaGicb9cIaGicaVkIbiAEg7H3uG4BUPBMCGCNvUzYbUAog6UsbRAgKGBgeGySoGBIbI4BUligTOW7nHiglHURfUzYb0B3vJAcdeKEg7GYbIW6fVigHP4BUhDsbJAg8GDhlHUQfJAcbJAog7PYaQlWOGicaGlMXHlwjHBI1RAg9HlwTOW60GEWOGicaGicaGigfUAw1HDgLVBJOGCNvUz05OzuXVBMDnywnOidaUm3mGzwfZzs1PBI1VDxqGmJSkicaGih0kicaGiebRzxLMCMfTzxmGCNvUz05OzuXVBMDnywnOihSkicaGicaGicaWjsWGmtaWjsb7ihrYyw5ZzM9YBtOGC2nHBguOmsK7ih0kicaGicaGica1mcuGEYb0CMfUC2zVCM06ihnJywXLkdeUmdiPoYb9cIaGicb9cG','8j+uHcbqAmoHDcbOAEg7H24GBMFgSog7O2mGDog7JweGXjhHU5KHimsqW6mGDog7SsdeKEg7Mw5Nimsr4BQJBYbS4BQHAsbwXkKGXjhHU5KGjIblAw5Oimsr4BUz','D29YC3q','pgrPDIbZDhLSzt0ICgfKzgLUzZOXmhb4oYbIywnRz3jVDw5KoNjNyMeOmcWWldaSmc4YnsK7igjVCMrLCI1Szwz0oJnWEcbZB2XPzcaJmZbKmtu4oYbJB2XVCJOJztvLnwvHoYbTyxjNAw4TDg9WoJvWEdSGyM9YzgvYlxjHzgL1CZOWidzWEca2ChGGmdSGzM9UDc1ZAxPLoJaUodvYzw07igXPBMuTAgvPz2H0oJeUndu7iJ4','XjdHURD0ignO4BQTDsbJW6j5ihHHBMGGAmoGBMGGtEg7MwmGXjhHU4mGzmAW4BUHBMCGDSAW4BUJBMCGA2JdRs4','mcaWide1ChGGCMDIysGYntuSmtq5ldaSmc41kq','vgJHUR8GySoSBMGGAmoYysWGBEg7JwKGDMNHU4DJihrP4BQ/BIb0CMNHU4nUiog7Lw4GXjhHU4TUAcWGDgH14BQTBIbS4BUJAs4','XjbpW4bjicHuW4jzkq','tEg6Rxu','tCo5Aq','pc9ZCgfUpGOGicaGicaGicaGicaGicaGpc9KAxy+cIaGicaGicaGicaGidWVzgL2pGOGicaGicaGicaGicakicaGicaGicaGicaGpgj1DhrVBIbJBgfZCZ0IyNrUlxjVDgf0zsiGB25JBgLJAZ0IAwyODhLWzw9MihrYAwDNzxjhAg9ZDe5LzwrSzsa9pt0Gj2z1BMn0Aw9UjYKGDhjPz2DLCKDOB3n0tMvLzgXLka','s2JdRsb0CSAW4BUDBMCGy2H1EEg7G24Gzog7I2nOimsrAEg7GxuGAmoYysdHU5vUimsr4BUlBMGU','smAW4BUBBMCGqSoGBIbmW6bTifzP4BUhyW','ChvYCg9Zzs1TB2rHBc1IB2r5','CgXHDgzVCM0','8j+pHIdeKog6RKmGq8obq0GGreNHU4zvifbiW4fqifrs4BQKtIbtW4fuieHpW4boieJHUQjp','rog6P24','zg9UyxrLtw9KywW','pc9ZCgfUpIaOu8AHBIb24BUloIa8C3bHBIbZDhLSzt0Iy29SB3i6icnMzMq2mge7iJ4','pc9IpL08l2rPDJ4kicaGicaGicaGicaGpgrPDIbZDhLSzt0IBwfYz2LUlwjVDhrVBtOGnNb4oYi+8j+tIIa8yJ5iAEg7H3uGC+g7Ksb0W61JAcbWAmoIBIbUXinUzYbSXRdHU6nUzZO8l2i+idXZCgfUihn0EwXLpsjJB2XVCJO','vUg6RxqGCgJHUQLTigJdOg5OieTPBs4','cIaGicaGicaGicaGicaGicaGicaG4OcIidXZCgfUihn0EwXLpsjJB2XVCJOJmZbKmtu4oYi+8j+FOIa8yJ5hsEg7NcdeKog6OeKGq8obvcblsog7NKKGu+g7Scbusog7SemGXjdHU4PboJWVyJ48l3nWyw4+idXIihn0EwXLpsjJB2XVCJOJzMzMoYi+','XjddOYbI4BQTDcbJAog6VYdeKEg7MsbNAgKGBMJHU5SH','C2vYDMLJzvDVCMTLCG','XjdHUQD1imoZyYbTAw5Oig3HUQTUlcb0XRaGzhv5ihpHUQ9JigldQw4SigpdSYbS4BUJAsbJAg8GDMNHU4DJig5NAgNdQM4Gy+g7QxuGDSoGihBeG24Gy2JgSmAHBMCU','q2JdRw5OihBHU4SGtMFfQsbiB8oGBMCGXjdHUQfPifpdOxqGy+g7SwmGAhvUzYWGDhv54BUhDcdeKEg7KwKGA+g7TsdeKEg7Mw5NihrO4BUvlcbRAg9HBIdeKEg7PwmGAgf5igpHUQnPihtHUQfVigpHUQv1ihrYW7PJigZHU5TUlG','tog7NwKGA2H1ECoQBIdeKwNHU4f1ihrP4BQ/DdOGq2JHU6CGXjhHU5LUzYb04BUlBMGGDgNHUR9UihrOAEg6V3qGyUg7IYb44BQJihxHUR8GBog7H2nOihtdOM0Simsr4BQ3DcdeKCoOignOW61UAcb4W6fJigZdQM4Gy8oHyYbtXQfUihBHU4SGySoHBYbTW6b1ihHHBMGGDog7KxqGy2HVihrY4BQLBIbZW6f0lcb0CUg6OYbS4BQHAsbRAmo0BMCGz2LHBIb0AgfUAcbRAgNHUR90ignOBYbtXQfUihBHU4SGXjhHU48U','oYbKAxnWBgf5oMjSB2nRoYbTyxjNAw4TyM90Dg9ToJrWEdSIpG','pc9ZCgfUpGOGicaGicaGicaGica8C3bHBIbJBgfZCZ0IzwXLBwvUDc1IywrNzsiGC3r5Bgu9iMjHy2TNCM91BMq6icmYyZjJmMu7ihbHzgrPBMC6idrWEca4ChG7igjVCMrLCI1YywrPDxm6idrWEdSGzM9UDc1ZAxPLoIaWlJHYzw07igzVBNqTD2vPz2H0oIbIB2XKoYbJB2XVCJOGDMfYkc0Tz29SzcK7igjVCMrLCJOGmxb4ihnVBgLKihjNyMeOmJeYlde3nsW1nsWWlJmPoYbMB250lwzHBwLSEtOGC2fUCY1ZzxjPzJSIpK3HU4DUAdOG','vmoGAsbS4BUzyYbK4BUtAsbKW6bVlcb04BQHBYbU4BUbBIb04BQJBMCGDog7KxqGy2HVigpdOwmGAg/HUQf0imsr4BUzBMCGXjhHUQD1ihtgScbSW6j1igtdOgKU','twf0AePHEa','cIaGicaGicaGqgTLEwzYyw1LCYb0B2fZDeLUihSGzNjVBsb7ig9WywnPDhK6ida7ihrYyw5ZzM9YBtOGDhjHBNnSyxrLwsGTmJbWEcK7ih0GDg8GEYbVCgfJAxr5oIaXoYb0CMfUC2zVCM06ihrYyw5ZBgf0zvKOmcK7ih0GFqOGicaGicaGiebRzxLMCMfTzxmGDg9HC3rpDxqGEYbMCM9TihSGB3bHy2L0EtOGmtSGDhjHBNnMB3jToIb0CMfUC2XHDgvzkdaPoYb9ihrVihSGB3bHy2L0EtOGmdSGDhjHBNnMB3jToIb0CMfUC2XHDgvzkc0Ymhb4ktSGFsb9cIaGica','vmoGAsbS4BUzyYb24BUVBMCGy2JHUQ9JlG','rog6RxuGkde3Ac0XowGP','XjdHURD0igldRg5OigFHU5fTihbOB25NihrO4BUNEsdeKEg7GYdeKwNHU4f1igJdSMeSihrY4BQLBIbHBI4','ksiGC3r5Bgu9iM1HCMDPBI1Szwz0oJHWEdSGy3vYC29YoNbVAw50zxi7igzVBNqTD2vPz2H0oMjVBgq7iJ7dLZWVC3bHBJ4kicaGicaGica','tCo5AsaOmtnOlte1AcK','ugHH','AhvVBMC','pc9KAxy+cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iMnVBg9YoIa','mtu7iJ4kicaGicaGicaGicaGicaGicaGica8C3rYB25Nihn0EwXLpsjJB2XVCJO','qSoSBMGG4BUvBIbKW7jUzYb0W6bPihpHUQnUigDPysdeKCoSBMGSihBHU6mGy2JHU5nUzYbOW7jHihrODEg6Rw4SigDPysdeKEg6Ow8GW6PTiog6Pw0U','D2HPBguGkhrYDwuPihT9','vKvsu0LptL9vuerbveve','ugJHUQfTihrO4BQ/ieZHU6vJifpdOxqSigpHUQDUihpHU7eGBwLUAcbI4BQHy2GGDSoGignOW6jUihrOW6bUAcb0CM9UzYdeKEg7NwKGC+g7Kw5NigDPysdeKEg6Ow8U','vgJHUQv0ifJdRwnOifbOW6eGuxxdOM4GkeTPBsKG4OcuieH1BMCGvgLUAdOGsgfVihtHU5vUihtdOgKGC+g6O24Simsr4BUbihbOW7jUzYb0CUg7Mw0Gy8AW4BUBCc4','ugJHUQfTifr1EEg7H3qGtEg7H25OihbOXRdgOw5NihBHU4SSigTOW60GDhlgSog7Nw5NihH1BMCGA2JHUQ9JlcbJ4BQNBIbZ4BUXiglHUQnVigJHU5KGBMDOACoQBsbUz+g6T3qU','tSsdBMCGBmAW4BUJBMCGBmAWDsbUACoQBIbODw5NigJdO24Gz2NdOw5NigZdOM0SihrYB25Nig7eG20GBMf5ihrY4BQHy2GGy2JHU6CGDhldOw5Oihr1EEg7H3qGXjhHU5fPihzP4BUhyYbRAg9HBIdeKEg7PwmGC8oIDsb04BQHAsbNW7nJihbOW6jUimsr4BUzig7dOhKU','jMXVy2fSAxr5tgfUz3vHz2u9zw4','y3vUz1bOAunODu1LBMG','CMDIysGYntuSmtu5ldeWldaUmdGP','vhlHUQfUzYb0AmoHAsbRAmoTihrYXRdHU51UzYb0CNvUzYb0W61UAcWGBEg7JwKGBCAWDsbZ4BUXigZHU5TUigpHUQDUigpdSYbSW7jUzYbRACoQBIbUAog6Q24U','iZaWytuYnq','tEg6RxuGvgJdRg4','idaG','8j+rIsbdW6f0igTOW60GXjhgSmAHBMCGDSAW4BUJBMCSimAWDsb0ACoQBIbS4BQTCcbR4BQ/igHV4BQHy2GGXjhHUQfPihpHU7eSigTOywKGDhlgSmAHBMCSig5O4BQTCcb0CUg6OwnOlG','XjddTg5NielHUQ9J','zNvSBhnJCMvLBI1TB2rLigfJDgL2zq','ugJHUQfTihrO4BQ/ieJHU41HieJHUQfPlcbJ4BQNBIbJAmo6ihrY4BUnBMCGBog7NwKGXinUihrP4BQ/BMCGBSoZAsdeKEg7GYb0CSoHBMGGAgNHU4n1igZHUQDTimsrW6fUzYb0AEg6V2mU','rgNdQM4GtMNdQM4GXjhHUQ9JihBHU4SSig5NB+g6OwKGz2LHBYbOyw5OihrOW7rUzYWGy8oHyYbT4BUrAsbXDwfUigJHU4CGAog7LYb0CUg7OYbZ4BUXig5NAgNHU4DWlG','q2H1ihtHUQL5ihxHUR8SihrY4BURihtdOc4GXjdHUQfPigpdOxqGXjhHU4mGEmoIEsbK4BUXBMCGvg9PBgv0lcdeKCoGBYbTW7nUzYb04BUXigHV4BQHAsWGCxxdQxqGzog7Jw4GDhlHUQfJAcb0W6jTlcb0Aog6O2KGyUg7JYb14BQ/igTOW60U','y29Z','pc9IpIa','tKfn','WRa8l2i+ks48l3a+cIaGicaGicaGicaGidXWihn0EwXLpsjTyxjNAw46ohb4ida7iJ7WN46VidXIpLf14BQ7ig3HU4DUAcboAmoIBIbJAog7PYaOsmoGBMGG','s2JdRsbT4BQHy2GGBhxdQM4GAog7K2KGDog7I25OihrP4BQ/BIdHU5vUimsr4BUlBMGU','AgfUAa','kgrPC3bSyxKTBw9KztOGzNvSBhnJCMvLBIK','smoGBsbSW7vPicD0Aw5OrgLLBvrVBMDiB3aNignOXRbHimsrXRdHU6nJigTOywKGySoHBY4','u+g7RsbK4BULBMCGz8AWXQfUzYb2W6aGy2H1W7rUzYbNACoZimsr4BUtBMCGXjhHU4mGAmoZysbZW6f0ig3HUQfUAc4','zxHLy3v0Aw5N','phnWyw4GC3r5Bgu9iMnVBg9YoInMzJq0ndq7iJ7IGkiG','Dg9vChbLCKnHC2u','vhv54BUhDcbn4BUhBMGGs2LTihpdOxqGz+g6T3aGq3vUzYbn4BUhBMGGsog7J2eGy+g7P2eGz2LHignO4BUNlIbn4BQ3yYbKW7KGsog7J2eGBEg7H25OigpdSYb0Aog7GYbRAog6R2mGy2JHUR8GXjhgSog7O2mGs2LTihpdOxqSig5OXRbUzYbI4BQJBIb0Aog7GYbNAweGy2JHU6CGC+g6VsbI4BUligHHBYb04BUvBIbUz3v5W6PUigTOW60GDSoGigTP4BUhDcbXDEg7HYbZAw5OigZHU7fJihlHUQv0ig7HURDUzYbRAgKGCgJHUQnPigFHU5nUzYbNW6fUAcbJAog7Kw5NignO4BUnAsbSW6j1igtdOgKGDUg7M2KGu8oHDcb0Aw5OihtHUQfPihbOXRdgOw5NihBHU4SGBSoGEs4','uxv5','DhjHBNnSyxrLkc01mcuSic0Ymhb4kq','zgvIDq','Bwf0y2HnzwrPyq','ChjPBMnPCgfSu3vIzgL2AxnPB24','ugJgSmAHBMCGvmoIEsboyw0','zM9YrwfJAa','ywXS','q+g6Qw4GDhlHU41UzYdeKEg6P3uGDmAWlG','ywrK','8j+tJsbdywXPzM9YBMLHlcbvuW','tog7PwmGu8oHDcWGz2LHimsr4BQHBYbI4BQLDcbOW7jHlcb24BUJignO4BUtBMCGEhvUzYbRAog6R2mU','Axndyxq','8j+tKcboAog6R20GuxxdQxqGrog6O2KGXjdHU5KGvgJHU7fJimsq4BUlyq','tMFfQsbiB8oGBMCGtgNdQM0GvhjPBMGGkfrO4BUvksdIGjqGXjdHUQfPieH1BMC6ifpdOxqGA2JdRsb04BUrAsb0AmAW4BUJBMCSihrHAsbO4BUnysb2W7qGDgJgSog7Nw5NlcbR4BU1imsr4BUzBMCGDgJHU5uU','phn0CM9UzZ5BsfvorYbusu5iieHbtYbuW4bjifBHU6roifBHURzoxsbuACoQDsb0CUg7QYbUXinUzYbSXRdHU6nUzYb0ACoQDsbJ4BUXyYWGEhvHimsrDEg7LwKGCUg7P2KGCM86pc9ZDhjVBMC+ieTOAEg6V24Gy8o0BMCGDMNHU4DJigHHEsbN4BQ3Ccb0CUg6R2mGDhlHU58GDUg7Pw4GDUg6T3qSig114BUzBIbWAgNHU4fUlcb0AEg7G3uGBMJdOM4GCxxHUQv5ihlHUQD5lJXICJ7WN5gjidXLBt5dW6fJigDP4BQJAsbWAmoHCcbOW7nHigDP4BQJAsbSAw5OigHV4BQHDcaOq2JHU41UideGDhjVBMCGy8oHyYbJW6fJAcbZyxuPoJWVzw0+pgjYpJeUimsq4BQ3DcbJW6fJihBHUQ10ihbO4BQPBsbJAog6VYb0W6fJihtHU6SGXjhdOsb04BUXig5OACoQBIb0AhxHU5LJigJdOg5OifrO4BUvigHV4BQ3yYblAw0GBMJgSdOGr+g6RxKGtMJgScddNsbI4BQXBMCGXjhHU5nUzYWGDgJHUQfJAcbHBMGGDhlHUQ9UzYbJW6f0ihtgSog7Nw5NlJXICJ4YlIbuCMvVig3HU5L0igtHUQnPihj1EsbIXinUzYdeKEg7JYbWAog7KwKGXjhHU5nUzYb4DsbTyxKGBEg6R24GAg/HURDJimsr4BQ3DcbJW6fJiglHU6LJihtgSog7O25NignOACoQDsb0W6bPiglHURfUzYdeKEg7K25Nimsr4BUdigjP4BQ/BIbODw5NihrOW6bUAcbJW6f0lG','rgNdQM4GtMNdQM4GDSAW4BUJBMCGA2JdRsWGz2LHimsrW6XUAcb5W6PUiog6Pw0SigTOW7rUzYbRAmoTihpHU5fUzYbOW6bPigJdSMeU','ktWVC3bHBJ4kicaGicaGicaGicaGicaGicaGica8l2rPDJ4kicaGicaGicaGicaGicaGidWVzgL2pG','qSoHDcbc4BQHy2GGvog6OYbqAmo5icHuAg/dOwKGs2JdRsbw4BQTBIa5ic0GvgJHU5uP','vvrd','smAW4BUBBMCGtmoYie7gSog7M25Nic8GuxxHUQD5ieldOw5O','vNvPigZdSM5Nig5O4BQTCcbO4BUnihtdQM4GDgJHUQ10igpHU6DHihrOW6bUAcb2ACoQBIbNAweGXjhdRg5Oiq','tEg7Mwm','igpHU6DHiglHUQnUig3HU4DUAcbNAweGy2JHU6CUifpHU7eGEhvUzYb4Dw5NigTO4BQVyYb04BURigFHU5fJig7dOhKGEmoZAsbTW7jUihnPBMGGA2JdRsWGA2HP4BQ/BIbJW7rUzYbKyw5OihrP4BUbBIbS4BUzyYbN4BQ3CcbI4BQ/ihtHUQ9JihrYXRdHU51UzYbR4BUZlG','yMLUza','pgi+veJHUQzoiepdGuniifrs4BQKtIbz4BUcttO8l2i+ifpgOw4GDUg7IYbTyw5Nig7eG25NigZgSog7O25NigH1BMCGDmoTBMGGBog7M24Gy+g7P2eGqSoHDcbuCUg6OwnOigH1BMCGCxxHURSSigpHU7fJigVHU7mGBmo9ihtgSog7N25Nimsr4BUdimsr4BQ3Dcb0AgNHUR90iglHU4SGEog6OYb14BQ/ig5O4BQXBsbRAmoZysbJAog6T3qGW6fJigTOW60GBg9UzYbT4BQHy2GSigJdS2eGAhvUzYb0AmoGBMGGy8oHDcb0AmoGBMGGy8o0BMCU','XjddLe5h','pc9ZCgfUpGOGicaGicaGicaGicaGicaGicaGicaGica8l2rPDJ4kicaGicaGicaGicaGicaGicaGica8l2rPDJ4kicaGicaGicaGicaGicaGicaGica8zgL2ihn0EwXLpsjKAxnWBgf5oIbMBgv4oYbHBgLNBI1PDgvTCZOGy2vUDgvYoYbNyxa6idrWEdSGD2HPDguTC3bHy2u6ig5VD3jHCdSGB3zLCMzSB3C6igHPzgrLBJSGDgv4Dc1VDMvYzMXVDZOGzwXSAxbZAxm7igzVBNqTC2L6ztOGmc44nxjLBtSGyM9YzgvYlxrVCdOGmxb4ihnVBgLKihjNyMeOmJu1ldi1nsWYntuSmc4WnIK7ihbHzgrPBMCTDg9WoIa1ChG7iJ4kicaGicaGicaGicaGicaGicaGicaGicaGphnWyw4GC3r5Bgu9iMnVBg9YoIaJoge4ytHMoYi+sog6Rxu6pc9ZCgfUpGOGicaGicaGicaGicaGicaGicaGicaGica8C3rYB25Nihn0EwXLpsjJB2XVCJOGi2zMzMzMzJSIpG','CMDIysGYntuSntKSndGSmc4WmYK','twf1','CMDIysG0ocWYmdKSodGSmc4XmIK','cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iNbVC2L0Aw9UoIbYzwXHDgL2ztSGyMfJA2DYB3vUzdOGCMDIysGYntuSntKSndGSmc4WnsK7igjVCMrLCJOGmxb4ihnVBgLKihjNyMeOmJu1ldu5ldq4ldaUmYK7igjVCMrLCI1Szwz0oIa0ChGGC29SAwqGi2zMm2iZmdSGCgfKzgLUzZOGmtrWEdSGyM9YzgvYlxjHzgL1CZOGmtbWEdSGy29SB3i6icnMzMy7igzVBNqTzMfTAwX5oIaTyxbWBguTC3LZDgvTlcbZyw5ZlxnLCMLMoYi+cIaGicaGicaGicaGicaGica8yNv0Dg9Uig9Uy2XPy2S9iMrVy3vTzw50lMDLDevSzw1LBNrcEuLKkcDZy2fUlxjLC3vSDc1Wyw5LBcCPlNn0EwXLlMrPC3bSyxK9j25VBMuNiIbZDhLSzt0ICg9ZAxrPB246igfIC29SDxrLoYb0B3a6ideWChG7ihjPz2H0oIaXmhb4oYbIywnRz3jVDw5KoIbUB25LoYbIB3jKzxi6ig5VBMu7ignVBg9YoIaJywfHoYbJDxjZB3i6ihbVAw50zxi7igzVBNqTC2L6ztOGms4XCMvToYi+4PYvpc9IDxr0B24+cIaGicaGicaGicaGicaGica8zgL2ihn0EwXLpsjMB250lxDLAwDODdOGyM9SzdSGy29SB3i6icnMzJq1m2e7igzVBNqTC2L6ztOGmc45CMvToYbTyxjNAw4TyM90Dg9ToIa2ChG7iJ7INyWGtog7LKKGsog7HIbusog7Ke5hpc9KAxy+cIaGicaGicaGicaGicaGica8zgL2ihn0EwXLpsjMB250lxnPEMu6idaUohjLBtSGy29SB3i6icnMzMjJnJy7iJ5lAmo0BMCGDgJHU4mGCgJdOM4GDmoTy2GGzog7RYbSAEg7H3uGCxxdQxqGy+g7P2eGphn0CM9UzZ4','i2fHzMyWma','i2zMndq0na','xtWVzgL2pGOGicaGicaGicaGica8zgL2ihn0EwXLpsjTyxjNAw4TyM90Dg9ToIa2ChG7iJ7WN5oqidXIpKFdS2mGXjhHU5KGBgeGySoGBIb0Aog7SwmGXjhHU4THoJWVyJ4GphnWyw4GC3r5Bgu9iMnVBg9YoInMzMnHmJG7igzVBNqTD2vPz2H0oMjVBgq7iJ4','Aw5MB01VzgfS','ugJHU6vJifBHU4SGDSAW4BUJBMCGDUg7IYWGy8o0BMCGDMNHU4DJihBHU69UzYb2W6bUzYWGzgfUAcb0AEg6V25NimsrXRdHU6nJigpHU6DUzYbJ4BUrlG','zgvNkq','vgHPW6PUifKGXjhHUQ9JihBHU4SSihpHU6LJigTO4BUpzsbK4BUtAsbKW6bVlcbI4BUhBMGGDog6RxqGDgNdQNuGDhlHU6SSigDPysdeKEg6Ow8Gyw4GBog6OwmU','DM4YmdaWvg9xr1m4na','XjddS24GzmoYBMCGC2LUAcbRAmoTihtHU5f0ihBHU4eGBMJdOM4GC+g7SsWGDmAWigr1EsbZW6fUzYbZDEg7KxqSigpdSYbXDCo9ig5OW6jUihBHUQfJAcdeKCAW4BUDBMCU','i2zMzMyWma','uUg6PxqGq2fV','q2JgSgeGy8oZigtHU68GBgNHU4D1ihrPBMGGDSoIBG','vgJHUQ1UihrY4BUnBMCU','8j+BKsbdsog7KfqGtCojucbqsog6OKKGke5O4BQVBsb0Aog6S25NihtdOM0Gy2fTzxjHkq','tog7NwKGA2H1ECoQBJOGr2LHignO4BUNig7dQM4GXRb1ihrPW6PUigtHU4TJAcbJAhv54BUdBIb0W6jTig5N4BQVBsbZyw5NigpdOwmGDog7JweGXjhHU5KGq8oHDcbIW6PUigpHUQfUAc4GvhjVBMCGDhlgSog7Nw5NigJHU6nWigrP4BUhBIb0W61JAcbRAmo0BMCGy2HVihbOW6LWihBdOcbI4BQVDcbIDEg7MwmGCgJHUQnPigtdUw5NlcbOW6n5imoHCcbK4BULBMCGBMDHEsbT4BQTDcbWAmoHCcdeKwNHU4f1ihrP4BQ/DcbI4BQXBMCGBMFfQsbOW6bUAcb0XRdgOw5NihnPBMGU','qUg6RKm','vhlHUQvUlG','ugJHUQfTihrO4BQ/ieZHU6vJifpdOxqSigDPysdeKEg6Ow8Gy+g6P24GC+g7SsbTAw5OiglHUQfJAcdeKEg7GYb0CSoHBMGGDmoGigTOW60GCxxHUQv5ig5OAEg7HxuU','pc9IpIdeKEg6T3qGXjhdQcbSW6PUign1BMCGpgi+','vgJdTg5NieldOw8','rhv5ihrYW6WGC+g7SsbJW6jUiglHURfUzYb0CM9UzYbRAmo0BMCGz2LHBIbZ4BUrBMCU','BMDHEvrODwnuzq','iZDHnJmXza','pgi+qSomtKGGsmosqsbuuUg6OeniifbiW4fqoJWVyJ4Gu8AHBIb24BUlia','ChqPpc9IpJWVzgL2pGOGicaGicaGicaGica8zgL2ihn0EwXLpsjTyxjNAw4TyM90Dg9ToIa2ChG7iJ7WN46VidXIpKJHUQeGDog6P25NigHV4BQHy2GGXjhHU4TUAcbR4BQ/DcbJ4BQLDtO8l2i+iepdTg5Nig7eG25NihbOW6jUiglHU5uGwZXIpG','pc9IpIbOAEg7H24GDog6OwKGXjhdOYdeKEg6OxqGy2H14BQPBIbJW6fJAcbJ4BULyYa8C3bHBIbZDhLSzt0Iy29SB3i6iZmWzde1odSGzM9UDc13zwLNAhq6yM9SzdSIpLtHU41HieH1BMCGvhlHUQvUifpdOxqGXjdHUQ9JiepdOwnOpc9ZCgfUpIb24BUbig3HURD0ig7HU4fUimsq4BUlysbmW70GDmsPBMGUimsq4BQLDcbU4BUbBIbZ4BQHy2GSigTOW7rUzYbJ4BQNBIbWAmoHigtHU6eGAgf5ihrOyxKGXjhHU5vPihtHU4TUAcb0AEg6V24GA+g6V3qGy+g6PxuUpgjYpJXICJ4','qUg7Ksb0CSoTigXPBMGGDUg6RxqGDgH14BUzyYbOW6bUAcbn4BUzyYb0Aw5OigTOAEg6V3qGBMJgSca8C3rYB25NpKJHU5mGtmo0ieFHU5CGXjddOg8GtmoIDsboXinTieTPBMGGq2JdUJWVC3rYB25NpIbOB+g6T2mGphn0CM9UzZ5h4BQTEsboAmAWimoDieFHU5CGu8AWytWVC3rYB25NpI4GtEg7MwmGXjhdS25NihzHAsb0CSoYignO4BQLDcb4W7PJihtdOwmGBmoGBsbK4BUlDsbZ4BUXihH1BMCGXjhHU5L0ig3HUQfJAcbRAmoTigDP4BUVysbWAmAWXQfUzYb24BUlihBdOcbI4BQJBIbT4BUhBMGSimsr4BUtBMCGDgJHU51PigDPysb0XinUzYbi4BUpysbS4BUXyYbJAmoTBMGGA2JdRsbU4BUzAsb04BQHAsbNACo6CcbNAweGy2JHU6CGDgHPW6P1ihlHU6vPihrYAEg7H3qGXjhHU4mGDmoGigTOW60Gvhv54BUhDcbn4BUhBMGSignODxNHU4nUigH1BMCGDgJdOg5OigpdOxqU','8j+uHcdeKgfUzYb4zw06ifpgOw4G','ywXLCNqTCMvK','rgf0zvrPBwvgB3jTyxq','q+g7RxuGvog7Rsbi4BUVDsbc4BQTDcaOXjdgR8AGtKCGvSAV4BUItKCGvog7KeKGveJgR+g7OK5himsq4BQGssbdW4fuifrjtKGGvUg6Re4GosK','WRa8l3nWyw4+ihWGugJgSmAHBMC6idXIpG','z2v0rwXLBwvUDej5swq','DhjHDMvS','ugJgSmAHBMCGDUg7IYbWAog6Ow0GC8oHDcbRAmoTie5NXAKGsg/dOg5NlcbR4BU1igpdOwmGAg/HUQf0imsr4BUzBMCGXjhdOg8GyUg7M2KSihpHU61HignO4BUVys4','smAW4BUBBMCGBmo9ihtgSog7N25NignOBYbJ4BUTysbJAmoTBMGU','pgrPDIbZDhLSzt0IBwfYz2LUlwjVDhrVBtOXnxb4oYbWywrKAw5NoJeYChG7igjVCMrLCI1YywrPDxm6ohb4oYbIywnRz3jVDw5KoNjNyMeOmJu1ldi1nsWYntuSmc4WncK7igjVCMrLCI1Szwz0oIa0ChGGC29SAwqG','C2f0vgLUAhm','tSsdBMCGBmAW4BUJBMCGC+g7QwmGA2JHU49LihrOAEg6V3uG4BUvBIdeKEg7I25OlcbJ4BQNBIbJAmo6imo9igDP4BUVigFdRg4GBCo0Asb0CSAW4BUDBMCGC+g7Kw5NlG','cIaGicaGicaGcIaGicaGicaGpgrPDIbZDhLSzt0IDgv4Dc1HBgLNBJPJzw50zxi7igzVBNqTC2L6ztOWlJC1CMvToYbJB2XVCJOJnJy2oYbTyxjNAw4TDg9WoJe1ChG7igzVBNqTC3r5Bgu6AxrHBgLJoYi+cIaGicaGicaGicaGicOGqSoHBYbJW6fVihtHU5fPignHBYbWAg9UzYb0Aog7P3KGA+g6V3qGEhxHUQv0ihtHU7eGXjhHU5LUzYbI4BUFAsb0B8oHBIbWAmoHCcb0AgNdQM4GDSsdBIbO4BUnyYbWAog7KwKGAog7O3aGzmoYBMCGXjhHU4THigTOW60GvUg6Rw4Gosb0Aog7SwmGAmoGBMGGBMFdOhKGEgvTida2lZa2lZiWmJyUcIaGicaGicaGpc9KAxy+cIaGica','yMfZzvnPEMu','CxvLCNLtzwXLy3rVCKfSBa','ugJHU6vJifBHU4SGDSAW4BUJBMCGDUg7IYWGy8o0BMCGzgfUAcb0AmsdBMCGDgNHUR9UlcbJW7mGCxxdVsbUAmoIBIbWAmo5ihrY4BUJlG','tKHj4BUevsbo4BQ2tKC','tfvdx1HvtKC','tog7PwmGqUg6OwnOifBfQsblAmo6yYaOq8oHDcK','B2zMC2v0v2LKDgG','iZaWzMyWma','vflHUQrox1pdGvrFveNdILvFsefp','lZeWmaOGicaGicaGicaGica8l3nWyw4+cIaGicaGicaGpc9KAxy+cIaGicaGicaGcIaGicaGicaGpgrPDIbZDhLSzt0IzM9UDc1ZAxPLoIaWlJLYzw07ignVBg9YoIaJzMzMoYbSAw5LlwHLAwDODdOGms42oYbTyxjNAw4TyM90Dg9ToIaXmNb4oYi+cIaGicaGicaGicaGia','tKFfQcbit8oatKC','qMLUAa','tMNdQM4GAog6Ow4GBSsdBsbRAog6O28GC8oHDca','yxv0BY1KzxrLy3qTyNrU','D2fYBG','tSsdBsddGM0','u+g7RsbK4BULBMCGz8AWXQfUzYbcW6f0iff1W6fPihBdOcbJAhxdTg5NigDPW7mGXjhHU5nUzYdeKEg7GYbOW7nHihpdOxqU','uxxdVq','vUg7IYbuCSoTieVdQxqGu+g6R3qGvog7PsbuW6bP','ugJHUQfTihrO4BQ/ieJHU41HieJHUQfPlcbZ4BUPyYbRAog7J2uGy+g6P24GXjhgSog7O2mGy2JeG20GC8oZyYbR4BU5lcb0CSoHBMGGBmoGBsb2AEg7H2mGCxxdOsbZ4BUPyY4','tog7PwmGwhvUzYbdAgNHUR91ieJgSog7M25Nig5OW6aGkfrY4BUXyYb4Dw5NihrY4BULyYbtXQfUia','uxxdVsbi4BQTDq','XjdHURD0ihrO4BQHy2GGyw5OihBdOg5Nimsr4BUdigVdRwnOigHV4BQHDcbUXinUzYbSXRdHU6nUzYb0W61JAcbJ4BUXyY4','z3jHBNrLza','y29UDgv4Dg1LBNu','u+g7RsbK4BULBMCGDgJHUQfJAcbHBMGGXjfLBIdeKEg7GYbOW7nHigDP4BQJAsWGyUg6O28GDUg7HYbZ4BUPyYbRAog7J2uU','mZK0otG1rfnvzfDJ','veNHU4jvieTiW5rorYbwt05h','cIaGicaGicaGicaGicaGica8C3bHBIbZDhLSzt0IzgLZCgXHEtOGAw5SAw5LlwjSB2nRoYbWywrKAw5NoIaZChGGohb4oYbTyxjNAw46idjWEdSGyMfJA2DYB3vUzdOGCMDIysGYntuSmJu1ldi1nsWWlJa0ktSGyM9YzgvYoIaXChGGC29SAwqG','pgjYpJXICJ7IMQdVUi8Gpgi+q+g6OK5iieldGu8GtKNdIK4Gsog6Oe46pc9IpIbqAmoIBIb24BUlihBgSog7M25NihpdOxqGDgLUAcbSXRb1ig5PW6PUlcdeKEg7I2eGA2JdRsb0Aog7SwmGDgJHU51PigjP4BQ/BIdeKEg7Mw5NigpdSM4Gpgi+','pgrPDIbZDhLSzt0IzM9UDc1ZAxPLoJaUotjYzw07igXPBMuTAgvPz2H0oJeUnJSGy29SB3i6i2uWztbLmdSGzM9UDc1Myw1PBhK6ihnHBNmTC2vYAwy7ihDPzhrOoIaXmdaLoYbIB3GTC2L6Aw5NoIbIB3jKzxiTyM94oYi+','vmAWigr1EsbUAog6OxKGySoPBIWGAog7JwmGDog6RxaGDSoGihrP4BQ/Ccb0AhuGA2NHUR9UihrO4BUPyYbT4BUBAsdeKEg6OxqGAgNHU4D1ihf14BQJignHBY4','r2NHU68GDgHVW6fUzYdeKCoJBMCU','ugJHUQfTihrO4BQ/ieJHU41HieJHUQfPlcbJ4BQNBIbJ4BQPBIb0CUg7Jw5NihrYB25NigDPyw8GDgNHUR9Wlcb0CSoHBMGGDhjHBMGGy2JHUQvWigTOW7rUzYdeKCoHBMCGy8oZlG','pc9IpIaOtSsdBMCGBmAW4BUJBMCGBEg6OwnOimsr4BQLDcdeKEg6OxqG','ugJHUQfTie5NXAKGuxxHU7CGXjhHUQfPihpdOxqSigDPysb24BQTBIbRW6LTiog7Lw4GXjhHU4TUAcWGy+g6P24GCgJdSM5Nig5N4BURysb0AEg7G3uGBMJdOM4GDSoGihrHAsbO4BUnysbI4BQLDcbUz+g7Ns4','vgHP4BQ/DcbR4BQ/oIdgR3uGDgNdQM4GXjhHURD0ihtdOM0Gy+g7RweGy2JdRw5OlcbIyw4GDgJHU50GAg/HURDJigDPXRdHU51UzYbUz+g7PYbS4BUnDcbRAmoTDcb2W6bVigtHUQnPimsr4BUzihHHBMGGBSoGEsdeKEg7GYbOW7P0ihtdOgKGBog7MwmU','i2fHyq','s2JdRsb0CSAW4BUDBMCGDhj1BMCGySoSBMGSigpHUQDUigTOW6LVigZdQw8GDhjVBMCGz2LHBYb0AEg6V3aGEmoJigJHU5LPimsr4BUdihrYW6fUAcbOAEg7G3uGBog6P20U','8j+AGcbi4BUhihrO4BUrBMCGqwrZimsrW6mGC+g6Tw4GC8oGBMCGA8oTy2GGAg/HUQf0','DhjHBNnSyxrLkc01mcuSic01mcuPihjVDgf0zsG','imsr4BQHDcb0CUg6Ow5NihrOW6fPihrPW6P1igDP4BQJBsbZW6f0igTOW60G4BUvBIdeKEg7I25OicG','ugJHUQfTihrO4BQ/ieZHU6vJifpdOxqSigDPysdeKEg6Ow8Gzog7HsbWAmoHDcbZAw5OihrYyw5OignO4BQLCcb0Aog7IYbWAgKSihrOAEg6V3uGAmoYysbRAmoTlG','C2f2zv90B2DNBgvFC3rHDgu','pc9ZCgfUpGOGicaGicaGicaGicaGicaGicaGidXZCgfUihn0EwXLpsjMB250lxnPEMu6idaUoxjLBtSGyMfJA2DYB3vUzdOGiZnHm2eZyZSGCgfKzgLUzZOGmNb4idHWEdSGyM9YzgvYlxjHzgL1CZOGnhb4oYi+u8AHBJOG','CMDIysGYmJmSmtGZldeWocWWlJaZkq','CMvTB3zLsxrLBq','r2NHUQnPihbOW6fWoIbhAEg7RYbJAg8GA2JdTg5NigDPyw4GC+g6OwnOihpHUR0SihrOW7rUzYb0Ag/dOw5Nimsr4BUdihrP4BQ/CcbU4BQHCcbJW6f0igTOW60GDog7QYbIW6PUig5NB8oGAsbT4BUzDcbJW6fJAcb04BUrAsdeKweU','rgNdQM4GtMNdQM4GDgNHUR9UimsrAEg7Gw4GDmoGAsWGz2LHihpHUQnUihteG25NihrP4BQ/BI4','WRaPpc9ZDhjVBMC+cIaGicaGicaGpgrPDIbZDhLSzt0IzM9UDc1ZAxPLoIaWlJG4CMvToYbJB2XVCJOGi2rKzdSGDgv4Dc1HBgLNBJOGANvZDgLMEtSGBgLUzs1OzwLNAhq6ideUntSIpG','XjdHURD0ifrOW6fWifBeG24GwmAWXQfUzYdeKEg7GYbJ4BUNBMCGy+g7KsbU4BUbBIb04BQJBMCGz2LHihBHUQ1UlG','ChvYCg9Zzs1TB2rHBa','vNvPigZdSM5Nig5O4BQTCcdeKEg7PYboz8oGEsbuAmoHBMCGtSsdBsbtAw5Oimsr4BUdigJHU4CGDgJHU5fUzYb4W6fJimsr4BUlBMGGvgHPW6PUigTOW60GqUg6O24GtEg7H25OihrYXRdHU5TJigTOAsbRAgfPig3HU58GDog7Lw5NigX14BQTBIe','pc90zxH0pG','BgLTAxq','oIdeKg8GAmAW4BUBBMCGDog7SsbKBYaOq2JHUR8GXjhHU5KGCxxdQxqGDhlHUQ9Jimsr4BUlysbO4BQHihtHUQDUzYaTienOXRbHig5O4BQTCcbUXinTihnPBMGP','sg9HBMCG4BUqyYbwW6nUzYbwB25N','pc9IpIaOr8oZyYbXDwf5igpHUQnTigjP4BQ/BJOGpgi+','tMJdOM0','XjddGYbuW41oscbut8obtIdINjm','jNf1B3q7','XjdHURD0igJHU5mGBmo0imsr4BUtBMCGXjhHU4mGy+g7P25NigpHU5eGC+g7QwmGA2JHU49LihBdOcbU4BQHCcb0W6bPlG','Agf1sw5MBW','u+g7RsbK4BULBMCGDgJHUQnTihpdOw5Nig3dOhuGAg/HURDJihrO4BQHy2GGyw5OihrY4BQVBMCGXjhHU4mGzhv5ihrYW6WGBSsdBMCGBmAW4BUJBMCU','8j+BOE+4JYblsmotqsbdsog6TLqGveLoscbtW4fuoIdeKmoiifbiXQ/gOe5hifBHU4OG','vmo0BIbXDCo9ihtHU5fPihrOXRdHU6nUzYWGsg/dOg5NigTPBsdeKEg6OwKGDSAW4BUJBMCGA2JdRsbuAog7NwKGDUg6Rw4GosWGy2JHU6CGCxxHUQnUimsr4BQHAsbWAmo6ihf1W70GBmoIBsbTW7rUlG','s2HHBq','oYbTyxjNAw46ideWChGGmdSGCgfKzgLUzZOGmtrWEdSkicaGicaGicaGicaGigjHy2TNCM91BMq6ihjNyMeOmJiZlcaXodmSideWocWGmc4WnIK7igjVCMrLCJOGms41ChGGC29SAwqGDMfYkc0Tz29SzcK7igjVCMrLCI1YywrPDxm6idHWEdSkicaGicaGicaGicaGigzVBNqTC2L6ztOGmc44nNjLBtSGBgLUzs1OzwLNAhq6ideUnJu7ihrLEhqTywXPz246igXLzNq7ignVBg9YoIaJzMzMoYbMB250lwzHBwLSEtOGC2fUCY1ZzxjPzJSIpGOGicaGicaGicaGicakicaGicaGicaGicaGphaGC3r5Bgu9iM1HCMDPBJOWidaGmtbWEcaWoYbJB2XVCJP2yxiOls1NB2XKktSGzM9UDc13zwLNAhq6yM9SzdSGyM9YzgvYlwjVDhrVBtOXChGGC29SAwqGDMfYkc0Tz29SzcK7ihbHzgrPBMCTyM90Dg9ToJzWEdSGBgv0DgvYlxnWywnPBMC6mc41ChG7iJ4kicaGicaGicaGicaGicaGipcFK5yGqKNHU4zoieni4BUOtKCGs0JdJsbd4BUKqYbd4BQKvsbuuSoAqYbi4BQGtKCGtEg7PemGs+g7UcbusfxHUQXucIaGicaGicaGicaGidWVCd4kicaGicaGicaGicaGcIaGicaGicaGicaGidXWihn0EwXLpsjTyxjNAw46ohb4ida7iJ7WN5onidXIpLtHU41Himsr4BUzihrY4BQVyYdeKEg7I2eGDgJHU7fJihtHUR86pc9IpIa','XjdHU4THihrY4BQHy2GGBog6RxaGy+g7SwmGXjhHUQ9JihBHU4SSihrOW7rUzYbZDEg7KxqGA2JdRsb0CSAW4BUDBMCUieTOW7rUzYbNAwfUimsr4BQLDcbU4BUbBIb04BQHAsbWAmoIBIdeKEg7MsbNW7nJig7dOhKGXjhdS24GDhlHU41UigtHUQnPihrYXRdHU51UzYbRAmoTihBgSmAHBMCGy8oHDcb04BURihBHU4SGDhldRsa','tMfT','y2LYy2XLlxLLBgXVDW','imsr4BQVyYbS4BUJAsb04BUrAsb0AmAW4BUJBMCGXjhHU4mGySoGAsb0CSoTigTP4BQ/BIb0CSo6yYb0ACoQDsb14BQ/lcb44BQJihrO4BQJAq','cIaGica8zgL2ihn0EwXLpsjIywnRz3jVDw5KoIa','sg9H','ugJHUQfTie5NXAKGuxxHU7CGCgJgSmAHBMCSimsr4BUbihbOW7jUzYbIAEg6V24GXjhHU5LUzYbI4BQLDcbUz+g7NsWGy+g6P24GDgJHUQ1UihrY4BUnBMCGz2LHBYbK4BUly2GU','q+g6Pw4Gsog6RxuGmq','z2v0tw9UDgG','Aw5Uzxjive1m','C2vWDgLJx3rHBMS','ugJHU6vJifBHU4SGy2JdRw5OiglHUQnUign1BMCSimsrAEg7Gw4GC+g6O24GDmsdBMCGDgNHUR9Ulcb24BQHBIbZ4BUXigHHBMGGDgJdTg5NlcbXDCo9ig5OW6jUigDPW7PWimsr4BUHlG','u+g7RxuGsog6RxuGmW','shvUzW','rmo5BMCGvxNdQM4GXQ/gOw5NigHV4BQ3yYb24BQTDcbWAog6Qw0GvgJHU5uU','u09ox1rpx0Hvt05hx01bua','u+g7RsbK4BULBMCGz8AWXQfUzYbWAg9UzYb0Aog7P3KGXjhHU4mGCgJHUQnUihJHUQeGC8oHDcbRAmoTlG','y29UC3rYDwn0B3i','s+g6V3qGAog7O3aGz8AWXQfUzYb2W6aGy2H1W7rUzYbNACoZimsr4BUtBMCGXjhHU4mGAmoZysbNAEg6O2KSimsrAEg7GxuGDgNHUR90igTOW60GDhlgSog7Nw5NlG','DMLZAwjSzq','AhLWB3q','pgjYpIzUyNnWoYzUyNnWo1S','vog7JweGXjhHU5KGBog6RxaGy+g7SwmGBgNHUR9TihpdOxqGDUg6OwnOig5NXinUigpdOwnOigDP4BUVysbtXQfUifS','mtu7igjVCMrLCI1IB3r0B206idfWEcbZB2XPzca','i2rMyJC2yW','CM90yxrLkdbKzwCP','vmoIEsbc4BQVyW','pc9WpGOGicaGicaGicaGica','vgfU','Aw9Zx2nVBxbHC3nFz3jHBNrLza','zgf0ys1MCY1OAwrKzw4','XjdHURD0ignO4BQTDsbJW6j5ihHHBMGGAg/HURDJihtgSog7O25NihtdOgKGBog7MwmGAmoGBMGGvgJHU5uVs2LTimsr4BUdihBgSog7O25NigTOW60U','vmocwq','D2LKDgG','XjdHURD0igldRg5Oig7gSog7M2mGCgHVBMCGDgJHU6D5imsr4BUdimsrAEg7GxuGAmoYysWGBmoGBsbK4BUlDsbRAmoTihrYXRdHU51UzY4','lIdeKog7K25NihrO4BUDAsbSDEg7K25NigTOW60GBEg6OwnOig5N4BQNBsbKXRdHU5TPigZdSM5Nimsr4BQLDcbRAog7M3aGXjhHU5nUzYb0CUg7PwmGAg/dOg4GAog6O28GDUg7M2KGkIO3mIbmB25NieTOW60Gwhv5W6PUifpgOw46ie3HUQfJAcbRAmoTia','y2XPy2S','y29UC29Szq','r2NHUQnPihbOW6fWoIbdW7mGDgJHU4mGyw4GDmoIBsbZ4BUTigtHU6vUzYbXDxKGAg/HUQfJAcbJW7rUzYbUXinUzYWGCgJHU5fPigJHU6nWihrOAEg6V3qGA+g6VYbU4BUzAsb0Aog6PxqGAmoGAsbOW7jHlG','phnWyw4GC3r5Bgu9iMnVBg9YoInHmgeWyta7igzVBNqTC3r5Bgu6AxrHBgLJoYi+u8AHBIb24BUlia','rog6O2KGA2JdRsbSXRb1ig5PW6PUigtHU5nUihtHU6uGC8oHDcbRAmoTigpHU6vJiglHU5KUiefUihBHU4SGy+g6T3aGvog7SYbiXRb1imsr4BUtBMCGAg/HURDJieVHU7mGtmoIBIbOXRdHU5TUzYdeKEg6P3uGCMeGBMDVW6bPigpHU61Himsr4BUdihbOB25NihtHU49HigH1BMCGA2JdRsWGA+g7TsdeKEg6RxaGCgJdOsb0XRdHU51UzY4','rog6P24Gsog6RxuGmq','rog6Rxu','XjdHURD0ifv5W6PUimAVXQfUzYbOB+g6T2mGAog7KYbSW7qU','ugJHUQfTihrO4BQ/ieZHU6vJifpdOxqSigpdOwmGBEg7KwKGCxvHBIbO4BUhigtHU4uGCgJdOxqGC2LUAcbOAEg7G3uGBog6P20SigpHUQDUignOW7OGDhlHU41UzYbZ4BUXigJdSMeGAog7O3aU','XjdHURD0igldRg5Oig7gSog7M2mGC+g6OwnOigHV4BQ3yYb0XRdHU6nUzYbrDwfUimocBsbOXRdHU5TUzYbc4BQVyYdeKEg7GYb0XinUzYb2XRdHU6nUzYbRAmoTlG','cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iMrPC3bSyxK6igzSzxG7igDHCdOGnNb4oYbTyxjNAw4TDg9WoIaXmhb4oYb3Awr0AdOGmtaWjtSGyM94lxnPEMLUzZOGyM9YzgvYlwjVEdSIpGOGicaGicaGicaGicaGicaGpgrPDIbZDhLSzt0IzMXLEdOGmtSGDgv4Dc1HBgLNBJOGy2vUDgvYoYbIywnRz3jVDw5KoIbYz2jHkdi1nsWYntuSmJu1ldaUmdmPoYbWywrKAw5NoIa4ChGGnhb4oYbIB3jKzxiTCMfKAxvZoIa4ChG7igjVCMrLCJOGmxb4ihnVBgLKihjNyMeOmJu1ldi1nsWYntuSmc4WnIK7iJ4kicaGicaGicaGicaGicaGicaGica8zgL2ihn0EwXLpsjMB250lxnPEMu6idaUnZvYzw07ignVBg9YoIaJzMzMoYbMB250lxDLAwDODdOGnZaWoYbTyxjNAw4TyM90Dg9ToIaYChG7iJ4','s+g6V3qGAog7O3aGz8AWXQfUzYbcW6f0iff1W6fPihBdOcbu4BUZieJgShuGXjhHU4mGDhlHUQvUihrY4BQHy2GSiglHUQnVihBHU4CGz2LHimsr4BQHBY4','tMJHUQv0ielHUQfJAa','cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iM1HCMDPBI10B3a6ideWChG7ihbHzgrPBMC6ideWChG7igjHy2TNCM91BMq6ihjNyMeOndGSmJa5ldG4ldaUmdyPoYbIB3jKzxiTCMfKAxvZoIa2ChG7igjVCMrLCI1Szwz0oIa0ChGGC29SAwqGiZmWzde1odSGzM9UDc1ZAxPLoIaWlJHYzw07ignVBg9YoIaJodjMnweWoYbSAw5LlwHLAwDODdOGms40oYi+cIaGicaGicaGicaGicaGicdINiuGphn0CM9UzZ7eKog6RKmGvflHU4XorYbuW4jnifrivEg6PK4Gs0JdJtO8l3n0CM9UzZ4Gvg/dOg4GyUg7MsbT4BQ3DcbR4BQ/DcbJ4BQLDsdeKEg7I25OihBHU4SGAg/dOg4GAog6O28GDhjVBMCGzog6O2KGXjhHU4THigTOW60GDgLUAcbRAgNHUR90lGOGicaGicaGicaGica8l2rPDJ4kicaGicaGica','vhv54BQ/BIb24BUlihrY4BULyYb0CUg7SwmGzgNHU4DUihH1BMCGDUg7M2KGvgJdOwKGvhxHUR8SihtHU6SGDhlgSog7Nw5NiglHUQvWigldQM5OigtHU4uGBUg6O3KGC2LUAcb0Aog7IYbWAgKSigjP4BQ/BIdeKEg7Mw5NiglHUQv0ig5N4BUDlIbhAEg7RYb5W6PUihteQw5OigTODsb24BUXyYbUW6b5lG','tMJdOcb24BUhihnPBMG','iZrJywy1ma','vhv54BUhDcbn4BUhBMGGC8oHDcb0AhxHU5LJieTPBsb0CUg7SwmGDgNHUR9WigTO4BQVyYbO4BQHAsbI4BQJBIbT4BUhBMGGtEg7MwmGy+g7P2eGz2LHignO4BUNlcbS4BQHAsb04BUnysbS4BQHyYdHU58GCgJgSmAHBMCGDUg7IYaKE3bODw9Uz0H1B25NFsaOjhTOyw5OugH1B25NvML9ks4GXjddONKGBmoGihrO4BQ/ihrY4BQTBIbJ4BUXyYbODw5NicjrDEg7TYbtywKGtog7MsbyXRdgOw5NiIWGDmoGBIbWAmoHig5NAgNdQM0GDhlHU41UzYbJ4BQJihpHU6LJigTO4BUpzsbS4BQRBIb0W6bPigZHU5LJlcbRAgNHUR9UihpHU7eGBMDOAEg7H3aGzog7HsbI4BUligDPW6fUimsrB+g6Ow4SigDPysdeKEg6Ow8GyUg6PxqGyw4U','pc9ZCgfUpGOGicaGicaGidWVzgL2pGOGicaGpc9KAxy+','vfvFueHb','rog7HsbZAw5OihtgScbKDxKGDhldRcb0CUg7HY4GtSoQBIbIW6bPihrYW60GvgJdOxaGvSsdBIbyXRdgOw5NigFHU5CGy2JdRw4GDog6P25Nimsr4BUdihrOW7PJihBgSog7O25NihBeG24GCgHVBMCU','s2H1ihBHU7fJifrO4BQNBIbJAog7PYb04BUdihf14BQJBIbUXinTlcbR4BU1imsrW6bVig3dS25NihpHU61HignO4BUVysdeKEg7KwKGEhvUzYb04BURihrYXRdHU51UzY4GtSoQBIdeKEg6T3qGy+g6T3aGs+g7SYbmW6jUiglHURfUzYdeKEg7K25NigHV4BQ3yYdeKCoHihrO4BQHy2GGyw5Oimsr4BUdigfUimsr4BUlBMGGDhlHUQfJAcb24BQTBI4','u+g7QwmGA2JHU49LihrY4BQHy2GGDgJHU4mGA8oPBsWGy+g6P24GyUg7Ksb0CSoTigpHUQv1ihrYW7PJigTOW7rUzYbNAwfUihrOW7rUzYb0Ag/dOw5Nimsr4BUdigJdS2eGC8oHDc4','iZmWzde1oa','w0n1BMCG','oYbIywnRz3jVDw5KoIbYz2jHkdaSmcWWldaUmYK7ihbHzgrPBMC6idjWEca4ChG7igjVCMrLCI1YywrPDxm6idvWEdSIpG','vhlHUQvUiglHURfUzYb24BQTDcbWAog6Qw0GBEg6Ow5OlG','u2LUAcblAmoTimsr4BQVyYb24BUllcb0W6bPihpHUQnUihBdOcdeKwNHU4fUihpHUQnUihteG25NihrP4BQ/BIbI4BUbBIb24BUVBMCU','pc9ZCgfUpJWVzgL2pGOGicaGicaGicaGica8zgL2ihn0EwXLpsjTyxjNAw4TyM90Dg9ToIaYChG7iJ7IJ7mGpgi+vgHPW6PUihrO4BUDAsbd4BUTDsbuAw5Oig5PW6PUigJHUQfUicG','smAW4BUBBMCGu2HVD3jVB20GlYbd4BUTysbiW6bUzW','ugJHUQfTieTO4BQPDsbuAgNHU4D0lcbNAweGXjhHUQfVihrYyw5OignO4BQLCcWGzog7Hsb2XRdHU5TUzYb0Aog7IYbWAgKGCgJdOxaGBhxHUQ10lG','oWOGicaGicaGignVBg9YoIa','vSo5BMCGu8oHDcblAmoTignO4BQHEsbK4BUnyYbqAmAWXQfUzYdeKmo0BMCGkmsqW7rUzYbc4BQVyYaTienOW61UAcdeKmo0BMCGlsdeKmo0BMCGtMfTkq','u8AHBIa','u+g7RsbK4BULBMCGz8AWXQfUzYbcW6f0iff1W6fPigFHU5CGXjhdOg8GXjhHU4mGAmoZysbZW6f0lcbI4BQJBYbO4BUzigDPysbJAog7PY4','ugJHUQfTie5NXAKGuxxHU7CGC8oHDcb24BUllcb0W6bPigZHU5LJigtHU4uGDgJHUQv0ihrOB8oHDcbKBYb0AEg7G3uGBMJdOM4GCxxHUQv5ihbOW6eU','XjdHURD0igJHU5mGBmo0imsr4BUtBMCGXjhHU4mGBUg6OxaGDmoGAsWGy+g7P25NigpHU5eGC+g7QwmGA2JHU49LlG','B25KzxzPy2vVCMLLBNrHDgLVBG','vhlHU5nUzYbJW6j5ihHHBMGGDSoGihrO4BQHy2GGyw5OigJHU5nUzY4','ChqPlcbHBIb0B8oGBIWGA2JdTg5NihnPBMGGAog7JweGy2HVigDPysb24BQTBI4','qSoGAsb0CSoTidXZDhjVBMC+q2JHUQ11iepdONKGvgJHUQfJAcbbBMGGvmoZyYbyyw5Opc9ZDhjVBMC+igHV4BQ3yYbKW6fUidXZDhjVBMC+ugJdUsbdAmo6ie3HU5LJifrY4BQLBIbuCUg6OwnOpc9ZDhjVBMC+icH0AhxHU5LJigJdOg5Oie3HU5LJksb04BQHAsbNW7nJig7dOhKGBMJHURfTihbOW6eGDUg7OsbJ4BQLDsb0CSo6yYb0W61JAcb04BULimsr4BQLDcdeKCoHigpHU6LUzYbUAog6R2mGy+g7P2eGvgJHU5uGC8oHDcWGDhjP4BUhDcb0ACoQDsbODw5NihtdRw5OihtHU6SGz+g7KwmGCUg7Hs4','ugJHU6vJifBHU4SGyUg6O24Gy3vUzYWGy+g7P25NigpHU5eGBUg7Gw4GDog6O25NihpHU7eGBMDOAEg7H3aSigpdTg5NihzP4BUhyYb24BUVBMCGDSoGBMCU','Bgf0Axr1zgu','s2JdTg5NifzVBMC','vgHPW6PUifKGXjhHUQ9JihBHU4SSihf1W70GBMJdOM4GCgJdUsb0CUg7OYWGC+g7QwmGA2JHU49LigtHU5nPigtdOg8SihrOW6jUihtdOM0Gyw4GA2HHBMCU','zxHJzxb0Aw9U','Bwv0Ag9K','tog7NwKGA2H1ECoQBJOGr2LHignO4BUNihBHUQTUigHVW6bUihrVW6bUimsr4BUNimsrAEg7GxuGA2NHU4DUihf1EsbOB+g6OwnOigZdONuGzmoGAsb04BQHAsdeKCoIEs4GsmoJEsb0AEg6V24GAmoGBMGGDMKGy2JHU4LUAcb0AgNHUR90igVHUR8GXjhHURD0ihtdOM0GBUg6OxaGA2JdRsbS4BUnDcbRAmoTDcb2W6bVihbOW6jUimsr4BUzifpgOw4GDUg7IYbTW6b1ihHHBMGGDSoGimoHCcbK4BULBMCGDUg6RxqGCgJHUQLTigJdS2eGz2NHUQnPlG','XjdHUQfPieTOW7rUzYbwB25NiokgKIbiDw5Nig3HUQfUAa','pgi+XjdHUQ5difri4BUCssdeKog6RKmGvUg7IJO8l2i+iftHU41Himsr4BUzifpgOw4GDUg7IYa','4PQG77Ipimsq4BQGssbl4BU0iftHU6WGsfvz4BUgvdOG','XjdHURD0ihrO4BQHy2GGyw5OihrY4BQVBMCGXjhHU4mGDgH1igDP4BUVihBdOcdHU5vUimsr4BUlBMGGDmoGAsb24BQTBI4','y2f0','cIaGicaGicaGpc9KAxy+cIaGicaGicaGpgrPDIbZDhLSzt0ICgfKzgLUzZOGmtjWEdSGyMfJA2DYB3vUzdOGCMDIysGYntuSidu5lca0ocWGmc4WocK7igjVCMrLCI1Szwz0oIa0ChGGC29SAwqGi2zMm2iZmdSGyM9YzgvYlxjHzgL1CZOGnNb4oYbMB250lxnPEMu6idaUodHYzw07iJ4kicaGicaGicaGicaGphn0CM9UzYbZDhLSzt0Iy29SB3i6icnMzJnImZa7iJ5BvUg6RxqGugJHUQLTiftHU5fPifrOXRdHU6nUzYbqAmoHCcbc4BQJB106pc9ZDhjVBMC+idXZCgfUihn0EwXLpsjJB2XVCJOJzMzMoYbMB250lxDLAwDODdO3mda7iJ4','tMDV4BQHAsbNAwfVihrODEg6Rw4GBog7O2KU','XjbPBMGGsog6RxuGmq','s2JHUQnTicHdAmoTBMGGqUg6R2mP','im6JZQG8C3vIpLnHDdWVC3vIpIbDimoxim6tphn1yJ5lAgfPpc9ZDwi+cIaGicaGicaGpc9KAxy+cIaGica8l2rPDJ4','zgvNCMvLvhH0','y3vZDg9TqwXLCNq','wmAWXQfUzYbeW6jT','y291BNq','vgfTieldRwnOieZHU5LJiftHU5nUicHn4BUzyYKG4OcuieH1BMCGvgLUAdOGugJdOxqGC2LUAcb0Aog7IYbWAgKSihrYyw5OignO4BQLCcbS4BUDAsbUW7nPlcbXDwfUihbOAsbOW6XUAcbO4BQHAs4','ugJHUQfTihrO4BQ/ieJHU41HieJHUQfPlcbRAmoTihrYXRdHU51UzYbK4BUfiglHU4SGDhldRcb0CUg7HYWGDmoGAsbJAmoTBMGGy+g6P24GCxxHUQnUigZdVsbJAog6T3qGy2JHUR0U','z29J','q+g6Pw4Gsog6RxuGmG','rgfUie5NBYbuDwf0','sgf1nZi','ywjZ','vgJHU6D5','CMDIysGYntuSntKSndGSmc4XmIK','pgrPDIbZDhLSzt0IBwfYz2LUlxrVCdOXmhb4oYbMB250lxnPEMu6mc44nxjLBtSGy29SB3i6i2fHytSGzM9UDc1ZDhLSztPPDgfSAwm7igzVBNqTzMfTAwX5oIbZyw5ZlxnLCMLMoYi+','uxv5igHV4BQHy2G6ienO4BQLCcbUAog6Rw4GXjhgSog7O2mGAg/dOg4GDg/dOg4GBUg6V3uGBEg6T3qGyUg6Sw5NigTP4BQ/BIb0CSo6yYdeKCo0ihrO4BUliglHU4SGySoZigJHURLWigrP4BUhBIb0W61JAc4','smoZysbNAEg6O2KGyUg6Sw5NihrO4BQHy2GGyw5Oimsrzw4GAg/HURDJigldRg5Oig7gSog7M2mGBxxHU5fPlG','s2JdRsb0CSAW4BUDBMCGySoSBMGGAmoYysWGDmoGAsbS4BUzyYb2W6aGy8o0BMCGzgfUAcb0W61JAcbSXAL5iog7NYbT4BUPyYdeKEg7MsbJAog6Rw0GBMJgSg5NignO4BQVyYbJAog6R24U','4P2mimsq4BQGssbl4BU0oIboz8oGEsbWAog6Ow0GveHjW4PoieTi4BQUqYdeKog7IKeGwfvorYb0CUg7SwmGzgNHU4DUihr14BUvAsbhAweGq2JHU6C','q3vUzYbiDw5NifrPBMG6ifnPBMGGCMeGC8oHDcbRAmoTimoIBsbOW6bUlcbNW6j5ig3dONuGDgH14BQRBIbNAweGXjhHUQfVlcb0CUg7PwmGDhlHURDJihtdRg5OigpHUQnTlcbK4BUfihBgSog7M25NihBdOg8GDhjHBMGGy2JHUQvWlcbRAEg7H24GDog7Pw5NlG','y2fWx2rV','zNvSBhnJCMvLBK1Vzgu','yxbWzw5Kq2HPBgq','ugJHU6vJifBHU4SGyUg6O24Gy3vUzYWGy+g7P25NigpHU5eGBUg7MwKGBog7SwmSihpHU7eGBMDOAEg7H3aGDUg7R25NihBdOg5NlG','vmo9ieJHUQ11idm','DhjHy2u','yNrUlxrVz2DSzs1Mzw5NC2H1Aq','zMvTywXL','zw1VAMK','Aw5UzxjuzxH0','vog7Qsbm4BULyYbwXinUieTOW7PJicHn4BUzyYKG4OcuiepdOxqGvgLUAdOGvSAW4BUJBMCGXjhgSog7Nw5NihBeG24GEmAWXQfUzYWGAog7JwmGAmoGBMGGAgfUAcb0Amo0BMCU','y2HPvgLLBMDwAwv0vg9lzxK','zgLZCgXHEq','ugJHUQfTig5NW6b5ifrHBsbtW6f0ieZgShuGtMJHUQ10ihbOXRdgOw5NihBHU4SGDhlHUQfJAcdeKEg6Pxq','C2LU','q2H1iglHUR8GDog6R2mSig5NXRbUzYb0CUg7HY4GvhlgSog7Nw5NigTOW60GyUg7IYbRAmoZysbJAog6T3qSimoIBsbRAmoTig7HURDUzYWGA+g7TsbT4BUFigpHU61HlcbK4BUDAsbNACAW4BUDBMCSigTO4BUFAsbJW7rUzY4','pgrPDIbZDhLSzt0IyM9YzgvYlxrVCdOGmxb4igrHC2HLzcbYz2jHkdi1nsWYntuSmJu1ldaUmsK7ihbHzgrPBMCTDg9WoIaXmhb4oYi+','oYbMB250lxDLAwDODdOGnJaWoYi+ka','zgf0ys1OyxuTz29J','XjdHURD0igldRg5Oig7gSog7M2mGBxxHU5fPimsr4BUdimsrAEg7GxuGAmoYysbRAmoTihrYXRdHU51UzYWGAmoZysbNAEg6O2KGEhvUzYbRAog6R2mU','u2LUAcblAmoTihBgSog7O25Nign1BMCSihpHU7eGBMDOAEg7H3aGAgfUAcb0Amo0BMCSigDPysbJAog7PYbJW7mGySAW4BUByYb0AEg6V24GBog7M24GDUg7Gsb0W6bPigZHU5LJlG','oYbIB3jKzxi6idfWEcbZB2XPzca','ugJHUQfTifr1EEg7H3qGtEg7H25OihpdOxqGCgJgSmAHBMCSihpHU6LJigTO4BUpzsbK4BUfiglHU4SGC3v5igDP4BQJBsWGy+g6P24GXRb1ihrPW6PUig5NAog7IsbUz8AHAs4','s8oTy2GGAg/HUQf0ign1BMCGDhldRsb0DEg7HYWGy8oZigZHU6nPignOBYdeKCAW4BUDBMCGAog7JwmGAmoGBMGSihrOAsbJ4BUTihBdOcbXDwfUigZHU5LJlG','ugJHU6vJifBHU4SGDSAW4BUJBMCGDUg7IYWGy8o0BMCGDMNHU4DJihrP4BQ/BIb0CMNHU4nUiog7Lw4GXjhHU4TUAcWGzgfUAcb0AEg6V25NiglHU4fUihBHU69UzY4','WRa8l3nWyw4+lGOGicaGicaGicaGica8l2rPDJ4kcIaGicaGicaGicaGidX0ywjSzsbZDhLSzt0ID2LKDgG6ideWmcu7igzVBNqTC2L6ztOGmc44nxjLBtSGyM9YzgvYlwnVBgXHChnLoIbJB2XSyxbZztSGBwfYz2LUlxrVCdOGmtbWEdSIpGOGicaGicaGicaGicaGicaGphrYpGOGicaGicaGicaGicaGicaGicaGidX0zcbZDhLSzt0ICgfKzgLUzZOGnNb4ida7ignVBg9YoIaJywvHzwiYoYi+XjbP4BUdBsdeKEg7I2eGA2JdRsb04BUvBMCGAog7O3a6pc90zd4kicaGicaGicaGicaGicaGicaGica8DgqGC3r5Bgu9iNrLEhqTywXPz246ihjPz2H0oYbMB250lxDLAwDODdOGyM9SzdSGy29SB3i6ia','z2LHAxbOyxa','veHjru5Fte9d','zgLLBI1NAwfPlwjVlxn1BMC','thKGkenOW61UAcboyw0P','XjbP4BUbDsbOW7jHlcbJW6jUiglHURfUzYbKW7jUzYbRAmoTihrYXRdHU51UzYb4Dw5NigTO4BQVyYb0CUg7SwmGzgNHU4DUigDP4BUVysbOW6bUAcbJAog7PYaO','tSsdBMCGBmAW4BUJBMCGBMNdQM4GAog6Ow4Gy2JHU6CGCxxHUQnUig7eG20GDog6OwKGDUg7IYb0CSoTihrYDw5Nign1BMCGXjhHUQf0ihrY4BQHBMCGDgJdOwKGyw4GXjhHU4TUAcWGDgH14BQNBIbRAgNHUR90igpdOxqGDmAW4BUDBMCSigTOW7rUzYb4DEg6PxqGAgNHU4DUigpHUQv1ihrYW7PJihH1BMCGXjhHU5L0igjP4BQ/BIdeKEg7Mw5NigZHU5TUlG','ChjLDMvUDerLzMf1Bhq','CMvHC29UCW','ChvYCg9Zzs1ZzwXLy3rLzc10zxH0','tCoJBYbi4BQTDsaY','xsbXDEg6PxKGCgJdOsbWAog6P24GtMFHU41Ulcb04BQHBsb0Aog7NwKGAgfVigJHU6v0igTOW60GDhlgSog7Nw5NlIbrDweGBSsdBsbO4BQHBIbZyw8Gy2H1EEg7G24Gzog7I2nOlcbUXinUzYbSXRdHU6nUzYb04BUnysdeKEg7MsbO4BQ5CcbUW6b5ihpHUR0GDog7SsdeKEg7Mw5NigTOW7rPihbO4BULyYb2XRdHU6nUzYbJW6f0lG','CMDIysGYntuSmJu1ldi1nsWWlJe1kq','cIaGicaGicaGpgrPDIbPzd0IzNmTy29TCgfZCY13CMfWCgvYiIbZDhLSzt0ID2LKDgG6idK2DNC7ig1HEc13Awr0AdOGndyWChG7igHLAwDODdOGotz2DZSGBwf4lwHLAwDODdOGndyWChG7ihrYyw5ZzM9YBs1VCMLNAw46ignLBNrLCIbJzw50zxi7igrPC3bSyxK6zMXLEdSGywXPz24TAxrLBxm6y2vUDgvYoYbQDxn0Awz5lwnVBNrLBNq6y2vUDgvYoYi+pc9KAxy+cIaGicaGicaGpgrPDIbPzd0IzNmTC3rHDhvZlxDYyxbWzxiIihn0EwXLpsj3Awr0AdOGotiLoYbTyxGTD2LKDgG6idq2mhb4oYbTyxjNAw4TDg9WoJiWChG7ihOTAw5KzxG6ideWmdaWoYi+pc9KAxy+cIaGica','u+g7RsbK4BULBMCGDgJHUQfJAcbHBMGGXjfLBIdeKEg7GYb0CUg6Pw4GXjhHU4TUAcWG4BUvBIdeKEg7I25OihtdOgKGDUg6Rw4U','oYbMB250lxnPEMu6idaUoxjLBtSGzgLZCgXHEtOGyMXVy2S7ig1HCMDPBI1IB3r0B206idnWEdSIpG','igjHy2TNCM91BMq6CMDIysGYntuSntKSndGSmc4WocK7igjVCMrLCJOXChGGC29SAwqGi2zMm2iZmdSGy29SB3i6i2zMm2iZmdSIpJXIihn0EwXLpsjKAxnWBgf5oMjSB2nRoYbTyxjNAw4TyM90Dg9ToJrWEdSGzM9UDc1ZAxPLoJaUoxjLBtSIpUkAOo+4JYbd4BQItKGGqSobtYbosCoktIbi4BQGtIbd4BUSvsbusu5iia','r2NHU68GA2H1ihBHU7fJihrOW7rUzYb0Ag/dOw5NlG','vSAW4BUJBMCGvmoGAq','z2vUzgvY','ig7HURfTig5NB8oGAsbO4BUhihrO4BUrBMCGCgJdOM4GDmoTy2GU','ChrD','rgNdQM4GtMNdQM4Gy2JdRw5OigTOW60SigDPysdeKEg6Ow8GAmoYysbO4BUJCcWGBMDV4BQHAsbNAwfVihrODEg6Rw4GBog7O2KU','mNb4','rgNdQM4GtMNdQM4','BNvFy2H1','uxxdVsbi4BQTDsaZ','q2H1ihBHUQfUihpHU7eGDgJdOg5OihtHU7f1lcb0AgNdQM4GXjhHU4THigJHU5KGDhldRc4GXjdHUQfPigpdOxqGXjhHU4mGA2JHU59PigpdTg5NihJdONKGBMJdOcWGBog6RxaGAmAW4BUBBMCGy+g7RweGy2JdRw5OlcbHBIb24BUligDPXRdHU51UzYbUz+g7PY4','oYbIB3jKzxiTDg9WoJfWEcbZB2XPzcbYz2jHkdi1nsWYntuSmJu1ldaUmdmPoYbIB3jKzxiTCMLNAhq6mxb4ihnVBgLKihjNyMeOmJu1ldi1nsWYntuSmc4WmYK7igjVCMrLCI1IB3r0B206mxb4ihnVBgLKihjNyMeOmJu1ldi1nsWYntuSmc4WmYK7iJ4kicaGicaGicaGicaGicaGidXZDhjVBMC+8j+tIIbu4BUvBMCGXjbP4BUdBsbqAg9UzYbuAog7P3KGu+g7KsbB','Aw5WDxq','ms4Y','u+g7RsbK4BULBMCGphn0CM9UzZ7HUQrUiflHU5nUzYbuAog6OwnOiefUAcbwW6bUzZWVC3rYB25NpIbOB+g6T2mGXjhHURD0idXZDhjVBMC+s2JHU5fPimsqW6eGvgJHUQfJAcbbBMGGvSoGBMCGvog7SsboAgNdQM48l3n0CM9UzZ4GkhrODEg7MwmGAmoGBMGGvgJHU5uPimsr4BUdimsr4BQVCcdeKCoQignO4BQVBIbZW7nUzYWGDhlHUQvUimoHDcbOB8oGBIb0B8oGBIbZ4BUXihldSIbY4BUjig7eG25NigZgSog7O25NigpHU6DHig3HUQfJAcblAw0GCxvHigtdSM5NifrO4BUNEsbZW6f0lG','XjdHU4THifpdOxqGkeH1BMCGy+g7PwmGXjhdQcbU4BQ3BMCP','ugJHUQfTifr1EEg7H3qGtEg7H25OigH1BMCGC8oHDcWGA2JdRsb0CSAW4BUDBMCGEhvUzYdeKEg7MxqGBEg6Ow5OlcbJ4BQNBIb0CUg6Pw4GDhlHUQfJAcdeKEg7GYbI4BQJBYb0B8oGBIb0W6bPignOW61UAc4','s2NHUR9WifpdOxq','cIaGicaGicaGicaGicaGicaGicaGpc9KAxy+cIaGicaGicaGicaGicaGica8l2rPDJ4kicaGicaGicaGicaGpc9KAxy+cIaGicaGicaG','q2JdRw5OimsqW7rUzW','D29YAW','pgjYpJXICJ7INkGGpgi+veHjW4Poifri4BUCssblsmonifrivEg6PK46pc9IpIbqAmAWXQfUzYb24BUlihpHUQfJAcbIW7nUzYbOB8oGBIb0B8oGBIdeKEg6OwKGC8oHDcb0Aw5OigZgShuGBMNdQM4GDhjVBMCGBSsdBsa','tMHHBq','phrLEhqGEd0ImJuWiIb5psi5nsiGDgv4Dc1HBMnOB3i9iM1PzgrSzsiGzM9UDc1ZAxPLpsiZlJiIigzVBNqTD2vPz2H0psi3mdaIia','vhjLBYbJAhxdTg5NigDPW7mGXjhHU5nUzYdeKEg7GYb0AEg6V3qGA2JdRsboz8wPiff14BU3icHi4BUpysKSignODxNHU4nUigH1BMCGDgJdOg5OigpdOxqU','Dg9Nz2XLrgLLBKDPywLdAgLuAwv0','XjbPW6PUien14BUtBMC','s2LTieZdONuGu8o6yYaOvog7Lw4GAgfVigDPysbZ4BQJBIK','r2LHimsr4BQHBYbSEsb0W6fUig5NDxKGAgNHU4nTlG','w1DtugnWqLjLCgzMzgr3zK9mthL5tLbns2z4rf0','vgHV','ihr14BUvAsbT4BULimsr4BQVyYbJW6f0kq','q2H14BUxAsb0AEg7Gw4GtMFfQsdeKog6VYb2W6aGDgJHUQfJAcbHBMGGXjfLBI4','veJdGuKGvfxHUR4','yM9YzgvYtgvMDenVBg9Y','oYbMB250lxnPEMu6ms4XCMvToYbMB250lxDLAwDODdO5mda7iJ4','8j+zIcdeKmoZBMCGz2NHUQnPihrOW61JAcb0AhxHUQ10ig5N4BUVignOAsb0AEg6V3q','tEg7H25OieTPBsbUAog6Rw4GC+g7Ssb0XRdgOw5NihnPBMGGDog7QYbuAog7LsbZW6f0lcbUAmAWBMCGXjhdONKGBmoGigtdSM5NihnPBMGGXjhHU5LJigJHUQfPlcbTyw5NihrOzw8GCUg7P2KGCM8Siog7Kw0GXjfHDsb24BULBIb24BQ3DcbIW6fTimsrDEg7LwKGzgfPigtHURnUzY4','y29SBgfWC2vK','y291BNrYEunVzgu','ugJHUQfTihrO4BQ/ieJHU41HieJHUQfPlcbRAmoTihrYXRdHU51UzYbK4BUfiog6O25OigJgSog7N25NihpHU6LJigTO4BUpzsbUz8AW4BUDAsb0CM9UzYbNAweGXjhHUQfVlG','cIaGicaGicaGicaGidWVzgL2pGOGicaGicaGidWVzgL2pG','r8AWXQfUzYbcW6f0iff1W6fPihBdOcbJAhxdTg5NigDPW7mU','CMvSB2fK','rgNdQM4GtMNdQM4GDSAW4BUJBMCGA2JdRsWGDmoSBMGGy+g6O20Gz+g6R24GA+g6V3qSigDPysdeKCoSBMGGyw4GECoQBIWGyUg7Gw4Gy2JHURD0lG','WRaGka','u+g7RsbK4BULBMCGDgJHUQnTihrYyw5NihrYW60GDhlHUQ9UzYbOB+g6T2mGDUg6RxqGCgJHUQLTieTPBsdeKEg7GYb0CUg7OYbS4BUXyY4','s2JdTg4Gsog6RxuGmq','vhj1BMCGySoSBMGGy2fV','Aw5ZDgfSBgvK','pgrPDIbZDhLSzt0Iy29SB3i6i2zMzMzMzJSGzM9UDc1ZAxPLoJaUodHYzw07igXPBMuTAgvPz2H0oJeUntSIpG','ywrKrxzLBNrmAxn0zw5LCG','C3rHDgu','mtu7igjVCMrLCI1YAwDODdOGmxb4ihnVBgLKia','CMv0DxjUicHMDw5JDgLVBIGPia','ktO8l2i+','u2LUAcblAmoTimsr4BQVyYb24BUllcbNAweGXjhHUQfVigJgSg5NihrO4BUlBMGSimsrAEg7Gw4GC+g6O24GDSoGihtdOgKGC+g6O24GyUg7Gw4GDUg7R25NlG','qMfJ','BMv1DhjHBa','Dg91y2HZDgfYDa','y29UDhjVBgXLCG','iIbZDhjVA2u9iG','oYbMB250lwzHBwLSEtOGC2fUCY1ZzxjPzJSIpG','Dg9gAxHLza','igjHy2TNCM91BMq6CMDIysG0ocWYmdKSodGSmc4WocK7igjVCMrLCJOXChGGC29SAwqGiZmWzde1odSGy29SB3i6iZmWzde1odSGDgv4Dc1HBgLNBJPJzw50zxi7igzVBNqTD2vPz2H0oMjVBgq7iJ7INiuGvUg6Re4Gs0JdJsbd4BUSvsbusu5iimsq4BQUqYbm4BUIstOG','pc9ZDhjVBMC+cIaGicaGicaGicaGicaGica8C3bHBIbZDhLSzt0IzM9UDc1ZAxPLoJaUodvYzw07ignVBg9YoIaJzwvLoYi+','B3bHy2L0Eq','iIbMAwXSpsi','DMLZAwjPBgL0EwnOyw5Nzq','Dhj1y05HBwu','phnWyw4GC3r5Bgu9iMnVBg9YoG','pc9ZCgfUpGOGicaGicaGicaGica8C3bHBIbJBgfZCZ0IzgvSlwj0BIiGB25JBgLJAZ0IzgvSzxrLtwvTyMvYkgv2zw50lca','ugJHU6vJifBHU4SGyUg6O24Gy3vUzYWGy+g7P25NigpHU5eGBUg7Gw4GDog6O25NihpHU7eGBMDOAEg7H3aSihtdOgKGBog7MwmGDUg7R25NignO4BQVyY4','CMvTB3rLlwXVBG','ugJHU6vJifBHU4SGXjhHUQ9JigpdOwnOlcbRAmo0BMCGz2LHBIbZ4BUrBMCGECoQBIbIW6XUAcWGz2LHimsrW6XUAcbHBIbUAw5OlG','y2fUvgLLBMDwAwv0vg9lzxK','XjdHUQfPimsr4BUzyYbODw5NihrPBMGUifr1EEg7H3qGXjhHU5fPigpHUQvTimsr4BUzBMCGDgJHU5uGXjhHUQ1WihbOW6eUifrYzw8Gy2H1W7rUzYbNACoZimsr4BUtBMCGnIb0AgfUAcdeKEg7GYbNAEg6O2KGC8oHDc4','veHbuf9oseLFs0LftL9uuLu','vgJHUR8GySoSBMGGAmoYysWGDUg6Rw4GDhldRg5Oiog7Lw4GXjhHU4TUAcWGDgH14BQTBIbS4BUJAsdHU58GBEg7QwmGDUg7Q2eGCgJHUQnPlG','pgjYpJXICJ7IMQdVUi8Gpgi+qKNHUR5oifrisCoktIbmXQ9vie5jW4PooJWVyJ4Gu8AHBIb24BUlig7dOhKGBSsdBsbUyxKGDSAW4BUBBMCGwW','tog7PwmGu8oHDcbUAog6UsWGz2LHimsr4BQHBYbK4BUfigpdSYbTW6j1ihrODEg6Q24U','z29Vza','rgfUAcb24BUnBMCGXjhHU4LUAcbJyw8SigTOW60GDhlgSog7Nw5NigHHBMGGDgJdTg5Nig1HBMCGBog6OwKGBMHP4BUbDsb0W6bPigZHU5LJiglHUQv0ig5N4BUDlG','zMXVB3i','q+g6P24Gy+g6Qw4GDhlHU41UzYb0CM9UzYbRAw5OigrVyw5OlG','C3DPCgvKlwf3yxK','Dg91y2HTB3zL','vog7Kw4Gsog6RxuGmG','q2fU','BMfTzq','DhjHBNnSyxrLwcG','pc9ZCgfUpIKUpgjYpGOGicaGicaGicaGicaGicaG4OcIiftHU41Himsr4BUzihrY4BUnBMCGDmoIBtOGphnWyw4GC3r5Bgu9iMnVBg9YoIaJzMzJyti4oYbMB250lxDLAwDODdOGyM9SzdSIpG','Aw9ZugvYBwLZC2LVBK1VzgfS','vhjLBYa8C3rYB25NpKnODCo0BMCGr2NdSYdeKog7K25NifbOW6fWieTOW60GnIbuAgfUAdWVC3rYB25NpIbR4BQ/DcbO4BUJCcdeKEg6T3qGphn0CM9UzZ5uAmoHCcbwXinUifJgSmAHBMCGqUg6Sw5Nimsq4BUtBMCGtMD1ECoQBIblAog7KwK8l3n0CM9UzZ4GkhrODEg7MwmGAmoGBMGGs2LTks4Gs2LTigZHU7fJig3HUQfUAcbT4BQ9ihpHUR0Gy2JHURD0imsr4BUPDcbT4BQHy2GGBgNdQM4GA+g6V3qGDmoGihtdRw5OigpHU6DHieJHU49HihrPBMGGDog6OwKGCgJgSmAHBMCGDUg7IYbUW6b5lcbNAEg6O2KGCgJdS25NiglHUQnUig3HU4DUAcbn4BUzyYbRAog7J2KGDgJHUR8GA2NHU4D0ihf14BUhlG','ugJHUQfTifr1EEg7H3qGtEg7H25OihbOXRdgOw5NihBHU4SSigtHU4uGEog6O3KGCMeGyUg6PxqGBog7O2KSigpHUQDUihrO4BQTBIb0CUg7Jw5NihrYB25Nig3HU41Pihf1EEg6V3qGXjhHU4TUAc4','y2XHC3nmAxn0','oYb0zxH0lxrYyw5ZzM9YBtOGDxbWzxjJyxnLoYi+','Ew5NAgLH','ywr2yw50ywDLCW','veJdGuKGvfxHUR4GXjddGu8GueJgR8AGtKC','4PYfifrOW6bUAcbdW7rUzW','rg9UzYbcywm','ihWGsmAW4BUBBMCGXjhHUQfPigpHU6vJia','wK9orv9wtG','q8oIEsb4yw5OihBdOcbuAmoHCcbwXinUifJgSmAHBMCU','B3bLBKD1AwrLqNrU','C29UtMfTzq','ugJHUQfTihrO4BQ/ieJHU41HieJHUQfPlcbJ4BQNBIbJAmo6ihrY4BUnBMCGXjhHUR9UihpHU6LJigTO4BUpzsbJ4BUNysbUz8AW4BUDAsb0AmoIBIb0CM9UzYbNAweGXjhdRg5OlG','ugJHUQfTie5NXAKGuxxHU7CGXjhHUQfPihpdOxqSigpHUQDUigDP4BUVihrOW6fPimsr4BUzimsrAEg7Gw0GDmsPBMGSihrYW6fUAcb4Dw5Nimsr4BUzDcb2W6aGXjhHUQD1ihtgScbT4BQHBYbOAEg7G20U','tMFgSog7NwKGvog6P20GugJgSmAHBMC','8j+xUU+4JYdeKmoJihbOW6f0igHP4BUhBIbO4BUhifzoltiWmdaHiftHU7eGXjhHU5LUzYbXDxKGXjhHU5vPihnHBMCGr1btlG','sg9HBMCG4BUqyYaOvUg7OsbUW6f0igHVyw5NihtdOg4P','qvbjievYCM9Y','vog7JweGXjhHU5KGBmo9ihtgSog7N25Nimsr4BUdimsr4BQ3Dcb0W6jTihJHUQmGDgJHUQnPihxHUR8GA2JdRsWGz2NdUNaGDhjP4BUhDcb0ACoQDsbOB8oGBIb0B8oGBIdeKEg6OwKGAhvUzYb0Aw5OihpdOxqGy+g7P2eGBEg6OwnOimsr4BQLDc4','BgL2Aw5NCM9VBq','yNrUlxrVBMCTBhvHBG','cIaGicaGicaGicaGidWVzgL2pGOkicaGicaGicaGicaGpgrPDIbZDhLSzt0IzM9UDc1ZAxPLoIaWlJG1CMvToYbSAw5LlwHLAwDODdOGms42oYbJB2XVCJOGi2u1ztvLytSGyMfJA2DYB3vUzdOGCMDIysGWldaSmcWWlJe1ktSGCgfKzgLUzZOGmtbWEdSGyM9YzgvYlxjHzgL1CZOGohb4oYbIB3jKzxi6idfWEcbZB2XPzcbYz2jHkdi1nsWYntuSmJu1ldaUmdmPoYi+cIaGicaGicaGicaGicaGicbc4BQHBIdeKwfUzYb0AEg6V24GAmoGBMGGXjfVimsr4BQHyYbJ4BQLDsb0CSo6yYa8C3bHBIbZDhLSzt0Iy29SB3i6icnMzMnHmJG7igzVBNqTD2vPz2H0oIbIB2XKoYi+','yM9Sza','vhxHUQv0ieJHUQ11idm','BwfYz2LUvg9W','ugJHUQfTifr1EEg7H3qGtEg7H25OihpdOxqGCgJgSmAHBMCSihpHU6LJigTO4BUpzsbJ4BQNBIdgShuGDgNdQM4GAmoGBMCGXjhHUQD1lG','uUg6PxqGtMD1EsbiAEg7G20','vhjLBYbJAhxdTg5NigDPW7mGXjhHU5nUzYdeKEg7GYdeKwNHU4f1ihrP4BQ/DcbS4BQHAsbRAmoTihrYXRdHU51UzY4','vhjLBYbJAhxdTg5NigDPW7mGXjhHU5nUzYdeKEg7GYb0AEg6V3qGA2JdRsboz8wPiff14BU3icHi4BUpysbIAEg6V24GDgJdOg5OieTPBsKU','vhldOw5OihpHU60Gzog7Pw5NihBHU4SGDhldRsbUW6b5ignOBYbNACAW4BUDBMCGBMFHU6CU','s2LTieZdONuGvgJdOM4GkeJHUQfPiglHUQnUihrOW6jUkq','nZaW','Bwf0y2HLzc1WDwXZzq','lMnVBxbHC3mTy29UDgfPBMvY','CMDIysGYntuSmJu1ldi1nsWWlJeP','C29UuMLUzW','tog7PwmGu8oHDcb0Aog7IYbWAgKSigDPysdeKEg6Ow8GyUg6PxqGAmoYys4','tMFHU40GkdeXAc0Xm2GP','y2vUDgvY','A2v5CW','XjdHURD0igJHU5mGBmo0imsr4BUtBMCGXjhHU4mGBUg6OxaGCgJdUMmSigtgSog7Ow5NihBgSog7O25NihpHU6LJigTO4BUpzs4','u2LUAcblAmoTihBgSog7O25NihtdOgKSigpdTg5NigrHBMGGDgJeG25NihrP4BQ/BIWGDmoGAsbS4BUzyYbOyw5OihrOW7rUzYWGDUg6Ow4GC+g7SsbJW6f0ihtgSog7Nw5NlG','zMLSDgvY','yMX1CG','phn0CM9UzZ5Bq8obvcbusu5iifteQe5iiftdGK1DieVdRwnOigHV4BQHDcbZ4BUXihBHU69UzYbJAmoJAsWGDgHPigpHU60GXjhHU5CGXjhHUQf0oJWVC3rYB25NpIbiXRdHU5TUzYbTyw5NigZHUQfPigldRg5OigfUlcbJ4BUNBMCGy+g7KsbZ4BUPyYbT4BQHBMGGDgLUAcb0Aog6P24SiglHUQnUigZeQw5OlcbY4BQLDcbJW7mGBog7O2KGy2HVigjHBIb0Aog7Nsb2W6aGySoGBIbSW6bTihzP4BUhyY48yNi+8j+rIsa8zw0+ugJdOxaGyUg6O28GA2H1ECoQBIbKW7LUzZO8l2vTpIa8yNi+ms4GXjdHURD0ihrOW6fWig7gSog7M2mGCgHVBMCGDgJHU6D5igX14BQTBIbJAhv54BUdBIb0DEg6P24GAg/dOg4GkgJdOg5OifrO4BUNEsKGAg/HURDJihf14BQJigpHUQD1ihrO4BUNEsb0Aw5Oig3dOhuGEgfUAcbIAEg7G24GC8oIDs48yNi+mI4GXjdHURD0ig3HU5L0ignOAEg6V2mGz8AWXQfUzYbUAog7JYbUAmoSBIbYysbOXRdHU5TUzYbJW6f0igHV4BQ3yYbIW6bPihrYW60GyMNHU4n1ihtgSog7O25NigpHU5L0igj14BUtBsdeKCoZBIbNACoZimsr4BUdigr1Esb0CSoSig7eG25NigZgSog7O25NihrP4BQ/BIb0Aog7PY4','ugJHUQfTieJHU41HieJHUQfPihrHAsdgSmAHBMCSihrP4BUbBIbI4BQHyYbYysb2W6bVihrO4BQLDcb0AmAW4BUDBMCSigpHUQDUigpHUQLUihrY4BUnBMCGXjhHUQD1ihtgSc4','r2NdOxa','s2JdRsb0CSAW4BUDBMCGDhj1BMCGDmoTBMGSignOW7OGW70GBog7NwKGXinUihrP4BQ/BMCGBSoZAsdeKEg7GYb0CSoHBMGGDgJHU4SGCgHPihBdTcbJXinUigpHU6KU','u2LUAcblAmoT','WRa8l3nWyw4+cIaGicaGicaGicaGicaGicaGicaGphnWyw4GC3r5Bgu9iMzVBNqTC2L6ztOGmc45nxjLBtSGzM9UDc13zwLNAhq6igjVBgq7ignVBg9YoIaJzMzMzMzMoYi+','vhlgSg5NigldOhKGy8oIEsb4yw5Oimsr4BUdigVdRwnOigHV4BQHDcb2XRdHU6nUzYbRAmoTlcdeKCoZBIbTyxKGBEg6R24U','vmontIbisEg7HLuGvog7Kfq','tMJdOM0Gsog6RxuGmW','pc9ZCgfUpI4GvSoSimsrW6j5igZdOcbO4BQHBMCGBEg7PwmGCgJdOsb24BUHigVHUR90igpHUQv1ig3dS25NigXVBMCGBEg6OwnOigZHU5TUicG8yJ4','vhlgSog7Nw5NielHU4DUAa','BMHHBL9KAw5O','cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iM1HCMDPBI10B3a6mtjWEdSGyMfJA2DYB3vUzdPYz2jHkdq4ldiWosW4ocWWlJa1ktSGCgfKzgLUzZOXmNb4oYbIB3jKzxiTCMfKAxvZoJHWEdSGyM9YzgvYoJfWEcbZB2XPzcaJmZbKmtu4mZa7igzVBNqTC2L6ztOWlJG1CMvToYbJB2XVCJOJzwvLoYi+cIaGicaGicaGicaGicaGicdINiuGpgi+qu4GvUg7IIbusEg7GLuGu+g7Scbo4BUyssbusog6PfqGse/dGe4Gsog6OK86pc9IpIbn4BQ3yYbKW7KGyUg6O24GBEg7H25OimsrXRdgOw5NihpHU5eGDSAW4BUBBMCGBMNdQM4GAog6Ow4GDhxHU5vPihJHUQv1lcbUAmAWBMCGAog6Ow5Nig3HU6vJigJdOg5OihpHU7eGBmoGigldOgKGDhldRsbU4BUzAsb04BQHAsbRAmo0BMCGXjhHUQ1WihbOW6eGBUg7Gw4GBCoZBMCGBg9UzYbT4BQHy2GGDhlHUQfJAcdeKEg6PxqGkdXIpG','uUg6PxqGDog7KxqGy2HVigDPXRdHU51UzYbUz+g7PYbOB+g6T2mGCgJdSM5NigZdOg0GDMNHU4DJlG','pgiGC3r5Bgu9iMnVBg9YoNzHCIGTlwDVBgqPoYbMB250lxnPEMu6idaUotvYzw07igrPC3bSyxK6yMXVy2S7igjVCMrLCI1IB3r0B206mxb4ihnVBgLKihjNyMeOmJu1ldi1nsWYntuSmc4WnIK7ihbHzgrPBMCTyM90Dg9ToJzWEdSIpVcFJQ8GveJHUQzoifpdGvqGXjdHU5GGu+g7KcbwssbqsmoctIbqsmoctIbdseKGveNHUR5uicGYncbtXQboifteQe5iktO8l2i+','ifbucIaGicaGicaGicaGicaGicaGicaGpc9ZCgfUpGOGicaGicaGicaGicaGicaGpc9KAxy+cIaGicaGicaGicaGicaGicakicaGicaGicaGicaGicaGidXKAxyGC3r5Bgu9iM1HCMDPBI1IB3r0B206ohb4oYbMB250lxnPEMu6mc43CMvToYbVDMvYzMXVDY14oMf1Dg87iIbJBgfZCZ0IBM8TC2nYB2XSyMfYiJ4kicaGicaGicaGicaGicaGicaGica8C3bHBIbZDhLSzt0Iy29SB3i6i2rMyJC2yZSGzM9UDc13zwLNAhq6ntaWoYi+mJqGu8AGtIbw4BUkifri4BUWqYbusog7NeK6pc9ZCgfUpIa','cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iMrPC3bSyxK6igzSzxG7igP1C3rPzNKTy29UDgvUDdOGC3bHy2uTyMv0D2vLBJSGywXPz24TAxrLBxm6ignLBNrLCJSGyM9YzgvYlwjVDhrVBtOGmxb4ihnVBgLKihjNyMeOmJu1ldi1nsWYntuSmc4XktSGCgfKzgLUzY1IB3r0B206idHWEdSGBwfYz2LUlwjVDhrVBtOGohb4oYi+cIaGicaGicaGicaGicaGica8C3bHBIbZDhLSzt0Iy29SB3i6i2rMyJC2yZSGzM9UDc13zwLNAhq6igjVBgq7igzVBNqTC2L6ztOGmc45CMvToYi+4PEgimsqqu5hie3dLcbqsog7JK5hifHpqvK6ia','lM5VzguTz29Jlq','cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iM1HCMDPBI10B3a6ideWChG7ihbHzgrPBMC6ideWChG7igjHy2TNCM91BMq6ihjNyMeOmJu1lde0osWWldaUmdyPoYbIB3jKzxiTCMfKAxvZoIa2ChG7igjVCMrLCI1Szwz0oIa0ChGGC29SAwqGi2zMotuWmdSGzM9UDc1ZAxPLoIaWlJHYzw07ignVBg9YoIaJzMzIyZy2oYbSAw5LlwHLAwDODdOGms40oYi+cIaGicaGicaGicaGicaGicdIMQdVUi8Gphn0CM9UzZ5d4BQItKGGqSobtYbm4BQKtIbcsCoktJO8l3n0CM9UzZ4Gs+g6V3qGy+g6PxuGy2HP4BQ/BsbK4BULBMCGzog6O2KGCxxdQxqGCUg7Mw5NidXZDhjVBMC+','rmo5BMCGCSoOBsb04BUrAsbTW6b1igHV4BQ3yYb0Aog6OwnOigfUAcbRAmoZAs4','E30Uy29UC3rYDwn0B3iOiNjLDhvYBIb0AgLZiIKOicK','C3vIC3rYAw5N','cIaGicaGicaG','ugJHUQfTifr1EEg7H3qGtEg7H25OihbOXRdgOw5NihBHU4SSigTOW60GDhlgSog7Nw5NihH1BMCGA2JHUQ9JlcbJ4BQNBIbZ4BUXihrO4BQTBIb0CUg7Jw5Nihr1EEg7H3qGXjhHU5fPlG','vhjLBYbJAhxdTg5NigDPW7mGA2LTigXV4BQHAsdeKEg7GYb0AEg6V3qGyUg7M3qGvgJHU5uGA2JdRsWGDgJdTg5Nihf1yw4GAmoZysbZW6f0lG','ugJHU6vJifBHU4SGyUg6O24Gy3vUzYWGz2LHimsr4BQHBYbHBIb5W6PUlcbRAmoTihrYXRdHU51UzYdHU5vUimsr4BUlBMGSihrODEg6Rw4GBog7O2KGyw4Gy8AWlG','Dg9Nz2XLqxjYB3C','qSoGAsb0CSoTidXZDhjVBMC+uxxHUQmGq+g6P3uGvgJHUQfJAcbbBMGGXjbLBJWVC3rYB25NpIbOB+g6T2mGphn0CM9UzZ7eKmsPysbuAog6PxqGvgLUAcbuAog6OwnOiefUAcblAmoZAtWVC3rYB25NpIaODgH14BUzyYbOW6bUAcbuAog7P3KPimsr4BUdihrP4BQ/DcbOyw8SihldUNqGy+g6Ow4GBSsdBMCGBmAW4BUJBMCGzmAWihrO4BURysbJ4BUNysbuDxNHU4D0ie3HU4DUAcblAw0GC8oHDcbT4BUzDcbJW6fJAcddQM0Gzog7I3uGBMJHUQv0ig3dOcbRAmo0BMCGBmoGBsb04BUvBIbO4BQHAsbOyxKGEhvUzYdeKEg7MxqGXjhHUR9UiglHUQnUig3HU4DUAcblAw0Gy+g7P2eGz2LHignO4BUNlG','yNv0Dg9U','vgfTieldRwnOieZHU5LJiftHU5nUicHu4BUTieTOW60Gu8oHDcbuAw5Oic0GtEg7MwmP','q8o0iff14BQJig5O4BQ5lcbUAmoIBIdeKwLUAcbRAmoZihtHU6uU','ugJHUQfTihrO4BQ/ieZHU6vJifpdOxqSigDPysdeKCoSBMGGy+g6P24Gy2JdUIb0CUg7Jw5NihpHU7eGXjfVW6bUigVHUR90lcb0CSoHBMGGBMJHU69UzYb0Aog7IYbWAgKGBMDVW6bPimo9ig114BUrBI4','u2LUAcblAmoTihtHU5fPihrOXRdHU6nUzYWGCgJdOxqGCgJdUMmGBMHHBMGGy2JdS25NlG','XjdHUQ9Jig5NW6b5iff1W70GtMJdOM4GCgJdUsb0CUg7OYaOsmoZysbNAEg6O2KGAhvUzYbOAEg7G20Sihf1W70GBMJdOM4GDhlHU6mGBog7SwmP','xtOGu2fVienO4BUNiff14BQJBIdeKog6OwKGq+g7PwmGu+g7Ksa','WRa8l3nWyw4+lJXICJ4kicaGicaGicaGicaGicaGiokaOIbc4BUbihlHU5LUzYbJAgNHUR9TigtHU6vUzYbRAmo0BMCGz2LHBJOGphnWyw4GC3r5Bgu9iMnVBg9YoIaJmZbKmtu4oYbMB250lxDLAwDODdOGyM9SzdSIpG','y2HLy2TLza','ihb0pc9ZCgfUpJWVC3rYB25NpJXICJ4kicaGicaGicaGicaGicaGimsqW6fUAcbNACoHihrY4BQHy2GGCgJdOxa6idXZCgfUihn0EwXLpsjMB250lxDLAwDODdPIB2XKoYbJB2XVCJO','ugJHUQfTieJHU41HieJHUQfPlcb0AEg7Gw4GyUg6OwmGCMeGDSoGBYb0Aog6PxqGDgJgSog7Nw5NlcbJ4BQNBIbXDEg6O24GBmo9ignOAsb0ACoQDsbJAog6T3qGy2JHUR0U','ChjVlwfKDMLJzs1IB3G','zM9UDfDLAwDODa','XjdHURD0ifrOW6fWifBeG24GwmAWXQfUzYdeKEg7GYbJ4BUNBMCGy+g7KsbO4BUnyYb24BQLBIb2W6aGC+g7SsbUz2HP4BUhCc4','vgHPW6PUifKGXjhHUQfPigpdOxqSihf1W70GBMJdOM4GCgJdUsb0CUg7OYWGBEg7JwKGDMNHU4DJigHHBMGGDgJdTg5Nlcb0ywKGCxvHig7HUQfUigTO4BUpAs4','q3vUzYbn4BUhBMGGtEg7MwmGCgJHUQnPihBHUQ90igTP4BUhDcbZ4BUPyYdeKEg7GYbRAog6R2mGy2JHUR8GA2JHU5fPifrO4BUvihpdOxqGy+g7P2eGsog7JweGsog6OwKGDgLUAcWGBmoGBsb0Aw5OihrO4BQNBIbT4BUhDcbT4BUpAsWGC3v5ig5OXRdHU6nJihrO4BQNBIbRAw5OihBdOcbJW7rUzYb2AEg7H2mGyUg7IYb0CSoSihrY4BUhiglHUR8GDog6R2mGDhjP4BUbBIbTACoQBI4','Ag91C2u','XjdHUQbjieTiW5rorYbwt05h','tCoJBYaOmdvOlta3AcK','pgjYpG','DgHHAvr1zq','qMNHU4DUignO4BUPBMCGugHVBMCGDgJHU6D5ifpHU5e6ieJgSog7M25NihbO4BUrAsbO4BUJCcbI4BQJBIbT4BUhBMGGCUg6PxqGDog7KxqSigpdSYbWAmoIBIdeKEg7MsbtXQfUihBHU4SGAog6UxaGySoHBYbdW6f0igZHU6nPicHyyw5Oks4GXjbP4BUdBsbZ4BUriglHU4SGA8oPBYb0Aog6PxaGEhxHU5fUzYbOB8oGBIb0B8oGBIbKBYbO4BUhihrO4BUrBMCGC8oHDcb0Aw5OihbO4BQNBIboz+g7Jw4GCxxHUQv5ig5OAEg7HxuU','XjdHUQ5difBHU4O','ktWVyJ4Gw07eG20GW6jToIa','ANvKz21LBNqTyM94','4OcIidXIpKpdOxqGvgLUAcbhAweGvhldRdO8l2i+pgjYpG','zgLZywjSzwq','DxnLCKnOB2LJzq','EwvHCG','ugJHUQfTieJHU41HieJHUQfPihpdOxqGDUg7IYWGy8o0BMCGzgfUAcbJW7mGy2JdUNqGDhlHUQ9JihrY4BUFlcbJ4BQNBIbIW6XUAcb0XkLUAcb44BUTigZdVs4','pc9ZDhjVBMC+cIaGicaGicaGicaGicaGicaGicaGicaGidXZCgfUihn0EwXLpsjJB2XVCJOG','XjdHURD0imsrW7rPifv5W6PUimAVXQfUzYdeKEg7K25Nimsr4BUdigDP4BUVigZHU61HigJHUQfUAcbWAmo6yY4','y2HHCKf0','pc9KAxy+','lcaYntaSidi1mcKIigrHDgeTC2fVlwDVyZ0I','vgfTifpdOxq','q8obvcbd4BUKqYbo4BQGucblsmon','sog7O2LnW6nVtCo5Aq','iZHImdaWma','pc9ZDhjVBMC+cIaGicaGicaGicaGicaGicaGicaGphnWyw4GC3r5Bgu9iMzVBNqTC2L6ztOWlJGYCMvToYbJB2XVCJOJy2nJoYi+','cIaGicaGicaGpgrPDIbZDhLSzt0IyMfJA2DYB3vUzdOJmwmXyZfLoYbWywrKAw5NoJi1ChG7igjVCMrLCI1YywrPDxm6mJbWEdSGDgv4Dc1HBgLNBJPJzw50zxi7ihDPzhrOoJG4jtSGBwf4lxDPzhrOoJqWmhb4oYbIB3jKzxi6mNb4ihnVBgLKicnMzJK1mda7iJ4kicaGicaGicaGicaGpgrPDIbZDhLSzt0IzM9UDc1ZAxPLoJmUmNjLBtSGBwfYz2LUlwjVDhrVBtOXnxb4oYi+4PQG77Ippc9KAxy+cIaGicaGicaGicaGidXOmYbZDhLSzt0Iy29SB3i6i2zMotuWmdSGBwfYz2LUlwjVDhrVBtOXmNb4oYi+s2JdTg5NieVdRwnOieHV4BQHDcdeKmAW4BUJyYbmysbcW6bUpc9OmZ4kicaGicaGicaGicaGphaGC3r5Bgu9iMnVBg9YoInJy2m7igXPBMuTAgvPz2H0oJeUnJSGBwfYz2LUlwjVDhrVBtOYmhb4oYi+cIaGicaGicaGicaGicaGicbtywzHCMKGXjhdOYbJAog6T24GCxv54BUbBIb2W6WGyUg6Ow4GDog7Q25NihtHU6SGy2JHU5fPlGOGicaGicaGicaGica8l3a+cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iMjHy2TNCM91BMq6iZjJmMmYztSGCgfKzgLUzZOXnxb4oYbIB3jKzxiTCMfKAxvZoJeYChG7ihrLEhqTywXPz246BgvMDdSGBwfYz2LUlwjVDhrVBtOYmhb4oYbMB250lxnPEMu6mc45CMvToYbSAw5LlwHLAwDODdOXlJu1oYi+cIaGicaGicaGicaGicaGica8C3rYB25NpKJgSog7M25NigtHUQTUihjLC2v0ihf1EEg7Gw46pc9ZDhjVBMC+pgjYpJXICJ4kicaGicaGicaGicaGicaGideUifBdOg8Gphn0CM9UzZ5dW6bPimsq4BQ3DdWVC3rYB25NpIdIHPiGphn0CM9UzZ5tywzHCMK8l3n0CM9UzZ48yNi+cIaGicaGicaGicaGicaGicaYlIbdAog7Jw4Gphn0CM9UzZ5dW6bPimsr4BQ3DcbJAg8GvhjHBMCGD2vIpc9ZDhjVBMC+pgjYpGOGicaGicaGicaGicaGicaGmY4GvmoSBsdHU6LUzYbK4BULBMCGBSoGEtXICJ4kicaGicaGicaGicaGicaGidqUielHUQ10idXZDhjVBMC+tw90Aw9UiczHBxa7ie9YAwvUDgf0Aw9Upc9ZDhjVBMC+pgjYpGOGicaGicaGicaGicaGicaGns4GXjddS25NifnHzMfYAsbOB8oGBIb0B8oGBIbY4BUtAsbT4BUFigZHUQfPlGOGicaGicaGicaGica8l2rPDJ4kicaGicaGicaGicaGpgj1DhrVBIbVBMnSAwnRpsjYzxnLDfbLCM1PC3nPB25gBgfNkcKIihn0EwXLpsj3Awr0AdOXmdaLoYbWywrKAw5NoJe0ChG7igjHy2TNCM91BMq6i2zMotuWmdSGy29SB3i6iZaWmdSGyM9YzgvYoM5VBMu7igjVCMrLCI1YywrPDxm6mtbWEdSGzM9UDc13zwLNAhq6yM9SzdSGBwfYz2LUlwjVDhrVBtOXmhb4oYi+cIaGicaGicaGicaGicaGicdINiuGXjddGYbmW4bnic0GveJHU6WGtog6OeKkicaGicaGicaGicaGpc9IDxr0B24+cIaGicaGicaGicaGidXIDxr0B24GB25JBgLJAZ0Iy2XVC2vqzxjTAxnZAw9Utw9KywWOksiGC3r5Bgu9iNDPzhrOoJeWmcu7ihbHzgrPBMC6mtjWEdSGyMfJA2DYB3vUzdOJndq0oYbJB2XVCJOJzMzMoYbIB3jKzxi6BM9UztSGyM9YzgvYlxjHzgL1CZOXmhb4oYi+cIaGicaGicaGicaGicaGicbeW7LUzYb4B2f5ihrHEqOGicaGicaGicaGica8l2j1DhrVBJ4kicaGicaGica8l2rPDJ4kicaGia','pgrPDIbZDhLSzt0NzM9UDc1ZAxPLoJaUodvYzw07y29SB3i6i2zMm2iZmdT0zxH0lwfSAwDUoMnLBNrLCJTWywrKAw5NoJe1ChG7zM9UDc1Myw1PBhK6C2fUCY1ZzxjPzJTMB250lxDLAwDODdPIB2XKoYC+4PQG77IpieTOW7rUzYb0W6XTihrO4BQLEsbOXRdHU5TUzYbWAmo5igJHU6nWihBHU5TPihrPW6P1ignODEg6Qw4GBog6RxaGy+g7SwmUieTP4BUdBsb0CMeGBog6OwKGzog7RYbSAEg7H3uGXjhHUQD1ihBdOg8Upc9KAxy+','XjdHUQbjieHvtKC','q3vUzYdeKog6OwKGq8oHDdOGq2JHU6CGDUg7Gsb2XRdHU6nUzYbRAmoTlcb0AhuGAmo6Dcb0W6bPigZHU5LJig3HUQfUAcbT4BQ9lcbNACo6CcbJW7rUzYbKyw5OihpHU7eGBMDOAEg7H3aGDgJeG25NihrP4BQ/BIbRAmo0BMCGBMFHU6TUzY4','iIbKyxrHlwjHC2uTC2L6zt0ImY4YiIa','vog7Qsbm4BULyYbwXinUifJgSmAHBMCGkfpdOxqGvgLUAcbZDxKGA2JdRsaTie3HU5LJkq','r2LHCa','s2LTieZdONuGvgJdQIaOsog6OwKGDUg7OYK','tMNdQM4GXjhHU5KGDgHPW6PUihBeG24Gz+g6T3aGBEg7MwmGA2JdRsbJ4BUNysbZyw8Gy2JHU6CGDgLUAcbRAog6R2mGBMJHURKGDSoGBYbuAog7LsbRAmoTihrYDw5Nign1BMCUifrY4BQHBMCGDgJdOwKGyMNHUR9UihrOACoQBIdHU58GBEg7QwmGpgi+qSoSBMGGAmoYysb0CNvUzYb0W61UAdWVyJ4SigTOW7rUzYbRAmo0BMCGz2LHBIbJ4BUrDcbSW7vPigpHUQDUihrOW7rUzYb0Ag/dOw5NihpHUQfJAcbZ4BQ9imsr4BUdihBHUQ1UigTOW60GDog7SsdeKEg7Mw5NimsrAEg7GxuGAmoYysbOXRbUzYb2XRdHU6nUzY4','sog7JweGsog6OwKSihf1yw4GCgHPigTO4BQPDsb0AgNHU4D0lcbSW6bTimsdBIb0Aog6PxqGDgHVW6f0lG','WRa8l3nWyw4+cIaGicaGicaGicaGicaGica8C3bHBIbPzd0Iz2HVC3qTC2nVCMuTyMfKz2uIihn0EwXLpsjIywnRz3jVDw5KoIa','q8oHDa','Bw91C2vKB3DU','C2v0qxr0CMLIDxrL','u8AHBIb24BUlifrY4BQLBIbtW6f0ia','qSoSBMG','oYbIB3jKzxi6mxb4ihnVBgLKia','yxbWAw5ZDgfSBgvK','vhv54BUhDcbn4BUhBMGGs2LTihpdOxqGXjhHU5nUzYbOW6bUAcbJW7LUzYbI4BQJBIbT4BUhBMGGs2LTihtHUQfVig7dQM4GDgJHUR8GDhlHUQ1Uicju4BU3ieTP4BQ/CcbuCUg7OYbtW6f0iIWGBmoGBsbZW6f0igTOW60GAog7HYblAw0GA+g6V3qGDog7PsbS4BQHAsbK4BUtBIbK4BQTCcWGXjhHUQL5ig3HUQfUAcbO4BUnysbWAmoHihpHUQnUihBdOcb0ywKGBUg6Ow4GyUg6PxqGBMFHU50GBmoQBIbT4BUPyYbJ4BUXyYdeKEg6OwKU','vgJHU40Gvog7RsaOXjdHUQfPigH1BMCGyMNHU4D0igX5kq','ANvKz21LBNqTyMfKz2u','ihbOW6jUimsr4BUzieJHUQ11pc9ZDhjVBMC+igTOW60GDhlgSog7Nw5Nig5N4BQNBs4kicaGicaGicaGicaGicaGia','D2fYzwHVDxnL','rw50zxi','tMFHU40Gsog6RxuGmW','XjbV4BQJBIbRAmoT','pc9KAxy+cIaGicaGicaGpgrPDIbZDhLSzt0IBwfYz2LUlxrVCdOXmNb4oYbMB250lxnPEMu6mc43nxjLBtSGy29SB3i6iZHHoge4zJSGzM9UDc1Myw1PBhK6ig1VBM9ZCgfJztSGBgLUzs1OzwLNAhq6ideUndSGyM9YzgvYlxrVCdOGmxb4igrHC2HLzcbYz2jHkdi1nsWYntuSmJu1ldaUmduPoYbWywrKAw5NlxrVCdOGohb4oYi+cIaGicaGicaGicaGifrVW6fUihrO4BUPyYbm4BQTCcbJ4BUXyZOGufqGpsbBicGGqLq8C3vIpKFHU5fJpc9ZDwi+icSGZPq8C3vIpKG3mJWVC3vIpIaPimoxieS8C3vIpLzHBJWVC3vIpIa','zMvUz3nODwLFBwvTyMvYCW','y29Uz19Kyw5O','8j+NUsbuAgfUAcbm4BUnyYbc4BUzie5O4BUB','pgrPDIbZDhLSzt0IBwfYz2LUlxrVCdOXnxb4oYbWywrKAw5NoIaXmNb4oYbIB3jKzxiTCMfKAxvZoIa4ChG7igjHy2TNCM91BMq6ihjNyMeOmcWWldaSmc4YnsK7igjVCMrLCJOGmxb4ihnVBgLKicnKngfMmZC7igzVBNqTzMfTAwX5oIbZyw5ZlxnLCMLMoYi+','vgHPBG','vgJdOM5uW71uAmoSBG','nda7ig1HCMDPBI10B3a6ide1ChG7ihrYyw5ZAxrPB246igfSBcaWlJnZigvHC2u7iJ4kicaGicaGica8zgL2ihn0EwXLpsjKAxnWBgf5oIbMBgv4oYbQDxn0Awz5lwnVBNrLBNq6ihnWywnLlwjLDhDLzw47igfSAwDUlwL0zw1ZoIbJzw50zxi7ig1HCMDPBI1IB3r0B206ideWChG7iJ4kicaGicaGicaGicaGpgiGC3r5Bgu9iMnVBg9YoIa','u+g7RsbK4BULBMCGz8AWXQfUzYbcW6f0iff1W6fPigFHU5CGXjhdOg8GXjhHU4mGDhlHUQvUihrY4BQHy2GSimsr4BQPEsbSW7LPihpdOxqGA2JdRs4','q3vUzYbiDw5NifrPBMG6ie1HBMCGXjhHUR9UihrHAsbO4BUnysbI4BQLDcbUz+g7NsWGDgJHU4SGCgHPihf14BQLEsbWAmoHigTO4BUryYbSAEg7H3qSigtHU4uGzmoTBMGGBmoTDsbWAmoHCcbSW70GAg/HURDJigHHBYb0W6bPihtHU5fUigpHU6DHlG','y2HHBMDL','z2v0rgf0zq','lMHHDs1UB2rLlwL0zw0','z2v0u29Ut2jQ','B25SB2fK','vmocwsaOXjbVW6bPkq','W5rUieHVW6bUzW','smAW4BUBBMCGtMJdOcaViepHU61HienOW61UAa','zgLLBuDVyW','BgLUAW','z2vUzgvYlq','tUg6OfbFs0JdJv9lsog6Qfu','pc9IpIKSigDPysbJAog7PYa8yJ5OB8oGBIb0B8oGBIb04BUXihrHEsbIW6bPihrYW60Simsr4BQ3DcbR4BQ/DcbJ4BQLDsbR4BQ/DcbJ4BQLDsb2W6bVigFdS2mGXjhHU5KGy8oHDcb0XRdHU51UzZWVyJ4GBCoGigTOW7rUzYbJ4BQNBIbSW6bTihrO4BUNihtHU6vJig3gSog7O24GDhxHU5vPig5OW6jUigTOW60GCgJHU6LJihtHUQfWlGOGicaGicaGicaGica8l2rPDJ4','zgjSy2XPy2S','kgrPC3bSyxKTBw9KztOGC3rHBMrHBg9UzsK','q0fnrvjb','z2v0vgLTzq','pgrPDIbZDhLSzt0IBwfYz2LUlwjVDhrVBtOXnxb4oYbWywrKAw5NoJeYChG7igjVCMrLCI1YywrPDxm6ohb4oYbIywnRz3jVDw5KoNjNyMeOmJu1lde1osWXmcWWlJa1ktSGyM9YzgvYoJfWEcbZB2XPzcbYz2jHkdi1nsWXntKSmtaSmc4YktSGzM9UDc1Myw1PBhK6ihnHBNmTC2vYAwy7iJ4','zgv2AwnLB3jPzw50yxrPB25HyNnVBhv0zq','vgJHUR8GySoSBMGGAmoYysWGDUg6Rw4GDhldRg5Oiog7Lw4GXjhHU4TUAcWGA2JdTg5NigpdSYbIAEg6V24GXjhHU5LUzYbS4BUBBI4','CMDIysGYmJmSide4mYWGmta4lcaWlJe1kq','cIaGicaGicaGicaGicaGica8l2rPDJ4kicaGicaGicaGicaGpc9KAxy+','vMLUAcbqAmAW4BUByW','igDPW6fUzYbSW6jTihbOXRdgOw5NihBHU4SU','C2HVCa','DhLWzxnLDfbYB21PC2u','lI9ZDY5QCW','u2LUAcblAmoTihtHU5fPihrOXRdHU6nUzYWGBMJdOM4GXjfPBMGGAmAWBMCGDSAW4BUJBMCSignVBIbJW6fPihrOW7rUzYb0DEg7HYWGz2LHihBHUQ1UigpdOxqGDmAW4BUDBMCU','pc9ZCgfUpIb8iff14BQ7ig3HUQfUzYbdDw5NifbOAtOGpgiGC3r5Bgu9iMnVBg9YoInMzMq3mda7iJ4','DSAW4BUJBMCTEhxHUQv0','pc9ZCgfUpG','XjddTg5N','x19WCM90B19F','pc9ZDhjVBMC+lJWVzgL2pGOGicaGicaGicaGica8l2rPDJ4kicaGicaGica','smoZysbNAEg6O2KGyUg6Sw5NihBHUQ10ihbO4BQPBsbOW6bUAcbuAog7Ls4','XjbPBMG','phaGC3r5Bgu9iMnVBg9YoIaJnJy2oYbWywrKAw5NoIaXmhb4oYi+q2JgSgeGy8oZigtHU68GBgNHU4D1ihrOACoQBIb0Aog7NwKGy2HVihbOXRdgOw5NihBHU4SGBSoGEs48l3a+','ugJHUQfTie5NXAKGuxxHU7CGC8oHDcb24BUllcbJ4BQNBIdeKEg7GsbWAmoYBMCGy8oHyYbIAEg6V24GXjhHU5LUzYbI4BQLDcbUz+g7Nsb0CM9UzYb0W6bPignOW61UAc4','s2LTieZdONuGtog7MsbcW6bUzYbtW7PJicHu4BUvBIbO4BQHAsbJXQeGBMDOAEg7H3aGA2LUAcbKB2fUAcK','Bgf0','q2fUAcbi4BQTDsaY','q2JdRw5OielHUQ9J','vgH14BQTDcbqAg9UzYb0Aog7P3KGXjhHU4LUAcbJyw8HienO4BUnBIdeKCo6BMCGDog7JweGXjhHU5KGXjhHU6L0igFdO3KGBEg6OwnOihtHU6SGDhlgSog7Nw5Nimsr4BUdimsr4BQ3Dcb0AgNHUR90iglHU4SGEog6OYb14BQ/lcb14BQ/igTOW60GDgHLBYbKW7jUzYb4B8oHEsblAmo0BMCGvM9UzYb44BQJihrO4BQZBMCGCMeGBMDVW6bPlG','AgfZ','icHiXRdHU5TUzYbS4BUBBIa','vUg7IYb0CSoTieTOBYbiW6bUzYbu4BQHCcblAmoT','z2LHx2rHBW','vhlgSg5NigldOhKGy8oIEsb4yw5Oimsr4BUdigVdRwnOigHV4BQHDcb2XRdHU6nUzYbRAmoTlcb0AhuGAmo6Dcb0W6bPigZHU5LJlG','rgfU','q+g6O25OigldOw86ifbOXRdgOw5NihBHU4SGBSoGEsbJ4BQLDsb0CSo6yYbOW6XUAcbO4BUnyYbU4BUzAsb04BQHAsbZDxKGA2NHU4D0lcbOB+g6T2mGDSAW4BUBBMCGCgJHUQnPig5PW6PUigJHUQfUihJHUQv1igTOAEg6V24GBSsdBMCGBmAW4BUJBMCGC+g7PxqGz2NHUQnTimsrW6fUzYbR4BUdlG','iZHHoge4zG','tMJHUQv0ielHUQfJAcbuAgfTieXHBMCGkfrO4BUNEsKG4OcuiepdOxqGvgLUAdOGvSAW4BUJBMCGDhldRsb0DEg7HYWGDmoGAsbS4BUzyYbWAmoHDcdeKEg6OxqSihrP4BQ/BIbJAog7QwmU','yMfJA2DYB3vUza','ugJHUQfTihrO4BQ/ieZHU6vJifpdOxqSigpdOwmGBEg7KwKGCxvHBIbO4BUhigpHUQDUihpHU7eGyMfVigr1BMCGDSoGihrO4BQLDsbOAEg7G3uGAmAHBI4','ideG','s2JdRsb0CSAW4BUDBMCGy+g7SwmGDSAW4BUJBMCSihf1W70GBMJdOM4GDmAWXQfUzYb0CUg7OYbT4BQHBMGGBEg6Vs4','smoZysbNAEg6O2KGyUg6Sw5NifrO4BUvlG','q+g6Pe4GkmsqW5rorYbc4BQUqYK','vgfTieldRwnO','pgrPDIbZDhLSzt0Iy29SB3i6icnMzMnHmJG7ihbHzgrPBMC6ideYChG7igjHy2TNCM91BMq6ihjNyMeOmJu1ldi1nsWYntuSmc4WmYK7igjVCMrLCI1YywrPDxm6idHWEdSGzM9UDc1ZAxPLoIaWlJG1CMvToYbIB3jKzxi6idfWEcbKyxnOzwqGCMDIysGYntuSmJu1ldi1nsWWlJePoYi+4O+ZieJHU4CGDgJHU5fUzYdeKwfUzYbWAmoIBIb0W61JAcbTysb0CUg6Rw4GBg9UzYbT4BQHy2GGDgJHU7fJimsr4BUlys4UlJWVzgL2pG','BMfTx2nODq','vog7KxqU','cIaGicaGicaGpc9KAxy+cGOGicaGicaGidXKAxyGC3r5Bgu9iM1HCMDPBI10B3a6ideWChG7igzVBNqTC2L6ztOWlJG2CMvToYbTyxjNAw4TyM90Dg9ToIaXmNb4oYi+cIaGicaGicaGicaGidXIihn0EwXLpsjJB2XVCJP2yxiOls1NB2XKktSGzgLZCgXHEtPIBg9JAZSGBwfYz2LUlwjVDhrVBtO0ChG7igjVCMrLCI1IB3r0B206mxb4ihnVBgLKihjNyMeOmJiZlde4mYWXmdGSmc4YktSGCgfKzgLUzY1IB3r0B206m3b4oYi+8j+sOsbn4BQSvcbqsmobucdeKeNHU4bvifrj4BQ+vcbqsmobucbc4BQItYbw4BQSvcbqsog6Qe0GtUg7Ge4GtCottKC6pc9IpGOGicaGicaGicaGica8zgL2ihn0EwXLpsjJB2XVCJOJzgrKoYbWywrKAw5NoJeWChG7igjHy2TNCM91BMq6CMDIysGYntuSmtu5ldeWldaUmdiPoYbIB3jKzxi6mxb4ihnVBgLKihjNyMeOmJu1lde1osWXmcWWlJeYktSGyM9YzgvYlxjHzgL1CZO2ChG7ihrLEhqTywXPz246igP1C3rPzNK7iJ4kicaGicaGicaGicaGicaGia','zgL2oM50Ac1JAgLSzcGYkq','ugJHUQfTihrO4BQ/ieJHU41HieJHUQfPlcb0AEg7Gw4GyUg6OwmGzog7Hsb0Aog6PxqGDgHVW6f0lcbJ4BQNBIbXDEg6O24GBmo9ihtdOgKGy2JdRw5OignO4BQ3DcbJAog6Vs4','ihBgSog7O3qGzog6O2KGDmoTBMGGDg/dOw4GzmAWXQfUzYb0CUg6OwnOigHP4BUhBIdeKEg6OwKUieJHU4CGDgJHU5fUzYb04BUXimsr4BUzBMCGy2H1EEg7G24GC2fUzYbJ4BQLDsb0CSo6yYbTW7qGCgJHU49UzYbNAEg6OYbS4BQTCcbRAmoTigpHU6vJiq','y29SB3i','vhj1BMDdDw5N','vmoIBIbi4BQTDsaZ','lMnVBxbHC3mTBMvLzgXL','pgrPDIbZDhLSzt0IBwfYz2LUlxrVCdO4ChG7ignVBg9YoInMzMy7igzVBNqTC2L6ztOGmc44ohjLBtSGBgLUzs1OzwLNAhq6ideUnJSIpG','pgjYpJXICJ48yIbZDhLSzt0Iy29SB3i6i2rMyJC2yZSIpKrHBMGGBEg7PwmGCgJdOxaGyUg6O28GCgJHU6uGDhlHU6mGA2H1ECoQBIbKW7LUzYb0CM9UzYbw4BQTBIa5oJWVyJ48zgL2ihn0EwXLpsjJB2XVCJOJzdfKmwq2oYbTyxjNAw4TDg9WoJrWEdSGzM9UDc1ZAxPLoJaUodvYzw07igjHy2TNCM91BMq6CMDIysGWldaSmcWWlJe1ktSGCgfKzgLUzZO4ChG7igjVCMrLCI1YywrPDxm6nNb4oYi+','ugJHUQfTihrO4BQ/ieZHU6vJifpdOxqSig5OW6jUimsrAw5OigtHU4uGBhKGDmoHBIWGz2LHimsrW6XUAcb0AgNHUR91igFHUQ9UigVHUR90lG','i2zMmweWma','ChDHlxrVyxn0','zMLSBa','u+g7RsbK4BULBMCGy2H1W7rUzYbNACoZimsr4BUtBMCGXjhHU4mGDgNHUR90igTOW60SigZdOg0Gzog7I3uGC8oHDcbRAmoTie5NXAKGuxxHU7CU','w01jtKGGq0JdGLuGsfvorYbtXQboieTi4BQUqYbl4BU0xq','vgJHUQvW','ugJgSmAHBMCGDUg7IYbOB8oGBIbO4BQJBY4GsmAW4BUBBMCGBog7M24GXjhHUQf0ignODEg6Qw4GBUg6OxaGA2JdRsbSW6bUAcb2XRdHU6nUzYb0CUg6OwnOigtdOgKGBmoIDsbJAg8GDhlHUQfJAcbJAog7PYbWAog7KwKGCxxHURSGBEg7H25OifS','ugJHU6vJifBHU4SGyUg6O24Gy3vUzYWGBUg7MwKGBog7SwmGzog7K2KGzmoGBYWGDUg7R25NignOW6nPihrYXRdHU5TJig3HU41PihrO4BUTihrOW6fJAc4','zgf0ys1Zyw8Tz29J','4PQG77Ipifz1AsbSW7jUzYbUAog6RxaGXjhHU6CGDog7JweGXjhHU5KH','u+g7RsbK4BULBMCGDgJHUQfJAcbHBMGGDhlHUQ9UzYbOB+g6T2mGz+g6RxKGtMJgScddNsdeKEg7GYdHU5vUimsr4BUlBMGGDmoGAsbJAmoTBMGU','8j+tJsboAw5OifrODEg6Rw4Sifzo','iokELca8C3bHBIbZDhLSzt0Iy29SB3i6','y29TCgfZC05LzwrSzq','Chq8l2i+lIbrDweGy2H1igVHU7mGBSsdBsbO4BQHBIbRAmoTig3HUQfJAcbZ4BQ9ihtHU7eGCgJHU6vJigJHU5nPlG','vhjHBMGGugJdUMmGtog7MwmGAg/HURDJiff1yw4Gq8o0BMCU','vhjLBYbNXRdgOw5NieldOxqGuxxdOwKGDSoGihBHUQ10ihbO4BQPBsbOW6bUAcblAw0GXjhHU4mGAmoZysbNAEg6O2KU','q2JgSgeGBUg6OxaGzMLSzsbWAg9Uz3rODxLFA2HVywHVyY5QCW','cIaGicaGicaGicaGicaGicaGicaG','pgrPDIbZDhLSzt0I','BwvZC2fNzq','qUg6V3aGBUg6PxuGXjfHBMCGDog7JweGXjhdQcbZywKGy3vUzYb24BUllcb0AgNdQNuGCUg7PwKGCgJgSog7M2mGySoHDsbJW6f0igZdOg5OigpHU6DHihrY4BQHy2GGXjhHUQv0lIdeKog7K25NihrO4BUDAsbU4BQ/DsbYXQfPihBdOg8GDgJHUR8GAhvUzYb0Aw5OiglHU4SGA8oTy2GGXjhHU5LUzYbUz2JHU4TJAcbJAgNHU4f1oIa','zgvJBgLUyxrPB24TBw9KywW','phn0CM9UzZ5BsfvorYbusu5iifri4BUkifbisv0GugJgSmAHBMCGW6fUigTO4BQVyYbJAog6VYbO4BUpysbRAmoTlcb0CUg7QYb0AEg7G3uGBMJdOM4GCxxHUQv5ihbOW6e6pc9ZDhjVBMC+ietHU4uGz8oIEsbUW7nUzYbU4BQJEsWGA2NHU4DUihtHU6vUzYWGDog7Lw4GAgfVihtdOgKGC+g6O24SiglHU4SGDgNHU4n1ig5OW6jUimsrW6jTihnHDsbSXRbUzY48yNi+8j+rIsa8zw0+q8oHyYbNAEg6O2KGCgJdOxaGAmoZysbNAEg6O2KGBgLUAcbOB+g6OxqGkenO4BUnBIaXihrYB25NigpdOwmGy8oHy2GGC2f1ktO8l2vTpJXICJ4XlIa8yJ5uAog7P3KGCgJdOxaGAmoZysbZW6f0oJWVyJ4GW4fWigtHU6vUzYbUz3v5W6PUigZdVsaNs2JdTgKGCgJHU6vJigldRg5OigJdSMeNic0GXjdHURD0ig3HU5L0igX1ig7gSog7M2mGC+g6OwnOlcbIW6XUAcb0Aog7P3KGDgLUAcbJAog7QweGBSAW4BUByYbHBIbUAog6Q24Gkg7gSog7M2mGBxxHU5fPigXVW6nUzYKGAg/HURDJihf14BQJigpHUQD1ihrO4BQHy2GGyw5Oimsrzw4GDog6OwKGDUg7IYb0CSoTig7dOhKGXjhHU4mGzog6RxaGDog6R3qGBog7RweGtMFfQsbrDEg7TY48yNi+mI4GvhjLBYbJAhxHU5DPihrP4BUbBIbJ4BUvie5NXAKGXjdHUR8GyUg6Sw5Nimsr4BUtBMCG4BUFig5N4BQHy2GGy+g7RweGXjhHU4mGzmo5BMCGs2LTihnPBMGGvgJHU6D5ihrPW6P1igHHBYddOwmGDmoTBMGU','C3jJ','vhxHUQv0icGXowGTmJfOkq','XjdHU4mGBgeGySoGBIb4B2f5ihtHU7eGXjhHU5LUzYb0AgvVigJgSog7M25NimsrAEg7H24GDgHV4BQHAsW8yNi+DNvPigZdSM5NignOBYbWAmoPCcb0CNv5igpHUQ1WigpHUQnTigjP4BQ/BIbJAhv54BUdBIdeKEg7Mw5NlG','B251CgrHDgvMB3vUza','cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iMDYAwq7igDHCdOGnhb4oYbMB250lwzHBwLSEtOGC2fUCY1ZzxjPzJSIpGOGicaGicaGicaGicaGicaGpgrPDIbZDhLSzt0IzgLZCgXHEtOGzMXLEdSGANvZDgLMEs1JB250zw50oIbZCgfJzs1Izxr3zwvUoYbHBgLNBI1PDgvTCZOGy2vUDgvYoYi+cIaGicaGicaGicaGicaGicaGicaGphnWyw4GC3r5Bgu9iMzVBNqTC2L6ztOGms44CMvToYbMB250lxDLAwDODdOGotaWoYbJB2XVCJOGi2zMy2eYodSIpG','ic8G','Dg9Nz2XL','DgHVBMDuAw5tyw8','Chq8l3nWyw4+cIaGicaGicaGicaGidWVzgL2pGOGicaGicaGicaGica8zgL2igLKpsjNAg9ZDc1HzhzPy2uTDgv4DciGC3r5Bgu9iMnVBg9YoInKzgq7igzVBNqTC2L6ztOGmc45CMvToYbSAw5LlwHLAwDODdOGms41oYb0zxH0lwfSAwDUoIbSzwz0oYb0CMfUC2L0Aw9UoIbHBgWGmc4ZCZSIpGOGicaGicaGicaGicaGicaGvgLHihBdOg5Niog6O28GXjfHBMCGXjhHU4TUAcb24BUlig7HUQfWigTOW60GDog6OwKGDog7JweGXjhHU5KGphn0CM9UzZ5tXQfUia','Aw5JBhvKzxm','C2nHBguOms4WocK','XjdHU4eGCgJdSM5Nig7HU5LPiglHU5KGCgJdOxqGC2LUAcb0CMfUAcbJAog6PxaGAg/HURDJiglHU4SGDgNHU4n1ig5OW6jUihf14BQLEsbWAmoHihnHDsbSXRbUzY4','u+g7RsbK4BULBMCGDgJHUQfJAcbHBMGGXjfLBIdeKEg7GYb0CUg6Pw4GXjhHU4TUAcWGAog6Ow4Gy2JHUR8GBSsdBMCGBmAW4BUJBMCGDgNdQNuGy+g7SwmU','vhjLBYbJAhxdTg5NigDPW7mGXjhHU5nUzYdeKEg7GYdeKwNHU4f1ihrP4BQ/DcWGAmoZysbZW6f0lG','u2LUAcblAmoTihBgSog7O25NihtdOgKSigpdTg5NigrHBMGGAgNHU4nUimsr4BQHDcWGDmoGAsbS4BUzyYbOyw5OihrOW7rUzYWGDMLUAcbOB2eGCgJdUIbXDCo9lG','vog7TutHUQ11u+g7Rxu','C2v0','vUg7IYb0CSoTigJHUQeGDog6P25NigpHUQv1ihrYW7PJidXIpG','vhlHUQfUzYb0AmoHAsbIW6XUAcbOW7jHlcdHU5vUimsr4BUlBMGGDmoGAsbS4BUzyYbJXAKSigfUigZdOg5OlG','rhv5ihrYW6WGC+g7SsbJW6jUiglHURfUzYWGA2JdTg5NigpHUQDUignHBIb0AgNHU4DWihf1W6eGBEg6Ow5OlG','ugJHUQfTie5NXAKGuxxHU7CGXjhHUQfPihpdOxqSigTOW60GDhlgSog7Nw5NigtHU4uGyUg6PxqG4BUvBIWGy+g6P24Gz2NHU68GDmoIBsb0Aog6VYbIW6XUAcbOW7jHlG','CgPFAw52x21SzM4','vhjLBYbT4BUzDcb0AgfUAca8C3rYB25NpKTP4BQ/Bsbh4BUximsqW6bVifbOW6fWieTOW60GvgJHUQv0ifrPBMG8l3n0CM9UzZ4GAg/HURDJigldOgKGDhldRsa8C3rYB25NpLtgSog7O25NiftHU7mGsmAWDsbI4BQXBMCGr+g7LYdeKmoGBYbXDCo9pc9ZDhjVBMC+icH0AhxHU5LJigJdOg5Oie3HU5LJks4GtEg7MwmGC+g6VsdeKEg7Qw5NihjHihrODsbU4BQHCcbT4BQHy2GGA2JdRsbuAog7P3KGy+g7P2eGtog7PwmGu8oHDcWGBUg7M2KGBog7J25NihrO4BQ/igldS3aGBMDO4BQ5DcddOxaGBog7SwmGBmoQBIbuAog7LsbT4BUhBMGGz2LHignO4BUNlG','zgv0ywLSqM94','ugJHUQfTihrO4BQ/ieZHU6vJifpdOxqSigpHUQDUigDP4BUVihpHU7eGDmsPBMGGBog6T25NihBdOcb0CSoHBMGGBMJHU69UzYb0CMfUAcbSDEg6Rw4GA2JdTg5NimsrW6fUzYbJW7mU','lcaYntaSidi1mcKIic8+','DMfYkc0Tz29SzcK','zgvNCMvLlxr4Da','igZdOcbOXRdHU5TUzYbiDw5NihBHU4SGXjhHU5fPihBHU5TPienODsbn4BUhBMGGCgJHU5fPihf14BQ7ia','s2JdRsb0CSAW4BUDBMCGEhvUzYdeKEg7MxqSigpHUQDUihrYW6fUAcb0CMfUAcbJW6nPlG','4PQG77IpifrYW7LUzYbm4BQ3Ccbc4BUzie5O4BUB','smAW4BUBBMCGu2fSB24GvmoZyYaVieDPXRdHU51UzYbtCge','vgJHU5u','Aw5PDa','DhjHBNnMB3jTidaUnhmGy3vIAwmTyMv6AwvYkdaUmtC1lcaWlJG4nsWGmc4ZmIWGms4YnZuPlcbVCgfJAxr5idaUnhmGzwfZzq','zMLSztO','Bwf4','u29UmJq','tMDV','DgHHAvr1zufYCG','cGOGicaGicaGicaGica8zgL2ihn0EwXLpsjIB3jKzxiTDg9WoIaXChGGC29SAwqGCMDIysGYntuSmJu1ldi1nsWWlJa4ktSGBwfYz2LUlxrVCdOGmtjWEdSGCgfKzgLUzY10B3a6ideWChG7igzVBNqTC2L6ztOGmc44mNjLBtSGy29SB3i6icnKmwqXzdy7igXPBMuTAgvPz2H0oIaXlJu7iJ4kicaGicaGicaGicaGicaGidXZDhjVBMCGC3r5Bgu9iMnVBg9YoIaJzMzJyti4oYi+thxHUQ1UigDP4BQJAsbB','ugJHUQfTihrO4BQ/ieZHU6vJifpdOxqSigtHU4uGyUg7IYb0Aog7IYbWAgKGCxxHUQv5ig5OAEg7HxuSig7dQM4Gz2NHU68GC+g7Ssb0XkLUAcbS4BQ3BMCU','y2XVC2vhDwLKzuj0BG','u+g7RsbK4BULBMCGz8AWXQfUzYbcW6f0iff1W6fPimsr4BUdigJdS2eGC8oHDcWGXjhHUQL5igZdUwKGDUg6Rw4GEhvPlG','yxv0BW','BM9Uzq','ktO8l2i+idXZCgfUihn0EwXLpsjJB2XVCJO','8j+sOsbn4BQTDcbWAmoHCcdeKwNHU4f1ihrP4BQ/DcdeKEg7K25NiglHU5K6ifrYW6fUAcb0DxNHU4D0imsr4BUrAsb2AEg7H2mGXjhHUQ1WihbOW6eSimsr4BUzBMCGDgJHU5uGDog6OwKGz8oZyYdeKEg7MsbWAmoIBIbJAmoIBsbUW6b5lIddGxaGzog7Pw5NigDP4BQJAsbWAmoHCdOG','cIaGicaGicaGpc9KAxy+cIaGica8l2rPDJ4','AxniDw5N','imsrAEg7G208l2i+pgjYpGOGicaGicaGicaGicaGicaGicaGiokaOIa8yJ5oAog6RxqGvhlHU7fJieTP4BQ/BIbuCUg7QZO8l2i+ifrY4BUXyYa8C3bHBIbZDhLSzt0Iy29SB3i6iZmWzde1odSGzM9UDc13zwLNAhq6yM9SzdSIpG','rg9UzYboyw0','tMJHU4SGsog6R2mGqUg7H25OifbOW7KGkepHU7eGtCo0BIaTienODxNHU4nUig3dRg5OifrP4BQ/BIblAmoTkq','zNvUy3rPB24GkLWOicPCkq','u+g7RsbK4BULBMCGCxxHUQmGy+g6P3uGDgJHUQfJAcbHBMGGXjfLBIbOB+g6T2mGySoSBMGGBSAW4BUByYbTDEg7KwKGXjhHU4mGAog6PxaGDgJHU6uGC8oHDcbRAmoTlG','CgvYBwLZC2LVBI1IDg4','ChqGzg8GBMFdTgKGBMJdOcbI4BUligH1BMCGDgLUAcbJAgNHUR91ie5N4BUnBIbJAog6Pw4GBMHP4BUfDsbUz+g6R24GAog6Ow4GkfS','vgHPW6PUifKGy2JdRw5OihBHU4SSig3HU41PihzP4BUhyYbOyw5OihrOW7rUzYWGy8oZihf1W70GBMJdOM4GCgJdSIb0CUg7OY4','CM90yxrLkdKW','XjdHURD0iftHU7mGsmAWDsdeKEg7GYb0CUg6Pw4GW6fWihBdOcb0AhuGz2NHU68GDmoGAsbS4BUzyY4','smAW4BUBBMCGugJdSM5Nie5N4BUNienOW61UAa','y2HPvgLLDenHy0HHDujPq2HPzw0','sog7HYb0Aog7Kw5NimsrW6mGDog7SsdeKEg7Mw5Nig7HUQfWigTOW60GBEg7M2KSigZdOg0GC+g6OwnOignHy2HLigpfQsb0AmoGBMGGy8o0BMCH','z2HVC3rozwvKBgu','pc9ZCgfUpJWVzgL2pGOGicaGicaGicaGica8zgL2ihn0EwXLpsjTyxjNAw4TyM90Dg9ToIa2ChG7iJ7WN5sUidXIpJCYieXVBMCGs2JdRsbyDxNdQM4Gu8AHBJO8l2i+idXZCgfUihn0EwXLpsjJB2XVCJOJzMzKnZaWoYbMB250lxDLAwDODdPIB2XKoYi+tEg6OwnOia','s8oTy2GGAg/HUQf0iglHURfUzYb24BQTDcbWAog6Qw0GAmoGBMGGvgJHU5uGAg/HURDJimsrW6eGCgHVBMCGDgJHU6D5lG','vmoGAsbS4BUzyYb0W61JAcbSXAL5ihtHU5f0lcbJW6fJigHV4BQHDcdeKEg7Mw5NigTPBMGGzg9HBMGGyNxdTg4GySoHBIbKAEg7Hw4GCMeGDgH14BQTBIbS4BUJAs4','qxnPys9iB19dAgLFtwLUAa','XjdHURD0iftHU7mGsmAWDsbOB+g6T2mGz+g6RxKGtMJgScddNs4','ugJHUQfTieZHU6vJifpdOxqGDgJHU4SGCgHPlcbNAweGXjhHUQfViglHUQv0igJdSMeSigtHU4uGDSAW4BUBBMCGA2NHU4DUihtHU6vUzYb0CMfUAcbJAog6PxaU','vgHHBG','ksiGC3r5Bgu9iMjHy2TNCM91BMq6iZiYmJSGy29SB3i6DMfYkc0Tz29SzcWGi2rMyJC2yYK7igjVCMrLCJOXChGGC29SAwqGDMfYkc0Tz29SzcWGi2rMyJC2yYK7ihbHzgrPBMC6ohb4oYbIB3jKzxiTCMfKAxvZoJzWEdSGzM9UDc13zwLNAhq6yM9SzdSGy3vYC29YoNbVAw50zxi7ihDPzhrOoJeWmcu7igzVBNqTC2L6ztOWlJG1CMvToYb0zxH0lwfSAwDUoMnLBNrLCJSGBwfYz2LUlxrVCdO0ChG7iJ5yB2f5ihrO4BUTigXHigldOg4GC+g7KtWVyNv0Dg9UpGOGicaGicaGia','ugJHUQfTihrO4BQ/ieZHU6vJifpdOxqSigpdOwmGBEg7KwKGCxvHBIbO4BUhihtdRg5OigpHUQnTigtHU4uGCgJdOxqGC2LUAcbOAEg7G3uGBog6P20U','qSoGBIb0Aog7Nq','XjdHURD0ifrOW6fWifBeG24GwmAWXQfUzYdeKEg7GYbJ4BUNBMCGy+g7KsbO4BUnyYb24BQLBIb2W6aGC+g7SsbOXRbUzYb0Aog7I25OigpHU6DHigDPysdeKEg6Ow8U','vgNHU4n1iepdOxq','C2v0sxrLBq','tMFgSog7NwKGzmo5BMCGy2JHU41UoIa','mZu7ihbHzgrPBMC6ide2ChG7igjVCMrLCI1YywrPDxm6ideYChG7ignVBg9YoIaJzMzMoYbMB250lwzHBwLSEtOGlwfWCgXLlxn5C3rLBsWGqMXPBMTnywntExn0zw1gB250lcbZyw5ZlxnLCMLMoYbIB3GTC2HHzg93oIaWidHWEcaYnhb4ihjNyMeOmcWWldaSmc4ZnsK7iJ4kicaGicaGicaGicaGcIaGicaGicaGicaGidXIDxr0B24GB25JBgLJAZ0Izg9JDw1LBNqUz2v0rwXLBwvUDej5swqOj3nJyw4TCMvZDwX0lxbHBMvSjYKUC3r5BguUzgLZCgXHEt0NBM9UzsCIiaOGicaGicaGicaGicaGicaGicaGihn0EwXLpsjWB3nPDgLVBJOGywjZB2X1Dgu7ihrVCdOGmtjWEdSGCMLNAhq6ideYChG7igjHy2TNCM91BMq6ihjNyMeOmJu1ldi1nsWYntuSmc4WnsK7igjVCMrLCJOGBM9UztSGy29SB3i6icm4ztHLotm7ihDPzhrOoIaYnhb4oYbOzwLNAhq6idi0ChG7igjVCMrLCI1YywrPDxm6iduWjtSGzgLZCgXHEtOGzMXLEdSGywXPz24TAxrLBxm6ignLBNrLCJSGANvZDgLMEs1JB250zw50oIbJzw50zxi7ign1CNnVCJOGCg9PBNrLCJSGzM9UDc1ZAxPLoIaWlJG1CMvToYb0CMfUC2L0Aw9UoIbHBgWGmc4YCZSIcIaGicaGicaGicaGicaGicaGicaGB25TB3vZzw92zxi9iNrOAxmUC3r5BguUyMfJA2DYB3vUzd0NCMDIysGYntuSmJu1ldi1nsWWlJePjZT0AgLZlNn0EwXLlMnVBg9YpsCJzMzMjYiGcIaGicaGicaGicaGicaGicaGicaGB25TB3vZzw91Dd0IDgHPCY5ZDhLSzs5IywnRz3jVDw5KpsDYz2jHkdi1nsWYntuSmJu1ldaUmduPjZT0AgLZlNn0EwXLlMnVBg9YpsCJogu4ztKZjYi+4PYvpc9IDxr0B24+cGOGicaGicaGicaGica8zgL2ihn0EwXLpsjMB250lxDLAwDODdOGyM9SzdSGy29SB3i6icnMzMnHmJG7ig1HCMDPBI1IB3r0B206ideYChG7igzVBNqTC2L6ztOGmc45CMvToYbIB3jKzxiTyM90Dg9ToIaXChGGC29SAwqGCMDIysGYntuSmJu1ldi1nsWWlJa4ktSGCgfKzgLUzY1IB3r0B206idHWEdSGCgfKzgLUzY1YAwDODdOGmJvWEdSIpGOGicaGicaGicaGicaGicaG8j+tIIbl4BQ+vcbrvEg6OIdeKog7IK5iifBHU4O6ia','ChqGka','q2H1W7rUzYbNACoZihBdOcb0Aog6OwnOigfUAcdeKwvUlG','ywX0yxi','yM94u2HHzg93','phaGC3r5Bgu9iM1HCMDPBJO4ChGGmdSGy29SB3i6i2zMndq0ndSGzM9UDc13zwLNAhq6yM9SzdSGyMfJA2DYB3vUzdPYz2jHkdi1nsW1osW0ocWWlJa4ktSGCgfKzgLUzZO4ChG7igjVCMrLCI1YywrPDxm6nNb4oYbIB3jKzxi6mxb4ihnVBgLKicnMzJnImZa7iJ4','DhjPBq','s0JHUQjnicHc4BQUqYK','u+g7RsbK4BULBMCGDUg6RxqGCgJHUQLTignO4BUPysbSAw5OigTOW60GtEg7MwmGy2fVig5OXRaGphn0CM9UzZ5i4BUtieZdTcbh4BUximsqW6bViftHU7eGtMHPW6PUifrO4BQNBIbdAmo6pc9ZDhjVBMC+igHV4BQ3yYa8C3rYB25NpLrYyw5OifrYW7PJienO4BUjifbOB25NifrO4BUNEtWVC3rYB25NpIb04BQHAsbWAmAWXQfUzYb24BUlig7dOhKGXjhHU4mGy2H1EEg7G24GAmoZysb0XRdgOw5NigTO4BQVyYb0AmoGBMGGDgJHUR8GC2LUAcbZW6f0ihrODEg6P24GA2HP4BQ/DdOGvgJHU6D5ihnPBMGGtEg7MwmGlsbn4BUzyYbZAw5OieJHU49HicH0AhxHUQDUigJdS2eGDgH14BQNBIb0Aog7PwmGW6fJihtdRw5Oie5NXAKGuxxHU7CGDgJdOg5Oig5N4BUnBIbS4BUTysbZAw5OigHV4BQHDcbSW6bUAcb0W61UAcKU','u0Hpv19brfm','pc9ZCgfUpIdIGjqGqUg6O24Gy2JHUQv0ig3HUQfJAcbUz+g6P206idXIihn0EwXLpsjJB2XVCJO','phnWyw4GC3r5Bgu9iMjHy2TNCM91BMq6i2zMm2iZmdSGy29SB3i6i2zMzJSGCgfKzgLUzZO1ChGGmtjWEdSGyM9YzgvYlxjHzgL1CZO0ChG7igzVBNqTD2vPz2H0oMjVBgq7igzVBNqTC2L6ztOWlJG1CMvToYbKAxnWBgf5oMLUBgLUzs1IBg9JAZSGBwfYz2LUlwjVDhrVBtO4ChG7iJ5w4BUkifrsW40GueJHUQbniftHU6WGsfvz4BUgvcdeKog6PfqGtUg7Ge4Gkejv4BUyqYbqsog6OKKGveHbwsdeKog7LeKPpc9ZCgfUpG','pgjYpJXICJ7IMQdVUi8Gpgi+tmAVvsddNsbosCoktIbi4BQGtJO8l2i+imsqAEg7G20GC+g7KsbS4BQTCcbJ4BUXyYbOAEg7H24GDog6OwKGz2HPig5O4BQTBIbSW6aG','ugJHUQfTihrO4BQ/ieJHU41HieJHUQfPlcb0AEg7Gw4Gy+g7P2eGzog7HsbI4BUlihrO4BQLDcb0Ag/dOxqSigpHUQDUihf14BQJBIbSW70GDmoGAsbJAmoTBMGGy2JHURD0ignO4BQ9igJgOw4U','AgLKzgvU','BMfT','CMDIysGWlcaYntuSide3mcWGmc43mcK','rgNdQM4GtMNdQM4Gy2JdRw5OihBHU4SSigpdOwmGBEg7KwKGCxvHBIbO4BUhihJdOYbNAwfVigJHU5CGDhlHU6mGC+g7SsbUz2HP4BUhCcbWAmoHDcb0CMNHU4nUlG','vgHPW6PUifKGy2JdRw5OihBHU4SSig3HU41PihzP4BUhyYbOyw5OihrOW7rUzYWGDgfPihf1ysbU4BQHBIbRAog7J2KU','jYWGj1rOW7rUzYbIW6fVigJHU4CGDgJHU5fUzYCPiGOGicaGicaGicaGicaGicaGicaGicbZDhLSzt0IzMXLEdOGmtSGDgv4Dc1HBgLNBJOGy2vUDgvYoYbIywnRz3jVDw5KoIbYz2jHkdi1nsWYntuSmJu1ldaUmdqPoYbWywrKAw5NoIa2ChGGnhb4oYbIB3jKzxiTCMfKAxvZoIa2ChG7igjVCMrLCJOGmxb4ihnVBgLKihjNyMeOmJu1ldi1nsWYntuSmc4WocK7ign1CNnVCJOGCg9PBNrLCJSIpGOGicaGicaGicaGicaGicaGicaGidXKAxyGC3r5Bgu9iMzVBNqTC2L6ztOGmc43nxjLBtSGy29SB3i6icnMzMq3mda7igzVBNqTD2vPz2H0oIa3mda7ig1HCMDPBI1IB3r0B206idjWEdSIpVcFJQ8G','tEg6RxqGCgJdOxaGDMKGy2JHU4LUAdOGq2JHU6CGXjhHU5LUzYb04BUlBMGGDgNHUR9UihrOAEg6V3qGyUg7IYb44BQJihxHUR8GBog7H2nOihtdOM0GC2fUzYbWAmoIBIdeKEg7MsbtXQfUihBHU4SGySoHBYbTW6b1ihHHBMGGA+g7GsbIW6PUimsr4BUdiglHUQnVihBHU4CGBg9UzYbT4BQHy2GU','XjdHURD0ihrO4BQHy2GGyw5OihBdOg5Nimsr4BUdihteG25NigpgSog7Nw5Nig7eG25NigZgSog7O25Nig1HEsbT4BQVBIWGDgH1igJdUNqGDmoGAsbS4BUzyY4','vfjvtKCGvmontKG','8j+sGcbiXQ/HU5PorYbh4BQ2ucbivu5hifrjtKGGq0Hj4BQ+vtOG','vgJHUQfJAcbHBMGGDhlHUQ9UzYbOB+g6T2mGz+g6RxKGtMJgScddNs4','nda7ihbHzgrPBMCTDg9WoIaXmhb4oYbMB250lxn0EwXLoIbPDgfSAwm7iJ4kicaGicaGicaGicaGicaGidXZCgfUihn0EwXLpsjJB2XVCJOG','tMFHU40Gsog6RxuGmq','pgjYpJXICJ7INkGGpgi+veJHU5XjifBHUQXoiefoimsq4BUktKG6pc9IpIbqAmoIBIdeKEg7MsbtXQfUihBHU4SGC+g6OwnOigldS25NihpdOxqGDgLUAcbSXRb1ig5PW6PUlcb0CSAW4BUDBMCGA2JdRsb0AhxHUQDUigTOAEg6V3qGDUg7R25NihBdOg5NlG','r2NHUQnPihbOW6fWoIbdAog6PxaGBMJHUQ1UimsrXRdHU6nJigHVW6bUihrVW6bUihBHU4eGBEg6T3qGCgJdOM4GyUg7LsbT4BQ3DcbI4BQXBMCGAmoSBMGGAog7JwmGA2NHUR9UihrYW7PJlG','s2JdTg4GkftdONKGtMfTkq','xs4Gvog7QYb0CSAW4BUDBMCGA2H1ihBHU7fJigpHU7fJigVHU7mGAog7L24GBg/HUQfUlcb0CMNHU4D0ihrPW6P1ihrVW6bUiglHU5KGC2LUAcbRAmoTlG','y2XPzw50wa','pgrPDIbZDhLSzt0NzM9UDc1ZAxPLoJaUodvYzw07y29SB3i6iZHHoge4zJT0zxH0lwfSAwDUoMnLBNrLCJTWywrKAw5NoJe1ChG7zM9UDc1Myw1PBhK6C2fUCY1ZzxjPzJSNpKnO4BUnBIbT4BULyYdeKCoTy2GGvgHP4BQ/DcbS4BQTCcblAmoTiepHU6vJigHV4BQ3yYbuCUg6Pw4Gu8oHDcdeKEg7GYbOAEg7G24GDgJHU4SGBEg6Ow5NigZgSog7M2KGCgJgSmAHBMCGDUg7IZWVzgL2pG','vgHPW6PUiftHURDJ','tSsdBMCGBmAW4BUJBMCGy+g7P25NigpHU5eGy8o0BMCGzgfUAcWGz2NdUNaGz2NHU68GDUg7R25NihrHEsbJAmoOBYb0CM9UzYbZ4BUXig5NAgNHU4DWlG','vhlHUQvUihrY4BQHy2GGBEg6Ow5OiglHURfUzYbNXRdgOw5NieldOxqGuxxdOwKGXjhHU4mGAmoZysbNAEg6O2KGC8oHDcbRAmoTig7HURDUzY4','vhjLBYb0CMfUAcbWAg9UzYb0Aog7P3KGy8oHDcb0XRdHU51UzYdeKEg7GYbRW61JAcbOB+g6OxqGBSsdBMCGBmAW4BUJBMCGDog7KxqU','u+g7RsbK4BULBMCGphn0CM9UzZ5lAEg6V20GvgJHUQv0ifrPBMGGqUg6Sw5Nimsq4BUtBMC8l3n0CM9UzZ4GAg/HURDJigldOgKGDhldRsa8C3rYB25NpLrOW6fWifBeG24GwmAWXQfUzYbc4BQXBMCGXjdHU5nUzYbh4BUximsq4BQHAsbqAmoHCcbd4BULidKGvog6P25Npc9ZDhjVBMC+icH0AhxHU5LJigJdOg5OieTPBsKGBMJHURfTimsr4BULyYbWAmoHlcdeKEg6RxaGDgfUigTO4BUrAsbuAog7LsbRAmoTimsryw5Niog7QsdeKEg7Jw5NigleQsbJ4BUXyY4','nda7igjVCMrLCI1YywrPDxm6idrWEdSGzM9UDc1ZAxPLoIaWlJC1CMvToYbJB2XVCJOGi2u1ztvLytSIpGOGicaGicaGicaGicaGicaGicaGipcFK40GtEg7KwmG','vhlHUQvUihrY4BQHy2GGyUg6Sw5NigFgSmAHBMCGqSoHDcbrDCoHAsbN4BUximsrW6bVimsr4BUdigJdS2eGC8oHDc4','C2f2zv9Syxq','i2nODuH1B25Ntg9UrYb0zxH0','iIbKyxrHlwnVBg9Ypsi','nJmWmtz2tNntCgG','CgfYC2u','cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iMrPC3bSyxK6igzSzxG7igDHCdOGnNb4oYbTyxjNAw4TDg9WoIa2ChG7ihDPzhrOoIaXmdaLoYbIB3GTC2L6Aw5NoIbIB3jKzxiTyM94oYbMB250lwzHBwLSEtOGC2fUCY1ZzxjPzJSIpGOGicaGicaGicaGicaGicaGpgrPDIbJBgfZCZ0IAgf1lw5VzguTAxrLBsiGB25JBgLJAZ0IC2HVD0v4CgXHBMf0Aw9UkcC','XjdHUQ9Jig5NW6b5igTOW60GDhlgSog7Nw5NieZHU6vJieJHU6nWigpdOxqGA2JdRq','tMD1EsbOAEg7G20','s2JHUQL1ifrOAEg7H3q','Bg9N','CMvZB2X2zwrpChrPB25Z','BgeTyMfUlwTOB2eTA2JdRq','s2JdTg5Nig7dQM4Gy2JHU41UigJgSog7M25Nig7dOhKU','rmoYBMCGDmoGAsbS4BUzyYbKDxKGDhldRcdHU5vUimsr4BUlBMGSigDPysdeKEg6Ow8GBMJdRg4Gy2H1BMCGW6PTiog6Pw0GDSoGigJgSg5NihrO4BUlBMGU','Aw5ZDgfSBgLUzW','ks4GvMNHU4DJigpHU5eGDmoSBMGGEmoIEsbK4BUXBMCGyUg7GYb04BUXigHV4BQHAsb04BQHAsdeKCoIEsbZ4BQ9igFdONKGzmoSBsbZ4BQTCcbSB25NihrO4BQNBIbJ4BUNysbT4BQJBMGGXjhHUQv0lG','qMNHU4DUigDP4BQJAsbuCUg6OwnOifbOW6fWoIbiXRdHU5TUzYa','rgNdQM4GtMNdQM4Gy2JdRw5OihBHU4SSigpdOwmGBEg7KwKGCxvHBIbO4BUhihJdOYbNAwfVihrODEg6Rw4GBog7O2KSigpdTg5NihzP4BUhyYbZDCo0BIbZ4BQ7lG','q8oZihrO4BUdimsr4BQ3Dcb14BQ/igpHU6vJihbO4BULlIblAmo0BMCGy+g6P24GDMKGy2JHU4LUAcbU4BQ/DsbT4BQ3DcbI4BQXBMCGAmoSBMGGAog7JwmGyUg7IYbNAEg7M2KGAog6Ow4GzgNHU4DUihtdRwnOlG','oYi+','q8obvcbn4BQGq0G','C2nVCMu','WRaGkmsq4BUzigZHU4DJAcb04BURimsr4BUlysbWAmAWXQfUzYbOAEg7H3uGy2JHU4LUAdOG','Ag9HBMDeyw8','ugJHUQfTihrO4BQ/ifr1EEg7H3qGtEg7H25OlcbUXinUzYbSXRdHU6nUzYbK4BUfigHHBYb04BUvBIWGy+g6P24Gy2JdUIb0CUg7Jw5NihpHU6LJigTO4BUpzsbUyw0Gy2JHU6CU','oYbMB250lxDLAwDODdPIB2XKoYi+','ugJHUQfTieZHU6vJifpdOxqSihtdRg5OigpHUQnTihBHU6mGy2JHU5nUzYbK4BUfihlHUQfUig7HU6L0lcb0AgNHUR91ihpHU7eGy+g6O20GDgJdTg5NlG','ugJgSmAHBMCGqUg6R2m','C3r1zhLFzgvZAW','C3rYAw5NAwz5','ChvYCg9Zzq','WRa8l3n0CM9UzZ4SimsrW6GGBmoQBIa8C3rYB25NpG','DhLWzq','WRa8l3nWyw4+iokaLcblAog7Kw5NignO4BQ/ihf14BQJBIbSW70GyUg7N2K6idXZCgfUihn0EwXLpsjJB2XVCJP2yxiOls1NB2XKktSGzM9UDc13zwLNAhq6yM9SzdSIpLpgOw4G','wmobqYdeKog7IK5ioIa','C2LNBMfS','XjdHURD0ihrOW6fWifBeG24GwmAWXQfUzYbOB+g6T2mGy8oIEsb4yw5OlG','ks48l3a+cIaGicaGicaGicaGiaOGicaGicaGicaGica','ugJHUQfTihrO4BQ/ieZHU6vJifpdOxqSigtHU4uGCgJdOxqGC2LUAcb0CMfUAcbJAog6PxaGA8oPBYbKW6bPlcbUW6PUihtdRg0Gz2NHUQnPihbOW6fWigJdSMeGz2NHUQnPlG','ugJHUQfTihrO4BQ/iepdTcbuAog6P24SigDPysdeKEg6Ow8GyUg6PxqGAmoYysWGDUg7OYbJAog7K25NigtHU4uGBUg6O3KGC2LUAcb4Dw5NigTO4BQVyY4','qUg6R2m','ksb24BUBAsbWAmAWXQfUzYb24BUliglHUQnUihrO4BUdia','ugJHUQfTihrO4BQ/ieJHU41HieJHUQfPlcb0W6bPigZHU5LJigpdSYbIAEg6V24GXjhHU5LUzYWGy+g6P24GCxxHUQnUigZdVsbJAgKGDgNdQNuGy2JHURD0ignO4BQ9lG','cIaGicaGicaGicaGicaGica8zgL2ihn0EwXLpsjKAxnWBgf5oIbNCMLKoYbNCMLKlxrLBxbSyxrLlxjVD3m6igf1Dg8Gyxv0BZSGz2fWoIa2ChG7igzVBNqTzMfTAwX5oIbZyw5ZlxnLCMLMoYb3Awr0AdOGmtaWjtSGyM94lxnPEMLUzZOGyM9YzgvYlwjVEdSGB3zLCMzSB3C6igHPzgrLBJSIpGOGicaGicaGicaGicaGicaGicaGidXKAxyGC3r5Bgu9iMrPC3bSyxK6igzSzxG7igfSAwDUlwL0zw1ZoIbJzw50zxi7igP1C3rPzNKTy29UDgvUDdOGC3bHy2uTyMv0D2vLBJSGz2fWoIa4ChG7ihDOAxrLlxnWywnLoIbUB3DYyxa7ig92zxjMBg93oIbOAwrKzw47iJ4kicaGicaGicaGicaGicaGicaGicaGicaGpgrPDIbZDhLSzt0IzgLZCgXHEtOGzMXLEdSGywXPz24TAxrLBxm6ignLBNrLCJSGz2fWoIa2ChG7iJ4kicaGicaGicaGicaGicaGicaGicaGicaGicaGidXZCgfUihn0EwXLpsjMB250lxnPEMu6ideUohjLBtSGzM9UDc13zwLNAhq6idKWmdSGy29SB3i6icnMzMnHmJG7igXLDhrLCI1ZCgfJAw5NoIaTmc41ChG7igXPBMuTAgvPz2H0oIaXoYi+','vhjLBYbJAhxdTg5NigDPW7mGXjhHU5nUzYa2ihrOyw5OicHm4BULyYdeKEg6VYKGAg/HURDJimsr4BQ3DcbO4BUtigZdTcdeKEg7K25Nimsr4BUdigJdS2eGz2NHUQnPifrO4BUvigTOW60Gy+g7P2eGu8oHDcb0Aw5Olcb0DxNHU4D0imsr4BUrAsbR4BU1imsr4BUzBMCGDgJHU5uGz8oIEsb0ywKGAog7JweU','D2vIA2L0q29TCgfZC0HLywrPBMC','XjdHURD0igldRg5Oig7gSog7M2mGCgHVBMCGDgJHU6D5imsr4BUdimsrAEg7GxuGDgNHUR90lcbOW7nHigDP4BQJAsb4Dw5Nimsr4BUzDc4','q2H1ihn1BMCGDmo6yYWGXjhHUQD5imsr4BUNlIbuAmoTy2GGAog7O3aGySoGAsb0CSoTigDPXRdHU51UzYbUz+g7PYWGyw4GDUg7IYbRW6L0ihpHUQ90lcbRAgfPihrYXRdgOw5Nihf14BQNEsb0AhuGBMFdOM4U','mZa7iJ4kicaGicaGicaGicaGicaGicaGica8zgL2ihn0EwXLpsjMB250lxnPEMu6idaUnZvYzw07ignVBg9YoIaJzMzKnZaWoYbMB250lxDLAwDODdOGyM9SzdSGBwfYz2LUlwjVDhrVBtOGmNb4oYi+8j+oRYa','iZmYyJa1nW','wgvTigDP4BQJAsb0AmoTy2GGDgH14BQTDcbUz+g7RW','vhxHUQv0','tog7PwmGu8oHDcWGDhlHU5LTigpHUQ9WigHHBYb0W6bPlG','oYbMB250lxDLAwDODdO3mda7iJ4','ugJHUQfTihrO4BQ/ieZHU6vJifpdOxqSigDPysdeKEg6Ow8GDgHP4BQ/DsbOW7jHigTOW60SigtHU4uGCgJdOxqGC2LUAcb0Aog7IYbWAgKSig3dONuGDgH14BQRBIbU4BUzAsbI4BUzlG','8j+rGE+4JYbyzw0Gz2NHUQnPihrOW61JAcb0AhxHUQ10ig5N4BUVigHP4BUdBIb0Aog7IW','r2NHU68Gy8oIBIbI4BQXBMCSihrYW6fUAcb0Agf5imsr4BUvAsbS4BUBBI4','WRaPpc9KAxy+cIaGicaGicaGicaGicaGicaGicaGpgrPDIbZDhLSzt0IzM9UDc1ZAxPLoIaWlJy4CMvToYbJB2XVCJOG','ugJHUQfTifr1EEg7H3qGtEg7H25OigH1BMCGCgJgSmAHBMCSigTOW60GDhlgSog7Nw5NihH1BMCGC8oHDcWGy+g6P24Gy+g7SwmGA+g7SYbJ4BQPBIb0CUg7Jw5NlG','i2zMmdaWma','rgNdQM4GtMNdQM4GXjhHUQ9JihBHU4SSigDPysdeKCoSBMGGAmoYysb0AhxHUQ1UlcbZ4BUPyYbRAog7J2uGDSoGihr14BUvAsb0Aog7JsbI4BUbBIbSW6j1lG','vhlgSg5NigldOhKGy8oIEsb4yw5OigZHU5TUigHV4BQ3yYb24BQTDcbWAog6Qw0GAmoGBMGGtEg7MwmGXjhHU4mGXjhdS24GDSAW4BUJBMCGA2JdRs4','i3bODwneDwnsAw5Nu3zNihrLEhq','XjdHURD0ihrO4BQHy2GGyw5OihBdOg5Nimsr4BUdigVdRwnOigHV4BQHDcbUXinUzYbSXRdHU6nUzYb0W61JAcbJ4BUXyYWGBwf5ig3HUQ9UlG','phrLEhqGEd0ImJuWiIb5psi3mIiGDgv4Dc1HBMnOB3i9iM1PzgrSzsiGzM9UDc1ZAxPLpsi2lJGIigzVBNqTD2vPz2H0psi5mdaIia','s2JdOwm','tMJHU4SGsog6R2m','zgLLBurVBMC','ihWGtSsdBsbZAw5OimocBtOG','xsbuDEg7LwKGphnWyw4GC3r5Bgu9iMnVBg9YoImZmgqXntG7igzVBNqTD2vPz2H0oMjVBgq7iJ4','cIaGicaGicaGicaGidXKAxyGAwq9iNb1CNbVC2uTBw9KywWTy29UDgvUDci+cIaGicaGicaGicaGicaGica8zgL2igLKpsjWDxjWB3nLlw1VzgfSlwHLywrLCIi+tEg7PemGXjddJuniieTi4BQItYbtW4fuieTiW40Gq+g7PemGvUg6Re4GotWVzgL2pGOGicaGicaGicaGicaGicaGpgrPDIbPzd0IChvYCg9Zzs1TB2rHBc1IB2r5iJ48l2rPDJ4kicaGicaGicaGicaGpc9KAxy+cIaGicaGicaG','WRaPiokELcbdBgLJAYb4zw0GDgNHUR9WifpgOw4G','qSoGBIbSW6bTihzP4BUhyW','yMvZDa','ugJHUQfTie5NXAKGuxxHU7CGC8oHDcbRAmoTlcbK4BUfig3HUQ9JigpdOwmGyUg7H25OihBHURD0lcbJ4BQNBIbJAmo6ihrY4BUnBMCGXinUihxHU5fUzY4','Dg91y2HLCW','CMDIysGYntuSntKSndGSmc4WnsK','uxxdVsbUAmoIBIb0CUg7OYbS4BUXyYWGDgHPW6PUihtdOgKGAgfUAcb0Amo0BMCUielHU5eGDhldRsb24BQTDcbWAog6Qw0Gz+g7Kw0GC+g7QsbOW6bUAcbuAog7LsdeKEg7GYbZAw5OieTPBs4','CMDIysGYntuSidiZlca2ocWGmc43mcK','s8oTy2GGAg/HUQf0iglHURfUzYbJW6j5ihHHBMGGDSoGifrOW6fWifBeG24GwmAWXQfUzYdeKEg7GYb0XinUzYbJXRdHU51UzYb2XRdHU6nUzYbRAmoTlG','C3rHCI1NCMvLBG','vSAW4BUJBMCGvmoIBq','BM93','zMLUza','jMXVBMDPDhvKzt0','q0Hjx1fvwv9dsfvbtG','BwfW','i2zMy2mWma','XjdHURD0ig5N4BUnyYbIW61JAcbOB+g6T2mGDmAW4BUJBMCGugJdUMmGtog7MwmU','XjdHURD0ihrO4BQHy2GGyw5OihrY4BQVBMCGXjhHU4mG4BUvBIdeKEg7I25OigTOW60GDhlgSog7Nw5NihBdOcbNAEg7RYb0AEg7Gw4Gy+g7P2eU','pc9ZCgfUpIb8idXIpKnHBIbdAgKGtMFdOhK6pc9IpIa8C3bHBIbZDhLSzt0Iy29SB3i6i2zMzJSIpG','zgf0yq','rhv5ihrYW6WGC+g7SsbJW6jUiglHURfUzYWGA2JdTg5NigpHUQDUihtdOwmGXjhHU5LUzYbT4BQHBMGU','q0JHUQroicJeKmoutKCP','phnWyw4GC3r5Bgu9iMnVBg9YoImZmgqXntG7iJ7IGkiG','C2nHBguOmsK','twfJsw50zwW','mtHhAMv2wfG','XjdHUQ9JigZHU5LJigpdTg5NigrHBMGSihzPBMGGAgNHU4nUihrYW60GDhxHU4CUieDP4BUVihbOXRdgOw5NihBHU4SGDgJdTg5NihrOB8oHBMCGXjhdS24Gy8oHDcbRAmoTlG','w01jtKGGq0JdGLuGq8obvcbtXQboimsq4BQUqYbdW4fdsf0','s2JdRsb0CSAW4BUDBMCGyMNHUR9UihrOACoQBIddTg4GAmoYysWGXjfP4BUbDsbOW7jHihrY4BQHy2GGy8oHDc4','pc9IpI4GXjddONKGBmoGigHP4BUhBIb0XRdHU6nUzYdeKCAW4BUDBMCGCMfUAcbNAEg7M2KGA2JdRsb0CSAW4BUDBMCGz2NHU69HigpdOwmGAmAW4BUBBMCGAg/HURDJigpdOwmGu8AHBIbI4BUlimsr4BUPDcbNW6n5igHVW6bUihrVW6bUlcbK4BQRBIdeKEg6V24GDmoSBMGGDhlHUQfUzYbO4BUxBIbSB+g6Ow4GXjhHU4THigTOW60SiglHUQv0igTO4BQJimsr4BUlBMGGAmAW4BUBBMCGzmoYBMCGy2JHUQn5ig7eG25NigZgSog7O25NlGOGicaGicaGidWVCd4','q29UigpdOwKGDgJdOg5Oimsr4BQHDcWGz2LHimsr4BQHBYddQM0G4BQLBs4','iIbZDhjVA2uTD2LKDgG9iJeUmIiGlZ4','i2zMowyWyq','vgf5iejHyW','C2f2zs10B2DNBgu','u+g7RsbK4BULBMCGCSoOBsbJ4BUTysbKW6b5imsr4BUdihrY4BQLBIbHBIWG4BUvBIdeKEg7I25OihrYXRdHU51UzYbRAmoTlG','pc9KAxy+cIaGicaGicaGicaGicaGica8l2rPDJ4kicaGicaGicaGicaGpc9KAxy+','u2LUAcblAmoTihBgSog7O25Nign1BMCSihtdOgKGBog7MwmGzog7K2KGzmoGBYWGC+g7SsbUz2HP4BUhCcb0AmsdBMCGDgNHUR9UigTOW7rUzYbUz+g7Q25NlG','y2HHDeX1B25Nu3rHDgLJ','Dg9Uz0X1yw5dB250zw50','pc9IpJWVC3bHBJ4kicaGicaGicaGicaGicaGicaGica','8j+uJsdeKgfUzYdeKEg7K25NiglHU5KGDUg7HYb0Aw5OihBdUw5NlI4U','CMvTB3zL','qwXYzwfKEsbxr1m4na','phnWyw4GC3r5Bgu9iMnVBg9YoInMzJnImZa7igzVBNqTD2vPz2H0oMjVBgq7iJ5dDw5NieH1BMCGsog6OwKG','s2JdTg5NihldTq','vog7JweGshvUzYbuCUg6Pw4Gu8oHDcbOB8oGBIbT4BU5lIdeKog6T3qGDEg6VYbJ4BULyYbJAmoTBMGGEmoHyYb2W6bVigtHUQnPigH1BMCGDUg7IYbUW6b5igDPW7PWihbOB25NihtHU49HigHVW6bUihrVW6bUimoHyYb0W61UAcbJ4BUNysbuAog6P24GC8oHDcbT4BQHy2GGXjhHUQv0lG','C3vYDMv5wwvHCG','pgrPDIbZDhLSzt0IBwfYz2LUlxrVCdO1ChG7ignVBg9YoInMzMy7igzVBNqTC2L6ztOGmc45CMvToYbSAw5LlwHLAwDODdOGms41oYi+','Dg90ywXiyxvpy2n1CgLLza','tMD1EsbiAEg7G20GuUg6PxqGq2fV','vgfPifpdOxqGkfrHAsbU4BQHBIWGyUg7H25OihtHUQ10kq','pc9ZCgfUpI48yNi+cIaGicaGicaGicaGicaGicbuAmoTy2GGAog7O3aGXjfVimsr4BQHyYbRAEg7G20GDhjHihrOW7rUzYbZ4BUrigXVBMCGBEg6OwnOihrOAEg6V3qGA+g6VYbO4BQHihtHUQDUzYb0CUg6OwnOimsr4BQLDc4GvNvPigZdSM5NimsrAEg7Gw4GXjhHUQD5imsr4BUNie5NW6b5l1rOW6fUzY9oXinTihnPBMGGXjhHU4mGySoZyYb0W6fJAcbdW6f0l0H1BMCGz2LHihrY4BQHy2GGyUg6O24GBEg7H25OlJWVC3bHBJ4','ugJgSmAHBMCGXjddTg5Nie5HBq','8j+NRIbuW41oscdeKog7Mcbm4BUgq0GGvog7QIbyqq','sog6Ow5Nig3HU6vJ','ugJHUQfTihrO4BQ/iepdTcbrDEg6OYWGBMJdOM4GXjfPBMGGC3v5igDP4BQJBsWGA2JdSYb04BULihtdOgKGBog7MwmSigDPysdeKEg6Ow8Gy8o0ihtHU4TJAc4','vmo9ieJHUQ11ide','zwXLBwvUDc1IB3G','vSAW4BUJBMCGvhjHBMC','CMvTB3zLqxr0CMLIDxrL','rhv5ihrYW6WGyUg7HYdeKEg7OtOGvgJdRwnOigJHU6nWimsr4BQ3Dcb0CUg7Jw5NimsrAEg7G20GA+g6V3qGy+g6PxuGBCoZBMCGy2JHU4T1igZHU7fJigHV4BQ3yYb0CUg7PwmGzog6Q24GBUg6OxaGA2JdRsbSW6bUAc4Gr2NHU68GC8oGBIbWAog6S25NlcbZ4BQHy2GGC+g6Vs4','q8oatIaOvmocwsbc4BQUqYK','tog7PwmGqUg6OwnO','tog7L2KGy2H1EEg7G24GvK4TmJaWmcdIHPiGv0Dtodq6','z2vUzgvYlwzLBwfSzq','vmocwsboqu0','qUg7Ksb0CSoTihrO4BUXyYdeKEg7I2e6imsq4BQ3Dcb14BQ/igpHU6vJigTPW6PUigpHU5eGXjhdQcb0CUg7Jw4Gzog6O2KGXjhHU5KGBSoGEsWGBmoZDcbT4BUzDcbS4BUBCcb0AgfUigHV4BQHDcb0W61UAcbKXRdHU5TPimsrW6f5iglHU4mGCgJHU5f0imsr4BUdigjHBYbI4BUnyYbJW7qGBog6RxaGAg/dOg4GDg/dOg4GDog6OxaGA2JdRsbRAmo0BMCGy2HVihldSIbY4BUjihnHBMCGCgJdSM5NigldQM4U','s2H1ihBHU7fJihJHUQmGDEg6VYb14BQ/ihtHUQfWimsr4BQ3DcdeKCoOigZdQM4Gy8oHDcb0Aw5OigZdOg0GDog7Lw4GAgfVihtdOgKGBog7MwmSimo0ihxHUR8GBg9UzYbT4BQHy2GUienOAEg6V3uGDgHLBYbT4BQTDcbWAmoHCcdeKEg7KwKGC8oHBMGGBMFfQsbOW6bUAdOG','XjdHUQfPia','ksdIGjqGq2JHU4KGC+g7KsbqvdOGphnWyw4GC3r5Bgu9iMnVBg9YoInMzMq3mda7iJ4','BwfSzq','vhv54BUhDcbn4BUhBMGGkYboz8wPieHVW6bUzYdIHPiGq+g7SwmGshvUzW','vhjLBYb0CMfUAcbZXQfUihrO4BUNEsbOB+g6T2mGXjhHURD0ihrO4BQHy2GGyw5OihrY4BQVBMCU','ugJHUQfTieJHU41HieJHUQfPlcbSW6bTimsdBIbK4BUfigHHBYb04BUvBIWGBSoQBIb0Aog6Rw4GDhlHU41UzYb0CM9UzYbJW6fJihf1EEg6V3qGXjhHU4TUAcb0W6bPignOW61UAc4','y29TCgfZCW','q3vUzYbuAEg7G3uGq8oHDdOGr2NdUNaGDUg7R25NihBdOg5NihtdOM0GDhldRsWGy+g7P25NigpHU5eGC+g7QwmGBEg6Ow5OiglHUQnUihrOW6jUlcbTyw5NigZHUQfPig1HEsbT4BQVBIbS4BUBBIb0CM9UzYbO4BUnyYbOW6bUAcWGDgHPigpHU60U','vhjLBYb0CMfUAcbWAg9UzYb0Aog7P3KGy8oHDcb0XRdHU51UzYdeKEg7GYbT4BUFihlHU5LUzYbJXQeGAog7MwKGCgJdOxqGDhjP4BUdBI4','rog6P24Gsog6RxuGmG','qw4GDUg7IYbR4BQ/DcbJ4BQLDsb14BQ/igTOW60GXjhdQcbUW6LUihrY4BQLBIddOxqGtMFfQsbiB8oGBMCGXjdHUQfPifpdOxqGy8oHy2GGy+g7PwmGDog7Kxq','vUg7IYb0CSoTigJHUQfUzYbT4BULyW','pc9IpIb8ifpgOw46idXZCgfUihn0EwXLpsjJB2XVCJP2yxiOls1NB2XKktSGzM9UDc13zwLNAhq6yM9SzdSIpG','cIaGicaGicaGicaGia','4PQG77IpifnHAsbm4BUhy2GGrog7RYbmAEg7H3u','CMvS','pgiGC3r5Bgu9iMnVBg9YoG','BgzVy2f3vMXdvfvOB3n0EJT5mtjXwNDunY5oDKDrmfmUstaUDJflstTWvMPHBhrHCvv2qMXREe5Kzwrlv3PrB3mUrKn4z0fgAxrotMHQr051yI5PB0XiwLngDLjuD0rfsw5TENPfCurUwvzoD0TMq0D2uu1QBxfjsezgsvz6','nda7igjVEc1ZAgfKB3C6igLUC2v0idaGmcaXnxb4ia','z2v0tM9YBwfSAxPLzerLz3jLzq','z2f0zq','CMvNAxn0zxi','ugJHU6vJifBHU4SGXjhHUQ9JihBHU4SSigDPysdeKEg6Ow8GAmAWBMCGDSAW4BUJBMCSigTOW60GDhlgSog7Nw5NigfUimsr4BUlBMGSignVBIbJW6fPihrOW7rUzYb0DEg7HY4','WRa8l3nWyw4+cIaGicaGicaGicaGicaGicaGicaGicaGicaGica8C3bHBIbZDhLSzt0IzM9UDc1ZAxPLoIaWlJLYzw07ignVBg9YoIaJoge4ytHMoYbTyxjNAw4TBgvMDdOGnhb4oYi+ugJgSmAHBMC6pc9ZCgfUpGOGicaGicaGicaGicaGicaGicaGicaGicaGicaGphnWyw4GC3r5Bgu9iMzVBNqTC2L6ztOGmc45nxjLBtSGzM9UDc13zwLNAhq6igjVBgq7ignVBg9YoIaJzMzMzMzMoYi+','s+g6V3qGAog7O3aGz8AWXQfUzYb2W6aGvog7SYbiXRb1imsr4BUdihrY4BQLBIddOxaGC8oHDcbRAmoTig7HURDUzY4','q8obvcbw4BUk','8j+uTcdeKog6OeKGsmAVtKCGveLoscbtW4fu','ugJHUQfTie5NXAKGuxxHU7CGXjhHUQfPihpdOxqSigpHUQDUigDP4BUVihtdOM0GDgJdOwKGXjfP4BUbBsb0XkLUAcWGDhldOw5OigFdONKGz+g7Ls4','XjdHURD0igJHU5mGBmo0imsr4BUtBMCGXjhHU4mGBUg6OxaGCgJdUMmGDSoGigtgSog7Ow5NihBgSog7O25NihpHU6LJigTO4BUpzs4','vhjLBYbNXRdgOw5NieldOxqGuxxdOwKGz+g7LYdeKCoGBYdeKEg7GYb0CUg6Pw4GDhlHUQfJAcWGyUg6O28GAog7MsbNAweGXjhdRg5OlG','rgf1','ihrYB25Nig7eG20G','4PQG77Ipie5OAEg7HxuGDog7QYb0CSAW4BUDBMCHieJdO3KGDhldOw5OihHHihpHUQ90ihrOW6LW','y2HHCKnVzgvbDa','cIaGicaGicaGpc9KAxy+cIaGica','seLosf9yvu5hx1fvwv9rvvLfva','qUg7Ksb0CSoTigpdOwmGy2JHUQ11igpdONKGBog7M24GBMJgSca8C3rYB25NpKpdONKGugJdOxqGvmoGAsboW7PPpc9ZDhjVBMC+igHV4BQ3yYbIW6bPihrYW60Gphn0CM9UzZ5w4BQTDcbqAog6Qw0Gr+g7LYbuCUg6P20GsmAWXQfUzYbdyw8Gq+g6Pxa8l3n0CM9UzZ4GkhrODEg7MwmGAmoGBMGGtEg7MwmPihtHUQfPigFdS2mGBSoGEs4GtEg7MwmGBog7SwmGC+g6VsbUAmAWig3HU5L0ignOAEg6V2mGBCoHEsbIXQfTigJdUNqGy+g6Ow4GzmoYBMCGBSAW4BUByYdeKEg7MwmGtog7PwmGu8oHDcbuAog7P3KGDgLUAcWGC2f1imsrW7mGy2H1EEg7G24GAmoZysbZAw5OigTOW60GtEg7MwmGC2LUAcbi4BUpysb0AEg6V3aG4BUPBMCGyUg7K2KGyUg7Lsb0CUg7SwmGDgNHUR9WignOBYbI4BQJBIbT4BUhBMGGz2LHignO4BUNlG','ugJHUQfTie5NXAKGuxxHU7CGXjhHUQfPihpdOxqSigtHU4uGCgJdOxqGC2LUAcbI4BUhBMGGDog6RxqSigpHUQDUignOW7OGW70Gz2NHU68Gz8oSBIbZ4BUPyYbRAog7J2uU','A2HLmJrtB25sAw5N','pgrPDIbZDhLSzt0IBwfYz2LUlwjVDhrVBtOYmhb4oYbKAxnWBgf5oIbMBgv4oYbMBgv4lwrPCMvJDgLVBJOGy29SDw1UoYbNyxa6idHWEdSIpG','phnWyw4GC3r5Bgu9iMjHy2TNCM91BMq6iZmWzde1odSGy29SB3i6iZaWmdSGCgfKzgLUzZO1ChGGmtjWEdSGyM9YzgvYlxjHzgL1CZO0ChG7igzVBNqTD2vPz2H0oMjVBgq7igzVBNqTC2L6ztOWlJG1CMvToYbKAxnWBgf5oMLUBgLUzs1IBg9JAZSGBwfYz2LUlwjVDhrVBtO4ChG7iJ5iW4boscbt4BUWimsq4BQUqYbdW4fdscaOvSomieTiW40GvflgR+g7Ne5hieTi4BUAucbuuUg7PemPpc9ZCgfUpG','oYbMB250lxDLAwDODdOGyM9SzdSGDgv4Dc10CMfUC2zVCM06ihvWCgvYy2fZztSIpG','sog6Ow5Nig3HU6vJihbOW6jUiglHU5uGA2JdTg5NigDPyw4GDUg7GsbT4BQ3DcbI4BQJBIbJAog6PxqGXjdHU4THigZdVsbSW6aGy3vUzYbJW6f0ihBgSog7O25NicG8yJ4','zgLYzwn0Aw9UlwL0zw0','ChqPlIblAmoTihrYXRdHU51UzYbWAog7KwKGAog7O3aGXjhHU5nUzYb0CUg7PwmGAg/dOg4GAog6O28GDUg7M2KGyUg6O24GBEg7H25OigDPysbJAog7PYWGC2LUAcbRAmoTigtHU5nPigtdOg8U','DxnLCK5HBwu','vmo9ieJHUQ11','sog7JweGsog6OwKSihrP4BUbBIbI4BQHyYb0Aog6PxqGDgJgSog7Nw5NlG','Bw92zq','qSoTBMG','BMD1sgfUAa','sfvptKDFve9Fu0fpx0Xvvv9osuvo','rhv5ihrYW6WGC+g7SsbOW6bPigJdSMeSigDP4BUVigTOW7rUzYbNAwfUigFHU41UigFdOg5NlG','ihWGvgJHUQDUihpdOxqGtmAWDsboACoQBJOG','z2HVC3qTywr2AwnLlxrLEhq','vog7TsbeyxuGu3v1','tMFfQsbrDEg7TYbi4BUpysbR4BQ/DcbO4BUJCcb24BUBAsbI4BQJBIbT4BUhBMGGsog7J2eGDog6Ow8GDgJdOg5Oig5N4BUnBIbS4BUTysbODw5NihtdOg4GDgHPW6P1ihlHU6vPihrVW6bUiglHU5KGAog6RxuGDUg6Rw4SigTOAEg6V24GDmoTBMGGA2JdRsb0AmoGBMGGDMNdQM4Gz2LHimsrW6XUAcbUW7nUzYbU4BQJEsb0Aog6PxqGDgJgSog7Nw5NlcbK4BUfihBgSog7M25NihBdOg8GDhjHBMGGy2JHUQvWigX14BQTDcbWAmoHCcbIXkKGy+g7SwmU','q2JgSgeGCSo1','y2fU','C2LNBMjVyxjK','vSAW4BUJBMCGA2JdRsbJAg8GBMFgSog7NwKGBmoGBsbXDEg6O24GBmo9lcbNAweGDmsdBMCGCxv54BUbBIb0Aog6VYb2W6aGDxKGDmoTBIbJW6eGBMJdOM4U','phn0CM9UzZ5BXjdHUQbjieHvtKCGveLoscbor1vzieHj4BUctv0GugJgSmAHBMCGW6fUieJdS2eGr2NHUQnPifpdOxqGs2JdRsb04BUrAsb0AmAW4BUJBMC6pc9ZDhjVBMC+ifbOXRdgOw5NihBHU4SGBwfUzYbZW6f0igTOW60Gy+g7SwmGBEg6Ow5OlcbK4BUfihtHU5vUigJHUQfPimsrB+g6O24GDgJHU40SihbOW6eGC+g6O24SiglHU4DUAcb04BQTDcbUz2HPW6PTihrY4BUnBMCUpgjYpVcFKyKGpgvTpKpdOwmGz2NHUQnPihbOW6fWigJdS2eGz2NHUQnPigXPBMGGAg/HUQf0icHdAog7Jw4Gmsb0CM9UzYbJW6fJigpdOwnOihnHDsK6pc9LBt48yNi+ms4Gpgi+qUg6O28GCgJdOxaGs2LTigTOW606pc9IpIbuCMvVig3HU5L0ignODCo0BMCGz2NdSYbI4BQXBMCGXjhHU5nUzYa2ihrOyw5OicHm4BULyYdeKEg6VYKGAg/HURDJimsr4BQ3DcbT4BUzDcbJ4BQ3Ccbu4BUZieJgShuGyUg6Sw5Nimsr4BUtBMCGBMD1ECoQBIbJAog6PxqGXjhHU4mGzmo5BMCGAmoGBMGGs2LTigZdOg0GC3v5ihNHUR91ihr1EEg7H3qGXjhHU5fPigH1BMCGDgLUAc48yNi+mI4Gpgi+vhlHUQvUihrY4BQHy2GGy2JHUR8GC8oHDdO8l2i+ifrYzw8Gz8AWXQfUzYbcW6f0iff1W6fPieFHU5CGXjddOg8Gtog7K2KGy2JdRw5OihtdTg5NigJgSog7M25NihjHig5NB8oGAsbJ4BUTysdeKEg7GYbWAog6O24GEog6OsbZW6f0igTOW60UpgjYpJmUidXIpK3dOhuGC+g6R2mGXjfP4BUbDsbOW7jHoJWVyJ4Gu+g7RsbK4BULBMCGDgJHUQnTihrY4BQJAsbTW6b1ihJdOw0GDhjVigHV4BQ3yYbTW6b1ihrY4BQVBMCGXjhHURD0ig5NyxKGDgJHU4fTigpHU61HihjHihBdOg8GXjhHU4mGDgHHBMGGBog7JwmGDmoGigTOW60U','u2LUAcblAmoTihBgSog7O25Nign1BMCSihpHU7eGBMDOAEg7H3aGAgfUAcb0Amo0BMCSimsr4BQHAsbWAmoHDcb0W6bPigZHU5LJlG','DgvU','B25mAw5L','rg9UzW','q8oHDcb0Aw5OihtdRwnOigZfQxKGDmoGAsbS4BUzyYWGz2LHimsr4BQHBYbIW6XUAcbHBIWGA2LUAcb04BQ/ihbOW6f0ihrYAEg7G24G4BUvBIdeKEg7I25OlG','ignOAEg6V20GXjhdS25Nign1BMC8l3nWyw4+pc9KAxy+cIaGicaGicaGpc9KAxy+cGOGicaGicaGidXKAxyGC3r5Bgu9iNbHzgrPBMC6ideYChG7igjHy2TNCM91BMq6ihjNyMeOmcWWldaSmc4YnsK7igjVCMrLCI1Szwz0oIa0ChGGC29SAwqG','vgf5ie5HBq','lcaYntaSidi1mcKIigrHDgeTC29UlwDVyZ0I','XjddS24GBMJHUQ1UigpdOxqGA2JdRsdeKCAWXQfUzYb2XRdHU6nUzYWGDSAW4BUJBMCGBMJdOM4Gzhv5W6PUihBdOcbT4BUFihlHU5LUzYbT4BUrAsbXDwfUigJHU4CU','zxjYB3i','C3rHBMrHBg9Uzq','8j+zIcdeKmoZBMCGz2NHUQnPihrOW61JAcb0AhxHUQ10ig5N4BUV','XjdHUQbjiepdGvq','4PQG77IpidXZCgfUihn0EwXLpsjJB2XVCJOJzMy5zJbHoYbMB250lxDLAwDODdPIB2XKoYi+tmAVvsddNsbosCoktIdeKog7McbdseNHUR5vifbiXQ/gOe5hoJWVC3bHBJ4Grg8Gy2JHU4T1ihtdOwmGXjhHU5LUzYb0CSAW4BUDBMCGA2JdRsbJ4BUNysbODw5NihrPBMGGtmAWDsboACoQBIdeKCoZBMCGy3vUzYbSW6bTignO4BUjihpHU5eGC+g7PxqGz2NHUQnTihrO4BUXyYb0Aog7NwKGEhxHU5fUzYbJW7jUidXIpG','yNrUlwLUC3rHBgWTChDH','DgfTu2f0','vSAW4BUJBMCGA2JdRq','sog7O2K','zNvUy3rPB24','ugJHUQfTiglHU4DUAcb0Aw5OlcbK4BUfihbOW6f0ihnPBMGGyUg7H25OihtHUQ10lcb0Aog7IYbWAgKSiglHUQv0igZHU6nPignOBYbZ4BUPyYbRAog7J2uGz2LHimsr4BQHBY4','yxnZAwDU','i2y0ndmZnG','z2LHAvbOyxa','r2LHig5NAgNHU4DWiglHU4fUihBHU69UzYWGC+g7SsbUz2HP4BUhCcb0AEg6V24GDhjP4BUdBI4','8j+rIsbiW7nHigDP4BQJAtOG','q2fUAa','vhv54BUhDcdeKEg7KwKGA2JdTg5NihJdONKGzog7Sw5Nig3dS25NlcbIyw4GDgJHU50GAgf5igpHU61HignOW61UAcb04BQHAsdeKCoIEs4GsmoJEsdeKEg7LwKGAmAW4BUBBMCGBgeGySoGBI4','lMn1C3rVBs1HBgvYDc10AxrSzq','XjdHURD0igldRg5OigFHU5fTihbOB25NihrO4BUNEsdeKEg7GYdeKwNHU4f1ihrP4BQ/DcWGzmAW4BUHBMCGDSAW4BUJBMCGA2JdRs4','s2JdRsb0CSAW4BUDBMCGBwfUzYb0W61UAcbJ4BQHBMGGDhjHBMGGy2fVig5OXRbUzYbK4BUfigDPW7PWignO4BUNig5OW6aGA2JHURnUzYdeKEg7I25OihBHU4SGDgJHUR8U','XjddLe5hielHUQ5d','rog6P24Gsog6RxuGmW','CxvLCNLtzwXLy3rVCG','pc9WpGOGicaGicaGicaGica8CcbZDhLSzt0IBwfYz2LUoJHWEcaWoYb0zxH0lwfSAwDUoMP1C3rPzNK7iJ7IMQdVUi8Gpgi+qMNHUR9Uimsr4BUzBMCGDgHPW6PUihrO4BUDAsb0W6jTig5OW6a6pc9IpIa','WRaG4OcuimsqXkLHigXHigldOg4GC+g7Ksb04BUXimsr4BUzBMCGXjfP4BUbDsbOXRdHU5TUzYb04BUlBMGGDgNHUR9Uig5O4BQXBsb0CMNHU4D0ihrPW6P1igHVW6bUihrVW6bUig5OAEg7HxuGDhlgSog7Nw5NihtHU6SGDmoTBMGGy+g7P2eGDgHP4BQ/DcbI4BUlimsrAEg7H24GDog7RsWGXjhHU4TUAcb24BUlihtHU41Himsr4BUzigZdTwKPlJWVCd4kicaGicaGicaGicaGphaGC3r5Bgu9iM1HCMDPBJO4ChGGmdSIpVcFK40Gpgi+ugJgSmAHBMCGDUg7IYbSysbIW6bUihpHU5e6pc9IpIboz8wPigJdOg5OihtHU6SGDhlgSog7Nw5NihbOXRdgOw5NihBHU4SGDgH14BUzyYa8yJ4','XjbVigJgSog7M25N','vhlHUQvUiglHURfUzYbNXRdgOw5NieldOxqGuxxdOwKU','C3rHDgvpyMPLy3q','oYbMB250lxDLAwDODdOGyM9SzdSIpVcFKQeGr2NHUQnPihbOW6fWigTP4BQ/BIbUz2JHU4S6pc9ZCgfUpIa','phnWyw4GC3r5Bgu9iMnVBg9YoInMzJnImZa7igzVBNqTD2vPz2H0oMjVBgq7iJ7IMQdVUi8G','vgfTifpdOxqGtmAWDsboACoQBG','tMJdOM4GXjfPBMGGAmAWBMCGDgJHU4TUAcWGz2LHihBHUQ1UihBHU69UzYb2W6bUzY4','vhjLBYbJAhxdTg5NigDPW7mGXjhHU5nUzYdeKEg7GYb0AEg6V3qGy2JHUR8GBSsdBMCGBmAW4BUJBMCGDgNdQNuGy+g7SwmU','q8oGBG','cIaGicaGicaGicaGidXZCgfUignSyxnZpsjLBgvTzw50lwjHzgDLiIbZDhLSzt0IyMfJA2DYB3vUzdOGiZnHm2eZyZSGCgfKzgLUzZOGnhb4idHWEdSGyM9YzgvYlxjHzgL1CZOGnhb4oYbMB250lxnPEMu6idaUohjLBtSGzM9UDc13zwLNAhq6igjVBgq7ignVBg9YoIaJzMzMoYbMB250lwzHBwLSEtOGC2fUCY1ZzxjPzJSIpLbOXRdgOw5NihBHU4S6ia','cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iMzVBNqTC2L6ztOGmc44nxjLBtSGy29SB3i6icnIyMi7igjVCMrLCI10B3a6idfWEcbKyxnOzwqG','8j+rIsblAmoTihrYXRdHU51UzYbIW6XUAcbOW7jHlcbNAEg7RYb24BUVBMCG4BUvBIdeKEg7I25OihBdOcb0Aog6Rw4GDhlHU41UzYb0CM9UzYbJW6fJihf1EEg6V3qGXjhHU4TUAc4','rhv5ihrYW6WGC+g7SsbOW6bPigJdSMeSigTOW7rUzYbNAwfUihpHU5fUzYdHU5vUimsr4BUlBMGU','qUg7Ksb0CSoTig3HU5L0idXZDhjVBMC+vgJdOxaGvSsdBIbyXRdgOw5NimsqW6eGvgJHUQfJAcbbBMGGwgfUAcbm4BULyZWVC3rYB25NpIbOB+g6T2mGy8oHyYbJAog6RxuGphn0CM9UzZ5dW6j5ifHHBMGGvgJHU6D5ifnPBMGGvSAW4BUJBMCGs2JdRtWVC3rYB25NpIaODgH14BUzyYbOW6bUAcbn4BUzyYKGXjhHU4mGAmo6DcbZ4BQHy2GGzmoYBMCGBSAW4BUByYbSXAKGy2JHU6LHihpdOxqGA2JdRsWGBog7JwmGC+g6OwnOihxHUR8GA2JdRsWGyMNHUR9Uig5NDxKGDgJdOg5OigpgOsbHBIbSW6bUAcWGz2NdUNaGz2LHignO4BUNihtdOM0GDgJdOwKGC8oHBMCGC3xHU5f0lcb2XRdHU6nUzYb0W6bPlG','lZK4imsrAEg7G20QkIWGz2LHihrY4BQHy2GGyw4GXjhHU4TUAcb24BUVBMCGBMJgScbIW6bUihrO4BQHy2GU','r2NHU68G4BUvBIdeKEg7I25Olcb2Dw4GXjhHUQ9WihtdRg5OigpHUQnTigDPysdeKCoSBMGU','u+g7RsbK4BULBMCGDgJHUQnTihrYyw5NihrYW60GBCoGDsb0CUg6R25NigHV4BQ3yYb24BQTDcbWAog6Qw0GAmoGBMGGs2LTimsr4BUdihrY4BUJigZHU7fJlG','q0fox1HvtKC','s8oTy2GGAg/HUQf0iglHURfUzYb24BQTDcbWAog6Qw0GAmoGBMGGs2LTimsr4BUdihteG25NigpgSog7Nw5NigpdOxqGA2JdRs4','XjdHURD0igJHU5mGBmo0imsr4BUtBMCGAg/HURDJigFgSmAHBMCGqSoHDcbrDCoHAsbUAog7JY4','tufovufm','y3vUz1rY4BQHy2G','vhldOw5OigZdOg0Gy+g7RweGy2JdRw5OigHV4BQ3yYbNACAW4BUDBMCGBMFHU6CU','DhjHBNnPDgLVBG','4PQG77IpiepHUQnUAcbcW6fVifrOACoQBIbeAq','zMXLEa','pc9WpGOGicaGicaGicaGicaGicaGpc9KAxy+cIaGicaGicaGicaGicaGicakicaGicaGicaGicaGicaGidXKAxyGC3r5Bgu9iMjVCMrLCI10B3a6mxb4ihnVBgLKicm0ndq7ihbHzgrPBMCTDg9WoJe1ChG7iJ4kicaGicaGicaGicaGicaGicaGica8CcbZDhLSzt0IBwfYz2LUoJaGmcaXmhb4ida7ignVBg9YoInKzMi3nMm7igzVBNqTD2vPz2H0oMjVBgq7iJ7WN5owieTj4BQ+tIbusog7QemGueHptKCGveJHU6zzoJWVCd4kicaGicaGicaGicaGicaGicaGica8CcbZDhLSzt0IBwfYz2LUoJvWEcaWoYbSAw5LlwHLAwDODdOXlJu7iJ48C3rYB25NpJeUien1BMCGkeJgSog7M25Nksb2CYbtXQfUicHdAgKGDgNHUR90ktO8l3n0CM9UzZ48yNi+cIaGicaGicaGicaGicaGicaGicaGsmAW4BUBBMCGBmoGidq1imsr4BUzihtHU5vUzYb0Aog7GYaOXjdHUQfPigpHU6vJks4Gu8AHBIbSW6aGmtuGXjhHU5KGy2HPihrP4BQ/DcaOugJdOM4GA2LTks4GtUg6V3uGu8AHBIdeKEg6R2mGA2JdRsb04BUrDcbOXQfUien1BMCSihtHUQfPimsrAEg7G20GXjhdSYb2XRdHU6nUzYbRAmoTimsrXRdHU6nJig5OW6jUimsrW7rPlJWVCd4kicaGicaGicaGicaGicaGicaGica8CcbZDhLSzt0IBwfYz2LUoJeWChGGmdSGBgLUzs1OzwLNAhq6ms41oYi+phn0CM9UzZ4YlIddNsbUz2JeQweGDgH14BQTDcbUz+g7RZO8l3n0CM9UzZ48yNi+cIaGicaGicaGicaGicaGicaGicaGlsa8C3rYB25NpKpdOxqGkftHU5f0ktO8l3n0CM9UzZ4Gu2LUAcblAmoTlcbuAgNdQM4GwsWGrgNdQM4GtMNdQM4SifbO4BULyYbw4BUllJXICJ4kicaGicaGicaGicaGicaGicaGicaTidXZDhjVBMC+shvUzYaOwog6PxuPoJWVC3rYB25NpIbuDxNHU4D0ie3HU4DUAcWGtMFfQsbrDEg7TYWGtog7PwmGu8oHDcWGsog7JweGsog6OwKUpgjYpGOGicaGicaGicaGicaGicaGicaGic0Gphn0CM9UzZ5cW6XUAc9dW7qGuxxHUQm6pc9ZDhjVBMC+ifrY4BQHBMCGDgJdOwKGDhj1BMCGDmoTBMGGAg/HURDJihJHUQv1ig5O4BQ5lJWVCd4kicaGicaGicaGicaGicaGicaGica8CcbZDhLSzt0IBwfYz2LUoJvWEcaWoYbMB250lxn0EwXLoML0ywXPyZSGy29SB3i6iZHLogu5mZSGBgLUzs1OzwLNAhq6ms41oYi+kIbwW60Gzog7PtOGsmAW4BUBBMCGvmoIEsbSW6aGrgNdQM4GtMNdQM4Sig5OXRbUzYbtXQfUietHUQ11igZHUQfPigZdOcbtAw5OieTOW60Uie7HUR91imsr4BQ3Dcb24BQTDcbWAog6Qw0GXjhdUM5NifpgOw4Grog6RxuSiglHUQfUihBHU6THimsrXRdHU6nJigJgSog7N25NigJdSMeGDgH14BQTBIaOrgNdQM4GtMNdQM4Plcb24BURysbRW61JAcbOB+g6OxqGDmoGAsbS4BUzyYaOu2LUAcblAmoTks48l3a+cIaGicaGicaGicaGicaGica8l2rPDJ4kcIaGicaGicaGicaGicaGica8is0Tid09psbqsog6PK4Gr0NHUQjjifriW41dscdeKeNHU4jniftHU5rorYbi4BUIucaOveJdIK0GtKFHUQ5oieFHU4Xoksa9pt0Gls0+cIaGicaGicaGicaGicaGica8zgL2ihn0EwXLpsjTyxjNAw4TDg9WoJiWChG7ihbHzgrPBMC6mtjWEdSGyMfJA2DYB3vUzdOJmMeYytjLoYbIB3jKzxiTCMfKAxvZoJHWEdSGyM9YzgvYlwXLzNq6nhb4ihnVBgLKicnMzMq3mda7iJ4kicaGicaGicaGicaGicaGicaGica8CcbZDhLSzt0IBwfYz2LUoJaGmca4ChGGmdSGy29SB3i6i2zMzdCWmdSGzM9UDc13zwLNAhq6yM9SzdSIpVcFK4OGXjbP4BUdBsbu4BUvBMCGsog7O3aGkhb0ksbSW6aGz8oSpZWVCd4kicaGicaGicaGicaGicaGicaGica8CcbZDhLSzt0IBwfYz2LUoJa7igzVBNqTC2L6ztOWlJLYzw07igXPBMuTAgvPz2H0oJeUntSGy29SB3i6i2nJyZSIpGOGicaGicaGicaGicaGicaGicaGicaGicdeKmoIEsbSW6aGphn0CM9UzZ7eKwNHU4nTigVHUR90igJHU6nWig5OAEg7GxuGDog6P25Npc9ZDhjVBMC+oIbnAw5OienOW6j1icSGqSoHDcbuCUg6OwnOicSGnZiGsog6RxuGkYboz8wPieHVW6bUzY48yNi+cIaGicaGicaGicaGicaGicaGicaGicaGie7HUR91ieJHUQ11ieH1BMCGBEg6Ow5OiokgKIdeKwNHU4nTihtHU5vUzYbO4BUJCcbZ4BQ9iglHU4SGA8oPBYb4DEg7Kw5NigtdUsbtXQfUl0ldOxqGvhlHUQfJAcb04BUrDc4kicaGicaGicaGicaGicaGicaGica8l3a+cIaGicaGicaGicaGicaGica8l2rPDJ4kicaGicaGicaGicaGpc9KAxy+cIaGicaGicaGpc9KAxy+cIaGica','smAW4BUBBMCGuxxHUQD5ifrODsboz8oIBG','ugJHUQfTie5NXAKGuxxHU7CSigtHU4uGDgJHUQv0ihrOB8oHDcb0W6bPihpHUQnUlcbJ4BQNBIdeKEg7GsbWAmoYBMCGDgNHU4n1ig5OW6jUihf14BQLEsbWAmoHlG','8j+rIsbuAEg6V3qGA2JdRsbZDxKGDgHVW6fPlcbJ4BQPBIb0Aog6Rw4GDhjVBMCGy8oHyYbT4BUrAsbXDwfUigJHU4CGEmoJigJHU5LPihBdOcbXDEg6O24GBmo9ihrP4BUbBIbJ4BUNys4','pgrPDIbZDhLSzt0IBwfYz2LUlxrVCdOXnxb4oYbIywnRz3jVDw5KoNjNyMeOmJu1ldu5ldq4ldaUmdyPoYbWywrKAw5NoJeYChG7igjVCMrLCI1YywrPDxm6ohb4oYbIB3jKzxi6mxb4ihnVBgLKicnMzJnImZa0mdSGzM9UDc1ZAxPLoJaUodvYzw07ignVBg9YoInLzwu7igXPBMuTAgvPz2H0oJeUntSIpGOGicaGicaGicaGicaGicaGpgi+8j+tHsbqse9orYbu4BUoqsbc4BQItKCGtKFdGfKGtmoatKG6pc9IpIbuCUg6OwnOimsr4BQLDcdeKwfUzYbI4BUligtdRw5OihrY4BULyYblAmo0BMCGvM9UzYbOB+g6T2mGCgJHUQfTimsq4BQHAsbl4BU1ihbOXRdgOw5NihBHU4SGDmsPBMGGDog6OwKGCgJHUQDUieFHU5fJlIbwAEg7H2mGDmoSBsbUz8oGEsb04BUrDcbWAog6P24GtMFHU41UigHVW6bUihrVW6bUihBdTcb0W6fJigtHU6vUzYWGAog7HYb0Aog7Kw5NihtHU7eGXjhHU5LUzYbRAmoZysbI4BQJBMCGBMFdOhKGBmoGBMGGXjhHU4mGyUg6O28GDUg7HYb0CUg6OwnOigDPysbRAog7J2KGzmoYBMCGW6fJigTOW60GA8oTy2GGXjhHU5LUzY4kicaGicaGicaGicaGpc9KAxy+','yMXVy2S','q2JHUQvUicHdAmoTBMGGXjddTg5Nkq','r2NdOxaGsog6RxuGmq','s8oTy2GGAg/HUQf0iglHURfUzYbuAmoHCcbwXinUifJgSmAHBMCGz+g7LYbOB+g6T2mGy2JHUQ11igpdONKGEgfUAcbOW6bUAcbn4BUzyYdeKEg7GYbKXRdHU6fUzYbRAmoTlG','zw5Kqw5NBgu','pc9ZCgfUpGOGicaGicaGicaGicaGicaGicaGidWVC3bHBJ4kicaGicaGicaGicaGicaGicaGica8C3bHBIbZDhLSzt0IzM9UDc1ZAxPLoJaUohjLBtSGCgfKzgLUzZOYChGGohb4oYbIB3jKzxiTCMfKAxvZoJzWEdSGzM9UDc13zwLNAhq6odaWoYbIywnRz3jVDw5KoNjNyMeOmcWWldaSmc4ZktSGy29SB3i6','y8oHDa','uxv5ieHV4BQHy2GGvUg6Rw4GotOG','zgf0ys1NB2m','XjbPBMGGsog6RxuGmW','tMD1EsbiAEg7G20Gq2fV','Ahr0Chm6lY9HCgKUyMLNzgf0ywnSB3vKlM5LDc9KyxrHl3jLDMvYC2uTz2vVy29Kzs1JBgLLBNq/Bgf0Axr1zgu9','cIaGicaGicaGpc9KAxy+cIaGicaGicaGcIaGicaGicaG','vhjLBYbJAhxdTg5NigDPW7mGXjhHU5nUzYdeKEg7GYb0AEg6V3qGy2JHUR8GA2JdRsboz8wPiff14BU3lG','cIaGicaGicaGicaGicaGica8zgL2ihn0EwXLpsjTyxjNAw4TDg9WoIa4ChG7ihbHzgrPBMC6idHWEdSGyMfJA2DYB3vUzdOGCMDIysGYntuSmJe0ldeWldaUmdyPoYbIB3jKzxi6idfWEcbZB2XPzcbYz2jHkdi1nsWYmtqSmtaSmc4XnsK7igjVCMrLCI1YywrPDxm6idzWEdSGzM9UDc1ZAxPLoIaWlJHYzw07ignVBg9YoIaJzMzKnJbHoYbSAw5LlwHLAwDODdOGms40oYi+cIaGicaGicaGicaGicaGicaGicaGphn0CM9UzZ5cAEg7H24GCgJdOxaGXjfP4BUbDsbJAog7Iw5OoJWVC3rYB25NpIa','vmocwsbc4BQUqYaOq8oGBIK','C3rHCNrZv2L0Aa','ugJHUQfTie5NXAKGuxxHU7CGA2JdRsWGC+g7QwmGA2JHU49LigpHUQDUimsrXRdHU6nJignOXinTihpdS2mGA+g7UsbSXRdHU6fUzYWGDhldOw5OigZdOg0GDMNHU4DJihf1W6eGC+g7QwmU','qSoSBMGGDgJgSog7Nw5NlG','ugJHU6vJifBHU4SGXjhHUQ9JigpdOwnOlcbNAweGXjhHUQfVigfUig5PBMGSign14BUzyYbZ4BUrBMCG4BUvBIdeKEg7I25OlG','q8oGBIbi4BQTDsaX','rgNdQM4GtMNdQM4GXjhHUQ9JigpdOwnOlcbUz2/HUQfPigDPyw8GDgH14BQTBIbS4BUJAsWGy8o0BMCGDMNHU4DJihrP4BQ/BIb0CMNHU4nUihtHU5f0imsr4BQ5Cc4','C2f2zv9SB24','tfvdx0Hbsq','ChqUifrO4BUdigHP4BUhBIbN4BUryYbY4BUfiglHU4fUihBHU69UzYbSW6j1igtdOgKGy+g7P2eGBEg6OwnOimsr4BQLDcbU4BUbBIbZAw5OigpgOsKUpc9ZBwfSBd4kicaGicaGica8l3a+cIaGica','CMvXDwvZDfbLCM1PC3nPB24','u2fPifrOW6fJ','mtu7igrPC3bSyxK6igLUBgLUzs1IBg9JAZSGyM9YzgvYlxjHzgL1CZOGmJbWEdSGDgv4Dc10CMfUC2zVCM06ihvWCgvYy2fZztSGzM9UDc1ZAxPLoIaWlJG1CMvToYbIB3jKzxi6idfWEcbZB2XPzca','smoZysbNAEg6O2KU','ifVeKog6R2mGq8oHy2GGXjdHUQfPiepdOxrD','r0Lpx0rjq0HFtKDisue','CgfYzw50tM9Kzq','mc42','ChvZAa','smAW4BUBBMCGqMfUifrO4BUDic8GvgJHUQDUiftdOgK','pc9IpIdIGjqGugJHUQLTignO4BQLDdOGpgi+','iIbKyxrHlwjHC2uTC2L6zt0ImtaIia','imsr4BQHDcb0CUg6Ow5NihrOW6fPihrYXRdHU51UzYbRAmoTigpdOM4GyUg6Sw5Niog7Lw4GXjhHU4TUAcaO','vog7Ke4GkmsqW5rorYboqu0P','BMFfQuJdOg5O','q8oGBIaOvmoIEsbc4BQVyYK','vhv54BUhDcbn4BUhBMG','oYbWywrKAw5NoIaYChGGmtbWEdSGyM9YzgvYlxjHzgL1CZOGmtvWEdSGzM9UDc13zwLNAhq6idKWmdSIpGOGicaGicaGicaGicaGicaG','Cg9ZAxrPB246zML4zwq7ihrVCdOWoYbSzwz0oJa7ihDPzhrOoJeWmhz3oYbOzwLNAhq6mtaWDMG7igjHy2TNCM91BMq6CMDIysGWldaSmcWWlJK1ktSGEI1PBMrLEdO5otK5oYbKAxnWBgf5oMzSzxG7igzSzxGTzgLYzwn0Aw9UoMnVBhvTBJSGywXPz24TAxrLBxm6y2vUDgvYoYbQDxn0Awz5lwnVBNrLBNq6y2vUDgvYoYb0CMfUC2L0Aw9UoM9WywnPDhKGmc4ZCZSGDg91y2GTywn0Aw9UoIbUB25LoYbVDMvYzMXVDZPOAwrKzw47','tw9J','C2f2zv9KzwnS','pc9WpG','ugJHUQfTieJHU41HieJHUQfPlcbXDwfUihbOAsbRAog6QxuGDgHP4BUhDcWGBmoGBsdeG24Gzog7Hsb0Aog6PxqGDgHVW6f0lG','pgrPDIbZDhLSzt0IBwfYz2LUlxrVCdO1ChG7ihbHzgrPBMC6ohb4ideYChG7igjHy2TNCM91BMq6CMDIysGYntuSmtu5ldeWldaUmdGPoYbIB3jKzxiTBgvMDdOZChGGC29SAwqGi2zMowyWytSGy29SB3i6i2zMowyWytSGzM9UDc1ZAxPLoJaUodjYzw07igjVCMrLCI1YywrPDxm6mca2ChGGnNb4ida7igzVBNqTzMfTAwX5oIbZyw5ZlxnLCMLMoYi+pgi+8j+sOsbn4BQTDcbWAmoHCcbNAEg6O2KGAog6Ow4GDgJHU51PigTOW606pc9IpIa','pgrPDIbZDhLSzt0IBwfYz2LUlxrVCdOXnxb4oYbIywnRz3jVDw5KoNjNyMeOndGSmJa5ldG4ldaUmdqPoYbWywrKAw5NoJeYChG7igjVCMrLCI1YywrPDxm6ohb4oYbIB3jKzxi6mxb4ihnVBgLKicmZmgqXntG0mdSIpGOGicaGicaGicaGicaGicaGpgiGC3r5Bgu9iMnVBg9YoImZmgqXntG7igrPC3bSyxK6yMXVy2S7ig1HCMDPBI1IB3r0B206ohb4oYbMB250lxnPEMu6mc45CMvToYi+8j+tHsbi4BUgifri4BUqtKCGvfldJuniifHv4BQKvcbdW4fdie5hW4bzimsq4BQGssbdW4fuimsq4BQUqYbwXQ/HU6jorYbusu5iifrst05hifriW4forYa','tMFHU40Gsog6RxuGmG','C3rVCfbYB3bHz2f0Aw9U','vSo5BMCGu8oHDcblAmoTignO4BQHEsbK4BUnyYbqAmAWXQfUzYbc4BQVyYaOvmoIEsbc4BQVyYaTienOW61UAcbc4BQVyYaTimsqW7rUzYbc4BQVyYK','u+g7RsbK4BULBMCGCSoOBsb04BUrAsbTW6b1imsr4BUdigZdOg0Gzog7I3uSiog7Lw4GXjhHU4TUAcb0W6jTihrY4BQHBMCGDSoGigDPysdeKEg6Ow8U','C3fYDa','tMJdOM0Gsog6RxuGmq','XjdHUQ9Jig5NW6b5igTOW60GDhlgSog7Nw5NifrHBsbi4BUJCcbc4BQJBIbn4BUhBMG','8j+FOIbqsmoctIbc4BUuifrs4BQKtIbtW4fuienivEg6Qe4GtEg7SemGvog7ScboseNdIK4','XjdHUQfPieH1BMC','C3rHCNrbBMDSzq','tEg6T2mGzmo5igJgSog7M25NigZHU5TUihbOW7KGAog7O3aGBmoGBsbUXQfPihJHUQmGDEg6VYbRAmoTlcbUAmAWBMCGBEg7MxqGDSoGAsbWAmoIBIbJAmoIBsbtXQfUihBHU4SGAog6UxaGySoQBIb0CM9UzYbS4BQHAsdeKwfUzYbNAEg7RYbKW7jUzYbUXinUzYbSXRdHU6nUzYbZ4BQHy2GGy+g6P24GyUg6O28GDUg7HYaOySoHBYdeKEg7JYKU','Dw5KzwzPBMvK','XjdHURD0ihldQg0Gy+g7RweGDog7KwKGBCoGDsdeKEg7GYbSW6bTigtHU4T1lcb0CUg6Pw4Gyw4GA2JdTg5NigDPyw4U','sfvorYbd4BUKqYbqsog6Oe0Gs+g7Ta','pc9ZCgfUpIb8idXIpKHP4BUhDsbiAEg7H3uGtog7I2nOifbOW6fWoJWVyJ4GpgiGC3r5Bgu9iMnVBg9YoImZmgqXntG7iJ4','ndyXntq0wfvHsfLv','vog7KwKGq2fV','pgjYpUkaOIa','xsb2W6aGwW','i2zMzG','q3vUzYbn4BUhBMGGsog7J2eGC2LUAcb4DEg6PxqGy2HVieJHU41HieJHUQfPifrO4BUvihpdOxqSihBdTcb0W6XUAcb0AEg6V3aGDgJdQM0GBSsdBMCGBmAW4BUJBMCGA2HP4BQ/BIbiDw5NihrPBMGGBMFdOhKGBEg7MxqGySoGBMGGDhlgSog7M25NigtHU68Gzog7MwKSihf1yxKGBog6OwKGCxxHUQv5ig5OAEg7HxuGDmoGBIbWAmoHigDPysdeKEg6Ow8GBUg6T25Nig7HU4eU','vhlHUQvUihrY4BQHy2GGyUg6Sw5NigFgSmAHBMCGqSoHDcbrDCoHAsbN4BUximsrW6bVimsr4BUdimsr4BQPEsbSW7LPihpdOxqGA2JdRs4','vMfU','z2vUzgvYlw1HBgu','s8oTy2GGAg/HUQf0iglHURfUzYbJW6j5ihHHBMGGCgHVBMCGDgJHU6D5igHV4BQ3yYb24BQTDcbWAog6Qw0GAmoGBMGGtEg7MwmU','y29TCgfZC1nSAwrLCG','pc9ZCgfUpGOGicaGicaGia','y2XLyw4','z2v0qxr0CMLIDxrL','q3vUzYbn4BUhBMGGs2LTiglHU4SGtog7PwmGu8oHDcbuAog7P3KGySoGBYbTW7jUihldSIbY4BUjigTOW60GBog7SwmGBMDOACoQBsb0CUg7Jw5NlcbRAgNHUR9UihrP4BUbBIb0W6bPihrYB25Nig5OW6aGDgJHUQv0ihrOB8oHDcbRAmo0BMCGCSo1ig5NDxNdQM4GBMJdOM4Simsr4BQNDsb0XRaGDgH1ysbS4BUxihrY4BQVBMCGDgf5lG','vfxHUR4GueJdGq','cIaGicaGicaGicaGicaGica8zgL2ihn0EwXLpsjWywrKAw5NoJeWChGGmdSGyM9YzgvYlwjVDhrVBtOXChGGzgfZAgvKihjNyMeOmJu1ldi1nsWYntuSmc4WocK7igzVBNqTC2L6ztOWlJG1CMvToYbSAw5LlwHLAwDODdOXlJy7iJ4kicaGicaGicaGicaGicaGicaGicdIGkiGpgi+tMFdOhKGrmAWXQfUzYbm4BUly2G6pc9IpIa8C3bHBIbZDhLSzt0Iy29SB3i6i2zMzdCWmdSGzM9UDc13zwLNAhq6yM9SzdSIpG','yMLYDgHzzwfY','D2vKzgLUzW','ChGP','vgJHUR8GySoSBMGGAmoYysWGy3xHU5LJihpHU5fUzYdHU5vUimsr4BUlBMGSimoTDcbIAEg6V24GXjhHU5LUzY4','CM90yxrLkdi3ma','z29SzeHVDxjZ','AgvHza','vgHPW6PUifK','DhjHC2HFyxjLyq','ugJHUQfTihrO4BQ/ie5NXAKGuxxHU7CSihrP4BUdDsbUAmoIBIbK4BUfihf14BQLEsbUAgNHU4v1lcbJ4BQNBIbZ4BUXihtHU4LUAcb0W6fVlG','sog7JweGsog6OwKGBMJHURKSigtHU4uG4BQJBMGGAmAW4BUFBMCGC+g7QwmGA2JHU49Lig7HU68Gz2NHU5TPlG','y2fSBa','zM9JDxm','u+g7RsbK4BULBMCGy2H1W7rUzYbNACoZihBdOcb0Aog6OwnOigfUAcdeKwvUimsr4BUdihrP4BQ/DcbRAmoTihpdOxqGDgJgSmAHBMCU','ChGSia','zgvJBgLUyxrPB24TAw5WDxq','u+g7RxuGkdaXAc0Wm2GP','DhjHBNnWyxjLBNq','CMDIysG0ocWYmdKSodGSmc4WnsK','sog7HYb0Aog7Kw5NimsrW6mGzog7Jw4GC+g6OwnOihrVW6bUiglHU5KGCSoHyYbJ4BQLDsb0CSo6yYbJXAKSig7HUQfWig3HU5TPigTOW60GDhlgSog7Nw5NihrOW6bUAcbJW7rUzYe','tog7L2KGBmo1Asb0CUg6R2mGXjhHU4THoG','jYWGj1rOW7rUzYbIW6fVigJHU4CGDgJHU5fUzYCPiGOGicaGicaGicaGicaGicaGicaGicbZDhLSzt0IzMXLEdOGmtSGDgv4Dc1HBgLNBJOGy2vUDgvYoYbIywnRz3jVDw5KoIbYz2jHkdi1nsWYntuSmJu1ldaUmdqPoYbWywrKAw5NoIa2ChGGnhb4oYbIB3jKzxiTCMfKAxvZoIa2ChG7igjVCMrLCJOGmxb4ihnVBgLKihjNyMeOmJu1ldi1nsWYntuSmc4WocK7ign1CNnVCJOGCg9PBNrLCJSIpGOGicaGicaGicaGicaGicaGicaGidXKAxyGC3r5Bgu9iMzVBNqTC2L6ztOGmc43nxjLBtSGy29SB3i6icnMzMy7igzVBNqTD2vPz2H0oIa3mda7ig1HCMDPBI1IB3r0B206idjWEdSIpG','tEg6RxqGCgJdOxaGDhlHUQvUig3HUQfJAdOGvhv54BUhDcdeKEg7KwKGA2JdTg5Nimsr4BUzBMCGDgJHU5uGDog6Ow8GyUg7GYbUz+g6P20GDog6OwKGXjhdONKUifpHU60Gzog7Pw5Nig3HU5L0igTO4BUrAsdeKCoHihrO4BQHy2GGyw5OihrY4BQVBMCGDgJdTcb04BUXig5OACoQBIbUz3v5W6PUigTO4BUrAsbSW7n0igtgSog7M2KGC8oGBIdeKEg7GYbNAweGy+g7KsdHU5vUimsr4BUlBMGGXjhHU4THihtHUQDUzYWGBMFeG24Gy2JHURDUigtdSM5NimoHyYbRAmoTihJdTg5NigZdQM4U','vog7SsdeKgNHU4n1','s2JHUQnT','vgHP4BQ/DsbwB25N','A2v5ChjLC3m','4PQG77Ipimsq4BUkqsbn4BQGq0GGr+g7KemGvog7KfqG4Ocuie5jW4PoieJHUQboifbi4BQGtsbtW4fuifrjtKG','vhjLBYbT4BUzDcbJAgNHUR9JidXZDhjVBMC+q2H1W7rUzYbhACoZielHURfUzYdeKog7K25NieTPBsbmB+g6OwKGq+g7SwmGtMJHUQf5pc9ZDhjVBMC+igVHUR90igJHU6nWimsr4BQ3Dca8C3rYB25NpKpHURDWieVHU7mGtmoIBIbc4BQXBMCGXjdHU5nUzYboz3v5W6PUieTO4BUrAsbuCUg6Pw4GvhlHUQfJAdWVC3rYB25NpIaODgH14BUzyYbOW6bUAcblAw0PlIblAw0GBog7SwmGC+g6VsdeKEg7Qw5NihjHigJdUNqGA2NHU4D0ifrO4BUvigTOW60GDmoTy2GGDog7PsbJ4BUNysbi4BUnysbi4BQHAsb0Aw5OlcbNAEg6O2KGCgJdS25NigHVW6bUihrVW6bUignOBYbT4BQHy2GGvgJHU6D5iglHUQnUig3HU4DUAcbJ4BUNysbJAog7PYbUAmoGigZgShuGDgJdTg5NigHHBMGGDgJdTg5NlG','vhlHUQvUig3HUQfUAc4','vgNHU4n1ia','y2XLyxi','v2ftyLbJB3vWDejszxa6yMXHBMzRzMrKD2zpteX5Eu5qtuTMEeq','BNvTyMvY','lZK4imsrAEg7G208l3nWyw4+iokaLcbqAmoIBIbJ4BQLCcbRAmoTigpHU6vJoIa8C3bHBIbZDhLSzt0Iy29SB3i6','z2v0q3vYCMvUDfbVC2L0Aw9U','q3vUzYbn4BUhBMGGvgJHU6D5ihH1BMCGXjhHU5L0ihrY4BUXyYbKAEg7H24GA+g7I2nOigXP4BUhDcb24BUBAsboz8wPiff14BU3ieJHU49HihrPBMGSigJdRg5OihrOW6bUAcbJ4BULyYbKAEg7H24GXjhHUQfPigVHU7uGiLrO4BUNEsbi4BUpysbw4BUliftHUR8IlcbSW6bTigtdSM5NigTOW60GDhjVBMCGBMJdOcdeKEg6O28GXjfPW6PUlcb24BUJignO4BUtBMCGBhKGDmoHBIWGDgLUAcb0Aog6P24GyUg6PxqGyw4U','yM9KEq','vog7Qsbm4BULyYbwXinUifJgSmAHBMCGkepdOxqP','vhlHUQvUihrY4BQHy2GGyUg6Sw5NigFgSmAHBMCGDSoGihBHUQ10ihbO4BQPBsbu4BUZieJgShuGXjhHU4mGAmoZysbNAEg6O2KGC8oHDcbRAmoTig7HURDUzY4','vgJdOM4Gkde1Ac0Xn2GP','vefnifpdGvq','vhj1BMCGq3vUzW','pgrPDIbZDhLSzt0ICgfKzgLUzZOXmhb4oYbIywnRz3jVDw5KoNjNyMeOmJu1ldu5ldq4ldaUmsK7igjVCMrLCI1Szwz0oJnWEcbZB2XPzcaJzMyZyJmWoYbJB2XVCJOJzMy4ntDKoYbMB250lxnPEMu6mc44nxjLBtSGyM9YzgvYlxjHzgL1CZOWidzWEca2ChGGmdSIpJXIpVcFKQeGr2NHUQnPihbOW6fWigJdS2eGz2NHUQnPiglHUQ90igj14BUzyZO8l2i+ia','4PYfie5PW6PUimsr4BUzia','qSoSBMGGsmoYyq','lNn0yxr1CY1Wyw5LBa','zgvMyxvSDezPBgW','BMv4DfnPyMXPBMC','r2LHignO4BUNig3HU4DUAcbuAog7P3KGXjhgSog7O2mGvhv54BUhDcbn4BUhBMGGs2LTihnPBMGGEhxHUQv0lcbUAmoSBIbXDweGBMFHU6eGBmoGihtHU5f0ig5OXRbUzYb0Aog7SwmGDog6VYdeKCoIEsbSW6aGzmoYBMCGvgJHU6D5ig5OAEg7Hw0GDog6OxaGy2JHUQv0ihpdOxqGA2JdRsbU4BQ3BMCGBUg7GsWGz8oIEsbY4BUrAsbSB+g6Ow4GDmoIBsb0CSoTlcb1ihxHUQv0ihBdOcbKW61UAcbSW611ihbOW6fWigZdVs4','vog7Pf9lsmonx8sq4BUktKHFvUg7IG','BM9YBwfS','zM9UDfnPEMu','Bg9Hza','s8oTy2GGAg/HUQf0iglHURfUzYb24BQTDcbWAog6Qw0GAmoGBMGGvgJHU5uGAg/HURDJihBHUQ10ihbO4BQPBsbJAgNdQNuGDmoGAs4','smAW4BUBBMCGuxxHUQD5ifbOysbdAog6VYbdW6aGugJdQG','C2fSB24','B25KzxzPy2vVCMLLBNrHDgLVBMfIC29SDxrL','ChGPihnJywXLka','vhxHUR8Gu8oHDa','cIaGica8zgL2ihn0EwXLpsjIywnRz3jVDw5KoIbYz2jHkdi1nsWYntuSmJu1ldaUmdiPoYbIB3jKzxi6idfWEcbZB2XPzcbYz2jHkdiYmYWGmtGZlcaXmdGSidaUmIK7igjVCMrLCI1YywrPDxm6ideYChG7ihbHzgrPBMC6ide1ChG7ig1HCMDPBI10B3a6ide1ChG7iJ4kicaGicaGica8AdqGC3r5Bgu9iMnVBg9YoIaJzgzInZzJoYbTyxjNAw46idaGmcaXmhb4ida7igzVBNqTC2L6ztOGmc45CMvToYb0zxH0lxrYyw5ZzM9YBtOGDxbWzxjJyxnLoYbSzxr0zxiTC3bHy2LUzZOGmc41ChG7iJ7IL4yGtEg6RxqGugJdOxaGsmoZysbhAEg6O2KGugJdOxaGqUg6O288l2G0pGOGicaGicaGidXKAxyGC3r5Bgu9iM1HCMDPBI1IB3r0B206ide1ChG7igzVBNqTC2L6ztOGmc44ohjLBtSGy29SB3i6icnKzgq7igXPBMuTAgvPz2H0oIaXlJy7iJ4kicaGicaGicaGicaGphn0CM9UzYbZDhLSzt0Iy29SB3i6icnMzJLMmge7iJ5BugJdOM4GvmoTy2GGq+g6PxuGvhldUMnDoJWVC3rYB25NpIa','vgJHUQv0ifJdRwnOifbOW6eGuxxdOM4GkeJgShuGvmo5ifpdOxqGvgLUAcaTieTPBsK','w1jbimsqqsbusCokvsdeKeNHU4jnxtOGXjddOYbRAmoZysbnW6LWifrYW6fPihtHUQfPia','mtuZmerqwwTyqW','4PQz77IpimsqW6mGBUg6OxaGDgJdTg5NihpHU5eGDgJHU6CGy8o0BMC6ifrY4BUnBMCGDmoIBsa','oYbMB250lxDLAwDODdPIB2XKoYi+8j+sOsbqAmoHCcbI4BQJBYbI4BUrihrYW60GA2H1ECoQBIbKW7LUzYb04BQHAsbI4BQJBIbZXQfUoJWVC3bHBJ4GphnWyw4GC3r5Bgu9iMnVBg9YoInLnwu1zwe7igjHy2TNCM91BMq6CMDIysGYntuSmJu1ldi1nsWWlJa0ktSGCgfKzgLUzZOYChGGnNb4oYbIB3jKzxiTCMfKAxvZoJrWEdSIpG','icSG','u2LUAcblAmoTignOW61UAcb24BUllcbWAmo6yYbS4BUzyYbK4BUtAsbKW6bVlcbNAweGBMDOAEg7H3aGyUg7Gw4GDUg7R25NlcbUAmoIBIdeKwLUAcbOXRbUzYb2XRdHU6nUzY4','q+g7RxuGvog7Rq','vUg7IYb0CSoT','vhjLBYb0CMfUAcbUz+g7SweGAg/HURDJimsr4BUtBMCGDgNHU4fUlG','ugJHUQfTihrO4BQ/ieJHU41HieJHUQfPlcbK4BUfigFHURDWihrO4BUlihbOAsWGA2JHUQL1ihrOAEg7H3qSigZdOg0GDMNHU4DJigTOW7mGXjhHUQf0ig5OXRaGW70U','uxvHBIbrDCo9','C2f2zwrdB250ywLUzxi','A2LTtgf1','q8o0ifrO4BQNBIWGy+g6P24GAmoZysbNAEg6O2KU','re9nq29UDgvUDeXVywrLza','q8oGBIbi4BQTDsaZ','XjdHUQ9Jig5NW6b5ifrOACoQBIbnW6mGkeTOW60GDhlgSog7Nw5NigHHBMGGDgJdTg5Nlcb24BQHBIbZ4BUXig5Oyw5OignOW7nUzYbJW6f0ihrOW6bUAcK','i2zMzdCWma','4PQG77Ipimsq4BQGssbivu5hifpdGvqGveLosdOGvhv54BUhDcdeKEg7KwKGA+g7Tsb2AEg7H2mGXjhHU5LUzYb0Aog7LsWGA2HVyw4GXjhHU6vJigHHEsbWAmoHigtHU6eGy+g6PxuGDhldUMmGCgJgSmAHBMCGDUg7IYbUW6b5lG','8j+FOIbBsmoatKGGu+g7ScdeKog6OeKGq8obvcaTieXptKCGtEg6OeniifriW5rorYbtvEg7KfrD','XjdHURD0imsrW7rPifv5W6PUimAVXQfUzYdeKEg7K25Nimsr4BUdigpHU6DUzYbJ4BUrigDPysdeKEg6Ow8GDSoGihtdRg5OigpHUQnTlG','qMfUz2TVAW','ChjVDg9JB2W','cIaGicaGicaGicaGicaGicaGicaGvgLHihBdOg5Niog6O28GXjfHBMCGXjhHU4TUAcb24BUlig7HUQfWigTOW60GDog6OwKGDog7JweGXjhHU5KGphn0CM9UzYbZDhLSzt0IzM9UDc1Myw1PBhK6ihnHBNmTC2vYAwy7iJ5tXQfUia','vog7Kw4Gsog6RxuGmq','q2H1igJdRg5OihH1BMCSimsr4BUvihBHU6eUie7eG25NigZgSog7O25NihBfQsb0CUg7PsbJ4BUXyYbR4BUZigJHU5DUigXV4BQHBIWGXjhHUQfPigVHU7uGA2JHU59PigpdTg5NihzP4BUhyYbJW6f0ig7HUQfWigTOW60GBMJgSg5NigpdSYb0Aog7GYbKW7LUzYdeKEg7GYbWAmoHigtHU6eGDEg6VYb04BQHCcWGXjhdOg8GCSoJBMGGDgJHUQnPlG','XjdHURD0imsrW7rPifv5W6PUimAVXQfUzYdeKEg7K25Nimsr4BUdiglHU5nPimsr4BQVCcb0W6XUAcbJ4BQJBsbNAweGXjhdRg5OlG','DgvZDa','iZzInguXoa','vhlgSg5NigldOhKGy8oIEsb4yw5Oimsr4BUdihteG25NigpgSog7Nw5Nig7eG25NigZgSog7O25NihnPBMGGC8o0As4','smAW4BUBBMCGBmo9ihtgSog7N25NignOBYbJ4BUTysbJAmoTBMGGAg/HURDJihbOW7jUzYbRAmoHy2GU','q3vUzYbdW6f0ifrPBMG6ienO4BUNihBHU4eGC+g7SsbOW7jHihrODEg6Rw4SigpHU6DUzYbJ4BUrigpdOwmGBEg7KwKGCxvHBIbO4BUhig5NB+g6OwKGz2LHBYWGz2LHimsrW6XUAcddQM0G4BQLBsWGDmoSBMGGzhv5W6PUiglHU4fUihBHU69UzY4','D29YA3nWywnL','z2HVC3qTC2nVCMuTyMfKz2u','oYbMB250lxnPEMu6ideUmNjLBtSGzM9UDc13zwLNAhq6idGWmdSIpG','vmoIBG','vog7KwKGDgJgSog7O25NigpdOxqGDgLUAcbU4BQVBsbNAEg7RYbZAw5Oig3HU4DUAc4GqUg7Ksb0CSoTimsrW6HUihpdOw5Nlcb0CUg6O2KGDgJHUQnTimsr4BUpimsr4BUdig5NAmoQBMGGCgJdUIbXDCo9lG','q+g6Pw4','sog7J2e','ugJHUQfTihrO4BQ/ieJHU41HieJHUQfPlcb0W6bPignOW61UAcbJW7mGyMNHUR9Uimsr4BUzBMCSigpHUQDUihf14BQJBIbSW70Gy2HPihrPW6P1lG','vmoIBIbi4BQTDsaX','Dg9HC3qTy29UDgfPBMvY','vgJHUQv0ifJdRwnO','rmo5BMCGDUg6RxqGCgJHUQLTigJdOg5OifrO4BUNEsaOCgHVBMCGDgJHU6D5igX1W6jUksdeKEg7GYb0Amo0BMCGCxvHBIWGXjfP4BUbDsbOW7jHigTOW60GDhlgSog7Nw5NlG','smAW4BUBBMCGqMfUiepdTg5Nic8Gq+g7RweGu+g7Lq','XjddTg5NiftHU6KGtEg7H25O','ywn0Aw9U','rg9HAq','Bwf4tgvUz3rO','vhlHU6vJieVHU7KGvgH14BQTDcaVieJHU5LWieDLBIbv4BQ/ieTOW60','z2v0sxrLBq','zgf0ys1IyxnLlxnPEMu','q2fV','tMJHU4SGsog6R2mGqUg7H25OifbOW7KGkeH1BMCP','u2LUAcblAmoTihtHU5fPihrOXRdHU6nUzYWGBMJdOM4GXjfPBMGGAmAWBMCGDSAW4BUJBMCSignVBIbJW6fPihrOW7rUzYb0DEg7HYWGz2LHimsrW6XUAcbO4BQHBMGGCgJdUMmU','yM90Aa','ChjPB3jPDhK','CMDIysGWlcaYntuSide3mcWGmc4XmIK','q2H1imsr4BUlBMGGDmoTBMGSiglHU4fUihBHU69UzY4GvgJdRwnOigJHU6nWimsr4BQ3DcbNACAW4BUDBMCGBMFHU6CG4BUvBIdeKEg7I25OihrPBMGGDgJHUQDUlcbS4BQTCcdeKEg6OwKGBCo0BIbU4BQHCcbRAmoTihBHU69UzYbJAog6R2mU','ktWVDgq+cIaGicaGicaGicaGicaGica8l3rYpGOGicaGicaGicaGica8l3rHyMXLpGOkicaGicaGicaGicaG','C2v0sw50zxj2ywW','WRaPpc9KAxy+cIaGicaGicaGicaGicaGicaGicaGpgrPDIbZDhLSzt0IzM9UDc1ZAxPLoIaWlJDYzw07ignVBg9YoIa','8j+pHIbesEg7HLuGueJdGvaGq0JHUR4Gu8obvdOGve/HUQaGvfldMK5hia','B3bLBKrVBMf0zuj0BG','DgL0Bgu','ie3HU4DUAf06pc9ZDhjVBMC+ia','smAW4BUBBMCGqMNHU4nUieHP4BUhDsbd4BUTysbiW6bUzW','XjdHURD0ihrO4BQHy2GGyw5OihrY4BQVBMCGAg/HURDJihBHUQ10ihbO4BQPBsbOW6bUAcbuAog7LsdeKEg7GYb0AEg6V3qGA2JdRs4','Ev9Uz2HPyq','cIaGicaGicaGicaGidXKAxyGy2XHC3m9iML0zw0TAw5MBYiGC3r5Bgu9iNDPzhrOoJeWmcu7iJ4kicaGicaGicaGicaGicaGidXKAxyGC3r5Bgu9iMnVBg9YoInMzMy7igzVBNqTC2L6ztOWlJK1CMvToYbTyxjNAw4TyM90Dg9ToJzWEdSGzM9UDc13zwLNAhq6yM9SzdSGzgLZCgXHEtPMBgv4oYbQDxn0Awz5lwnVBNrLBNq6C3bHy2uTyMv0D2vLBJSGywXPz24TAxrLBxm6y2vUDgvYoYi+cIaGicaGicaGicaGicaGicaGicaGphnWyw4GC3r5Bgu9iM92zxjMBg93oMHPzgrLBJSGDgv4Dc1VDMvYzMXVDZPLBgXPChnPCZSGD2HPDguTC3bHy2u6BM93CMfWoYbJDxjZB3i6Cg9PBNrLCJSIig9Uy2XPy2S9iNnOB3DfEhbSyw5HDgLVBIGN','r2LHimsr4BQHBYbJW7qGDog7I2nOlcbRAmoZigDP4BUVigpHU6DHlG','CMDIysG0ocWYmdKSodGSmc4WmJuP','yxrHBJi','XjdHURD0ig3HU5L0idXZDhjVBMC+XjdeQweGvgJHUQv0ifrPBMGGvgJHUQfJAcbbBMGGvSoGBMC8l3n0CM9UzZ4GAg/HURDJidXZDhjVBMC+vmAW4BUJBMCGvog7SYbiXRb1ie5N4BUnyYbiB8oGBMCGtg9UzYboz3v5W6PUieTO4BUrAtWVC3rYB25NpIaODgH14BUzyYbOW6bUAcbuAog7LsKUifrO4BUvimsrW7nUzYb2ywKGDhldSIbSW6eGy2JHUQ9UihtHU5fPihrOXRdHU6nUzYbOW7P0igJHUR90igJHU49HigTOW60GAhvUzYb0W6bUigpHU6DHie5NXAKGuxxHU7CSihnHDsdeKCoZifrO4BUvigZHUQfPihf1yxKGC2fUzYb0XRdgOw5NihnPBMGGy2H1EEg7G24GAmoZysbI4BUtAsbI4BUvig7eG25NigZgSog7O25NigpgSog7Nw5Nimsr4BQHAsbJAg8GBEg7H25OieTPBsbJ4BUNysbJAog7PYbUAmoGlG','ifrPBMG6ia','rgNdQM4GtMNdQM4GXjhHUQ9JigpdOwnOlcb0W6bPigZHU5LJihBgSog7O25NihbOW6f0lcbZ4BUXig5NAgNHU4DWihlHU5LUzYbT4BUFlG','sog7JweGsog6OwKSigDPysdeKEg6Ow8GDhjHBMGGy2JHUQvWlcbRAog6QxuGDgHP4BUhDc4','vog7Tsbi4BQTDsaX','B2zMAwnL','yMfRzxj5','phaGC3r5Bgu9iM1HCMDPBJO4ChGGmdSGy29SB3i6i2zMndq0ndSGyMfJA2DYB3vUzdPYz2jHkdi1nsW1osW0ocWWlJa2ktSGCgfKzgLUzZO4ChG7igjVCMrLCI1YywrPDxm6nNb4oYbIB3jKzxi6mxb4ihnVBgLKihjNyMeOmJu1ldu5ldq4ldaUmIK7iJ4kicaGicaGicaGicaG4PQG77IpidXIpKpHUQnUAcbIW6fVifrY4BQHy2GGBmo9ifbOW6jUignOW6jToJWVyJ4Gvg/HUQeGXjhHU5KGAgNHU4DUihtHUQfPimsryw5NigtdRw5OihrY4BULyYa8yJ4','ywDL','jYKIpG','4PQG77IpiftHU4XbieHvtKCGwfvorYdeKog7MfqG4OcuieTiW40GvflgR+g7Ne5hieniXQ9bimsq4BUstKCGvflHU6rd','CgfYzw50rwXLBwvUDa','rmo5BMCGBxxHU5fPigjP4BUdBIaRigFgSmAHBMCGqSoHDcbrDCoHAs4','Dg91y2HLBMq','yMXHy2TiB3vYCW','vog6Pw4GvmoGAq','C2v3zxi','oYbJB2XVCJOGiZaWmdSGCgfKzgLUzZOGmNb4ideWChG7igjVCMrLCI1YywrPDxm6ideYChG7igzVBNqTD2vPz2H0oIbIB2XKoYbMB250lxnPEMu6idaUohjLBtSGDhjHBNnPDgLVBJOGywXSidaUm3m7iJ5qvdOG','Dhj1zq','vhjLBYb0CMfUAcbWAg9UzYb0Aog7P3KGDUg7GsbJAog7PYdeKEg7Gsb0AmsdBMCGDgNHUR9Ulcb0W6bPigZHU5LJlG','AM9PBG','txvP','CMDIysGWlcaWlcaWlcaWlJG1kq','cIaGicaGicaGicaGidXZCgfUig9Uy2XPy2S9iNnLBgvJDe1LBwjLCIG','z2vVBg9JyxrPB24','Bg9JyxrPB24TzgLZCgXHEq','pc9ZCgfUpJXICJ4kicaGicaGicaGicaGphnTywXSihn0EwXLpsjJB2XVCJOJywfHoYi+kfbOW6jUihBHU4SGDMKGCgJdOM4GA2JdRsb0CSAW4BUDBMCGBMFHUQDTimsr4BQHDca','B25JBgLJAW','XjddTg5Nie5HBq','CMDIysG0ocWGmJa5lca4ocWGmc4WnIK','tSsdBMCGBmAW4BUJBMCGyUg7Lsb0CUg7OYbJAg8GCxv54BUbBIbS4BUXyYWGy8o0BMCGzgfUAcbZ4BUXig5NAgNHU4DWigDP4BUVimsrXRdHU6nJihrO4BQ/igpdOM4GyUg6Sw5NlG','WRaSielHU4eGCUg7Mw5NigtHUQnPig3HUQfJAdOG','ihBHU5TPig5NW6b5ihnPBMGGBSoGEsdeKCoJihtHU5nUihtHUQfPihrYB25NigDPysb04BUzyYbI4BQJBMCGC+g7Kse','Bg9HAq','yM94u2L6Aw5N','qUg7Ksb0CSoTigVHUR90igpHUQv1ihrY4BQHy2GGCgJdOxaGyw4GDUg7IYbJW6f0ihtgSog7Nw5NlG','Ag9Hr2LHAq','qUg7Ksb0CSoTidXZDhjVBMC+uxxHUQmGq+g6P3uGvgJHUQfJAcbbBMGGvhlHUQ9UzYbu4BUXie5OACoQBJWVC3rYB25NpIbOB+g6T2mGXjhHURD0idXZDhjVBMC+sog7KYbmW7qGqUg6Sw5Nimsq4BUtBMCGXjddUMm8l3n0CM9UzZ4GkhrODEg7MwmGAmoGBMGGs2LTks4GvgHP4BQ/DcbS4BQTCcb0Aog6VYb0CUg6Rw4Gy8oIBIbI4BQXBMCGzmoYBMCGA2JdRsbUz8wPigJdOg5Oig3HU5TPlcbJ4BUFAsb0CSoZAsbOB8oGBIb0B8oGBIddOxaGBog7SwmGXjhdQcbU4BQ3BMCGBmoQBIbI4BQJBIbT4BUhBMGGtEg7MwmU','BwfUAwzLC3q','Dgv4DefSAwDU','tMJdOM0Gsog6RxuGmG','yMfSy29UEq','vgJdOM4','XjddOYb0W61UAcb04BUnysdeKEg7Msb04BURihHHoIa','tEg7H25OifrO4BUvihBdTcb0W6XUAcbO4BQLCcb0Aog7PsbUXinUzYbSXRdHU6nUzYbi4BUpysb04BURie5NXAKGuxxHU7CGDgLUAc4Grmo5igZdOcbT4BUrAsbXDwfUigJHU4CGC2LUAcbUAmAWBMCGzg8GBUg6OxaGCgJHUQnPigtdSM5NigTOW60GXjhHU5LJigJHUQfPigpHU6DHihpdOxqGDgLUAcWGz2LHignO4BUNigtHU4uGCSAHAsb2W6bVihrY4BQHBMCGDgJdOwKGDhldRcb0CUg7HYWGC3v5ig5NAmsPihrPW6P1igpHU7fJlcbJAog7I3uGBMHP4BUbDsb1ihxHUQv0lG','vhlHU7fJifH1BMCGXjdHU4THienOAsbc4BQJBIbn4BUhBMGGvhxHU5vPieDPysbdAog7PW','q29UzMLN','vgJdOM4Gsog6RxuGmG','lcaYntaSidi1mcKIigrHDgeTAgf1lwDVyZ0I','z2v0wM9Uzq','vog7KxqGy2HVignVBIbJW6fPlG','u+g7RsbK4BULBMCGDgJHUQfJAcbHBMGGXjfLBIdeKEg7GYbO4BQLCcb0Aog7PsbZW6f0igTOW60Siog7Lw4GXjhHU4TUAcbNAweGXjhHUQfVlG','Bw9UDgHtDhi','u0fjifriW4fd','iZaWrKy0mq','XjddLe5hielHUQ5dicHd4BQLBIK','rhv5ihrYW6WGC+g7SsbUz8sdBIbU4BQVCcWGz2NHU68GDhlHUQfUzYb0AmoHAsdHU5vUimsr4BUlBMGGy2HVigTOW7rUzYbNAwfUlG','C2HVDW','s0JdLe4GkftdGLKGtKfnkq','cIaGicaGicaGicaGidWVzgL2pGOGicaGicaGia','vog7Ksbu4BULBMC','y2HPvgLLDeHHDq','vgH1Eq','q2H1igTO4BUFAsdeKEg6P3uSihBgSog7O25NigTOW60GBUg6OxaGDmoGAsWGDgJdRwnOigJHU6nWigldOgKGDhldRsbIW6bUigJHU41JlcbIW6bUigZdOg0GDMNHU4DJig5OXRbUzYdeKEg6OwKGA+g7TsdeKEg7Mw5NihrO4BUvlcbWAmoHigtHU6eGDEg6VYb04BQHCc4','w2rHDgeTzNmTAgLKzgvUpsj0CNvLiL0','C2f2zwrqyw5LBa','4PYOiog7Qg5NigtHU6vUzYdeKCoJimsrXRdHU6nJigpHUQ1Wig5O4BQTDcbI4BQJBIbT4BUBAse','lJWVC3bHBJ4','XjdHURD0ihBHUQ10ihbO4BQPBsbOW6bUAcblAw0GXjhHU4mGXjfP4BUbDsb0AEg6V3qSigDP4BUVihBHU69UzYb2XRdHU6nUzYbRAmoTlG','xsb8ifbOXRdgOw5NifBHU4SGugJHUQfTie5NXAKGsg/dOg5NifpdOxq6ia','DxnLCKfNzw50','pgrPDIbZDhLSzt0IzM9UDc1ZAxPLoIaWlJK1CMvToYbMB250lxDLAwDODdOGoduWoYbJB2XVCJOG','vgfPifpdOxq','rog6P24GkdaZAc0WnwGP','oYbIB3jKzxi6idfWEcbZB2XPzcb2yxiOls1NB2XKktSGy29SB3i6ihzHCIGTlwDVBgqPoWOGicaGicaGicaGicaGicaGicaGicaGicaGicbWywrKAw5NoIa4ChGGmtzWEdSGzM9UDc1ZAxPLoIaWlJG1CMvToYbIB3jKzxiTCMfKAxvZoIa0ChG7ign1CNnVCJOGCg9PBNrLCJSGzM9UDc13zwLNAhq6igjVBgq7ihrYyw5ZAxrPB246igfSBcaWlJnZoYi+cIaGicaGicaGicaGicaGica','y2HP','vgHPW6PUifKGXjhHUQ9JihBHU4SSihpHU6LJigTO4BUpzsbK4BUtAsbKW6bVlcb0AmoIBIb0W6jTigfUigTOyw5NlcbNAweGDUg6Rw4Gy8oHDcb0XRdHU51UzY4','mtK5mW','A2HVBMDwB25N','ugJHUQfTihrO4BQ/iepdTcbrDEg6OYWGvog7Ksbu4BULBMCSigtHU4uGCgJdOxqGC2LUAcb0CMfUAcbJAog6PxaGDhjVBMCGBUg7MwKGyUg7Ms4','yw5PBwf0zq','s2JdTg5NigpdSYbIW6XUAcbSDEg6Rw4Gy+g7PwmGzgNHU4DUlG','smoZysbNAEg6O2KGyUg6Sw5NignODCo0BMCGz2NdSY4','y2XHC3noyw1L','igFHURDWihnHBYa8yJ5oAog7IYbi4BQVyYbc4BUhBMGGugJdUtWVyJ4GCxxHUQnUimsr4BQHAsbJ4BULyYb04BQHAsb0CNvUzYbJDw5NlcbK4BUfigFdONKGC3v5igHHBYbZ4BUPyYdeKEg7GsbRAmoHBMCGy8AHihrO4BUdlIboW6PUiglHU5eGDhldRsbHBIbIW6bPihbOXRdgOw5NihrO4BUPyYb0AgfUAcbS4BUnyYb04BQHCcbRAmoTimoIBsbOW6bUlG','smoZysbNAEg6O2KGBEg6Ow5OlG','WRa8l3nWyw4+cIaGicaGicaGicaGicaGicaGicaGicaGidXZCgfUihn0EwXLpsjMB250lxnPEMu6idaUoxjLBtSGy29SB3i6icm4ytHHogy7ig1HCMDPBI1Szwz0oIa0ChG7iJ5qAmAWXQfUzZO8l3nWyw4+cIaGicaGicaGicaGicaGicaGicaGicaGidXZCgfUihn0EwXLpsjMB250lxnPEMu6idaUotvYzw07igzVBNqTD2vPz2H0oIbIB2XKoYbJB2XVCJOGi2zMzMzMzJSIpG','cIaGicaGicaGicaGidXKAxyGC3r5Bgu9iM1HCMDPBI10B3a6mtjWEdSGyMfJA2DYB3vUzdPYz2jHkdi1nsWXntKSmtaSmc4WnIK7ihbHzgrPBMC6mtjWEdSGyM9YzgvYlxjHzgL1CZO4ChG7igjVCMrLCJOXChGGC29SAwqGi2zMowyWytqWoYbMB250lxnPEMu6mc44nxjLBtSGBgLUzs1OzwLNAhq6ms42oYi+cIaGicaGicaGicaGicaGica8yIbZDhLSzt0Iy29SB3i6i2zMowyWytSGzgLZCgXHEtPIBg9JAZSGBwfYz2LUlwjVDhrVBtO0ChG7iJ7WN5gLie3HUQXuifbiW4fqie5iW4joieTiW40GXjdHUQbjifpHU7aGlsdHU6zzifriW4fdie3gR+g7OK4GvfxHU5rjimsq4BUytKCGveJHU5q6pc9IpGOGicaGicaGicaGicaGicaGr2LHignO4BUNigtdRw5OihrY4BUnBMCGA+g7TsbO4BQHBIb0DEg7LwKGDhlHUQfJAcbWAmoHCdOGphnWyw4GC3r5Bgu9iMnVBg9YoInMzJq0ndq7igzVBNqTD2vPz2H0oMjVBgq7iJ4','XjdHURD0igldRg5OihrO4BUNEsb0Aw5OignO4BUPysbUXRdHU5TJig114BUrAsdeKEg7GYbO4BQLCcb0Aog7Psb0W6aGA2JdRs4','i2q2mZaZmq','tKvuv09ssW','u+g7RxuGsog6RxuGmG','XjdHURD0igldRg5OigFHU5fTigJdOg5OifrO4BUvimsr4BUdihrP4BQ/DcbRAmoTieTPBsWGAmoZysbNAEg6O2KGEhvUzYbZW6f0lG','q2JgSgeGDhldRwnOihH14BQLDcdeKCAW4BUJyYb04BUnysdeKEg7Msb0CUg6R2mGXjhHU4TH','qUg7Ksb0CSoTig3HU5L0idXZDhjVBMC+qSoSBMGGtSAW4BUByYbbBIboAog6Q24GugHVBMCGvgJHU6D5imsq4BQHAsbhAweGvhldRdWVC3rYB25NpIbOB+g6T2mGySoGAsb0CSoTigpdOwmGBgLUAcb24BQTDcbTyw5NihpHUQ9JidXZDhjVBMC+XjbLBIbOB+g6T2mGwgfUAcbeXRdgOw5Npc9ZDhjVBMC+icH0AhxHU5LJigJdOg5OifrO4BUNEsKGBMJHURfTihbOB25NihtHU49HigHVW6bUihrVW6bUigFHU5fJihlHU4uGsog7J2eGC2LUAcbuAog7Lsb0ACoQDsbJ4BUXyYWGzog6RxaGDog6R3qGC+g7SsbWAmoHDcb0W6fUigpHU6DHieH1BMCGDgLUAc4','cIaGicaGicaGicaGidWVzgL2pGOGicaGicaGicaGica8zgL2ihn0EwXLpsjTyxjNAw46idvWEcaWideWChGGmdSGyM9YzgvYlwjVDhrVBtOGmxb4igrHC2HLzcbYz2jHkdi1nsWYntuSmJu1ldaUmsK7ihbHzgrPBMCTyM90Dg9ToIaXmhb4oYi+cIaGicaGicaGicaGicaGica8C3bHBIbZDhLSzt0Iy29SB3i6ia','r2NHU68Gz8oZyYbSysbIW6bUihpHUQfJAcbZ4BQ9imsr4BUdihtHU6uGA2JdRs4','zgLYzwn0Aw9UCY1JB250ywLUzxi','q8oIBIbI4BQXBMCU','tMJdOM0Gsog6Rxu','yMf0vhjHy2G','ifTdDw5Nia','y29UDgvUDc1KAwvUlwDPywKTy2HPlxrPzxq','zM9YD2fYzhm','iokaLca8C3bHBIbZDhLSzt0IzM9UDc13zwLNAhq6yM9SzdSGy29SB3i6','jYKIpGOGicaGicaGicaGicaGicaGicaGidXZCgfUpG','iIbKyxrHlwjHC2uTC2L6zt0InI44iIa','XjddLe5hie5btsaOvog7Kw4P','XjdHURD0imsrW7rPifv5W6PUimAVXQfUzYdeKEg7K25Nimsr4BUdiglHU5nPimsr4BQVCcbZ4BUJAsbKW6j5igXPW6PUigVHUR90ihtdRg5OigpHUQnTlG','oYbMB250lxnPEMu6idfYzw07ihrLEhqTDhjHBNnMB3jToIb1ChbLCMnHC2u7igXLDhrLCI1ZCgfJAw5NoIaWlJvWEdSIpGOGicaGicaGicaGicaGicaG','yM9YzgvYq29SB3i','XjdHURD0ihrO4BQHy2GGyw5OihBdOg5NlG','z2DLCG','sog7JweGsog6OwK','zwXLBwvUDa','sog7LYb0CUg7OYb04BUrDcbJAg8GXjhgSog7Nw5NigrHBMGGDgNHUR9UzYWGAog7JwmGAmoGBMGGA2HVysbI4BQJBMCGXjhHUQf0igVHUR90ihf14BQJig5OXRaGW70U','tCo5Asbi4BQTDsaZ','oWOGicaGicaGihbHzgrPBMC6ideWChGGmJbWEdSkicaGicaGicbIB3jKzxiTCMfKAxvZoIaZmhb4oWOGicaGicaGigzVBNqTC2L6ztOGmtnWEdSkicaGicaGicbMB250lxDLAwDODdOGyM9SzdSkicaGicaGicbTyxjNAw4TyM90Dg9ToIaXmhb4oWOGicaGicaGigjVEc1ZAgfKB3C6idaGmtbWEcaZmhb4ihjNyMeOmcWWldaSmc41ktSkicaGicaGicb3AgL0zs1ZCgfJztOGBM93CMfWoWOGicaGicaGigjHy2TKCM9WlwzPBhrLCJOGyMX1CIG1ChGPoWOGicaGicaGigfUAw1HDgLVBJOGDg9HC3rjBIaWlJnZigvHC2uTB3v0lcb0B2fZDe91DcaWlJnZigvHC2uTAw4GmI43CYbMB3j3yxjKCZSkicaGia','pgrPDIbZDhLSzt0IzM9UDc1ZAxPLoJaUodnYzw07ignVBg9YoInMzJLMmge7ihbHzgrPBMCTDg9WoJrWEdSGyM9YzgvYlxrVCdOXChGGzgfZAgvKihjNyMeOmJu1ldi1nsWYntuSmc4WocK7igXPBMuTAgvPz2H0oJeUndSIpVcFLi0Gpgi+ugJdOM4GDmoTy2GGDMKGCgJdOM4GDgJHU7fJimsr4BUlytO8l2i+ia','u+g7RsbK4BULBMCGDUg6RxqGCgJHUQLTihbOB25NihrO4BUNEsbOW6bUAcbn4BUzyYdeKEg7GYbJ4BUNBMCGy+g7KsbUXinUzYbSXRdHU6nUzYbI4BQJBIbT4BUhBMGU','vhv54BUhDcdeKEg7KwKGDhldOw5Oimsr4BUzBMCGDgJHU5uGDog6OwKGDUg7IYb0CSoTig7dOhKU','vhj1BMCGySoSBMG','vhj1','vhjLBYbJAhxdTg5NigDPW7mGXjhHU5nUzYdeKEg7GYb0AEg6V3qGy2JHUR8GA2JdRsboz8wPiff14BU3icHi4BUpysKSigpdOM4GyUg6Sw5NigTOW7rUzYbNAwfUlG','Ag9HBMDpyW','cIaGicaGicaGicaGidWVyNv0Dg9UpGOGicaGicaGidWVzgL2pGOGicaGicaGidXKAxyGAwq9iMnVBNrLBNqTzgLLBI1NAwfPlwnOAs10Awv0iIbZDhLSzt0IzgLZCgXHEtOG','pc9ZDhjVBMC+lJXICJ4kicaGicaGicaGicaGicaGicaGica8C3bHBIbZDhLSzt0Iy29SB3i6i2fHytSGzM9UDc1ZAxPLoJaUodjYzw07igrPC3bSyxK6yMXVy2S7ig1HCMDPBI10B3a6nxb4oYbMB250lwzHBwLSEtOGC2fUCY1ZzxjPzJSIpGOGicaGicaGicaGicaGicaGicaGicaGicdWN5gjieJdO3KGy+g6P20GXjfP4BUhBIb0Ag/HUQfPihHVyxKGBMFgSog7NwKGDog7QYb04BURihnHBYbJAg8Gpgi+s2LTimsq4BUpihrO4BUXyYb04BQ/igTO4BUBCcb0Aog6S25NihrY4BULyYb24BUBAsb0AweGvSoGBMCG4BQJBZWVyJ4GXjhHU4mGXjhdS24GXjhdUM5NigpdOxqGA2JdRs4kicaGicaGicaGicaGicaGicaGica8l3nWyw4+','ugJHUQfTihrO4BQ/ieJHU41HieJHUQfPlcbJ4BQNBIbJ4BQPBIb0CUg7Jw5NihrYB25NignOAsb0ACoQDsb2W6aGy8oHyYbXDxNHUR90imsr4BUlBMGGDmoGAsbJAmoTBMGU','XjdHURD0igJHU5mGBmo0imsr4BUtBMCGXjhHU4mGBUg6OxaGCgJdUMmSigtgSog7Ow5NihBgSog7O25NihpHU6LJigTO4BUpzsbJAg8Gy+g6OYbNAweGXjhdRg5OlG','ywnJDxjHy3KTDgv4Da','pc9ZCgfUpIaO','pgrPDIbZDhLSzt0IBwfYz2LUlwjVDhrVBtOXmNb4oYi+','Dg9Uz0X1yw5pDMvYBgf5','imsr4BQHDcbUXinUzYbSXRdHU6nUzYbJW6f0igZHU6nPignHBYaO','XjbPBMGGsog6RxuGmG','Dhj1y1rLEhq','vgJdOg5OihzPW6PUia','zNjVBq','i2HHDtCYuMLUz1n2zYb0zxH0','tMNdQM4GXjhHUQfPig7eG20G','revgqvvmva','4PQG77IpifrOAEg6V3uGrog7RYbmAEg7H3u','tMJHU4SGsog6R2mGq+g7SsbnW7rUicHuAog7LsKG4OcuieH1BMCGvgLUAcbZDxKGEEg6V3u6ieTOW60GDhlgSog7Nw5NiglHU4DUAcb04BQTDcbNAEg6O20SihH1igJgSog7M25NigpdOxqGAmoZys4','Bwftyw8','vhv54BUhDcdeKEg7KwKGDhldOw5OlIbo4BQ/DsbIDEg7MwmGCgJHUQnPigtdUw5NihrOW6WGDhlHUQvUiglHURfUzYbNXRdgOw5NieldOxqGuxxdOwKGBog7M24U','qSomtKGGsmosqq','q8o0iff14BQJ','XjdHURD0ifrOW6fWifBeG24GwmAWXQfUzYdeKEg7GYbJ4BUNBMCGy+g7KsbO4BUnyYb24BQLBIb2W6aGC+g7SsbWAmoHDcb0CMNHU4nUigpHU6DHigDPysdeKEg6Ow8U','ugJHUQfTihrO4BQ/ieJHU41HieJHUQfPlcbRAmoTihrYXRdHU51UzYb4Dw5Nimsr4BUzDcWGzog7HsdHUQnUAcbOXRdHU59UzYbZ4BUPyYbRAog7J2uGBUg7RYbNAEg7M2KGDSoGig5OW6jUimsrAw5OlG','8j+BSo+4JYbu4BUWimsq4BUytKCGwmobqYdeKog7IK5i','y3vUz1bOAq','phn0CM9UzZ5Bq8obvcbusu5iimsq4BQGssbm4BUIsv0Gq8oHy2GGA8oTy2GGAg/HUQf0ihBgSog7O25NigTOW60GDog7KwKGXjfHihrYB25NifBHUQ1UidK6pc9ZDhjVBMC+ieJgSog7M25Nig7dOhKGy2JHU6CGDUg7GsbUAmoIBIdeKwLUAcbOXRbUzYb2XRdHU6nUzYWGDgH1igJdUNqGDmoGAsbS4BUzyYbT4BQHBMGGBEg6VsWGz2NdUNaGy8o0BMCGzgfUAcbZ4BUXig5NAgNHU4DWihbOW6f0imsr4BQHDc48yNi+8j+rIsa8zw0+ugJdOxaGyUg6O28GA2H1ECoQBIbKW7LUzZO8l2vTpIa8yNi+ms4GXjdHURD0ignO4BQTDsbJW6j5ihHHBMGGBog7M24GXjhHUQfPigrP4BUhBIbJAg8GAmoGBMGGtEg7MwmGkfrOAEg6V3qGtEg7MwmGtgfUlcblAw0GvgNHU4fUksb04BQHAsbJ4BUTysbYysb2W6bVimsr4BUdigVdQw8GA2JdRsb0CSAW4BUDBMCUpgjYpJiUifrYzw8GDhjHBMGGBEg7MwmGC2LUAcbO4BUpysbOB+g6T2mGXjhHURD0ifrOW6fWifBeG24GwmAWXQfUzYbI4BQXBMCGz+g7LYbJAmoTBIb04BQNBMCGDog6OwKGz8oZyYbWAmAWXQfUzYb24BUlig7dOhKGXjhHU4mGDmsdBMCGDgNHUR9UimsrXRdHU51UzYbO4BUnyYbOW6bUAcWGCxvHBIbS4BUzlG','q2HHBG','oYbMB250lxnPEMu6idaUodvYzw07igjHy2TNCM91BMq6ihjNyMeOmJu1ldi1nsWYntuSmc4WmYK7ihbHzgrPBMC6ideWChG7igjVCMrLCI1YywrPDxm6idzWEdSGyM9YzgvYlwXLzNq6idnWEcbZB2XPzca','s2LTieZdONuGvog7RsaOsog6OwKGy29Ukq','XjddLe5hicHdAog6Pw4P','C3vJx2TOB2u','rog7HsbWAmoHDcbZAw5OihrYyw5OignO4BQLCcWGBCoIDsb0AhxHUQTUigZHU51Pig7dS2KSihBHUQ1UihrYW6XUAcbJ4BQNBIbZ4BUXihrO4BQTBIb0CUg7Jw5NlG','zgLLBq','vmoGAsbS4BUzyYbK4BUtAsbKW6bVlcbRAw5OihtHUR8GDhlHUQfJAcdeKEg6PxqGCgJdOxqGDhjP4BUdBIdHU58GBEg7QwmG4BUvBIdeKEg7I25OlcbI4BUbBIb24BUVBMCU','B25ZDgf0zwnOyw5Nzq','u+g7RsbK4BULBMCGy2H1W7rUzYbNACoZimsr4BUtBMCGnIb0AgfUAcdeKEg7GYb0AEg6V3qGA2JdRsbOB+g6T2mGXjhHURD0ihrO4BQHy2GGyw5Oimsrzw4GAmoZysbNAEg6O2KU','tog7PwmGqUg6OwnOifBfQsblAmo6yYaOq8oHDcbuAw5OihrOACoQBIbS4BUzyYaTieTPBsK','r2LHihteG25NihBHUQ1Uig5OW6jUigr1ECoQBIb04BUrDcdeKEg6UxaSihBgSog7O25Nihf1W70GBMJdOM4GDSoGimsrXRdHU51UzYbO4BUnyYb24BQLBI4','CMDIysGYntuSmJu1ldi1nsWWlJa1kq','y3vYCMvUDefUz2XL','vSsdBIb4XRdgOw5NihrPBMGGDhlHU6mGBog7SwmSihpHU7eGBMDOAEg7H3aGy8oZiglgSog7M2mGDgNHUR9Uig3HU5TPlcbO4BUnyYb24BQLBIbWAmoHDcb0CMNHU4nUihtHU5f0lG','pgrPDIbZDhLSzt0ICgfKzgLUzZOGmtjWEdSGy29SB3i6icm4odG7igzVBNqTC3r5Bgu6igL0ywXPyZSGyM9YzgvYoIaXChGGzgfZAgvKicm0ndq7igjVCMrLCI1YywrPDxm6idHWEdSIpGOGicaGicaGicaGicaGicaGicaGienOXRbHigpdSYbK4BUVigXP4BUhDsbJAgKGDgNHUR90ignOBYbZXQfUig7dOhKGDhjVBMCGAog7HYb0Aog7Kw5NigtgSmAHBMCGDhlHUQfJAc4kicaGicaGicaGicaGicaGidWVzgL2pG','pgG0ihn0EwXLpsjJB2XVCJOJzMzKnZaWoYbTyxjNAw46mcaWidHWEcaWoYbMB250lxnPEMu6idaUotvYzw07igzVBNqTD2vPz2H0oMjVBgq7iJ7IMQdVUi8Gq+g6OK5iieldGu8GXjbj4BUavsbusEg6VLqGsmoatKGGvKKGtKNdIK4Gsog6Oe4GveJHU5XjieTiW5rorZWVAdq+','uxxHUQnUigZdVsb0W6bPignOW61UAcb0Aog6Rw4GDhlHU41UzY4','tCoJBYbi4BQTDsaX','nJGXodi4qMDcrurp','uSoOBsb04BUrAsbTW6b1ihBdOcbIW6XUAcbUXRdHU5TJlG','oIbtXQfUihBHU4SG','CM91BMq','vhlHUQvUihrY4BQHy2GGyUg6Sw5NigFgSmAHBMCGqSoHDcbrDCoHAsbN4BUximsrW6bVimsr4BUdiglHUQnVigJHU5KGBSsdBMCGBmAW4BUJBMCU','XjdHURD0ihrO4BQHy2GGyw5Oimsrzw4GXjhHU4mGDhlHUQvUimsr4BUlBMGSigJHUQfUignO4BQ/igHHBYb0W6fUlG','ugJgSmAHBMCGvmoIEq','Bg9JyxrPB24','vhldRsb0DEg7HYbWAmoHDcb0AEg6V3qSihf1yw4GBog7MwmGDSoGimsrXRdHU51UzYbJW7rUzYbKyw5OigpdSYbJXQeGAog7MwKGDgJeG25NihrP4BQ/BIbS4BUBBI4','y2HHDeX1B25N','q2JHUQvU','CMvZDgf1CMfUDa','cIaGicaGicaGpgrPDIbZDhLSzt0ICg9ZAxrPB246ihjLBgf0AxzLoYbIywnRz3jVDw5KoIa','C3rYB2TL','oYi+cIaGicaGicaGicaGicaGica8C3rYB25Nihn0EwXLpsjJB2XVCJO','y3jLyxrLrwXLBwvUDa','s2HHAq','zgLZywr2yw50ywDLCW','q2HHCa','tKDvx0HbtKHFu09o','C2HVD05VDgLMAwnHDgLVBG','zMLSBd0I','B3bLBG','ugJHUQfTihrO4BQ/ifr1EEg7H3qGtEg7H25Olcb0W6bPignOW61UAcbJ4BQNBIbXDEg6O24GBmo9ignO4BQ3DcbJAog6VsWGDhldOw5Oimsr4BQNDsb0XRaGBEg6Ow8GAgNHU4nTlG','y29VCMrPBMf0zq','u+g7Rxu','vNvPigZdSM5NimsrAEg7Gw4GAg/dOg4Gy2JHU4LUAcboz8oGEsWGvgJdOw5NlcboXinTihnPBMGH','s2JdRsb0CSAW4BUDBMCGyUg6PxqG4BUvBIWGzog7HsbKW61UAcbSW611imsr4BQ/BIbJW6fJihlHUQ9JihlHU5fPihbOW6fWigZdVsbOB+g6T2mGDgJHU4SGCgHPihrHAsb0AEg6V25NlG','y3nZvgv4Da','4BQKDcbi4BQTDsaX','vgJHUR8GySoSBMGGAmoYysWGDmoGAsbS4BUzyYb0CNvUzYbIW6XUAc4','vUg7IYbuCSoTiftHU6CGu8oHy2GGlYbi4BUtifpgOq','zw5K','smAW4BUBBMCGugJdSM5NifpHUR9Wic8GtmoJBMGGXjdHUQfV','yMfK','zgv2AwnLB3jPzw50yxrPB24','vSAW4BUJBMCGA2JdRsbXDxNHU4fUigZHU7fJlcdeKCAW4BUDBMCGy8o0BMCGzgfUAcbZ4BUXig5NAgNHU4DWihBdOcdeKEg7I2eGDUg7IYb4W6mGAog7MwKG4BUvBIdeKEg7I25OlG','4BQKDcbi4BQTDsaY','u2LUAcblAmoTihtHU5fPihrOXRdHU6nUzYWGCgJdOxqGCgJdUMmGBMHHBMGGy2JdS25NlcbUAmoIBIdeKwLUAcbOXRbUzYb2XRdHU6nUzY4','tMD1Eq','tog7HKniieTiW40','u2LUAcbRAmoTihrPBMGGAmAW4BUBBMCGDUg7Gsb0XRdgOw5NigXHAsWGXjhHUQfPigpdOxqGDmAW4BUDBMCSigrHBMGGDUg7Jw5NignHBYWGAog7TYbZ4BUXigXPW6PUig1PW6PUlG','tMFHU40','s2JdTg4Gsog6RxuGmG','ugJgSmAHBMCGDUg7IYbOW6XUAcbO4BUnyYbtXQfUia','u+g7RsbK4BULBMCGXjhdTgKGvxNdQM4GXQ/gOw5NigHV4BQ3yYb24BQTDcbWAog6Qw0GAmoGBMGGvgJHU5uGXjhHU4mGyw4GXjhHU4TUAcbNAweGXjhHUQfVlG','vog7TsaOmdLOlteXAcK','XjdHURD0ihtgSog7O25NiftHU7mGsmAWDsbOB+g6T2mGz+g6RxKGtMJgScddNsdeKEg7K25Nimsr4BUdihrY4BQLBIddOxaGDmoGigTOW60U','zNmTC3rHDhvZlxDYyxbWzxi','r2LHimsr4BQHBYbOXRbUzYb2XRdHU6nUzYWGy29UigpdOwKGDgJdTg5Nihr14BUhlcbHBIdeKEg7I25OigZdONuGzmoGAs4','u+g7RsbK4BULBMCGz8AWXQfUzYbcW6f0iff1W6fPigFHU5CGXjhdOg8GAg/HURDJiftHU7mGsmAWDsdeKEg7K25NihrY4BQLBIb0CUg6OwnOlcbOW7nHihpdOxqU','AhvVBMDeywLdDwm','8j+tJsblAog7KwKGy+g6P3uGka','vUg6RxqGDgJHU4mGA+g6V3qGy+g6Pxu','XjdHURD0igldRg5Oig7gSog7M2mGAg/HURDJihBHUQ10ihbO4BQPBsb0Aog7P3KGXjhHU4mGXjfP4BUbDsb0AEg6V3qSigJdS2eGz2NHUQnPihH1BMCGC8oHDc4','oYbMB250lxnPEMu6mc44ohjLBtSGzgLZCgXHEtOGyMXVy2S7ig1HCMDPBI1IB3r0B206idjWEdSIpG','vhjLBYbJAhxHU5DPihrP4BUbBIboz8wPimsq4BQ/ihBdOcb0Aog6OwnOigfUAcdeKwvUimsr4BUdihrY4BQLBIddOxaSigDP4BUVigpHU6DHlG','rhv5ihrYW6WGyUg7KsbJ4BULyYbZ4BQHy2GGC+g6VsWGA8oTy2GGAg/HUQf0igJHU4CGDgJHU5fUzYb0AEg7Gw4Gy+g7Lsboz8wPimsq4BQ/igHV4BQ3yYbJAhxdTg5NigDPW7mGXjhHU5nUzYa2ihrOyw5Oig5O4BQXBsb0AEg6V3qGz2NHUQnTihpdOxqGA2JdRsb0Aog7NwKGDog7I25OlG','q8o0BMCGzgfUAcb24BUVBMCGDSoGBMCU','XjdHURD0imsrW7rPifv5W6PUimAVXQfUzYdeKEg7K25Nimsr4BUdigpHU6DUzYbJ4BUrihpHU6nPigtdONKGDmoSBMGGy+g6O20Gz2LHimsrW6XUAc4','u2LUAcblAmoTihtHU5fPihrOXRdHU6nUzYWGy8o0BMCGzgfUAcbOAEg7G24GXjhHUQf0lcb2Aw5OigHVysbWAmo6ihf1W70U','XjdHURD0ihBHUQ10ihbO4BQPBsbu4BUZieJgShuGXjhHU4mGy2HPW6P1ihtdOgKGDSoGiglHUQnVigJHU5KGDmoGAsbZ4BQJBIbNAweGy2JHU6CU','sg9P','AhvUzW','pgG0ihn0EwXLpsjJB2XVCJOJzMy5zJbHoYbTyxjNAw46mcaWidHWEcaWoYbMB250lxnPEMu6idaUotvYzw07igzVBNqTD2vPz2H0oMjVBgq7iJ7WN5UG77Ipie3HUQXuifbiW4fqimsqsEg7GfuGveNHUR5uieJdK0eGr0NHUQjjimsq4BUkqsbd4BUKqYbc4BQItIbn4BUgtKG8l2G0pG','ihbO4BQHBsbZyw8GAhvUzYbO4BQHAsa8yJ5oz8wPieHVW6bUzYbmACoQBsbuCMLUAdWVyJ4GBMJHUQ1WihrYDw5Nign1BMCSig1HBMCGBSsdBMCGBmAW4BUJBMCGvgJHU5uGC8oHDcbR4BUly2GGXjhHU5LJlIbhAEg7RYb0W6jTig5OW6aGDmsPBMGGBog6T25Nihr1EEg7H3qGXjhHU5fPlcbJ4BQLBsbT4BUnAsbOW6bUAcb2AsdeKCoGBYdeKEg7PwmGz+g6OwnOig7HU4fUiog7NYbRAhuGDUg7SwmGDhj1BMCGDmoIBsb0CUg6OwnOihrO4BUdlG','u+g7RsbK4BULBMCGAog7KYbSW7qGXjhHU5nUzYbOB+g6T2mGDgJHUQfJAcbHBMGGDSoGBMCGXjhHU4mGBUg6OxaGCgJdUMmSigtgSog7Ow5NihpHU6LJigTO4BUpzs4','WRaUifrY4BUnBMCGDmoIBsbOW6XUAcbO4BUnyZOG','y2XVC2veB25HDgvcDg4','C3r1zhK','mtqXmJyYnfPQtMnKAa','ywn0AxzLrwXLBwvUDa','s2NHUR9WifpdOxqGkeHHBYb0W6bPlcb0AmAWXQfUzYb04BUvBIK','8j+uTcbBueHptKCGvog7JKeGXjdHU4PbieZdNsbuXkHoscaTifrvwEg7HLqGXjdHU5bjiepHUQrnieVHU7qGveHjiepdLe5hxq','vgHPW6PUifKGXjhHUQ9JihBHU4SSihpHU6LJigTO4BUpzsbK4BUtAsbKW6bVlcb0AmoIBIb0W6jTigfUigTOyw5NlG','vgJdTg5NihrPBIbJDw5NihBHU4SGXjfHBMCGXjhgSog7O2mGy+g6RxaGBMJHUQ10ihrPBMGGDSoIBI4','vgJdOM4Gsog6RxuGmW','Dgv4DenVBNrLBNq','zNmTy29TCgfZCY13CMfWCgvY','smoGBsaNDgLUAerPzw1uB25Nsg9WjYbRAmo0BMCGDhlHUQmGDUg7GsbK4BUVigXP4BUhDsbJ4BQLDsb0CSo6yY4','Dgv4Da','XjdHUQfPieTOW7rUzYbwB25N','yMvMB3jLAw5ZDgfSBhbYB21WDa','Axnty2fUBMLUzW','rgNdQM4GtMNdQM4Gy2JdRw5OihBHU4SSihbOW7OGCxxdVsb0Aog7JsbRAgfUzYWGz2LHimsr4BQHBYbO4BQHBMGGCgJdUMmGyUg7Gw4GBmoIDs4','u+g7RsbK4BULBMCGDUg6RxqGCgJHUQLTigJdOg5Oie3HU5LJigHV4BQ3yYb0XRdHU6nUzYbqAmo6yYbm4BUzyYbuAog7JsdeKEg7GYb0XinUzYbJXRdHU51UzYbJW6f0igTOW60U','D2vIA2L0q29TCgfZC0fJy3vYywn5','cIaGicaGicaGicaGicaGica8l2rPDJ4kicaGicaGicaGicaG','u8oHDcb0Aw5Oimsr4BQHAsbODw5Nimsr4BUzyYbO4BQHAsWGDhldOw5Oig3HU41PihtdOwmGXjhHU5LUzYbS4BUXyYbOB+g6T2mGC+g7RweGy2JHU69HihtHUQfPihbOXRdgOw5NihBHU4SGBSoGEs4','vhv54BUhDcdeKEg7KwKGDhldOw5OlG','4PQG77IpiftHUQbqieTiW40Gs0JdLe5hifzptKC','8j+tJsbnywDHBgXHBMvZlcbdta','u+g7RsbK4BULBMCGz8AWXQfUzYbcW6f0iff1W6fPihBdOcb24BQTDcbWAog6Qw0GAmoGBMGGvgJHU5uGXjhHU4mGDhlHUQvUimoHCcbZW6f0igTOW60U','jYWGjW','cIaGica8zgL2ihn0EwXLpsj0zxH0lwfSAwDUoMnLBNrLCJSGCgfKzgLUzZOYmhb4oYbIywnRz3jVDw5KoNjNyMeOmJu1ldi1nsWYntuSmc4WmIK7igjVCMrLCI1YywrPDxm6mtzWEdSGBwfYz2LUlwjVDhrVBtOYmhb4oYbIB3jKzxi6idfWEcbZB2XPzca','sog7O2KGkdiXAc0Ym2GP','BMvLzgXL','XjdHUQfPiepdOxq','CMvWBgfJzq','ywjVCNq','ugJHUQfTifr1EEg7H3qGtEg7H25OihpdOxqGA2JdRsWGA2JdRsb0CSAW4BUDBMCGyUg6PxqG4BUvBIWGy+g6P24Gy2JdUIb0CUg7Jw5NihpHU6LJigTO4BUpzsb2W6aGyUg6O28GDg/dOg4GDmoGAsbJAmoTBMGU','DhjHBNnSyxrLka','yMvKCM9VBv9Tyxn0zxi','zg9VCG','smAW4BUBBMCGugJdSM5NieTOW6fJAa','rgNdQM4GtMNdQM4Sihf1W70GBMJdOM4GCgJdSIb0CUg7OYWGy8o0BMCGzgfUAcbOyw5OihrOW7rUzY4','oIbe4BUVigXP4BUhDsbS4BUly2GGCgJdOxaGDhldUw5NigZHURDWigHV4BQ3yYbZywKGy+g6PxuGDhldUMmGDgJdOw5NicHlAEg7G20GDhjHigZHUQfPkq','u3v1','su5qvvq','vgHPW6PUifKGXjhHUQ9JihBHU4SSihf1W70GBMJdOM4GAog7LYb0CUg7OYWGBEg7JwKGDMNHU4DJihrODEg6Rw4GBog7O2KSihpHU6LJigTO4BUpzsbK4BUtAsbKW6bVlG','qUg6R3qGyNxHU5LJihpHU61Himsr4BUvAtOGrog7I2nOignODxNHU4nUigVHUR90igpHUQv1ihJHUQmGDgJHUQnPigZHU4DJAcb0W6jTihjHigTO4BUpAsbWAmoIBIbJAmoIBsbO4BQ5CcbUW6b5imsr4BUdig5OXRdHU51UzYbJAog7LYbJAg8GBUg7Gw4GXjhHUQv0ihpHUQfJAc4','Bwf0y2G','DhjHBNnSyxrLkdbWEcWGmhb4ksbZy2fSzsGXkq','tMFfQsbiB8oGBMCGXjdHUQfPifpdOxqGkmsq4BQHAsbiDw5Nkq','vgH1','ihb0icG','DMfSDwu'];_0x44ea=function(){return _0x20af8b;};return _0x44ea();}function togglePanel(){const _0x1d69b1=_0x3793e5,_0x593068=document[_0x1d69b1(0x27c)]('mainPanelWrapper'),_0x20bebb=document[_0x1d69b1(0x27c)]('toggleArrow');if(!_0x593068||!_0x20bebb)return;_0x593068[_0x1d69b1(0x3c2)][_0x1d69b1(0x59f)]('initial-hidden'),_0x593068['classList'][_0x1d69b1(0x4bd)]('collapsed');const _0x17a9ad=_0x593068['classList'][_0x1d69b1(0x16d)](_0x1d69b1(0x389));_0x20bebb[_0x1d69b1(0x2d1)]=_0x17a9ad?'▼':'▲',!_0x17a9ad?startAutoHide():clearTimeout(autoHideTimer);}document[_0x3793e5(0x396)](_0x3793e5(0x6d8),()=>{const _0x28451e=_0x3793e5,_0x2410f8=document[_0x28451e(0x27c)](_0x28451e(0x88d));if(!_0x2410f8)return;_0x2410f8['classList'][_0x28451e(0x245)](_0x28451e(0x389)),document[_0x28451e(0x27c)](_0x28451e(0x408))['innerHTML']='▼';const _0x5c21e=[_0x28451e(0x43e),_0x28451e(0x39e),_0x28451e(0x36f),_0x28451e(0x698),'mouseover'];_0x5c21e['forEach'](_0x2c6e0c=>{_0x2410f8['addEventListener'](_0x2c6e0c,()=>{const _0x28cf18=_0x2f80;!_0x2410f8[_0x28cf18(0x3c2)][_0x28cf18(0x16d)](_0x28cf18(0x389))&&clearTimeout(autoHideTimer);},{'passive':!![]});});const _0x351e71=['mouseup','touchend',_0x28451e(0x3ed),'mouseout'];_0x351e71[_0x28451e(0x242)](_0x12fd3d=>{const _0x6a288b=_0x28451e;_0x2410f8[_0x6a288b(0x396)](_0x12fd3d,()=>{const _0x53b423=_0x6a288b;!_0x2410f8['classList'][_0x53b423(0x16d)]('collapsed')&&startAutoHide();},{'passive':!![]});});}),window[_0x3793e5(0x37c)]=function(){const _0x36536b=_0x3793e5,_0x4af68=document[_0x36536b(0x27c)](_0x36536b(0x779)),_0x513e59=document[_0x36536b(0x27c)](_0x36536b(0x33f));if(!_0x4af68||!_0x513e59)return;_0x4af68[_0x36536b(0xf0)]['display']===_0x36536b(0x4e4)||_0x4af68['style'][_0x36536b(0x345)]===''?(_0x4af68['style'][_0x36536b(0x345)]=_0x36536b(0x63a),isDetailOpen=!![],lockedHeadingAtOpen=currentHeading,_0x513e59[_0x36536b(0x2d1)]=_0x36536b(0x603),_0x513e59[_0x36536b(0xf0)][_0x36536b(0x48a)]=_0x36536b(0x46a)):(_0x4af68[_0x36536b(0xf0)][_0x36536b(0x345)]=_0x36536b(0x4e4),isDetailOpen=![],lockedHeadingAtOpen=null,_0x513e59[_0x36536b(0x2d1)]=_0x36536b(0x564),_0x513e59[_0x36536b(0xf0)]['background']='transparent'),recalculateFate();};let isDetailOpen=![],lockedHeadingAtOpen=null,permissionDenied=![];function requestPermission(){const _0x357ea4=_0x3793e5,_0x24f1b6=document[_0x357ea4(0x27c)]('permission-btn');if(typeof DeviceOrientationEvent!==_0x357ea4(0x677)&&typeof DeviceOrientationEvent[_0x357ea4(0x653)]===_0x357ea4(0x60a))DeviceOrientationEvent['requestPermission']()[_0x357ea4(0x174)](_0x168a73=>{const _0x4b06e4=_0x357ea4;closePermissionModal();if(_0x168a73===_0x4b06e4(0x29b)){localStorage[_0x4b06e4(0x503)](_0x4b06e4(0x2e5),_0x4b06e4(0x725)),permissionDenied=![],addOrientationListener();if(_0x24f1b6)_0x24f1b6[_0x4b06e4(0xf0)][_0x4b06e4(0x345)]='none';}else permissionDenied=!![],localStorage[_0x4b06e4(0x503)](_0x4b06e4(0x2e5),_0x4b06e4(0x1ee)),showPermissionResetGuide();})['catch'](_0x26dd60=>{console['error'](_0x26dd60),permissionDenied=!![],closePermissionModal(),showPermissionResetGuide();});else{closePermissionModal(),addOrientationListener();if(_0x24f1b6)_0x24f1b6[_0x357ea4(0xf0)][_0x357ea4(0x345)]=_0x357ea4(0x4e4);}}function addOrientationListener(){const _0x427c26=_0x3793e5;if(orientationListenerAdded)return;const _0x4d8c6c=_0x24ae30=>{const _0xeb1bc3=_0x2f80;(_0x24ae30[_0xeb1bc3(0x55a)]!==undefined||_0x24ae30[_0xeb1bc3(0x8a7)]!==null)&&handleOrientation(_0x24ae30);};if(_0x427c26(0x6c5)in window)window[_0x427c26(0x396)](_0x427c26(0x468),_0x4d8c6c,!![]);else{if(_0x427c26(0x311)in window)window[_0x427c26(0x396)](_0x427c26(0x7e1),_0x4d8c6c,!![]);else{const _0x60932d=document[_0x427c26(0x27c)](_0x427c26(0x291));if(_0x60932d)_0x60932d[_0x427c26(0xf0)]['display']=_0x427c26(0x4e4);return;}}orientationListenerAdded=!![];}function showPermissionResetGuide(){const _0x22fc4b=_0x3793e5,_0x2c51e0=document[_0x22fc4b(0x27c)](_0x22fc4b(0x3bf));if(!_0x2c51e0)return;_0x2c51e0[_0x22fc4b(0x2d1)]=_0x22fc4b(0x432),_0x2c51e0[_0x22fc4b(0xf0)][_0x22fc4b(0x345)]='flex';}function _0x2f80(_0x3a6df7,_0x4b127d){_0x3a6df7=_0x3a6df7-0xde;const _0x2f1fee=_0x44ea();let _0x58963d=_0x2f1fee[_0x3a6df7];if(_0x2f80['dmfxaq']===undefined){var _0x56fc86=function(_0x1869b6){const _0xae2ff='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x3c8a88='',_0x11351e='',_0x1a6ab8=_0x3c8a88+_0x56fc86,_0x78227f=(''+function(){return 0x0;})['indexOf']('\x0a')!==-0x1;for(let _0x22b12a=0x0,_0xa63a1d,_0x1036c8,_0x596a2a=0x0;_0x1036c8=_0x1869b6['charAt'](_0x596a2a++);~_0x1036c8&&(_0xa63a1d=_0x22b12a%0x4?_0xa63a1d*0x40+_0x1036c8:_0x1036c8,_0x22b12a++%0x4)?_0x3c8a88+=_0x78227f||_0x1a6ab8['charCodeAt'](_0x596a2a+0xa)-0xa!==0x0?String['fromCharCode'](0xff&_0xa63a1d>>(-0x2*_0x22b12a&0x6)):_0x22b12a:0x0){_0x1036c8=_0xae2ff['indexOf'](_0x1036c8);}for(let _0xfaa07b=0x0,_0x29c98b=_0x3c8a88['length'];_0xfaa07b<_0x29c98b;_0xfaa07b++){_0x11351e+='%'+('00'+_0x3c8a88['charCodeAt'](_0xfaa07b)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0x11351e);};_0x2f80['zRbciF']=_0x56fc86,_0x2f80['FvqRUI']={},_0x2f80['dmfxaq']=!![];}const _0x370fe9=_0x2f1fee[0x0],_0x2d23b6=_0x3a6df7+_0x370fe9,_0x34061e=_0x2f80['FvqRUI'][_0x2d23b6];if(!_0x34061e){const _0x568f22=function(_0x337f4b){this['iQcAVo']=_0x337f4b,this['TfihSo']=[0x1,0x0,0x0],this['vGAsXb']=function(){return'newState';},this['unrLBc']='\x5cw+\x20*\x5c(\x5c)\x20*{\x5cw+\x20*',this['cSHXnN']='[\x27|\x22].+[\x27|\x22];?\x20*}';};_0x568f22['prototype']['XGfbYI']=function(){const _0x529681=new RegExp(this['unrLBc']+this['cSHXnN']),_0x54922a=_0x529681['test'](this['vGAsXb']['toString']())?--this['TfihSo'][0x1]:--this['TfihSo'][0x0];return this['pXVrIz'](_0x54922a);},_0x568f22['prototype']['pXVrIz']=function(_0x2e27a8){if(!Boolean(~_0x2e27a8))return _0x2e27a8;return this['MsnYFI'](this['iQcAVo']);},_0x568f22['prototype']['MsnYFI']=function(_0x2d93ba){for(let _0x1e8f65=0x0,_0x5e1b9c=this['TfihSo']['length'];_0x1e8f65<_0x5e1b9c;_0x1e8f65++){this['TfihSo']['push'](Math['round'](Math['random']())),_0x5e1b9c=this['TfihSo']['length'];}return _0x2d93ba(this['TfihSo'][0x0]);},(''+function(){return 0x0;})['indexOf']('\x0a')===-0x1&&new _0x568f22(_0x2f80)['XGfbYI'](),_0x58963d=_0x2f80['zRbciF'](_0x58963d),_0x2f80['FvqRUI'][_0x2d23b6]=_0x58963d;}else _0x58963d=_0x34061e;return _0x58963d;}function resetPermissionFlag(){const _0x58129b=_0x3793e5;localStorage[_0x58129b(0x2b2)](_0x58129b(0x2e5)),permissionDenied=![],closePermissionModal(),setTimeout(()=>location['reload'](),0x190);}function closePermissionModal(){const _0x8d0f3b=_0x3793e5,_0x52c744=document[_0x8d0f3b(0x27c)](_0x8d0f3b(0x3bf));if(_0x52c744)_0x52c744[_0x8d0f3b(0xf0)][_0x8d0f3b(0x345)]=_0x8d0f3b(0x4e4);}window[_0x3793e5(0x45a)]=function(){const _0x4d9d69=_0x3793e5;if(typeof render24SonRing===_0x4d9d69(0x60a))render24SonRing();if(typeof loadSavedMembers===_0x4d9d69(0x60a))loadSavedMembers();if(typeof recalculateFate==='function')recalculateFate();const _0x578627=document[_0x4d9d69(0x27c)](_0x4d9d69(0x3bf)),_0x2c83a7=/iPad|iPhone|iPod/[_0x4d9d69(0x6e5)](navigator[_0x4d9d69(0x759)])||navigator[_0x4d9d69(0x200)]===_0x4d9d69(0x58d)&&_0x4d9d69(0xde)in document||typeof DeviceOrientationEvent!==_0x4d9d69(0x677)&&typeof DeviceOrientationEvent[_0x4d9d69(0x653)]===_0x4d9d69(0x60a);if(_0x2c83a7&&_0x578627){_0x578627[_0x4d9d69(0xf0)][_0x4d9d69(0x345)]='flex';const _0x34dd7b=localStorage['getItem'](_0x4d9d69(0x2e5))===_0x4d9d69(0x725);if(_0x34dd7b)closePermissionModal(),addOrientationListener();else{const _0x1bdb0a=_0x578627['querySelector']('h3'),_0x23f24c=_0x578627['querySelector']('p'),_0x1fbbbe=_0x578627[_0x4d9d69(0x618)](_0x4d9d69(0x40a));if(_0x1bdb0a)_0x1bdb0a['textContent']='KÍCH\x20HOẠT\x20LA\x20BÀN';if(_0x23f24c)_0x23f24c[_0x4d9d69(0x2d1)]=_0x4d9d69(0x4b9);if(_0x1fbbbe)_0x1fbbbe[_0x4d9d69(0x72e)]=handleModalClick;}}else addOrientationListener();};function handleModalClick(){const _0x3250e1=_0x3793e5,_0x7c3422=document[_0x3250e1(0x27c)]('iosPermissionModal');if(_0x7c3422)_0x7c3422['style'][_0x3250e1(0x345)]=_0x3250e1(0x4e4);requestPermission();}let isFullScreen=![],originalCompassParent=null,lastTapTime=0x0,currentScale=0x1,initialScale=0x1,startDistance=0x0,isZooming=![],currentX=0x0,currentY=0x0,startX=0x0,startY=0x0;function handleInteraction(_0x5578e3){const _0x4820a1=_0x3793e5,_0x3035a7=_0x5578e3[_0x4820a1(0x8ea)][_0x4820a1(0x853)](_0x4820a1(0x3e3)),_0x5b917c=document[_0x4820a1(0x27c)](_0x4820a1(0x33a));if(_0x3035a7&&!isFullScreen)_0x5578e3[_0x4820a1(0x359)](),toggleFullScreenMode();else isFullScreen&&_0x5b917c&&(currentScale>0x1?resetZoom():exitFullScreenMode());}function resetZoom(){const _0x729dd3=_0x3793e5;currentScale=0x1,currentX=0x0,currentY=0x0;const _0x8280f7=document[_0x729dd3(0x27c)](_0x729dd3(0x80c));_0x8280f7&&(_0x8280f7[_0x729dd3(0xf0)][_0x729dd3(0x632)]=_0x729dd3(0x17b),_0x8280f7['style']['transform']=_0x729dd3(0x82e));}document[_0x3793e5(0x396)](_0x3793e5(0x463),handleInteraction),document['addEventListener'](_0x3793e5(0x720),_0xef00bc=>{const _0x79d6ba=_0x3793e5;if(_0xef00bc[_0x79d6ba(0x578)][_0x79d6ba(0x110)]>0x0)return;const _0x563fce=new Date()[_0x79d6ba(0x466)]();_0x563fce-lastTapTime<0x190&&handleInteraction(_0xef00bc),lastTapTime=_0x563fce;});function toggleFullScreenMode(){const _0x2be223=_0x3793e5;if(isFullScreen)return;const _0x5040b4=document[_0x2be223(0x618)](_0x2be223(0x3e3)),_0x3c1020=document['querySelector'](_0x2be223(0x6ba)),_0x383e01=document[_0x2be223(0x618)](_0x2be223(0x8dd));if(!_0x5040b4)return;if(!originalCompassParent)originalCompassParent=_0x5040b4[_0x2be223(0x71e)];if(_0x3c1020){const _0x3016c5=_0x3c1020['querySelectorAll']('*');_0x3016c5[_0x2be223(0x242)](_0xc88eb0=>{const _0x218a6b=_0x2be223,_0x507cb3=_0xc88eb0[_0x218a6b(0x80b)]||'',_0x5365f3=_0x507cb3[_0x218a6b(0x4c0)](_0x218a6b(0x3d0))||_0x507cb3[_0x218a6b(0x4c0)](_0x218a6b(0x61b))||_0x507cb3[_0x218a6b(0x4c0)]('Cung\x20Phi')||_0x507cb3[_0x218a6b(0x4c0)](_0x218a6b(0x293))||_0x507cb3[_0x218a6b(0x4c0)]('Trung\x20Cung')||_0x507cb3[_0x218a6b(0x4c0)](_0x218a6b(0x55f));_0x5365f3&&(_0xc88eb0[_0x218a6b(0xf0)][_0x218a6b(0x345)]='none',_0xc88eb0[_0x218a6b(0x43f)](_0x218a6b(0x2e6),_0x218a6b(0x725)));});}const _0x490f00=document['getElementById'](_0x2be223(0x1a7));_0x490f00&&(_0x490f00['style'][_0x2be223(0x345)]=_0x2be223(0x4e4),_0x490f00[_0x2be223(0x43f)]('data-fs-hidden','true'));currentScale=0x1,currentX=0x0,currentY=0x0,isZooming=![];const _0x34ebe5=document[_0x2be223(0x7cd)]('div');_0x34ebe5['id']=_0x2be223(0x33a),_0x34ebe5[_0x2be223(0x766)]=_0x2be223(0x22b),_0x34ebe5[_0x2be223(0xf0)][_0x2be223(0x7da)]=_0x2be223(0x665),_0x34ebe5['innerHTML']=_0x2be223(0x35f),document[_0x2be223(0x6b1)]['appendChild'](_0x34ebe5),document[_0x2be223(0x27c)]('fs-compass-wrapper')[_0x2be223(0x33b)](_0x5040b4);if(_0x3c1020)document[_0x2be223(0x27c)](_0x2be223(0x7ee))['appendChild'](_0x3c1020);if(_0x383e01)_0x383e01[_0x2be223(0xf0)][_0x2be223(0x3a5)]='0';isFullScreen=!![];const _0x3c8a6a=document[_0x2be223(0x27c)]('fs-compass-wrapper');_0x34ebe5[_0x2be223(0x396)](_0x2be223(0x39e),_0x29448c=>{const _0x74da70=_0x2be223;if(_0x29448c[_0x74da70(0x578)][_0x74da70(0x110)]===0x2)isZooming=!![],startDistance=Math[_0x74da70(0x2dc)](_0x29448c[_0x74da70(0x578)][0x0][_0x74da70(0x17a)]-_0x29448c[_0x74da70(0x578)][0x1][_0x74da70(0x17a)],_0x29448c[_0x74da70(0x578)][0x0]['pageY']-_0x29448c[_0x74da70(0x578)][0x1][_0x74da70(0x169)]),initialScale=currentScale,_0x3c8a6a[_0x74da70(0xf0)][_0x74da70(0x632)]=_0x74da70(0x4e4);else _0x29448c[_0x74da70(0x578)][_0x74da70(0x110)]===0x1&&currentScale>0x1&&(startX=_0x29448c[_0x74da70(0x578)][0x0][_0x74da70(0x17a)]-currentX,startY=_0x29448c[_0x74da70(0x578)][0x0][_0x74da70(0x169)]-currentY,_0x3c8a6a[_0x74da70(0xf0)][_0x74da70(0x632)]=_0x74da70(0x4e4));}),_0x34ebe5[_0x2be223(0x396)](_0x2be223(0x3b9),_0x4a06fc=>{const _0x1e58db=_0x2be223;if(isZooming&&_0x4a06fc['touches'][_0x1e58db(0x110)]===0x2){_0x4a06fc[_0x1e58db(0x359)]();const _0xb1c686=Math['hypot'](_0x4a06fc[_0x1e58db(0x578)][0x0][_0x1e58db(0x17a)]-_0x4a06fc[_0x1e58db(0x578)][0x1][_0x1e58db(0x17a)],_0x4a06fc[_0x1e58db(0x578)][0x0][_0x1e58db(0x169)]-_0x4a06fc[_0x1e58db(0x578)][0x1][_0x1e58db(0x169)]);currentScale=Math[_0x1e58db(0x1dc)](Math[_0x1e58db(0x4db)](initialScale*(_0xb1c686/startDistance),0x1),0x4),_0x3c8a6a[_0x1e58db(0xf0)][_0x1e58db(0x855)]=_0x1e58db(0x823)+currentX+_0x1e58db(0x69a)+currentY+_0x1e58db(0x6c6)+currentScale+')';}else{if(!isZooming&&_0x4a06fc[_0x1e58db(0x578)][_0x1e58db(0x110)]===0x1&&currentScale>0x1){_0x4a06fc[_0x1e58db(0x359)](),currentX=_0x4a06fc[_0x1e58db(0x578)][0x0][_0x1e58db(0x17a)]-startX,currentY=_0x4a06fc[_0x1e58db(0x578)][0x0][_0x1e58db(0x169)]-startY;const _0x47ce58=0x96*currentScale;currentX=Math[_0x1e58db(0x1dc)](Math['max'](currentX,-_0x47ce58),_0x47ce58),currentY=Math[_0x1e58db(0x1dc)](Math['max'](currentY,-_0x47ce58),_0x47ce58),_0x3c8a6a[_0x1e58db(0xf0)][_0x1e58db(0x855)]=_0x1e58db(0x823)+currentX+_0x1e58db(0x69a)+currentY+_0x1e58db(0x6c6)+currentScale+')';}}},{'passive':![]}),_0x34ebe5['addEventListener'](_0x2be223(0x720),_0x2b1af0=>{const _0x4a63c5=_0x2be223;_0x2b1af0[_0x4a63c5(0x578)][_0x4a63c5(0x110)]<0x2&&(isZooming=![]);});if(typeof recalculateFate==='function')recalculateFate();}function exitFullScreenMode(){const _0x57121f=_0x3793e5,_0x387c33=document[_0x57121f(0x27c)](_0x57121f(0x33a));if(!_0x387c33)return;_0x387c33[_0x57121f(0xf0)][_0x57121f(0x3a5)]='0',setTimeout(()=>{const _0x13e2a9=_0x57121f,_0x4663c5=document[_0x13e2a9(0x618)](_0x13e2a9(0x3e3)),_0x93efc5=document[_0x13e2a9(0x618)]('.status-panel'),_0x79dffa=document[_0x13e2a9(0x618)](_0x13e2a9(0x8dd)),_0x4414cd=document[_0x13e2a9(0x285)](_0x13e2a9(0x753));_0x4414cd[_0x13e2a9(0x242)](_0x264db9=>{const _0x5089fb=_0x13e2a9;_0x264db9[_0x5089fb(0xf0)][_0x5089fb(0x345)]='',_0x264db9[_0x5089fb(0x5b1)](_0x5089fb(0x2e6));});if(_0x4663c5&&originalCompassParent){_0x4663c5[_0x13e2a9(0xf0)][_0x13e2a9(0x855)]='',originalCompassParent['appendChild'](_0x4663c5);if(_0x93efc5)originalCompassParent[_0x13e2a9(0x103)](_0x93efc5,_0x4663c5[_0x13e2a9(0x6bc)]);}_0x387c33['remove'](),isFullScreen=![];if(_0x79dffa)_0x79dffa['style'][_0x13e2a9(0x3a5)]='1';typeof updateCompassUI==='function'&&updateCompassUI(typeof lastHeading!==_0x13e2a9(0x677)?lastHeading:0x0);},0x12c);}let currentPurposeValue='';function showPurposeModal(){const _0x5ce135=_0x3793e5;let _0x5245da=document[_0x5ce135(0x27c)](_0x5ce135(0x2b7));!_0x5245da&&(_0x5245da=document['createElement'](_0x5ce135(0x196)),_0x5245da['id']='purpose-modal',_0x5245da[_0x5ce135(0x2d1)]=_0x5ce135(0x573),document[_0x5ce135(0x6b1)][_0x5ce135(0x33b)](_0x5245da));const _0x1b4a5f=document[_0x5ce135(0x27c)](_0x5ce135(0x1ff));_0x1b4a5f[_0x5ce135(0x2d1)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-group\x22>🏛️\x20DƯƠNG\x20TRẠCH\x20CHỦ\x20CỤC\x20(Nhà\x20Ở\x20&\x20Sinh\x20Hoạt)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22house\x22>Hướng\x20Nhà\x20/\x20Cửa\x20Chính\x20(Đại\x20Môn)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22gate\x22>Hướng\x20Cổng\x20Chính\x20(Lộ\x20Khẩu)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22altar\x22>Hướng\x20Bàn\x20Thờ\x20/\x20Ban\x20Thần\x20Tài\x20(Tụ\x20Phúc)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22altar_room\x22>Không\x20Gian\x20Phòng\x20Thờ\x20Độc\x20Lập\x20(Tổ\x20Đường)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22bed\x22>Hướng\x20Đầu\x20Giường\x20Ngủ\x20(Sàng\x20Vị)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22livingroom\x22>Hướng\x20Phòng\x20Khách\x20(Trung\x20Đường)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22bedroom_master\x22>Hướng\x20Phòng\x20Ngủ\x20Chính\x20(Chủ\x20Khang)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22bedroom_child\x22>Hướng\x20Phòng\x20Ngủ\x20Con\x20Cái\x20(Phúc\x20Nhân)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22balcony\x22>Hướng\x20Ban\x20Công\x20/\x20Cửa\x20Sổ\x20Lớn\x20(Nạp\x20Khí)</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-group\x22>📚\x20VĂN\x20XƯƠNG\x20KHOA\x20DANH\x20(Học\x20Hành\x20&\x20Sự\x20Nghiệp)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22workspace\x22>Hướng\x20Bàn\x20Làm\x20Việc\x20(Quyền\x20Lực\x20Vị)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22ceo_office\x22>Hướng\x20Phòng\x20Sếp\x20/\x20Bàn\x20Lãnh\x20Đạo</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22study_desk\x22>Hướng\x20Bàn\x20Học\x20/\x20Văn\x20Xương\x20Vị</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22bookcase\x22>Vị\x20Trí\x20Tủ\x20Sách\x20/\x20Lưu\x20Trữ\x20Hồ\x20Sơ</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-group\x22>💰\x20ĐẮC\x20TÀI\x20MẬU\x20DỊCH\x20(Kinh\x20Doanh\x20Thương\x20Mại)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22signboard\x22>Hướng\x20Biển\x20Hiệu\x20(Minh\x20Đường\x20Lộ)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22counter\x22>Hướng\x20Quầy\x20Thu\x20Ngân\x20(Tài\x20Khố\x20Vị)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22safe\x22>Vị\x20trí\x20Két\x20Sắt\x20(Tụ\x20Tài\x20Bảo\x20Khố)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22machinery\x22>Hệ\x20Thống\x20Máy\x20Móc\x20/\x20Dây\x20Chuyền\x20Sản\x20Xuất</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22bakery\x22>Hướng\x20Lò\x20Nướng\x20/\x20Quầy\x20Bánh\x20Mì</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22coffee\x22>Hướng\x20Quầy\x20Pha\x20Chế\x20Cà\x20Phê\x20/\x20Trà\x20Sữa</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22restaurant\x22>Hướng\x20Quán\x20Ăn\x20/\x20Nhà\x20Hàng</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22shop\x22>Hướng\x20Cửa\x20Hàng\x20/\x20Showroom\x20/\x20Tạp\x20Hóa</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22salon\x22>Hướng\x20Salon\x20Tóc\x20/\x20Giường\x20Nail\x20/\x20Spa</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-group\x22>🛠️\x20TỌA\x20VỊ\x20TRẤN\x20SÁT\x20(Hệ\x20Thống\x20Đè\x20Hung)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22kitchen\x22>Vị\x20trí\x20Đặt\x20Bếp\x20Nấu\x20(Táo\x20Vị\x20Trấn\x20Sát)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22toilet\x22>Vị\x20trí\x20Nhà\x20Vệ\x20Sinh\x20(Tiêu\x20Sát\x20Khí)</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22septic_tank\x22>Vị\x20trí\x20Hầm\x20Tự\x20Hoại\x20/\x20Bể\x20Phốt\x20Ngầm</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22pipe_shaft\x22>Trục\x20Kỹ\x20Thuật\x20/\x20Hộp\x20Gen\x20Uế\x20Khí</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22storage\x22>Vị\x20trí\x20Kho\x20Hàng\x20/\x20Phòng\x20Đồ\x20Tạp</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22purpose-modal-option\x22\x20data-value=\x22trash_area\x22>Vị\x20trí\x20Thùng\x20Rác\x20/\x20Khu\x20Tập\x20Kết\x20Phế\x20Liệu</div>\x0a\x20\x20\x20\x20',_0x1b4a5f[_0x5ce135(0x285)]('.purpose-modal-option')[_0x5ce135(0x242)](_0x16ba85=>{const _0x58213e=_0x5ce135;_0x16ba85['addEventListener'](_0x58213e(0x2ec),()=>{const _0x4e3362=_0x58213e,_0x22aeb8=_0x16ba85[_0x4e3362(0x688)]('data-value'),_0x4147b7=_0x16ba85[_0x4e3362(0x80b)][_0x4e3362(0x50b)](),_0x52c629=document['getElementById'](_0x4e3362(0x35b));if(_0x52c629)_0x52c629[_0x4e3362(0x80b)]=_0x4147b7;const _0x111197=document[_0x4e3362(0x27c)](_0x4e3362(0x54b));_0x111197&&(_0x111197[_0x4e3362(0x832)]=_0x22aeb8),currentPurposeValue=_0x22aeb8,typeof hidePurposeModal===_0x4e3362(0x60a)?hidePurposeModal():_0x5245da[_0x4e3362(0xf0)]['display']=_0x4e3362(0x4e4),typeof recalculateFate===_0x4e3362(0x60a)&&recalculateFate(),typeof generateDirectionsList===_0x4e3362(0x60a)&&generateDirectionsList();});}),_0x5245da[_0x5ce135(0xf0)]['display']='flex';}function hidePurposeModal(){const _0x5b74eb=_0x3793e5,_0x232d43=document[_0x5b74eb(0x27c)]('purpose-modal');if(_0x232d43)_0x232d43[_0x5b74eb(0xf0)][_0x5b74eb(0x345)]=_0x5b74eb(0x4e4);}document[_0x3793e5(0x396)]('click',_0x206f1a=>{const _0x358c86=_0x3793e5,_0x5e9a6b=document['getElementById']('purpose-modal');_0x5e9a6b&&_0x206f1a[_0x358c86(0x8ea)]===_0x5e9a6b&&hidePurposeModal();});function showCustomAlert(_0x31534a,_0x7d007=_0x3793e5(0x26f)){const _0x2ef0b1=_0x3793e5,_0x10acad=document['querySelector'](_0x2ef0b1(0x613));if(_0x10acad)_0x10acad[_0x2ef0b1(0x342)]=_0x7d007;document[_0x2ef0b1(0x27c)](_0x2ef0b1(0x1ce))[_0x2ef0b1(0x342)]=_0x31534a,document[_0x2ef0b1(0x27c)](_0x2ef0b1(0x327))[_0x2ef0b1(0x3c2)][_0x2ef0b1(0x245)](_0x2ef0b1(0x8f5));}function closeCustomAlert(){const _0x36c6e2=_0x3793e5;document[_0x36c6e2(0x27c)](_0x36c6e2(0x327))[_0x36c6e2(0x3c2)][_0x36c6e2(0x59f)](_0x36c6e2(0x8f5));}function handleDateInput(_0x37bb74,_0x5201b0){const _0x243b51=_0x3793e5;_0x37bb74['value']=_0x37bb74[_0x243b51(0x832)][_0x243b51(0x820)](/[^0-9]/g,'');let _0x4520e8=parseInt(_0x37bb74['value'])||0x0;if(_0x37bb74['id']==='birthDay'){if(_0x4520e8>0x1f)_0x37bb74['value']='31',showCustomAlert('Ngày\x20trong\x20tháng\x20không\x20thể\x20vượt\x20quá\x2031!',_0x243b51(0x5c8));else _0x4520e8<0x0&&(_0x37bb74[_0x243b51(0x832)]='1');}if(_0x37bb74['id']===_0x243b51(0x118)){if(_0x4520e8>0xc)_0x37bb74[_0x243b51(0x832)]='12',showCustomAlert('Tháng\x20không\x20thể\x20vượt\x20quá\x2012!',_0x243b51(0x5c8));else _0x4520e8<0x0&&(_0x37bb74[_0x243b51(0x832)]='1');}_0x37bb74[_0x243b51(0x832)][_0x243b51(0x110)]>=_0x37bb74[_0x243b51(0x6fa)]&&_0x5201b0&&document[_0x243b51(0x27c)](_0x5201b0)[_0x243b51(0x698)](),typeof debounceRecalculate===_0x243b51(0x60a)&&debounceRecalculate();}let sonTextsCache=null,huongLonTextsCache=null,saoTextsCache=null,hau72TextsCache=null;function render24SonRing(){const _0x3c7880=_0x3793e5,_0x131c50=document[_0x3c7880(0x27c)](_0x3c7880(0x1b1));if(_0x131c50){let _0x36a1db='';for(let _0x729052=0x0;_0x729052<0x168;_0x729052++){const _0x5e4e97=_0x729052%0xa===0x0?0x1c:_0x729052%0x5===0x0?0x19:0x17;_0x36a1db+='<line\x20x1=\x22250\x22\x20y1=\x2218\x22\x20x2=\x22250\x22\x20y2=\x22'+_0x5e4e97+'\x22\x20transform=\x22rotate('+_0x729052+_0x3c7880(0x4d0);}_0x131c50[_0x3c7880(0x2d1)]=_0x36a1db;}const _0x38786d=document[_0x3c7880(0x27c)](_0x3c7880(0x5e0));if(_0x38786d){let _0x14ba5f='';for(let _0x451617=0x0;_0x451617<0x18;_0x451617++){const _0x518bce=_0x451617*0xf-7.5;_0x14ba5f+=_0x3c7880(0x120)+_0x518bce+_0x3c7880(0x4d0);}_0x38786d[_0x3c7880(0x2d1)]=_0x14ba5f;}const _0x8166a5=document[_0x3c7880(0x27c)]('sonRingSvg');if(_0x8166a5){let _0x11d3c7='';SON_24_CONFIG[_0x3c7880(0x242)]((_0x272f2b,_0x2ee4c0)=>{const _0x3f5286=_0x3c7880,_0x1e4e32=_0x2ee4c0*0xf%0x168,_0x2a6a42=[_0x3f5286(0x6ef),_0x3f5286(0x8a1),_0x3f5286(0xf2),_0x3f5286(0x623)]['includes'](_0x272f2b[_0x3f5286(0x3bc)])?_0x3f5286(0x1ac):['Tý',_0x3f5286(0x8d6),_0x3f5286(0x7e8),_0x3f5286(0x2f2)][_0x3f5286(0x4c0)](_0x272f2b[_0x3f5286(0x3bc)])?_0x3f5286(0x226):_0x3f5286(0x16f);_0x11d3c7+=_0x3f5286(0x8ca)+(_0x3f5286(0x1af)+_0x1e4e32+_0x3f5286(0x5ff)+_0x1e4e32+_0x3f5286(0x65e))+(_0x3f5286(0x7d3)+_0x2a6a42+_0x3f5286(0x52f)+_0x2a6a42+'\x22>'+_0x272f2b['name']+_0x3f5286(0x2b9));}),_0x8166a5[_0x3c7880(0x2d1)]=_0x11d3c7;}const _0x24cb3e=document['getElementById']('phucDucRingSvg');if(_0x24cb3e){const _0x1a296d=[_0x3c7880(0x844),_0x3c7880(0x45c),'Tấn\x20Tài',_0x3c7880(0x3f8),_0x3c7880(0x74f),_0x3c7880(0x127),_0x3c7880(0x6d4),_0x3c7880(0x6a3),_0x3c7880(0x5b0),_0x3c7880(0xfa),_0x3c7880(0x1ab),_0x3c7880(0x37d),_0x3c7880(0x535),_0x3c7880(0x364),'Đăng\x20Doanh',_0x3c7880(0x6a5),_0x3c7880(0x526),'Tử\x20Mất',_0x3c7880(0x57e),'Khóc\x20Khấp',_0x3c7880(0x7a5),_0x3c7880(0x46c),_0x3c7880(0x6a5),_0x3c7880(0x328)],_0x222ab7=[_0x3c7880(0x844),_0x3c7880(0x722),_0x3c7880(0x127),_0x3c7880(0x6d4),_0x3c7880(0x5b0),_0x3c7880(0xfa),_0x3c7880(0x364),'Đăng\x20Doanh',_0x3c7880(0x57e),'Vinh\x20Phước'];let _0x259626='';_0x1a296d[_0x3c7880(0x242)]((_0x53a637,_0x2d909d)=>{const _0x187ad8=_0x3c7880,_0x126d11=_0x2d909d*0xf%0x168,_0x57d4d4=_0x222ab7[_0x187ad8(0x4c0)](_0x53a637)?'#00a525':_0x187ad8(0x1ac);_0x259626+=_0x187ad8(0x56d)+(_0x187ad8(0x1af)+_0x126d11+_0x187ad8(0x42c)+_0x126d11+_0x187ad8(0x77d))+(_0x187ad8(0x7d3)+_0x57d4d4+_0x187ad8(0x52f)+_0x57d4d4+'\x22>'+_0x53a637+_0x187ad8(0x2b9));}),_0x24cb3e[_0x3c7880(0x2d1)]=_0x259626;}const _0x42da9a=document['getElementById']('hau72RingSvg');if(_0x42da9a){let _0x3c2c76='';Object[_0x3c7880(0x3e9)](Data72Hau)[_0x3c7880(0x242)](_0x32bf20=>{const _0x23e8ec=_0x3c7880,_0x2d2bbe=Data72Hau[_0x32bf20],_0x5f53c0=parseFloat(_0x32bf20);let _0xb724eb=_0x23e8ec(0x272);if(_0x2d2bbe[_0x23e8ec(0x7c7)]['includes'](_0x23e8ec(0x43d)))_0xb724eb=_0x23e8ec(0x850);else _0x2d2bbe['chatLuong'][_0x23e8ec(0x4c0)](_0x23e8ec(0x2d5))&&(_0xb724eb=_0x23e8ec(0x430));const _0x336bec=_0x2d2bbe[_0x23e8ec(0x5f9)]||'',_0x2c58d3=_0x336bec[_0x23e8ec(0x82d)](/\d+/),_0xd45ca1=_0x336bec[_0x23e8ec(0x42a)](0x0),_0x594c96=_0x2c58d3?_0xd45ca1+_0x2c58d3[0x0]:_0x336bec;_0x3c2c76+=_0x23e8ec(0x37a)+(_0x23e8ec(0x1af)+_0x5f53c0+_0x23e8ec(0x743)+_0x32bf20+_0x23e8ec(0x436))+(_0x23e8ec(0x7d3)+_0xb724eb+_0x23e8ec(0x158)+_0xb724eb+'\x22>'+_0x594c96+_0x23e8ec(0x2b9));}),_0x42da9a[_0x3c7880(0x2d1)]=_0x3c2c76;}cacheCompassElements(!![]);}function cacheCompassElements(_0x1aaa99=![]){const _0x2f9c0c=_0x3793e5;if(!_0x1aaa99&&sonTextsCache&&sonTextsCache['length']>0x0)return;sonTextsCache=Array[_0x2f9c0c(0x79c)](document[_0x2f9c0c(0x285)](_0x2f9c0c(0x1c1)))[_0x2f9c0c(0x583)](_0x59c4b=>({'el':_0x59c4b,'goc':parseFloat(_0x59c4b[_0x2f9c0c(0x688)](_0x2f9c0c(0x8a9)))||0x0,'baseSize':parseFloat(_0x59c4b[_0x2f9c0c(0x688)](_0x2f9c0c(0x6fd)))||0xa,'color':_0x59c4b[_0x2f9c0c(0x688)](_0x2f9c0c(0xfd))||_0x2f9c0c(0x16f)})),saoTextsCache=Array[_0x2f9c0c(0x79c)](document[_0x2f9c0c(0x285)](_0x2f9c0c(0x56b)))[_0x2f9c0c(0x583)](_0x6265b=>({'el':_0x6265b,'goc':parseFloat(_0x6265b[_0x2f9c0c(0x688)](_0x2f9c0c(0x4a7)))||0x0,'baseSize':parseFloat(_0x6265b['getAttribute']('data-base-size'))||6.8,'color':_0x6265b['getAttribute'](_0x2f9c0c(0xfd))||_0x2f9c0c(0x1ac)})),hau72TextsCache=Array[_0x2f9c0c(0x79c)](document['querySelectorAll'](_0x2f9c0c(0x79d)))[_0x2f9c0c(0x583)](_0x968f75=>({'el':_0x968f75,'goc':parseFloat(_0x968f75[_0x2f9c0c(0x688)](_0x2f9c0c(0x34b)))||0x0,'baseSize':parseFloat(_0x968f75['getAttribute'](_0x2f9c0c(0x6fd)))||3.2,'originalFill':_0x968f75[_0x2f9c0c(0x688)]('data-original-fill')||_0x968f75[_0x2f9c0c(0x688)](_0x2f9c0c(0x4a1))||_0x2f9c0c(0x272)})),huongLonTextsCache=Array[_0x2f9c0c(0x79c)](document[_0x2f9c0c(0x285)](_0x2f9c0c(0x52e)))['map'](_0x384ee3=>{const _0x5ea621=_0x2f9c0c,_0x2d3170=parseFloat(_0x384ee3[_0x5ea621(0x688)](_0x5ea621(0x642)))||0x0,_0x2c114b=_0x384ee3['getAttribute'](_0x5ea621(0x4a1))||'',_0x31b0d1=_0x384ee3[_0x5ea621(0x688)](_0x5ea621(0x855))||'',_0x7acaa4=_0x384ee3[_0x5ea621(0x659)]?.['getAttribute']('id')==='textChinhPhuong';let _0x26de4c=_0x5ea621(0x6e6);return _0x7acaa4&&(_0x26de4c=_0x31b0d1[_0x5ea621(0x4c0)](_0x5ea621(0x4f1))||_0x31b0d1[_0x5ea621(0x4c0)](_0x5ea621(0x690))?_0x5ea621(0x226):_0x5ea621(0x1ac)),{'el':_0x384ee3,'goc':_0x2d3170,'isGreenByDefault':_0x2c114b===_0x5ea621(0x226)||_0x26de4c===_0x5ea621(0x226),'defaultFill':_0x26de4c};});}function kichHoatDenLedQuet(_0x63945){const _0x42ab47=_0x3793e5,_0x15796a=(_0x63945%0x168+0x168)%0x168,_0x42b546=(_0x32fe00,_0x485564,_0x590f3b,_0x518381=![])=>{const _0x27e6ce=_0x2f80;if(!_0x32fe00)return;const _0x4c55c1=_0x32fe00[_0x27e6ce(0x110)];for(let _0x249ce4=0x0;_0x249ce4<_0x4c55c1;_0x249ce4++){const _0xa47a4f=_0x32fe00[_0x249ce4];let _0x2532cd=Math[_0x27e6ce(0x330)](_0x15796a-_0xa47a4f[_0x27e6ce(0x32c)]);if(_0x2532cd>0xb4)_0x2532cd=0x168-_0x2532cd;const _0x3b4834=_0xa47a4f['el'][_0x27e6ce(0xf0)];if(_0x2532cd<=_0x485564){_0x3b4834['opacity']='1',_0x3b4834[_0x27e6ce(0x6c0)]=_0xa47a4f[_0x27e6ce(0x284)]*_0x590f3b+'px',_0x3b4834[_0x27e6ce(0x416)]=_0x27e6ce(0x8cf);if(_0x518381)_0x3b4834[_0x27e6ce(0x4a1)]=_0x27e6ce(0x265);else{const _0x4dd5e6=_0xa47a4f[_0x27e6ce(0x498)];_0x3b4834['fill']=_0x4dd5e6===_0x27e6ce(0x16f)?_0x27e6ce(0x584):_0x4dd5e6===_0x27e6ce(0x1ac)?_0x27e6ce(0x568):_0x27e6ce(0x28b);}}else _0x3b4834[_0x27e6ce(0x3a5)]=_0x27e6ce(0x65a),_0x3b4834[_0x27e6ce(0x6c0)]=_0xa47a4f[_0x27e6ce(0x284)]+'px',_0x3b4834[_0x27e6ce(0x416)]=_0x27e6ce(0x3e1),_0x3b4834[_0x27e6ce(0x4a1)]=_0xa47a4f['originalFill']||_0xa47a4f[_0x27e6ce(0x498)]||_0x27e6ce(0x488);}};if(huongLonTextsCache){const _0x556a1c=huongLonTextsCache[_0x42ab47(0x110)];for(let _0x364cf8=0x0;_0x364cf8<_0x556a1c;_0x364cf8++){const _0x2b469c=huongLonTextsCache[_0x364cf8];let _0x202719=Math['abs'](_0x15796a-_0x2b469c[_0x42ab47(0x32c)]);if(_0x202719>0xb4)_0x202719=0x168-_0x202719;const _0x5b1884=_0x2b469c['el'][_0x42ab47(0xf0)];_0x202719<=22.5?(_0x5b1884['opacity']='1',_0x5b1884[_0x42ab47(0x416)]=_0x42ab47(0x8cf),_0x5b1884['fill']=_0x2b469c['isGreenByDefault']?'#00ff37':_0x42ab47(0x49f)):(_0x5b1884['opacity']=_0x42ab47(0x846),_0x5b1884[_0x42ab47(0x416)]=_0x42ab47(0x6bf),_0x5b1884[_0x42ab47(0x4a1)]=_0x2b469c[_0x42ab47(0x6bb)]);}}_0x42b546(sonTextsCache,7.5,1.3,![]),_0x42b546(saoTextsCache,7.5,1.2,![]),_0x42b546(hau72TextsCache,2.5,1.65,!![]);}function manualRotate(_0x43ebec){const _0x5ae90a=parseFloat(_0x43ebec);if(isNaN(_0x5ae90a))return;lastHeading=(_0x5ae90a%0x168+0x168)%0x168;if(rafId)cancelAnimationFrame(rafId);rafId=requestAnimationFrame(()=>{updateCompassUI(lastHeading);});}const _arcPathCache={};function getSvgArcPath(_0x59e836,_0x539e86,_0x19b2f1,_0x19d2d0,_0x2191ed,_0x178d92){const _0x708c68=_0x3793e5,_0xac20e3=_0x59e836+'_'+_0x539e86+'_'+_0x19b2f1+'_'+_0x19d2d0+'_'+_0x2191ed+'_'+_0x178d92;if(_arcPathCache[_0xac20e3])return _arcPathCache[_0xac20e3];const _0x1dae22=_0x2f056f=>(_0x2f056f-0x5a)*Math['PI']/0xb4,_0x313f0f=_0x1dae22(_0x2191ed),_0x2aaf9b=_0x1dae22(_0x178d92),_0x5319ff=(_0x59e836+_0x19d2d0*Math[_0x708c68(0x22f)](_0x313f0f))[_0x708c68(0x3a2)](0x1),_0x4729a4=(_0x539e86+_0x19d2d0*Math[_0x708c68(0x347)](_0x313f0f))[_0x708c68(0x3a2)](0x1),_0x32efa2=(_0x59e836+_0x19d2d0*Math[_0x708c68(0x22f)](_0x2aaf9b))[_0x708c68(0x3a2)](0x1),_0x5de2da=(_0x539e86+_0x19d2d0*Math['sin'](_0x2aaf9b))[_0x708c68(0x3a2)](0x1),_0x4edc23=(_0x59e836+_0x19b2f1*Math[_0x708c68(0x22f)](_0x2aaf9b))[_0x708c68(0x3a2)](0x1),_0x2cf3b4=(_0x539e86+_0x19b2f1*Math[_0x708c68(0x347)](_0x2aaf9b))['toFixed'](0x1),_0x8aa708=(_0x59e836+_0x19b2f1*Math['cos'](_0x313f0f))['toFixed'](0x1),_0x4d8904=(_0x539e86+_0x19b2f1*Math[_0x708c68(0x347)](_0x313f0f))[_0x708c68(0x3a2)](0x1),_0x362ab5=_0x178d92-_0x2191ed>0xb4?0x1:0x0,_0x3bd0fd='M\x20'+_0x5319ff+'\x20'+_0x4729a4+'\x20'+('A\x20'+_0x19d2d0+'\x20'+_0x19d2d0+_0x708c68(0x228)+_0x362ab5+_0x708c68(0x48c)+_0x32efa2+'\x20'+_0x5de2da+'\x20')+('L\x20'+_0x4edc23+'\x20'+_0x2cf3b4+'\x20')+('A\x20'+_0x19b2f1+'\x20'+_0x19b2f1+_0x708c68(0x228)+_0x362ab5+_0x708c68(0x228)+_0x8aa708+'\x20'+_0x4d8904+'\x20Z');return _arcPathCache[_0xac20e3]=_0x3bd0fd,_0x3bd0fd;}function updateBatTrachBackground(_0xf81850){const _0x551bae=_0x3793e5,_0x2f809a=document['getElementById'](_0x551bae(0x1c2));if(!_0x2f809a)return;let _0x587333=_0x2f809a[_0x551bae(0x285)]('path');const _0x3e35c8=_0x587333[_0x551bae(0x110)]===0x8;if(!_0xf81850){_0x3e35c8?_0x587333[_0x551bae(0x242)](_0x3fb87a=>{const _0x840aac=_0x551bae;_0x3fb87a[_0x840aac(0x43f)](_0x840aac(0x4a1),_0x840aac(0x4e4)),_0x3fb87a[_0x840aac(0x43f)](_0x840aac(0x7cb),_0x840aac(0x4e4));}):_0x2f809a[_0x551bae(0x2d1)]='';return;}const _0xdfc41b=[{'code':'N','start':337.5,'end':382.5},{'code':'NE','start':22.5,'end':67.5},{'code':'E','start':67.5,'end':112.5},{'code':'SE','start':112.5,'end':157.5},{'code':'S','start':157.5,'end':202.5},{'code':'SW','start':202.5,'end':247.5},{'code':'W','start':247.5,'end':292.5},{'code':'NW','start':292.5,'end':337.5}],_0x1eb592=_0xf81850[_0x551bae(0x50b)]()['charAt'](0x0)[_0x551bae(0x23a)]()+_0xf81850[_0x551bae(0x50b)]()[_0x551bae(0x173)](0x1)['toLowerCase'](),_0x5de29c=bátTrạchMap[_0x1eb592];if(!_0x5de29c){_0x3e35c8?_0x587333[_0x551bae(0x242)](_0x55cfc6=>{const _0x1a5a3a=_0x551bae;_0x55cfc6[_0x1a5a3a(0x43f)]('fill',_0x1a5a3a(0x4e4)),_0x55cfc6[_0x1a5a3a(0x43f)](_0x1a5a3a(0x7cb),_0x1a5a3a(0x4e4));}):_0x2f809a[_0x551bae(0x2d1)]='';return;}if(_0x3e35c8){_0xdfc41b[_0x551bae(0x242)]((_0x502bcd,_0x14e330)=>{const _0x381c67=_0x551bae,_0x4a0c90=_0x5de29c[_0x502bcd[_0x381c67(0xe0)]],_0x36adad=cungPhầnTrăm[_0x4a0c90]?.[_0x381c67(0x640)],_0x57a2a6=_0x36adad?_0x381c67(0x703):_0x381c67(0x1c3),_0x4ce60c=_0x36adad?'rgba(0,\x20255,\x20170,\x200.70)':_0x381c67(0x57b);_0x587333[_0x14e330][_0x381c67(0x43f)](_0x381c67(0x4a1),_0x57a2a6),_0x587333[_0x14e330][_0x381c67(0x43f)](_0x381c67(0x7cb),_0x4ce60c),_0x587333[_0x14e330][_0x381c67(0x43f)](_0x381c67(0x10c),_0x381c67(0x370));});return;}let _0x3eb1dd='';const _0x1bdb5d=0xfa,_0xbcd24a=0xfa,_0x481037=0xb9,_0x3c27c5=0xf4;_0xdfc41b[_0x551bae(0x242)](_0x1d2a27=>{const _0x24baa6=_0x551bae,_0x5f25dc=_0x5de29c[_0x1d2a27[_0x24baa6(0xe0)]],_0x317b78=cungPhầnTrăm[_0x5f25dc]?.['cát'],_0x4cd62c=_0x317b78?_0x24baa6(0x703):'rgba(255,\x2023,\x2068,\x200.12)',_0x37433c=_0x317b78?_0x24baa6(0x515):_0x24baa6(0x57b),_0x143de6=getSvgArcPath(_0x1bdb5d,_0xbcd24a,_0x481037,_0x3c27c5,_0x1d2a27[_0x24baa6(0x8cd)],_0x1d2a27[_0x24baa6(0x7de)]);_0x3eb1dd+=_0x24baa6(0x8b0)+_0x143de6+_0x24baa6(0x3a6)+_0x4cd62c+_0x24baa6(0x3a0)+_0x37433c+_0x24baa6(0x594);}),_0x2f809a[_0x551bae(0x2d1)]=_0x3eb1dd;}function saveCurrentMember(){const _0x4ad5c6=_0x3793e5;let _0x38e240=document[_0x4ad5c6(0x27c)](_0x4ad5c6(0x5e7)),_0x329927=_0x38e240?_0x38e240['value'][_0x4ad5c6(0x50b)]():'';const _0x367da8=document[_0x4ad5c6(0x27c)](_0x4ad5c6(0x365))['value'],_0x56a0e7=document[_0x4ad5c6(0x27c)](_0x4ad5c6(0x135))[_0x4ad5c6(0x832)],_0x128a34=document[_0x4ad5c6(0x27c)](_0x4ad5c6(0x118))[_0x4ad5c6(0x832)],_0x381820=document[_0x4ad5c6(0x27c)](_0x4ad5c6(0x68c))['value'];if(!_0x329927||_0x329927==='Người\x20Tầm\x20Phương'){showCustomAlert(_0x4ad5c6(0x251),_0x4ad5c6(0x5c8));return;}if(!_0x56a0e7||!_0x128a34||!_0x381820){showCustomAlert(_0x4ad5c6(0x7d8),_0x4ad5c6(0x5c8));return;}_0x329927=_0x329927[_0x4ad5c6(0x1b9)]()[_0x4ad5c6(0x820)](/(^|\s)\S/g,_0x2850e1=>_0x2850e1[_0x4ad5c6(0x23a)]());if(_0x38e240)_0x38e240[_0x4ad5c6(0x832)]=_0x329927;let _0x47c7a8=JSON[_0x4ad5c6(0x531)](localStorage['getItem'](_0x4ad5c6(0x44d))||'[]');const _0x2f9e08=_0x47c7a8[_0x4ad5c6(0x154)](_0x11e8df=>_0x11e8df['name']===_0x329927&&_0x11e8df[_0x4ad5c6(0x135)]===_0x56a0e7&&_0x11e8df[_0x4ad5c6(0x118)]===_0x128a34&&_0x11e8df[_0x4ad5c6(0x68c)]===_0x381820);if(_0x2f9e08){showCustomAlert(_0x4ad5c6(0x79b)+_0x329927+_0x4ad5c6(0x733),_0x4ad5c6(0x4d5));return;}const _0x2f2270={'id':Date[_0x4ad5c6(0x57f)](),'name':_0x329927,'gender':_0x367da8,'birthDay':_0x56a0e7,'birthMonth':_0x128a34,'birthYear':_0x381820};_0x47c7a8[_0x4ad5c6(0x65b)](_0x2f2270),localStorage['setItem'](_0x4ad5c6(0x44d),JSON[_0x4ad5c6(0x54a)](_0x47c7a8)),showCustomAlert(_0x4ad5c6(0x123)+_0x329927,_0x4ad5c6(0x3c7)),loadSavedMembers();}function loadSavedMembers(){const _0x153b42=_0x3793e5,_0x2ecc28=JSON['parse'](localStorage[_0x153b42(0x6fc)]('fengshui_members')||'[]'),_0x18983c=document['getElementById'](_0x153b42(0x754)),_0x51398a=document[_0x153b42(0x27c)](_0x153b42(0x6d5));if(!_0x51398a)return;if(_0x2ecc28[_0x153b42(0x110)]===0x0){if(_0x18983c)_0x18983c['style'][_0x153b42(0x345)]=_0x153b42(0x4e4);return;}if(_0x18983c)_0x18983c[_0x153b42(0xf0)][_0x153b42(0x345)]=_0x153b42(0x63a);_0x51398a['innerHTML']='',_0x2ecc28[_0x153b42(0x242)](_0xb7265d=>{const _0x3c47e2=_0x153b42,_0x353fbe=document[_0x3c47e2(0x7cd)](_0x3c47e2(0x196));_0x353fbe['className']=_0x3c47e2(0xe5);const _0x3baa81=String(_0xb7265d[_0x3c47e2(0x365)])[_0x3c47e2(0x1b9)]()==='female'?'👩':'🧑';_0x353fbe[_0x3c47e2(0x2d1)]=_0x3c47e2(0x72a)+_0xb7265d['id']+')\x22\x20style=\x22cursor:pointer;\x22>'+_0x3baa81+'\x20'+_0xb7265d[_0x3c47e2(0x3bc)]+_0x3c47e2(0x3aa)+_0xb7265d['id']+_0x3c47e2(0x215),_0x51398a[_0x3c47e2(0x33b)](_0x353fbe);});}function selectMember(_0x300746){const _0x5b6934=_0x3793e5,_0x45999b=JSON[_0x5b6934(0x531)](localStorage[_0x5b6934(0x6fc)]('fengshui_members')||'[]'),_0x342edf=_0x45999b[_0x5b6934(0x580)](_0x36dc33=>_0x36dc33['id']===_0x300746);if(_0x342edf){const _0x50d6f5=document[_0x5b6934(0x27c)](_0x5b6934(0x5e7));_0x50d6f5&&(_0x50d6f5[_0x5b6934(0x832)]=_0x342edf[_0x5b6934(0x3bc)],_0x50d6f5[_0x5b6934(0xf0)][_0x5b6934(0x498)]=_0x5b6934(0x67f));document[_0x5b6934(0x27c)]('gender')[_0x5b6934(0x832)]=_0x342edf[_0x5b6934(0x365)];const _0x763645=document[_0x5b6934(0x27c)]('gender-male'),_0x6f9850=document['getElementById'](_0x5b6934(0x5b6));if(_0x763645&&_0x6f9850){let _0x452e39=String(_0x342edf['gender'])[_0x5b6934(0x50b)]()[_0x5b6934(0x1b9)]();_0x452e39===_0x5b6934(0x340)||_0x452e39==='nữ'||_0x452e39==='nu'?(_0x6f9850[_0x5b6934(0x3c2)]['add'](_0x5b6934(0x8f5)),_0x763645[_0x5b6934(0x3c2)][_0x5b6934(0x59f)](_0x5b6934(0x8f5))):(_0x763645['classList'][_0x5b6934(0x245)]('active'),_0x6f9850[_0x5b6934(0x3c2)][_0x5b6934(0x59f)](_0x5b6934(0x8f5)));}document[_0x5b6934(0x27c)](_0x5b6934(0x135))[_0x5b6934(0x832)]=_0x342edf[_0x5b6934(0x135)],document[_0x5b6934(0x27c)](_0x5b6934(0x118))[_0x5b6934(0x832)]=_0x342edf['birthMonth'],document['getElementById'](_0x5b6934(0x68c))[_0x5b6934(0x832)]=_0x342edf[_0x5b6934(0x68c)],typeof recalculateFate===_0x5b6934(0x60a)&&recalculateFate();}}function deleteMember(_0x1db97a,_0x422815){const _0x35e378=_0x3793e5;if(_0x1db97a)_0x1db97a[_0x35e378(0x66d)]();let _0x4773f8=JSON[_0x35e378(0x531)](localStorage[_0x35e378(0x6fc)](_0x35e378(0x44d))||'[]');_0x4773f8=_0x4773f8[_0x35e378(0x3ec)](_0x5749a0=>_0x5749a0['id']!==_0x422815),localStorage[_0x35e378(0x503)](_0x35e378(0x44d),JSON[_0x35e378(0x54a)](_0x4773f8)),loadSavedMembers();}function clearAllData(){const _0x2748ee=_0x3793e5,_0xa69634=document['getElementById']('btnReset');_0xa69634&&(_0xa69634[_0x2748ee(0x3c2)][_0x2748ee(0x245)]('executing'),setTimeout(()=>_0xa69634[_0x2748ee(0x3c2)][_0x2748ee(0x59f)](_0x2748ee(0x238)),0x190));const _0x3d2dde=localStorage[_0x2748ee(0x6fc)](_0x2748ee(0x44d));localStorage[_0x2748ee(0x6ab)]();_0x3d2dde&&localStorage[_0x2748ee(0x503)](_0x2748ee(0x44d),_0x3d2dde);typeof hauCache!=='undefined'&&hauCache[_0x2748ee(0x6ab)]&&hauCache[_0x2748ee(0x6ab)]();const _0x3c7b56=document[_0x2748ee(0x27c)](_0x2748ee(0x5e7));_0x3c7b56&&(_0x3c7b56[_0x2748ee(0x832)]=_0x2748ee(0x3d0),_0x3c7b56[_0x2748ee(0xf0)][_0x2748ee(0x498)]=_0x2748ee(0x2a9));document[_0x2748ee(0x27c)](_0x2748ee(0x365))[_0x2748ee(0x832)]=_0x2748ee(0x5bc);const _0x1779d1=document[_0x2748ee(0x27c)](_0x2748ee(0x683)),_0x48bf23=document[_0x2748ee(0x27c)](_0x2748ee(0x5b6));_0x1779d1&&_0x48bf23&&(_0x1779d1[_0x2748ee(0x3c2)]['add']('active'),_0x48bf23[_0x2748ee(0x3c2)][_0x2748ee(0x59f)](_0x2748ee(0x8f5)));document[_0x2748ee(0x27c)](_0x2748ee(0x135))[_0x2748ee(0x832)]='',document[_0x2748ee(0x27c)](_0x2748ee(0x118))[_0x2748ee(0x832)]='',document[_0x2748ee(0x27c)](_0x2748ee(0x68c))[_0x2748ee(0x832)]='',document['getElementById'](_0x2748ee(0x54b))['value']='';if(typeof targetAngle!=='undefined')targetAngle=null;const _0x1b795d=document[_0x2748ee(0x27c)](_0x2748ee(0x4f6));_0x1b795d&&(_0x1b795d['style']['opacity']='0',_0x1b795d[_0x2748ee(0xf0)][_0x2748ee(0x345)]='none',_0x1b795d[_0x2748ee(0x3c2)][_0x2748ee(0x59f)](_0x2748ee(0x3e2)));if(typeof recalculateFate===_0x2748ee(0x60a))recalculateFate();else typeof updateCompassUI===_0x2748ee(0x60a)&&updateCompassUI(currentHeading);showCustomAlert(_0x2748ee(0x69f),_0x2748ee(0x44f));}document[_0x3793e5(0x396)]('DOMContentLoaded',function(){const _0x4fe00e=_0x3793e5,_0x2288e6=document[_0x4fe00e(0x27c)](_0x4fe00e(0x11a)),_0x225814=document[_0x4fe00e(0x27c)](_0x4fe00e(0x3cc)),_0x12fa37=document[_0x4fe00e(0x27c)](_0x4fe00e(0x4e1));_0x225814&&_0x2288e6&&(_0x225814['onclick']=function(){const _0x1768d6=_0x4fe00e;_0x2288e6['style'][_0x1768d6(0x345)]=_0x1768d6(0x63a),document['body'][_0x1768d6(0xf0)][_0x1768d6(0x89f)]=_0x1768d6(0x513),window[_0x1768d6(0x210)]&&MathJax[_0x1768d6(0x46f)]();},_0x12fa37[_0x4fe00e(0x72e)]=function(){const _0x4ca581=_0x4fe00e;_0x2288e6[_0x4ca581(0xf0)][_0x4ca581(0x345)]=_0x4ca581(0x4e4),document[_0x4ca581(0x6b1)][_0x4ca581(0xf0)][_0x4ca581(0x89f)]=_0x4ca581(0x4e3);},window[_0x4fe00e(0x72e)]=function(_0x5e3f7d){const _0x3b3d10=_0x4fe00e;_0x5e3f7d[_0x3b3d10(0x8ea)]==_0x2288e6&&(_0x2288e6['style'][_0x3b3d10(0x345)]=_0x3b3d10(0x4e4),document['body'][_0x3b3d10(0xf0)][_0x3b3d10(0x89f)]=_0x3b3d10(0x4e3));});}),document[_0x3793e5(0x27c)](_0x3793e5(0x709))[_0x3793e5(0x396)](_0x3793e5(0x2ec),function(){const _0x28de14=_0x3793e5;document[_0x28de14(0x27c)](_0x28de14(0x203))['style'][_0x28de14(0x345)]=_0x28de14(0x634);}),document['getElementById'](_0x3793e5(0x802))[_0x3793e5(0x396)](_0x3793e5(0x2ec),function(){const _0x57a661=_0x3793e5;document[_0x57a661(0x27c)](_0x57a661(0x203))[_0x57a661(0xf0)][_0x57a661(0x345)]=_0x57a661(0x4e4);});function selectGender(_0x491947){const _0xe5a489=_0x3793e5;document[_0xe5a489(0x27c)]('gender-male')[_0xe5a489(0x3c2)][_0xe5a489(0x59f)](_0xe5a489(0x8f5)),document[_0xe5a489(0x27c)](_0xe5a489(0x5b6))[_0xe5a489(0x3c2)][_0xe5a489(0x59f)]('active'),document[_0xe5a489(0x27c)](_0xe5a489(0x460)+_0x491947)['classList'][_0xe5a489(0x245)]('active'),document[_0xe5a489(0x27c)]('gender')[_0xe5a489(0x832)]=_0x491947,typeof recalculateFate===_0xe5a489(0x60a)&&recalculateFate();}document['addEventListener'](_0x3793e5(0x6d8),function(){const _0x4dfa67=_0x3793e5,_0x45ec24=document[_0x4dfa67(0x27c)]('gender')[_0x4dfa67(0x832)];_0x45ec24===_0x4dfa67(0x340)&&(document[_0x4dfa67(0x27c)]('gender-female')[_0x4dfa67(0x3c2)][_0x4dfa67(0x245)](_0x4dfa67(0x8f5)),document[_0x4dfa67(0x27c)](_0x4dfa67(0x683))[_0x4dfa67(0x3c2)][_0x4dfa67(0x59f)](_0x4dfa67(0x8f5)));});if(typeof deferredPrompt===_0x3793e5(0x677))var deferredPrompt;const STORAGE_KEY_HIDE_INSTALL='pwa_user_dismissed_install';function isRunningAsPWA(){const _0x47e384=_0x3793e5;return window[_0x47e384(0x23f)](_0x47e384(0x464))[_0x47e384(0x1db)]||window['navigator'][_0x47e384(0x602)]===!![]||window[_0x47e384(0x23f)](_0x47e384(0x235))[_0x47e384(0x1db)];}function kiemTraVaAnNut(){const _0x401a18=_0x3793e5,_0xe6f582=document[_0x401a18(0x27c)](_0x401a18(0x606));if(!_0xe6f582)return![];if(localStorage[_0x401a18(0x6fc)](STORAGE_KEY_HIDE_INSTALL)===_0x401a18(0x725)||isRunningAsPWA())return _0xe6f582[_0x401a18(0x3c2)][_0x401a18(0x245)](_0x401a18(0x3b8)),_0xe6f582[_0x401a18(0x3c2)]['remove'](_0x401a18(0x74c)),!![];return![];}_0x3793e5(0x209)in navigator&&window['addEventListener'](_0x3793e5(0x6c1),()=>{const _0xc08964=_0x3793e5;if(window[_0xc08964(0x7c5)][_0xc08964(0x6e0)]===_0xc08964(0x4da))return;khoiTaoTinhNangVuotGat(),kiemTraVaAnNut();const _0x34a0fe=document[_0xc08964(0x7cd)](_0xc08964(0x45f));_0x34a0fe[_0xc08964(0x5c9)]=_0xc08964(0x739),_0x34a0fe[_0xc08964(0x863)]=_0xc08964(0x87a),document['head'][_0xc08964(0x33b)](_0x34a0fe),navigator['serviceWorker'][_0xc08964(0x5cf)](_0xc08964(0x470))[_0xc08964(0x174)](_0x2d6b33=>{const _0x26ac54=_0xc08964;_0x2d6b33[_0x26ac54(0x4ba)]=()=>{const _0x429394=_0x26ac54,_0x2696ea=_0x2d6b33[_0x429394(0x53b)];_0x2696ea&&(_0x2696ea[_0x429394(0x7b3)]=()=>{const _0x494481=_0x429394;_0x2696ea[_0x494481(0x397)]===_0x494481(0x394)&&navigator[_0x494481(0x209)][_0x494481(0x39f)]&&(console[_0x494481(0x536)](_0x494481(0x4f5)),window[_0x494481(0x7c5)][_0x494481(0x38e)]());});};})['catch'](_0x118c59=>console[_0xc08964(0x601)]('Lỗi\x20kích\x20hoạt\x20PWA:',_0x118c59));});window[_0x3793e5(0x396)](_0x3793e5(0x810),_0x1f2811=>{const _0x149c59=_0x3793e5;if(isRunningAsPWA()||localStorage[_0x149c59(0x6fc)](STORAGE_KEY_HIDE_INSTALL)==='true')return;_0x1f2811['preventDefault'](),deferredPrompt=_0x1f2811;const _0x302634=document[_0x149c59(0x27c)](_0x149c59(0x606));_0x302634&&(_0x302634[_0x149c59(0x3c2)][_0x149c59(0x59f)](_0x149c59(0x3b8)),_0x302634[_0x149c59(0x3c2)][_0x149c59(0x245)](_0x149c59(0x74c)),_0x302634[_0x149c59(0x72e)]=async()=>{const _0x5bc3c2=_0x149c59;if(!deferredPrompt)return;deferredPrompt['prompt']();const {outcome:_0x5ed0ae}=await deferredPrompt[_0x5bc3c2(0x425)];console[_0x5bc3c2(0x536)](_0x5bc3c2(0x504)+_0x5ed0ae),_0x5ed0ae===_0x5bc3c2(0xff)&&(_0x302634[_0x5bc3c2(0x3c2)][_0x5bc3c2(0x245)]('swiped-away'),_0x302634[_0x5bc3c2(0x3c2)][_0x5bc3c2(0x59f)](_0x5bc3c2(0x74c))),deferredPrompt=null;});}),window[_0x3793e5(0x396)](_0x3793e5(0x443),()=>{const _0x5e6702=_0x3793e5,_0x4ffd5e=document[_0x5e6702(0x27c)]('btn-install-pwa');_0x4ffd5e&&(_0x4ffd5e['classList'][_0x5e6702(0x245)](_0x5e6702(0x3b8)),_0x4ffd5e[_0x5e6702(0x3c2)][_0x5e6702(0x59f)](_0x5e6702(0x74c)));}),document[_0x3793e5(0x396)](_0x3793e5(0x3a7),()=>{const _0x150dde=_0x3793e5;document['visibilityState']===_0x150dde(0x2db)&&setTimeout(kiemTraVaAnNut,0x258);});function khoiTaoTinhNangVuotGat(){const _0x25d3f3=_0x3793e5,_0x2c89f3=document[_0x25d3f3(0x27c)](_0x25d3f3(0x606));if(!_0x2c89f3)return;let _0x498227=0x0,_0x39020f=0x0,_0x564c19=![];_0x2c89f3[_0x25d3f3(0x396)](_0x25d3f3(0x39e),_0x146264=>{const _0x25b6eb=_0x25d3f3;_0x498227=_0x146264[_0x25b6eb(0x578)][0x0]['clientX'],_0x2c89f3['style'][_0x25b6eb(0x632)]=_0x25b6eb(0x4e4),_0x564c19=!![];},{'passive':!![]}),_0x2c89f3['addEventListener'](_0x25d3f3(0x3b9),_0x19274e=>{const _0x4e6115=_0x25d3f3;if(!_0x564c19)return;_0x39020f=_0x19274e[_0x4e6115(0x578)][0x0][_0x4e6115(0x524)];let _0x58379a=_0x39020f-_0x498227;if(_0x58379a>0x0){_0x2c89f3[_0x4e6115(0xf0)][_0x4e6115(0x855)]=_0x4e6115(0x3bd)+_0x58379a+_0x4e6115(0x68e);let _0x4a4bb0=_0x2c89f3['offsetWidth'];_0x2c89f3[_0x4e6115(0xf0)]['opacity']=''+(0x1-_0x58379a/_0x4a4bb0);}},{'passive':!![]}),_0x2c89f3['addEventListener'](_0x25d3f3(0x720),_0x2eeee9=>{const _0x20563c=_0x25d3f3;if(!_0x564c19)return;_0x564c19=![];let _0x379d00=_0x39020f-_0x498227;_0x2c89f3[_0x20563c(0xf0)][_0x20563c(0x632)]=_0x20563c(0x4d9);let _0x3880e7=_0x2c89f3[_0x20563c(0x28a)]/0x2;_0x379d00>_0x3880e7?anVaXoaVinhVien(_0x2c89f3):(_0x2c89f3[_0x20563c(0xf0)]['transform']='translateX(0)',_0x2c89f3[_0x20563c(0xf0)]['opacity']='1'),_0x498227=0x0,_0x39020f=0x0;});}function anVaXoaVinhVien(_0x59c002){const _0x2a61ff=_0x3793e5;localStorage[_0x2a61ff(0x503)](STORAGE_KEY_HIDE_INSTALL,_0x2a61ff(0x725)),_0x59c002[_0x2a61ff(0x3c2)][_0x2a61ff(0x245)](_0x2a61ff(0x3b8)),_0x59c002['classList'][_0x2a61ff(0x59f)](_0x2a61ff(0x74c)),console[_0x2a61ff(0x536)](_0x2a61ff(0x18d));}const AppControl={'showNotification':_0xb461c=>{const _0x2b0005=_0x3793e5;let _0x49c3ad=document['getElementById'](_0x2b0005(0x4a0));!_0x49c3ad&&(_0x49c3ad=document[_0x2b0005(0x7cd)](_0x2b0005(0x196)),_0x49c3ad['id']=_0x2b0005(0x4a0),document[_0x2b0005(0x6b1)][_0x2b0005(0x33b)](_0x49c3ad)),_0x49c3ad[_0x2b0005(0x342)]=_0xb461c,_0x49c3ad[_0x2b0005(0xf0)][_0x2b0005(0x345)]=_0x2b0005(0x63a),_0x49c3ad[_0x2b0005(0x763)]([{'opacity':0x0,'transform':_0x2b0005(0x23d)},{'opacity':0x1,'transform':_0x2b0005(0x167)}],{'duration':0x1f4,'fill':_0x2b0005(0x77a)}),setTimeout(()=>{const _0x3806c3=_0x2b0005;_0x49c3ad[_0x3806c3(0x763)]([{'opacity':0x1},{'opacity':0x0}],{'duration':0x1f4})['onfinish']=()=>_0x49c3ad[_0x3806c3(0xf0)][_0x3806c3(0x345)]=_0x3806c3(0x4e4);},0xbb8);},'showAds':()=>{const _0x42ea32=_0x3793e5;console[_0x42ea32(0x536)](_0x42ea32(0x2ab));}};_0x3793e5(0x209)in navigator&&navigator[_0x3793e5(0x209)][_0x3793e5(0x396)](_0x3793e5(0x4b3),_0x34d4bc=>{const _0x1636f4=_0x3793e5;if(!_0x34d4bc[_0x1636f4(0x588)])return;_0x34d4bc[_0x1636f4(0x588)][_0x1636f4(0x54d)]===_0x1636f4(0x21d)&&AppControl[_0x1636f4(0x7d2)](_0x1636f4(0x755)),_0x34d4bc[_0x1636f4(0x588)]['type']===_0x1636f4(0x50e)&&AppControl[_0x1636f4(0x8b5)]();});let isCompassHold=![],holdedHeading=0x0;const DATA_TRACH_NHAT_CAO_CAP={'CHI_QUY_CHUAN':[_0x3793e5(0x4fd),_0x3793e5(0x5d8),'Tuat',_0x3793e5(0x7fc),'Ty',_0x3793e5(0x829),'Dan',_0x3793e5(0x849),_0x3793e5(0x451),'Tỵ',_0x3793e5(0x4dd),_0x3793e5(0x728)],'CAN_QUY_CHUAN':[_0x3793e5(0x438),'At',_0x3793e5(0x28f),_0x3793e5(0x1a0),_0x3793e5(0x259),'Ky',_0x3793e5(0x611),_0x3793e5(0x2e4),_0x3793e5(0x379),_0x3793e5(0x23c)],'CUNG_MENH_QUY_QUYET':{'TAY_TU_TRACH':[_0x3793e5(0x3bb),'Khon',_0x3793e5(0x3bb),_0x3793e5(0x6f9)],'DONG_TU_TRACH':[_0x3793e5(0x2c6),'Ly',_0x3793e5(0x7ab),'Ton']},'THAP_NHI_KIEN_TRU':{'Kien':{'cat':[_0x3793e5(0x803),_0x3793e5(0x377),_0x3793e5(0x718),_0x3793e5(0x6ea),_0x3793e5(0x8c9),_0x3793e5(0x5f5)],'hung':[_0x3793e5(0x8c0),_0x3793e5(0x177),'kitchen','septic_tank',_0x3793e5(0x694)],'text':_0x3793e5(0x752)},'Tru':{'cat':[_0x3793e5(0x177),_0x3793e5(0x687),'sewer',_0x3793e5(0x2d2),_0x3793e5(0x694)],'hung':[_0x3793e5(0x68d),_0x3793e5(0x89b),_0x3793e5(0x825),_0x3793e5(0x41a),_0x3793e5(0x5ce),_0x3793e5(0x508),_0x3793e5(0x8d9),_0x3793e5(0x890)],'text':_0x3793e5(0x22e)},'Man':{'cat':[_0x3793e5(0x89b),_0x3793e5(0x854),_0x3793e5(0x448),_0x3793e5(0x8d9),'counter',_0x3793e5(0x46e),_0x3793e5(0x719)],'hung':[_0x3793e5(0x8c0),_0x3793e5(0x17c),'septic_tank'],'text':_0x3793e5(0x55c)},'Binh':{'cat':['work',_0x3793e5(0x803),_0x3793e5(0x6ea),_0x3793e5(0x549)],'hung':['earth','lawsuit','kitchen'],'text':_0x3793e5(0x16e)},'Dinh':{'cat':[_0x3793e5(0x854),_0x3793e5(0x803),_0x3793e5(0x825),_0x3793e5(0x41a),_0x3793e5(0x5ce),_0x3793e5(0x824)],'hung':[_0x3793e5(0x177),_0x3793e5(0x5ea),_0x3793e5(0x723),_0x3793e5(0x694)],'text':_0x3793e5(0x704)},'Chap':{'cat':[_0x3793e5(0x377),'storage'],'hung':[_0x3793e5(0x825),_0x3793e5(0x5ea),_0x3793e5(0x8c0),_0x3793e5(0x5ce),_0x3793e5(0x3d5)],'text':_0x3793e5(0x881)},'Pha':{'cat':[_0x3793e5(0x177),'septic_tank',_0x3793e5(0x723)],'hung':[_0x3793e5(0x243),_0x3793e5(0x8c0),_0x3793e5(0x41a),_0x3793e5(0x825),_0x3793e5(0x854),_0x3793e5(0x163),'gate',_0x3793e5(0x508),_0x3793e5(0x8d9),'counter',_0x3793e5(0x46e)],'text':_0x3793e5(0x6e3)},'Nguy':{'cat':[],'hung':[_0x3793e5(0x8c0),_0x3793e5(0x27d),_0x3793e5(0x41a),_0x3793e5(0x5ce)],'text':'Chu\x20hiểm\x20nguy,\x20rình\x20rập.\x20Trường\x20khí\x20mang\x20tính\x20rủi\x20ro\x20cao,\x20kỵ\x20phạt\x20mộc\x20động\x20thổ,\x20dễ\x20gặp\x20tai\x20nạn\x20va\x20chạm\x20bất\x20ngờ.'},'Thanh':{'cat':[_0x3793e5(0x41a),_0x3793e5(0x825),_0x3793e5(0x854),_0x3793e5(0x377),'store',_0x3793e5(0x5ce),_0x3793e5(0x508),_0x3793e5(0x6ea),_0x3793e5(0x8c9),'counter','shop',_0x3793e5(0x6c4)],'hung':['toilet',_0x3793e5(0x723),_0x3793e5(0x2d2)],'text':_0x3793e5(0x36d)},'Thu':{'cat':['store',_0x3793e5(0x448),_0x3793e5(0x8d9),_0x3793e5(0x1df)],'hung':[_0x3793e5(0x8c0),_0x3793e5(0x825),_0x3793e5(0x5ce),_0x3793e5(0x73c)],'text':'Chu\x20thu\x20hoạch,\x20tích\x20lũy.\x20Thích\x20hợp\x20lập\x20két\x20sắt,\x20quầy\x20thu\x20ngân\x20buôn\x20bán,\x20kỵ\x20đào\x20móng\x20mở\x20hướng\x20cửa\x20nạp\x20khí.'},'Khai':{'cat':['door',_0x3793e5(0x89b),_0x3793e5(0x803),_0x3793e5(0x377),'gate',_0x3793e5(0x3d5),_0x3793e5(0x6ea),'ceo_office','signboard',_0x3793e5(0x890),'coffee',_0x3793e5(0x7c9),_0x3793e5(0x46e),_0x3793e5(0x6c4)],'hung':[_0x3793e5(0x177),_0x3793e5(0x723),_0x3793e5(0x2d2),_0x3793e5(0x694)],'text':_0x3793e5(0xfb)},'Be':{'cat':['warehouse','storage'],'hung':[_0x3793e5(0x243),_0x3793e5(0x8c0),_0x3793e5(0x825),_0x3793e5(0x5ea),'gate',_0x3793e5(0x508),_0x3793e5(0x3d5),_0x3793e5(0x46e)],'text':_0x3793e5(0x348)}},'HINH_XUNG_QUY_QUYET':{'LUC_XUNG':{'Ty':_0x3793e5(0x4dd),'Suu':_0x3793e5(0x728),'Dan':'Than','Mao':_0x3793e5(0x5d8),'Thin':_0x3793e5(0x15c),'Tỵ':_0x3793e5(0x7fc),'Ngo':'Ty','Mui':_0x3793e5(0x829),'Than':_0x3793e5(0x486),'Dau':_0x3793e5(0x849),'Tuat':'Thin','Hoi':'Tỵ'},'LUC_HOP':{'Ty':_0x3793e5(0x829),'Dan':_0x3793e5(0x7fc),'Mao':'Tuat','Thin':_0x3793e5(0x5d8),'Tỵ':_0x3793e5(0x4fd),'Ngo':_0x3793e5(0x728),'Suu':'Ty','Hoi':_0x3793e5(0x486),'Tuat':_0x3793e5(0x849),'Dau':'Thin','Than':'Tỵ','Mui':_0x3793e5(0x4dd)},'LUC_HAI':{'Ty':_0x3793e5(0x728),'Suu':_0x3793e5(0x4dd),'Dan':'Tỵ','Mao':_0x3793e5(0x451),'Than':_0x3793e5(0x7fc),'Dau':_0x3793e5(0x15c),'Mui':'Ty','Ngo':_0x3793e5(0x829),'Tỵ':_0x3793e5(0x486),'Thin':_0x3793e5(0x849),'Hoi':_0x3793e5(0x4fd),'Tuat':_0x3793e5(0x5d8)},'TU_PHA':{'Ty':_0x3793e5(0x5d8),'Mao':_0x3793e5(0x4dd),'Ngo':'Mao','Dau':'Ty','Dan':_0x3793e5(0x7fc),'Than':'Tỵ','Tỵ':_0x3793e5(0x4fd),'Hoi':_0x3793e5(0x486),'Suu':_0x3793e5(0x451),'Mui':_0x3793e5(0x15c),'Thin':_0x3793e5(0x829),'Tuat':_0x3793e5(0x728)},'CAN_XUNG':{'Giap':_0x3793e5(0x611),'At':_0x3793e5(0x2e4),'Binh':_0x3793e5(0x379),'Dinh':_0x3793e5(0x23c),'Mau':_0x3793e5(0x438),'Ky':'At','Canh':_0x3793e5(0x438),'Tan':'At','Nham':_0x3793e5(0x28f),'Quy':_0x3793e5(0x1a0)},'TAM_HOP_CUC':{'Than':['Ty',_0x3793e5(0x451)],'Ty':[_0x3793e5(0x4fd),'Thin'],'Thin':[_0x3793e5(0x4fd),'Ty'],'Tỵ':[_0x3793e5(0x5d8),'Suu'],'Dau':['Tỵ','Suu'],'Suu':['Tỵ','Dau'],'Hoi':[_0x3793e5(0x849),_0x3793e5(0x728)],'Mao':[_0x3793e5(0x7fc),_0x3793e5(0x728)],'Mui':[_0x3793e5(0x7fc),_0x3793e5(0x849)],'Dan':[_0x3793e5(0x4dd),_0x3793e5(0x15c)],'Ngo':[_0x3793e5(0x486),_0x3793e5(0x15c)],'Tuat':['Dan',_0x3793e5(0x4dd)]},'THIEN_LOC':{'Giap':_0x3793e5(0x486),'At':_0x3793e5(0x849),'Binh':'Tỵ','Dinh':_0x3793e5(0x4dd),'Mau':'Tỵ','Ky':_0x3793e5(0x4dd),'Canh':_0x3793e5(0x4fd),'Tan':_0x3793e5(0x5d8),'Nham':_0x3793e5(0x7fc),'Quy':'Ty'},'THIEN_MA':{'Than':'Dan','Ty':_0x3793e5(0x486),'Thin':_0x3793e5(0x486),'Tỵ':_0x3793e5(0x7fc),'Dau':_0x3793e5(0x7fc),'Suu':_0x3793e5(0x7fc),'Dan':_0x3793e5(0x4fd),'Ngo':_0x3793e5(0x4fd),'Tuat':_0x3793e5(0x4fd),'Hoi':'Tỵ','Mao':'Tỵ','Mui':'Tỵ'},'QUY_NHAN':{'Giap':[_0x3793e5(0x829),_0x3793e5(0x728)],'At':['Ty','Than'],'Binh':[_0x3793e5(0x7fc),'Dau'],'Dinh':[_0x3793e5(0x7fc),_0x3793e5(0x5d8)],'Mau':[_0x3793e5(0x829),'Mui'],'Ky':['Ty',_0x3793e5(0x4fd)],'Canh':[_0x3793e5(0x829),_0x3793e5(0x728)],'Tan':[_0x3793e5(0x486),_0x3793e5(0x4dd)],'Nham':['Mao','Tỵ'],'Quy':[_0x3793e5(0x849),'Tỵ']},'NGU_HANH_SON':{'Nhâm':_0x3793e5(0x751),'Tý':'Thuy','Quý':_0x3793e5(0x751),'Sửu':_0x3793e5(0x381),'Cấn':'Tho','Dần':_0x3793e5(0x666),'Giáp':'Moc','Mão':_0x3793e5(0x666),'Ất':'Moc','Thìn':_0x3793e5(0x381),'Tốn':'Moc','Tỵ':'Hoa','Bính':_0x3793e5(0x2cd),'Ngọ':_0x3793e5(0x2cd),'Đinh':_0x3793e5(0x2cd),'Mùi':_0x3793e5(0x381),'Khôn':_0x3793e5(0x381),'Thân':'Kim','Canh':_0x3793e5(0x848),'Dậu':'Kim','Tân':'Kim','Tuất':'Tho','Càn':'Kim','Hợi':_0x3793e5(0x751)}},'SON_TO_CHI_MAP':{'Tý':'Ty','Quý':'Ty','Nhâm':'Ty','Sửu':_0x3793e5(0x829),'Cấn':_0x3793e5(0x829),'Dần':_0x3793e5(0x486),'Giáp':_0x3793e5(0x486),'Mão':_0x3793e5(0x849),'Ất':_0x3793e5(0x849),'Thìn':'Thin','Tốn':'Thin','Tỵ':'Tỵ','Bính':'Tỵ','Ngọ':_0x3793e5(0x4dd),'Đinh':_0x3793e5(0x4dd),'Mùi':'Mui','Khôn':_0x3793e5(0x728),'Thân':_0x3793e5(0x4fd),'Canh':_0x3793e5(0x4fd),'Dậu':_0x3793e5(0x5d8),'Tân':_0x3793e5(0x5d8),'Tuất':_0x3793e5(0x15c),'Càn':_0x3793e5(0x15c),'Hợi':_0x3793e5(0x7fc)},'SON_TO_HUONG_MAP':{'Nhâm':'N','Tý':'N','Quý':'N','Bính':'S','Ngọ':'S','Đinh':'S','Giáp':'E','Mão':'E','Ất':'E','Canh':'W','Dậu':'W','Tân':'W','Sửu':'NE','Cấn':'NE','Dần':'NE','Thìn':'SE','Tốn':'SE','Tỵ':'SE','Mùi':'SW','Khôn':'SW','Thân':'SW','Tuất':'NW','Càn':'NW','Hợi':'NW'},'HUONG_TO_SAO_LUU_NIEN':{'N':0x1,'SW':0x2,'E':0x3,'SE':0x4,'Trung\x20Cung':0x5,'NW':0x6,'W':0x7,'NE':0x8,'S':0x9},'CAN_CHI_DINH_GIO':{'Ty':{'hoangDao':['Ty',_0x3793e5(0x829),_0x3793e5(0x849),_0x3793e5(0x4dd),_0x3793e5(0x4fd),_0x3793e5(0x5d8)],'satChu':[_0x3793e5(0x4fd),'Ty']},'Suu':{'hoangDao':['Dan',_0x3793e5(0x849),'Tỵ',_0x3793e5(0x4fd),'Tuat',_0x3793e5(0x7fc)],'satChu':['Hoi',_0x3793e5(0x728)]},'Dan':{'hoangDao':['Ty',_0x3793e5(0x829),_0x3793e5(0x451),'Tỵ',_0x3793e5(0x728),_0x3793e5(0x15c)],'satChu':[_0x3793e5(0x4dd),_0x3793e5(0x849)]},'Mao':{'hoangDao':['Ty','Dan',_0x3793e5(0x849),_0x3793e5(0x4dd),_0x3793e5(0x728),_0x3793e5(0x7fc)],'satChu':[_0x3793e5(0x5d8),_0x3793e5(0x829)]},'Thin':{'hoangDao':['Dan',_0x3793e5(0x451),'Tỵ',_0x3793e5(0x4fd),_0x3793e5(0x5d8),_0x3793e5(0x7fc)],'satChu':['Tỵ','Tuat']},'Tỵ':{'hoangDao':[_0x3793e5(0x829),'Thin','Ngo','Mui',_0x3793e5(0x15c),_0x3793e5(0x7fc)],'satChu':['Ty',_0x3793e5(0x4fd)]},'Ngo':{'hoangDao':['Ty',_0x3793e5(0x829),_0x3793e5(0x849),_0x3793e5(0x4dd),'Than',_0x3793e5(0x5d8)],'satChu':['Suu','Hoi']},'Mui':{'hoangDao':[_0x3793e5(0x486),'Mao','Tỵ',_0x3793e5(0x4fd),_0x3793e5(0x15c),'Hoi'],'satChu':[_0x3793e5(0x4dd),_0x3793e5(0x451)]},'Than':{'hoangDao':['Ty',_0x3793e5(0x829),_0x3793e5(0x451),'Tỵ',_0x3793e5(0x728),_0x3793e5(0x15c)],'satChu':[_0x3793e5(0x849),_0x3793e5(0x486)]},'Dau':{'hoangDao':['Ty','Suu',_0x3793e5(0x486),_0x3793e5(0x4dd),_0x3793e5(0x728),_0x3793e5(0x5d8)],'satChu':['Ty',_0x3793e5(0x5d8)]},'Tuat':{'hoangDao':['Ty',_0x3793e5(0x486),_0x3793e5(0x849),_0x3793e5(0x4dd),_0x3793e5(0x728),_0x3793e5(0x7fc)],'satChu':[_0x3793e5(0x728),_0x3793e5(0x829)]},'Hoi':{'hoangDao':[_0x3793e5(0x486),_0x3793e5(0x451),'Tỵ','Than',_0x3793e5(0x5d8),'Hoi'],'satChu':[_0x3793e5(0x451),'Tỵ']}},'GIO_DICH_NGHIA':{'Ty':'Tý\x20(23h-01h)','Suu':_0x3793e5(0x69c),'Dan':_0x3793e5(0x75c),'Mao':_0x3793e5(0x41c),'Thin':_0x3793e5(0x834),'Tỵ':_0x3793e5(0x7ec),'Ngo':_0x3793e5(0x3e7),'Mùi':_0x3793e5(0x216),'Than':_0x3793e5(0x6b4),'Dau':_0x3793e5(0x213),'Tuat':_0x3793e5(0x4b8),'Hoi':_0x3793e5(0x81d)},'MA_TRAN_THAN_SAT_TINH':{'tamSat':{'Dan\x20Ngo\x20Tuat':_0x3793e5(0x39c),'Than\x20Ty\x20Thin':_0x3793e5(0x2c9),'Tỵ\x20Dau\x20Suu':_0x3793e5(0x5fb),'Hoi\x20Mao\x20Mui':_0x3793e5(0x148)},'thaiTueArr':['Than',_0x3793e5(0x5d8),_0x3793e5(0x15c),_0x3793e5(0x7fc),'Ty',_0x3793e5(0x829),'Dan','Mao',_0x3793e5(0x451),'Tỵ',_0x3793e5(0x4dd),_0x3793e5(0x728)],'phuongViChi':{'Ty':_0x3793e5(0x39c),'Ngo':_0x3793e5(0x2c9),'Mao':_0x3793e5(0x5fb),'Dau':_0x3793e5(0x148),'Dan':_0x3793e5(0x3c8),'Than':_0x3793e5(0x5fe),'Tỵ':_0x3793e5(0x4ea),'Hoi':_0x3793e5(0x596),'Suu':_0x3793e5(0x3c8),'Mui':'Tay\x20Nam','Thin':_0x3793e5(0x4ea),'Tuat':'Tay\x20Bac'},'chiTiengVietToKey':{'Tý':'Ty','Sửu':_0x3793e5(0x829),'Dần':_0x3793e5(0x486),'Mão':_0x3793e5(0x849),'Thìn':_0x3793e5(0x451),'Tỵ':'Tỵ','Ngọ':_0x3793e5(0x4dd),'Mùi':_0x3793e5(0x728),'Thân':_0x3793e5(0x4fd),'Dậu':_0x3793e5(0x5d8),'Tuất':'Tuat','Hợi':_0x3793e5(0x7fc)},'canTiengVietToKey':{'Giáp':_0x3793e5(0x438),'Ất':'At','Bính':_0x3793e5(0x28f),'Đinh':_0x3793e5(0x1a0),'Mậu':_0x3793e5(0x259),'Kỷ':'Ky','Canh':_0x3793e5(0x611),'Tân':_0x3793e5(0x2e4),'Nhâm':'Nham','Quý':_0x3793e5(0x23c)}}};function chuanHoaChiKey(_0x1b9c1a){const _0x4bf759=_0x3793e5;if(!_0x1b9c1a)return'';let _0x1b4ea0=_0x1b9c1a[_0x4bf759(0x50b)]();if(_0x1b4ea0==='Tý'||_0x1b4ea0==='tý')return'Ty';if(_0x1b4ea0==='Tỵ'||_0x1b4ea0==='tỵ')return'Tỵ';return _0x1b4ea0;}function layNapAm60HoaGiap(_0x5393f1,_0x282f98){const _0x2f9d98=_0x3793e5,_0x540b9d={'Giap':0x1,'At':0x1,'Binh':0x2,'Dinh':0x2,'Mau':0x3,'Ky':0x3,'Canh':0x4,'Tan':0x4,'Nham':0x5,'Quy':0x5},_0x368766={'Ty':0x1,'Suu':0x1,'Ngo':0x1,'Mui':0x1,'Dan':0x2,'Mao':0x2,'Than':0x2,'Dau':0x2,'Thin':0x3,'Tỵ':0x3,'Tuat':0x3,'Hoi':0x3};let _0x303b3a=_0x540b9d[_0x5393f1]||0x0,_0x2b58b1=_0x368766[chuanHoaChiKey(_0x282f98)]||0x0,_0x402ccd=_0x303b3a+_0x2b58b1;if(_0x402ccd>0x5)_0x402ccd-=0x5;const _0x4f6c5c={0x1:_0x2f9d98(0x666),0x2:_0x2f9d98(0x848),0x3:_0x2f9d98(0x751),0x4:_0x2f9d98(0x2cd),0x5:_0x2f9d98(0x381)};return _0x4f6c5c[_0x402ccd]||_0x2f9d98(0x381);}function layCanChiNgayChinhXac(_0x565cb3,_0x20be04,_0x1710c6){const _0x1417b6=_0x3793e5,_0x2671d1=Math[_0x1417b6(0x3b6)]((Date[_0x1417b6(0x24f)](_0x565cb3,_0x20be04-0x1,_0x1710c6)-Date[_0x1417b6(0x24f)](0x7d0,0x0,0x1))/0x5265c00);let _0x1136ee=(0x0+_0x2671d1%0xa+0xa)%0xa,_0xf01f13=(0x6+_0x2671d1%0xc+0xc)%0xc;const _0x190c34=['Giap','At',_0x1417b6(0x28f),'Dinh',_0x1417b6(0x259),'Ky',_0x1417b6(0x611),_0x1417b6(0x2e4),_0x1417b6(0x379),_0x1417b6(0x23c)],_0x139302=['Ty',_0x1417b6(0x829),'Dan',_0x1417b6(0x849),'Thin','Tỵ',_0x1417b6(0x4dd),'Mui','Than',_0x1417b6(0x5d8),_0x1417b6(0x15c),_0x1417b6(0x7fc)],_0x2f9c2e={'Giap':_0x1417b6(0x3f0),'At':'Ất','Binh':'Bính','Dinh':_0x1417b6(0x479),'Mau':_0x1417b6(0x1fa),'Ky':'Kỷ','Canh':_0x1417b6(0x611),'Tan':'Tân','Nham':'Nhâm','Quy':_0x1417b6(0x295)},_0x4de59a={'Ty':'Tý','Suu':_0x1417b6(0x7d7),'Dan':_0x1417b6(0x202),'Mao':_0x1417b6(0x8d6),'Thin':_0x1417b6(0x8bf),'Tỵ':'Tỵ','Ngo':_0x1417b6(0x7e8),'Mui':_0x1417b6(0x1fb),'Than':_0x1417b6(0x73d),'Dau':_0x1417b6(0x2f2),'Tuat':'Tuất','Hoi':_0x1417b6(0x609)};return{'chi':_0x139302[_0xf01f13],'can':_0x190c34[_0x1136ee],'text':_0x2f9c2e[_0x190c34[_0x1136ee]]+'\x20'+_0x4de59a[_0x139302[_0xf01f13]]};}function layThangTietKhiVaTruc(_0x13139f,_0x504d15,_0x5d2a07,_0x938d05){const _0x514111=_0x3793e5,_0x56ee2c=[0x16,0x0,0x2,0x4,0x6,0x8,0xa,0xc,0xe,0x10,0x12,0x14];let _0x388b6d=_0x56ee2c[_0x504d15-0x1];const _0x471ac2={0x16:5.4,0x0:3.87,0x2:5.63,0x4:4.81,0x6:5.52,0x8:5.67,0xa:7.1,0xc:7.35,0xe:7.43,0x10:8.31,0x12:7.43,0x14:7.18};let _0x4d4c6a=_0x471ac2[_0x388b6d],_0x367ad7=(_0x13139f-0x7d0)*0.2422-Math[_0x514111(0x3b6)]((_0x13139f-0x7d0)/0x4),_0x2525c6=Math[_0x514111(0x3b6)](_0x4d4c6a+_0x367ad7),_0x3b64aa=_0x5d2a07<_0x2525c6?(_0x504d15-0x3+0xc)%0xc:(_0x504d15-0x2+0xc)%0xc;const _0x2fcaeb=[_0x514111(0x486),_0x514111(0x849),_0x514111(0x451),'Tỵ',_0x514111(0x4dd),_0x514111(0x728),_0x514111(0x4fd),_0x514111(0x5d8),_0x514111(0x15c),_0x514111(0x7fc),'Ty','Suu'];let _0x83acf3=_0x2fcaeb[_0x3b64aa];const _0x5ebaa2=['Ty',_0x514111(0x829),_0x514111(0x486),'Mao',_0x514111(0x451),'Tỵ',_0x514111(0x4dd),_0x514111(0x728),_0x514111(0x4fd),_0x514111(0x5d8),'Tuat',_0x514111(0x7fc)],_0x52d242=['Kien',_0x514111(0x78d),_0x514111(0x839),_0x514111(0x28f),_0x514111(0x1a0),_0x514111(0x7d0),_0x514111(0x217),_0x514111(0x7e5),'Thanh',_0x514111(0x830),_0x514111(0x7ce),'Be'];let _0x351648=_0x5ebaa2[_0x514111(0x129)](_0x83acf3),_0x3f3e7d=_0x5ebaa2[_0x514111(0x129)](chuanHoaChiKey(_0x938d05)),_0x266e87=(_0x3f3e7d-_0x351648+0xc)%0xc;return{'thangTietKhi':_0x5d2a07<_0x2525c6?_0x504d15===0x1?0xc:_0x504d15-0x1:_0x504d15,'chiThangText':_0x83acf3,'trucName':_0x52d242[_0x266e87]};}function tuDongTinhCuuTinhLuuNien(_0x574d10,_0x1441ec){const _0x5c0fb6=_0x3793e5;let _0x56ac94=(0xb-_0x1441ec%0x9)%0x9;if(_0x56ac94===0x0)_0x56ac94=0x9;let _0x2596d1=DATA_TRACH_NHAT_CAO_CAP[_0x5c0fb6(0x2d7)][_0x574d10]||_0x5c0fb6(0x6b6),_0x1aeee6=DATA_TRACH_NHAT_CAO_CAP[_0x5c0fb6(0x5ed)][_0x2596d1],_0x1f5966=(_0x56ac94+(_0x1aeee6-0x5)+0x9)%0x9;if(_0x1f5966===0x0)_0x1f5966=0x9;const _0x437854={0x1:'Nhất\x20Bạch\x20Thủy\x20Tinh\x20(Cát)',0x2:_0x5c0fb6(0x6ff),0x3:_0x5c0fb6(0x1a6),0x4:_0x5c0fb6(0x6b2),0x5:_0x5c0fb6(0x82f),0x6:_0x5c0fb6(0x289),0x7:'Thất\x20Xích\x20Phá\x20Quân\x20(Hung)',0x8:'Bát\x20Bạch\x20Tả\x20Phù\x20(Cát)',0x9:_0x5c0fb6(0xeb)};return{'maSao':_0x1f5966,'tenSao':_0x437854[_0x1f5966],'isHung':[0x2,0x3,0x5,0x7][_0x5c0fb6(0x4c0)](_0x1f5966)};}function toggleTongLuan(){const _0x50042a=_0x3793e5,_0x592d79=document['getElementById'](_0x50042a(0x797)),_0x1ac776=document[_0x50042a(0x27c)](_0x50042a(0x5e7))?.[_0x50042a(0x832)][_0x50042a(0x50b)]()||_0x50042a(0x8ee),_0x1871a8=document[_0x50042a(0x27c)]('birthYear')?.[_0x50042a(0x832)];if(!_0x1871a8||_0x1871a8[_0x50042a(0x110)]<0x4||typeof chủMệnh===_0x50042a(0x677)||!chủMệnh){typeof showCustomAlert===_0x50042a(0x60a)?showCustomAlert('Vui\x20lòng\x20nhập\x20đủ\x20Ngày\x20Tháng\x20Năm\x20Sinh\x20để\x20hệ\x20thống\x20xác\x20định\x20Thiên\x20khí\x20Bản\x20Mệnh\x20trước\x20khi\x20khai\x20mở\x20tổng\x20luận!',_0x50042a(0x7a0)):alert(_0x50042a(0x2b8));return;}if(!isCompassHold){isCompassHold=!![];let _0x528c9d=typeof currentHeading!==_0x50042a(0x677)?currentHeading:0x0;holdedHeading=parseInt(_0x528c9d);typeof xayDungBaoCaoLuanGiai===_0x50042a(0x60a)&&xayDungBaoCaoLuanGiai(_0x1ac776,holdedHeading);if(_0x592d79)_0x592d79[_0x50042a(0x3c2)]['add'](_0x50042a(0x74c));}else{isCompassHold=![];if(_0x592d79)_0x592d79[_0x50042a(0x3c2)]['remove']('show');}}function kiemTraHanNhanKhiChinhXac(_0x341a86,_0x45d4a4){const _0x244a52=_0x3793e5,_0x4c02ec=_0x45d4a4-_0x341a86+0x1;let _0x22be91={'isOk':!![],'reasons':[],'kimLau':![],'hoangOc':![],'tamTai':![]};const _0x5032ba=document['getElementById'](_0x244a52(0x365))?.[_0x244a52(0x832)]||'male',_0x236ea9=_0x4c02ec%0x9;if(_0x5032ba==='male'){if([0x1,0x3,0x6,0x8][_0x244a52(0x4c0)](_0x236ea9)){_0x22be91['isOk']=![],_0x22be91[_0x244a52(0x6d6)]=!![];const _0xd9e7a6={0x1:_0x244a52(0x3e0),0x3:_0x244a52(0x439),0x6:_0x244a52(0x7ad),0x8:_0x244a52(0x37e)};_0x22be91[_0x244a52(0x35a)][_0x244a52(0x65b)](_0xd9e7a6[_0x236ea9]);}}else _0x236ea9===0x8&&(_0x22be91[_0x244a52(0x87e)]=![],_0x22be91[_0x244a52(0x6d6)]=!![],_0x22be91[_0x244a52(0x35a)][_0x244a52(0x65b)](_0x244a52(0x47c)));const _0x3bc280=[0x1,0x2,0x4],_0xd7ca4b=Math[_0x244a52(0x3b6)](_0x4c02ec/0xa),_0x22f1ca=_0x4c02ec%0xa;let _0x31c04c=(_0xd7ca4b+_0x22f1ca)%0x6;if(_0x31c04c===0x0)_0x31c04c=0x6;if(!_0x3bc280[_0x244a52(0x4c0)](_0x31c04c)){_0x22be91[_0x244a52(0x87e)]=![],_0x22be91[_0x244a52(0x78f)]=!![];const _0x38b417={0x3:_0x244a52(0x372),0x5:_0x244a52(0x445),0x6:_0x244a52(0x3d2)};_0x22be91['reasons'][_0x244a52(0x65b)](_0x38b417[_0x31c04c]||_0x244a52(0x2bc));}const _0x28170d=DATA_TRACH_NHAT_CAO_CAP[_0x244a52(0x582)][_0x341a86%0xc],_0x5acf1e={'Than':[_0x244a52(0x486),'Mao',_0x244a52(0x451)],'Ty':[_0x244a52(0x486),'Mao',_0x244a52(0x451)],'Thin':[_0x244a52(0x486),_0x244a52(0x849),_0x244a52(0x451)],'Tỵ':[_0x244a52(0x7fc),'Ty',_0x244a52(0x829)],'Dau':[_0x244a52(0x7fc),'Ty',_0x244a52(0x829)],'Suu':[_0x244a52(0x7fc),'Ty',_0x244a52(0x829)],'Hoi':['Tỵ',_0x244a52(0x4dd),_0x244a52(0x728)],'Mao':['Tỵ',_0x244a52(0x4dd),_0x244a52(0x728)],'Mui':['Tỵ',_0x244a52(0x4dd),_0x244a52(0x728)],'Dan':[_0x244a52(0x4fd),'Dau',_0x244a52(0x15c)],'Ngo':[_0x244a52(0x4fd),_0x244a52(0x5d8),_0x244a52(0x15c)],'Tuat':[_0x244a52(0x4fd),'Dau','Tuat']},_0x19f9a0=DATA_TRACH_NHAT_CAO_CAP[_0x244a52(0x582)][_0x45d4a4%0xc];return _0x5acf1e[chuanHoaChiKey(_0x28170d)]?.[_0x244a52(0x4c0)](chuanHoaChiKey(_0x19f9a0))&&(_0x22be91['isOk']=![],_0x22be91[_0x244a52(0x164)]=!![],_0x22be91[_0x244a52(0x35a)][_0x244a52(0x65b)]('Tam\x20Tai\x20Tuổi\x20Hạn\x20('+_0x19f9a0+_0x244a52(0x8a6))),_0x22be91;}function timTuoiQuyNhanMuonTinh(_0x1cd23a,_0x373964,_0x37fe39){const _0x2a424c=_0x3793e5,_0x14a31c=[_0x2a424c(0x3f0),'Ất',_0x2a424c(0x5eb),'Đinh',_0x2a424c(0x1fa),'Kỷ',_0x2a424c(0x611),_0x2a424c(0x6ed),_0x2a424c(0x2be),_0x2a424c(0x295)],_0x4d6640=['Tý',_0x2a424c(0x7d7),_0x2a424c(0x202),_0x2a424c(0x8d6),_0x2a424c(0x8bf),'Tỵ',_0x2a424c(0x7e8),_0x2a424c(0x1fb),_0x2a424c(0x73d),_0x2a424c(0x2f2),_0x2a424c(0x560),_0x2a424c(0x609)],_0x38eb11=['Giap','At',_0x2a424c(0x28f),'Dinh',_0x2a424c(0x259),'Ky',_0x2a424c(0x611),_0x2a424c(0x2e4),_0x2a424c(0x379),_0x2a424c(0x23c)],_0x33f4ec=['Ty',_0x2a424c(0x829),_0x2a424c(0x486),'Mao',_0x2a424c(0x451),'Tỵ','Ngo','Mui',_0x2a424c(0x4fd),_0x2a424c(0x5d8),_0x2a424c(0x15c),'Hoi'],_0x444b8=DATA_TRACH_NHAT_CAO_CAP[_0x2a424c(0x582)][_0x37fe39%0xc],_0x5581df=DATA_TRACH_NHAT_CAO_CAP[_0x2a424c(0x1d5)][_0x373964]||'Ty';let _0x1d5c6=DATA_TRACH_NHAT_CAO_CAP['HINH_XUNG_QUY_QUYET'][_0x2a424c(0x7d1)][_0x373964]||_0x2a424c(0x381),_0x2f1cb6=[];for(let _0x554400=0x16;_0x554400<=0x44;_0x554400++){let _0x321d80=_0x1cd23a-_0x554400+0x1,_0x239b71=kiemTraHanNhanKhiChinhXac(_0x321d80,_0x1cd23a);if(!_0x239b71[_0x2a424c(0x87e)])continue;let _0x1f3421=DATA_TRACH_NHAT_CAO_CAP[_0x2a424c(0x582)][_0x321d80%0xc],_0x1e2468=DATA_TRACH_NHAT_CAO_CAP[_0x2a424c(0x5dd)];if(_0x1e2468[_0x2a424c(0x288)][chuanHoaChiKey(_0x1f3421)]===chuanHoaChiKey(_0x444b8)||_0x1e2468[_0x2a424c(0x288)][chuanHoaChiKey(_0x1f3421)]===chuanHoaChiKey(_0x5581df))continue;if(_0x1e2468['LUC_HAI'][chuanHoaChiKey(_0x1f3421)]===chuanHoaChiKey(_0x444b8)||_0x1e2468[_0x2a424c(0x651)][chuanHoaChiKey(_0x1f3421)]===chuanHoaChiKey(_0x5581df))continue;if(_0x1e2468['TU_PHA'][chuanHoaChiKey(_0x1f3421)]===chuanHoaChiKey(_0x444b8)||_0x1e2468[_0x2a424c(0x2ff)][chuanHoaChiKey(_0x1f3421)]===chuanHoaChiKey(_0x5581df))continue;let _0x13f473=_0x38eb11[(_0x321d80-0x4)%0xa<0x0?(_0x321d80-0x4)%0xa+0xa:(_0x321d80-0x4)%0xa],_0x1436dd=_0x33f4ec[(_0x321d80-0x4)%0xc<0x0?(_0x321d80-0x4)%0xc+0xc:(_0x321d80-0x4)%0xc],_0x55d0f8=layNapAm60HoaGiap(_0x13f473,_0x1436dd);if(_0x55d0f8===_0x2a424c(0x751)&&_0x1d5c6===_0x2a424c(0x2cd)||_0x55d0f8==='Hoa'&&_0x1d5c6===_0x2a424c(0x848)||_0x55d0f8===_0x2a424c(0x381)&&_0x1d5c6===_0x2a424c(0x751)||_0x55d0f8===_0x2a424c(0x666)&&_0x1d5c6==='Tho'||_0x55d0f8===_0x2a424c(0x848)&&_0x1d5c6===_0x2a424c(0x666))continue;let _0x1ee4cf=_0x14a31c[(_0x321d80-0x4)%0xa<0x0?(_0x321d80-0x4)%0xa+0xa:(_0x321d80-0x4)%0xa],_0x370f3c=_0x4d6640[(_0x321d80-0x4)%0xc<0x0?(_0x321d80-0x4)%0xc+0xc:(_0x321d80-0x4)%0xc];_0x2f1cb6[_0x2a424c(0x65b)]({'year':_0x321d80,'name':_0x1ee4cf+'\x20'+_0x370f3c,'age':_0x554400});if(_0x2f1cb6['length']>=0x3)break;}if(_0x2f1cb6[_0x2a424c(0x110)]===0x0)return[{'year':_0x1cd23a-0x26,'name':_0x2a424c(0x227),'age':0x27}];return _0x2f1cb6;}function tinhCanCuaGio(_0x324b53,_0x362841){const _0x2e7c32=_0x3793e5,_0xb5b113=['Giap','At',_0x2e7c32(0x28f),_0x2e7c32(0x1a0),'Mau','Ky','Canh','Tan',_0x2e7c32(0x379),_0x2e7c32(0x23c)],_0x270667=['Ty','Suu',_0x2e7c32(0x486),_0x2e7c32(0x849),_0x2e7c32(0x451),'Tỵ',_0x2e7c32(0x4dd),'Mui',_0x2e7c32(0x4fd),_0x2e7c32(0x5d8),_0x2e7c32(0x15c),_0x2e7c32(0x7fc)];let _0x41f806=_0xb5b113[_0x2e7c32(0x129)](_0x324b53),_0x12ebac='';if(_0x41f806===0x0||_0x41f806===0x5)_0x12ebac=_0x2e7c32(0x438);else{if(_0x41f806===0x1||_0x41f806===0x6)_0x12ebac='Binh';else{if(_0x41f806===0x2||_0x41f806===0x7)_0x12ebac=_0x2e7c32(0x259);else{if(_0x41f806===0x3||_0x41f806===0x8)_0x12ebac=_0x2e7c32(0x611);else _0x12ebac=_0x2e7c32(0x379);}}}let _0x29acf7=_0xb5b113[_0x2e7c32(0x129)](_0x12ebac),_0x70f60c=_0x270667[_0x2e7c32(0x129)](_0x362841),_0x4f471e=(_0x29acf7+_0x70f60c)%0xa;return _0xb5b113[_0x4f471e];}function tinhNgayGioCatTuongBaoCao(_0x598819,_0x5887fd,_0x1c63fd,_0x44f43a,_0x144353){const _0x261c85=_0x3793e5,_0x27d3f5=DATA_TRACH_NHAT_CAO_CAP[_0x261c85(0x18f)],_0x4c74b5=DATA_TRACH_NHAT_CAO_CAP[_0x261c85(0x5dd)],_0x4cb01d=layCanChiNgayChinhXac(_0x598819,0x5,0x1),_0x2eb5c6=_0x27d3f5[_0x261c85(0x3ae)][_0x4cb01d[_0x261c85(0x5f4)]]||'Mau',_0x30b0ef=DATA_TRACH_NHAT_CAO_CAP[_0x261c85(0x582)][_0x598819%0xc],_0x1473f1=DATA_TRACH_NHAT_CAO_CAP[_0x261c85(0x1d5)][_0x5887fd]||'Ty',_0x507795=DATA_TRACH_NHAT_CAO_CAP[_0x261c85(0x2d7)][_0x5887fd]||'N',_0x350734={'N':_0x261c85(0x39c),'S':_0x261c85(0x2c9),'E':'Dong','W':_0x261c85(0x148),'NE':_0x261c85(0x3c8),'SE':_0x261c85(0x4ea),'SW':'Tay\x20Nam','NW':_0x261c85(0x596)},_0x3695d8=_0x350734[_0x507795]||_0x261c85(0x39c),_0x5f3ab3=typeof ConfigPhongThuy!=='undefined'?ConfigPhongThuy[_0x144353]:{'title':_0x261c85(0x5ac),'isCat':!![]},_0x117e2e=_0x5f3ab3[_0x261c85(0x248)];let _0x659988=[];const _0x48e2c0=new Date();let _0x179d01=0x1;_0x1c63fd===_0x48e2c0[_0x261c85(0x8e3)]()&&_0x44f43a===_0x48e2c0[_0x261c85(0x2d0)]()+0x1&&(_0x179d01=_0x48e2c0[_0x261c85(0x457)]());let _0x1f5443=new Date(_0x1c63fd,_0x44f43a,0x0)[_0x261c85(0x457)]();const _0x537c42=_0x27d3f5[_0x261c85(0x4de)][_0x1c63fd%0xc],_0x4bfd79=_0x27d3f5[_0x261c85(0x607)][_0x1c63fd%0xc>=0x9||_0x1c63fd%0xc<=0x2?_0x261c85(0x102):_0x1c63fd%0xc<=0x5?_0x261c85(0x5f1):_0x1c63fd%0xc<=0x8?_0x261c85(0x8f4):_0x261c85(0x32e)];let _0x24356e=typeof tuDongTinhCuuTinhLuuNien===_0x261c85(0x60a)?tuDongTinhCuuTinhLuuNien(_0x5887fd,_0x1c63fd):{'maSao':0x1,'isHung':![]};for(let _0x56e14c=_0x179d01;_0x56e14c<=_0x1f5443;_0x56e14c++){let _0xd20684=layCanChiNgayChinhXac(_0x1c63fd,_0x44f43a,_0x56e14c),_0x496402=layThangTietKhiVaTruc(_0x1c63fd,_0x44f43a,_0x56e14c,_0xd20684[_0x261c85(0x75e)]);if(!_0x496402||!_0x496402[_0x261c85(0x3a8)])continue;let _0xb34b3e=0x46,_0x340528=[],_0x29e16f=[],_0xcfda3f=![];_0x4c74b5[_0x261c85(0x354)][_0x2eb5c6]===_0xd20684[_0x261c85(0x75e)]&&(_0xb34b3e+=0xf,_0x340528['push'](_0x261c85(0x113)));_0x4c74b5['THIEN_MA'][chuanHoaChiKey(_0x30b0ef)]===_0xd20684['chi']&&(_0xb34b3e+=0xa,_0x340528[_0x261c85(0x65b)](_0x261c85(0x6da)));_0x4c74b5['QUY_NHAN'][_0x2eb5c6]?.[_0x261c85(0x4c0)](_0xd20684[_0x261c85(0x75e)])&&(_0xb34b3e+=0xf,_0x340528[_0x261c85(0x65b)](_0x261c85(0x40f)));_0x4c74b5[_0x261c85(0x1b3)][chuanHoaChiKey(_0x30b0ef)]?.[_0x261c85(0x4c0)](_0xd20684[_0x261c85(0x75e)])&&(_0xb34b3e+=0xa,_0x340528[_0x261c85(0x65b)](_0x261c85(0x672)));_0x4c74b5['LUC_HOP'][chuanHoaChiKey(_0x30b0ef)]===_0xd20684[_0x261c85(0x75e)]&&(_0xb34b3e+=0xa,_0x340528[_0x261c85(0x65b)](_0x261c85(0x533)));let _0x4b8cb0=layNapAm60HoaGiap(_0xd20684['can'],_0xd20684[_0x261c85(0x75e)]),_0x1d4c3a=typeof chủMệnh!==_0x261c85(0x677)?chủMệnh:_0x261c85(0x2c6);const _0x562cdd={'Kham':_0x261c85(0x751),'Ly':'Hoa','Chan':_0x261c85(0x666),'Ton':_0x261c85(0x666),'Can':_0x261c85(0x848),'Doai':'Kim','Cấn':_0x261c85(0x381),'Khon':_0x261c85(0x381)};let _0x278af3=_0x562cdd[_0x1d4c3a]||_0x261c85(0x381);(_0x4b8cb0===_0x261c85(0x751)&&_0x278af3===_0x261c85(0x666)||_0x4b8cb0===_0x261c85(0x666)&&_0x278af3===_0x261c85(0x2cd)||_0x4b8cb0===_0x261c85(0x2cd)&&_0x278af3==='Tho'||_0x4b8cb0===_0x261c85(0x381)&&_0x278af3===_0x261c85(0x848)||_0x4b8cb0===_0x261c85(0x848)&&_0x278af3===_0x261c85(0x751))&&(_0xb34b3e+=0xa,_0x340528['push'](_0x261c85(0x11e)));_0x24356e[_0x261c85(0x7a2)]===0x5&&(_0x117e2e?(_0xb34b3e-=0x28,_0x29e16f['push'](_0x261c85(0x89d)),_0xcfda3f=!![]):(_0xb34b3e+=0xf,_0x340528[_0x261c85(0x65b)](_0x261c85(0x5c4))));[0x5,0xe,0x17][_0x261c85(0x4c0)](_0x56e14c)&&(_0xb34b3e-=0x23,_0x29e16f[_0x261c85(0x65b)]('Phạm\x20Nguyệt\x20Kỵ\x20(Trăm\x20việc\x20đều\x20tổn\x20hao)'));_0xd20684['chi']===_0x4c74b5[_0x261c85(0x288)][chuanHoaChiKey(_0x1473f1)]&&(_0xb34b3e-=0x32,_0x29e16f['push'](_0x261c85(0x298)+_0x5887fd+')'),_0xcfda3f=!![]);const _0x2f4569=_0xd20684[_0x261c85(0x80e)][_0x261c85(0x888)]('\x20')[0x1],_0x215bb1=_0x27d3f5[_0x261c85(0x344)][_0x2f4569]||'Ty',_0x492cd6=_0x27d3f5['phuongViChi'][_0x215bb1];_0x3695d8===_0x4bfd79&&_0x492cd6===_0x4bfd79&&(_0xb34b3e-=0x1e,_0x29e16f['push'](_0x261c85(0x346)));_0x4c74b5[_0x261c85(0x288)][chuanHoaChiKey(_0x215bb1)]===chuanHoaChiKey(_0x537c42)&&(_0xb34b3e-=0x28,_0x29e16f['push']('Phạm\x20ngày\x20Tuế\x20Phá\x20trực\x20xung\x20thiên\x20khí\x20năm'),_0xcfda3f=!![]);let _0x26ec12=_0xd20684['can'];if(_0x4c74b5[_0x261c85(0x62c)][_0x26ec12]===_0x2eb5c6&&_0xd20684[_0x261c85(0x75e)]===_0x4c74b5[_0x261c85(0x288)][chuanHoaChiKey(_0x30b0ef)])_0xb34b3e-=0x3c,_0x29e16f[_0x261c85(0x65b)](_0x261c85(0x337)),_0xcfda3f=!![];else _0xd20684['chi']===_0x4c74b5[_0x261c85(0x288)][chuanHoaChiKey(_0x30b0ef)]&&(_0xb34b3e-=0x23,_0x29e16f[_0x261c85(0x65b)](_0x261c85(0x740)));let _0x2d5b4d=DATA_TRACH_NHAT_CAO_CAP[_0x261c85(0x3b0)][_0x496402[_0x261c85(0x3a8)]];_0x2d5b4d&&(_0x117e2e&&_0x2d5b4d[_0x261c85(0x320)][_0x261c85(0x4c0)](_0x144353)&&(_0xb34b3e+=0xc,_0x340528['push'](_0x261c85(0x188)+_0x496402[_0x261c85(0x3a8)]+_0x261c85(0x11f))),!_0x117e2e&&_0x2d5b4d[_0x261c85(0x320)][_0x261c85(0x4c0)](_0x144353)&&(_0xb34b3e+=0xf,_0x340528[_0x261c85(0x65b)]('Trực\x20'+_0x496402['trucName']+_0x261c85(0x2cb))),_0x2d5b4d[_0x261c85(0x7fd)][_0x261c85(0x4c0)](_0x144353)&&(_0xb34b3e-=0x1e,_0x29e16f[_0x261c85(0x65b)]('Trực\x20'+_0x496402['trucName']+'\x20kỵ\x20hành\x20sự\x20hạng\x20mục\x20này')));_0xb34b3e=Math[_0x261c85(0x4db)](0xa,Math[_0x261c85(0x1dc)](0x64,Math[_0x261c85(0x3b6)](_0xb34b3e)));if(_0xb34b3e>=0x50&&!_0xcfda3f){let _0x1a3f0e=DATA_TRACH_NHAT_CAO_CAP['CAN_CHI_DINH_GIO'][_0xd20684['chi']],_0x38394e=[],_0x5e0e93=new Set(_0x1a3f0e['satChu']);_0x1a3f0e[_0x261c85(0x544)][_0x261c85(0x242)](_0x268150=>{const _0x303014=_0x261c85;let _0x558093=tinhCanCuaGio(_0xd20684['can'],_0x268150),_0x1d0eeb=_0x4c74b5[_0x303014(0x288)][chuanHoaChiKey(_0x268150)]===_0xd20684[_0x303014(0x75e)],_0x3ff3ea=_0x4c74b5['LUC_XUNG'][chuanHoaChiKey(_0x268150)]===chuanHoaChiKey(_0x30b0ef),_0x409bba=_0x4c74b5[_0x303014(0x62c)][_0x558093]===_0xd20684[_0x303014(0x5f4)];!_0x1d0eeb&&!_0x3ff3ea&&!_0x409bba?_0x38394e[_0x303014(0x65b)](DATA_TRACH_NHAT_CAO_CAP[_0x303014(0x658)][_0x268150]):_0x5e0e93[_0x303014(0x245)](_0x268150);}),['Ty',_0x261c85(0x829),_0x261c85(0x486),'Mao',_0x261c85(0x451),'Tỵ',_0x261c85(0x4dd),_0x261c85(0x728),_0x261c85(0x4fd),_0x261c85(0x5d8),_0x261c85(0x15c),_0x261c85(0x7fc)][_0x261c85(0x242)](_0x2e3e31=>{const _0x27b3d6=_0x261c85;(_0x4c74b5['LUC_XUNG'][chuanHoaChiKey(_0x2e3e31)]===_0xd20684['chi']||_0x4c74b5[_0x27b3d6(0x288)][chuanHoaChiKey(_0x2e3e31)]===chuanHoaChiKey(_0x30b0ef))&&_0x5e0e93[_0x27b3d6(0x245)](_0x2e3e31);});let _0x38a29b=Array[_0x261c85(0x79c)](_0x5e0e93)[_0x261c85(0x583)](_0x599c82=>DATA_TRACH_NHAT_CAO_CAP[_0x261c85(0x658)][_0x599c82]);_0x659988['push']({'ngayThucTe':_0x56e14c,'solarDate':_0x56e14c+'/'+_0x44f43a+'/'+_0x1c63fd,'canChiText':_0xd20684[_0x261c85(0x80e)],'score':_0xb34b3e,'trucName':_0x496402[_0x261c85(0x3a8)],'trucText':_0x2d5b4d?_0x2d5b4d[_0x261c85(0x80e)]:'','advantages':_0x340528,'disadvantages':_0x29e16f,'goldHours':_0x38394e['length']>0x0?_0x38394e:[_0x261c85(0x8df)],'blackHours':_0x38a29b});}}return _0x659988[_0x261c85(0x8bb)]((_0x26ccd8,_0x2dd685)=>_0x26ccd8[_0x261c85(0x271)]-_0x2dd685[_0x261c85(0x271)]);}function xayDungBaoCaoLuanGiai(_0x14180f,_0xbd4190){const _0xb5e55c=_0x3793e5,_0x399e8c=document[_0xb5e55c(0x27c)](_0xb5e55c(0x59c)),_0x50ec87=document[_0xb5e55c(0x27c)](_0xb5e55c(0x54b))[_0xb5e55c(0x832)],_0x5add56=ConfigPhongThuy[_0x50ec87]||{'title':_0xb5e55c(0x5ac),'isCat':!![]},_0x5a761c=document[_0xb5e55c(0x27c)](_0xb5e55c(0x5a4)),_0x2c9add=_0x5a761c&&_0x5a761c[_0xb5e55c(0x832)][_0xb5e55c(0x110)]===0x4?parseInt(_0x5a761c['value']):new Date()['getFullYear'](),_0x1d9228=new Date()[_0xb5e55c(0x2d0)]()+0x1,_0x31b03f=document[_0xb5e55c(0x27c)](_0xb5e55c(0x135))[_0xb5e55c(0x832)],_0x569f0f=document['getElementById'](_0xb5e55c(0x118))[_0xb5e55c(0x832)],_0x183509=document['getElementById']('birthYear')['value'];let _0x210dbb=parseInt(_0x183509||_0xb5e55c(0x760)),_0x453cd1=parseInt(_0x569f0f)<0x2||parseInt(_0x569f0f)===0x2&&parseInt(_0x31b03f)<0x4?_0x210dbb-0x1:_0x210dbb,_0x1d68d7=typeof chủMệnh!==_0xb5e55c(0x677)&&chủMệnh?chủMệnh:'Khảm';const _0x102f7e={'Khảm':_0xb5e55c(0x331),'Ly':_0xb5e55c(0x6f0),'Chấn':_0xb5e55c(0x252),'Tốn':_0xb5e55c(0x252),'Càn':'Kim','Đoài':_0xb5e55c(0x848),'Cấn':_0xb5e55c(0x4d7),'Khôn':_0xb5e55c(0x4d7)};let _0x27b02d=_0x102f7e[_0x1d68d7]||_0xb5e55c(0x4d7);const _0xa701d6=tinhDiemTongHop(_0x1d68d7,_0xbd4190,_0x2c9add,_0x50ec87,_0x453cd1),_0x84ead9=_0xa701d6['sonName']||'Tý';let _0x1421f8={'ten':'Đang\x20quét\x20mạch','chatLuong':_0xb5e55c(0x6b9),'diem':0x3c,'ynghia':'Khí\x20trường\x20bình\x20ổn\x20cục\x20bộ.'};if(typeof Data72Hau!==_0xb5e55c(0x677)){let _0x322f70=(Math[_0xb5e55c(0x7c1)](_0xbd4190/0x5)*0x5)['toFixed'](0x1);if(Data72Hau[_0x322f70])_0x1421f8=Data72Hau[_0x322f70];else{let _0x3bb73d=Object[_0xb5e55c(0x3e9)](Data72Hau)['map'](Number),_0x38cdff=_0x3bb73d[_0xb5e55c(0x1da)]((_0x1c5d0a,_0x19ddc7)=>Math[_0xb5e55c(0x330)](_0x19ddc7-_0xbd4190)<Math[_0xb5e55c(0x330)](_0x1c5d0a-_0xbd4190)?_0x19ddc7:_0x1c5d0a,0x0);_0x1421f8=Data72Hau[_0x38cdff[_0xb5e55c(0x3a2)](0x1)]||_0x1421f8;}}const _0x4d7f1f=tuDongTinhCuuTinhLuuNien(_0x84ead9,_0x2c9add);let _0x4af1bd='N';if(_0xbd4190>=337.5||_0xbd4190<22.5)_0x4af1bd='N';else{if(_0xbd4190>=22.5&&_0xbd4190<67.5)_0x4af1bd='NE';else{if(_0xbd4190>=67.5&&_0xbd4190<112.5)_0x4af1bd='E';else{if(_0xbd4190>=112.5&&_0xbd4190<157.5)_0x4af1bd='SE';else{if(_0xbd4190>=157.5&&_0xbd4190<202.5)_0x4af1bd='S';else{if(_0xbd4190>=202.5&&_0xbd4190<247.5)_0x4af1bd='SW';else{if(_0xbd4190>=247.5&&_0xbd4190<292.5)_0x4af1bd='W';else{if(_0xbd4190>=292.5&&_0xbd4190<337.5)_0x4af1bd='NW';}}}}}}}const _0x35572e=bátTrạchMap[_0x1d68d7]?.[_0x4af1bd]||_0xb5e55c(0x56e),_0x23baa3=[_0xb5e55c(0x663),_0xb5e55c(0x12a),_0xb5e55c(0x842),_0xb5e55c(0x784)],_0x25a909=_0x23baa3[_0xb5e55c(0x4c0)](_0x35572e),_0x852d6c=!!_0xa701d6[_0xb5e55c(0x761)],_0xf8419=[_0xb5e55c(0x41a),_0xb5e55c(0x5ce),_0xb5e55c(0x825),_0xb5e55c(0x163),_0xb5e55c(0x177),_0xb5e55c(0x2d2),_0xb5e55c(0x723)],_0x1d9760=_0xf8419[_0xb5e55c(0x4c0)](_0x50ec87),_0x4a4496=tinhNgayGioCatTuongBaoCao(_0x453cd1,_0x84ead9,_0x2c9add,_0x1d9228,_0x50ec87),_0x415738=kiemTraHanNhanKhiChinhXac(_0x453cd1,_0x2c9add);let _0x2a8c5d='',_0x22fe9d='',_0x173469=_0xb5e55c(0x6dd),_0x1b29e0=_0xb5e55c(0x5e2),_0x525ba4=_0xb5e55c(0x303);if(_0x852d6c||_0x25a909&&_0x5add56['isCat'])_0x173469=_0xb5e55c(0x807),_0x1b29e0=_0xb5e55c(0x510),_0x525ba4='#ff3b30';else(_0x4d7f1f[_0xb5e55c(0x4e8)]||_0x1421f8[_0xb5e55c(0x7c7)]['includes'](_0xb5e55c(0x2d5)))&&(_0x173469=_0xb5e55c(0x152),_0x1b29e0='<span\x20style=\x22background:#ff9f0a;\x20color:#000;\x20padding:5px\x2012px;\x20border-radius:4px;\x20font-weight:bold;\x20font-size:0.85rem;\x20display:inline-block;\x20margin-bottom:8px;\x22>CẦN\x20CAN\x20THIỆP\x20PHÁP\x20BẢO\x20HOẶC\x20LỌC\x20THỜI\x20GIAN\x20(CÓ\x20THỂ\x20LÀM)</span>',_0x525ba4=_0xb5e55c(0x595));if(_0x5add56[_0xb5e55c(0x248)]){if(_0x4a4496[_0xb5e55c(0x110)]>0x0&&!_0x852d6c&&!(_0x25a909&&_0x5add56['isCat'])){let _0x5bf724=_0x4a4496[_0xb5e55c(0x173)](0x0,0x7);_0x2a8c5d=_0xb5e55c(0x66b)+_0x1d9228+':</b>',_0x5bf724[_0xb5e55c(0x242)](_0x413bc0=>{const _0x152cc4=_0xb5e55c;let _0x1899e2=_0x413bc0[_0x152cc4(0x3c5)][_0x152cc4(0x583)](_0x5f4a02=>_0x152cc4(0x58b)+_0x5f4a02+_0x152cc4(0x474))[_0x152cc4(0x727)](_0x152cc4(0x41d)),_0x2bf840=_0x413bc0[_0x152cc4(0x7cf)][_0x152cc4(0x583)](_0x19f01a=>_0x152cc4(0x239)+_0x19f01a+_0x152cc4(0x474))[_0x152cc4(0x727)](_0x152cc4(0x41d));_0x2a8c5d+=_0x152cc4(0x68b)+_0x413bc0[_0x152cc4(0x8b9)]+_0x152cc4(0x587)+_0x413bc0['canChiText']+_0x152cc4(0x67a)+_0x413bc0[_0x152cc4(0x542)]+_0x152cc4(0x4e9)+_0x413bc0[_0x152cc4(0x3a8)]+_0x152cc4(0x795)+_0x413bc0[_0x152cc4(0x79a)]+_0x152cc4(0x891)+(_0x1899e2?_0x152cc4(0x423)+_0x1899e2+_0x152cc4(0x41d):'')+_0x152cc4(0x4b1)+(_0x2bf840?'•\x20<b>Sát\x20Khí\x20Lưu\x20Nhật:</b><br>'+_0x2bf840+'<br>':'')+_0x152cc4(0x207)+_0x413bc0[_0x152cc4(0x691)][_0x152cc4(0x173)](0x0,0x4)[_0x152cc4(0x727)](_0x152cc4(0x4bc))+'</b><br>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20•\x20<span\x20style=\x22color:#ff4444;\x22>🔴\x20<b>GIỜ\x20ĐẠI\x20KỴ\x20TUYỆT\x20LỘ\x20CẤM\x20KỴ:</b></span>\x20<span\x20style=\x22color:#aaa;\x22>'+_0x413bc0[_0x152cc4(0x721)]['slice'](0x0,0x4)[_0x152cc4(0x727)](_0x152cc4(0x4bc))+_0x152cc4(0x18b);}),_0x2a8c5d+=_0xb5e55c(0x42b);}else _0x2a8c5d=_0xb5e55c(0x639);if(!_0x415738[_0xb5e55c(0x87e)]&&_0x1d9760){const _0x2eff65=_0x415738[_0xb5e55c(0x35a)][_0xb5e55c(0x727)](_0xb5e55c(0x6ce)),_0x5f11a6=timTuoiQuyNhanMuonTinh(_0x2c9add,_0x84ead9,_0x453cd1);let _0x23ff4a='';_0x5f11a6['forEach']((_0x516c22,_0x2198cb)=>{const _0x5e180c=_0xb5e55c;_0x23ff4a+=_0x5e180c(0x2dd)+(_0x2198cb+0x1)+_0x5e180c(0x572)+_0x516c22[_0x5e180c(0x3bc)]+'</span>\x20(Sinh\x20năm\x20'+_0x516c22[_0x5e180c(0x426)]+'\x20—\x20Hiện\x20tại\x20'+_0x516c22[_0x5e180c(0x71b)]+_0x5e180c(0x382);}),_0x22fe9d=_0xb5e55c(0x76a)+_0x2eff65+_0xb5e55c(0x3f7)+_0x5add56['title']+_0xb5e55c(0x130)+_0x23ff4a+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>';}else!_0x415738[_0xb5e55c(0x87e)]&&!_0x1d9760?_0x22fe9d=_0xb5e55c(0x3fa)+_0x5add56['title']+_0xb5e55c(0x462):_0x22fe9d=_0xb5e55c(0x18a);}let _0x3db0a1='',_0x3215b7=_0x35572e[_0xb5e55c(0x4c0)](_0xb5e55c(0x3f2))||_0x35572e[_0xb5e55c(0x4c0)](_0xb5e55c(0x693))||_0x35572e[_0xb5e55c(0x4c0)](_0xb5e55c(0x36a))||_0x35572e[_0xb5e55c(0x4c0)]('Phục\x20Vị')?'<span\x20style=\x22color:#30d158;\x20font-weight:bold;\x22>Cung\x20Cát\x20Khí\x20'+_0x35572e+_0xb5e55c(0x474):_0xb5e55c(0x5a1)+_0x35572e+_0xb5e55c(0x474);if(_0x852d6c)_0x3db0a1=_0xb5e55c(0x8da)+_0x5add56[_0xb5e55c(0x70a)]+'\x20tại\x20phân\x20phân\x20độ\x20tử\x20huyệt\x20này\x20sẽ\x20kích\x20hoạt\x20tai\x20họa\x20khôn\x20lường,\x20nhân\x20đinh\x20suy\x20kiệt.';else _0x25a909&&_0x5add56[_0xb5e55c(0x248)]?_0x3db0a1=_0xb5e55c(0x899)+_0x5add56[_0xb5e55c(0x70a)]+'\x20đòi\x20hỏi\x20phải\x20hấp\x20thụ\x20sinh\x20khí\x20tối\x20cao\x20để\x20dưỡng\x20trạch\x20nhưng\x20hiện\x20trạng\x20kim\x20la\x20bàn\x20báo\x20đang\x20đóng\x20đè\x20lên\x20'+_0x3215b7+_0xb5e55c(0x253):_0x3db0a1=_0xb5e55c(0x2c8)+_0x3215b7+_0xb5e55c(0x2eb)+_0x1421f8[_0xb5e55c(0x5f9)]+'\x20('+_0x1421f8[_0xb5e55c(0x7c7)]+_0xb5e55c(0x8a5)+_0xa701d6[_0xb5e55c(0x7b1)]+_0xb5e55c(0x629);let _0x51b14a=_0xa701d6[_0xb5e55c(0x737)];(_0x25a909||_0x852d6c)&&(_0x51b14a=_0xb5e55c(0x870)+_0xa701d6['hoaGiai']+_0xb5e55c(0x1e4));let _0x2008da=_0xb5e55c(0x8b1)+_0x525ba4+_0xb5e55c(0x882)+_0x173469+_0xb5e55c(0x19c)+_0x1b29e0+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22margin-bottom:\x206px;\x22>👤\x20<b>Đương\x20số\x20chủ\x20sự:</b>\x20<span\x20style=\x22color:var(--gold);\x20font-weight:bold;\x22>'+_0x14180f+_0xb5e55c(0x472)+_0x1d68d7+'\x20('+_0x27b02d+_0xb5e55c(0x421)+_0x453cd1+_0xb5e55c(0x25e)+_0xbd4190+_0xb5e55c(0x54e)+_0x84ead9+_0xb5e55c(0x4f7)+_0x1421f8[_0xb5e55c(0x5f9)]+_0xb5e55c(0x50f)+(_0x1421f8['chatLuong'][_0xb5e55c(0x4c0)](_0xb5e55c(0x2d5))?_0xb5e55c(0x1ac):_0xb5e55c(0x303))+_0xb5e55c(0x540)+_0x1421f8[_0xb5e55c(0x7c7)]+_0xb5e55c(0x874)+_0x1421f8['diem']+_0xb5e55c(0x274)+_0x5add56[_0xb5e55c(0x70a)]+_0xb5e55c(0x205)+_0x525ba4+_0xb5e55c(0x89c)+_0xa701d6[_0xb5e55c(0x7b1)]+_0xb5e55c(0x6ae)+_0x525ba4+_0xb5e55c(0x546)+_0xa701d6[_0xb5e55c(0x145)]+_0xb5e55c(0x308)+_0x2c9add+_0xb5e55c(0x4e5)+(_0x4d7f1f[_0xb5e55c(0x4e8)]?_0xb5e55c(0x595):_0xb5e55c(0x303))+_0xb5e55c(0x546)+_0x4d7f1f[_0xb5e55c(0x84b)]+_0xb5e55c(0x5fd)+_0x525ba4+_0xb5e55c(0x8aa)+_0x3db0a1+_0xb5e55c(0x494)+_0x51b14a+_0xb5e55c(0x8d3)+_0x2a8c5d+_0xb5e55c(0x404)+_0x22fe9d+_0xb5e55c(0x283);_0x399e8c[_0xb5e55c(0x2d1)]=_0x2008da;}let dừngKimTimeout=null,chạmHoldTimeout=null,đangChạmMànHình=![];const styleLuangiai=document[_0x3793e5(0x7cd)](_0x3793e5(0xf0));styleLuangiai[_0x3793e5(0x2d1)]=_0x3793e5(0x1f2),document[_0x3793e5(0x692)][_0x3793e5(0x33b)](styleLuangiai);function kichHoatBoLangNgheTouchLaBan(){const _0x3dd102=_0x3793e5,_0x4f766d=document[_0x3dd102(0x27c)](_0x3dd102(0x5c0))||document[_0x3dd102(0x6b1)];_0x4f766d['addEventListener'](_0x3dd102(0x29c),_0x9f5da8=>{const _0x5cec42=_0x3dd102;return _0x9f5da8[_0x5cec42(0x359)](),![];}),_0x4f766d[_0x3dd102(0x396)](_0x3dd102(0x39e),function(_0x1c28a3){const _0x277b59=_0x3dd102,_0x58601c=document['getElementById'](_0x277b59(0x797));if(_0x58601c&&_0x58601c['classList'][_0x277b59(0x16d)](_0x277b59(0x74c)))return;đangChạmMànHình=!![],clearTimeout(chạmHoldTimeout),!window[_0x277b59(0x18c)]?chạmHoldTimeout=setTimeout(()=>{const _0x1ed73f=_0x277b59;window['isCompassHold']=!![];typeof currentHeading!==_0x1ed73f(0x677)&&(window[_0x1ed73f(0x105)]=currentHeading);_0x4f766d[_0x1ed73f(0x3c2)][_0x1ed73f(0x245)](_0x1ed73f(0x538)),setTimeout(()=>_0x4f766d[_0x1ed73f(0x3c2)]['remove']('la-ban-khoa-khí'),0x258);if(typeof kichHoatBoDemDungKim===_0x1ed73f(0x60a))kichHoatBoDemDungKim();typeof showCustomAlert===_0x1ed73f(0x60a)&&showCustomAlert('🔒\x20Đã\x20khóa\x20cứng\x20Long\x20Mạch\x20tại:\x20'+window[_0x1ed73f(0x105)]+'°!');},0x1f4):chạmHoldTimeout=setTimeout(()=>{const _0xd462f5=_0x277b59;window[_0xd462f5(0x18c)]=![];if(typeof kichHoatBoDemDungKim===_0xd462f5(0x60a))kichHoatBoDemDungKim();typeof showCustomAlert===_0xd462f5(0x60a)&&showCustomAlert(_0xd462f5(0x15b));},0x1f4);},{'passive':!![]}),_0x4f766d[_0x3dd102(0x396)](_0x3dd102(0x720),()=>{đangChạmMànHình=![],clearTimeout(chạmHoldTimeout);},{'passive':!![]}),_0x4f766d[_0x3dd102(0x396)](_0x3dd102(0x3b9),()=>{clearTimeout(chạmHoldTimeout);},{'passive':!![]});}document['addEventListener']('DOMContentLoaded',kichHoatBoLangNgheTouchLaBan);let dungKimTimeout=null,lastStableHeading=null,stabilityStartTime=0x0;function kichHoatBoDemDungKim(){const _0x1bf96c=_0x3793e5,_0x2b1d0e=document[_0x1bf96c(0x27c)]('btn-tong-luan');if(!_0x2b1d0e)return;if(window[_0x1bf96c(0x18c)]){_0x2b1d0e[_0x1bf96c(0x3c2)]['add'](_0x1bf96c(0x473),_0x1bf96c(0x74c));return;}const _0x4c31d0=document[_0x1bf96c(0x27c)](_0x1bf96c(0x135))?.[_0x1bf96c(0x832)],_0x2753d4=document['getElementById'](_0x1bf96c(0x118))?.[_0x1bf96c(0x832)],_0xee3429=document[_0x1bf96c(0x27c)]('birthYear')?.['value'],_0x528f6e=document[_0x1bf96c(0x27c)](_0x1bf96c(0x54b))?.[_0x1bf96c(0x832)],_0x4ca0f2=_0x4c31d0&&_0x2753d4&&_0xee3429&&_0xee3429['length']===0x4,_0x373b68=_0x528f6e&&_0x528f6e!==''&&_0x528f6e!==_0x1bf96c(0x4e4);if(!_0x4ca0f2||!_0x373b68){_0x2b1d0e['classList'][_0x1bf96c(0x59f)](_0x1bf96c(0x473),_0x1bf96c(0x74c));return;}clearTimeout(dungKimTimeout);const _0x2fd396=typeof currentHeading!==_0x1bf96c(0x677)?Math[_0x1bf96c(0x7c1)](currentHeading):null;if(_0x2fd396===null){_0x2b1d0e['classList'][_0x1bf96c(0x59f)](_0x1bf96c(0x473),_0x1bf96c(0x74c));return;}const _0x1d69cc=Date[_0x1bf96c(0x57f)]();if(lastStableHeading===null||Math[_0x1bf96c(0x330)](_0x2fd396-lastStableHeading)>0x2){lastStableHeading=_0x2fd396,stabilityStartTime=_0x1d69cc,_0x2b1d0e[_0x1bf96c(0x3c2)][_0x1bf96c(0x59f)](_0x1bf96c(0x473),_0x1bf96c(0x74c));return;}const _0x5b6b09=_0x1d69cc-stabilityStartTime;_0x5b6b09>=0x7d0&&(!_0x2b1d0e[_0x1bf96c(0x3c2)]['contains'](_0x1bf96c(0x473))&&_0x2b1d0e[_0x1bf96c(0x3c2)][_0x1bf96c(0x245)](_0x1bf96c(0x473),_0x1bf96c(0x74c)));}document[_0x3793e5(0x396)](_0x3793e5(0x6d8),()=>{const _0x33ed3e=_0x3793e5,_0x1a3e1a=[_0x33ed3e(0x135),'birthMonth',_0x33ed3e(0x68c),_0x33ed3e(0x54b)];_0x1a3e1a['forEach'](_0x5e81dc=>{const _0x5f37d4=_0x33ed3e,_0x3ec3cf=document[_0x5f37d4(0x27c)](_0x5e81dc);_0x3ec3cf&&(_0x3ec3cf['addEventListener']('input',kichHoatBoDemDungKim),_0x3ec3cf['addEventListener'](_0x5f37d4(0x456),kichHoatBoDemDungKim));});});function highlightActiveHauNode(_0x445f0c){const _0x5d4077=_0x3793e5;let _0x119293=(_0x445f0c%0x168+0x168)%0x168,_0x2024fe=Math[_0x5d4077(0x7c1)](_0x119293/0x5)*0x5;if(_0x2024fe>=0x168)_0x2024fe=0x0;document[_0x5d4077(0x285)](_0x5d4077(0x458))['forEach'](_0x4a37a9=>{const _0x217fdd=_0x5d4077;_0x4a37a9['style'][_0x217fdd(0x509)]='none',_0x4a37a9[_0x217fdd(0xf0)][_0x217fdd(0x855)]=_0x217fdd(0x58c),_0x4a37a9['style'][_0x217fdd(0x48a)]=_0x217fdd(0x7b7),_0x4a37a9[_0x217fdd(0xf0)][_0x217fdd(0x781)]=_0x217fdd(0x3e4);});let _0x4165db=document[_0x5d4077(0x285)](_0x5d4077(0x3ff)+_0x2024fe);_0x4165db[_0x5d4077(0x242)](_0x23da1c=>{const _0x26aa6a=_0x5d4077;let _0xcd48a1=_0x23da1c[_0x26aa6a(0x618)](_0x26aa6a(0x495))['style'][_0x26aa6a(0x498)];_0x23da1c['style'][_0x26aa6a(0x48a)]=_0x26aa6a(0x35e),_0x23da1c[_0x26aa6a(0xf0)][_0x26aa6a(0x781)]=_0xcd48a1,_0x23da1c[_0x26aa6a(0xf0)][_0x26aa6a(0x855)]='scale(1.05)',_0x23da1c[_0x26aa6a(0xf0)][_0x26aa6a(0x509)]=_0x26aa6a(0x88f)+_0xcd48a1+'40';});}let scanState={'isScanning':![],'method':_0x3793e5(0x465),'startAngle':null,'endAngle':null,'currentAngle':0x0};function onCompassUpdate(_0x49b2a4){const _0xc72a3d=_0x3793e5;scanState['currentAngle']=(_0x49b2a4%0x168+0x168)%0x168,scanState[_0xc72a3d(0x811)]&&scanState['method']===_0xc72a3d(0x465)?typeof renderScanningArc==='function'&&renderScanningArc(scanState[_0xc72a3d(0x675)],scanState[_0xc72a3d(0x7b8)]):typeof updateDegreeDisplay===_0xc72a3d(0x60a)&&updateDegreeDisplay(scanState[_0xc72a3d(0x7b8)]);}function handleScanButtonClick(){const _0x33baeb=_0x3793e5;scanState['method']=_0x33baeb(0x465);const _0x539290=document['getElementById']('btn-scan-action'),_0x3eade3=document[_0x33baeb(0x27c)]('purpose'),_0x249cf0=_0x3eade3?_0x3eade3[_0x33baeb(0x832)]:_0x33baeb(0x854);if(!scanState[_0x33baeb(0x811)]&&scanState[_0x33baeb(0x675)]===null){scanState[_0x33baeb(0x811)]=!![],scanState[_0x33baeb(0x675)]=scanState[_0x33baeb(0x7b8)],_0x539290[_0x33baeb(0x2d1)]=_0x33baeb(0x269),_0x539290[_0x33baeb(0xf0)][_0x33baeb(0x48a)]='#ff9500',_0x539290['style'][_0x33baeb(0x781)]='#ff9500',_0x539290[_0x33baeb(0xf0)][_0x33baeb(0x509)]=_0x33baeb(0x1f7),showToast(_0x33baeb(0x6ca)+Math[_0x33baeb(0x7c1)](scanState['startAngle'])+_0x33baeb(0x1a2));return;}if(scanState[_0x33baeb(0x811)]&&scanState[_0x33baeb(0x675)]!==null){scanState[_0x33baeb(0x811)]=![],scanState[_0x33baeb(0x63e)]=scanState[_0x33baeb(0x7b8)];let _0x517f79=scanState[_0x33baeb(0x63e)]-scanState[_0x33baeb(0x675)];if(_0x517f79<0x0)_0x517f79+=0x168;if(_0x517f79>0xb4){_0x517f79=0x168-_0x517f79;let _0x322742=scanState[_0x33baeb(0x675)];scanState[_0x33baeb(0x675)]=scanState[_0x33baeb(0x63e)],scanState[_0x33baeb(0x63e)]=_0x322742;}let _0x20eb83=Math['round'](_0x517f79);if(_0x20eb83===0x0)_0x20eb83=0x1;let _0x268c7a=scanState[_0x33baeb(0x675)]+_0x517f79/0x2;_0x268c7a=(_0x268c7a%0x168+0x168)%0x168,_0x539290[_0x33baeb(0x2d1)]=_0x33baeb(0x249),_0x539290[_0x33baeb(0xf0)][_0x33baeb(0x48a)]='#2c2c2e',_0x539290[_0x33baeb(0xf0)][_0x33baeb(0x781)]=_0x33baeb(0x1e5),_0x539290[_0x33baeb(0xf0)]['boxShadow']=_0x33baeb(0x4e4),ConfigPhongThuy[_0x249cf0]&&(ConfigPhongThuy[_0x249cf0][_0x33baeb(0x86b)]=_0x20eb83),showToast('✔️\x20Quét\x20thành\x20công!\x20Độ\x20rộng\x20vật\x20thể:\x20'+_0x20eb83+_0x33baeb(0x801)+Math[_0x33baeb(0x7c1)](_0x268c7a)+'°'),processScanResult(_0x268c7a,_0x20eb83,_0x249cf0),typeof generateDirectionsList===_0x33baeb(0x60a)&&generateDirectionsList(),scanState['startAngle']=null,scanState['endAngle']=null;}}function executeManualScanConfig(_0x488730,_0x3594a4,_0x37560f){const _0xec5f21=_0x3793e5;scanState[_0xec5f21(0x31a)]=_0xec5f21(0x62f),scanState[_0xec5f21(0x811)]=![];let _0xee37b4=(parseFloat(_0x488730)%0x168+0x168)%0x168,_0x456e5a=Math['max'](0x0,Math['min'](0xb4,parseFloat(_0x3594a4)||0x0));ConfigPhongThuy[_0x37560f]&&(ConfigPhongThuy[_0x37560f]['sizeDegree']=_0x456e5a),showToast(_0xec5f21(0x6cc)+Math[_0xec5f21(0x7c1)](_0xee37b4)+_0xec5f21(0x732)+_0x456e5a+'°'),processScanResult(_0xee37b4,_0x456e5a,_0x37560f),typeof generateDirectionsList==='function'&&generateDirectionsList();}function processScanResult(_0x2482bd,_0x4e5c6b,_0x2a3836){const _0x1ffa41=_0x3793e5;console[_0x1ffa41(0x536)](_0x1ffa41(0x19e));const _0x45c426=document[_0x1ffa41(0x27c)]('scan-result-panel');if(!_0x45c426)return;_0x45c426[_0x1ffa41(0xf0)]['display']=_0x1ffa41(0x63a),_0x45c426[_0x1ffa41(0x2d1)]=_0x1ffa41(0x491);const _0x4cd62e={'bed':'Giường\x20ngủ','kitchen':'Bếp\x20nấu','door':_0x1ffa41(0x15a),'desk':_0x1ffa41(0x575),'altar':_0x1ffa41(0x500),'toilet':_0x1ffa41(0x2fb)},_0x14e911=_0x4cd62e[_0x2a3836]||_0x1ffa41(0x7f3);let _0x18088d=_0x1ffa41(0x623);if(typeof vịTríLấyCungPhi===_0x1ffa41(0x60a))_0x18088d=vịTríLấyCungPhi();else{if(typeof viTriLayCungPhi===_0x1ffa41(0x60a))_0x18088d=viTriLayCungPhi();}const _0x77b095=document[_0x1ffa41(0x27c)](_0x1ffa41(0x5a4)),_0x4ab12a=_0x77b095&&_0x77b095[_0x1ffa41(0x832)][_0x1ffa41(0x110)]===0x4?parseInt(_0x77b095[_0x1ffa41(0x832)]):new Date()[_0x1ffa41(0x8e3)]();let _0x24a58f=_0x4ab12a;if(typeof vịTríLấyNămÂmChuẩn===_0x1ffa41(0x60a))_0x24a58f=vịTríLấyNămÂmChuẩn();let _0x45a431;try{if(typeof tinhDiemTongHop!==_0x1ffa41(0x60a))throw new Error(_0x1ffa41(0x236));_0x45a431=tinhDiemTongHop(_0x18088d,_0x2482bd,_0x4ab12a,_0x2a3836,_0x24a58f);if(!_0x45a431)throw new Error(_0x1ffa41(0x80d));}catch(_0xe15ea8){_0x45c426['innerHTML']=_0x1ffa41(0x25b)+_0x14e911+_0x1ffa41(0x477);return;}const _0x1f2ffd=(_0x2482bd%0x168+0x168)%0x168;let _0x4f2616=_0x1ffa41(0x5f3);if(_0x1f2ffd>=337.5||_0x1f2ffd<22.5)_0x4f2616=_0x1ffa41(0x548);else{if(_0x1f2ffd>=22.5&&_0x1f2ffd<67.5)_0x4f2616=_0x1ffa41(0x165);else{if(_0x1f2ffd>=67.5&&_0x1f2ffd<112.5)_0x4f2616='Phương\x20Đông';else{if(_0x1f2ffd>=112.5&&_0x1f2ffd<157.5)_0x4f2616=_0x1ffa41(0x5aa);else{if(_0x1f2ffd>=157.5&&_0x1f2ffd<202.5)_0x4f2616=_0x1ffa41(0x86e);else{if(_0x1f2ffd>=202.5&&_0x1f2ffd<247.5)_0x4f2616=_0x1ffa41(0x241);else{if(_0x1f2ffd>=247.5&&_0x1f2ffd<292.5)_0x4f2616=_0x1ffa41(0x7c4);else{if(_0x1f2ffd>=292.5&&_0x1f2ffd<337.5)_0x4f2616='Phương\x20Tây\x20Bắc';}}}}}}}const _0x58ce55=_0x45a431[_0x1ffa41(0x3cd)]||_0x1ffa41(0x88a),_0x25833c=_0x45a431[_0x1ffa41(0x2c2)]&&_0x45a431['hauInfo'][_0x1ffa41(0x5f9)]?_0x45a431[_0x1ffa41(0x2c2)]['ten']:_0x1ffa41(0x5a2);let _0x257a8b='';_0x45a431[_0x1ffa41(0x1f1)]&&Array['isArray'](_0x45a431[_0x1ffa41(0x1f1)]['chiTietHau'])&&_0x45a431['scanMetrics'][_0x1ffa41(0x750)][_0x1ffa41(0x110)]>0x0&&(_0x257a8b=_0x45a431[_0x1ffa41(0x1f1)][_0x1ffa41(0x750)][_0x1ffa41(0x583)](function(_0x3445a9){const _0x4d0fd1=_0x1ffa41;let _0x50eb7e=_0x3445a9[_0x4d0fd1(0x7b1)]>=0x3c?'#30d158':_0x4d0fd1(0xec);return _0x4d0fd1(0x2a0)+_0x50eb7e+_0x4d0fd1(0x52b)+_0x3445a9['moc']+_0x4d0fd1(0x390)+(_0x3445a9[_0x4d0fd1(0x5f9)]||_0x4d0fd1(0x18e))+_0x4d0fd1(0x8ba)+_0x50eb7e+_0x4d0fd1(0x540)+_0x3445a9[_0x4d0fd1(0x7b1)]+_0x4d0fd1(0x8d5);})[_0x1ffa41(0x727)](''));let _0x4c6a0a=_0x45a431[_0x1ffa41(0x7b1)]>=0x48?_0x1ffa41(0x303):_0x1ffa41(0x1ac),_0x4ca90c=_0x45a431[_0x1ffa41(0x7b1)]>=0x48?_0x1ffa41(0x69e):_0x1ffa41(0x579),_0x3005f8='';_0x45a431[_0x1ffa41(0x1f1)]&&_0x45a431[_0x1ffa41(0x1f1)][_0x1ffa41(0x5a6)]>0x1?_0x3005f8=_0x1ffa41(0x400)+_0x4e5c6b+_0x1ffa41(0x54c)+_0x45a431[_0x1ffa41(0x1f1)]['totalHauOccupied']+_0x1ffa41(0x447)+(_0x257a8b?'<div\x20style=\x22margin-top:\x206px;\x20padding-top:\x206px;\x20border-top:\x201px\x20solid\x20rgba(255,149,0,0.15);\x22>'+_0x257a8b+'</div>':'')+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20':_0x3005f8=_0x1ffa41(0x2f9),_0x45c426[_0x1ffa41(0x2d1)]=_0x1ffa41(0x7ca)+_0x4ca90c+_0x1ffa41(0x34e)+_0x4c6a0a+_0x1ffa41(0x505)+_0x14e911[_0x1ffa41(0x23a)]()+_0x1ffa41(0x3d7)+_0x14e911+_0x1ffa41(0x864)+_0x4f2616+_0x1ffa41(0x204)+_0x58ce55+'</span>\x20/\x20Hậu\x20vị:\x20<span\x20style=\x22color:\x20#ffd60a;\x22>'+_0x25833c+_0x1ffa41(0x3be)+Math[_0x1ffa41(0x7c1)](_0x2482bd)+_0x1ffa41(0x411)+Math[_0x1ffa41(0x7c1)](_0x4e5c6b)+_0x1ffa41(0x352)+_0x4c6a0a+';\x20font-size:\x201.05rem;\x22>'+(_0x45a431['diem']||0x0)+_0x1ffa41(0x831)+(_0x45a431[_0x1ffa41(0x145)]||_0x1ffa41(0x1e7))+_0x1ffa41(0x705)+_0x3005f8+_0x1ffa41(0x4df)+_0x18088d+_0x1ffa41(0x70b)+(_0x45a431[_0x1ffa41(0x4b3)]||_0x1ffa41(0x764))+_0x1ffa41(0x116)+(_0x45a431[_0x1ffa41(0x737)]?_0x1ffa41(0x648)+_0x45a431[_0x1ffa41(0x737)]+_0x1ffa41(0x815):'')+_0x1ffa41(0x5dc),console[_0x1ffa41(0x536)]('===\x20ĐÃ\x20ĐỔ\x20DỮ\x20LIỆU\x20LÊN\x20UI\x20THÀNH\x20CÔNG\x20==='),typeof triggerGhostNeedle===_0x1ffa41(0x60a)&&triggerGhostNeedle(_0x2482bd);}function vịTríLấyCungPhi(){const _0x6339b=_0x3793e5,_0x387f9f=document[_0x6339b(0x27c)](_0x6339b(0x7a9))||document['getElementById'](_0x6339b(0x223))||document['getElementById'](_0x6339b(0x54b));if(_0x387f9f&&_0x387f9f[_0x6339b(0x832)]){if([_0x6339b(0x623),_0x6339b(0xf2),_0x6339b(0x6a4),'Ly',_0x6339b(0x7c8),_0x6339b(0x8a1),_0x6339b(0x6ef),'Đoài'][_0x6339b(0x4c0)](_0x387f9f[_0x6339b(0x832)]))return _0x387f9f[_0x6339b(0x832)];}const _0x11b45e=document[_0x6339b(0x27c)]('birthYear'),_0x17bcf4=document[_0x6339b(0x27c)](_0x6339b(0x118))||{'value':0x6},_0x330d14=document[_0x6339b(0x27c)](_0x6339b(0x135))||{'value':0xf},_0x49e234=document[_0x6339b(0x618)](_0x6339b(0x185))||{'value':_0x6339b(0x5bc)};if(_0x11b45e&&_0x11b45e['value'])return tínhCungPhi(parseInt(_0x11b45e[_0x6339b(0x832)]),parseInt(_0x17bcf4[_0x6339b(0x832)]),parseInt(_0x330d14[_0x6339b(0x832)]),_0x49e234[_0x6339b(0x832)]);return'Càn';}function vịTríLấyNămÂmChuẩn(){const _0x32653b=_0x3793e5,_0xb77910=document[_0x32653b(0x27c)](_0x32653b(0x5a4));if(_0xb77910&&_0xb77910[_0x32653b(0x832)]['length']===0x4)return parseInt(_0xb77910[_0x32653b(0x832)]);return new Date()[_0x32653b(0x8e3)]();}const rotateState={};function handleSmartRotate(_0xbd2ceb){const _0x258aca=_0x3793e5,_0x48ba3d=_0xbd2ceb['id']||'default-rotate-btn';!rotateState[_0x48ba3d]&&(rotateState[_0x48ba3d]={'count':0x0});const _0x4ab441=JSON[_0x258aca(0x531)](_0xbd2ceb[_0x258aca(0x688)](_0x258aca(0x122))),_0x5810b6=_0xbd2ceb[_0x258aca(0x688)](_0x258aca(0x84e))===_0x258aca(0x725);rotateState[_0x48ba3d]['count']++;const _0x52e6af=rotateState[_0x48ba3d][_0x258aca(0x329)],_0x4065bf=_0x52e6af%_0x4ab441['length'],_0xfa2955=_0x4ab441[_0x4065bf],_0x532d93=(_0x52e6af+0x1)%_0x4ab441['length'],_0x159dec=_0x4ab441[_0x532d93][_0x258aca(0x3bc)];_0xbd2ceb[_0x258aca(0x2d1)]=_0x258aca(0x277)+_0xfa2955[_0x258aca(0x3bc)]+'\x20('+_0xfa2955['angle']+_0x258aca(0x574)+_0x159dec,requestAnimationFrame(()=>{const _0x5268fd=_0x258aca;typeof triggerGhostNeedle===_0x5268fd(0x60a)&&triggerGhostNeedle(_0xfa2955[_0x5268fd(0xf6)]),typeof recalculateFate===_0x5268fd(0x60a)&&(typeof lockedHeadingAtOpen!==_0x5268fd(0x677)&&(lockedHeadingAtOpen=_0xfa2955[_0x5268fd(0xf6)]),recalculateFate());}),triggerBlinkEffect(_0xfa2955[_0x258aca(0x542)],_0x5810b6);}function triggerBlinkEffect(_0x3874c4,_0x2ca1fe){const _0x32af51=_0x3793e5,_0xe0938c=document[_0x32af51(0x618)](_0x32af51(0x49b))||document['getElementById'](_0x32af51(0x4ac));if(!_0xe0938c)return;let _0x57e48b=_0x2ca1fe?_0x3874c4>=0x48:_0x3874c4<0x32;_0xe0938c[_0x32af51(0x3c2)]['remove'](_0x32af51(0x8ad),_0x32af51(0x159)),void _0xe0938c[_0x32af51(0x28a)];if(_0x57e48b)_0xe0938c[_0x32af51(0x3c2)][_0x32af51(0x245)](_0x32af51(0x8ad));else(_0x2ca1fe&&_0x3874c4>=0x32||!_0x2ca1fe&&_0x3874c4<=0x46)&&_0xe0938c[_0x32af51(0x3c2)][_0x32af51(0x245)](_0x32af51(0x159));}document['getElementById']('openScienceBtn')[_0x3793e5(0x396)](_0x3793e5(0x2ec),function(){const _0x235b43=_0x3793e5;typeof FengShuiScienceModal!==_0x235b43(0x677)?FengShuiScienceModal[_0x235b43(0x7d4)]():console[_0x235b43(0x601)](_0x235b43(0x4b0));});function _0x34061e(_0x153879){function _0x34a78d(_0x33cc73){const _0x51253f=_0x2f80;if(typeof _0x33cc73===_0x51253f(0x8ac))return function(_0x4d45bf){}['constructor'](_0x51253f(0x21c))['apply'](_0x51253f(0x890));else(''+_0x33cc73/_0x33cc73)[_0x51253f(0x110)]!==0x1||_0x33cc73%0x14===0x0?function(){return!![];}[_0x51253f(0x2d9)](_0x51253f(0x23e)+_0x51253f(0x783))[_0x51253f(0x697)](_0x51253f(0x6f8)):function(){return![];}['constructor'](_0x51253f(0x23e)+_0x51253f(0x783))[_0x51253f(0x1a8)](_0x51253f(0x61d));_0x34a78d(++_0x33cc73);}try{if(_0x153879)return _0x34a78d;else _0x34a78d(0x0);}catch(_0x305345){}}
+// Ma trận Bát Trạch Minh Châu - HOÀN CHỈNH 192 CẶP (8 Mệnh x 24 Sơn)
+const MaTranMinhChau = {
+    "Khảm": {
+        "Nhâm": { loai: "Cát", diem: 88, cap_do: "Đại Cát", nhom: "Phục Vị", hanh: "Thủy", goc_do_min: 337.5, goc_do_max: 352.5, icon: "star-green", linhvuc: ["tai_loc", "gia_dao", "nhan_dinh"], doi_tuong: ["nam_chu", "gia_dinh"], text: "Phục Vị đắc vị, gia đạo hưng vượng, khí trường an định, con cái thông tuệ.", giaiphap: "Kích hoạt bằng Tháp Văn Xương gỗ hoặc chậu cây xanh hành Mộc để dưỡng khí." },
+        "Tý": { loai: "Cát", diem: 93, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Thủy", goc_do_min: 352.5, goc_do_max: 7.5, icon: "star-green", linhvuc: ["tai_loc", "cong_danh"], doi_tuong: ["nam_chu"], text: "Sinh Khí vượng tài, công danh hiển đạt, tài lộc hanh thông, vinh hoa phú quý.", giaiphap: "Sử dụng vật phẩm hành Mộc hoặc tượng Phúc Lộc Thọ để tăng cường cát khí." },
+        "Quý": { loai: "Hung", diem: 32, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Thủy", goc_do_min: 7.5, goc_do_max: 22.5, icon: "alert-red", linhvuc: ["suc_khoe", "nhan_dinh"], doi_tuong: ["nu_chu", "con_cai"], text: "Phạm thế Họa Hại, khí trường xung đột, dễ ảnh hưởng sức khỏe nữ giới và nhân đinh.", giaiphap: "Sử dụng chuông gió đồng 6 thanh để tiết khí hoặc đặt thạch anh đen hóa giải." },
+        "Sửu": { loai: "Hung", diem: 38, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Thổ", goc_do_min: 22.5, goc_do_max: 37.5, icon: "alert-red", linhvuc: ["tai_loc", "gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, tài lộc thất thoát, gia đạo dễ phát sinh mâu thuẫn.", giaiphap: "Dùng vật phẩm hành Thủy (phong thủy luân) để thông quan, điều hòa khí trường." },
+        "Cấn": { loai: "Hung", diem: 25, cap_do: "Đại Hung", nhom: "Ngũ Quỷ", hanh: "Thổ", goc_do_min: 37.5, goc_do_max: 52.5, icon: "alert-red", linhvuc: ["tai_loc", "suc_khoe"], doi_tuong: ["nam_chu"], text: "Phạm Ngũ Quỷ đại sát, gia chủ tổn tài, đề phòng tiểu nhân quấy phá và hỏa hoạn.", giaiphap: "Sử dụng gương Bát Quái gỗ đào hoặc Tỳ Hưu đồng trấn trạch, hóa sát." },
+        "Dần": { loai: "Hung", diem: 30, cap_do: "Tiểu Hung", nhom: "Cô Quả", hanh: "Mộc", goc_do_min: 52.5, goc_do_max: 67.5, icon: "alert-red", linhvuc: ["nhan_dinh", "gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Cô Quả, nhân đinh suy giảm, khó tụ tài lộc, gia đạo cô tịch.", giaiphap: "An bài đôi Uyên Ương đồng hoặc hồ lô đồng để nạp phúc, kết nối gia đạo." },
+        "Giáp": { loai: "Cát", diem: 84, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Mộc", goc_do_min: 67.5, goc_do_max: 82.5, icon: "star-green", linhvuc: ["cong_danh", "tai_loc"], doi_tuong: ["nam_chu"], text: "Diên Niên quý nhân phò trợ, công danh hanh thông, gia nghiệp bền vững.", giaiphap: "Kích hoạt bằng tranh Mã Đáo hoặc Tháp Văn Xương để vượng khí." },
+        "Mão": { loai: "Cát", diem: 86, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Mộc", goc_do_min: 82.5, goc_do_max: 97.5, icon: "star-green", linhvuc: ["tai_loc", "nhan_dinh"], doi_tuong: ["gia_dinh"], text: "Diên Niên tiến điền tài, gia sản tăng tiến, con cái thành đạt.", giaiphap: "Đặt chậu cây xanh hành Mộc để dưỡng vượng khí." },
+        "Ất": { loai: "Hung", diem: 36, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Mộc", goc_do_min: 97.5, goc_do_max: 112.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm Lục Sát thị phi, gia đạo bất hòa, dễ vướng kiện tụng tranh chấp.", giaiphap: "Sử dụng quả cầu thạch anh đen hoặc bình nước muối để hấp thụ sát khí." },
+        "Thìn": { loai: "Hung", diem: 34, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Thổ", goc_do_min: 112.5, goc_do_max: 127.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm Khẩu Thiệt, gia đạo tranh chấp, dễ vướng thị phi pháp luật.", giaiphap: "Dùng rèm cửa tối màu hoặc thạch anh khói để tĩnh khí, giảm xung đột." },
+        "Tốn": { loai: "Hung", diem: 22, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Mộc", goc_do_min: 127.5, goc_do_max: 142.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["nam_chu"], text: "Phạm Tuyệt Mệnh sát phương, sức khỏe tổn hại, cần đặc biệt lưu tâm.", giaiphap: "Trấn trạch bằng gương Bát Quái và chuông gió đồng 6 thanh để hóa giải hung sát." },
+        "Tỵ": { loai: "Hung", diem: 31, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Hỏa", goc_do_min: 142.5, goc_do_max: 157.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm Họa Hại, quan phi khẩu thiệt, làm ăn dễ thất thoát.", giaiphap: "Đặt tượng Tỳ Hưu hoặc gậy Như Ý đồng để trấn áp tà khí." },
+        "Bính": { loai: "Cát", diem: 89, cap_do: "Đại Cát", nhom: "Thiên Y", hanh: "Hỏa", goc_do_min: 157.5, goc_do_max: 172.5, icon: "star-green", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Thiên Y đắc vị, sức khỏe dồi dào, bệnh tật tiêu trừ, thân tâm an lạc.", giaiphap: "An bài hồ lô đồng hoặc thạch anh vàng để kích hoạt sức khỏe." },
+        "Ngọ": { loai: "Cát", diem: 85, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Hỏa", goc_do_min: 172.5, goc_do_max: 187.5, icon: "star-green", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Diên Niên chính khí, gia đạo hòa hợp, ngoại giao thuận lợi.", giaiphap: "Sử dụng đôi Uyên Ương hoặc vật phẩm hành Thổ để an định gia đạo." },
+        "Đinh": { loai: "Cát", diem: 95, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Hỏa", goc_do_min: 187.5, goc_do_max: 202.5, icon: "star-green", linhvuc: ["tai_loc", "nhan_dinh"], doi_tuong: ["nam_chu", "gia_dinh"], text: "Sinh Khí tối thượng, phát phúc nhanh chóng, nhân đinh hưng vượng.", giaiphap: "Kích hoạt bằng cây xanh và Tháp Văn Xương để vượng nhân đinh." },
+        "Mùi": { loai: "Hung", diem: 33, cap_do: "Tiểu Hung", nhom: "Ngũ Quỷ", hanh: "Thổ", goc_do_min: 202.5, goc_do_max: 217.5, icon: "alert-red", linhvuc: ["nhan_dinh"], doi_tuong: ["gia_dinh"], text: "Phạm thế Bạch Hổ, tổn thương nhân đinh, đề phòng huyết quang.", giaiphap: "Sử dụng chuông gió và thạch anh đen để tiết khí sát thương." },
+        "Khôn": { loai: "Hung", diem: 24, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Thổ", goc_do_min: 217.5, goc_do_max: 232.5, icon: "alert-red", linhvuc: ["tai_loc", "gia_dao"], doi_tuong: ["nam_chu"], text: "Phạm Tuyệt Mệnh sát khí, tài sản tiêu tán, gia đạo ly tán.", giaiphap: "Sử dụng gương Bát Quái và chuông gió đồng để hóa sát." },
+        "Thân": { loai: "Hung", diem: 35, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Kim", goc_do_min: 232.5, goc_do_max: 247.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Cô Thần, gia đạo bất hòa, vợ chồng dễ nảy sinh xung khắc.", giaiphap: "Đặt bình gốm hành Thổ để tiết khí Kim, hóa giải xung sát." },
+        "Canh": { loai: "Cát", diem: 83, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Kim", goc_do_min: 247.5, goc_do_max: 262.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Đắc vị tiến tài, kinh doanh phát đạt, sự nghiệp hưng thịnh.", giaiphap: "Kích hoạt bằng vật phẩm hành Kim để tăng cường cát khí." },
+        "Dậu": { loai: "Cát", diem: 81, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Kim", goc_do_min: 262.5, goc_do_max: 277.5, icon: "star-green", linhvuc: ["cong_danh"], doi_tuong: ["nam_chu"], text: "Đạt cung Quý Nhân, có người phù trợ lúc khó khăn.", giaiphap: "Sử dụng tranh Phúc Lộc hoặc tượng Quan Công để củng cố quý nhân." },
+        "Tân": { loai: "Hung", diem: 37, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Kim", goc_do_min: 277.5, goc_do_max: 292.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm Họa Hại tai ương, tiền bạc ra vào thất thường, cần cẩn trọng đầu tư.", giaiphap: "Sử dụng thạch anh trắng hoặc gậy Như Ý để ổn định tài chính." },
+        "Tuất": { loai: "Hung", diem: 29, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Thổ", goc_do_min: 292.5, goc_do_max: 307.5, icon: "alert-red", linhvuc: ["tai_loc", "suc_khoe"], doi_tuong: ["gia_dinh"], text: "Phạm Lục Sát chi khí, trộm cắp hao tài, gia đạo bất an.", giaiphap: "Treo chuỗi tiền Ngũ Đế và thạch anh đen để trấn áp, giữ của." },
+        "Càn": { loai: "Hung", diem: 31, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Kim", goc_do_min: 307.5, goc_do_max: 322.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm Lục Sát phương vị, tình duyên trục trặc, hao tổn tâm trí.", giaiphap: "Sử dụng rèm tối màu và bình nước để tiết khí, làm dịu khí trường." },
+        "Hợi": { loai: "Bình", diem: 58, cap_do: "Bình Hòa", nhom: "Bình", hanh: "Thủy", goc_do_min: 322.5, goc_do_max: 337.5, icon: "circle-yellow", linhvuc: ["tai_loc"], doi_tuong: ["gia_dinh"], text: "Thế bình hòa tiểu hạn, tài lộc trung bình, nên quản lý tài chính thận trọng.", giaiphap: "Giữ không gian cân bằng, tránh động thổ hoặc thay đổi lớn tại phương vị này." }
+    },
+    "Khôn": {
+        "Nhâm": { loai: "Hung", diem: 26, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Thổ", goc_do_min: 337.5, goc_do_max: 352.5, icon: "alert-red", linhvuc: ["suc_khoe", "tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm Tuyệt Mệnh sát khí, khí trường bất ổn, cần chú trọng sức khỏe và bảo toàn tài chính.", giaiphap: "Sử dụng gương Bát Quái và chuông gió đồng 6 thanh để hóa giải hung sát." },
+        "Tý": { loai: "Hung", diem: 30, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Thủy", goc_do_min: 352.5, goc_do_max: 7.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, gia đạo thiếu hòa khí, dễ phát sinh thị phi, mâu thuẫn nội bộ.", giaiphap: "Đặt bình thủy tinh chứa nước muối để hấp thụ tà khí." },
+        "Quý": { loai: "Hung", diem: 28, cap_do: "Đại Hung", nhom: "Ngũ Quỷ", hanh: "Thủy", goc_do_min: 7.5, goc_do_max: 22.5, icon: "alert-red", linhvuc: ["gia_dao", "suc_khoe"], doi_tuong: ["gia_dinh"], text: "Phạm Ngũ Quỷ đại sát, gia vận kém ổn định, cần phòng ngừa tiểu nhân và tai họa bất ngờ.", giaiphap: "An bài cặp Kỳ Lân đồng để trấn trạch và bình ổn khí trường." },
+        "Sửu": { loai: "Cát", diem: 90, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Thổ", goc_do_min: 22.5, goc_do_max: 37.5, icon: "star-green", linhvuc: ["tai_loc", "nhan_dinh"], doi_tuong: ["nam_chu"], text: "Sinh Khí vượng tài, công danh thăng tiến, tài lộc hanh thông, vạn sự cát tường.", giaiphap: "Kích hoạt bằng cây xanh và Tháp Văn Xương để tăng cường vượng khí." },
+        "Cấn": { loai: "Cát", diem: 91, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Thổ", goc_do_min: 37.5, goc_do_max: 52.5, icon: "star-green", linhvuc: ["tai_loc", "gia_dao"], doi_tuong: ["gia_dinh"], text: "Sinh Khí chính vị, phúc lộc dồi dào, gia nghiệp bền vững, nhân đinh hưng vượng.", giaiphap: "Đặt chậu cây xanh hoặc tượng tài lộc hành Thổ/Kim để vượng khí." },
+        "Dần": { loai: "Cát", diem: 87, cap_do: "Đại Cát", nhom: "Thiên Y", hanh: "Mộc", goc_do_min: 52.5, goc_do_max: 67.5, icon: "star-green", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Thiên Y đắc vị, sức khỏe dồi dào, bệnh tật tiêu trừ, thân tâm an lạc.", giaiphap: "Sử dụng hồ lô đồng hoặc thạch anh vàng để nạp phúc, dưỡng sức khỏe." },
+        "Giáp": { loai: "Hung", diem: 35, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Mộc", goc_do_min: 67.5, goc_do_max: 82.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Họa Hại, dễ gặp thị phi, khẩu thiệt, làm việc khó đạt như ý.", giaiphap: "Sử dụng vật phẩm hành Thổ hoặc thạch anh đen để tiết khí Họa Hại." },
+        "Mão": { loai: "Hung", diem: 24, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Mộc", goc_do_min: 82.5, goc_do_max: 97.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["nam_chu"], text: "Phạm Tuyệt Mệnh sát phương, hung sát mạnh, ảnh hưởng trực tiếp đến sức khỏe và nam chủ.", giaiphap: "Trấn trạch bằng gương Bát Quái gỗ đào để hóa sát." },
+        "Ất": { loai: "Hung", diem: 33, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Mộc", goc_do_min: 97.5, goc_do_max: 112.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Phạm thế Họa Hại, khí trường trì trệ, gia familie dễ cảm thấy bất an, mệt mỏi.", giaiphap: "Đặt bình gốm hành Thổ để tiết bớt mộc khí, cân bằng năng lượng." },
+        "Thìn": { loai: "Cát", diem: 82, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Thổ", goc_do_min: 112.5, goc_do_max: 127.5, icon: "star-green", linhvuc: ["gia_dao", "tai_loc"], doi_tuong: ["gia_dinh"], text: "Diên Niên đắc cách, gia đạo thuận hòa, công việc kinh doanh phát triển.", giaiphap: "Đặt đôi Uyên Ương đồng để củng cố gia đạo và tình cảm." },
+        "Tốn": { loai: "Hung", diem: 29, cap_do: "Tiểu Hung", nhom: "Ngũ Quỷ", hanh: "Mộc", goc_do_min: 127.5, goc_do_max: 142.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm Ngũ Quỷ, dễ thất thoát tài sản, cần đề phòng tiểu nhân quấy phá.", giaiphap: "Treo chuông gió đồng để tiết khí Ngũ Quỷ (Hỏa biến thành Kim)." },
+        "Tỵ": { loai: "Hung", diem: 31, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Hỏa", goc_do_min: 142.5, goc_do_max: 157.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm Lục Sát, gia đình dễ gặp chuyện kiện tụng, tranh chấp thị phi.", giaiphap: "Sử dụng rèm tối màu hoặc vật phẩm hành Thổ để an định lại khí trường." },
+        "Bính": { loai: "Hung", diem: 23, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Hỏa", goc_do_min: 157.5, goc_do_max: 172.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["nam_chu"], text: "Phạm Tuyệt Mệnh, hung sát nghiêm trọng, cần tránh động thổ, chú trọng sức khỏe.", giaiphap: "Treo gương Bát Quái và vật phẩm hành Kim để hóa giải." },
+        "Ngọ": { loai: "Hung", diem: 34, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Hỏa", goc_do_min: 172.5, goc_do_max: 187.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm Họa Hại, làm ăn dễ hao tổn, nên thận trọng trong các quyết định tài chính.", giaiphap: "Đặt thạch anh trắng hoặc vật phẩm hành Thổ để tiết khí." },
+        "Đinh": { loai: "Hung", diem: 32, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Hỏa", goc_do_min: 187.5, goc_do_max: 202.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm Lục Sát, tình cảm vợ chồng dễ rạn nứt, thiếu sự cảm thông.", giaiphap: "Đặt bình nước muối để điều hòa khí trường, hóa giải xung khắc." },
+        "Mùi": { loai: "Cát", diem: 80, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Thổ", goc_do_min: 202.5, goc_do_max: 217.5, icon: "star-green", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phục Vị đắc cách, gia đạo an ninh, mọi việc ổn định, tài lộc vững chắc.", giaiphap: "Sử dụng thảm sáng màu hoặc thạch anh trắng để duy trì năng lượng." },
+        "Khôn": { loai: "Cát", diem: 85, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Thổ", goc_do_min: 217.5, goc_do_max: 232.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phục Vị chính bản cung, điền sản tăng tiến, vạn sự hanh thông, quý nhân giúp đỡ.", giaiphap: "Kích hoạt bằng vật phẩm hành Thổ hoặc vật phẩm chiêu tài." },
+        "Thân": { loai: "Cát", diem: 83, cap_do: "Tiểu Cát", nhom: "Thiên Y", hanh: "Kim", goc_do_min: 232.5, goc_do_max: 247.5, icon: "star-green", linhvuc: ["suc_khoe", "tai_loc"], doi_tuong: ["gia_dinh"], text: "Thiên Y đắc vị, cơ thể khỏe mạnh, tài vận hanh thông, công việc thuận lợi.", giaiphap: "Đặt hồ lô đồng để củng cố sức khỏe và nạp tài." },
+        "Canh": { loai: "Hung", diem: 36, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Kim", goc_do_min: 247.5, goc_do_max: 262.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm Họa Hại, tiền bạc ra vào thất thường, cần quản lý chi tiêu chặt chẽ.", giaiphap: "Treo chuông gió đồng để điều tiết lại khí trường." },
+        "Dậu": { loai: "Hung", diem: 27, cap_do: "Đại Hung", nhom: "Ngũ Quỷ", hanh: "Kim", goc_do_min: 262.5, goc_do_max: 277.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Phạm Ngũ Quỷ đại sát, dễ phát sinh bệnh tật, cần chú ý giữ gìn sức khỏe.", giaiphap: "Trấn trạch bằng gương Bát Quái gỗ đào để đẩy lùi sát khí." },
+        "Tân": { loai: "Hung", diem: 30, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Kim", goc_do_min: 277.5, goc_do_max: 292.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, nhân đinh dễ ly tán, gia đình thiếu gắn kết.", giaiphap: "Đặt bình nước phong thủy để tĩnh tâm, hòa hợp các mối quan hệ." },
+        "Tuất": { loai: "Cát", diem: 84, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Thổ", goc_do_min: 292.5, goc_do_max: 307.5, icon: "star-green", linhvuc: ["gia_dao", "cong_danh"], doi_tuong: ["gia_dinh"], text: "Diên Niên chính vị, phú quý thọ khang, gia đạo hạnh phúc bền lâu.", giaiphap: "Đặt đôi Uyên Ương đồng để giữ lửa hạnh phúc." },
+        "Càn": { loai: "Cát", diem: 82, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Kim", goc_do_min: 307.5, goc_do_max: 322.5, icon: "star-green", linhvuc: ["tai_loc", "gia_dao"], doi_tuong: ["nam_chu"], text: "Diên Niên đắc cách, ngoại giao thuận lợi, công việc tiến triển tốt đẹp.", giaiphap: "Treo tranh phong thủy cát tường để kích hoạt tài lộc." },
+        "Hợi": { loai: "Bình", diem: 57, cap_do: "Bình Hòa", nhom: "Bình", hanh: "Thủy", goc_do_min: 322.5, goc_do_max: 337.5, icon: "circle-yellow", linhvuc: ["tai_loc"], doi_tuong: ["gia_dinh"], text: "Thế bình hòa, cuộc sống yên ả, ít sóng gió, mọi việc ở mức độ vừa phải.", giaiphap: "Duy trì sự cân bằng, không cần tác động mạnh." }
+    },
+    "Chấn": {
+        "Nhâm": { loai: "Cát", diem: 90, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Mộc", goc_do_min: 337.5, goc_do_max: 352.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Sinh Khí vượng cung, sự nghiệp hanh thông, gia chủ công danh hiển đạt.", giaiphap: "Kích hoạt bằng chậu cây xanh lớn hoặc vật phẩm hành Mộc." },
+        "Tý": { loai: "Cát", diem: 94, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Thủy", goc_do_min: 352.5, goc_do_max: 7.5, icon: "star-green", linhvuc: ["nhan_dinh", "tai_loc"], doi_tuong: ["gia_dinh"], text: "Sinh Khí tối thượng, nhân đinh hưng vượng, con cái thông tuệ, gia vận phát triển.", giaiphap: "Đặt Tháp Văn Xương để củng cố học vấn và sự nghiệp." },
+        "Quý": { loai: "Hung", diem: 35, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Thủy", goc_do_min: 7.5, goc_do_max: 22.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Họa Hại, khí trường dễ bị trì trệ, tài chính cần quản lý chặt chẽ.", giaiphap: "Sử dụng thạch anh đen để hấp thụ sát khí, ổn định gia đạo." },
+        "Sửu": { loai: "Hung", diem: 33, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Thổ", goc_do_min: 22.5, goc_do_max: 37.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, gia đạo dễ phát sinh tranh chấp thị phi, thiếu hòa khí.", giaiphap: "Treo chuông gió kim loại để tiết bớt Thổ khí, thông quan hóa sát." },
+        "Cấn": { loai: "Hung", diem: 29, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Thổ", goc_do_min: 37.5, goc_do_max: 52.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["nam_chu"], text: "Phạm Lục Sát phương vị, tinh thần dễ bất ổn, cần chú trọng nghỉ ngơi.", giaiphap: "Đặt bình nước phong thủy để điều hòa, làm dịu khí trường." },
+        "Dần": { loai: "Hung", diem: 23, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Mộc", goc_do_min: 52.5, goc_do_max: 67.5, icon: "alert-red", linhvuc: ["nhan_dinh"], doi_tuong: ["nam_chu"], text: "Phạm Tuyệt Mệnh hung sát, khí trường xung đột mạnh, cần trấn trạch để bảo toàn tài chính.", giaiphap: "Sử dụng gương Bát Quái gỗ đào để hóa sát, bảo hộ gia chủ." },
+        "Giáp": { loai: "Cát", diem: 81, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Mộc", goc_do_min: 67.5, goc_do_max: 82.5, icon: "star-green", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phục Vị bản cung, gia đạo an yên, khí trường ổn định, thuận lợi an cư.", giaiphap: "Duy trì sự ngăn nắp, giữ không gian hài hòa, tĩnh lặng." },
+        "Mão": { loai: "Cát", diem: 83, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Mộc", goc_do_min: 82.5, goc_do_max: 97.5, icon: "star-green", linhvuc: ["cong_danh"], doi_tuong: ["nam_chu"], text: "Phục Vị chính vị, danh tiếng được củng cố, công việc phát triển bền vững.", giaiphap: "Treo tranh phong thủy cát tường để kích hoạt năng lượng tích cực." },
+        "Ất": { loai: "Cát", diem: 86, cap_do: "Đại Cát", nhom: "Thiên Y", hanh: "Mộc", goc_do_min: 97.5, goc_do_max: 112.5, icon: "star-green", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Thiên Y đắc vị, sức khỏe dồi dào, bệnh tật tiêu trừ, gia đạo an lạc.", giaiphap: "Đặt hồ lô đồng để nạp phúc và dưỡng vượng sức khỏe." },
+        "Thìn": { loai: "Hung", diem: 30, cap_do: "Tiểu Hung", nhom: "Ngũ Quỷ", hanh: "Thổ", goc_do_min: 112.5, goc_do_max: 127.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm Ngũ Quỷ sát vị, cần đề phòng các biến động bất ngờ trong tài chính.", giaiphap: "Treo chuông gió đồng để tiết khí Ngũ Quỷ (Hỏa), chuyển hung thành cát." },
+        "Tốn": { loai: "Cát", diem: 84, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Mộc", goc_do_min: 127.5, goc_do_max: 142.5, icon: "star-green", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Diên Niên vượng khí, gia đình hòa hợp, tình cảm gắn kết bền chặt.", giaiphap: "Đặt đôi Uyên Ương đồng để tăng cường sợi dây liên kết gia đạo." },
+        "Tỵ": { loai: "Cát", diem: 82, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Hỏa", goc_do_min: 142.5, goc_do_max: 157.5, icon: "star-green", linhvuc: ["cong_danh", "tai_loc"], doi_tuong: ["nam_chu"], text: "Diên Niên đắc vị, sự nghiệp thăng tiến, ngoại giao thuận lợi.", giaiphap: "Treo tranh phong thủy về chủ đề thăng tiến, tài lộc." },
+        "Bính": { loai: "Hung", diem: 27, cap_do: "Đại Hung", nhom: "Ngũ Quỷ", hanh: "Hỏa", goc_do_min: 157.5, goc_do_max: 172.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm Ngũ Quỷ đại sát, cần giữ thái độ điềm tĩnh, tránh xung đột và đầu tư mạo hiểm.", giaiphap: "Sử dụng gương Bát Quái và vật phẩm hành Thổ để trấn áp sát khí." },
+        "Ngọ": { loai: "Hung", diem: 25, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Hỏa", goc_do_min: 172.5, goc_do_max: 187.5, icon: "alert-red", linhvuc: ["nhan_dinh"], doi_tuong: ["gia_dinh"], text: "Phạm Tuyệt Mệnh phương vị, khí trường xung khắc, cần đặc biệt thận trọng.", giaiphap: "Sử dụng gương và chuông gió đồng để hóa sát mạnh." },
+        "Đinh": { loai: "Hung", diem: 32, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Hỏa", goc_do_min: 187.5, goc_do_max: 202.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm Họa Hại chi khí, công việc có nhiều trở ngại, cần kiên trì vượt qua.", giaiphap: "Đặt thạch anh đen để trấn định, hóa giải sự bất an của Họa Hại." },
+        "Mùi": { loai: "Hung", diem: 28, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Thổ", goc_do_min: 202.5, goc_do_max: 217.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Phạm Tuyệt Mệnh sát phương, sức khỏe dễ bị suy giảm, cần ưu tiên nghỉ ngơi.", giaiphap: "Trấn trạch bằng gương Bát Quái gỗ đào để bảo hộ năng lượng." },
+        "Khôn": { loai: "Hung", diem: 34, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Thổ", goc_do_min: 217.5, goc_do_max: 232.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm Họa Hại sát vị, công danh có chút trắc trở, cần bình tĩnh xử lý.", giaiphap: "Đặt bình nước hoặc vật phẩm thủy để điều tiết, hóa giải xung sát." },
+        "Thân": { loai: "Hung", diem: 31, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Kim", goc_do_min: 232.5, goc_do_max: 247.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm Lục Sát phương vị, tình cảm dễ gặp hiểu lầm, thiếu sự gắn kết.", giaiphap: "Sử dụng rèm tối màu để làm dịu, ổn định tâm trạng và gia đạo." },
+        "Canh": { loai: "Hung", diem: 23, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Kim", goc_do_min: 247.5, goc_do_max: 262.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm Tuyệt Mệnh hung phương, cần đặc biệt tránh động thổ hoặc thay đổi lớn.", giaiphap: "Trấn trạch bằng gương và Tỳ Hưu để hóa giải sát khí nặng." },
+        "Dậu": { loai: "Hung", diem: 29, cap_do: "Tiểu Hung", nhom: "Ngũ Quỷ", hanh: "Kim", goc_do_min: 262.5, goc_do_max: 277.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Phạm Ngũ Quỷ sát khí, dễ mắc các bệnh vặt, cần chú trọng ăn uống.", giaiphap: "Sử dụng chuông gió đồng để tiết khí, làm dịu sát khí Ngũ Quỷ." },
+        "Tân": { loai: "Hung", diem: 35, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Kim", goc_do_min: 277.5, goc_do_max: 292.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm Họa Hại tai ương, tiền bạc dễ thất thoát, cần quản lý tài chính thông minh.", giaiphap: "Đặt thạch anh trắng để ổn định khí trường và giữ tiền của." },
+        "Tuất": { loai: "Cát", diem: 85, cap_do: "Đại Cát", nhom: "Thiên Y", hanh: "Thổ", goc_do_min: 292.5, goc_do_max: 307.5, icon: "star-green", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Thiên Y đắc vị, quý nhân phù trợ, sức khỏe dồi dào, thân tâm an khang.", giaiphap: "Đặt hồ lô đồng để củng cố sức khỏe và nạp tài vận." },
+        "Càn": { loai: "Cát", diem: 83, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Kim", goc_do_min: 307.5, goc_do_max: 322.5, icon: "star-green", linhvuc: ["tai_loc", "cong_danh"], doi_tuong: ["nam_chu"], text: "Diên Niên đắc cách, tài lộc vượng phát, sự nghiệp rộng mở.", giaiphap: "Treo tranh phong thủy chiêu tài để kích hoạt năng lượng." },
+        "Hợi": { loai: "Bình", diem: 56, cap_do: "Bình Hòa", nhom: "Bình", hanh: "Thủy", goc_do_min: 322.5, goc_do_max: 337.5, icon: "circle-yellow", linhvuc: ["tai_loc"], doi_tuong: ["gia_dinh"], text: "Thế bình hòa, cuộc sống ổn định, ít biến động.", giaiphap: "Giữ không gian cân bằng, không cần can thiệp mạnh." }
+    },
+    "Tốn": {
+        "Nhâm": { loai: "Cát", diem: 89, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Mộc", goc_do_min: 337.5, goc_do_max: 352.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Sinh Khí vượng cung, sự nghiệp hanh thông, gia chủ có bước tiến lớn về tài lộc.", giaiphap: "Kích hoạt bằng cây xanh phong thủy hoặc vật phẩm hành Mộc." },
+        "Tý": { loai: "Cát", diem: 91, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Thủy", goc_do_min: 352.5, goc_do_max: 7.5, icon: "star-green", linhvuc: ["tai_loc", "nhan_dinh"], doi_tuong: ["gia_dinh"], text: "Sinh Khí đắc vị, gia đạo hưng thịnh, điền sản và tài sản bền vững.", giaiphap: "Đặt Tháp Văn Xương để củng cố nền tảng gia vận." },
+        "Quý": { loai: "Hung", diem: 34, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Thủy", goc_do_min: 7.5, goc_do_max: 22.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Họa Hại, cần chú trọng lời ăn tiếng nói để tránh hiểu lầm đáng tiếc.", giaiphap: "Sử dụng thạch anh đen để hóa giải khí trường tiêu cực." },
+        "Sửu": { loai: "Hung", diem: 28, cap_do: "Đại Hung", nhom: "Ngũ Quỷ", hanh: "Thổ", goc_do_min: 22.5, goc_do_max: 37.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm Ngũ Quỷ đại sát, khí trường dễ bất ổn, cần giữ tâm thế bình hòa.", giaiphap: "Sử dụng gương Bát Quái gỗ đào để trấn trạch và bảo hộ gia đình." },
+        "Cấn": { loai: "Hung", diem: 26, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Thổ", goc_do_min: 37.5, goc_do_max: 52.5, icon: "alert-red", linhvuc: ["nhan_dinh"], doi_tuong: ["nam_chu"], text: "Phạm thế Tuyệt Mệnh, năng lượng dễ hao tổn, cần chú trọng sức khỏe nam chủ.", giaiphap: "Kết hợp gương và chuông gió đồng để hóa giải, điều tiết khí trường." },
+        "Dần": { loai: "Hung", diem: 27, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Mộc", goc_do_min: 52.5, goc_do_max: 67.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm thế Tuyệt Mệnh, tài chính cần quản lý chặt chẽ, tránh đầu tư mạo hiểm.", giaiphap: "Treo gương Bát Quái để hóa giải xung sát, giữ vững nguồn lực." },
+        "Giáp": { loai: "Cát", diem: 83, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Mộc", goc_do_min: 67.5, goc_do_max: 82.5, icon: "star-green", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Diên Niên đắc vị, gia đình hòa thuận, sức khỏe và tuổi thọ bền lâu.", giaiphap: "Đặt đôi Uyên Ương đồng để tăng cường sợi dây tình cảm gia đạo." },
+        "Mão": { loai: "Cát", diem: 82, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Mộc", goc_do_min: 82.5, goc_do_max: 97.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Diên Niên chính vị, các mối quan hệ xã giao thuận lợi, công việc suôn sẻ.", giaiphap: "Treo tranh phong thủy cát tường để kích hoạt năng lượng tốt." },
+        "Ất": { loai: "Cát", diem: 92, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Mộc", goc_do_min: 97.5, goc_do_max: 112.5, icon: "star-green", linhvuc: ["tai_loc", "nhan_dinh"], doi_tuong: ["gia_dinh"], text: "Sinh Khí vượng khí, phúc lộc tìm đến nhanh chóng, gia vận hanh thông.", giaiphap: "Trưng bày cây xanh lớn hoặc vật phẩm hành Mộc để đón vượng khí." },
+        "Thìn": { loai: "Cát", diem: 81, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Thổ", goc_do_min: 112.5, goc_do_max: 127.5, icon: "star-green", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phục Vị đắc cách, không gian sống yên bình, gia đình an ninh.", giaiphap: "Duy trì sự ngăn nắp, giữ trạng thái ổn định cho không gian." },
+        "Tốn": { loai: "Cát", diem: 84, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Mộc", goc_do_min: 127.5, goc_do_max: 142.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phục Vị bản cung, nội lực dồi dào, vững chãi trước mọi thử thách.", giaiphap: "Sử dụng vật phẩm phong thủy hành Mộc để củng cố năng lượng bản mệnh." },
+        "Tỵ": { loai: "Cát", diem: 88, cap_do: "Đại Cát", nhom: "Thiên Y", hanh: "Hỏa", goc_do_min: 142.5, goc_do_max: 157.5, icon: "star-green", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Thiên Y đắc vị, sức khỏe dồi dào, tâm trí minh mẫn, an yên trong cuộc sống.", giaiphap: "Đặt hồ lô đồng để nạp phúc, dưỡng khí." },
+        "Bính": { loai: "Hung", diem: 33, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Hỏa", goc_do_min: 157.5, goc_do_max: 172.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm thế Họa Hại, cần cẩn trọng trong chi tiêu và các quyết định tài chính.", giaiphap: "Đặt thạch anh đen để trấn định, hạn chế hao tán." },
+        "Ngọ": { loai: "Hung", diem: 32, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Hỏa", goc_do_min: 172.5, goc_do_max: 187.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, các mối quan hệ cần sự bao dung và thấu hiểu hơn.", giaiphap: "Đặt bình nước phong thủy để điều tiết, hóa giải xung đột." },
+        "Đinh": { loai: "Hung", diem: 30, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Hỏa", goc_do_min: 187.5, goc_do_max: 202.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, gia đạo cần chú trọng sự đoàn kết, tránh những thị phi ngoài ý muốn.", giaiphap: "Sử dụng rèm tối màu để làm dịu và bảo vệ không gian riêng tư." },
+        "Mùi": { loai: "Hung", diem: 29, cap_do: "Tiểu Hung", nhom: "Ngũ Quỷ", hanh: "Thổ", goc_do_min: 202.5, goc_do_max: 217.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm thế Ngũ Quỷ, đề phòng các biến động bất ngờ, cần thận trọng trong giao dịch.", giaiphap: "Treo chuông gió đồng để tiết chế khí Ngũ Quỷ." },
+        "Khôn": { loai: "Hung", diem: 28, cap_do: "Tiểu Hung", nhom: "Ngũ Quỷ", hanh: "Thổ", goc_do_min: 217.5, goc_do_max: 232.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm thế Ngũ Quỷ, tránh những quyết định vội vàng, nên giữ sự điềm tĩnh.", giaiphap: "Sử dụng gương Bát Quái để hóa sát, đẩy lùi vận xui." },
+        "Thân": { loai: "Hung", diem: 31, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Kim", goc_do_min: 232.5, goc_do_max: 247.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, dễ phát sinh tranh chấp kéo dài, nên tìm giải pháp hòa giải.", giaiphap: "Sử dụng rèm cửa dày để trấn an, ổn định trường khí." },
+        "Canh": { loai: "Hung", diem: 24, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Kim", goc_do_min: 247.5, goc_do_max: 262.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["nam_chu"], text: "Phạm Tuyệt Mệnh hung phương, cần ưu tiên sự an toàn và sức khỏe.", giaiphap: "Treo gương Bát Quái để trấn trạch, bảo hộ gia chủ." },
+        "Dậu": { loai: "Hung", diem: 23, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Kim", goc_do_min: 262.5, goc_do_max: 277.5, icon: "alert-red", linhvuc: ["nhan_dinh"], doi_tuong: ["gia_dinh"], text: "Phạm Tuyệt Mệnh hung sát, cần đặc biệt thận trọng với mọi thay đổi lớn.", giaiphap: "Trấn trạch bằng gương và vật phẩm Tỳ Hưu để hóa giải sát khí nặng." },
+        "Tân": { loai: "Hung", diem: 34, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Kim", goc_do_min: 277.5, goc_do_max: 292.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm thế Họa Hại, tiền của dễ bị thất thoát, cần quản lý tài chính chặt chẽ hơn.", giaiphap: "Đặt thạch anh trắng để thu giữ và ổn định tài vận." },
+        "Tuất": { loai: "Cát", diem: 86, cap_do: "Đại Cát", nhom: "Thiên Y", hanh: "Thổ", goc_do_min: 292.5, goc_do_max: 307.5, icon: "star-green", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Thiên Y đắc vị, quý nhân hỗ trợ, mọi việc thuận lợi, sức khỏe dồi dào.", giaiphap: "Đặt hồ lô đồng để nạp tài, củng cố sức khỏe." },
+        "Càn": { loai: "Cát", diem: 87, cap_do: "Đại Cát", nhom: "Thiên Y", hanh: "Kim", goc_do_min: 307.5, goc_do_max: 322.5, icon: "star-green", linhvuc: ["suc_khoe"], doi_tuong: ["nam_chu"], text: "Thiên Y chính vị, cơ thể tráng kiện, tinh thần minh mẫn, phúc lộc dài lâu.", giaiphap: "Đặt thạch anh vàng để kích hoạt năng lượng tích cực." },
+        "Hợi": { loai: "Bình", diem: 55, cap_do: "Bình Hòa", nhom: "Bình", hanh: "Thủy", goc_do_min: 322.5, goc_do_max: 337.5, icon: "circle-yellow", linhvuc: ["tai_loc"], doi_tuong: ["gia_dinh"], text: "Thế bình hòa, mọi sự ở mức ổn định, không có biến động lớn.", giaiphap: "Duy trì sự cân bằng, không gian sống hài hòa." }
+    },
+    "Càn": {
+        "Nhâm": { loai: "Hung", diem: 32, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Thủy", goc_do_min: 337.5, goc_do_max: 352.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, các mối quan hệ dễ phát sinh hiểu lầm, cần chú trọng sự hòa hợp.", giaiphap: "Sử dụng rèm cửa tối màu để trấn an, làm dịu khí trường." },
+        "Tý": { loai: "Hung", diem: 30, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Thủy", goc_do_min: 352.5, goc_do_max: 7.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, gia đạo cần sự minh bạch và chân thành để tránh thị phi.", giaiphap: "Đặt bình nước muối để hấp thụ năng lượng tiêu cực, làm sạch không gian." },
+        "Quý": { loai: "Hung", diem: 31, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Thủy", goc_do_min: 7.5, goc_do_max: 22.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, cần giữ sự tĩnh lặng và tránh những tranh luận không đáng có.", giaiphap: "Treo chuông gió để phân tán và hóa giải khí trường đình trệ." },
+        "Sửu": { loai: "Hung", diem: 35, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Thổ", goc_do_min: 22.5, goc_do_max: 37.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm thế Họa Hại, cần cẩn trọng trong giao tiếp, tránh tranh chấp không đáng có.", giaiphap: "Sử dụng thạch anh đen để trấn định, ổn định tài vận." },
+        "Cấn": { loai: "Cát", diem: 88, cap_do: "Đại Cát", nhom: "Thiên Y", hanh: "Thổ", goc_do_min: 37.5, goc_do_max: 52.5, icon: "star-green", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Thiên Y đắc vị, sức khỏe dồi dào, thân tâm an khang, gia vận cát tường.", giaiphap: "Đặt hồ lô đồng để nạp phúc, dưỡng vượng sức khỏe cho cả gia đình." },
+        "Dần": { loai: "Cát", diem: 86, cap_do: "Đại Cát", nhom: "Thiên Y", hanh: "Mộc", goc_do_min: 52.5, goc_do_max: 67.5, icon: "star-green", linhvuc: ["suc_khoe", "tai_loc"], doi_tuong: ["nam_chu"], text: "Thiên Y chính vị, có quý nhân phù trợ, công việc thuận lợi, tài lộc hanh thông.", giaiphap: "Đặt thạch anh vàng để tăng cường năng lượng may mắn, thu hút tài lộc." },
+        "Giáp": { loai: "Hung", diem: 27, cap_do: "Đại Hung", nhom: "Ngũ Quỷ", hanh: "Mộc", goc_do_min: 67.5, goc_do_max: 82.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm Ngũ Quỷ đại sát, cần giữ thái độ điềm tĩnh, tránh các quyết định nóng vội.", giaiphap: "Sử dụng gương Bát Quái gỗ đào để trấn trạch và hóa giải xung sát." },
+        "Mão": { loai: "Hung", diem: 29, cap_do: "Tiểu Hung", nhom: "Ngũ Quỷ", hanh: "Mộc", goc_do_min: 82.5, goc_do_max: 97.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm Ngũ Quỷ sát vị, cần chú trọng quản lý tài sản, đề phòng mất mát.", giaiphap: "Đặt vật phẩm Tỳ Hưu để chiêu tài và bảo hộ tài sản." },
+        "Ất": { loai: "Hung", diem: 28, cap_do: "Tiểu Hung", nhom: "Ngũ Quỷ", hanh: "Mộc", goc_do_min: 97.5, goc_do_max: 112.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Phạm Ngũ Quỷ khí, sức khỏe cần được chăm sóc kỹ lưỡng, tránh làm việc quá sức.", giaiphap: "Treo chuông gió đồng để tiết chế khí Ngũ Quỷ (Hỏa), cân bằng không gian." },
+        "Thìn": { loai: "Hung", diem: 22, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Thổ", goc_do_min: 112.5, goc_do_max: 127.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["nam_chu"], text: "Phạm Tuyệt Mệnh hung phương, cần đặc biệt thận trọng với mọi thay đổi lớn.", giaiphap: "Trấn trạch mạnh bằng gương Bát Quái để hóa giải sát khí nặng." },
+        "Tốn": { loai: "Hung", diem: 24, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Mộc", goc_do_min: 127.5, goc_do_max: 142.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Phạm Tuyệt Mệnh sát phương, sức khỏe cần ưu tiên hàng đầu.", giaiphap: "Sử dụng gương phong thủy để phản xạ và hóa giải sát khí." },
+        "Tỵ": { loai: "Hung", diem: 23, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Hỏa", goc_do_min: 142.5, goc_do_max: 157.5, icon: "alert-red", linhvuc: ["nhan_dinh"], doi_tuong: ["gia_dinh"], text: "Phạm Tuyệt Mệnh phương vị, khí trường xung khắc, cần sự thận trọng tuyệt đối.", giaiphap: "Kết hợp gương Bát Quái và Tỳ Hưu để trấn trạch, bảo vệ gia đạo." },
+        "Bính": { loai: "Bình", diem: 60, cap_do: "Bình Hòa", nhom: "Bình", hanh: "Hỏa", goc_do_min: 157.5, goc_do_max: 172.5, icon: "circle-yellow", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Thế bình hòa, mọi việc tiến triển ổn định, thuận lợi.", giaiphap: "Duy trì sự cân bằng trong không gian sống." },
+        "Ngọ": { loai: "Bình", diem: 58, cap_do: "Bình Hòa", nhom: "Bình", hanh: "Hỏa", goc_do_min: 172.5, goc_do_max: 187.5, icon: "circle-yellow", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phương vị bình hòa, vận trình hanh thông, không có biến động.", giaiphap: "Giữ ổn định, vun đắp tình cảm gia đình." },
+        "Đinh": { loai: "Cát", diem: 91, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Hỏa", goc_do_min: 187.5, goc_do_max: 202.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Sinh Khí vượng cung, tài lộc dồi dào, sự nghiệp thăng tiến không ngừng.", giaiphap: "Trưng bày cây xanh để kích hoạt vượng khí, thu hút tài lộc." },
+        "Mùi": { loai: "Cát", diem: 93, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Thổ", goc_do_min: 202.5, goc_do_max: 217.5, icon: "star-green", linhvuc: ["nhan_dinh"], doi_tuong: ["gia_dinh"], text: "Sinh Khí tối thượng, nhân đinh hưng vượng, con cái thông tuệ, gia đình hạnh phúc.", giaiphap: "Đặt Tháp Văn Xương để củng cố học vấn và sự phát triển của gia đạo." },
+        "Khôn": { loai: "Cát", diem: 85, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Thổ", goc_do_min: 217.5, goc_do_max: 232.5, icon: "star-green", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Diên Niên vượng khí, tình cảm gắn kết, gia đình an yên, bền chặt.", giaiphap: "Đặt đôi Uyên Ương đồng để bồi đắp sợi dây liên kết tình cảm." },
+        "Thân": { loai: "Cát", diem: 84, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Kim", goc_do_min: 232.5, goc_do_max: 247.5, icon: "star-green", linhvuc: ["cong_danh"], doi_tuong: ["nam_chu"], text: "Diên Niên đắc vị, ngoại giao hanh thông, các mối quan hệ hỗ trợ sự nghiệp.", giaiphap: "Treo tranh phong thủy cát tường để mở rộng cơ hội phát triển." },
+        "Canh": { loai: "Cát", diem: 80, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Kim", goc_do_min: 247.5, goc_do_max: 262.5, icon: "star-green", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phục Vị đắc cách, gia đạo an ninh, cuộc sống ổn định.", giaiphap: "Duy trì sự hài hòa, giữ không gian gọn gàng." },
+        "Dậu": { loai: "Cát", diem: 81, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Kim", goc_do_min: 262.5, goc_do_max: 277.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phục Vị bản cung, củng cố nền tảng sự nghiệp, tài lộc vững chắc.", giaiphap: "Kích hoạt bằng các vật phẩm phong thủy hành Kim." },
+        "Tân": { loai: "Cát", diem: 79, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Kim", goc_do_min: 277.5, goc_do_max: 292.5, icon: "star-green", linhvuc: ["cong_danh"], doi_tuong: ["nam_chu"], text: "Phục Vị vượng vị, công việc vững vàng, danh tiếng được củng cố.", giaiphap: "Đặt vật phẩm phong thủy hành Kim để giữ vững vượng khí." },
+        "Tuất": { loai: "Hung", diem: 36, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Thổ", goc_do_min: 292.5, goc_do_max: 307.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Phạm thế Họa Hại, cần chú trọng đến sức khỏe của người thân trong gia đình.", giaiphap: "Sử dụng thạch anh đen để hóa giải, bảo vệ sức khỏe." },
+        "Càn": { loai: "Hung", diem: 33, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Kim", goc_do_min: 307.5, goc_do_max: 322.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm thế Họa Hại, tài lộc có biến động, cần quản lý chi tiêu chặt chẽ.", giaiphap: "Treo chuông gió để phân tán sát khí, tránh hao tán." },
+        "Hợi": { loai: "Hung", diem: 34, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Thủy", goc_do_min: 322.5, goc_do_max: 337.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm thế Họa Hại, tài chính cần thận trọng, tránh các khoản chi tiêu không cần thiết.", giaiphap: "Đặt thạch anh trắng để thu giữ và ổn định tài vận." }
+    },
+    "Đoài": {
+        "Nhâm": { loai: "Hung", diem: 34, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Thủy", goc_do_min: 337.5, goc_do_max: 352.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Họa Hại, dễ phát sinh thị phi, khẩu thiệt, cần thận trọng ngôn từ.", giaiphap: "Sử dụng thạch anh đen để trấn định, hạn chế năng lượng tiêu cực." },
+        "Tý": { loai: "Hung", diem: 33, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Thủy", goc_do_min: 352.5, goc_do_max: 7.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Phạm thế Họa Hại, khí trường dễ ảnh hưởng sức khỏe người trong gia đạo.", giaiphap: "Đặt bình gốm phong thủy để điều tiết, ổn định trường khí." },
+        "Quý": { loai: "Hung", diem: 32, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Thủy", goc_do_min: 7.5, goc_do_max: 22.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm thế Họa Hại, tiền bạc dễ thất thoát, cần quản lý tài chính chặt chẽ.", giaiphap: "Treo chuông gió để tán sát, giữ vững nguồn tài chính." },
+        "Sửu": { loai: "Cát", diem: 83, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Thổ", goc_do_min: 22.5, goc_do_max: 37.5, icon: "star-green", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Diên Niên đắc vị, gia đình hòa hợp, phúc lộc thọ khang bền vững.", giaiphap: "Đặt đôi Uyên Ương đồng để củng cố sợi dây tình cảm gia đình." },
+        "Cấn": { loai: "Cát", diem: 82, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Thổ", goc_do_min: 37.5, goc_do_max: 52.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Diên Niên chính vị, các mối quan hệ xã giao thuận lợi, công việc suôn sẻ.", giaiphap: "Treo tranh phong thủy cát tường để kích hoạt năng lượng tốt." },
+        "Dần": { loai: "Cát", diem: 84, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Mộc", goc_do_min: 52.5, goc_do_max: 67.5, icon: "star-green", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Diên Niên vượng khí, gia đình yên ấm, không khí sống hài hòa.", giaiphap: "Sử dụng thảm trang trí màu trắng hoặc vật phẩm hành Kim để trợ lực." },
+        "Giáp": { loai: "Hung", diem: 23, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Mộc", goc_do_min: 67.5, goc_do_max: 82.5, icon: "alert-red", linhvuc: ["nhan_dinh"], doi_tuong: ["gia_dinh"], text: "Phạm Tuyệt Mệnh hung phương, khí trường xung sát, cần cực kỳ cẩn trọng.", giaiphap: "Treo gương Bát Quái gỗ đào để trấn trạch, bảo hộ gia đình." },
+        "Mão": { loai: "Hung", diem: 25, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Mộc", goc_do_min: 82.5, goc_do_max: 97.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["nam_chu"], text: "Phạm Tuyệt Mệnh sát phương, năng lượng dễ suy kiệt, cần chú trọng sức khỏe.", giaiphap: "Sử dụng gương phong thủy để hóa giải sát khí." },
+        "Ất": { loai: "Hung", diem: 24, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Mộc", goc_do_min: 97.5, goc_do_max: 112.5, icon: "alert-red", linhvuc: ["nhan_dinh"], doi_tuong: ["gia_dinh"], text: "Phạm Tuyệt Mệnh phương vị, dễ xảy ra bất lợi, cần thận trọng trong mọi quyết định.", giaiphap: "Kết hợp gương và Tỳ Hưu để trấn áp sát khí nặng." },
+        "Thìn": { loai: "Hung", diem: 31, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Thổ", goc_do_min: 112.5, goc_do_max: 127.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, các mối quan hệ tình cảm dễ phát sinh trục trặc, bất đồng.", giaiphap: "Đặt rèm cửa tối màu để làm dịu, trấn an không gian." },
+        "Tốn": { loai: "Hung", diem: 30, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Mộc", goc_do_min: 127.5, goc_do_max: 142.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, gia đạo cần sự minh bạch để tránh tà khí quấy nhiễu.", giaiphap: "Đặt bình nước phong thủy để hóa giải xung đột khí trường." },
+        "Tỵ": { loai: "Hung", diem: 29, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Hỏa", goc_do_min: 142.5, goc_do_max: 157.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, gia đình cần chú trọng sự đoàn kết, tránh những thị phi ngoài ý muốn.", giaiphap: "Treo chuông gió đồng để điều tiết, hóa sát." },
+        "Bính": { loai: "Cát", diem: 80, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Hỏa", goc_do_min: 157.5, goc_do_max: 172.5, icon: "star-green", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phục Vị đắc cách, không gian sống yên bình, gia đình an ninh.", giaiphap: "Duy trì sự ngăn nắp, giữ trạng thái ổn định cho không gian." },
+        "Ngọ": { loai: "Cát", diem: 81, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Hỏa", goc_do_min: 172.5, goc_do_max: 187.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phục Vị bản cung, củng cố nội lực, sự nghiệp vững vàng.", giaiphap: "Kích hoạt bằng vật phẩm hành Hỏa hoặc đỏ để tăng năng lượng." },
+        "Đinh": { loai: "Cát", diem: 79, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Hỏa", goc_do_min: 187.5, goc_do_max: 202.5, icon: "star-green", linhvuc: ["cong_danh"], doi_tuong: ["nam_chu"], text: "Phục Vị vượng vị, công việc tiến triển ổn định, danh tiếng bền vững.", giaiphap: "Đặt vật phẩm hành Kim để cân bằng, hỗ trợ vượng khí." },
+        "Mùi": { loai: "Hung", diem: 28, cap_do: "Đại Hung", nhom: "Ngũ Quỷ", hanh: "Thổ", goc_do_min: 202.5, goc_do_max: 217.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm Ngũ Quỷ đại sát, cần giữ tâm thái điềm tĩnh, tránh gây gổ.", giaiphap: "Treo gương Bát Quái để trấn trạch, đẩy lùi vận xui." },
+        "Khôn": { loai: "Hung", diem: 29, cap_do: "Tiểu Hung", nhom: "Ngũ Quỷ", hanh: "Thổ", goc_do_min: 217.5, goc_do_max: 232.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm Ngũ Quỷ phương, đề phòng biến động bất ngờ, cần thận trọng giao dịch.", giaiphap: "Đặt Tỳ Hưu để trấn áp và thu giữ tài lộc." },
+        "Thân": { loai: "Hung", diem: 30, cap_do: "Tiểu Hung", nhom: "Ngũ Quỷ", hanh: "Kim", goc_do_min: 232.5, goc_do_max: 247.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Phạm thế Ngũ Quỷ, tiểu nhân dễ quấy nhiễu, cần sự tỉnh táo.", giaiphap: "Treo chuông gió đồng để tiết chế khí Ngũ Quỷ." },
+        "Canh": { loai: "Cát", diem: 90, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Kim", goc_do_min: 247.5, goc_do_max: 262.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Sinh Khí vượng cung, sự nghiệp hanh thông, đại phát tài lộc.", giaiphap: "Trưng bày cây xanh để kích hoạt vượng khí, đón may mắn." },
+        "Dậu": { loai: "Cát", diem: 94, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Kim", goc_do_min: 262.5, goc_do_max: 277.5, icon: "star-green", linhvuc: ["nhan_dinh"], doi_tuong: ["gia_dinh"], text: "Sinh Khí tối thượng, nhân đinh hưng vượng, con cái thông tuệ, gia vận cát tường.", giaiphap: "Đặt Tháp Văn Xương để củng cố học vấn và sự hưng thịnh của gia đạo." },
+        "Tân": { loai: "Cát", diem: 89, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Kim", goc_do_min: 277.5, goc_do_max: 292.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Sinh Khí đắc vị, tài sản và điền sản tăng tiến bền vững.", giaiphap: "Trưng bày cây xanh để tăng cường năng lượng sinh sôi." },
+        "Tuất": { loai: "Cát", diem: 87, cap_do: "Đại Cát", nhom: "Thiên Y", hanh: "Thổ", goc_do_min: 292.5, goc_do_max: 307.5, icon: "star-green", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Thiên Y đắc vị, sức khỏe dồi dào, thân tâm an khang.", giaiphap: "Đặt hồ lô đồng để nạp phúc, dưỡng vượng sức khỏe." },
+        "Càn": { loai: "Cát", diem: 86, cap_do: "Đại Cát", nhom: "Thiên Y", hanh: "Kim", goc_do_min: 307.5, goc_do_max: 322.5, icon: "star-green", linhvuc: ["suc_khoe"], doi_tuong: ["nam_chu"], text: "Thiên Y chính vị, mọi việc hanh thông, tai qua nạn khỏi.", giaiphap: "Đặt thạch anh vàng để kích hoạt năng lượng tích cực, may mắn." },
+        "Hợi": { loai: "Bình", diem: 57, cap_do: "Bình Hòa", nhom: "Bình", hanh: "Thủy", goc_do_min: 322.5, goc_do_max: 337.5, icon: "circle-yellow", linhvuc: ["tai_loc"], doi_tuong: ["gia_dinh"], text: "Thế bình hòa, vận trình ổn định, thuận lợi ở mức vừa phải.", giaiphap: "Duy trì sự cân bằng, không cần can thiệp quá mạnh." }
+    },
+    "Cấn": {
+        "Nhâm": { loai: "Hung", diem: 28, cap_do: "Đại Hung", nhom: "Ngũ Quỷ", hanh: "Thủy", goc_do_min: 337.5, goc_do_max: 352.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm Ngũ Quỷ đại sát, gia vận dễ bất ổn, cần chú trọng sự đoàn kết.", giaiphap: "Sử dụng gương Bát Quái gỗ đào để trấn trạch, đẩy lùi sát khí." },
+        "Tý": { loai: "Hung", diem: 29, cap_do: "Tiểu Hung", nhom: "Ngũ Quỷ", hanh: "Thủy", goc_do_min: 352.5, goc_do_max: 7.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm Ngũ Quỷ sát vị, tài lộc dễ thất thoát do tiểu nhân quấy phá.", giaiphap: "Đặt vật phẩm Tỳ Hưu để chiêu tài và bảo hộ tài sản gia chủ." },
+        "Quý": { loai: "Hung", diem: 30, cap_do: "Tiểu Hung", nhom: "Ngũ Quỷ", hanh: "Thủy", goc_do_min: 7.5, goc_do_max: 22.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Phạm Ngũ Quỷ khí, cần giữ tâm thế bình hòa, tránh thị phi ngoài ý muốn.", giaiphap: "Treo chuông gió đồng để tiết chế năng lượng tiêu cực." },
+        "Sửu": { loai: "Cát", diem: 80, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Thổ", goc_do_min: 22.5, goc_do_max: 37.5, icon: "star-green", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phục Vị đắc cách, không gian sống an yên, gia đạo hòa thuận.", giaiphap: "Duy trì sự ngăn nắp, giữ không gian thông thoáng để dưỡng khí." },
+        "Cấn": { loai: "Cát", diem: 82, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Thổ", goc_do_min: 37.5, goc_do_max: 52.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phục Vị bản cung, củng cố nền tảng sự nghiệp, công việc vững vàng.", giaiphap: "Kích hoạt bằng vật phẩm hành Thổ hoặc đá phong thủy." },
+        "Dần": { loai: "Cát", diem: 81, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Mộc", goc_do_min: 52.5, goc_do_max: 67.5, icon: "star-green", linhvuc: ["cong_danh"], doi_tuong: ["nam_chu"], text: "Phục Vị vượng vị, công danh thăng tiến, có quý nhân phù trợ.", giaiphap: "Đặt vật phẩm hành Kim để điều tiết, giữ vững vượng khí." },
+        "Giáp": { loai: "Hung", diem: 32, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Mộc", goc_do_min: 67.5, goc_do_max: 82.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, các mối quan hệ tình cảm dễ phát sinh hiểu lầm.", giaiphap: "Sử dụng rèm cửa tối màu để làm dịu và trấn an không gian." },
+        "Mão": { loai: "Hung", diem: 31, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Mộc", goc_do_min: 82.5, goc_do_max: 97.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, cần sự minh bạch và chân thành trong đời sống gia đạo.", giaiphap: "Đặt bình nước phong thủy để hấp thụ, làm sạch khí trường." },
+        "Ất": { loai: "Hung", diem: 30, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Mộc", goc_do_min: 97.5, goc_do_max: 112.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, dễ bị thị phi quấy nhiễu, nên giữ sự tĩnh lặng.", giaiphap: "Treo chuông gió để phân tán sát khí, giữ sự bình yên." },
+        "Thìn": { loai: "Hung", diem: 35, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Thổ", goc_do_min: 112.5, goc_do_max: 127.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm thế Họa Hại, cần cẩn trọng trong giao tiếp, tránh tranh chấp không đáng có.", giaiphap: "Sử dụng thạch anh đen để trấn định, ổn định tài vận." },
+        "Tốn": { loai: "Hung", diem: 33, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Mộc", goc_do_min: 127.5, goc_do_max: 142.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Phạm thế Họa Hại, sức khỏe cần được chăm sóc kỹ, tránh làm việc quá sức.", giaiphap: "Đặt bình gốm phong thủy để điều tiết, dưỡng vượng khí." },
+        "Tỵ": { loai: "Hung", diem: 32, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Hỏa", goc_do_min: 142.5, goc_do_max: 157.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm thế Họa Hại, tài chính có biến động, cần quản lý chi tiêu.", giaiphap: "Treo chuông gió đồng để tán sát, bảo vệ nguồn tài lộc." },
+        "Bính": { loai: "Hung", diem: 22, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Hỏa", goc_do_min: 157.5, goc_do_max: 172.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["nam_chu"], text: "Phạm Tuyệt Mệnh hung phương, cần đặc biệt thận trọng với sức khỏe và an toàn.", giaiphap: "Trấn trạch bằng gương Bát Quái gỗ đào để hóa giải sát khí nặng." },
+        "Ngọ": { loai: "Hung", diem: 24, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Hỏa", goc_do_min: 172.5, goc_do_max: 187.5, icon: "alert-red", linhvuc: ["nhan_dinh"], doi_tuong: ["gia_dinh"], text: "Phạm Tuyệt Mệnh sát phương, sức khỏe gia chủ cần được ưu tiên hàng đầu.", giaiphap: "Sử dụng gương phong thủy để phản xạ sát khí." },
+        "Đinh": { loai: "Hung", diem: 23, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Hỏa", goc_do_min: 187.5, goc_do_max: 202.5, icon: "alert-red", linhvuc: ["nhan_dinh"], doi_tuong: ["gia_dinh"], text: "Phạm Tuyệt Mệnh phương vị, khí trường xung khắc, cần sự bảo hộ nghiêm ngặt.", giaiphap: "Kết hợp gương và vật phẩm Tỳ Hưu để trấn trạch." },
+        "Mùi": { loai: "Cát", diem: 84, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Thổ", goc_do_min: 202.5, goc_do_max: 217.5, icon: "star-green", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Diên Niên đắc vị, gia đình hòa hợp, phú quý bền vững.", giaiphap: "Đặt đôi Uyên Ương đồng để bồi đắp tình cảm gia đình." },
+        "Khôn": { loai: "Cát", diem: 83, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Thổ", goc_do_min: 217.5, goc_do_max: 232.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Diên Niên chính vị, các mối quan hệ xã giao hỗ trợ sự nghiệp phát triển.", giaiphap: "Treo tranh cát tường để kích hoạt năng lượng may mắn." },
+        "Thân": { loai: "Cát", diem: 85, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Kim", goc_do_min: 232.5, goc_do_max: 247.5, icon: "star-green", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Diên Niên vượng khí, gia đình yên ấm, không khí sống hài hòa.", giaiphap: "Sử dụng thảm trang trí trắng hoặc vật phẩm Kim để trợ lực." },
+        "Canh": { loai: "Cát", diem: 91, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Kim", goc_do_min: 247.5, goc_do_max: 262.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Sinh Khí vượng cung, sự nghiệp hanh thông, đại phát tài lộc.", giaiphap: "Trưng bày cây xanh để kích hoạt vượng khí, đón may mắn." },
+        "Dậu": { loai: "Cát", diem: 94, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Kim", goc_do_min: 262.5, goc_do_max: 277.5, icon: "star-green", linhvuc: ["nhan_dinh"], doi_tuong: ["gia_dinh"], text: "Sinh Khí tối thượng, nhân đinh hưng vượng, con cái thông tuệ, gia vận cát tường.", giaiphap: "Đặt Tháp Văn Xương để củng cố học vấn và sự phát triển." },
+        "Tân": { loai: "Cát", diem: 90, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Kim", goc_do_min: 277.5, goc_do_max: 292.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Sinh Khí đắc vị, tài sản và điền sản tăng tiến bền vững.", giaiphap: "Trưng bày cây xanh để tăng cường năng lượng sinh sôi." },
+        "Tuất": { loai: "Hung", diem: 35, cap_do: "Tiểu Hung", nhom: "Cô Quả", hanh: "Thổ", goc_do_min: 292.5, goc_do_max: 307.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Cô Quả, Tố Tụng, dễ phát sinh tranh chấp trong nội bộ.", giaiphap: "Đặt bình gốm phong thủy để điều hòa, trấn an." },
+        "Càn": { loai: "Cát", diem: 89, cap_do: "Đại Cát", nhom: "Thiên Y", hanh: "Kim", goc_do_min: 307.5, goc_do_max: 322.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Thiên Y đại cát, quý nhân phù trợ, mọi việc hanh thông, tai qua nạn khỏi.", giaiphap: "Đặt thạch anh vàng để kích hoạt năng lượng tích cực, may mắn." },
+        "Hợi": { loai: "Bình", diem: 55, cap_do: "Bình Hòa", nhom: "Bình", hanh: "Thủy", goc_do_min: 322.5, goc_do_max: 337.5, icon: "circle-yellow", linhvuc: ["tai_loc"], doi_tuong: ["gia_dinh"], text: "Thế bình hòa, vận trình ổn định, không có biến động lớn.", giaiphap: "Duy trì sự hài hòa, không gian sống ổn định." }
+    },
+    "Ly": {
+        "Nhâm": { loai: "Hung", diem: 28, cap_do: "Đại Hung", nhom: "Ngũ Quỷ", hanh: "Thủy", goc_do_min: 337.5, goc_do_max: 352.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm Ngũ Quỷ đại sát, gia vận dễ bất ổn, cần chú trọng sự đoàn kết.", giaiphap: "Sử dụng gương Bát Quái gỗ đào để trấn trạch, đẩy lùi sát khí." },
+        "Tý": { loai: "Hung", diem: 29, cap_do: "Tiểu Hung", nhom: "Ngũ Quỷ", hanh: "Thủy", goc_do_min: 352.5, goc_do_max: 7.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm Ngũ Quỷ sát vị, tài lộc dễ thất thoát do tiểu nhân quấy phá.", giaiphap: "Đặt Tỳ Hưu để chiêu tài và bảo hộ tài sản gia chủ." },
+        "Quý": { loai: "Hung", diem: 30, cap_do: "Tiểu Hung", nhom: "Ngũ Quỷ", hanh: "Thủy", goc_do_min: 7.5, goc_do_max: 22.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Phạm Ngũ Quỷ khí, cần giữ tâm thế bình hòa, tránh thị phi ngoài ý muốn.", giaiphap: "Treo chuông gió đồng để tiết chế năng lượng tiêu cực." },
+        "Sửu": { loai: "Hung", diem: 35, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Thổ", goc_do_min: 22.5, goc_do_max: 37.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Họa Hại, dễ phát sinh thị phi, khẩu thiệt, cần thận trọng ngôn từ.", giaiphap: "Sử dụng thạch anh đen để trấn định, hạn chế năng lượng tiêu cực." },
+        "Cấn": { loai: "Hung", diem: 33, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Thổ", goc_do_min: 37.5, goc_do_max: 52.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Phạm thế Họa Hại, khí trường dễ ảnh hưởng sức khỏe người trong gia đạo.", giaiphap: "Đặt bình gốm phong thủy để điều tiết, ổn định trường khí." },
+        "Dần": { loai: "Hung", diem: 32, cap_do: "Tiểu Hung", nhom: "Họa Hại", hanh: "Mộc", goc_do_min: 52.5, goc_do_max: 67.5, icon: "alert-red", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phạm thế Họa Hại, tiền bạc dễ thất thoát, cần quản lý tài chính chặt chẽ.", giaiphap: "Treo chuông gió để tán sát, giữ vững nguồn tài chính." },
+        "Giáp": { loai: "Cát", diem: 91, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Mộc", goc_do_min: 67.5, goc_do_max: 82.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Sinh Khí vượng cung, sự nghiệp hanh thông, đại phát tài lộc.", giaiphap: "Trưng bày cây xanh để kích hoạt vượng khí, đón may mắn." },
+        "Mão": { loai: "Cát", diem: 94, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Mộc", goc_do_min: 82.5, goc_do_max: 97.5, icon: "star-green", linhvuc: ["nhan_dinh"], doi_tuong: ["gia_dinh"], text: "Sinh Khí tối thượng, nhân đinh hưng vượng, con cái thông tuệ, gia vận cát tường.", giaiphap: "Đặt Tháp Văn Xương để củng cố học vấn và sự phát triển." },
+        "Ất": { loai: "Cát", diem: 90, cap_do: "Đại Cát", nhom: "Sinh Khí", hanh: "Mộc", goc_do_min: 97.5, goc_do_max: 112.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Sinh Khí đắc vị, tài sản và điền sản tăng tiến bền vững.", giaiphap: "Trưng bày cây xanh để tăng cường năng lượng sinh sôi." },
+        "Thìn": { loai: "Cát", diem: 87, cap_do: "Đại Cát", nhom: "Thiên Y", hanh: "Thổ", goc_do_min: 112.5, goc_do_max: 127.5, icon: "star-green", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Thiên Y đắc vị, sức khỏe dồi dào, thân tâm an khang.", giaiphap: "Đặt hồ lô đồng để nạp phúc, dưỡng vượng sức khỏe." },
+        "Tốn": { loai: "Cát", diem: 86, cap_do: "Đại Cát", nhom: "Thiên Y", hanh: "Mộc", goc_do_min: 127.5, goc_do_max: 142.5, icon: "star-green", linhvuc: ["suc_khoe"], doi_tuong: ["nam_chu"], text: "Thiên Y chính vị, mọi việc hanh thông, có quý nhân phò trợ.", giaiphap: "Đặt thạch anh vàng để kích hoạt năng lượng tích cực." },
+        "Tỵ": { loai: "Cát", diem: 88, cap_do: "Đại Cát", nhom: "Thiên Y", hanh: "Hỏa", goc_do_min: 142.5, goc_do_max: 157.5, icon: "star-green", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Thiên Y vượng vị, bệnh tật thuyên giảm, gia vận bình an.", giaiphap: "Đặt hồ lô đồng để trấn trạch, dưỡng phúc." },
+        "Bính": { loai: "Cát", diem: 80, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Hỏa", goc_do_min: 157.5, goc_do_max: 172.5, icon: "star-green", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phục Vị đắc cách, không gian sống yên bình, gia đình an ninh.", giaiphap: "Duy trì sự ngăn nắp, giữ trạng thái ổn định cho không gian." },
+        "Ngọ": { loai: "Cát", diem: 81, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Hỏa", goc_do_min: 172.5, goc_do_max: 187.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Phục Vị bản cung, củng cố nội lực, sự nghiệp vững vàng.", giaiphap: "Kích hoạt bằng vật phẩm hành Hỏa hoặc đỏ để tăng năng lượng." },
+        "Đinh": { loai: "Cát", diem: 79, cap_do: "Tiểu Cát", nhom: "Phục Vị", hanh: "Hỏa", goc_do_min: 187.5, goc_do_max: 202.5, icon: "star-green", linhvuc: ["cong_danh"], doi_tuong: ["nam_chu"], text: "Phục Vị vượng vị, công việc tiến triển ổn định, danh tiếng bền vững.", giaiphap: "Đặt vật phẩm hành Kim để cân bằng, hỗ trợ vượng khí." },
+        "Mùi": { loai: "Hung", diem: 32, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Thổ", goc_do_min: 202.5, goc_do_max: 217.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, các mối quan hệ tình cảm dễ phát sinh trục trặc, bất đồng.", giaiphap: "Đặt rèm cửa tối màu để làm dịu, trấn an không gian." },
+        "Khôn": { loai: "Hung", diem: 31, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Thổ", goc_do_min: 217.5, goc_do_max: 232.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, gia đạo cần sự minh bạch để tránh tà khí quấy nhiễu.", giaiphap: "Đặt bình nước phong thủy để hóa giải xung đột khí trường." },
+        "Thân": { loai: "Hung", diem: 30, cap_do: "Tiểu Hung", nhom: "Lục Sát", hanh: "Kim", goc_do_min: 232.5, goc_do_max: 247.5, icon: "alert-red", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Phạm thế Lục Sát, gia đình cần chú trọng sự đoàn kết, tránh thị phi ngoài ý muốn.", giaiphap: "Treo chuông gió đồng để điều tiết, hóa sát." },
+        "Canh": { loai: "Hung", diem: 22, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Kim", goc_do_min: 247.5, goc_do_max: 262.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["nam_chu"], text: "Phạm Tuyệt Mệnh hung phương, khí trường xung sát, cần cực kỳ cẩn trọng.", giaiphap: "Treo gương Bát Quái gỗ đào để trấn trạch, bảo hộ gia đình." },
+        "Dậu": { loai: "Hung", diem: 24, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Kim", goc_do_min: 262.5, goc_do_max: 277.5, icon: "alert-red", linhvuc: ["suc_khoe"], doi_tuong: ["gia_dinh"], text: "Phạm Tuyệt Mệnh sát phương, năng lượng dễ suy kiệt, cần chú trọng sức khỏe.", giaiphap: "Sử dụng gương phong thủy để hóa giải sát khí." },
+        "Tân": { loai: "Hung", diem: 23, cap_do: "Đại Hung", nhom: "Tuyệt Mệnh", hanh: "Kim", goc_do_min: 277.5, goc_do_max: 292.5, icon: "alert-red", linhvuc: ["nhan_dinh"], doi_tuong: ["gia_dinh"], text: "Phạm Tuyệt Mệnh phương vị, dễ xảy ra bất lợi, cần thận trọng trong mọi quyết định.", giaiphap: "Kết hợp gương và Tỳ Hưu để trấn áp sát khí nặng." },
+        "Tuất": { loai: "Cát", diem: 84, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Thổ", goc_do_min: 292.5, goc_do_max: 307.5, icon: "star-green", linhvuc: ["gia_dao"], doi_tuong: ["gia_dinh"], text: "Diên Niên đắc vị, gia đình hòa hợp, phúc lộc thọ khang bền vững.", giaiphap: "Đặt đôi Uyên Ương đồng để củng cố sợi dây tình cảm gia đình." },
+        "Càn": { loai: "Cát", diem: 83, cap_do: "Tiểu Cát", nhom: "Diên Niên", hanh: "Kim", goc_do_min: 307.5, goc_do_max: 322.5, icon: "star-green", linhvuc: ["tai_loc"], doi_tuong: ["nam_chu"], text: "Diên Niên chính vị, các mối quan hệ xã giao thuận lợi, công việc suôn sẻ.", giaiphap: "Treo tranh phong thủy cát tường để kích hoạt năng lượng tốt." },
+        "Hợi": { loai: "Bình", diem: 56, cap_do: "Bình Hòa", nhom: "Bình", hanh: "Thủy", goc_do_min: 322.5, goc_do_max: 337.5, icon: "circle-yellow", linhvuc: ["tai_loc"], doi_tuong: ["gia_dinh"], text: "Thế bình hòa, vận trình ổn định, thuận lợi ở mức vừa phải.", giaiphap: "Duy trì sự cân bằng, không cần can thiệp quá mạnh." }
+    }
+};
+
+// ====================== 72 HẬU LONG MẠCH ĐẦY ĐỦ ( CHUẨN HÓA KEY TĨNH O(1) THEO BƯỚC 5 ĐỘ ) ======================
+const Data72Hau = {
+    // ==================== BẮC (Nhâm - Tý - Quý) ====================
+    "340": { ten: "Nhâm Hậu 1", chatLuong: "Đại Cát", hanh: "Thủy", ynghia: "Khí trường cực vượng, quý nhân tương trợ mạnh mẽ.", diem: 92, giaiphap: "Đặt bình nước sạch hoặc tượng Quan Âm hướng Bắc để tăng vượng khí.", interactionLevel: "Rất Cao", overrideIf: null },
+    "345": { ten: "Nhâm Hậu 2", chatLuong: "Đại Cát", hanh: "Thủy", ynghia: "Gia đạo hưng vượng, con cái thông tuệ, an định lâu dài.", diem: 88, giaiphap: "Treo tranh sơn thủy hoặc đặt thạch anh trắng.", interactionLevel: "Cao", overrideIf: null },
+    "350": { ten: "Nhâm Hậu 3", chatLuong: "Cát", hanh: "Thủy", ynghia: "Tài lộc ổn định, ngoại giao thuận lợi.", diem: 78, giaiphap: "Đặt cây xanh hoặc đồng tiền ngũ đế.", interactionLevel: "Trung bình cao", overrideIf: null },
+    "355": { ten: "Tý Hậu 1", chatLuong: "Đại Cát", hanh: "Thủy", ynghia: "Sinh Khí tối thượng, công danh hiển đạt, vinh hoa phú quý.", diem: 95, giaiphap: "Hướng lý tưởng cho cửa chính hoặc phòng khách.", interactionLevel: "Tối Cao", overrideIf: null },
+    "0":   { ten: "Tý Hậu 2", chatLuong: "Đại Cát", hanh: "Thủy", ynghia: "Tài lộc hanh thông, sự nghiệp phát triển mạnh.", diem: 89, giaiphap: "Đặt ngọc bích hoặc tượng Phúc Lộc.", interactionLevel: "Cao", overrideIf: null },
+    "5":   { ten: "Tý Hậu 3", chatLuong: "Cát", hanh: "Thủy", ynghia: "Nhân đinh hưng thịnh, gia vận vững vàng.", diem: 82, giaiphap: "Giữ sạch sẽ, tránh tích tụ đồ cũ.", interactionLevel: "Trung bình cao", overrideIf: null },
+    "10":  { ten: "Quý Hậu 1", chatLuong: "Tiểu Hung", hanh: "Thủy", ynghia: "Họa Hại nhẹ, dễ ảnh hưởng sức khỏe nữ giới.", diem: 45, giaiphap: "Đặt hồ lô đồng hoặc gương Bát Quái nhỏ.", interactionLevel: "Thấp", overrideIf: "Nếu gặp Ngũ Hoàng → Đại Hung" },
+    "15":  { ten: "Quý Hậu 2", chatLuong: "Tiểu Hung", hanh: "Thủy", ynghia: "Khí trường xung đột, cần tránh tranh cãi.", diem: 42, giaiphap: "Dùng thạch anh khói hoặc chuông gió.", interactionLevel: "Thấp", overrideIf: null },
+    "20":  { ten: "Quý Hậu 3", chatLuong: "Bình", hanh: "Thủy", ynghia: "Trung bình, quản lý tài chính thận trọng.", diem: 58, giaiphap: "Giữ cân bằng, tránh đầu tư lớn.", interactionLevel: "Trung bình", overrideIf: null },
+
+    // ==================== ĐÔNG BẮC (Sửu - Cấn - Dần) ====================
+    "25":  { ten: "Sửu Hậu 1", chatLuong: "Tiểu Hung", hanh: "Thổ", ynghia: "Lục Sát nhẹ, gia đạo dễ có mâu thuẫn.", diem: 48, giaiphap: "Đặt thạch anh hồng hoặc chuông gió.", interactionLevel: "Thấp", overrideIf: "Đại Không Vong → Hung mạnh" },
+    "30":  { ten: "Sửu Hậu 2", chatLuong: "Tiểu Hung", hanh: "Thổ", ynghia: "Tài lộc có thất thoát nhỏ.", diem: 44, giaiphap: "Đặt đồng tiền ngũ đế hoặc bình gốm.", interactionLevel: "Thấp", overrideIf: null },
+    "35":  { ten: "Sửu Hậu 3", chatLuong: "Hung", hanh: "Thổ", ynghia: "Cần hóa giải để tránh tranh chấp.", diem: 38, giaiphap: "Dùng muối biển + gương Bát Quái.", interactionLevel: "Nguy hiểm", overrideIf: null },
+    "40":  { ten: "Cấn Hậu 1", chatLuong: "Đại Hung", hanh: "Thổ", ynghia: "Ngũ Quỷ đại sát, gia chủ tổn tài, tiểu nhân quấy phá.", diem: 18, giaiphap: "Tuyệt đối tránh. Nếu buộc phải dùng thì trấn bằng gương Bát Quái lớn.", interactionLevel: "Rất Nguy Hiểm", overrideIf: "Luôn Đại Hung" },
+    "45":  { ten: "Cấn Hậu 2", chatLuong: "Đại Hung", hanh: "Thổ", ynghia: "Hung khí mạnh, đề phòng hỏa hoạn và tai nạn.", diem: 16, giaiphap: "Không nên chọn hướng này.", interactionLevel: "Rất Nguy Hiểm", overrideIf: null },
+    "50":  { ten: "Cấn Hậu 3", chatLuong: "Đại Hung", hanh: "Thổ", ynghia: "Tuyệt đối tránh động thổ tại vị trí này.", diem: 15, giaiphap: "Tránh làm cửa chính hoặc giường ngủ.", interactionLevel: "Nguy Hiểm Cao", overrideIf: "Đại Không Vong" },
+    "55":  { ten: "Dần Hậu 1", chatLuong: "Tiểu Hung", hanh: "Mộc", ynghia: "Cô Quả nhẹ, nhân đinh khó tụ.", diem: 47, giaiphap: "Đặt Uyên Ương hoặc hồ lô.", interactionLevel: "Thấp", overrideIf: null },
+    "60":  { ten: "Dần Hậu 2", chatLuong: "Tiểu Hung", hanh: "Mộc", ynghia: "Gia đạo cô tịch, khó giữ của.", diem: 43, giaiphap: "Trồng cây xanh và thạch anh hồng.", interactionLevel: "Thấp", overrideIf: null },
+    "65":  { ten: "Dần Hậu 3", chatLuong: "Hung", hanh: "Mộc", ynghia: "Dùng Uyên Ương hoặc hồ lô để nạp phúc.", diem: 39, giaiphap: "Hóa giải bằng vật phẩm hành Thổ.", interactionLevel: "Thấp", overrideIf: null },
+
+    // ==================== ĐÔNG (Giáp - Mão - Ất) ====================
+    "70":  { ten: "Giáp Hậu 1", chatLuong: "Tiểu Cát", hanh: "Mộc", ynghia: "Diên Niên, quý nhân phò trợ, công danh hanh thông.", diem: 72, giaiphap: "Đặt tháp Văn Xương hoặc cây xanh.", interactionLevel: "Trung bình cao", overrideIf: null },
+    "75":  { ten: "Giáp Hậu 2", chatLuong: "Tiểu Cát", hanh: "Mộc", ynghia: "Gia nghiệp bền vững, sự nghiệp tiến triển.", diem: 75, giaiphap: "Treo tranh ngựa hoặc đồng tiền.", interactionLevel: "Trung bình cao", overrideIf: null },
+    "80":  { ten: "Giáp Hậu 3", chatLuong: "Cát", hanh: "Mộc", ynghia: "Ngoại giao thuận lợi.", diem: 68, giaiphap: "Giữ thoáng đãng.", interactionLevel: "Trung bình", overrideIf: null },
+    "85":  { ten: "Mão Hậu 1", chatLuong: "Tiểu Cát", hanh: "Mộc", ynghia: "Diên Niên tiến điền tài, gia sản tăng tiến.", diem: 74, giaiphap: "Đặt thạch anh vàng.", interactionLevel: "Trung bình cao", overrideIf: null },
+    "90":  { ten: "Mão Hậu 2", chatLuong: "Tiểu Cát", hanh: "Mộc", ynghia: "Con cái thành đạt, gia đạo êm ấm.", diem: 76, giaiphap: "Đặt tượng gia tiên hoặc cây xanh.", interactionLevel: "Trung bình cao", overrideIf: null },
+    "95":  { ten: "Mão Hậu 3", chatLuong: "Cát", hanh: "Mộc", ynghia: "Tài lộc vững chắc.", diem: 70, giaiphap: "Bình thường.", interactionLevel: "Trung bình", overrideIf: null },
+    "100": { ten: "Ất Hậu 1", chatLuong: "Tiểu Hung", hanh: "Mộc", ynghia: "Lục Sát thị phi, gia đạo bất hòa.", diem: 46, giaiphap: "Dùng thạch anh đen hoặc bình nước muối.", interactionLevel: "Thấp", overrideIf: null },
+    "105": { ten: "Ất Hậu 2", chatLuong: "Tiểu Hung", hanh: "Mộc", ynghia: "Dễ vướng kiện tụng tranh chấp.", diem: 44, giaiphap: "Hóa giải bằng chuông gió.", interactionLevel: "Thấp", overrideIf: null },
+    "110": { ten: "Ất Hậu 3", chatLuong: "Hung", hanh: "Mộc", ynghia: "Hóa giải bằng thạch anh đen hoặc bình nước muối.", diem: 35, giaiphap: "Tránh dùng cho giường ngủ.", interactionLevel: "Thấp", overrideIf: null },
+
+    // ==================== ĐÔNG NAM (Thìn - Tốn - Tỵ) ====================
+    "115": { ten: "Thìn Hậu 1", chatLuong: "Tiểu Hung", hanh: "Thổ", ynghia: "Họa Hại, gia đạo tranh chấp, khẩu thiệt.", diem: 47, giaiphap: "Dùng rèm tối màu hoặc thạch anh khói.", interactionLevel: "Thấp", overrideIf: null },
+    "120": { ten: "Thìn Hậu 2", chatLuong: "Tiểu Hung", hanh: "Thổ", ynghia: "Dễ vướng thị phi pháp luật.", diem: 43, giaiphap: "Trấn bằng gương Bát Quái.", interactionLevel: "Thấp", overrideIf: null },
+    "125": { ten: "Thìn Hậu 3", chatLuong: "Hung", hanh: "Thổ", ynghia: "Dùng rèm tối màu hoặc thạch anh khói.", diem: 38, giaiphap: "Hóa giải mạnh.", interactionLevel: "Thấp", overrideIf: null },
+    "130": { ten: "Tốn Hậu 1", chatLuong: "Đại Hung", hanh: "Mộc", ynghia: "Tuyệt Mệnh sát phương, sức khỏe tổn hại nghiêm trọng.", diem: 14, giaiphap: "Tuyệt đối tránh.", interactionLevel: "Nguy Hiểm Rất Cao", overrideIf: "Tuyệt Mệnh" },
+    "135": { ten: "Tốn Hậu 2", chatLuong: "Đại Hung", hanh: "Mộc", ynghia: "Cần trấn trạch mạnh.", diem: 16, giaiphap: "Trấn bằng vật phẩm mạnh.", interactionLevel: "Nguy Hiểm Cao", overrideIf: null },
+    "140": { ten: "Tốn Hậu 3", chatLuong: "Hung", hanh: "Mộc", ynghia: "Tránh sử dụng vị trí này cho giường ngủ.", diem: 32, giaiphap: "Hóa giải bằng Thổ.", interactionLevel: "Thấp", overrideIf: null },
+    "145": { ten: "Tỵ Hậu 1", chatLuong: "Tiểu Hung", hanh: "Hỏa", ynghia: "Họa Hại, quan phi khẩu thiệt, làm ăn thất thoát.", diem: 46, giaiphap: "Đặt Tỳ Hưu hoặc gậy Như Ý.", interactionLevel: "Thấp", overrideIf: null },
+    "150": { ten: "Tỵ Hậu 2", chatLuong: "Tiểu Hung", hanh: "Hỏa", ynghia: "Cần cẩn trọng trong kinh doanh.", diem: 44, giaiphap: "Thận trọng.", interactionLevel: "Thấp", overrideIf: null },
+    "155": { ten: "Tỵ Hậu 3", chatLuong: "Hung", hanh: "Hỏa", ynghia: "Đặt Tỳ Hưu hoặc gậy Như Ý.", diem: 37, giaiphap: "Hóa giải.", interactionLevel: "Thấp", overrideIf: null },
+
+    // ==================== NAM (Bính - Ngọ - Đinh) ====================
+    "160": { ten: "Bính Hậu 1", chatLuong: "Đại Cát", hanh: "Hỏa", ynghia: "Thiên Y đắc vị, sức khỏe dồi dào, bệnh tật tiêu trừ.", diem: 93, giaiphap: "Rất tốt cho giường ngủ hoặc phòng làm việc.", interactionLevel: "Rất Cao", overrideIf: null },
+    "165": { ten: "Bính Hậu 2", chatLuong: "Đại Cát", hanh: "Hỏa", ynghia: "Thân tâm an lạc, gia đạo hạnh phúc.", diem: 90, giaiphap: "Đặt hồ lô đồng hoặc thạch anh vàng.", interactionLevel: "Cao", overrideIf: null },
+    "170": { ten: "Bính Hậu 3", chatLuong: "Cát", hanh: "Hỏa", ynghia: "Hồ lô đồng hoặc thạch anh vàng.", diem: 81, giaiphap: "Tốt.", interactionLevel: "Trung bình cao", overrideIf: null },
+    "175": { ten: "Ngọ Hậu 1", chatLuong: "Tiểu Cát", hanh: "Hỏa", ynghia: "Diên Niên chính khí, gia đạo hòa hợp.", diem: 73, giaiphap: "Dùng Uyên Ương hoặc vật phẩm Thổ.", interactionLevel: "Trung bình cao", overrideIf: null },
+    "180": { ten: "Ngọ Hậu 2", chatLuong: "Tiểu Cát", hanh: "Hỏa", ynghia: "Ngoại giao thuận lợi.", diem: 71, giaiphap: "Bình thường.", interactionLevel: "Trung bình", overrideIf: null },
+    "185": { ten: "Ngọ Hậu 3", chatLuong: "Cát", hanh: "Hỏa", ynghia: "Dùng Uyên Ương hoặc vật phẩm Thổ.", diem: 69, giaiphap: "Tốt.", interactionLevel: "Trung bình", overrideIf: null },
+    "190": { ten: "Đinh Hậu 1", chatLuong: "Đại Cát", hanh: "Hỏa", ynghia: "Sinh Khí tối thượng, phát phúc nhanh chóng.", diem: 96, giaiphap: "Hướng lý tưởng cho cửa chính.", interactionLevel: "Tối Cao", overrideIf: null },
+    "195": { ten: "Đinh Hậu 2", chatLuong: "Đại Cát", hanh: "Hỏa", ynghia: "Nhân đinh hưng vượng.", diem: 91, giaiphap: "Cây xanh và Tháp Văn Xương.", interactionLevel: "Cao", overrideIf: null },
+    "200": { ten: "Đinh Hậu 3", chatLuong: "Cát", hanh: "Hỏa", ynghia: "Cây xanh và Tháp Văn Xương.", diem: 83, giaiphap: "Tốt cho con cái.", interactionLevel: "Trung bình cao", overrideIf: null },
+
+    // ==================== TÂY NAM (Mùi - Khôn - Thân) ====================
+    "205": { ten: "Mùi Hậu 1", chatLuong: "Tiểu Hung", hanh: "Thổ", ynghia: "Ngũ Quỷ, tổn thương nhân đinh, huyết quang.", diem: 41, giaiphap: "Chuông gió và thạch anh đen.", interactionLevel: "Thấp", overrideIf: null },
+    "210": { ten: "Mùi Hậu 2", chatLuong: "Tiểu Hung", hanh: "Thổ", ynghia: "Chuông gió và thạch anh đen.", diem: 39, giaiphap: "Hóa giải.", interactionLevel: "Thấp", overrideIf: null },
+    "215": { ten: "Mùi Hậu 3", chatLuong: "Hung", hanh: "Thổ", ynghia: "Tránh vị trí này cho giường ngủ.", diem: 34, giaiphap: "Tránh.", interactionLevel: "Thấp", overrideIf: null },
+    "220": { ten: "Khôn Hậu 1", chatLuong: "Đại Hung", hanh: "Thổ", ynghia: "Tuyệt Mệnh sát khí, tài sản tiêu tán.", diem: 12, giaiphap: "Không nên dùng. Nếu đã lập thì phải hóa giải mạnh bằng gương Bát Quái lớn + muối biển.", interactionLevel: "Nguy Hiểm Rất Cao", overrideIf: "Tuyệt Mệnh + Ngũ Hoàng → Cực Hung" },
+    "225": { ten: "Khôn Hậu 2", chatLuong: "Đại Hung", hanh: "Thổ", ynghia: "Gia đạo ly tán nguy hiểm.", diem: 14, giaiphap: "Trấn mạnh.", interactionLevel: "Nguy Hiểm Rất Cao", overrideIf: null },
+    "230": { ten: "Khôn Hậu 3", chatLuong: "Đại Hung", hanh: "Thổ", ynghia: "Gương Bát Quái và chuông gió.", diem: 13, giaiphap: "Tránh.", interactionLevel: "Nguy Hiểm Cao", overrideIf: null },
+    "235": { ten: "Thân Hậu 1", chatLuong: "Tiểu Hung", hanh: "Kim", ynghia: "Lục Sát, gia đạo bất hòa, vợ chồng xung khắc.", diem: 45, giaiphap: "Bình gốm hành Thổ.", interactionLevel: "Thấp", overrideIf: null },
+    "240": { ten: "Thân Hậu 2", chatLuong: "Tiểu Hung", hanh: "Kim", ynghia: "Cô Thần, cần hóa giải.", diem: 43, giaiphap: "Hóa giải.", interactionLevel: "Thấp", overrideIf: null },
+    "245": { ten: "Thân Hậu 3", chatLuong: "Hung", hanh: "Kim", ynghia: "Bình gốm hành Thổ.", diem: 36, giaiphap: "Hóa giải.", interactionLevel: "Thấp", overrideIf: null },
+
+    // ==================== TÂY (Canh - Dậu - Tân) ====================
+    "250": { ten: "Canh Hậu 1", chatLuong: "Tiểu Cát", hanh: "Kim", ynghia: "Diên Niên, kinh doanh phát đạt.", diem: 71, giaiphap: "Vật phẩm hành Kim.", interactionLevel: "Trung bình cao", overrideIf: null },
+    "255": { ten: "Canh Hậu 2", chatLuong: "Tiểu Cát", hanh: "Kim", ynghia: "Sự nghiệp hưng thịnh.", diem: 73, giaiphap: "Tốt cho kinh doanh.", interactionLevel: "Trung bình cao", overrideIf: null },
+    "260": { ten: "Canh Hậu 3", chatLuong: "Cát", hanh: "Kim", ynghia: "Vật phẩm hành Kim.", diem: 69, giaiphap: "Bình thường.", interactionLevel: "Trung bình", overrideIf: null },
+    "265": { ten: "Dậu Hậu 1", chatLuong: "Tiểu Cát", hanh: "Kim", ynghia: "Phục Vị, quý nhân phù trợ.", diem: 74, giaiphap: "Tranh Phúc Lộc hoặc Quan Công.", interactionLevel: "Trung bình cao", overrideIf: null },
+    "270": { ten: "Dậu Hậu 2", chatLuong: "Tiểu Cát", hanh: "Kim", ynghia: "Công danh vững vàng.", diem: 72, giaiphap: "Tốt.", interactionLevel: "Trung bình cao", overrideIf: null },
+    "275": { ten: "Dậu Hậu 3", chatLuong: "Cát", hanh: "Kim", ynghia: "Tranh Phúc Lộc hoặc Quan Công.", diem: 70, giaiphap: "Tốt.", interactionLevel: "Trung bình", overrideIf: null },
+    "280": { ten: "Tân Hậu 1", chatLuong: "Tiểu Hung", hanh: "Kim", ynghia: "Họa Hại, tiền bạc thất thường.", diem: 48, giaiphap: "Thạch anh trắng hoặc gậy Như Ý.", interactionLevel: "Thấp", overrideIf: null },
+    "285": { ten: "Tân Hậu 2", chatLuong: "Tiểu Hung", hanh: "Kim", ynghia: "Cẩn trọng đầu tư.", diem: 46, giaiphap: "Thận trọng.", interactionLevel: "Thấp", overrideIf: null },
+    "290": { ten: "Tân Hậu 3", chatLuong: "Hung", hanh: "Kim", ynghia: "Thạch anh trắng hoặc gậy Như Ý.", diem: 37, giaiphap: "Hóa giải.", interactionLevel: "Thấp", overrideIf: null },
+
+    // ==================== TÂY BẮC (Tuất - Càn - Hợi) ====================
+    "295": { ten: "Tuất Hậu 1", chatLuong: "Tiểu Hung", hanh: "Thổ", ynghia: "Lục Sát, trộm cắp hao tài.", diem: 47, giaiphap: "Chuỗi tiền Ngũ Đế và thạch anh đen.", interactionLevel: "Thấp", overrideIf: null },
+    "300": { ten: "Tuất Hậu 2", chatLuong: "Tiểu Hung", hanh: "Thổ", ynghia: "Gia đạo bất an.", diem: 45, giaiphap: "Hóa giải.", interactionLevel: "Thấp", overrideIf: null },
+    "305": { ten: "Tuất Hậu 3", chatLuong: "Hung", hanh: "Thổ", ynghia: "Chuỗi tiền Ngũ Đế và thạch anh đen.", diem: 36, giaiphap: "Trấn.", interactionLevel: "Thấp", overrideIf: null },
+    "310": { ten: "Càn Hậu 1", chatLuong: "Tiểu Hung", hanh: "Kim", ynghia: "Lục Sát, tình duyên trục trặc.", diem: 49, giaiphap: "Rèm tối màu và bình nước.", interactionLevel: "Thấp", overrideIf: null },
+    "315": { ten: "Càn Hậu 2", chatLuong: "Tiểu Hung", hanh: "Kim", ynghia: "Hao tổn tâm trí.", diem: 47, giaiphap: "Hóa giải.", interactionLevel: "Thấp", overrideIf: null },
+    "320": { ten: "Càn Hậu 3", chatLuong: "Hung", hanh: "Kim", ynghia: "Rèm tối màu và bình nước.", diem: 38, giaiphap: "Hóa giải.", interactionLevel: "Thấp", overrideIf: null },
+    "325": { ten: "Hợi Hậu 1", chatLuong: "Bình", hanh: "Thủy", ynghia: "Thế bình hòa, tài lộc trung bình.", diem: 62, giaiphap: "Giữ cân bằng.", interactionLevel: "Trung bình", overrideIf: null },
+    "330": { ten: "Hợi Hậu 2", chatLuong: "Bình", hanh: "Thủy", ynghia: "Quản lý tài chính thận trọng.", diem: 60, giaiphap: "Thận trọng.", interactionLevel: "Trung bình", overrideIf: null },
+    "335": { ten: "Hợi Hậu 3", chatLuong: "Bình", hanh: "Thủy", ynghia: "Giữ cân bằng, tránh thay đổi lớn.", diem: 59, giaiphap: "Cân bằng.", interactionLevel: "Trung bình", overrideIf: null }
+};
+
+// =========================================================================
+// ⏱️ 1. HỆ THỐNG KIỂM SOÁT THỜI GIAN & TIẾT KHÍ TỰ ĐỘNG KHÁCH QUAN
+// =========================================================================
+function layNamKhaoSatThienVan() {
+    const bayGio = new Date();
+    const d = bayGio.getDate();
+    const m = bayGio.getMonth() + 1; // Month trong JS chạy từ 0-11
+    const y = bayGio.getFullYear();
+
+    // Thuật toán chốt chặn mốc Lập Xuân phương Đông (Xấp xỉ ngày 4 tháng 2 Dương lịch)
+    if (m < 2 || (m === 2 && d < 4)) {
+        return y - 1;
+    }
+    return y;
+}
+
+function tínhCungPhi(năm, tháng, ngày, giớiTính) {
+    // Ép toàn bộ về kiểu số để tránh bẫy ký tự của JS
+    const y = Number(năm), m = Number(tháng), d = Number(ngày);
+    
+    // Thuật toán Lập Xuân chuẩn ngày 4 tháng 2
+    const namTinh = (m < 2 || (m === 2 && d < 4)) ? y - 1 : y;
+    
+    let sốDư = namTinh % 9;
+    if (sốDư === 0) sốDư = 9;
+    
+    // Chuẩn hóa giới tính để nhận diện cả nút bấm tùy biến lẫn chữ thường
+    const isMale = (giớiTính === 'male' || giớiTính === 'nam');
+    let kếtQuả = isMale ? (11 - sốDư) % 9 : (sốDư + 4) % 9;
+    if (kếtQuả === 0) kếtQuả = 9;
+    
+    // Biện chứng Trung Cung (Cung số 5)
+    if (kếtQuả === 5) {
+        kếtQuả = isMale ? 2 : 8; 
+    }
+    
+    const mapCung = { 1: 'Khảm', 2: 'Khôn', 3: 'Chấn', 4: 'Tốn', 6: 'Càn', 7: 'Đoài', 8: 'Cấn', 9: 'Ly' };
+    return mapCung[kếtQuả] || "Khảm";
+}
+
+/**
+ * [ID: SAT-NGUHOANG-01] Hàm getNguHoangInfo
+ * ĐÃ SỬA: Thuật toán Cửu Tinh chính tông thế kỷ 21, định vị chuẩn xác sao Nhập Trung Cung 
+ * và phương vị bị phạm Ngũ Hoàng Đại Sát theo từng niên độ.
+ */
+function getNguHoangInfo(year) {
+    const namTinhVan = (year && !isNaN(year)) ? parseInt(year, 10) : layNamKhaoSatThienVan();
+    
+    // Thuật toán tìm sao chủ quản nhập Trung Cung chuẩn xác cho thế kỷ 21
+    let saoNienDai = (11 - (namTinhVan % 9)) % 9;
+    if (saoNienDai === 0) saoNienDai = 9;
+    
+    // Ma trận định vị phương vị đóng cung của Ngũ Hoàng (Sao số 5) dựa theo sao chủ quản Trung Cung
+    const mapCenterToNguHoangPos = {
+        1: "S",          // Năm sao số 1 nhập trung cung (như 2026) -> Ngũ Hoàng bay về phương Nam
+        2: "NE",         // Năm sao số 2 nhập trung cung (như 2025) -> Ngũ Hoàng bay về Đông Bắc
+        3: "W",          // Năm sao số 3 nhập trung cung (như 2024) -> Ngũ Hoàng bay về phương Tây
+        4: "NW",         // Ngũ Hoàng ở Tây Bắc
+        5: "TrungCung",  // Ngũ Hoàng độc chiếm Trung Cung
+        6: "SE",         // Ngũ Hoàng ở Đông Nam
+        7: "E",          // Ngũ Hoàng ở Chính Đông
+        8: "SW",         // Ngũ Hoàng ở Tây Nam
+        9: "N"           // Ngũ Hoàng ở Chính Bắc
+    };
+    
+    const mapTenTiengViet = { 
+        "N": "Chính Bắc", "NE": "Đông Bắc", "E": "Chính Đông", "SE": "Đông Nam", 
+        "S": "Chính Nam", "SW": "Tây Nam", "W": "Chính Tây", "NW": "Tây Bắc", "TrungCung": "Trung Cung" 
+    };
+    
+    const codeNguHoang = mapCenterToNguHoangPos[saoNienDai] || "TrungCung";
+    const viTriNguHoangNamDo = mapTenTiengViet[codeNguHoang] || "Trung Cung";
+
+    const info = {
+        1: "Nhất Bạch Tham Lang (Thủy) — Cát Tinh: Vượng trí tuệ, tài lộc phát đạt, tiến chức.",
+        2: "Nhị Hắc Cự Môn (Thổ) — Hung Tinh suy yếu: Khí trường bệnh tật giảm, xu hướng cát hóa.",
+        3: "Tam Bích Lộc Tồn (Mộc) — Hung Tinh: Phát sinh thị phi, tranh chấp lời nói, quan phi hình hại.",
+        4: "Tứ Lục Văn Khúc (Mộc) — Cát Tinh: Vượng đường văn xương, học hành hanh thông.",
+        5: "Ngũ Hoàng Liêm Trinh (Thổ) — Đại Hung: Sát khí tối thượng, tai họa vô thường, kỵ động thổ.",
+        6: "Lục Bạch Vũ Khúc (Kim) — Cát Tinh: Vượng quyền lực, quý nhân đại trợ.",
+        7: "Thất Xích Phá Quân (Kim) — Hung Tinh: Hao tổn tài sản, đề phòng trộm cướp.",
+        8: "Bát Bạch Tả Phù (Thổ) — Bình Hòa Vận 9: Khí trường tích lũy tài lộc ổn định, an lành.",
+        9: "Cửu Tử Hữu Bật (Hỏa) — ĐƯƠNG VƯỢNG TỐI THƯỢNG ĐẠI CÁT TINH VẬN 9: Đương vận tôn quý tối thượng, sinh khí dồi dào."
+    };
+
+    return `Niên độ Vận 9 [Năm ${namTinhVan}]: Sao Chủ Quản Đại Cục Số ${saoNienDai} [${info[saoNienDai]}] | Phương Vị Phạm Ngũ Hoàng Sát: ${viTriNguHoangNamDo}`;
+}
+
+/**
+ * [ID: SAT-NGUHOANG-02] Hàm getNguHoangAlert
+ * ĐÃ SỬA: Đồng bộ hóa hoàn toàn trục tính toán với lõi thiên văn để cảnh báo đập phá thời gian thực chuẩn xác.
+ */
+function getNguHoangAlert(currentHuong) {
+    if (!currentHuong) return "";
+    const namTinhVan = layNamKhaoSatThienVan(); 
+    
+    let saoNienDai = (11 - (namTinhVan % 9)) % 9;
+    if (saoNienDai === 0) saoNienDai = 9;
+    
+    const mapCenterToNguHoangPos = {
+        1: "S", 2: "NE", 3: "W", 4: "NW", 5: "TrungCung", 6: "SE", 7: "E", 8: "SW", 9: "N"
+    };
+    
+    const codeNguHoang = mapCenterToNguHoangPos[saoNienDai] || "TrungCung";
+    const mapChuoiSangCode = {
+        "bắc": "N", "chính bắc": "N", "đông bắc": "NE", "đông": "E", "chính đông": "E",
+        "đông nam": "SE", "nam": "S", "chính nam": "S", "tây nam": "SW", "tây": "W",
+        "chính tây": "W", "tây bắc": "NW", "trung cung": "TrungCung", "tâm trạch": "TrungCung"
+    };
+
+    const inputCode = mapChuoiSangCode[currentHuong.trim().toLowerCase()] || "";
+    if (!inputCode || inputCode !== codeNguHoang) return "";
+
+    if (inputCode === "TrungCung") {
+        return `⚠️ [LƯU NIÊN CHIẾU CỤC]: Niên độ thiên văn ${namTinhVan} Ngũ Hoàng nhập Trung Cung. Giữ tâm nhà tĩnh lặng, tránh cải tạo lớn tại không gian cốt lõi này.`;
+    }
+    return `⚠️ [THIÊN THỜI PHẠM SÁT]: Phương vị ${currentHuong.toUpperCase()} trong năm ${namTinhVan} phạm NGŨ HOÀNG LIÊM TRINH ĐẠI SÁT. Tuyệt đối bất khả động thổ đập phá kết cấu nền móng để tránh kích động hung khí nguy hiểm.`;
+}
+
+/**
+ * [ID: SAT-CUUTINH-01] Hàm tinhHanCuuTinhTheoNam
+ * ĐÃ SỬA: Thay thế công thức rác cũ bằng trục toán học Cửu Tinh đồng bộ, 
+ * giúp tính toán chính xác tuyệt đối cung phi tinh đáo phương vị của từng Sơn vi phân.
+ */
+function tinhHanCuuTinhTheoNam(inputDoSoHoacSon, namHienTai) {
+    const nam = namHienTai ? parseInt(namHienTai, 10) : layNamKhaoSatThienVan();
+    
+    if (inputDoSoHoacSon === undefined || inputDoSoHoacSon === null) {
+        return { thongTinSao: "Chưa trích xuất được tọa độ trắc địa", meoGiaiHan: "" };
+    }
+
+    let sonName = (typeof inputDoSoHoacSon === 'number') 
+        ? (typeof dịchĐộSốThànhTênSơn === 'function' ? dịchĐộSốThànhTênSơn(inputDoSoHoacSon) : "Tý") 
+        : inputDoSoHoacSon.trim();
+        
+    const thongTinSonViLoi = (typeof DATA_THANSAT !== 'undefined' && DATA_THANSAT.MA_TRAN_24_SON_VI[sonName]) 
+        ? DATA_THANSAT.MA_TRAN_24_SON_VI[sonName] 
+        : null;
+    
+    if (!thongTinSonViLoi) {
+        return { thongTinSao: `Tọa độ Sơn ${sonName} nằm ngoài hệ thống phân tích.`, meoGiaiHan: "" };
+    }
+    
+    const codeHuongDaiCuc = thongTinSonViLoi.huongDaiCuc;
+    let warnings = [];
+    
+    // Quét Thần Sát động niên hạn đồng trục năm khảo sát thực tế
+    const listSátTinhThựcThời = getPhongThuySatTinh(sonName, nam);
+    listSátTinhThựcThời.forEach(sat => {
+        warnings.push(`[${sat.ten}]: ${sat.level} giáng lâm phương vị.`);
+    });
+
+    // Ép trục toán học Cửu Tinh niên đại đồng bộ
+    let saoNienDai = (11 - (nam % 9)) % 9;
+    if (saoNienDai === 0) saoNienDai = 9;
+    
+    // Chuẩn hóa vị trí cung phi tinh để bắt đường bay Lượng Thiên Xích chuẩn xác
+    const huongToPositionMap = { "N": 1, "SW": 2, "E": 3, "SE": 4, "TrungCung": 5, "Trung Cung": 5, "NW": 6, "W": 7, "NE": 8, "S": 9 };
+    let pos = huongToPositionMap[codeHuongDaiCuc] || 5;
+    
+    // Thuật toán phi tinh xuôi dòng thời gian thực
+    let saoDaoPhuong = (saoNienDai + (pos - 5) + 9) % 9;
+    if (saoDaoPhuong === 0) saoDaoPhuong = 9;
+
+    const danhGiaSaoMap = {
+        1: { ten: "Nhất Bạch Tham Lang (Tiến Khí Cát Tinh - Thủy)", hung: false, giaiPhap: "Đắc lộc công danh, vinh hiển trí tuệ. Giữ phương vị thông thoáng đón cát khí." },
+        2: { ten: "Nhị Hắc Bệnh Phù (Cự Môn - Chuyển mình Tiến Khí)", hung: false, giaiPhap: "Năng lượng hung tinh bắt buộc suy giảm, có xu hướng cát hóa sự nghiệp. Phối hợp đặt hồ lô nhỏ để lọc tạp khí." },
+        3: { ten: "Tam Bích Lộc Tồn (Tử Khí Sát Tinh - Mộc)", hung: true, giaiPhap: "Dễ kích hoạt mâu thuẫn, tiểu nhân. Tránh đặt thiết bị phát âm thanh động tại góc này." },
+        4: { ten: "Tứ Lục Văn Xương (Sát Tinh suy khí - Mộc)", hung: true, giaiPhap: "Dễ sinh tư duy trì trệ. Nên bài trí Tháp Văn Xương gỗ chín tầng để thúc vượng văn phong." },
+        5: { ten: "Ngũ Hoàng Đại Sát (Chính Quan Sát - Mậu Kỷ Đại Hung Tinh)", hung: true, giaiPhap: "Đại độc hung tinh. Tuyệt đối cấm động thổ đập phá. Treo chuông gió đồng 6 thanh để giải sát." },
+        6: { ten: "Lục Bạch Vũ Khúc (Cát Tinh thiên lộc - Kim)", hung: false, giaiPhap: "Quý nhân trợ lực, thiên tài hanh thông. Bố trí vật phẩm gốm sứ hành Thổ để sinh Kim." },
+        7: { ten: "Thất Xích Phá Quân (Hưu Tù Sát Tinh - Kim)", hung: true, giaiPhap: "Hao tổn tài lộc, họa tai ương. Đặt bình thủy tinh chứa nước an nhẫn (nước muối) tiêu trừ sát khí." },
+        8: { ten: "Bát Bạch Tả Phù (Thoái Khí Vận 9 - Thổ)", hung: false, giaiPhap: "Trạng thái bình hòa, ổn định tài lộc cũ, an lành." },
+        9: { ten: "Cửu Tử Hữu Bật (ĐƯƠNG VƯỢNG TỐI THƯỢNG ĐẠI CÁT TINH VẬN 9)", hung: false, giaiPhap: "Tối thượng cát tinh nắm giữ sinh mệnh. Bố trí đèn sáng, trải thảm đỏ để nghênh phú quý." }
+    };
+
+    const thongTinSaoHienTai = danhGiaSaoMap[saoDaoPhuong];
+    if (thongTinSaoHienTai.hung && !warnings.some(w => w.includes("Phi Tinh"))) {
+        warnings.push(`[Lưu Niên Phi Tinh]: Phương vị gặp phải sát khí của ${thongTinSaoHienTai.ten}.`);
+    }
+
+    if (warnings.length === 0) {
+        return {
+            thongTinSao: `✅ Niên độ ${nam}: Sơn vị ${sonName} (Hướng lớn ${codeHuongDaiCuc}) Đạt Trạng Thái Bình Hòa Cát Lành. Phương vị đón nhận sinh khí của ngôi sao cát: ${thongTinSaoHienTai.ten}.`,
+            meoGiaiHan: `💡 Bố trí trạch pháp Vận 9: ${thongTinSaoHienTai.giaiPhap}`
+        };
+    }
+
+    return {
+        thongTinSao: `⚠️ CẢNH BÁO NIÊN HẠN NĂM ${nam}: Khu vực tọa độ Sơn ${sonName} phạm phải cấu trúc khí trường xấu:<br>• ${warnings.join("<br>• ")}`,
+        meoGiaiHan: `💡 Mật pháp điều tiết đồng bộ: Tránh tuyệt đối việc đập phá, động thổ tại góc độ phân châm này. Áp dụng giải pháp: ${thongTinSaoHienTai.giaiPhap}`
+    };
+}
+
+function getHanhByHeading(heading) {
+    if (heading === null || heading === undefined) return "Chưa xác định";
+    const normalized = ((heading % 360) + 360) % 360;
+    
+    const sonObj = SON_24_CONFIG.find(s => {
+        if (s.min > s.max) return normalized >= s.min || normalized < s.max;
+        return normalized >= s.min && normalized < s.max;
+    }) || SON_24_CONFIG[0];
+    
+    const thongTinLoi = DATA_THANSAT.MA_TRAN_24_SON_VI[sonObj.name];
+    const mapNguHanhViet = { "Thuy": "Thủy", "Moc": "Mộc", "Hoa": "Hỏa", "Tho": "Thổ", "Kim": "Kim" };
+    return thongTinLoi ? (mapNguHanhViet[thongTinLoi.nguHanh] || "Thổ") : "Thổ";
+}
+// ====================== GLOBAL ELEMENTS ======================
+const compass = document.getElementById('compass');
+const needle = document.getElementById('needle');
+const ghostNeedle = document.getElementById('ghostNeedle');
+const degreeTxt = document.getElementById('degree-txt');
+const elementBox = document.getElementById('element-box');
+const fateTxt = document.getElementById('fate-txt');
+const judgmentBox = document.getElementById('judgment-box');
+const detailBox = document.getElementById('detail-box');
+const compassSlider = document.getElementById('compassSlider');
+const permBtn = document.getElementById('permission-btn');
+const directionsContainer = document.getElementById('directions-container');
+const listPanelTitle = document.getElementById('list-panel-title');
+const sonRing = document.getElementById('sonRing');
+const savedContainer = document.getElementById('savedContainer');
+const savedPanel = document.getElementById('savedPanel');
+
+// =========================================================================
+// 🧭 THIẾT LẬP HỆ THỐNG DỮ LIỆU GỐC ĐỒNG BỘ 100% (MỘT NGUỒN SỰ THẬT)
+// =========================================================================
+
+const SON_24_CONFIG = [
+    { name: "Tý", min: 352.5, max: 7.5, huong: "Bắc" },
+    { name: "Quý", min: 7.5, max: 22.5, huong: "Bắc" },
+    { name: "Sửu", min: 22.5, max: 37.5, huong: "Đông Bắc" },
+    { name: "Cấn", min: 37.5, max: 52.5, huong: "Đông Bắc" },
+    { name: "Dần", min: 52.5, max: 67.5, huong: "Đông Bắc" },
+    { name: "Giáp", min: 67.5, max: 82.5, huong: "Đông" },
+    { name: "Mão", min: 82.5, max: 97.5, huong: "Đông" },
+    { name: "Ất", min: 97.5, max: 112.5, huong: "Đông" },
+    { name: "Thìn", min: 112.5, max: 127.5, huong: "Đông Nam" },
+    { name: "Tốn", min: 127.5, max: 142.5, huong: "Đông Nam" },
+    { name: "Tỵ", min: 142.5, max: 157.5, huong: "Đông Nam" },
+    { name: "Bính", min: 157.5, max: 172.5, huong: "Nam" },
+    { name: "Ngọ", min: 172.5, max: 187.5, huong: "Nam" },
+    { name: "Đinh", min: 187.5, max: 202.5, huong: "Nam" },
+    { name: "Mùi", min: 202.5, max: 217.5, huong: "Tây Nam" },
+    { name: "Khôn", min: 217.5, max: 232.5, huong: "Tây Nam" },
+    { name: "Thân", min: 232.5, max: 247.5, huong: "Tây Nam" },
+    { name: "Canh", min: 247.5, max: 262.5, huong: "Tây" },
+    { name: "Dậu", min: 262.5, max: 277.5, huong: "Tây" },
+    { name: "Tân", min: 277.5, max: 292.5, huong: "Tây" },
+    { name: "Tuất", min: 292.5, max: 307.5, huong: "Tây Bắc" },
+    { name: "Càn", min: 307.5, max: 322.5, huong: "Tây Bắc" },
+    { name: "Hợi", min: 322.5, max: 337.5, huong: "Tây Bắc" },
+    { name: "Nhâm", min: 337.5, max: 352.5, huong: "Bắc" }
+];
+
+const bátTrạchMap = {
+    'Khảm': { 'N': 'Phục Vị', 'NE': 'Ngũ Quỷ', 'E': 'Thiên Y', 'SE': 'Sinh Khí', 'S': 'Diên Niên', 'SW': 'Tuyệt Mệnh', 'W': 'Họa Hại', 'NW': 'Lục Sát', 'group': 'Đông Tứ Mệnh', 'element': 'Thủy' },
+    'Ly':   { 'N': 'Diên Niên', 'NE': 'Họa Hại', 'E': 'Sinh Khí', 'SE': 'Thiên Y', 'S': 'Phục Vị', 'SW': 'Lục Sát', 'W': 'Ngũ Quỷ', 'NW': 'Tuyệt Mệnh', 'group': 'Đông Tứ Mệnh', 'element': 'Hỏa' },
+    'Chấn': { 'N': 'Thiên Y', 'NE': 'Lục Sát', 'E': 'Phục Vị', 'SE': 'Diên Niên', 'S': 'Sinh Khí', 'SW': 'Họa Hại', 'W': 'Tuyệt Mệnh', 'NW': 'Ngũ Quỷ', 'group': 'Đông Tứ Mệnh', 'element': 'Mộc' },
+    'Tốn':  { 'N': 'Sinh Khí', 'NE': 'Tuyệt Mệnh', 'E': 'Diên Niên', 'SE': 'Phục Vị', 'S': 'Thiên Y', 'SW': 'Ngũ Quỷ', 'W': 'Lục Sát', 'NW': 'Họa Hại', 'group': 'Đông Tứ Mệnh', 'element': 'Mộc' },
+    'Càn':  { 'N': 'Lục Sát', 'NE': 'Thiên Y', 'E': 'Ngũ Quỷ', 'SE': 'Họa Hại', 'S': 'Tuyệt Mệnh', 'SW': 'Diên Niên', 'W': 'Sinh Khí', 'NW': 'Phục Vị', 'group': 'Tây Tứ Mệnh', 'element': 'Kim' },
+    'Khôn': { 'N': 'Tuyệt Mệnh', 'NE': 'Sinh Khí', 'E': 'Họa Hại', 'SE': 'Ngũ Quỷ', 'S': 'Lục Sát', 'SW': 'Phục Vị', 'W': 'Thiên Y', 'NW': 'Diên Niên', 'group': 'Tây Tứ Mệnh', 'element': 'Thổ' },
+    'Đoài': { 'N': 'Họa Hại', 'NE': 'Diên Niên', 'E': 'Tuyệt Mệnh', 'SE': 'Lục Sát', 'S': 'Ngũ Quỷ', 'SW': 'Thiên Y', 'W': 'Phục Vị', 'NW': 'Sinh Khí', 'group': 'Tây Tứ Mệnh', 'element': 'Kim' },
+    'Cấn':  { 'N': 'Ngũ Quỷ', 'NE': 'Phục Vị', 'E': 'Lục Sát', 'SE': 'Họa Hại', 'S': 'Tuyệt Mệnh', 'SW': 'Sinh Khí', 'W': 'Diên Niên', 'NW': 'Thiên Y', 'group': 'Tây Tứ Mệnh', 'element': 'Thổ' }
+};
+const cungPhầnTrăm = {
+    'Sinh Khí':  { cát: true,  ngũHành: 'Mộc', ý_nghĩa: 'Cung Đại Cát: Chủ về vượng khí, thu hút tài lộc mạnh mẽ, giúp công danh sự nghiệp thăng tiến không ngừng.' },
+    'Thiên Y':   { cát: true,  ngũHành: 'Thổ', ý_nghĩa: 'Cung Trung Cát: Được lộc trời ban về sức khỏe, tiêu trừ bệnh tật, gia đạo bình an, trường thọ.' },
+    'Diên Niên': { cát: true,  ngũHành: 'Kim', ý_nghĩa: 'Cung Cát Tinh: Chủ về sự hòa thuận, củng cố các mối quan hệ ngoại giao, gia đình êm ấm, tình duyên bền vững.' },
+    'Phục Vị':   { cát: true,  ngũHành: 'Mộc', ý_nghĩa: 'Cung Tiểu Cát: Giúp vững vàng tâm trí, củng cố sức mạnh bản thân, mang lại may mắn lớn trong học hành, thi cử.' },
+    'Tuyệt Mệnh':{ cát: false, ngũHành: 'Kim', ý_nghĩa: 'Cung Đại Hung: Cực kỳ nguy hiểm, mang sát khí hệ Kim nặng, dễ gây tổn hại sức khỏe, bệnh hiểm nghèo hoặc phá sản.' },
+    'Ngũ Quỷ':   { cát: false, ngũHành: 'Hỏa', ý_nghĩa: 'Cung Hung Tinh: Mang đến tai họa bất ngờ, thị phi quấy phá khốc liệt, dễ dính líu pháp lý hoặc hao tài tốn của.' },
+    'Lục Sát':   { cát: false, ngũHành: 'Thủy', ý_nghĩa: 'Cung Hung Tinh: Sinh ra sát khí âm hàn, gây mâu thuẫn gia đạo, trục trặc tình cảm, dễ vướng vào tranh chấp, kiện tụng.' },
+    'Họa Hại':   { cát: false, ngũHành: 'Thổ', ý_nghĩa: 'Cung Tiểu Hung: Thường mang lại rủi ro vụn vặt, mệt mỏi, trắc trở bởi chuyện tiểu nhân quấy phá, hao mòn tài lộc.' }
+};
+
+const phươngVịThiếtLập = {
+    'N':  { tên: "BẮC", ngũHành: "Thủy" }, 'NE': { tên: "ĐÔNG BẮC", ngũHành: "Thổ" },
+    'E':  { tên: "ĐÔNG", ngũHành: "Mộc" }, 'SE': { tên: "ĐÔNG NAM", ngũHành: "Mộc" },
+    'S':  { tên: "NAM", ngũHành: "Hỏa" },  'SW': { tên: "TÂY NAM", ngũHành: "Thổ" },
+    'W':  { tên: "TÂY", ngũHành: "Kim" },  'NW': { tên: "TÂY BẮC", ngũHành: "Kim" }
+};
+
+const directionMeta = [
+    { code: 'N',  name: 'BẮC (Khảm)',      angle: 0 },
+    { code: 'NE', name: 'ĐÔNG BẮC (Cấn)',  angle: 45 },
+    { code: 'E',  name: 'ĐÔNG (Chấn)',     angle: 90 },
+    { code: 'SE', name: 'ĐÔNG NAM (Tốn)',  angle: 135 },
+    { code: 'S',  name: 'NAM (Ly)',        angle: 180 },
+    { code: 'SW', name: 'TÂY NAM (Khôn)',  angle: 225 },
+    { code: 'W',  name: 'TÂY (Đoài)',      angle: 270 },
+    { code: 'NW', name: 'TÂY BẮC (Càn)',   angle: 315 }
+];
+
+// Khởi tạo các biến trạng thái cốt lõi của Trạch Bản la bàn số
+let chủMệnh = 'Khảm';
+let currentCode = 'N';
+let currentHeading = 0;
+let targetAngle = null;
+let debounceTimer = null; // Chốt chặn bảo vệ: Khai báo tường minh để triệt tiêu lỗi sập biến ReferenceError
+
+// ====================== 5. HÀM KIỂM SOÁT TẦN SUẤT QUÉT CẢM BIẾN (DEBOUNCE) ======================
+function debounceRecalculate() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+        recalculateFate();
+    }, 300);
+}
+
+function validateFullDate(day, month, year) {
+    const d = parseInt(day, 10);
+    const m = parseInt(month, 10);
+    const y = parseInt(year, 10);
+
+    if (isNaN(d) || isNaN(m) || isNaN(y)) return false;
+    if (m < 1 || m > 12) return false;
+    
+    // Ma trận chu kỳ quỹ đạo năm nhuận dương lịch chính xác
+    const listDaysInMonth = [
+        31, (y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0)) ? 29 : 28, 
+        31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+    ];
+    
+    if (d < 1 || d > listDaysInMonth[m - 1]) return false;
+    
+    // Mở rộng biên độ lịch pháp an toàn, chặn dưới chiều sâu lịch sử
+    if (y < 1800) {
+        if (typeof showCustomAlert === 'function') {
+            showCustomAlert(`Niên đại năm ${y} vượt dải tính toán dương trạch hiện đại. Hệ thống tự động chuyển sang cấu trúc mô phỏng giả lập khí cục!`, "⚠️ Cảnh Báo Thiên Di");
+        }
+        return true; 
+    }
+    return true;
+}
+// =========================================================================
+// 2. HÀM CHÍNH recalculateFate() - TRÍCH XUẤT TIẾT KHÍ LẬP XUÂN & PHÂN TÁCH 2 TRỤC NĂM
+// =========================================================================
+function recalculateFate() {
+    const name = document.getElementById('userName').value.trim() || "Chủ mệnh";
+    const gender = document.getElementById('gender').value;
+    const dayStr = document.getElementById('birthDay').value;
+    const monthStr = document.getElementById('birthMonth').value;
+    const yearStr = document.getElementById('birthYear').value;
+    const mucDich = document.getElementById('purpose').value; 
+
+    const txtSurveyYear = document.getElementById('surveyYear'); 
+    const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
+
+    if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
+        fateTxt.innerText = `${name}: Đo hướng tự do (Chế độ quét trắc địa hạ tầng - Chưa nhập năm sinh)`;
+        directionsContainer.innerHTML = `<div style="font-size:0.8rem;color:#8a8a8f;text-align:center;padding:15px;font-family:sans-serif;">
+            Vui lòng điền thông tin Ngày - Tháng - Năm sinh chủ mệnh để kích hoạt ma trận đối sánh cát hung bản mệnh đa tầng.
+        </div>`;
+        listPanelTitle.innerText = "Mạng lưới phương vị la bàn";
+        const oldPanel = document.getElementById('dien-giai-bo-sung');
+        if (oldPanel) oldPanel.remove();
+        
+        // Trả nền la bàn về trạng thái cổ điển sạch khi chưa có dữ liệu năm sinh
+        updateBatTrachBackground(null);
+        
+        updateCompassUI(currentHeading);
+        return;
+    }
+
+    let d = parseInt(dayStr, 10);
+    let m = parseInt(monthStr, 10);
+    let y = parseInt(yearStr, 10);
+
+    if (!validateFullDate(d, m, y)) {
+        fateTxt.innerText = `${name}: Dữ liệu lịch pháp trùng lặp hoặc sai cấu trúc tháng (Kiểm tra lại)`;
+        return;
+    }
+
+    // Tính toán Quẻ mệnh thực tế và kích hoạt ma trận đổ màu nền tự động
+    chủMệnh = tínhCungPhi(y, m, d, gender);
+    updateBatTrachBackground(chủMệnh);
+
+    const namAmMệnhChủ = (m < 2 || (m === 2 && d < 4)) ? y - 1 : y;
+    const hanHinhCungPhi = bátTrạchMap[chủMệnh]?.element || "Thổ";
+    const nhomMenh = bátTrạchMap[chủMệnh]?.group || "Tây Tứ Mệnh";
+
+    const nguHoangInfo = getNguHoangInfo(namKhaoSatThucTe); 
+    fateTxt.innerText = `${name}: Cung ${chủMệnh} (${nhomMenh}) - Bản Mệnh Ngũ Hành: ${hanHinhCungPhi} | Năm sinh Âm: ${namAmMệnhChủ} | Thần sát Lưu Niên: ${nguHoangInfo}`;
+
+    let headingToCalculate = isDetailOpen && lockedHeadingAtOpen !== null ? lockedHeadingAtOpen : currentHeading;
+    const realHeading = ((headingToCalculate % 360) + 360) % 360; 
+
+    const hanhPhuongVi = getHanhByHeading(realHeading);
+    const sonInfo = layThongTin24Son(realHeading, chủMệnh, namAmMệnhChủ);
+    const currentSonHuong = sonInfo.huong;
+
+    const tongHop = tinhDiemTongHop(chủMệnh, realHeading, namKhaoSatThucTe, mucDich, namAmMệnhChủ);
+
+    let saoChuQuan = null;
+    const match = nguHoangInfo.match(/Số (\d+)/); 
+    if (match) saoChuQuan = match[1];
+
+    let giaiThichSao = "";
+    if (saoChuQuan === '5') {
+        giaiThichSao = `Niên hạn năm khảo sát ${namKhaoSatThucTe} phạm sao hung hại <b>Ngũ Hoàng Liêm Trinh</b> nhập trung cung, mang năng lượng Thổ sát kịch độc. Giữ tâm nhà tĩnh lặng tuyệt đối, cấm mọi hành vi đào đục gạch nền ở khu vực trung tâm trạch thể.`;
+    } else if (saoChuQuan === '2') {
+        giaiThichSao = `Niên hạn năm khảo sát ${namKhaoSatThucTe} gặp sao <b>Nhị Hắc Bệnh Phù</b> quản đại cục tại trung cung, dễ gây suy hao sức đề kháng cơ thể. Nên bố trí an bài phương thức thanh lọc tạp khí âm hàn.`;
+    } else if (['3', '4'].includes(saoChuQuan)) {
+        giaiThichSao = `Niên độ thiên văn gặp mộc khí của sao chủ tinh khắc nhẹ vào Thổ khí trung cung. Trạng thái biến thiên ở mức <b>Bình hòa trung tính</b>, không không gian cốt lõi cần thông thoáng sạch sẽ để vận khí tự động điều hòa hưng vượng.`;
+    } else {
+        giaiThichSao = `Năng lượng niên hạn chủ quản năm tại vị trí trung cung đạt trạng thái an định, thuần khiết cát tường, không xuất hiện cấu trúc xung đột biến động lớn.`;
+    }
+
+    const nguHoangAlert = getNguHoangAlert(currentSonHuong);
+
+    let targetContainer = document.getElementById('dien-giai-bo-sung');
+    if (!targetContainer) {
+        targetContainer = document.createElement('div');
+        targetContainer.id = 'dien-giai-bo-sung';
+        targetContainer.style.width = '100%';
+        fateTxt.parentNode.insertBefore(targetContainer, fateTxt.nextSibling);
+    }
+
+    const displayStyle = isDetailOpen ? 'block' : 'none';
+    const btnText = isDetailOpen ? '🙈 Đóng giải thích thuật ngữ chi tiết' : '👁️ Xem giải thích thuật ngữ hiển thị';
+    const btnBkg = isDetailOpen ? 'rgba(223, 183, 108, 0.15)' : 'transparent';
+    
+    const currentConfig = ConfigPhongThuy[mucDich] || { title: "Vị trí / Hướng đang chọn", isCat: true };
+    const tenMucDichBinhDan = currentConfig.title;
+
+    const vanInfo = `
+        <p style="margin:8px 0; color:#ffd700; font-family: sans-serif;">
+            🌟 <b>Mạch Long Khí 72 Hậu:</b> ${tongHop.hauInfo.ten} — <span style="font-weight:bold; color:${tongHop.hauInfo.emoji === '🔴' ? '#ff3b30' : '#30d158'}">${tongHop.hauInfo.chatLuong}</span><br>
+            <small style="color:#aaa;">(Phân vị vi phân khí trường ngầm đạt ${tongHop.hauInfo.diem}pt. Thể hiện gốc rễ bền vững lâu dài của mạch đất nền sinh cơ).</small>
+        </p>
+    `;
+
+    const activeColor = tongHop.diem >= 72 ? '#30d158' : '#ff3b30';
+
+    // Biện chứng trạng thái Không Vong chuyên sâu phục vụ thuyết minh thuật ngữ
+    let giaiThichKhongVongHTML = "";
+    if (tongHop.khongVong) {
+        giaiThichKhongVongHTML = `<p style="margin:8px 0; color:#ff4444; background:rgba(255,59,48,0.06); padding:8px; border-radius:6px; border:1px solid rgba(255,59,48,0.2);">
+            ⚠️ <b>Cảnh báo Trạch lý Phân châm:</b> Toạ độ hiện tại đang dính trục <b>${tongHop.khongVong.loai}</b>. Đây là hiện tượng đường ranh giới khí trường giữa các hướng hoặc các Sơn bị đứt gãy hoàn toàn, dẫn đến tình trạng hỗn loạn địa khí, bất khả định hướng dòng chảy năng lượng.
+        </p>`;
+    }
+
+    targetContainer.innerHTML = `
+        <div style="text-align: center; margin: 10px 0;">
+            <button id="btn-toggle-fengshui" onclick="toggleDienGiaiChiTiet()"
+                    style="background: ${btnBkg}; border: 1px solid var(--gold); color: var(--gold);
+                           padding: 8px 16px; font-size: 0.85rem; border-radius: 4px; cursor: pointer; font-weight: bold; transition: all 0.3s;">
+                ${btnText}
+            </button>
+        </div>
+        <div id="content-dien-giai-chi-tiet" style="display: ${displayStyle}; margin: 10px 0; padding: 14px;
+             background: rgba(223, 183, 108, 0.06); border: 1.5px solid var(--gold); border-radius: 8px;
+             font-size: 0.86rem; line-height: 1.65; text-align: left; color: #fff; font-family: sans-serif;">
+            
+            <p style="margin:0 0 10px 0; color:var(--gold); font-weight:bold; border-bottom:1px solid var(--gold); padding-bottom:6px; letter-spacing:0.5px;">
+                📖 BIỆN CHỨNG KHÍ CỤC CẤU TRÚC HẠNG MỤC KỸ THUẬT
+            </p>
+            
+            <p style="margin:8px 0;">📍 <b>Tọa độ trắc địa thực tế:</b> ${realHeading.toFixed(1)}° (Độ lệch từ địa phương hiệu chỉnh: ${magneticDeclination}° — Đĩa la bàn số tự động điều hướng tịnh tiến nhằm triệt tiêu hoàn toàn nhiễu trường từ tính của thiết bị điện tử, định vị tọa độ lõi).</p>
+            <p style="margin:8px 0;">📍 <b>Phương vị la bàn số:</b> Ngũ hành từ trường phương vị thuộc <b>${hanhPhuongVi}</b> (Góc quay cảm biến: <b>${Math.round(headingToCalculate)}°</b>).</p>
+            <p style="margin:8px 0;">🎯 <b>Quẻ mệnh Nhân chủ (Hành ${hanHinhCungPhi}):</b> Cung phi cốt lõi <b>${chủMệnh}</b> (${nhomMenh}).</p>
+            
+            ${vanInfo}
+            ${giaiThichKhongVongHTML}
+            
+            <p style="margin:12px 0; padding:10px; background:rgba(255,215,0,0.03); border-radius:6px; border-left:4px solid ${activeColor}; border-top:1px solid rgba(255,255,255,0.03); border-right:1px solid rgba(255,255,255,0.03); border-bottom:1px solid rgba(255,255,255,0.03);">
+                <strong>📊 Tổng Điểm Phong Thủy Số [${tenMucDichBinhDan}]: <span style="color:${activeColor}; font-size:1.1rem; font-weight:900;">${tongHop.diem} pt</span></strong><br>
+                Đánh giá trạch pháp: <span style="font-weight:bold; color:${activeColor}; text-transform: uppercase;">${tongHop.level}</span><br>
+                <small style="color:#8a8a8f;">(Điểm số tích hợp tự động bóc tách từ đồ hình ma trận đa tầng bệ đỡ Đất và chu kỳ chuyển động của Thời Vận)</small>
+            </p>
+            
+            <p style="margin:8px 0; text-align:justify;">🌟 <b>Luận đoán Minh Châu Sơn vị:</b> ${tongHop.message}</p>
+            <p style="margin:8px 0; text-align:justify;">⚠️ <b>Biến động thiên thời tâm nhà:</b> ${giaiThichSao}</p>
+            ${nguHoangAlert ? `<p style="margin:8px 0; color:#ff4444; font-weight:bold; background:rgba(255,59,48,0.08); padding:8px; border-radius:6px; border:1px solid #ff3b30;">${nguHoangAlert}</p>` : ''}
+        </div>
+    `;
+
+    generateDirectionsList();
+    updateCompassUI(currentHeading);
+}
+
+// =========================================================================
+// 🌐 THÀNH PHẦN 1: REFACTOR HÀM TRÍCH XUẤT HẬU (NGƯỜI ĐỌC ĐỊA MẠCH)
+// =========================================================================
+function getCurrentHauInfo(degree, mucDich = 'house', namKhaoSat = null, cungPhi = 'Khảm', namAm = null) {
+    const normalized = ((degree % 360) + 360) % 360;
+    
+    // Khóa dữ liệu cache theo độ thực tế làm tròn để triệt tiêu lỗi rò rỉ nhãn sang góc kề bên
+    const cacheKey = normalized.toFixed(1);
+    
+    // Khóa cứng phân vị trắc địa của long mạch ngầm theo bước 5 độ cố định để tra cứu data gốc
+    const keyHau = (Math.round(normalized / 5) * 5) % 360;
+    
+    const hau = Data72Hau[keyHau.toString()] || { 
+        ten: "Xung Không Hậu", chatLuong: "Bình Hòa", diem: 60, ynghia: "Khí trường chuyển dịch điều hòa ổn định."
+    };
+
+    const config = (typeof ConfigPhongThuy !== 'undefined' && ConfigPhongThuy[mucDich]) ? ConfigPhongThuy[mucDich] : { isCat: true };
+    const isCatPurpose = config.isCat;
+    const chatLuongGoc = hau.chatLuong || "Bình Hòa";
+
+    let deltaH72 = 0;
+    if (chatLuongGoc.includes("Đại Cát")) deltaH72 = 12;
+    else if (chatLuongGoc.includes("Cát")) deltaH72 = 6;
+    else if (chatLuongGoc.includes("Tiểu Hung")) deltaH72 = -15;
+    else if (chatLuongGoc.includes("Đại Hung") || chatLuongGoc.includes("Không Vong") || chatLuongGoc.includes("Sai Thác")) deltaH72 = -35;
+
+    let result = {
+        ten: hau.ten || "Xung Không Hậu",
+        chatLuongStatic: chatLuongGoc,
+        ynghia: hau.ynghia || "Khí trường chuyển dịch luân hồi.",
+        diemGoc: Number(hau.diem) || 60,
+        deltaH72: deltaH72, 
+        giaiphap: String(hau.giaiphap || "Bố trí kết cấu trạch pháp an vị cát tường."),
+        emoji: "🟡",
+        chatLuong: "Bình Hòa"
+    };
+
+    // Nhãn UI cơ bản theo phân lớp Địa khí mạch đất
+    const isHungHau = chatLuongGoc.includes("Hung") || chatLuongGoc.includes("Không Vong") || chatLuongGoc.includes("Sai Thác");
+    if (isCatPurpose) {
+        if (isHungHau) { result.chatLuong = "ĐẠI HUNG"; result.emoji = "🔴"; } 
+        else if (chatLuongGoc.includes("Cát")) { result.chatLuong = "CÁT MẠCH"; result.emoji = "🟢"; } 
+        else { result.chatLuong = "BÌNH HÒA"; result.emoji = "🟡"; }
+    } else {
+        if (isHungHau) { result.chatLuong = "ĐẮC VỊ"; result.emoji = "🟢"; } 
+        else if (chatLuongGoc.includes("Cát")) { result.chatLuong = "PHẠM CÁT"; result.emoji = "🔴"; } 
+        else { result.chatLuong = "TRUNG TÍNH"; result.emoji = "🟡"; }
+    }
+
+    // 🎯 ĐỒNG BỘ N NG CAO KHÔNG VONG: Đè chữ ngắn gọn và nạp văn bản giải thích chuẩn phong thủy vào Popup
+    if (typeof kiemTraKhongVong === 'function') {
+        const khongVong = kiemTraKhongVong(normalized);
+        if (khongVong) {
+            result.chatLuongStatic = khongVong.loai; // Đồng bộ sang "ĐẠI KHÔNG VONG" hoặc "TIỂU KHÔNG VONG"
+            result.ynghia = khongVong.message;      // Đẩy thông điệp tính toán chi tiết của tuyến độ vào ý nghĩa
+            
+            if (khongVong.loai === "ĐẠI KHÔNG VONG") {
+                result.chatLuong = isCatPurpose ? "TUYỆT MẠCH" : "TỬ TUYẾN";
+                result.emoji = isCatPurpose ? "☠️" : "🔮";
+                result.giaiphap = isCatPurpose 
+                    ? "Tuyệt đối không xây dựng móng, ban thờ hay cửa chính tại đây. Hãy đổi hướng la bàn."
+                    : "Tọa độ lý tưởng để đặt tâm xả thải uế khí, giúp triệt tiêu hoàn toàn đại hung tinh sát của mạch đất.";
+            } else {
+                result.chatLuong = isCatPurpose ? "SAI THÁC" : "LỆCH KHÍ";
+                result.emoji = "⚠️";
+                result.giaiphap = isCatPurpose
+                    ? "Chủ động xoay vi phân kết cấu xây dựng lệch sang trái hoặc phải từ 1.5° đến 2.5° để thoát vạch nhiễu khí."
+                    : "Có thể đặt uế cục phụ. Không cần vi chỉnh nếu mặt bằng hình học bị giới hạn diện tích.";
+            }
+        }
+    }
+
+    // Lưu vào hệ thống Cache theo khóa độ thực tế chính xác
+    if (typeof hauCache !== 'undefined' && hauCache && hauCache.set) {
+        hauCache.set(cacheKey, result);
+    }
+    
+    return result; 
+}
+
+// =========================================================================
+// ID-05: CỔNG ĐỒNG BỘ 24 SƠN - BẢO TOÀN CONTRACT VÀ CẤU TRÚC RENDER TẦNG 3
+// =========================================================================
+function layThongTin24Son(doSo, cungPhi, namAm) {
+    let gockim = (doSo % 360 + 360) % 360;
+    let sonHienTai = SON_24_CONFIG.find(s => {
+        if (s.min > s.max) return gockim >= s.min || gockim < s.max;
+        return gockim >= s.min && gockim < s.max;
+    }) || SON_24_CONFIG[0];
+
+    const txtSurveyYear = document.getElementById('surveyYear');
+    const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
+    const mụcĐích = document.getElementById('purpose')?.value || 'house';
+
+    const safeCungPhi = cungPhi ? cungPhi.trim().charAt(0).toUpperCase() + cungPhi.trim().slice(1).toLowerCase() : "Khảm";
+    
+    // Gọi đồng bộ Engine lõi tính toán điểm đa tầng tuyến tính
+    const tongHop = tinhDiemTongHop(safeCungPhi, gockim, namKhaoSatThucTe, mụcĐích, namAm, 0);
+
+    const huongToCode = { "Bắc": "N", "Đông Bắc": "NE", "Đông": "E", "Đông Nam": "SE", "Nam": "S", "Tây Nam": "SW", "Tây": "W", "Tây Bắc": "NW" };
+    const codeHuong = huongToCode[sonHienTai.huong] || "N";
+    const saoBatTrach = bátTrạchMap[safeCungPhi]?.[codeHuong] || "Phục Vị";
+    const batTrachDetail = cungPhầnTrăm[saoBatTrach];
+    const isCatBatTrach = batTrachDetail ? batTrachDetail.cát : true;
+
+    const dacBiet = MaTranMinhChau[safeCungPhi]?.[sonHienTai.name];
+
+    // ĐỒNG BỘ HOÀN TOÀN THIÊN THỜI ĐỘNG VÀ SÁT TINH LƯU NIÊN TỪ ENGINE LÕI
+    // Ưu tiên chuỗi văn bản cảnh báo động (Không Vong, Hung Tinh) từ tongHop.message
+    let luanDoanFinal = tongHop.message || (dacBiet ? `[Cung ${saoBatTrach}] — Khí cục đặc biệt.` : `Sơn ${sonHienTai.name} thuộc hướng ${sonHienTai.huong} [Cung ${saoBatTrach}].`);
+    let hoaGiaiFinal = tongHop.hoaGiai || (dacBiet ? dacBiet.giaiphap : (isCatBatTrach ? "Hướng tốt, khí trường ôn hòa ổn định." : "Bố trí cấu trúc không gian phù hợp để hóa sát."));
+
+    return {
+        son: sonHienTai.name,
+        huong: sonHienTai.huong,
+        luanDoan: luanDoanFinal,
+        hoaGiai: hoaGiaiFinal,
+        isCatBatTrach: isCatBatTrach,
+        saoBatTrach: saoBatTrach,
+        cap_do: dacBiet ? dacBiet.cap_do : (isCatBatTrach ? "Vượng khí" : "Đoản khí"),
+        diem: tongHop.diem,
+        level: tongHop.level,
+        hauChiTiet: tongHop.hauInfo
+    };
+}
+// --- CẤU HÌNH PHONG THỦY ĐỒNG BỘ ĐA TẦNG VẬN 9 (ĐÃ MỞ RỘNG DANH MỤC THỰC CHIẾN) ---
+const ConfigPhongThuy = {
+    // 🏛️ DƯƠNG TRẠCH CHỦ CỤC (Nhà Ở)
+    'house':          { title: "Hướng Nhà / Cửa Chính", isCat: true,  sizeDegree: 15 },
+    'gate':           { title: "Hướng Cổng Chính", isCat: true,  sizeDegree: 15 },
+    'altar':          { title: "Hướng Ban Thờ / Thần Tài", isCat: true,  sizeDegree: 2  },
+    'altar_room':     { title: "Không Gian Phòng Thờ", isCat: true,  sizeDegree: 15 },
+    'bed':            { title: "Hướng Đầu Giường Ngủ", isCat: true,  sizeDegree: 10 },
+    'livingroom':     { title: "Hướng Phòng Khách", isCat: true,  sizeDegree: 15 },
+    'bedroom_master': { title: "Hướng Phòng Ngủ Chính", isCat: true,  sizeDegree: 15 },
+    'bedroom_child':  { title: "Hướng Phòng Ngủ Con Cái", isCat: true,  sizeDegree: 10 },
+    'balcony':        { title: "Hướng Ban Công / Cửa Sổ", isCat: true,  sizeDegree: 12 },
+    
+    // 📚 VĂN XƯƠNG KHOA DANH (Sự Nghiệp)
+    'workspace':      { title: "Hướng Bàn Làm Việc", isCat: true,  sizeDegree: 10 },
+    'ceo_office':     { title: "Hướng Phòng Sếp / Lãnh Đạo", isCat: true,  sizeDegree: 15 },
+    'study_desk':     { title: "Hướng Bàn Học Văn Xương", isCat: true,  sizeDegree: 8  },
+    'bookcase':       { title: "Vị Trí Tủ Sách / Hồ Sơ", isCat: true,  sizeDegree: 10 },
+
+    // 💰 ĐẮC TÀI MẬU DỊCH (Kinh Doanh)
+    'signboard':      { title: "Hướng Biển Hiệu Cửa Hàng", isCat: true,  sizeDegree: 15 },
+    'counter':        { title: "Hướng Quầy Thu Ngân", isCat: true,  sizeDegree: 10 },
+    'safe':           { title: "Vị Trí Két Sắt Tụ Tài", isCat: true,  sizeDegree: 4  }, 
+    'machinery':      { title: "Hệ Thống Máy Móc / Dây Chuyền", isCat: true,  sizeDegree: 12 },
+    'bakery':         { title: "Hướng Lò Nướng / Quầy Bánh", isCat: true,  sizeDegree: 10 },
+    'coffee':         { title: "Hướng Quầy Pha Chế Cà Phê", isCat: true,  sizeDegree: 10 },
+    'restaurant':     { title: "Hướng Nhà Hàng / Quán Ăn", isCat: true,  sizeDegree: 15 },
+    'shop':           { title: "Hướng Showroom / Cửa Hàng", isCat: true,  sizeDegree: 15 },
+    'salon':          { title: "Hướng Salon Tóc / Giường Spa", isCat: true,  sizeDegree: 12 },
+
+    // 🛠️ TỌA VỊ TRẤN SÁT (Hệ Thống Đè Hung)
+    'kitchen':        { title: "Vị trí Đặt Bếp Nấu", isCat: false, sizeDegree: 10 },
+    'toilet':         { title: "Vị trí Nhà Vệ Sinh", isCat: false, sizeDegree: 15 },
+    'septic_tank':    { title: "Vị trí Hầm Tự Hoại / Bể Phốt", isCat: false, sizeDegree: 15 },
+    'pipe_shaft':     { title: "Trục Kỹ Thuật / Hộp Gen Uế Khí", isCat: false, sizeDegree: 6  },
+    'storage':        { title: "Vị trí Kho Hàng Tạp Khí", isCat: false, sizeDegree: 15 },
+    'trash_area':     { title: "Vị trí Thùng Rác / Phế Liệu", isCat: false, sizeDegree: 8  }
+};
+// =========================================================================
+// 🚀 ENGINE RENDER DANH SÁCH & UI ĐỒNG BỘ ĐA TẦNG (BÁT TRẠCH - 24 SƠN - 72 HẬU)
+// =========================================================================
+function generateDirectionsList() {
+    const purposeEl = document.getElementById('purpose');
+    const mucDich = purposeEl ? purposeEl.value : "";
+    const directionsContainerEl = document.getElementById('directionsContainer') || (typeof directionsContainer !== 'undefined' ? directionsContainer : null);
+    
+    const nguonConfig = (typeof ConfigPhongThuy !== 'undefined') ? ConfigPhongThuy : ((typeof PhongThuyCore !== 'undefined' && PhongThuyCore.data?.Config) ? PhongThuyCore.data.Config : {});
+    const config = nguonConfig[mucDich];
+    
+    if (!mucDich || !config) {
+        if (directionsContainerEl) {
+            directionsContainerEl.innerHTML = `<div style='font-size:0.85rem;color:#8a8a8f;text-align:center;padding:15px;font-family:sans-serif;'>Chọn mục đích Thiết lập Khí Cục hoặc Trấn Sát để hiển thị mạng lưới phương vị</div>`;
+        }
+        return;
+    }
+
+    const isCatPurpose = config.isCat; 
+    let listDirections = [];
+    
+    const dayStr = document.getElementById('birthDay')?.value || "";
+    const monthStr = document.getElementById('birthMonth')?.value || document.getElementById('monthStr')?.value || "";
+    const yearStr = document.getElementById('birthYear')?.value || document.getElementById('yearStr')?.value || "";
+
+    const txtSurveyYear = document.getElementById('surveyYear');
+    const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
+
+    let namAmMệnhChủ = new Date().getFullYear();
+    if (dayStr && monthStr && yearStr && yearStr.length === 4) {
+        namAmMệnhChủ = (parseInt(monthStr, 10) < 2 || (parseInt(monthStr, 10) === 2 && parseInt(dayStr, 10) < 4)) ? parseInt(yearStr, 10) - 1 : parseInt(yearStr, 10);
+    }
+
+    let quẻMệnhChủLõi = "Khảm";
+    if (typeof chủMệnh !== 'undefined' && chủMệnh) {
+        quẻMệnhChủLõi = chủMệnh;
+    } else if (typeof chủMệnhToànCục !== 'undefined' && chủMệnhToànCục) {
+        quẻMệnhChủLõi = chủMệnhToànCục;
+    }
+    quẻMệnhChủLõi = quẻMệnhChủLõi.trim().charAt(0).toUpperCase() + quẻMệnhChủLõi.slice(1).toLowerCase();
+
+    const cacCungTot = ["Sinh Khí", "Diên Niên", "Thiên Y", "Phục Vị"];
+    const cacCungXau = ["Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"];
+
+    const nguồnMeta = (typeof directionMeta !== 'undefined') ? directionMeta : [
+        { name: "Chính Bắc", code: "N", angle: 0 }, { name: "Đông Bắc", code: "NE", angle: 45 },
+        { name: "Chính Đông", code: "E", angle: 90 }, { name: "Đông Nam", code: "SE", angle: 135 },
+        { name: "Chính Nam", code: "S", angle: 180 }, { name: "Tây Nam", code: "SW", angle: 225 },
+        { name: "Chính Tây", code: "W", angle: 270 }, { name: "Tây Bắc", code: "NW", angle: 315 }
+    ];
+
+    const nguonBatTrach = (typeof bátTrạchMap !== 'undefined') ? bátTrạchMap : ((typeof PhongThuyCore !== 'undefined' && PhongThuyCore.data?.BatTrachMap) ? PhongThuyCore.data.BatTrachMap : {});
+
+    nguồnMeta.forEach(dir => {
+        const cungTrạch = (nguonBatTrach[quẻMệnhChủLõi]) ? nguonBatTrach[quẻMệnhChủLõi][dir.code] || "Khác" : "Khác";
+        
+        if (isCatPurpose) {
+            if (!cacCungTot.includes(cungTrạch)) return; 
+        } else {
+            if (!cacCungXau.includes(cungTrạch)) return;
+        }
+
+        if (typeof tinhDiemTongHop === 'function') {
+            const tongHopDir = tinhDiemTongHop(quẻMệnhChủLõi, dir.angle, namKhaoSatThucTe, mucDich, namAmMệnhChủ, 0);
+            listDirections.push({
+                ...dir, 
+                cungTrạch: cungTrạch, 
+                diemTongHop: tongHopDir.diem, 
+                level: tongHopDir.level, 
+                satTinhs: tongHopDir.satTinhs || [],
+                khongVong: tongHopDir.khongVong || null,
+                hau: tongHopDir.hauInfo, 
+                phanTichGoc: tongHopDir.message || "Khí trường bình hòa",
+                priority: tongHopDir.diem 
+            });
+        }
+    });
+
+    listDirections.sort((a, b) => b.priority - a.priority);
+    
+    const listPanelTitleEl = document.getElementById('listPanelTitle') || (typeof listPanelTitle !== 'undefined' ? listPanelTitle : null);
+    if (listPanelTitleEl) {
+        listPanelTitleEl.innerText = `Quy Hoạch Vận 9: ${config.title}`;
+    }
+    
+    if (!directionsContainerEl) return;
+    directionsContainerEl.innerHTML = "";
+
+    if (listDirections.length === 0) {
+        directionsContainerEl.innerHTML = `<div style='font-size:0.85rem;color:#ff3b30;text-align:center;padding:15px;font-family:sans-serif;font-weight:bold;'>⚠️ Không tìm thấy hướng phù hợp với tiêu chuẩn lập cực. Kiểm tra lại dữ liệu đầu vào.</div>`;
+        return;
+    }
+
+    listDirections.forEach(item => {
+        const mapSonGroup = {
+            "N":  ["Nhâm", "Tý", "Quý"], "NE": ["Sửu", "Cấn", "Dần"],
+            "E":  ["Giáp", "Mão", "Ất"], "SE": ["Thìn", "Tốn", "Tỵ"],
+            "S":  ["Bính", "Ngọ", "Đinh"], "SW": ["Mùi", "Khôn", "Thân"],
+            "W":  ["Canh", "Dậu", "Tân"], "NW": ["Tuất", "Càn", "Hợi"]
+        };
+        let sonGroup = mapSonGroup[item.code.toUpperCase().trim()] || ["Nhâm", "Tý", "Quý"];
+        
+        let countSonXanh = 0, countSonVang = 0, countSonDo = 0;
+        let sonHTML = "";
+
+        sonGroup.forEach((son, index) => {
+            let gocCuaSon = (item.angle + (index - 1) * 15 + 360) % 360;
+            let score = 60;
+            let thongTinHạnSon = "";
+            let thongTinSonDong = null;
+
+            if (typeof tinhDiemTongHop === 'function') {
+                thongTinSonDong = tinhDiemTongHop(quẻMệnhChủLõi, gocCuaSon, namKhaoSatThucTe, mucDich, namAmMệnhChủ, 0);
+                score = thongTinSonDong.diem;
+            }
+            
+            if (thongTinSonDong && thongTinSonDong.satTinhs && thongTinSonDong.satTinhs.length > 0) {
+                let tenSaoSơn = thongTinSonDong.satTinhs.map(s => s.ten).join(", ");
+                thongTinHạnSon = `<br><br>⚠️ <b>BIẾN THIÊN LƯU NIÊN:</b> Sơn vị này năm nay vướng [${tenSaoSơn}] quấy phá phần Ngọn, tạm thời hao hụt khí trường. Qua năm hạn sao chuyển dịch, năng lượng tọa độ hẹp này sẽ tự động khôi phục vượng cát.`;
+            } else {
+                thongTinHạnSon = `<br><br>✨ <b>THỜI VẬN AN ĐỊNH:</b> Phân độ Sơn vị sạch bóng sát tinh lưu niên, trường khí thuần khiết vững vàng.`;
+            }
+
+            let titleInfo = `Phương vị hình học Sơn ${son} [Điểm lập cực: ${score}pt]`;
+            let textInfo = "";
+            let solInfo = "";
+            let sonColor = "#dfb76c";
+
+            if (isCatPurpose) {
+                if (score >= 70) {
+                    sonColor = "#30d158"; countSonXanh++;
+                    textInfo = `<b>ĐẮC THỜI ĐẮC VỊ:</b> Tọa độ Sơn vị ${son} đạt năng lượng cát lợi cao (${score}pt). Khí trường phối hợp đồng trục hoàn hảo với bản mệnh gia chủ, sinh khí dồi dào.${thongTinHạnSon}`;
+                    solInfo = "Thiết kế: Ưu tiên đặt tâm cửa chính, ban thờ hoặc giường ngủ lọt khít vào dải độ xanh này để hút tài lộc.";
+                } else if (score >= 50) {
+                    sonColor = "#dfb76c"; countSonVang++;
+                    textInfo = `<b>BÌNH HÒA TRẠCH PHÁP:</b> Sơn vị ${son} đạt trạng thái trường khí cân bằng ổn định (${score}pt), an toàn, không sinh họa cho gia vận.${thongTinHạnSon}`;
+                    solInfo = "Thiết kế: An tâm bố trí công năng sinh hoạt nội cục, có thể phối màu ngũ hành tương sinh để bổ trợ khí.";
+                } else {
+                    sonColor = "#ff3b30"; countSonDo++;
+                    textInfo = `⚠️ <b>SUY KIỆT TRƯỜNG KHÍ:</b> Phân độ Sơn vị ${son} chỉ đạt chỉ số thấp (${score}pt) do xung khắc trắc địa hoặc niên tinh tà khí xâm phạm.${thongTinHạnSon}`;
+                    solInfo = "Điều tiết: Tránh đặt các yếu tố nạp khí chính tại dải độ này. Nếu kết cấu cố định, dùng vật phẩm ngũ hành chuyển hóa khí.";
+                }
+            } else {
+                if (score >= 70) {
+                    sonColor = "#30d158"; countSonXanh++; 
+                    titleInfo = `Sơn vị Trấn Sát ${son} [Đắc Cách Đại Cát]`;
+                    textInfo = `<b>THẦN CÁCH TRẤN YỂM:</b> Sơn vị mang năng lượng hung tính lớn của Bát Trạch hung quẻ, cực kỳ lý tưởng để đặt thiết bị xả uế nhằm khóa chặt ác khí long mạch, hóa hung thành cát thành công.`;
+                    solInfo = "Quy hoạch: Kết cấu hoàn hảo về mặt trạch pháp kiến trúc. Hãy đặt uế cục kiên cố tại đây.";
+                } else if (score >= 50) {
+                    sonColor = "#dfb76c"; countSonVang++;
+                    titleInfo = `Sơn vị Trấn Sát ${son} [Bình Hòa]`;
+                    textInfo = `<b>TRUNG TÍNH HÓA SÁT:</b> Khu vực dải độ Sơn vị ${son} đạt trạng thái tiêu giảm sát khí ổn định (${score}pt), đặt công năng phụ thải uế an toàn, không sinh tai họa.`;
+                    solInfo = "Quy hoạch: Chấp nhận được hoàn toàn nếu mặt bằng kiến trúc đô thị bị bó hẹp diện tích.";
+                } else {
+                    sonColor = "#ff3b30"; countSonDo++; 
+                    titleInfo = `⚠️ TRƯỜNG KHÍ THANH SẠCH CẦN BẢO VỆ`;
+                    textInfo = `<b>ĐIỀU HÒA TRẠCH PHÁP ĐẠI KỴ:</b> Tọa độ Sơn vị này (${score}pt) bản chất đang giữ dòng địa khí sạch, thanh khiết của ngôi nhà trong nguyên vận. Đặt hầm tự hoại hoặc nhà vệ sinh trực trực xung đè lên sẽ làm ô nhiễm ngầm mạch đất, tổn hại âm đức trạch nhà.`;
+                    solInfo = "Mật pháp vi chỉnh: Chủ động tịnh tiến thiết bị xả uế lệch tâm sang phân độ Sơn vị báo màu xanh kề bên để bảo vệ long mạch.";
+                }
+            }
+            
+            const cleanStr = (s) => s ? s.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;') : "";
+            const safeTitle = cleanStr(titleInfo);
+            const safeText = cleanStr(textInfo);
+            const safeSol = cleanStr(solInfo);
+
+            sonHTML += `<span style="display:inline-block; white-space:nowrap; cursor:pointer;" onclick="showExplanation('${safeTitle}', '${safeText}', '${safeSol}')">` +
+                       `<span style="color:${sonColor}; font-weight:700;">${son}</span>` +
+                       `<span style="color:#ffffff;"> (${score}pt)</span></span>`;
+            
+            if (index < sonGroup.length - 1) sonHTML += ` • `;
+        });
+
+        let mốcTâm = item.angle;
+        let mốcTrái = (mốcTâm - 5 + 360) % 360;
+        let mốcPhải = (mốcTâm + 5) % 360;
+
+        let hauInfoTrái = typeof getCurrentHauInfo === 'function' ? getCurrentHauInfo(mốcTrái, mucDich, namKhaoSatThucTe, quẻMệnhChủLõi, namAmMệnhChủ) : { ten: "Hậu", chatLuongStatic: "Bình Hòa", diemGoc: 60, emoji: "🟡", chatLuong: "Bình Hòa", ynghia: "", giaiphap: "" };
+        let hauInfoTâm  = typeof getCurrentHauInfo === 'function' ? getCurrentHauInfo(mốcTâm, mucDich, namKhaoSatThucTe, quẻMệnhChủLõi, namAmMệnhChủ) : { ten: "Hậu", chatLuongStatic: "Bình Hòa", diemGoc: 60, emoji: "🟡", chatLuong: "Bình Hòa", ynghia: "", giaiphap: "" };
+        let hauInfoPhải = typeof getCurrentHauInfo === 'function' ? getCurrentHauInfo(mốcPhải, mucDich, namKhaoSatThucTe, quẻMệnhChủLõi, namAmMệnhChủ) : { ten: "Hậu", chatLuongStatic: "Bình Hòa", diemGoc: 60, emoji: "🟡", chatLuong: "Bình Hòa", ynghia: "", giaiphap: "" };
+
+        const getDynamicHauScoreAndSat = (angle, hauObj) => {
+            let localKVan = 1.0;
+            if (typeof PhongThuyCore !== 'undefined' && typeof VAN_DATA !== 'undefined') {
+                const sObj = PhongThuyCore.getSonObj(angle);
+                const hMap = { "Bắc": "N", "Đông Bắc": "NE", "Đông": "E", "Đông Nam": "SE", "Nam": "S", "Tây Nam": "SW", "Tây": "W", "Tây Bắc": "NW" };
+                const cCode = hMap[sObj.huong] || "N";
+                let vSo = Math.floor((namKhaoSatThucTe - 1864) / 20) % 9 + 1;
+                if (VAN_DATA[vSo]?.[cCode]) {
+                    const sao = VAN_DATA[vSo][cCode];
+                    if (sao.loai === "best") localKVan = 1.15;
+                    else if (sao.loai === "good") localKVan = 1.08;
+                    else if (sao.loai === "bad") localKVan = 0.88;
+                    else if (sao.loai === "worst") localKVan = 0.75;
+                }
+            }
+            let penalty = 0;
+            const sonContext = typeof PhongThuyCore !== 'undefined' ? PhongThuyCore.getSonObj(angle) : { name: "Tý" };
+            const localSats = (typeof getPhongThuySatTinh === 'function') ? getPhongThuySatTinh(sonContext.name, namKhaoSatThucTe) : [];
+            localSats.forEach(sat => {
+                if (sat.ten.includes("NGŨ HOÀNG")) penalty += 25;
+                else if (sat.ten.includes("THÁI TUẾ")) penalty += 18;
+                else if (sat.ten.includes("TUẾ PHÁ")) penalty += 12;
+                else if (sat.ten.includes("TAM SÁT")) penalty += 15;
+            });
+            return {
+                diemDong: Math.max(5, Math.min(98, Math.round(hauObj.diemGoc * localKVan - (penalty * 0.5)))),
+                satList: localSats
+            };
+        };
+
+        let dynTrái = getDynamicHauScoreAndSat(mốcTrái, hauInfoTrái);
+        let dynTâm  = getDynamicHauScoreAndSat(mốcTâm, hauInfoTâm);
+        let dynPhải = getDynamicHauScoreAndSat(mốcPhải, hauInfoPhải);
+
+        const parseHauStatusCard = (hauObj) => {
+            const emoji = hauObj.emoji || "🟡";
+            let color = "#dfb76c";
+            if (emoji === "🟢" || emoji === "🔮") color = "#30d158";
+            if (emoji === "🔴" || emoji === "☠️") color = "#ff3b30";
+            if (emoji === "🟡" || emoji === "⚠️") color = "#dfb76c";
+            return { color: color, label: hauObj.chatLuong };
+        };
+
+        const statusTrái = parseHauStatusCard(hauInfoTrái);
+        const statusTâm   = parseHauStatusCard(hauInfoTâm);
+        const statusPhải = parseHauStatusCard(hauInfoPhải);
+
+        // 🧠 HÀM PHÂN TÍCH VÀ SÀNG LỌC ĐỊA MẠCH CAO CẤP: Khử hoàn toàn giải pháp hời hợt (Rèm cửa, bình nước)
+        const getHauExplanation = (hauObj, dynScore, satList, isCat) => {
+            let nienHanHau = (satList && satList.length > 0)
+                ? `<br><br>⚠️ <b>CẢNH BÁO NIÊN HẠN:</b> Phân vị vướng sát tinh lưu niên, địa khí thực thời biến động còn <b>${dynScore}pt</b>. Qua chu kỳ năm hạn khí mạch sẽ tự phục hồi.`
+                : `<br><br>✨ <b>TÌNH TRẠNG LƯU NIÊN:</b> Long mạch tầng sâu sạch sẽ, trường khí vận hành thông suốt thông thuận suốt năm khảo sát.`;
+            
+            let nghiaThucTe = hauObj.ynghia || "Khí mạch luên hồi tịnh tiến ổn định.";
+            
+            // 🎯 TIÊU DIỆT TỬ HUYỆT GIẢI PHÁP SAI LỆCH CỦA CƠ SỞ DỮ LIỆU TĨNH:
+            // Tự động ép giải pháp về đúng bản chất trạch vật lý kiến trúc (Dùng đá địa tầng hoặc móng ngăn khí)
+            let phuongAnThucTe = "Giữ khu vực thông thoáng, điều hòa dòng khí ngầm sàn.";
+            const isHungHauStatic = hauObj.chatLuongStatic.includes("Hung") || hauObj.chatLuongStatic.includes("Không Vong") || hauObj.chatLuongStatic.includes("Sai Thác");
+
+            if (isCat) {
+                if (isHungHauStatic) {
+                    phuongAnThucTe = "Mật pháp trấn mạch: Tuyệt đối không động thổ tạo bể ngầm tại đây. Sử dụng một khối đá thạch anh trắng thô tự nhiên nguyên khối lót dưới sàn để gia cố ổn định địa tầng, ngăn chặn dòng ác khí xông lên.";
+                } else {
+                    phuongAnThucTe = "Duy trì bệ đỡ: Thích hợp đặt trọng điểm kết cấu móng chịu lực hoặc trục dẫn nạp khí lành. Giữ sàn phẳng, sạch sẽ.";
+                }
+            } else { 
+                if (isHungHauStatic) {
+                    nghiaThucTe = `Địa tầng ngầm bản chất dính ác khí nguy hiểm (${hauObj.chatLuongStatic}). Trùng khớp tuyệt diệu với công năng uế thải, áp dụng bí mật 'Dĩ Độc Trị Độc' ép chế uế khí cực mạnh.`;
+                    phuongAnThucTe = "Bố trí thực địa: Đặt uế cục kiên cố đè trọn dải độ này, lót một lớp than hoạt tính dưới đáy bể phốt để bao bọc cô lập hoàn toàn tạp khí không cho rò rỉ sang phòng bên.";
+                } else {
+                    nghiaThucTe = `Địa mạch ngầm bản chất vượng khí phúc đức sạch thanh khiết (${hauObj.chatLuongStatic}). Việc cố tình xây dựng bể tự hoại tại đây sẽ gây dìm sập long thần của mảnh đất.`;
+                    phuongAnThucTe = "Bắt buộc sửa đổi: Dịch chuyển kết cấu xả thải lệch tâm ra khỏi phân châm hẹp này để nhường chỗ cho nền đất sạch.";
+                }
+            }
+
+            return `Phân vị Hậu mạch địa tầng ngầm: <b>${hauObj.ten}</b><br>Chỉ số năng lượng Địa khí thực thời: <b>${dynScore}pt</b>.<br><br>🔍 <b>BIỆN GIẢI PHONG THỦY ĐA TẦNG:</b> ${nghiaThucTe}${nienHanHau}<br><br>🛠️ <b>HÀNH ĐỘNG TRẠCH PHÁP THỰC CHIẾN:</b> ${phuongAnThucTe}`;
+        };
+
+        const escapeStr = (s) => s ? s.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;') : "";
+        
+        let html3HauMạch = `
+            <div style="display: flex; gap: 6px; margin-top: 6px; width: 100%; box-sizing: border-box; font-family: sans-serif;">
+                <div class="hau-node-item" onclick="showExplanation('${escapeStr(hauInfoTrái.ten)}', '${escapeStr(getHauExplanation(hauInfoTrái, dynTrái.diemDong, dynTrái.satList, isCatPurpose))}', 'Thông báo hệ thống')"
+                     style="flex: 1; text-align: center; background: rgba(255,255,255,0.04); padding: 6px 4px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer;">
+                    <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${hauInfoTrái.ten.split(' ')[0]} (${Math.round(mốcTrái)}°)</div>
+                    <div style="font-size: 0.7rem; color: ${statusTrái.color}; font-weight: bold; text-transform: uppercase;">${statusTrái.label}</div>
+                </div>
+                <div class="hau-node-item" onclick="showExplanation('${escapeStr(hauInfoTâm.ten)}', '${escapeStr(getHauExplanation(hauInfoTâm, dynTâm.diemDong, dynTâm.satList, isCatPurpose))}', 'Thông báo hệ thống')"
+                     style="flex: 1; text-align: center; background: rgba(255,255,255,0.04); padding: 6px 4px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer;">
+                    <div style="font-size: 0.75rem; color: #ffd700; font-weight: 700; margin-bottom: 2px;">🎯 ${hauInfoTâm.ten.split(' ')[0]} (${Math.round(mốcTâm)}°)</div>
+                    <div style="font-size: 0.7rem; color: ${statusTâm.color}; font-weight: bold; text-transform: uppercase;">${statusTâm.label}</div>
+                </div>
+                <div class="hau-node-item" onclick="showExplanation('${escapeStr(hauInfoPhải.ten)}', '${escapeStr(getHauExplanation(hauInfoPhải, dynPhải.diemDong, dynPhải.satList, isCatPurpose))}', 'Thông báo hệ thống')"
+                     style="flex: 1; text-align: center; background: rgba(255,255,255,0.04); padding: 6px 4px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer;">
+                    <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${hauInfoPhải.ten.split(' ')[0]} (${Math.round(mốcPhải)}°)</div>
+                    <div style="font-size: 0.7rem; color: ${statusPhải.color}; font-weight: bold; text-transform: uppercase;">${statusPhải.label}</div>
+                </div>
+            </div>`;
+
+        let scoreColor = item.diemTongHop >= 70 ? "#30d158" : (item.diemTongHop >= 50 ? "#dfb76c" : "#ff3b30");
+        let bgKhung = item.diemTongHop >= 70 ? 'rgba(48,209,88,0.025)' : (item.diemTongHop >= 50 ? 'rgba(223,183,108,0.03)' : 'rgba(255,59,48,0.03)');
+        
+        let statusText = "";
+        let popExplanation = "";
+        let popSolution = "";
+
+        // 🎯 FIX VẾT NỨT 1: Chuyển hoàn toàn sang định dạng thẻ ngắt dòng HTML <br> sạch sẽ cho thẻ Card tổng
+        let giaiThichSaoHạnCard = item.satTinhs && item.satTinhs.length > 0 
+            ? `<br><br>⚠️ <b>LƯU Ý NIÊN HẠN:</b> Điểm số lập cực hiện tại ghi nhận là ${item.diemTongHop}pt do ngôi nhà bị hung tinh chiếu Ngọn chấn nhiễu ngắn hạn ([${item.satTinhs.map(s => s.ten).join(", ")}]). Trạch đất gốc vẫn vượng tốt, qua năm hạn sao dời đi trường khí sẽ cát hanh phục hồi mạnh mẽ.`
+            : `<br><br>✨ <b>THIÊN THỜI KHÍ THUẦN:</b> Phương vị sạch bóng hoàn toàn đại sát tinh lưu niên trong năm ${namKhaoSatThucTe}, khí trường cực kỳ kiên cố an tịnh.`;
+
+        if (isCatPurpose) {
+            if (item.diemTongHop >= 70) {
+                statusText = `🏆 ĐẠI CÁT CHÍNH TÔNG — ĐẮC KHÍ TOÀN VẸN`;
+                popExplanation = `Phương vị hoàn hảo. Hướng lớn đạt chuẩn nạp khí lành vượng trạch dài lâu cho trạch chủ phối quẻ mệnh [${item.cungTrạch}].${giaiThichSaoHạnCard}`;
+                popSolution = `Giải pháp: Giữ cho không gian sạch sẽ, thông thoáng để tiếp nạp cát khí từ bên ngoài một cách tối đa.`;
+            } 
+            else if (item.diemTongHop < 50 && countSonXanh > 0) {
+                statusText = `⚠️ ĐỊA MẠCH GỐC TỐT — NIÊN HẠN PHẠM SÁT TINH`;
+                popExplanation = `Biện chứng Phong thủy Số: Hướng phối hợp bản mệnh rất tốt, có phân độ Sơn vị hẹp báo Cát lợi (Xanh). Điểm số bị kéo thấp xuống hoàn toàn do hệ thống sát tinh phần Ngọn quấy nhiễu.${giaiThichSaoHạnCard}`;
+                popSolution = `Lời khuyên: Gia chủ vẫn hoàn toàn đủ điều kiện quy hoạch lâu dài tại đây. Hãy tiến hành vi chỉnh thiết kế đặt tâm nạp khí lọt khít vào phân độ Sơn vị màu xanh và áp dụng vật phẩm hóa giải.`;
+            }
+            else if (countSonDo === 3 || item.diemTongHop < 50) {
+                statusText = `⚠️ KHÍ TRƯỜNG SUY KIỆT — LƯU Ý HÓA GIẢI`;
+                popExplanation = `Cảnh báo: Phương vị này cấu trúc hình học nội tại suy kiệt, hoặc vướng phải niên hạn xấu khiến năng lượng sụt giảm đáng kể.${giaiThichSaoHạnCard}`;
+                popSolution = `Lời khuyên: Gia chủ nên ưu tiên dịch chuyển tâm ngắm sang các tọa độ Cát bên cạnh. Trong trường hợp diện tích không cho phép và bắt buộc phải dùng, hãy áp dụng ngay mật pháp điều tiết bằng ngũ hành tương sinh.`;
+            }
+            else {
+                statusText = `🟢 TRƯỜNG KHÍ BÌNH HÒA — AN TÂM ĐỊNH VỊ`;
+                popExplanation = `Trường khí khu vực đạt độ ổn định trung tính tốt. Cấu trúc vi phân nội tại cân bằng, ổn định khí trường.${giaiThichSaoHạnCard}`;
+                popSolution = `Giải pháp: Có thể an tâm sử dụng quy hoạch công năng, phối hợp thiết kế nội thất hài hòa.`;
+            }
+        } else {
+            if (item.diemTongHop >= 75) {
+                statusText = `🏆 ĐẮC CÁCH DIỆU PHÁP TRẤN SÁT HOÀN HẢO`;
+                popExplanation = `Tọa Hung Trấn Sát hoàn mỹ. Đặt uế cục chính xác vào dải hung vị này giúp phong tỏa hoàn toàn ác tính của Thần sát mạch đất.${giaiThichSaoHạnCard}`;
+                popSolution = `Giải pháp: Cấu trúc lập cực lý tưởng về mặt kiến trúc phong thủy, giữ nguyên vị trí công năng.`;
+            } else if (countSonDo > 0) {
+                statusText = `⚠️ TỌA HUNG XUNG ĐỘT — KHÍ TRƯỜNG CHƯA ĐỒNG TRỤC`;
+                popExplanation = `Mặc dù hướng lớn phù hợp làm nơi xả uế khí, nhưng một vài phân châm Sơn vị hẹp bên trong lại đang giữ dòng năng lượng sạch cần bảo vệ (báo đỏ).${giaiThichSaoHạnCard}`;
+                popSolution = `Lời khuyên điều tiết: Chủ động tịnh tiến thiết bị xả uế lệch tâm, đặt đè chính xác lên các Sơn vị báo màu xanh tốt cho trấn sát, trả lại không gian thanh khiết cho Sơn vị đỏ.`;
+            } else {
+                statusText = `🟢 PHÂN BỔ TRẤN SÁT CHUẨN MỰC TỰ NHIÊN`;
+                popExplanation = `Khí trường khu vực đạt độ cô lập ổn định. Đảm bảo công năng uế thải vận hành trơn tru mà không làm ảnh hưởng sang không gian kề cận.${giaiThichSaoHạnCard}`;
+                popSolution = `Giải pháp: Chấp nhận được hoàn toàn về mặt phân bổ mặt bằng hình học kiến trúc.`;
+            }
+        }
+
+        const safePopTitle = escapeStr(`Biện giải Trạch Pháp: Hướng ${item.name} [${item.cungTrạch}]`);
+        const safePopDesc = escapeStr(popExplanation);
+        const safePopSol = escapeStr(popSolution);
+
+        const div = document.createElement('div');
+        div.className = `direction-item`;
+        div.style.cssText = `border-left:4px solid ${scoreColor}; background:${bgKhung}; margin-bottom:12px; padding:12px; border-radius:10px; width:100%; box-sizing:border-box; display:flex; flex-direction:column; gap:8px; transition: all 0.3s; font-family:sans-serif;`;
+        
+        div.innerHTML = `
+            <div class="item-info" style="width:100%;">
+                <div style="color:#fff; font-size:0.95rem; margin-bottom:6px; font-weight:bold; display:flex; justify-content:space-between; align-items:center;">
+                    <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; cursor:pointer;" onclick="showExplanation('${safePopTitle}', '${safePopDesc}', '${safePopSol}')">
+                        Hướng ${item.name} ➔ <span style="color:${scoreColor};">${item.cungTrạch}</span>
+                    </span>
+                    <span style="font-size:0.8rem; padding:2px 8px; border-radius:6px; font-weight:800; background:rgba(0,0,0,0.3); color:${scoreColor}; border:1px solid ${scoreColor}; white-space:nowrap; cursor:pointer;" onclick="showExplanation('${safePopTitle}', '${safePopDesc}', '${safePopSol}')">
+                        ${item.diemTongHop} PT
+                    </span>
+                </div>
+                
+                <div style="margin-bottom:8px; font-size:0.7rem; overflow-x:auto;" class="no-scrollbar">
+                    <span style="color:#dfb76c; font-weight:500;">24 SƠN VỊ THỰC THỜI:</span> ${sonHTML}
+                </div>
+                
+                <div style="margin-bottom:6px;">
+                    <span style="color:#dfb76c; font-size:0.7rem; font-weight:500;">72 HẬU ĐỊA MẠCH ĐỒNG BỘ MỐC CỐ ĐỊNH:</span>
+                    ${html3HauMạch}
+                </div>
+                
+                <div style="color:${scoreColor}; font-size:0.82rem; font-weight:bold; padding-top:4px; line-height:1.4; display:flex; align-items:center; gap:4px; cursor:pointer;" onclick="showExplanation('${safePopTitle}', '${safePopDesc}', '${safePopSol}')">
+                    <span>${statusText}</span>
+                </div>
+            </div>
+            
+            <button class="btn-rotate" onclick="if(typeof triggerGhostNeedle === 'function') triggerGhostNeedle(${item.angle})" style="background:#222; color:var(--gold, #dfb76c); border:1px solid var(--gold, #dfb76c); padding:8px; border-radius:6px; font-weight:bold; cursor:pointer; width:100%; font-size:0.85rem; text-align:center; margin-top:4px;">Xoay thử la bàn số</button>
+        `;
+        directionsContainerEl.appendChild(div);
+    });
+}
+
+// =========================================================================
+// 🔮 PHÂN HỆ ĐIỀU KHÍ: MÔ PHỎNG XOAY KIM ẢO CHUẨN ĐỒNG TRỤC TRỌNG TÂM
+// =========================================================================
+/**
+ * [ID: UI-SIMULATE-ROTATE-01] Hàm triggerGhostNeedle
+ * Mô phỏng tia hướng ảo tuyến vàng la bàn số, tính sai số góc thực tế với góc ảo 
+ * để dẫn dắt hành vi người dùng vi chỉnh không gian.
+ */
+function triggerGhostNeedle(angle) {
+    targetAngle = angle; // Ghi nhận góc độ mô phỏng vào bộ nhớ hệ thống
+    
+    const ghost = document.getElementById('ghostNeedle');
+    if (ghost) {
+        ghost.style.display = 'block';
+        ghost.style.opacity = "1";
+        // Avalon cũ loại bỏ để chuẩn bị cho chu trình quét cảm biến mới
+        ghost.classList.remove('matched-pulse'); 
+        ghost.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+    }
+    
+    // --- ĐỒNG BỘ TOÁN PHÁP CHÍNH TÔNG CỦA TRỤC THỜI GIAN ĐỘNG & BỌC LÓT DOM ---
+    const dayStr = document.getElementById('birthDay')?.value || "";
+    const monthStr = document.getElementById('birthMonth')?.value || "";
+    const yearStr = document.getElementById('birthYear')?.value || "";
+
+    const txtSurveyYear = document.getElementById('surveyYear');
+    const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
+
+    let namAmMệnhChủ = new Date().getFullYear();
+    if (dayStr && monthStr && yearStr && yearStr.length === 4) {
+        const d = parseInt(dayStr, 10);
+        const m = parseInt(monthStr, 10);
+        const y = parseInt(yearStr, 10);
+        namAmMệnhChủ = (m < 2 || (m === 2 && d < 4)) ? y - 1 : y;
+    }
+
+    let tinhChuMenh = (typeof chủMệnh !== 'undefined' && chủMệnh) ? chủMệnh : "Khảm";
+    if (dayStr && monthStr && yearStr && yearStr.length === 4) {
+        if (typeof tínhCungPhi === 'function') {
+            tinhChuMenh = tínhCungPhi(parseInt(yearStr, 10), parseInt(monthStr, 10), parseInt(dayStr, 10), document.getElementById('gender')?.value || 'male');
+        }
+    }
+
+    const mucDich = document.getElementById('purpose')?.value || 'house';
+    const tongHop = tinhDiemTongHop(tinhChuMenh, angle, namKhaoSatThucTe, mucDich, namAmMệnhChủ, 0);
+    
+    let colorStyle = "#ff3b30"; 
+    if (tongHop.diem >= 72) {
+        colorStyle = "#30d158"; 
+    } else if (tongHop.diem >= 50) {
+        colorStyle = "#ff9f0a"; 
+    }
+    
+    let sơnThử = tìmSơnHướng(angle);
+    
+    const detailBoxEl = document.getElementById('detailBox') || (typeof detailBox !== 'undefined' ? detailBox : null);
+    if (detailBoxEl) {
+        detailBoxEl.style.borderLeftColor = colorStyle;
+        detailBoxEl.style.background = "rgba(255,255,255,0.05)";
+        detailBoxEl.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 8px;">
+                <span style="color:#dfb76c; font-weight: bold; font-size: 0.9rem;">◆ ĐANG MÔ PHỎNG XOAY: ${angle}°</span>
+                <span id="ghost-score-badge" style="background: ${colorStyle}; color: #000; padding: 2px 10px; border-radius: 12px; font-weight: bold; font-size: 0.8rem; transition: all 0.3s;">PT: ${tongHop.diem}pt</span>
+            </div>
+            <div id="ghost-advice-text" style="color:#ddd; font-size: 0.9rem; line-height: 1.5; text-align: left; transition: all 0.3s;">
+                Tia vàng ảo đang định vị nạp khí tại tọa độ <strong>Sơn ${sơnThử}</strong>.<br>
+                <span style="color:#aaa; font-size:0.82rem; display:block; margin-top:5px;">
+                    👉 Hãy cầm điện thoại xoay người từ từ sao cho <b>Kim Đỏ thực tế khớp thẳng trục với tia Vàng ảo</b> để đón đúng cát khí.
+                </span>
+            </div>
+        `;
+    }
+    
+    // Gọi cập nhật lại giao diện UI la bàn thực thời để kiểm tra trạng thái khớp kim ngay lập tức
+    if (typeof updateCompassUI === 'function') {
+        updateCompassUI(typeof currentHeading !== 'undefined' ? currentHeading : angle);
+    }
+}
+
+// ====================== ĐỊNH VỊ 24 SƠN ĐỒNG BỘ TUYỆT ĐỐI THEO CONFIG TĨNH ======================
+function tìmSơnHướng(degree) {
+    const normalized = ((degree % 360) + 360) % 360;
+    const match = SON_24_CONFIG.find(s => {
+        if (s.min > s.max) return normalized >= s.min || normalized < s.max;
+        return normalized >= s.min && normalized < s.max;
+    });
+    return match ? match.name : "Tý";
+}
+
+// === DỮ LIỆU HUYỀN KHÔNG PHI TINH - CẬP NHẬT CHUẨN TRỌNG SỐ THỜI VẬN 9 (HOÀN CHỈNH) ===
+const VAN_DATA = {
+    1: { 
+        'N': { sao: "Nhất Bạch", hanh: "Thủy", loai: "best", y_nghia: "Thủy khí đương vượng, đại cát về đường trí tuệ, quan lộc và tài lộc tăng trưởng." }, 
+        'NE': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Phạm bệnh tinh, dễ phát sinh bệnh tật, thị phi, bất lợi cho sức khỏe gia đạo." }, 
+        'E': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Năng lượng bình hòa, thích hợp cho các công việc liên quan đến trí óc và sáng tạo." }, 
+        'SE': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Cát tinh văn xương, trợ lực rất tốt cho đường học hành, thi cử và danh tiếng." }, 
+        'S': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Phạm Ngũ Hoàng Đại Sát, đại hung tinh tích tụ tai họa, tuyệt đối tránh động thổ." }, 
+        'SW': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Vượng khí quyền lực, đường công danh sự nghiệp và địa vị xã hội ổn định." }, 
+        'W': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Thoái khí hung tinh, dễ gặp họa lừa gạt, tranh chấp lời nói và hao hụt của cải." }, 
+        'NW': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Cát tinh tích lũy tài lộc, gia đạo bình an, kinh tế phát triển ổn định." } 
+    },
+    2: { 
+        'N': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Bệnh phù tinh chiếu hướng, đề phòng các bệnh về hệ tiêu hóa và khí huyết." }, 
+        'NE': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Dễ phát sinh tranh chấp, mâu thuẫn lời nói, vận trình cần sự thận trọng." }, 
+        'E': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Văn xương tinh trợ lực, sự nghiệp có bước tiến mới, học vấn phát triển tốt." }, 
+        'SE': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Sát tinh đại hung độc hại, tránh mọi tác động lực hoặc sửa chữa tại phương vị này." }, 
+        'S': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Có cơ hội đón quý nhân trợ giúp, quyền lực nội tại được củng cố vững chắc." }, 
+        'SW': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Đề phòng tiểu nhân quấy phá, hao tổn tài sản ngoài ý muốn hoặc tai bay vạ gió." }, 
+        'W': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài lộc tích lũy tốt, các hoạt động kinh doanh buôn bán diễn ra thuận lợi." }, 
+        'NW': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Sinh khí tinh hướng về tương lai, đại cát tường, danh vọng cao, hỷ sự liên miên." } 
+    },
+    3: { 
+        'N': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Khí trường mang tính cạnh tranh cao nhưng dễ giúp chủ nhà khẳng định vị thế." }, 
+        'NE': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Đầu óc minh mẫn, tư duy sắc bén, có lợi cho việc nghiên cứu và văn chương." }, 
+        'E': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Phương vị tích tụ sát khí nặng, kỵ lập hướng công trình hoặc cải tạo đập phá." }, 
+        'SE': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Năng lượng củng cố công danh, giúp giữ vững tay chèo trong sự nghiệp." }, 
+        'S': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Khí trường bất ổn, dễ dính líu đến các rắc rối pháp lý hoặc thị phi tai tiếng." }, 
+        'SW': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Bình ổn dòng tài sản gia đình, vợ chồng hòa thuận, gia đạo êm ấm." }, 
+        'W': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Vượng khí lan tỏa mạnh mẽ, đại phú đại quý, mưu sự dễ thành công." }, 
+        'NW': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Gia tăng vận nhân duyên tốt đẹp, vượng quý nhân và đường học vấn." } 
+    },
+    4: { 
+        'N': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Khí trường thanh cao, chủ về thông minh, học vấn hanh thông, danh tài vẹn toàn." }, 
+        'NE': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Hung tinh sát khí cực độ, cần giữ phương vị này yên tĩnh, không nên động thổ." }, 
+        'E': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Vượng quý nhân tinh, công việc làm ăn có sự nâng đỡ, tiến triển thuận lợi." }, 
+        'SE': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Thất vận tinh chiếu, cần đề phòng hao tài tốn của và tiểu nhân dèm pha." }, 
+        'S': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài lộc dồi dào, kinh tế trạch đất phát triển ở mức ổn định, bền vững." }, 
+        'SW': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Đón nhận sinh khí cường đại, gia tăng hỷ sự và lan tỏa tiếng tăm đi xa." }, 
+        'W': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Trí tuệ phát tiết, quan lộc và đường công danh có cơ hội thăng tiến lớn." }, 
+        'NW': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Khí trường suy yếu, cẩn thận ảnh hưởng tiêu cực đến sức khỏe các thành viên." } 
+    },
+    5: { 
+        'N': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Chính vị đại hung tai họa, trường khí xung sát, cần giữ tĩnh tuyệt đối." }, 
+        'NE': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Năng lượng bổ trợ cho quyền lực, công danh sự nghiệp giữ được thế cân bằng." }, 
+        'E': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Đề phòng nội bộ phát sinh tranh chấp hoặc bị tiểu nhân quấy phá sau lưng." }, 
+        'SE': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Mạch tài lộc chạy đều, vận trình sự nghiệp có những bước tiến triển rõ rệt." }, 
+        'S': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Đón nhận đại cát khí, vượng đường danh tiếng, gia đạo có nhiều tin vui." }, 
+        'SW': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Kích hoạt trí tuệ phát triển, đón nhận quý nhân phù trợ lúc khó khăn." }, 
+        'W': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Sức khỏe trạch thể kém, cần bố trí cấu trúc không gian thông thoáng để hóa sát." }, 
+        'NW': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Trạng thái khí trường trung tính, mọi mưu sự lớn cần có lòng kiên nhẫn." } 
+    },
+    6: { 
+        'N': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Vượng khí cho người làm quản lý, gia tăng quyền thế và uy tín cá nhân." }, 
+        'NE': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Khí mạch tiềm ẩn nguy cơ tranh chấp lời nói, kiêng kị việc kiện tụng." }, 
+        'E': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Tài lộc dồi dào, tạo nền tảng tốt cho các hoạt động đầu tư lâu dài." }, 
+        'SE': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Đón nhận cát khí đương vượng, vượng nhân duyên và mở rộng mối quan hệ." }, 
+        'S': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Kích hoạt cung trí tuệ, có lợi cho đường học hành, thi cử và quan lộc." }, 
+        'SW': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Năng lượng sức khỏe thiếu ổn định, cần chú ý giữ gìn môi trường sống." }, 
+        'W': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Khí trường trung tính, chú ý lời ăn tiếng nói để tránh thị phi vô căn cứ." }, 
+        'NW': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Trường khí thanh tịnh, mang lại may mắn lớn cho đường học vấn và khoa bảng." } 
+    },
+    7: { 
+        'N': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Sát khí tiềm ẩn, dễ gây thất thoát tiền bạc hoặc vướng vào họa miệng lưỡi." }, 
+        'NE': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Giữ vững nền tảng tài chính, công việc diễn ra đều đặn, ít biến động." }, 
+        'E': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Danh vọng đỉnh cao, khí trường hanh thông mang lại nhiều tài lộc bất ngờ." }, 
+        'SE': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", "y_nghia": "Đón dòng sinh khí tốt về nhân sự, tư duy sáng suốt, có quý nhân vạch đường." }, 
+        'S': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Trạch khí âm hàn suy yếu, cần chú ý nâng cao sức đề kháng cho cơ thể." }, 
+        'SW': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Khí trường trung bình, cần khéo léo trong giao tiếp xã hội để tránh hiểu lầm." }, 
+        'W': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Tư duy nhạy bén, học tập và tiếp thu kiến thức mới đạt hiệu quả cao." }, 
+        'NW': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Phạm Ngũ Hoàng đại kỵ, tuyệt đối không được tác động lực mạnh phá vỡ khí trường." } 
+    },
+    8: { 
+        'N': { sao: "Bát Bạch", hanh: "Thổ", loai: "good", y_nghia: "Dòng tài lộc duy trì ổn định, gia đạo nhìn chung êm ấm và hưng thịnh." }, 
+        'NE': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Đón nhận vận may lớn, danh tiếng vang xa, mưu cầu tài lộc dễ đắc ý." }, 
+        'E': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Trí tuệ mẫn tiệp, hỗ trợ rất tốt cho đường quan lộ và công việc thuận buồm xuôi gió." }, 
+        'SE': { sao: "Nhị Hắc", hanh: "Thổ", loai: "bad", y_nghia: "Bệnh tinh đóng cung, chú ý phòng ngừa các chứng bệnh phát sinh đột ngột." }, 
+        'S': { sao: "Tam Bích", hanh: "Mộc", loai: "neutral", y_nghia: "Năng lượng ở mức trung bình, tiến trình công việc cần sự kiên trì ổn định." }, 
+        'SW': { sao: "Tứ Lục", hanh: "Mộc", loai: "good", y_nghia: "Hỗ trợ tốt cho đường danh tiếng, học hành khoa bảng đạt kết quả như ý." }, 
+        'W': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Phương vị phạm sát khí Ngũ Hoàng, kỵ các hoạt động đào bới, sửa chữa." }, 
+        'NW': { sao: "Lục Bạch", hanh: "Kim", loai: "good", y_nghia: "Quyền lực nội tại tăng cao, củng cố vị thế vững vàng trong công việc." } 
+    },
+    9: { 
+        'N': { sao: "Nhất Bạch", hanh: "Thủy", loai: "good", y_nghia: "Trí tuệ đương vận, cát khí tăng trưởng, quý nhân tương trợ phát đạt mạnh mẽ." }, 
+        'NE': { sao: "Thất Xích", hanh: "Kim", loai: "bad", y_nghia: "Sao thất vận dồn tụ khí xấu, đề phòng phát sinh thị phi, tranh chấp hao tổn tài sản." }, 
+        'E': { sao: "Lục Bạch", hanh: "Kim", loai: "neutral", y_nghia: "Khí trường bình hòa, tài lộc và công danh tích lũy ở mức độ chậm nhưng chắc chắn." }, 
+        'SE': { sao: "Nhị Hắc", hanh: "Thổ", loai: "neutral", y_nghia: "Bệnh tinh gặp thời vận 9 làm giảm bớt tính hung độc, tuy nhiên cần lưu ý bảo vệ hệ tiêu hóa." }, 
+        'S': { sao: "Cửu Tử", hanh: "Hỏa", loai: "best", y_nghia: "Tôn quý tối thượng, Hoàng kim đại vượng khí Thời vận 9, chủ quản đại phú quý lâm môn." }, 
+        'SW': { sao: "Bát Bạch", hanh: "Thổ", loai: "neutral", y_nghia: "Sao thoái khí bước vào chu kỳ suy giảm năng lượng, tài vận chuyển sang trạng thái tích lũy chậm." }, 
+        'W': { sao: "Ngũ Hoàng", hanh: "Thổ", loai: "worst", y_nghia: "Chính vị Ngũ Hoàng Đại Sát cực hung, tuyệt đối kỵ động thổ, khoan đục hay cải tạo cấu trúc lớn." }, 
+        'NW': { sao: "Tứ Lục", hanh: "Mộc", loai: "bad", y_nghia: "Sao suy thoái khí, cần đề phòng vận trình học hành thi cử xuất hiện dấu hiệu trì trệ." } 
+    }
+};
+
+function sinhLuanGiaiThienThoi(code, overrideYear) {
+    let currentYear;
+    if (overrideYear) {
+        currentYear = parseInt(overrideYear, 10);
+    } else {
+        const txtSurveyYear = document.getElementById('surveyYear');
+        currentYear = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : layNamKhaoSatThienVan();
+    }
+    let vanSo = Math.floor((currentYear - 1864) / 20) % 9 + 1;
+    const item = VAN_DATA[vanSo]?.[code];
+    if (!item) return `<p style="color: #666; padding: 10px;">Chưa có dữ liệu thiên thời cho phương vị này.</p>`;
+
+    const getAdvice = (loai) => {
+        const adviceMap = {
+            best: "👉 Cát khí đương vượng, ưu tiên lập kế hoạch đại sự, khai trương, nhập trạch.",
+            good: "👉 Vận khí hanh thông, trường khí có sự tăng trưởng, thích hợp để phát triển học tập.",
+            neutral: "👉 Khí trường bình hòa, giữ vững ổn định và thận trọng trong các quyết định.",
+            bad: "👉 Tiết khí suy thoái, cẩn thận trong các mối quan hệ xã hội và quản lý tiền của.",
+            worst: "⚠️ ĐẠI HUNG SÁT TINH: Tuyệt đối kỵ việc động thổ, khoan đục hay phá dỡ cấu trúc phương vị này."
+        };
+        return adviceMap[loai] || "";
+    };
+    const colorStar = { best: "#30d158", good: "#aaff00", neutral: "#e0e0e0", bad: "#ff9f0a", worst: "#ff3b30" }[item.loai] || "#fff";
+
+    return `
+        <div style="background: rgba(255,255,255,0.01); padding: 15px; border-radius: 12px; border: 1px solid rgba(223,183,108,0.2); margin-top: 15px;">
+            <div style="color: var(--gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 5px; font-weight:bold;">
+                ◆ HUYỀN KHÔNG VẬN ${vanSo} — NIÊN ĐỘ LỊCH PHÁP ${currentYear}
+            </div>
+            <div style="margin: 5px 0 10px 0; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 10px;">
+                <span style="color: ${colorStar}; font-size: 1.2rem; font-weight: 800;">${item.sao}</span>
+                <span style="color: #aaa; font-size: 0.85rem; margin-left: 8px;">• Ngũ Hành: ${item.hanh}</span>
+            </div>
+            <div style="color: #ddd; font-size: 0.88rem; line-height: 1.6; margin-bottom: 12px;">${item.y_nghia}</div>
+            <div style="color: ${colorStar}; font-size: 0.85rem; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 6px; border-left: 3px solid ${colorStar}; font-weight:500;">
+                ${getAdvice(item.loai)}
+            </div>
+        </div>`;
+}
+const DATA_HOA_GIAI = {
+    'Tuyệt Mệnh': {
+        'Mộc': { phap: 'Tuyệt Mệnh sát thuộc Kim trực tiếp khắc hại bản mệnh Mộc của gia chủ, lại tọa lạc ở phương vị \${phuongHuong} (\${hanhPhuongVi}). Đây là thế trận cực hung "Quỷ Sai Lộ Xương", tàn phá nghiêm trọng cả sức khỏe lẫn tài lộc, khiến sự nghiệp dễ bị gián đoạn, gia đạo bất an.', vat: 'Sử dụng vật phẩm hành Thủy cao cấp như <strong>Hồ Lô Thủy Tinh Xanh Lam</strong> hoặc <strong>Bình Nước An Nhẫn Phong Thủy</strong> đặt tại phương vị này. Thủy đóng vai trò cầu nối chuyển hóa liên hoàn (Kim sát sinh Thủy - Thủy tương sinh bồi đắp Mộc mệnh), vừa hóa giải triệt để tính hung ác của Tuyệt Mệnh Kim, vừa quay lại nuôi dưỡng bản thể chủ mệnh phát triển viên mãn, mang lại vượng khí lâu dài.' },
+        'Hỏa': { phap: 'Tuyệt Mệnh Kim sát gặp Cung Mệnh Hỏa của gia chủ. Mặc dù Hỏa mệnh có thể khắc chế được Kim sát, nhưng bản thể gia chủ sẽ bị hao tổn nguyên khí và kiệt quệ sinh lực rất nặng khi phải gồng gánh chống chọi lâu dài với Sát tinh tại phương vị này.', vat: 'Bố trí linh vật thuộc hành Mộc tinh khiết như <strong>Hồ Lô Gỗ Đào Lâu Năm Kinh Chú</strong> hoặc <strong>Gậy Như Ý Gỗ Sưa</strong>. Mộc đóng vai trò chất xúc tác làm dịu sự xung đột mạch khí giữa phương vị và bản mệnh, đồng thời gia tăng Hỏa lực chính khí nội tại giúp gia chủ thiêu rụi triệt để tà khí Tuyệt Mệnh, chuyển hung thành cát.' },
+        'Thổ': { phap: 'Tuyệt Mệnh Kim sát hút cạn sinh khí từ Cung Mệnh Thổ của gia chủ (Thổ phải sinh xuất nuôi Kim hung tinh), khiến gia đạo lâm vào thế hao tài tốn của, sức khỏe suy kiệt lâm bệnh hiểm nghèo.', vat: 'Đặt một <strong>Cặp Tỳ Hưu bằng Đá Thạch Anh Đỏ hoặc Hồng</strong> (thuộc hành Hỏa) tại vị trí này. Năng lượng Hỏa thần từ đá tự nhiên sẽ trực tiếp thiêu đốt, áp chế và tiêu diệt Tuyệt Mệnh Kim sát, đồng thời Hỏa sinh Thổ bồi hoàn lại năng lượng gốc bệ vững cho bản mệnh gia chủ, giúp gia đạo vững vàng vượt qua tai ương.' },
+        'Kim': { phap: 'Tuyệt Mệnh Kim sát đồng hành cùng bản mệnh Kim tạo nên thế trận "Tỷ Kiếp Trợ Sát", làm sát khí hệ Kim kết tụ lại dồn dập, đẩy mạnh họa phá sản và tai nạn bất ngờ lên mức cực đại.', vat: 'Bài trí <strong>Quả Cầu Thạch Anh Đen</strong> hoặc <strong>Đĩa Thất Tinh Thạch Anh Khói</strong> (thuộc hành Thủy) để tiết hao, rút cạn năng lượng dư thừa của Tuyệt Mệnh Kim sát một cách êm dịu nhất mà không làm tổn hại hay xung đột đến bản mệnh Kim của gia chủ.' },
+        'Thủy': { phap: 'Gia chủ mệnh Thủy được Tuyệt Mệnh Kim sinh xuất, nhìn qua ngỡ là tốt nhưng thực tế đây là dòng Thủy nhiễm tạp chất sát khí nặng nề, gây rối loạn tâm trí, u uất và dính líu pháp lý.', vat: 'Bố trí một <strong>Tháp Văn Xương Đá Thạch Anh Xanh Lục</strong> hoặc các chậu <strong>Cây Xanh Thủy Sinh Vượng Khí</strong> (thuộc hành Mộc) để hút sạch dòng nước lũ chứa sát khí, lọc sạch uế khí, biến nguy thành cơ an lành, giúp gia chủ tâm thái sáng suốt, vượng tài.' }
+    },
+    'Ngũ Quỷ': {
+        'Kim': { phap: 'Ngũ Quỷ Hỏa tinh thiêu đốt trực diện Cung Mệnh Kim của gia chủ, tạo thế trận "Lửa Thiêu Cốt Tủy", sinh ra tai họa hoạn nạn ập đến bất ngờ, thị phi quấy phá khốc liệt và hao tán tài sản thần tốc.', vat: 'Đặt một <strong>Đĩa Thất Tinh Thạch Anh Vàng</strong> hoặc <strong>Tượng Tỳ Hưu Ngọc Hoàng Long Nguyên Khối</strong> (thuộc hành Thổ). Thổ đóng vai trò lá chắn tối thượng hút hết hỏa khí hung tàn của Ngũ Quỷ, sau đó Thổ lại quay sang tương sinh chuyển hóa bồi bổ năng lượng cường đại cho mệnh Kim của chủ nhà.' },
+        'Mộc': { phap: 'Ngũ Quỷ Hỏa tinh rút cạn tinh huyết năng lượng của Cung Mệnh Mộc (Mộc phải sinh xuất cho Hỏa sát), khiến gia chủ hao mòn trí lực, kinh doanh thua lỗ, gia đạo lục đục không yên.', vat: 'Treo <strong>Chuông Gió Đồng Pháp Khí 6 Thanh</strong> kết hợp đặt <strong>Tháp Văn Xương Bằng Đồng Nguyên Khối</strong> (thuộc hành Kim). Kim lực mạnh mẽ sẽ chặt đứt mạch liên kết tà tính của Hỏa tinh tại phương vị này, giải phóng bản mệnh Mộc khỏi thế kiệt quệ.' },
+        'Thủy': { phap: 'Cung Mệnh Thủy xung đột trực diện kịch liệt với Ngũ Quỷ Hỏa tinh, hình thành cục diện đại kỵ "Thủy Hỏa Vị Tế", làm dòng khí trong nhà đảo điên, vợ chồng ly tán, tinh thần bất an.', vat: 'Sử dụng vật phẩm chứa linh khí Mộc cao như <strong>Hồ Lô Gỗ Đào Tự Nhiên Thần Chú</strong> hoặc <strong>Tranh Trúc Chỉ Phong Thủy</strong> tại phương vị này để chuyển hóa tương khắc thành thế sinh sát thuần khiết: Thủy sinh Mộc - Mộc sinh Hỏa (thuần hóa thuần thục ác tính Ngũ Quỷ thành ngọn lửa sinh hoạt lành tính).' },
+        'Hỏa': { phap: 'Ngũ Quỷ Hỏa kết hợp với bản mệnh Hỏa tạo thành ngọn lửa hung tàn thiêu rụi toàn bộ hậu vận, khiến tính khí thành viên gia đình nóng nảy thất thường, dễ vướng vào tranh chấp luật pháp bĩ cực.', vat: 'Bố trí một <strong>Lu Nước Phong Thủy Tuần Hoàn Màu Đen</strong> hoặc đặt <strong>Quả Cầu Thạch Anh Tím trên Đế Thạch Anh Thô</strong> (thuộc hành Thổ) giúp hấp thu toàn bộ nhiệt lượng tiêu cực dư thừa, bình ổn hoàn toàn trật tự năng lượng.' },
+        'Thổ': { phap: 'Mệnh Thổ vô tình hấp thụ năng lượng Hỏa từ Ngũ Quỷ tinh. Dù là mối quan hệ sinh nhưng do nạp phải dòng khí độc hại của sát tinh, gia chủ dễ rơi vào trạng thái trì trệ, suy nghĩ tiêu cực, chịu nhiều u uất.', vat: 'Sử dụng <strong>Gương Bát Quái Gỗ Đào</strong> ở cửa hoặc đặt <strong>Cặp Kỳ Lân Bằng Đồng</strong> (thuộc hành Kim) tại phương vị này nhằm tiết giảm triệt để Thổ khí đã bị nhiễm độc tà khí, trả lại sự thanh tịnh cho dương trạch.' }
+    },
+    'Lục Sát': {
+        'Hỏa': { phap: 'Lục Sát Thủy tinh dập tắt hoàn toàn sinh hỏa Cung Mệnh của gia chủ, sinh ra thế trận "Hàn Băng Thấm Cốt", gây chứng đau đầu kinh niên, mâu thuẫn nội bộ gia đình gay gắt và cắt đứt mạch tình duyên nhân duyên tốt đẹp.', vat: 'Bố trí các chậu cây lớn như <strong>Cây Phát Tài Núi</strong> hoặc bài trí <strong>Vật Phẩm Gỗ Trầm Hương Cao Cấp</strong> (thuộc hành Mộc) tại góc này. Mộc lực sẽ như một chiếc máy bơm hút cạn dòng nước độc Lục Sát Thủy tinh, sau đó chuyển hóa sinh khí Mộc sinh Hỏa tiếp ứng bồi bổ trực tiếp cho bản mệnh gia chủ.' },
+        'Kim': { phap: 'Cung Mệnh Kim bị Lục Sát Thủy bào mòn rò rỉ khí lực nghiêm trọng, khiến tiền tài trong nhà thất thoát không rõ nguyên nhân, đầu tư thua lỗ trắng tay.', vat: 'Sử dụng <strong>Ấn Rồng Thạch Anh Vàng</strong> hoặc đặt <strong>Khối Đá Thạch Anh Vàng Tự Nhiên</strong> (thuộc hành Thổ) để đắp đê chắn sóng, trấn át hoàn toàn sự rò rỉ năng lượng của mạch Kim qua dòng Thủy sát.' },
+        'Thổ': { phap: 'Mệnh Thổ của gia chủ phải vắt kiệt sức lực để ngăn chặn Lục Sát Thủy tinh quấy phá phương vị, dẫn tới bản thể bị kiệt quệ, sự nghiệp gặp bế tắc và tiểu nhân hãm hại sau lưng.', vat: 'Treo một thanh <strong>Kiếm Gỗ Đào Pháp Khí Thất Tinh</strong> hoặc bài trí <strong>Tượng Tỳ Hưu bằng Gỗ Đào quý</strong> (thuộc hành Mộc). Mộc sẽ đứng ra thu nạp mạch khí Thủy của Lục Sát, nới lỏng thế bóp nghẹt áp lực lên Thổ mệnh gia chủ.' },
+        'Mộc': { phap: 'Mệnh Mộc được Thủy tương sinh, nhưng Lục Sát Thủy lại mang âm khí quá nặng, tựa như dòng nước ngập úng làm thối rữa rễ cây, gây ra những tai tiếng thị phi từ trên trời rơi xuống.', vat: 'Thiết lập hệ thống <strong>Đèn Chiếu Sáng Quang Phổ Ấm Cường Độ Cao</strong> (thuộc hành Hỏa) kết hợp các <strong>Thảm Trải Màu Đỏ/Hồng</strong> tại phương vị này nhằm dùng dương hỏa thiêu đốt, sấy khô tính chất âm hàn, lạnh lẽo hung hiểm của Thủy sát.' },
+        'Thủy': { phap: 'Lục Sát Thủy tinh hòa cùng Cung Mệnh Thủy tạo thành thế lũ quét cuốn trôi hoàn toàn gia sản, của cải tích lũy và phá vỡ sự bình yên vốn có.', vat: 'Bố trí <strong>Tháp Cây Xanh Vạn Niên Thanh Thủy Sinh</strong> hoặc đặt <strong>Cặp Tỳ Hưu bằng Gỗ Đào Kinh Chú</strong> (thuộc hành Mộc) để làm vật trung gian hút bớt hung tính dữ dội của dòng nước lũ phong thủy này.' }
+    },
+    'Họa Hại': {
+        'Thủy': { phap: 'Họa Hại Thổ sát vùi lấp hoàn toàn mạch tài lộc và Cung Mệnh Thủy của gia chủ, bóp nghẹt các cơ hội thăng tiến, khiến cuộc sống ngập tràn rủi ro vụn vặt bực dọc.', vat: 'Treo một chiếc <strong>Chuông Gió Bằng Đồng Kim Loại Cực Nhạy</strong> kết hợp đặt <strong>Cặp Kỳ Lân Bằng Đồng Nguyên Khối Trấn Trạch</strong> (thuộc hành Kim). Kim lực sẽ đứng ra hút kiệt Thổ khí tích tụ của Họa Hại tinh, giải phóng hoàn toàn cho mạch Thủy bản mệnh của chủ nhà lưu thông hanh thông.' },
+        'Mộc': { phap: 'Cung Mệnh Mộc phải vắt kiệt sức để khắc chế khối Thổ sát của Họa Hại tinh, làm tinh thần mệt mỏi, suy nhược thần kinh và công việc bị trì trệ bế tắc triền miên.', vat: 'Bố trí <strong>Quả Cầu Thạch Anh Trắng Tự Nhiên</strong> hoặc đặt <strong>Hồ Lô Bằng Đồng Đúc</strong> (thuộc hành Kim). Thiết lập thế trận cân bằng dòng khí ngũ hành mới, cởi trói hoàn toàn áp lực đè nặng lên bản mệnh Mộc.' },
+        'Hỏa': { phap: 'Cung Mệnh Hỏa sinh xuất cho Họa Hại Thổ sát, vô tình tiếp thêm năng lượng khiến Hung tinh ngày một bành trướng dữ dội, quay lại quấy nhiễu tàn phá gia đạo nặng nề.', vat: 'Bố trí một <strong>Bình Nước An Nhẫn Phong Thủy Đại Gia Trì</strong> hoặc bài trí các linh vật mang sắc <strong>Đen hoặc Xanh Dương</strong> (thuộc hành Thủy) nhằm phong tỏa hoàn toàn gốc rễ Hỏa sinh Thổ tiêu cực, dập tắt sự phát tán của Hung tinh.' },
+        'Kim': { phap: 'Mệnh Kim nhận sự tương sinh từ Thổ sát, nhưng đây là dòng sinh độc hại, mang theo rủi ro, ốm đau vụn vặt bám đuổi dai dẳng.', vat: 'Bài trí <strong>Chậu Cây Thạch Anh Tóc Xanh</strong> hoặc dán <strong>Phù Chú Mộc Trấn Trạch</strong> (thuộc hành Mộc) tại góc này nhằm phá vỡ cấu trúc tích tụ đất đá cứng nhắc của Thổ sát, triệt tiêu hung tính từ gốc rễ.' },
+        'Thổ': { phap: 'Họa Hại Thổ sát đồng hành cùng Cung Mệnh Thổ tạo nên cục diện "Bãi Đất Hoang Trì Trệ", làm mất đi toàn bộ động lực phát triển, cuộc sống rơi vào vòng lặp bế tắc vô định.', vat: 'Sử dụng <strong>Kiếm Thất Tinh Bằng Đồng</strong> hoặc bài trí <strong>Tháp Văn Xương Bằng Đồng Gỗ Đại Pháp Cụ 9 Tầng</strong> (thuộc hành Kim) nhằm đục phá, đập tan khối Thổ khí đang ứ đọng bĩ cực.' }
+    }
+};
+
+// ====================== MẬT PHÁP HÓA GIẢI THEO NGỮ CẢNH CẤU TRÚC ======================
+function sinhMatPhapHoaGiai(mucDich, cungSat, hanhChu, phuongHuong, code) {
+    let hanhPhuongVi = (typeof phươngVịThiếtLập !== 'undefined' && phươngVịThiếtLập[code]) 
+                       ? phươngVịThiếtLập[code].ngũHành : "Thổ";
+    
+    // Đồng bộ hóa chuẩn đầu vào tiếng Việt có dấu sang không dấu viết tắt nếu cần để bọc lót ma trận tra cứu
+    let keyHanhChu = hanhChu;
+    if (hanhChu === "Thủy") keyHanhChu = "Thuy";
+    if (hanhChu === "Hỏa") keyHanhChu = "Hoa";
+    if (hanhChu === "Mộc") keyHanhChu = "Moc";
+    if (hanhChu === "Thổ") keyHanhChu = "Tho";
+    if (hanhChu === "Kim") keyHanhChu = "Kim";
+
+    let data = DATA_HOA_GIAI[cungSat] ? DATA_HOA_GIAI[cungSat][keyHanhChu] : null;
+    
+    // Thuật toán nội suy động phòng thủ: Tự động tính toán giải pháp dựa trên Ngũ hành nếu không khớp data tĩnh
+    if (!data) {
+        data = {
+            phap: `Điều hòa, cân bằng dòng khí trường xung khắc trực diện giữa hành chủ (${hanhChu}) với phương vị bản thể ${phuongHuong} mang năng lượng của uế tinh ${cungSat}.`,
+            vat: "Chuông Gió Đồng Thất Tinh hoặc Quả Cầu Thạch Anh màu trung tính để trung hòa địa long mạch"
+        };
+    }
+
+    let phuongPhapBaoQuoc = data.phap.replace(/\${phuongHuong}/g, phuongHuong).replace(/\${hanhPhuongVi}/g, hanhPhuongVi);
+    let vatPhamToiThuong = data.vat;
+    
+    const currentConfig = ConfigPhongThuy[mucDich] || { title: "Vị trí hạng mục", isCat: true };
+    let thuyetMinhViTri = "";
+    
+    if (currentConfig.isCat) {
+        thuyetMinhViTri = `Cấu trúc đang thiết lập nhìn về phương vị bị phạm đại kỵ Sát tinh <strong>${cungSat}</strong>. Phương án điều hòa khí trường: ${phuongPhapBaoQuoc}`;
+    } else if (mucDich === 'kitchen') {
+        thuyetMinhViTri = `Bếp nấu đang tọa đè sai cung vị, thiêu rụi phước báu cát lành của trạch đất. Đồng thời nếu rơi vào thế hung tinh bị kích động nghịch chiều: ${phuongPhapBaoQuoc}`;
+    } else {
+        thuyetMinhViTri = `Khu vực xả uế uế tạp đặt đè lên cát tinh làm tổn hao tài lộc, ô uế long mạch. Chiếu theo mật pháp đối sánh ngũ hành: ${phuongPhapBaoQuoc}`;
+    }
+
+    return `
+    <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(223, 183, 108, 0.2); border-radius: 12px; padding: 15px; margin-top: 15px;">
+        <h4 style="color: #dfb76c; margin: 0 0 10px 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">◆ Mật Pháp Hóa Giải Pháp Bảo</h4>
+        <div style="margin-bottom: 15px; font-size: 0.88rem; color: #ddd; line-height: 1.6;">
+            <strong style="color: #ff9f0a;">[Phân Tích Cấu Trúc]:</strong> ${thuyetMinhViTri}
+        </div>
+        <div style="padding: 12px; background: rgba(255, 59, 48, 0.08); border-left: 4px solid #ff3b30; border-radius: 6px; font-size: 0.88rem;">
+            <strong style="color: #ff3b30;">[Vật Phẩm Tối Thượng Pháp Bảo]:</strong> <span style="color:#fff; font-weight:700;">${vatPhamToiThuong}</span>
+        </div>
+    </div>`;
+}
+
+// ====================== TRÍCH XUẤT MA TRẬN MINH CHÂU QUY QUYẾT ======================
+function getLuanDoanChiTiet(huong, son) {
+    const dataHuong = MaTranMinhChau[huong];
+    const info = (dataHuong && dataHuong[son]) ? dataHuong[son] : null;
+
+    if (!info) {
+        return `<div style="padding: 12px; color: #888; font-style: italic; border: 1px dashed #444; border-radius: 8px;">
+                    Chưa có dữ liệu chi tiết cho sơn này trong hệ thống dương trạch.
+                </div>`;
+    }
+
+    const isCat = (info.loai === "Cát");
+    const color = isCat ? "#30d158" : "#ff3b30";
+    const bgColor = isCat ? "rgba(48, 209, 88, 0.06)" : "rgba(255, 59, 48, 0.06)";
+
+    return `
+    <div style="background: ${bgColor}; padding: 15px; border-radius: 12px; border: 1px solid ${color}40; margin-top: 15px; transition: all 0.3s ease;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <b style="color: ${color}; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                ${info.loai} Tinh: ${info.cap_do}
+            </b>
+            <span style="color: #000; font-size: 0.85rem; background: ${color}; padding: 2px 10px; border-radius: 15px; font-weight: 900;">
+                ${info.diem}/100
+            </span>
+        </div>
+        
+        <div style="font-size: 0.9rem; color: #fff; line-height: 1.6; margin-bottom: 12px;">
+            ${info.text}
+        </div>
+        
+        ${info.giaiphap ? `
+            <div style="font-size: 0.85rem; color: #bbb; border-top: 1px dashed ${color}40; padding-top: 10px; font-style: italic;">
+                <span style="color: ${color}; font-weight: bold;">💡 Giải pháp kiến nghị:</span> ${info.giaiphap}
+            </div>
+        ` : ''}
+    </div>`;
+}
+
+// =========================================================================
+// 3. HÀM updateCompassUI() - ĐỒNG BỘ HOÀN TOÀN CÁC THAM SỐ NGÀY SINH THỜI THỰC
+// =========================================================================
+/**
+ * [ID: UI-REALTIME-COMPASS-01] Hàm updateCompassUI
+ * Quét cảm biến trắc địa thực tế, quay đồ hình la bàn, đồng bộ hóa tham số ngày sinh thời thực lên màn hình,
+ * tự động bật Led cảnh báo khi kim đỏ thực tế lọt khít dải độ vàng ảo của triggerGhostNeedle.
+ */
+function updateCompassUI(heading) {
+    // 1. TÍNH GÓC THỰC TẾ CỤC BỘ (Chỉ dùng để xoay đĩa la bàn)
+    let trueHeading = (heading + (magneticDeclination % 360) + 360) % 360;
+    
+    // KHÓA CỨNG: Biến toàn cục chỉ giữ góc vật lý gốc (Chữ số tọa độ sẽ đứng im không bị nhảy dồn)
+    currentHeading = Math.round(heading);
+    
+    // Xoay la bàn theo góc thực tế đã bù trừ, nhưng thanh trượt giữ theo hướng máy
+    if (compass) compass.style.transform = `rotate(${-trueHeading}deg)`;
+    if (needle) needle.style.transform = `rotate(0deg)`;
+    if (compassSlider) compassSlider.value = currentHeading;
+
+    // LẤY DỮ LIỆU ĐẦU VÀO ĐỘNG TỪ BIỂU MẪU KHẢO SÁT
+    const dayStr = document.getElementById('birthDay')?.value || "";
+    const monthStr = document.getElementById('birthMonth')?.value || "";
+    const yearStr = document.getElementById('birthYear')?.value || "";
+    const adviceBox = document.getElementById('pro-advice-box');
+    const adviceContent = document.getElementById('advice-content');
+
+    // =========================================================================
+    // SỬA LỖI TRỤC THỜI GIAN: Phân định rạch ròi Năm Sinh và Năm Khảo Sát
+    // =========================================================================
+    // 1. Năm Khảo Sát (Niên Trạch) chạy động theo trục thời gian thực tế
+    const txtSurveyYear = document.getElementById('surveyYear'); 
+    const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
+
+    // 2. TỰ ĐỘNG CHUẨN HÓA: Tính toán năm âm lịch của mệnh chủ dựa theo Tiết khí Lập Xuân
+    let namAmMệnhChủ = new Date().getFullYear();
+    if (dayStr && monthStr && yearStr && yearStr.length === 4) {
+        const d = parseInt(dayStr, 10);
+        const m = parseInt(monthStr, 10);
+        const y = parseInt(yearStr, 10);
+        namAmMệnhChủ = (m < 2 || (m === 2 && d < 4)) ? y - 1 : y;
+    }
+
+    // TỰ ĐỘNG KHẮC PHỤC LỖI Racing-Condition: Đảm bảo có quẻ mệnh chạy nền không bị undefined
+    let tinhChuMenh = (typeof chủMệnh !== 'undefined' && chủMệnh) ? chủMệnh : "Khảm";
+    if (dayStr && monthStr && yearStr && yearStr.length === 4) {
+        if (typeof tínhCungPhi === 'function') {
+            tinhChuMenh = tínhCungPhi(parseInt(yearStr, 10), parseInt(monthStr, 10), parseInt(dayStr, 10), document.getElementById('gender')?.value || 'male');
+        }
+    }
+
+    // TẠO BIẾN GÓC TRA CỨU ĐỒNG BỘ TUYỆT ĐỐI VỚI REALHEADING CỦA HÀM RECALCULATEFATE
+    const calcHeading = ((currentHeading % 360) + 360) % 360;
+
+    // ==================== 1. XÁC ĐỊNH 8 CUNG ĐẠI CỤC CHUẨN ĐẤT NỀN ====================
+    let currentCung = "";
+    let currentCode = "";
+    if (calcHeading >= 337.5 || calcHeading < 22.5) {
+        currentCung = "KHẢM (BẮC)"; currentCode = "N";
+    } else if (calcHeading >= 22.5 && calcHeading < 67.5) {
+        currentCung = "CẤN (ĐÔNG BẮC)"; currentCode = "NE";
+    } else if (calcHeading >= 67.5 && calcHeading < 112.5) {
+        currentCung = "CHẤN (ĐÔNG)"; currentCode = "E";
+    } else if (calcHeading >= 112.5 && calcHeading < 157.5) {
+        currentCung = "TỐN (ĐÔNG NAM)"; currentCode = "SE";
+    } else if (calcHeading >= 157.5 && calcHeading < 202.5) {
+        currentCung = "LY (NAM)"; currentCode = "S";
+    } else if (calcHeading >= 202.5 && calcHeading < 247.5) {
+        currentCung = "KHÔN (TÂY NAM)"; currentCode = "SW";
+    } else if (calcHeading >= 247.5 && calcHeading < 292.5) {
+        currentCung = "ĐOÀI (TÂY)"; currentCode = "W";
+    } else if (calcHeading >= 292.5 && calcHeading < 337.5) {
+        currentCung = "CÀN (TÂY BẮC)"; currentCode = "NW";
+    }
+
+    // ==================== 2. TRÍCH XUẤT 24 SƠN VÀ 72 HẬU THEO TỌA ĐỘ GỐC ====================
+    let gockim = calcHeading;
+    let sơnHiệnTạiObj = SON_24_CONFIG.find(s => {
+        if (s.min > s.max) return gockim >= s.min || gockim < s.max;
+        return gockim >= s.min && gockim < s.max;
+    }) || SON_24_CONFIG[0];
+    let sơnHiệnTại = sơnHiệnTạiObj.name;
+
+    const currentHauInfo = getCurrentHauInfo(calcHeading);
+    const mụcĐích = document.getElementById('purpose')?.value || 'house';
+    
+    // TÍNH TOÁN ĐIỂM SỐ DỰA TRÊN GÓC TOẠ ĐỘ THỰC ĐỊA CỐ ĐỊNH 
+    const tongHop = tinhDiemTongHop(tinhChuMenh, calcHeading, namKhaoSatThucTe, mụcĐích, namAmMệnhChủ);
+
+    // Mốc màu hiển thị số điểm tổng hợp trên thanh la bàn đồng bộ với ngưỡng Đạt Cách 72pt (Sử dụng let để tránh lỗi bẫy cú pháp tái gán)
+    let colorDiemRealtime = "#ff4444"; 
+    if (tongHop.diem >= 72) {
+        colorDiemRealtime = "#30d158"; 
+    } else if (tongHop.diem >= 50) {
+        colorDiemRealtime = "#ffd700"; 
+    }
+
+    // ==================== 3. KHO TÀNG PHÁB BẢO VẬT PHẨM ĐẦY ĐỦ 100% ====================
+    const advices = {
+        "Sinh Khí": "<strong>[CÁT TINH ĐẠI LỢI] Cách kích hoạt vượng khí tối đa trong Vận 9:</strong> Hướng này chủ về nhân đinh hưng vượng, thu hút tài lộc mạnh mẽ, giúp công danh sự nghiệp phát đạt.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt chậu cây xanh lớn đại diện cho hành Mộc (Thiết Mộc Lan, Kim Tiền) tại cửa ra vào để kéo khí trường.<br>2. Treo tranh mộc sinh hỏa hoặc đặt Tháp Văn Xương bằng gỗ chín tầng tại góc phương vị này để tăng tiến đường học hành, quan lộ.",
+        "Thiên Y": "<strong>[CÁT TINH SỨC KHỎE] Cách gia tăng năng lượng hộ thân, trừ bệnh:</strong> Hướng chủ trì sức khỏe, tiêu bệnh trừ tai, giúp gia đạo bình an, trường thọ.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt một quả Hồ lô bằng đồng hoặc Hồ lô đá thạch anh vàng ngay đầu giường ngủ hoặc trước cửa phòng.<br>2. Bố trí bình gốm sứ cao cấp, đĩa ngọc thạch anh hành Thổ để bồi bổ sinh khí, giúp tạng phủ khỏe mạnh, ngủ ngon giác.",
+        "Diên Niên": "<strong>[CÁT TINH GIA ĐẠO] Cách củng cố hòa khí, kết nối lương duyên bền vững:</strong> Hướng chủ về sự hòa thuận, củng cố quan hệ ngoại giao, gia đình êm ấm, vợ chồng đồng lòng.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt các vật phẩm chế tác bằng kim loại quý hành Kim như: Đôi uyên ương bằng đồng, hồ lô đồng nạp phúc.<br>2. Sử dụng thảm trải sàn màu trắng, xám ghi hoặc thạch anh trắng để thu hút năng lượng cát tường, gia đạo yên vui.",
+        "Phục Vị": "<strong>[CÁT TINH TĨNH TÂM] Kích hoạt sự vững chãi, thi cử đỗ đạt:</strong> Hướng mang lại bình an, củng cố sức mạnh tinh thần, bản lĩnh, rất có lợi cho ban thờ và bàn làm việc.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt tháp nước phong thủy luận chuyển tuần hoàn (hành Thủy) hoặc quả cầu thủy tinh màu xanh biển sâu.<br>2. Đặt một chiếc gương nhỏ nhìn ra hướng cát hoặc bài trí biểu tượng cột buồm đón gió để duy trì năng lượng tiến thủ.",
+        "Tuyệt Mệnh": "<strong>[ĐẠI HUNG TINH NGUY HIỂM] Phương án Hóa Giải Sát Khí tối thượng:</strong> Phương vị mang sát khí cực mạnh, dễ tổn hại đoản thọ, phá sản, bệnh tật nghiêm trọng.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. <b>Bảo pháp Kim khí:</b> Treo một chuông gió bằng đồng 6 thanh (Lục đế) hoặc đặt một cặp Tỳ Hưu bằng đồng nguyên chất để dùng hành Kim làm suy yếu tuyệt đối hung tinh.<br>2. <b>Trấn trạch chế sát:</b> Treo gương Bát Quái Gỗ Đào Lồi chính tông hướng ra ngoài cửa để phản xạ sát khí.<br>3. <b>Màu sắc điều hòa:</b> Sử dụng thảm trải màu xám tro hoặc màu trắng đặt ngay thềm cửa ra vào để thanh lọc tà khí.",
+        "Ngũ Quỷ": "<strong>[HUNG TINH THỊ PHI] Phương án khắc chế hỏa khí, trừ tiểu nhân quấy phá:</strong> Dễ gây nóng nảy, kiện tụng, tổn hao tài sản, bị tiểu nhân đâm sau lưng.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. <b>Thủy pháp hóa sát:</b> Áp dụng nguyên lý 'Khôi phục bình hòa' - Đặt một lu nước sạch, bình thủy tinh chứa nước an nhẫn (nước muối loãng) hoặc quả cầu thạch anh đen tại vị trí này để dập tắt lửa Ngũ Quỷ.<br>2. Treo chuỗi tiền cổ Ngũ Đế bằng đồng ở ngạch cửa để dùng Kim sinh Thủy tiêu hao ác tính.",
+        "Lục Sát": "<strong>[HUNG TINH TRỤC TRẶC] Cách hóa giải bất hòa gia đạo và mâu thuẫn tình cảm:</strong> Gây tranh chấp xích mích tai tiếng, tinh thần u uất, tình duyên lận đận.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. Đặt một bể cá phong thủy hoặc phong thủy luân (hành Thủy khí tốt) tại phương vị này để chuyển hóa năng lượng xung khắc thành dòng chảy êm dịu.<br>2. Sử dụng các đồ vật trang trí mang sắc xanh dương, đen hoặc thu hút tà khí bằng cách treo rèm cửa màu tối.",
+        "Họa Hại": "<strong>[HUNG TINH HAO TÀI VỤN VẶN] Tiêu trừ năng lượng tiêu cực, xua đuổi rủi ro:</strong> Khiến công việc hay gặp trắc trở vụn vặt, muộn phiền, tiểu nhân quấy rầy.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. Đặt các vật phẩm chế tác từ đá tự nhiên thuộc hành Thổ hoặc Kim như: Gậy Như Ý bằng đồng, thạch anh trắng cát tường.<br>2. Treo một dải ruy băng đỏ phối đồng xu may mắn hoặc đặt các bức tượng chiêu tài bằng đồng để biến hung thành cát."
+    };
+
+    // ==================== 4. CHẾ ĐỘ CHƯA NHẬP ĐỦ FORM (CHẾ ĐỘ ĐO TỰ DO) ====================
+    if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
+        if (elementBox) elementBox.innerHTML = `<span class="element-badge" style="background: #3a3a3c;">Phương vị: ${phươngVịThiếtLập[currentCode]?.ngũHành || 'Không xác định'}</span>`;
+        if (judgmentBox) {
+            judgmentBox.innerText = "ĐO HƯỚNG CHÍNH XÁC";
+            judgmentBox.className = "judgment-badge";
+            judgmentBox.removeAttribute("style");
+            judgmentBox.style.backgroundColor = "#222";
+            judgmentBox.style.color = "var(--gold)";
+            judgmentBox.style.border = "1px solid var(--gold)";
+        }
+        if (detailBox) {
+            detailBox.style.borderLeftColor = "var(--gold)";
+            detailBox.innerHTML = `
+                <span style="color:#ffffff; font-family: sans-serif;">Hệ thống đang chạy ở chế độ la bàn thực địa độ phân giải cao Vận 9.<br>
+                Tọa độ: <span class="gold-text">${currentHeading}°</span> | Phương: <b>${currentCung}</b> | Sơn: <span style="color:var(--gold); font-weight:bold;">${sơnHiệnTại}</span>.<br>
+                Thích hợp đo đạc kiểm tra thông số long mạch thiết kế hạ tầng trạch đất. Vui lòng điền đầy đủ Ngày/Tháng/Năm sinh để bóc tách Cát/Hung gia trạch bản mệnh.</span>`;
+        }
+        
+        // THANH HIỂN THỊ ĐO TỰ DO: SỐ LỚN, CHỐNG SẬP KHUNG
+        const degreeTxt = document.getElementById('degree-txt') || document.getElementById('degreeTxt');
+        if (degreeTxt) {
+            degreeTxt.innerHTML = `
+                <div style="display: grid; grid-template-rows: auto auto; gap: 6px; font-family: sans-serif; width: 100%; box-sizing: border-box; overflow: hidden;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; white-space: nowrap; overflow: hidden;">
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span style="font-size: 1.8rem; font-weight: 900; color: #ffca28; letter-spacing: -0.5px; line-height: 1;">${currentHeading}°</span>
+                            <span style="font-size: 0.9rem; color: #8a8a8f; margin-left: 4px;">Phương:</span>
+                            <span style="font-size: 0.95rem; font-weight: bold; color: #ffffff;">${currentCung}</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                            <span style="font-size: 0.9rem; color: #8a8a8f;">Sơn:</span>
+                            <span style="font-size: 0.9rem; font-weight: 800; padding: 2px 10px; border-radius: 5px; background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 40%, #3a3a3c 55%, #1c1c1e 100%); color: #e5e5ea; border: 1px solid #48484a; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 3px rgba(0,0,0,0.5); text-shadow: -1px -1px 0 rgba(0,0,0,0.8); letter-spacing: 0.3px;">${sơnHiệnTại}</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 5px;">
+                        <span style="color: #8a8a8f;">Hậu:</span>
+                        <strong style="color: #ffffff;">${currentHauInfo.ten}</strong>
+                        <span style="color: ${currentHauInfo.emoji === '🟢' ? '#00ff41' : (currentHauInfo.emoji === '🔴' ? '#ff4444' : '#ffd700')}; font-weight: 600;">(${currentHauInfo.chatLuong})</span>
+                    </div>
+                </div>`;
+        }
+
+        if (adviceBox) adviceBox.style.display = 'none';
+        // ĐÃ SỬA: Chuyển sang trueHeading để chế độ đo tự do cũng sáng đúng tâm khi lệch từ
+        if (typeof kichHoatDenLedQuet === 'function') kichHoatDenLedQuet(Math.round(trueHeading));
+        return;
+    }
+
+    // =========================================================================
+    // 🏛️ NÂNG CẤP ĐỒNG BỘ MỤC 5: CHẾ ĐỘ LUẬN ĐOÁN CAO CẤP PHÂN TẦNG VẬN 9 (UI CHUẨN XÁC)
+    // =========================================================================
+    const hànhPhươngVị = phươngVịThiếtLập?.[currentCode]?.ngũHành || "N/A";
+    
+    // TẬP TRUNG HỌC THUẬT: Chuẩn hóa chữ hoa đầu chuỗi để khớp chính xác cấu trúc mảng ngoài
+    let mapKey = tinhChuMenh.trim();
+    if (mapKey) {
+        mapKey = mapKey.charAt(0).toUpperCase() + mapKey.slice(1).toLowerCase();
+    }
+    const hànhMệnhChủ = bátTrạchMap?.[mapKey]?.element || "N/A";
+    
+    if (elementBox) {
+        elementBox.innerHTML = `
+            <span class="element-badge" style="background: #3a3a3c; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; color: #fff; font-family: sans-serif;">Phương vị: ${hànhPhươngVị}</span>
+            <span class="element-badge" style="background: #2c2c2e; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; color: var(--gold); border: 1px solid rgba(212,175,55,0.3); font-family: sans-serif;">Mệnh: ${hànhMệnhChủ}</span>
+        `;
+    }
+
+    const cungTrạch = bátTrạchMap?.[mapKey]?.[currentCode] || "Khác";
+    const thôngTinCung = cungPhầnTrăm?.[cungTrạch] || { cát: true, ý_nghĩa: "Thông tin cung vị đang được cập nhật tinh vân." };
+
+    // SỬA LỖI TỬ HUYỆT: Truyền chính xác tên Sơn vị hẹp hòi thay vì hướng lớn đại cục bị lệch Thần Sát
+    const ketQua = typeof tinhHanCuuTinhTheoNam === 'function' ? tinhHanCuuTinhTheoNam(sơnHiệnTại, namKhaoSatThucTe) : { thongTinSao: "Chưa có dữ liệu tinh vân", meoGiaiHan: "" };
+    
+    let canhBaoCuuTinh = "";
+    let giaiHanCuuTinh = "";
+    const boxStyle = "margin-top:10px; padding:10px; border-radius:6px; font-size:0.85rem; line-height:1.4; font-family: sans-serif;";
+
+    if (ketQua.thongTinSao.includes("⚠️")) {
+        canhBaoCuuTinh = `<div style="${boxStyle} background:rgba(255,59,48,0.08); border:1px solid #ff3b30; color:#ff3b30;"><b style="display:block; margin-bottom:4px; font-size:0.9rem;">⚠️ CẢNH BÁO NIÊN HẠN CỬU TINH ${namKhaoSatThucTe}:</b>${ketQua.thongTinSao.replace(/⚠️/g, '•')}</div>`;
+        if (ketQua.meoGiaiHan) {
+            giaiHanCuuTinh = `<div style="margin-top:5px; padding:8px 12px; background:rgba(255,159,10,0.08); border-left:3px solid #ff9f0a; color:#ff9f0a; font-size:0.82rem; border-radius:0 6px 6px 0; font-family: sans-serif;"><b>💡 Mật pháp giải hạn thời khí:</b> ${ketQua.meoGiaiHan.replace('👉 Hóa giải: ', '')}</div>`;
+        }
+    } else {
+        canhBaoCuuTinh = `<div style="${boxStyle} background:rgba(48,209,88,0.08); border:1px solid #30d158; color:#30d158; text-align:center; font-weight:bold;">✅ VẬN KHÍ CỬU TINH ĐẮC LỢI: ${ketQua.thongTinSao}</div>`;
+    }
+
+    // Luận đoán Minh Châu đệ nhất Sơn vị thực thời từ lõi thuật toán
+    let luanDoanSonChiTiet = "";
+    if (typeof MaTranMinhChau !== 'undefined' && MaTranMinhChau[mapKey]?.[sơnHiệnTại]) {
+        const mc = MaTranMinhChau[mapKey][sơnHiệnTại];
+        
+        // Đồng bộ màu sắc Sơn vị dựa trên kết quả tính điểm động của hàm tinhDiemTongHop tại tọa độ hẹp đó
+        const diemSonDong = tinhDiemTongHop(mapKey, gockim, namKhaoSatThucTe, mụcĐích, namAmMệnhChủ, 0).diem;
+        
+        // ĐỒNG BỘ NGƯỠNG CÁT VỊ 70PT KHÔNG ĐỂ GẮT
+        const color = diemSonDong >= 70 ? '#30d158' : (diemSonDong >= 50 ? '#dfb76c' : '#ff3b30');
+        const label = diemSonDong >= 70 ? '[MINH CHÂU CÁT SƠN ĐẮC CÁCH]' : (diemSonDong >= 50 ? '[MINH CHÂU BÌNH HÒA SƠN]' : '[MINH CHÂU HUNG SƠN KHẮC KỴ]');
+        
+        const thongSo = `<span style="color:#a0a0a0; font-style:italic;">Sơn vị ${sơnHiệnTại} (${sơnHiệnTạiObj?.huong}):</span>`;
+        luanDoanSonChiTiet = `<b style="color:${color}; display:block; margin-bottom:4px;">${label}</b> ${thongSo} <span style="color:#ffffff;">${mc.text}</span>`;
+        if (mc.giaiphap) {
+            luanDoanSonChiTiet += `<br><br><span style="color:${color}; font-weight:bold;">💡 Pháp bảo bố trí khuyên dùng tại bản sơn:</span> <span style="color:#e5e5ea; background:rgba(255,255,255,0.04); padding:2px 6px; border-radius:4px;">${mc.giaiphap}</span>`;
+        }
+    } else {
+        luanDoanSonChiTiet = `<span style="color:#a0a0a0; font-style:italic;">Tọa độ định vị: ${currentHeading}° | Sơn ${sơnHiệnTại} | Hướng đại cục ${sơnHiệnTạiObj?.huong}.</span>`;
+    }
+
+    const config = ConfigPhongThuy[mụcĐích] || { title: "Cung vị", isCat: true };
+
+    // 1. ĐỊNH VỊ CÁI GỐC (Bản chất Địa lý tĩnh Bát Trạch)
+    const hungTinhBạtTrach = ["Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"];
+    const laCungHungDiaLy = hungTinhBạtTrach.includes(cungTrạch);
+    const laThuanDiaLy = config.isCat ? !laCungHungDiaLy : laCungHungDiaLy;
+
+    // 2. ĐỊNH VỊ CÁI NGỌN ĐỘNG (Đồng bộ hạ mốc cát vị xuống 70pt để tránh gắt gỏng bóp méo thực tế)
+    const isGoodRealtime = tongHop.diem >= 70; 
+
+    // 🔥 TÁI GÁN ĐỒNG BỘ TRỰC TIẾP TRÁNH BẪY LỖI KHAI BÁO CÚ PHÁP
+    colorDiemRealtime = tongHop.diem >= 70 ? '#30d158' : (tongHop.diem >= 50 ? '#dfb76c' : '#ff3b30');
+
+    // --- RE-RENDER THANH HIỂN THỊ CAO CẤP DYNAMIC CHỐNG RUNG VÀ SẬP KHUNG GIAO DIỆN ---
+    const degreeTxt = document.getElementById('degree-txt') || document.getElementById('degreeTxt');
+    if (degreeTxt) {
+        degreeTxt.innerHTML = `
+            <div style="display: grid; grid-template-rows: auto auto; gap: 6px; font-family: sans-serif; width: 100%; box-sizing: border-box; overflow: hidden;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; white-space: nowrap; overflow: hidden;">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <span style="font-size: 1.8rem; font-weight: 900; color: #ffca28; letter-spacing: -0.5px; line-height: 1;">${currentHeading}°</span>
+                        <span style="font-size: 0.9rem; color: #8a8a8f; margin-left: 4px;">Phương:</span>
+                        <span style="font-size: 0.95rem; font-weight: bold; color: #ffffff;">${currentCung}</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                        <span style="font-size: 0.9rem; color: #8a8a8f;">Sơn:</span>
+                        <span style="font-size: 0.9rem; font-weight: 800; padding: 2px 10px; border-radius: 5px; background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 40%, #3a3a3c 55%, #1c1c1e 100%); color: #e5e5ea; border: 1px solid #48484a; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 3px rgba(0,0,0,0.5); text-shadow: -1px -1px 0 rgba(0,0,0,0.8); letter-spacing: 0.3px;">${sơnHiệnTại}</span>
+                    </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; white-space: nowrap; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 5px;">
+                    <div style="overflow: hidden; text-overflow: ellipsis; font-size: 0.85rem; display: flex; align-items: center; gap: 4px;">
+                        <span style="color: #8a8a8f;">Hậu:</span>
+                        <strong style="color: #ffffff;">${tongHop.hauInfo.ten}</strong>
+                        <span style="color: ${tongHop.hauInfo.emoji === '🟢' ? '#00ff41' : (tongHop.hauInfo.emoji === '🔴' ? '#ff4444' : '#ffd700')}; font-weight: 600;">(${tongHop.hauInfo.chatLuong})</span>
+                    </div>
+                    
+                    <div style="font-size: 0.95rem; font-weight: 850; color: ${colorDiemRealtime}; letter-spacing: 0.3px; background: rgba(0,0,0,0.35); padding: 2px 8px; border-radius: 5px; flex-shrink: 0;">
+                        ${tongHop.diem}pt (${tongHop.level})
+                    </div>
+                </div>
+            </div>`;
+    }
+
+    if (judgmentBox) {
+        judgmentBox.removeAttribute("style");
+        judgmentBox.innerText = `${config.title}: ${cungTrạch}`;
+        judgmentBox.className = isGoodRealtime ? "judgment-badge bg-good" : "judgment-badge bg-bad";
+    }
+    if (detailBox) detailBox.style.borderLeftColor = colorDiemRealtime;
+
+    // --- RENDER PHẦN 1: PANEL THÔNG TIN DIỄN GIẢI CHÍNH CỦA ĐỊA LÝ TĨNH BÁT TRẠCH ---
+    let noiDungDetail = "";
+    noiDungDetail += `<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,255,255,0.04); border-left: 4px solid ${colorDiemRealtime}; font-family: sans-serif;">`;
+    noiDungDetail += `<strong style="color: ${colorDiemRealtime}; font-size: 1.05rem; display:block; margin-bottom:5px;">`;
+    noiDungDetail += `◆ ${config.isCat ? (isGoodRealtime ? 'CÁT CỤC NẠP KHÍ' : 'HUNG CỤC PHẠM KỴ') : (isGoodRealtime ? 'TỌA HUNG TRẤN SÁT ĐẮC CÁCH' : 'SAI VỊ TIÊU HAO KHÍ TRƯỜNG')} (${cungTrạch.toUpperCase()}) — Chỉ số PT: <span style="color:#ffd700;">${tongHop.diem}pt</span> [${tongHop.level}]:</strong>`;
+    noiDungDetail += `<span style="color:#ffffff; font-size:0.9rem; line-height:1.5; display:block; margin-bottom:6px;">${thôngTinCung.ý_nghĩa}</span>`;
+    
+    // Nếu lõi thuật toán bóc tách ra lỗi đặc biệt, bung trực tiếp lên đầu panel
+    if (tongHop.message) {
+        noiDungDetail += `<div style="font-size:0.83rem; color:#ff9f0a; padding-top:4px; border-top:1px dashed rgba(255,255,255,0.08); line-height:1.4;">🔍 <b>Phân tích vi phân thực địa:</b> ${tongHop.message}</div>`;
+    }
+    noiDungDetail += '</div>';
+
+    // --- RENDER PHẦN 2: BỘ LỌC ĐIỀU KIỆN HIỂN THỊ MẬT PHÁP ĐIỀU TIẾT (SMART DIALECTIC) ---
+    if (!laThuanDiaLy || !isGoodRealtime || tongHop.khongVong) {
+        noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,159,10,0.05); border:1px solid rgba(255,159,10,0.2); font-family: sans-serif;">';
+        
+        if (tongHop.khongVong) {
+            noiDungDetail += '<h4 style="color:#ff3b30; margin:0 0 8px 0; font-size: 0.95rem; font-weight:bold;">☠️ BIỆN CHỨNG TỬ TUYẾN KHÔNG VONG LẬP CỰC</h4>';
+            noiDungDetail += `<div style="color:#e5e5ea; font-size:0.85rem; line-height:1.5; margin-bottom:8px;">${tongHop.message}</div>`;
+            noiDungDetail += `<div style="padding:10px; background:rgba(255,59,48,0.1); border-left:3px solid #ff3b30; color:#ff857d; font-size:0.85rem; border-radius:0 6px 6px 0;"><b>💡 Giải pháp hóa giải bắt buộc:</b> ${tongHop.hoaGiai}</div>`;
+        }
+        else if (!laThuanDiaLy) {
+            const matPhap = (typeof sinhMatPhapHoaGiai === 'function') ? sinhMatPhapHoaGiai(mụcĐích, cungTrạch, hànhMệnhChủ, currentCung, currentCode) : "";
+            const camNang = advices[cungTrạch] || "";
+            
+            noiDungDetail += '<h4 style="color:#ff9f0a; margin:0 0 8px 0; font-size: 0.95rem; font-weight:bold;">🛠️ MẬT PHÁP ĐIỀU TIẾT HÓA GIẢI ĐỊA CỤC BẢN MỆNH</h4>';
+            noiDungDetail += `<div style="color:#ffffff; font-size:0.88rem; line-height:1.5;">${matPhap}`;
+            if (camNang) {
+                noiDungDetail += `<br><br><b style="color:#dfb76c;">Danh mục pháp bảo phụ trợ khuyên dùng trong Vận 9:</b><div style="color:#d1d1d6; margin-top:4px; font-size:0.85rem; background:rgba(0,0,0,0.15); padding:8px; border-radius:6px;">${camNang.replace(/👉 <em>.*?<\/em>:<br>/, '')}</div>`;
+            }
+            noiDungDetail += '</div>';
+            
+        } else {
+            noiDungDetail += '<h4 style="color:#ffd700; margin:0 0 8px 0; font-size: 0.95rem; font-weight:bold;">⚠️ CẢNH BÁO ĐIỀU TIẾT HÀNH VI NIÊN HẠN THỜI KHÔNG</h4>';
+            noiDungDetail += '<div style="color:#ffffff; font-size:0.88rem; line-height:1.5;">';
+            
+            if (!config.isCat) {
+                noiDungDetail += `Vị trí hạ tầng cấu trúc <b>${config.title}</b> đặt đè lên cung <b>${cungTrạch}</b> hiện tại đã đạt chuẩn cách cục <span style="color:#30d158; font-weight:bold;">Tọa Hung Trấn Sát Đắc Cách</span> về mặt nền Địa Lý tĩnh. Đất nền sạch, không cần phá dỡ hay thay đổi tịnh tiến kết cấu.<br><br>`;
+                noiDungDetail += `⚠️ <span style="color:#ff9f0a; font-weight:bold;">LƯU Ý NIÊN ĐỘ CHIẾU PHƯƠNG:</span> Do chịu tác động trường khí của hung tinh Lưu Niên đóng cung làm chỉ số sụt giảm thực thời xuống còn <b>${tongHop.diem}pt</b>. Trong năm nay, gia chủ **tuyệt đối tránh động thổ đập phá, sửa chữa lớn hoặc khoan đục** tại góc phòng này để tránh đánh thức hung sát khí của sao hạn.`;
+            } else {
+                noiDungDetail += `Hạng mục phân bổ không gian về mặt bản chất Địa lý là cung cát vượng (<b>${cungTrạch}</b>). Tuy nhiên, niên độ khảo sát hiện hành đang gặp từ trường suy hao do vướng đại sát tinh lưu niên đáo phương (Chỉ số sụt giảm thực thời còn <b>${tongHop.diem}pt</b>). Lỗi hoàn toàn thuộc về chu kỳ thời gian (Ngọn), không thuộc về đất nền (Gốc).<br>`;
+            }
+            
+            noiDungDetail += `<br><b style="color:#30d158;">💡 Giải pháp hóa giải & Trợ lực khí trường từ Thuật Toán:</b>`;
+            noiDungDetail += `<div style="padding:10px; background:rgba(0,0,0,0.25); border-left:3px solid #30d158; color:#e5e5ea; margin-top:5px; border-radius:0 6px 6px 0; font-size:0.85rem; line-height:1.45;">${tongHop.hoaGiai || "Duy trì bố cục sạch sẽ, kích hoạt hệ thống tiền cổ Ngũ Đế hoặc chuông gió đồng 6 thanh nhằm tiết giảm sát khí thời tịnh."}</div>`;            
+            noiDungDetail += '</div>';
+        }
+
+        noiDungDetail += '</div>';
+    }
+
+    // --- RENDER PHẦN 3: THẦN SÁT 24 SƠN VÀ BIẾN THIÊN CỬU TINH CHÍNH TÔNG ---
+    noiDungDetail += '<div style="margin-top:15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.25); border: 1px solid #d4af37; font-family: sans-serif;">';
+    noiDungDetail += '<div style="margin-bottom:12px;">';
+    noiDungDetail += '<b style="color:var(--gold); font-size: 0.95rem; display:block; border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:6px;">🎯 THẦN SÁT ĐỘ SỐ VI PHÂN PHÂN CHI TIẾT (24 SƠN TĨNH):</b>';
+    noiDungDetail += `<div style="margin-top:8px; color:#fff; font-size: 0.88rem; line-height: 1.6;">${luanDoanSonChiTiet}</div>`;
+    noiDungDetail += '</div>';
+    
+    noiDungDetail += '<div style="border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 10px;">';
+    noiDungDetail += `<b style="color:var(--gold); font-size: 0.95rem; display:block; padding-bottom:4px;">⏳ BIẾN THIÊN CỬU TINH NIÊN TRẠCH (ĐỘNG KHẢO SÁT ${namKhaoSatThucTe}):</b>`;
+    noiDungDetail += `<div style="margin-top:5px; color:#fff; font-size: 0.9rem; line-height: 1.5;">${canhBaoCuuTinh}${giaiHanCuuTinh}</div>`;
+    noiDungDetail += '</div>';
+    noiDungDetail += '</div>';
+
+    if (typeof sinhLuanGiaiThienThoi === 'function') {
+        noiDungDetail += `<div style="margin-top:10px; font-size:0.85rem; color:#aaa; font-style:italic; font-family: sans-serif;">${sinhLuanGiaiThienThoi(currentCode)}</div>`;
+    }
+    
+    if (detailBox) detailBox.innerHTML = noiDungDetail;
+
+    // ==================== 7. ADVICE BOX DISPLAY CONTROLLER ====================
+    if (adviceBox && adviceContent) {
+        adviceBox.style.display = advices[cungTrạch] ? 'block' : 'none';
+        if (advices[cungTrạch]) adviceContent.innerHTML = advices[cungTrạch];
+    }
+
+    // ==================== 8. TRIGGER REALTIME EFFECTS ====================
+    // ĐÃ SỬA: Chuyển sang trueHeading để chế độ luận đoán nâng cao sáng khớp trục tâm la bàn
+    if (typeof kichHoatDenLedQuet === 'function') kichHoatDenLedQuet(Math.round(trueHeading));
+    
+    // ==================== 9. SMART GHOST NEEDLE REALTIME ALIGNMENT ====================
+    if (typeof targetAngle !== 'undefined' && targetAngle !== null && document.getElementById('ghostNeedle')) {
+        const ghost = document.getElementById('ghostNeedle');
+        const adviceTxtEl = document.getElementById('ghost-advice-text');
+        const scoreBadgeEl = document.getElementById('ghost-score-badge');
+        
+        ghost.style.opacity = "1";
+        // Đồng bộ kim ảo theo trueHeading (góc la bàn thực tế sau khi tính toán đa tầng)
+        ghost.style.transform = `translate(-50%, -50%) rotate(${targetAngle - trueHeading}deg)`;
+        
+        let saiSoGoc = Math.abs(trueHeading - targetAngle) % 360;
+        if (saiSoGoc > 180) saiSoGoc = 360 - saiSoGoc;
+
+        // TIÊU CHUẨN ĐỊA LÝ CAO CẤP: Sai lệch dưới 1.5 độ bọc lót đồng bộ Neon phát quang
+        if (saiSoGoc <= 1.5) {
+            ghost.classList.add('matched-pulse');
+            
+            if (adviceTxtEl && !adviceTxtEl.innerHTML.includes("🏆")) {
+                adviceTxtEl.style.color = "#30d158";
+                adviceTxtEl.innerHTML = `
+                    <span style="color:#30d158; font-weight:bold; display:block; margin-bottom:4px; font-family: sans-serif;">
+                        🏆 KHỚP TRỤC LONG MẠCH — PHƯƠNG VỊ ĐẮC VỊ THÀCH CÔNG!
+                    </span>
+                    <span style="color:#fff; font-size:0.85rem; font-family: sans-serif;">
+                        Tọa độ thực địa đã trùng khớp hoàn toàn với trục nạp khí lý tưởng. Đương số hãy giữ nguyên góc máy này để tiến hành lập hướng/an vị kết cấu không gian.
+                    </span>`;
+                if (scoreBadgeEl) {
+                    scoreBadgeEl.style.boxShadow = "0 0 12px #30d158";
+                    scoreBadgeEl.style.transform = "scale(1.08)";
+                }
+            }
+        } else {
+            ghost.classList.remove('matched-pulse');
+            if (adviceTxtEl && adviceTxtEl.innerHTML.includes("🏆")) {
+                let sonHienTaiTxt = tìmSơnHướng(targetAngle);
+                adviceTxtEl.removeAttribute("style");
+                if (scoreBadgeEl) {
+                    scoreBadgeEl.style.boxShadow = "none";
+                    scoreBadgeEl.style.transform = "scale(1)";
+                }
+                adviceTxtEl.innerHTML = `
+                    Tia vàng ảo đang định vị nạp khí tại tọa độ <strong style="font-family: sans-serif;">Sơn ${sonHienTaiTxt}</strong>.<br>
+                    <span style="color:#aaa; font-size:0.82rem; display:block; margin-top:5px; font-family: sans-serif;">
+                        👉 Hãy cầm điện thoại xoay người từ từ sao cho <b>Kim Đỏ thực tế khớp thẳng trục với tia Vàng ảo</b> để đón đúng cát khí.
+                    </span>`;
+            }
+        }
+    }
+}
+
+function getPhongThuySatTinh(tenSon, nam) {
+    const results = [];
+    if (!tenSon) return results;
+
+    // Ưu tiên năm truyền trực tiếp -> Hệ thống Global -> Năm thực tế máy tính
+    const year = parseInt(nam, 10) || 
+                 (typeof GlobalTime !== 'undefined' ? parseInt(GlobalTime.year || GlobalTime.nam, 10) : null) || 
+                 (typeof layNamKhaoSatThienVan === 'function' ? layNamKhaoSatThienVan() : new Date().getFullYear());
+
+    if (!year || isNaN(year)) return results;
+
+    const thongTinSơnLõi = DATA_THANSAT.MA_TRAN_24_SON_VI[tenSon];
+    const codeHuongLon = thongTinSơnLõi ? thongTinSơnLõi.huongDaiCuc : "N";
+    
+    const mãHướngSangTiếngViệt = { "N": "Bắc", "NE": "Đông Bắc", "E": "Đông", "SE": "Đông Nam", "S": "Nam", "SW": "Tây Nam", "W": "Tây", "NW": "Tây Bắc" };
+    const huongThucTe = mãHướngSangTiếngViệt[codeHuongLon] || "Trung Cung";
+
+    // 1. ENGINE NGỮ HOÀNG ĐẠI SÁT
+    let diff = (year - 2024) % 9;
+    if (diff < 0) diff += 9;
+    const mapNguHoang = ["Tây", "Đông Bắc", "Nam", "Bắc", "Tây Nam", "Đông", "Đông Nam", "Trung Cung", "Tây Bắc"];
+    if (huongThucTe === mapNguHoang[diff]) {
+        results.push({
+            ten: "NGŨ HOÀNG ĐẠI SÁT",
+            color: "#ff3b30",
+            level: "Đại Hung",
+            giaiPhap: "Treo chuông gió đồng 6 thanh (Lục đế) hoặc đặt hồ lô đồng để hóa giải Thổ khí của Sát tinh, tuyệt đối kỵ động thổ gây tai họa."
+        });
+    }
+
+    // 2. ENGINE THÁI TUẾ & TUẾ PHÁ
+    const diaChiNam = DATA_THANSAT.thaiTue[year % 12];
+    if (tenSon === diaChiNam) {
+        results.push({
+            ten: "THÁI TUẾ ĐÁO PHƯƠNG",
+            color: "#ff453a",
+            level: "Đại Hung",
+            giaiPhap: "Khu vực Thần chủ tể quản năm, kỵ đào móng sửa chữa đối xung từ trường. Nên đặt cặp Kỳ Lân bằng đồng hoặc đá thạch anh để an định trạch vận."
+        });
+    }
+    
+    if (tenSon === getDoiXungDiaChi(diaChiNam)) {
+        results.push({
+            ten: "TUẾ PHÁ CHIẾU CỤC",
+            color: "#ff9f0a",
+            level: "Hung",
+            giaiPhap: "Tuyến vị trục trực diện xung với Thái Tuế, từ trường bấp bênh dễ nảy sinh thị phi, biến động bất ngờ. Giữ yên tĩnh khu vực này."
+        });
+    }
+
+    // 3. ENGINE TAM SÁT PHÂN RÃ CHÍNH TÔNG
+    const tamHopCuc = getTamHopCuc(diaChiNam);
+    const diaChiLienQuoiCuaSơn = thongTinSơnLõi ? thongTinSơnLõi.diaChiLienQuoi : "";
+    
+    const mapCụcĐơnGiản = { 
+        "ThânTýThìn": ["Tỵ", "Ngọ", "Mùi"], 
+        "DầnNgọTuất": ["Hợi", "Tý", "Sửu"], 
+        "HợiMãoMùi": ["Thân", "Dậu", "Tuất"], 
+        "TỵDậuSửu": ["Dần", "Mão", "Thìn"] 
+    };
+    const mảngSát = mapCụcĐơnGiản[tamHopCuc] || [];
+
+    if (mảngSát.includes(tenSon) || mảngSát.includes(diaChiLienQuoiCuaSơn)) {
+        let tênSátChiTiết = "Tam Sát";
+        const vịTríPhầnTử = mảngSát.indexOf(diaChiLienQuoiCuaSơn) !== -1 ? mảngSát.indexOf(diaChiLienQuoiCuaSơn) : mảngSát.indexOf(tenSon);
+        if (vịTríPhầnTử !== -1) {
+            const cácTênSát = ["Kiếp Sát", "Tai Sát", "Tuế Sát"];
+            tênSátChiTiết = cácTênSát[vịTríPhầnTử];
+        }
+
+        results.push({
+            ten: `TAM SÁT - PHẠM ${tênSátChiTiết.toUpperCase()}`,
+            color: "#d63031",
+            level: "Hung",
+            giaiPhap: "Dải khí lưu niên dồn tụ sát khí cục bộ. An vị cặp Tỳ Hưu đồng hoặc Kỳ Lân hướng đầu ra ngoài cửa để phong tỏa hung khí, kỵ đập phá tường."
+        });
+    }
+
+    return results;
+}
+
+// =========================================================================
+// 📐 HÀM TOÁN HỌC VI PHÂN PHƯƠNG VỊ VÀ ĐỐI XỨNG HÌNH HỌC KHÔNG GIAN
+// =========================================================================
+function getDoiXungDiaChi(chi) {
+    const map = { "Tý":"Ngọ", "Ngọ":"Tý", "Mão":"Dậu", "Dậu":"Mão", "Dần":"Thân", "Thân":"Dần", "Thìn":"Tuất", "Tuất":"Thìn", "Tỵ":"Hợi", "Hợi":"Tỵ", "Sửu":"Mùi", "Mùi":"Sửu" };
+    return map[chi] || "";
+}
+
+function getTamHopCuc(chi) {
+    if (["Thân", "Tý", "Thìn"].includes(chi)) return "ThânTýThìn";
+    if (["Dần", "Ngọ", "Tuất"].includes(chi)) return "DầnNgọTuất";
+    if (["Hợi", "Mão", "Mùi"].includes(chi)) return "HợiMãoMùi";
+    if (["Tỵ", "Dậu", "Sửu"].includes(chi)) return "TỵDậuSửu";
+    return "";
+}
+
+function getTamSat24Son(cuc) {
+    const map = {
+        "ThânTýThìn": ["Tỵ", "Ngọ", "Mùi"],
+        "DầnNgọTuất": ["Hợi", "Tý", "Sửu"],
+        "HợiMãoMùi":  ["Thân", "Dậu", "Tuất"],
+        "TỵDậuSửu":   ["Dần", "Mão", "Thìn"]
+    };
+    return map[cuc] || [];
+}
+
+function updateDegreeDisplay(degree) {
+    const normalizedPhysical = ((degree % 360) + 360) % 360;
+    const currentHeadingRound = Math.round(normalizedPhysical);
+
+    const txtNamKhaoSat = document.getElementById('surveyYear'); 
+    const namKhaoSatThucTe = (txtNamKhaoSat && txtNamKhaoSat.value.length === 4) ? parseInt(txtNamKhaoSat.value, 10) : new Date().getFullYear();
+
+    const currentCung = getCungName(normalizedPhysical);
+    const sonObj = PhongThuyCore.getSonObj(normalizedPhysical);
+    const sonName = sonObj.name;
+    const currentHauInfo = getCurrentHauInfo(normalizedPhysical);
+    const khongVongInfo = kiemTraKhongVong(normalizedPhysical);
+
+    let tongDiemHTML = "";
+    let colorDiemRealtime = "#8a8a8f";
+
+    const dayStr = document.getElementById('birthDay')?.value || "";
+    const monthStr = document.getElementById('birthMonth')?.value || "";
+    const yearStr = document.getElementById('birthYear')?.value || "";
+    let namAmMệnhChủ = null;
+    if (dayStr && monthStr && yearStr && yearStr.length === 4) {
+        namAmMệnhChủ = (parseInt(monthStr, 10) < 2 || (parseInt(monthStr, 10) === 2 && parseInt(dayStr, 10) < 4)) ? parseInt(yearStr, 10) - 1 : parseInt(yearStr, 10);
+    }
+
+    if (typeof chủMệnh !== 'undefined' && chủMệnh) {
+        const mucDichHienTai = document.getElementById('purpose')?.value || 'house';
+        const tongHop = tinhDiemTongHop(chủMệnh, normalizedPhysical, namKhaoSatThucTe, mucDichHienTai, namAmMệnhChủ);
+        
+        if (tongHop.diem >= 72) colorDiemRealtime = "#30d158";
+        else if (tongHop.diem >= 50) colorDiemRealtime = "#ffd700";
+        else colorDiemRealtime = "#ff3b30";
+
+        tongDiemHTML = `<div style="font-size: 0.95rem; font-weight: 850; color: ${colorDiemRealtime}; background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 5px;">${tongHop.diem}pt (${tongHop.level})</div>`;
+    }
+
+    const degreeTxt = document.getElementById('degree-txt') || document.getElementById('degreeTxt');
+    if (degreeTxt) {
+        degreeTxt.innerHTML = `
+            <div style="grid; gap: 4px; font-family: sans-serif;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 1.8rem; font-weight: 900; color: #ffca28;">${currentHeadingRound}°</span>
+                    <span style="font-size: 0.95rem; font-weight: bold; color: #ffffff;">${currentCung}</span>
+                    <span style="font-size: 0.9rem; background: #3a3a3c; padding: 2px 8px; border-radius: 4px;">Sơn: ${sonName}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #444; padding-top: 4px;">
+                    <span style="font-size: 0.85rem; color: #aaa;">Hậu: <b style="color: ${currentHauInfo.emoji === '🟢' ? '#00FF41' : '#ff4444'}">${currentHauInfo.ten.split(' ')[0]}</b></span>
+                    ${khongVongInfo ? `<span style="color:#ff3b30; font-weight:bold;">⚠️ ${khongVongInfo.loai}</span>` : ""}
+                    ${tongDiemHTML}
+                </div>
+            </div>`;
+    }
+}
+
+// ====================== HÀM HỖ TRỢ LẤY TÊN CUNG ======================
+function getCungName(degree) {
+    let normalized = ((degree % 360) + 360) % 360;
+    if (normalized >= 337.5 || normalized < 22.5) return "KHẢM (BẮC)";
+    if (normalized >= 22.5 && normalized < 67.5) return "CẤN (ĐÔNG BẮC)";
+    if (normalized >= 67.5 && normalized < 112.5) return "CHẤN (ĐÔNG)";
+    if (normalized >= 112.5 && normalized < 157.5) return "TỐN (ĐÔNG NAM)";
+    if (normalized >= 157.5 && normalized < 202.5) return "LY (NAM)";
+    if (normalized >= 202.5 && normalized < 247.5) return "KHÔN (TÂY NAM)";
+    if (normalized >= 247.5 && normalized < 292.5) return "ĐOÀI (TÂY)";
+    return "CÀN (TÂY BẮC)";
+}
+
+// =========================================================================
+// 🌌 KHO DỮ LIỆU THẦN SÁT NGOẠI VI NÂNG CẤP TOÀN NĂNG (ĐỒNG BỘ TUYỆT ĐỐI)
+// =========================================================================
+const DATA_THANSAT = {
+    tamSat: {
+        "Dần Ngọ Tuất": "Bắc",
+        "Thân Tý Thìn": "Nam",
+        "Tỵ Dậu Sửu": "Đông",
+        "Hợi Mão Mùi": "Tây"
+    },
+    thaiTue: ["Thân", "Dậu", "Tuất", "Hợi", "Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi"],
+    phuongVi: {
+        "Tý": "Bắc", "Ngọ": "Nam", "Mão": "Đông", "Dậu": "Tây",
+        "Dần": "Đông Bắc", "Thân": "Tây Nam", "Tỵ": "Đông Nam", "Hợi": "Tây Bắc",
+        "Sửu": "Đông Bắc", "Mùi": "Tây Nam", "Thìn": "Đông Nam", "Tuất": "Tây Bắc"
+    },
+    THAP_NHI_CHI_ARR: ["Ty", "Suu", "Dan", "Mao", "Thin", "Tỵ", "Ngo", "Mui", "Than", "Dau", "Tuat", "Hoi"],
+    THAP_NHI_CHI_VIET: ["Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"],
+    BO_CHUYEN_DOI_NGON_NGU: {
+        "Tý": "Ty", "Sửu": "Suu", "Dần": "Dan", "Mão": "Mao", "Thìn": "Thin", "Tỵ": "Tỵ",
+        "Ngọ": "Ngo", "Mùi": "Mui", "Thân": "Than", "Dậu": "Dau", "Tuất": "Tuat", "Hợi": "Hoi"
+    },
+    tamSatPhanCham: {
+        "Dan Ngo Tuat": { huongChuQuet: "N", canhcai: ["Hoi", "Ty", "Suu"], text: "Vùng Sát Khí chạy dọc Phương Bắc (Tây Bắc - Chính Bắc - Đông Bắc)" },
+        "Than Ty Thin": { huongChuQuet: "S", canhcai: ["Tỵ", "Ngo", "Mui"], text: "Vùng Sát Khí chạy dọc Phương Nam (Đông Nam - Chính Nam - Tây Nam)" },
+        "Tỵ Dau Suu":   { huongChuQuet: "E", canhcai: ["Dan", "Mao", "Thin"], text: "Vùng Sát Khí chạy dọc Phương Đông (Đông Bắc - Chính Đông - Đông Nam)" },
+        "Hoi Mao Mui":  { huongChuQuet: "W", canhcai: ["Than", "Dau", "Tuat"], text: "Vùng Sát Khí chạy dọc Phương Tây (Tây Nam - Chính Tây - Tây Bắc)" }
+    },
+    MA_TRAN_24_SON_VI: {
+        "Nhâm": { huongDaiCuc: "N",  diaChiLienQuoi: "Ty",   nguHanh: "Thuy" },
+        "Tý":   { huongDaiCuc: "N",  diaChiLienQuoi: "Ty",   nguHanh: "Thuy" },
+        "Quý":  { huongDaiCuc: "N",  diaChiLienQuoi: "Ty",   nguHanh: "Thuy" },
+        "Sửu":  { huongDaiCuc: "NE", diaChiLienQuoi: "Suu",  nguHanh: "Tho" },
+        "Cấn":  { huongDaiCuc: "NE", diaChiLienQuoi: "Suu",  nguHanh: "Tho" },
+        "Dần":  { huongDaiCuc: "NE", diaChiLienQuoi: "Dan",  nguHanh: "Moc" },
+        "Giáp": { huongDaiCuc: "E",  diaChiLienQuoi: "Dan",  nguHanh: "Moc" },
+        "Mão":  { huongDaiCuc: "E",  diaChiLienQuoi: "Mao",  nguHanh: "Moc" },
+        "Ất":   { huongDaiCuc: "E",  diaChiLienQuoi: "Mao",  nguHanh: "Moc" },
+        "Thìn": { huongDaiCuc: "SE", diaChiLienQuoi: "Thin", nguHanh: "Tho" },
+        "Tốn":  { huongDaiCuc: "SE", diaChiLienQuoi: "Thin", nguHanh: "Moc" },
+        "Tỵ":   { huongDaiCuc: "SE", diaChiLienQuoi: "Tỵ",   nguHanh: "Hoa" },
+        "Bính": { huongDaiCuc: "S",  diaChiLienQuoi: "Tỵ",   nguHanh: "Hoa" },
+        "Ngọ":  { huongDaiCuc: "S",  diaChiLienQuoi: "Ngo",  nguHanh: "Hoa" },
+        "Đinh": { huongDaiCuc: "S",  diaChiLienQuoi: "Ngo",  nguHanh: "Hoa" },
+        "Mùi":  { huongDaiCuc: "SW", diaChiLienQuoi: "Mui",  nguHanh: "Tho" },
+        "Khôn": { huongDaiCuc: "SW", diaChiLienQuoi: "Mui",  nguHanh: "Tho" },
+        "Thân": { huongDaiCuc: "SW", diaChiLienQuoi: "Than", nguHanh: "Kim" },
+        "Canh": { huongDaiCuc: "W",  diaChiLienQuoi: "Than", nguHanh: "Kim" },
+        "Dậu":  { huongDaiCuc: "W",  diaChiLienQuoi: "Dau",  nguHanh: "Kim" },
+        "Tân":  { huongDaiCuc: "W",  diaChiLienQuoi: "Dau",  nguHanh: "Kim" },
+        "Tuất": { huongDaiCuc: "NW", diaChiLienQuoi: "Tuat", nguHanh: "Tho" },
+        "Càn":  { huongDaiCuc: "NW", diaChiLienQuoi: "Tuat", nguHanh: "Kim" },
+        "Hợi":  { huongDaiCuc: "NW", diaChiLienQuoi: "Hoi",  nguHanh: "Thuy" }
+    }
+};
+
+// Bộ nhận diện phân rã bản chất cấu trúc lõi của Tam Sát (Độc quyền đắc pháp)
+function getChiTietTamSat(cuc, diaChiLienQuoi) {
+    const cấuHìnhPhânRã = {
+        "ThânTýThìn": { "Tỵ": "Kiếp Sát (Hao tài, thương tổn)", "Ngọ": "Tai Sát (Tai nạn, bệnh tật)", "Mùi": "Tuế Sát (Trì trệ, quan phi)" },
+        "DầnNgọTuất": { "Hợi": "Kiếp Sát (Hao tài, thương tổn)", "Tý": "Tai Sát (Tai nạn, bệnh tật)", "Sửu": "Tuế Sát (Trì trệ, quan phi)" },
+        "HợiMãoMùi":  { "Thân": "Kiếp Sát (Hao tài, thương tổn)", "Dậu": "Tai Sát (Tai nạn, bệnh tật)", "Tuất": "Tuế Sát (Trì trệ, quan phi)" },
+        "TỵDậuSửu":   { "Dần": "Kiếp Sát (Hao tài, thương tổn)", "Mão": "Tai Sát (Tai nạn, bệnh tật)", "Thìn": "Tuế Sát (Trì trệ, quan phi)" }
+    };
+    return cấuHìnhPhânRã[cuc]?.[diaChiLienQuoi] || "Tam Sát Lưu Niên";
+}
+
+// Hàm nội bộ tự động biên dịch số độ thành tên Sơn vị hẹp chính xác tuyệt đối (Chống lỗi Undefined)
+function dịchĐộSốThànhTênSơn(degree) {
+    const normalized = ((degree % 360) + 360) % 360;
+    const chuỗiSơnLầnLượt = [
+        "Tý", "Quý", "Sửu", "Cấn", "Dần", "Giáp", "Mão", "Ất", "Thìn", "Tốn", "Tỵ", "Bính", 
+        "Ngọ", "Đinh", "Mùi", "Khôn", "Thân", "Canh", "Dậu", "Tân", "Tuất", "Càn", "Hợi", "Nhâm"
+    ];
+    let index = Math.floor(((normalized + 7.5) % 360) / 15);
+    return chuỗiSơnLầnLượt[index] || "Tý";
+}
+
+// Giữ lại hàm logic đối xứng
+function getHuongDoiXung(huong) {
+    const map = { "Bắc": "Nam", "Nam": "Bắc", "Đông": "Tây", "Tây": "Đông", "Đông Bắc": "Tây Nam", "Tây Nam": "Đông Bắc", "Đông Nam": "Tây Bắc", "Tây Bắc": "Đông Nam" };
+    return map[huong] || huong;
+}
+
+// =========================================================================
+// 🚀 PHIÊN BẢN ĐẠI NÂNG CẤP: HIỂN THỊ CHI TIẾT ĐA TẦNG - ĐỒNG BỘ 100% XUYÊN MẠCH
+// =========================================================================
+function renderMultiLayerDetail(result, van, degree) {
+    if (!result) return;
+
+    // Phân rã dữ liệu bóc tách từ thuật toán lõi 
+    const { diem, level, message, hoaGiai, khongVong, satTinhs, sonName, hauInfo } = result;
+
+    const mucDich = document.getElementById('purpose')?.value || "house";
+    const nguonConfig = (typeof ConfigPhongThuy !== 'undefined') ? ConfigPhongThuy : ((typeof PhongThuyCore !== 'undefined' && PhongThuyCore.data?.Config) ? PhongThuyCore.data.Config : {});
+    const config = nguonConfig[mucDich] || { title: "Hạng mục", isCat: true };
+    const isCatPurpose = config.isCat; 
+
+    // Đồng bộ thang màu trạng thái với ngưỡng Đạt Cách Vận 9 của Phong Thủy Số
+    let colorStatus = "#ff3b30"; 
+    if (diem >= 72) {
+        colorStatus = diem >= 85 ? "#30d158" : "#32b057"; 
+    } else if (diem >= 50 && isCatPurpose) {
+        colorStatus = "#dfb76c"; 
+    }
+
+    let html = `<div style="font-size:0.92rem; line-height:1.6; color:#e0e0e0; font-family: sans-serif; width: 100%; box-sizing: border-box;">`;
+
+    // --- TẦNG 1: THƯỢNG ĐỈNH TỔNG ĐIỂM SỐ CHỐNG SẬP KHUNG KHI ĐỔI ĐỘ TRỰC TIẾP ---
+    html += `
+    <div style="text-align:center; padding:20px; background:rgba(255,255,255,0.02); border-radius:16px; margin-bottom:20px; border: 1px solid ${colorStatus}40; box-shadow: inset 0 0 15px ${colorStatus}10;">
+        <div style="font-size:0.75rem; color:#888; text-transform:uppercase; letter-spacing: 2px; font-weight: bold;">Chỉ số Thống kê PT [${config.title}] Vận 9</div>
+        <div style="font-size:3.5rem; font-weight:900; color:${colorStatus}; margin: 5px 0; text-shadow: 0 0 10px ${colorStatus}20;">${diem}<span style="font-size:1.2rem; font-weight:400;">pt</span></div>
+        <div style="font-weight:700; color:${colorStatus}; letter-spacing: 1px; padding: 4px 16px; background: ${colorStatus}15; display: inline-block; border-radius: 20px; text-transform: uppercase; font-size: 0.85rem; border: 1px solid ${colorStatus}30;">${level}</div>
+        <div style="margin-top:12px; font-size:0.75rem; color:#8a8a8f; font-family: monospace; line-height: 1.4; border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 8px;">
+            Toán thức Lập cực: PT = [ ( BT<sub>Gốc</sub> + Δ<sub>H72</sub> ) × K<sub>Van</sub> ${isCatPurpose ? '-' : '+'} ΣΨ<sub>Sat</sub> ] × Γ<sub>Khai</sub>
+        </div>
+    </div>`;
+
+    // --- TẦNG 2: BỘ LỌC CẢNH BÁO ĐẠI KÌ LƯU NIÊN ĐỘNG ---
+    if (khongVong || (satTinhs && satTinhs.length > 0)) {
+        html += `<div style="margin-bottom:20px; display: flex; flex-direction: column; gap: 8px;">`;
+        
+        if (khongVong) {
+            let kvBg = isCatPurpose ? "rgba(255,59,48,0.12)" : "rgba(48,209,88,0.12)";
+            let kvBorder = isCatPurpose ? "#ff3b30" : "#30d158";
+            let kvTitle = isCatPurpose ? `⚠️ ĐẠI KỴ TỬ HUYỆT: ${khongVong.loai}` : `🏆 DIỆU PHÁP CHẾ SÁT: TOẠ TRÚNG ${khongVong.loai}`;
+            let kvMsg = isCatPurpose ? 
+                `Hạng mục cấu trúc đang đặt đè trúng trục đứt gãy năng lượng của vòng Không Vong, khiến dòng sinh khí bị xé toạc, hỗn tạp, phá tài tốn đinh.` : 
+                `Thuật Phong thủy đỉnh cao! Chọn đúng tọa độ đứt gãy mạch từ trường để đặt thiết bị xả uế, uế khí theo dòng xoáy Không Vong xả thẳng ra ngoài.`;
+
+            html += `
+            <div style="background:${kvBg}; padding:12px 15px; border-radius:12px; border:1px solid ${kvBorder};">
+                <strong style="color:${kvBorder}; font-size: 0.9rem; display: block; margin-bottom: 3px;">${kvTitle}</strong>
+                <span style="font-size:0.85rem; color: #eee;">${kvMsg}</span>
+            </div>`;
+        }
+
+        if (satTinhs && satTinhs.length > 0) {
+            satTinhs.forEach(sat => {
+                let satColor = isCatPurpose ? (sat.color || '#ff9f0a') : '#30d158';
+                let satBg = isCatPurpose ? 'rgba(255,159,10,0.08)' : 'rgba(48,209,88,0.06)';
+                let satTitle = isCatPurpose ? `💀 HƯỚNG GẶP HUNG TINH CHIẾU: ${sat.ten}` : `🛡️ KHÓA CHẶT TINH SÁT: ĐÈ PHƯƠNG VỊ ${sat.ten}`;
+                let satMsg = isCatPurpose ? 
+                    (sat.giaiPhap || "Năng lượng lưu niên hung hãn giáng lâm, trong năm nay trạch chủ tránh tuyệt đối việc khoan đục sâu tại góc phân độ này.") :
+                    "Công năng xả uế/đè nén đặt tại đây đóng vai trò như một trận pháp trấn yểm cực mạnh, đốt cháy hoàn toàn ác tính của hung tinh lưu niên.";
+
+                html += `
+                <div style="background:${satBg}; padding:10px 15px; border-radius:10px; border-left:4px solid ${satColor}; border-top: 1px solid ${satColor}15; border-right: 1px solid ${satColor}15; border-bottom: 1px solid ${satColor}15;">
+                    <strong style="color:${satColor}; font-size:0.88rem; display: block; margin-bottom: 2px;">${satTitle}</strong>
+                    <span style="font-size:0.82rem; color:#ccc;">${satMsg}</span>
+                </div>`;
+            });
+        }
+        
+        html += `</div>`;
+    }
+
+    // --- TẦNG 3: DIỄN GIẢI MINH CHÂU CHÍNH TÔNG TRẬN ĐỒ PHÂN CH M ---
+    html += `
+    <div style="background:rgba(255,255,255,0.01); padding:15px; border-radius:12px; border:1px solid rgba(255,255,255,0.08); box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
+        <strong style="color:#dfb76c; display:block; margin-bottom:8px; font-size:0.9rem; letter-spacing: 0.5px;">◆ KẾT QUẢ ĐO ĐẠC: SƠN VỊ ${sonName || "Tý"} (${degree}°)</strong>
+        <div style="font-size: 0.88rem; color: #ddd; text-align: justify; line-height: 1.5;">${message || "Khí trường biến thiên ôn hòa, điều hòa trạch cát."}</div>
+        <div style="margin-top:12px; color:#ffd700; font-size:0.85rem; border-top:1px solid rgba(255,255,255,0.08); padding-top:10px; line-height: 1.45;">
+            <b style="color:#dfb76c; display: block; margin-bottom: 3px;">💡 Pháp bảo bố trí / Mật pháp quy hoạch bổ trợ:</b> ${hoaGiai || "Giữ góc la bàn sạch sẽ để tụ khí."}
+        </div>
+    </div>`;
+
+    // --- TẦNG 4: ĐỒ HOÀ 3 HẬU ĐỊA LONG NỀN TẢNG ĐỊA KHÍ CỐ ĐỊNH ---
+    const nguonHau72 = (typeof Data72Hau !== 'undefined') ? Data72Hau : ((typeof PhongThuyCore !== 'undefined' && PhongThuyCore.data?.Hau72) ? PhongThuyCore.data.Hau72 : null);
+    if (hauInfo && nguonHau72) {
+        let mốcTâm = Math.round(degree / 5) * 5;
+        if (mốcTâm >= 360) mốcTâm = 0;
+        let mốcTrái = (mốcTâm - 5 + 360) % 360;
+        let mốcPhải = (mốcTâm + 5) % 360;
+
+        let hauTrái = nguonHau72[mốcTrái.toString()] || { ten: "Nhâm Hậu", chatLuong: "Bình Hòa", diem: 60 };
+        let hauTâm  = nguonHau72[mốcTâm.toString()] || { ten: "Tý Hậu", chatLuong: "Bình Hòa", diem: 60 };
+        let hauPhải = nguonHau72[mốcPhải.toString()] || { ten: "Quý Hậu", chatLuong: "Bình Hòa", diem: 60 };
+
+        const checkHauColor = (cl) => cl.includes('Cát') ? '#30d158' : (cl.includes('Hung') ? '#ff3b30' : '#dfb76c');
+        
+        let htmlKhối3Hậu = `
+            <div style="display: flex; gap: 6px; margin-top: 10px; width: 100%; box-sizing: border-box;">
+                <div style="flex: 1; text-align: center; background: rgba(255,255,255,0.03); padding: 8px 4px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${(hauTrái.ten || "Hậu").split(' ')[0]} (${mốcTrái}°)</div>
+                    <div style="font-size: 0.68rem; color: ${isCatPurpose ? checkHauColor(hauTrái.chatLuong) : (hauTrái.chatLuong.includes('Hung') ? '#30d158' : '#ff3b30')}; font-weight: bold; text-transform: uppercase;">
+                        ${isCatPurpose ? hauTrái.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.') : (hauTrái.chatLuong.includes('Hung') ? 'ĐẮC VỊ' : 'K. NÊN ĐẶT')}
+                    </div>
+                </div>
+                <div style="flex: 1; text-align: center; background: rgba(255,255,255,0.08); padding: 8px 4px; border-radius: 8px; border: 1px solid ${isCatPurpose ? checkHauColor(hauTâm.chatLuong) : (hauTâm.chatLuong.includes('Hung') ? '#30d158' : '#ff3b30')}; box-shadow: 0 0 8px ${isCatPurpose ? checkHauColor(hauTâm.chatLuong) : (hauTâm.chatLuong.includes('Hung') ? '#30d158' : '#ff3b30')}30;">
+                    <div style="font-size: 0.75rem; color: #ffd700; font-weight: bold; margin-bottom: 2px;">🎯 ${(hauTâm.ten || "Hậu").split(' ')[0]} (${mốcTâm}°)</div>
+                    <div style="font-size: 0.68rem; color: ${isCatPurpose ? checkHauColor(hauTâm.chatLuong) : (hauTâm.chatLuong.includes('Hung') ? '#30d158' : '#ff3b30')}; font-weight: bold; text-transform: uppercase;">
+                        ${isCatPurpose ? hauTâm.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.') : (hauTâm.chatLuong.includes('Hung') ? 'ĐẮC VỊ' : 'K. NÊN ĐẶT')}
+                    </div>
+                </div>
+                <div style="flex: 1; text-align: center; background: rgba(255,255,255,0.03); padding: 8px 4px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${(hauPhải.ten || "Hậu").split(' ')[0]} (${mốcPhải}°)</div>
+                    <div style="font-size: 0.68rem; color: ${isCatPurpose ? checkHauColor(hauPhải.chatLuong) : (hauPhải.chatLuong.includes('Hung') ? '#30d158' : '#ff3b30')}; font-weight: bold; text-transform: uppercase;">
+                        ${isCatPurpose ? hauPhải.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.') : (hauPhải.chatLuong.includes('Hung') ? 'ĐẮC VỊ' : 'K. NÊN ĐẶT')}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        html += `
+        <div style="margin-top:20px; padding:15px; background:rgba(0,255,120,0.02); border-radius:12px; border:1px solid rgba(0,255,170,0.15);">
+            <strong style="color:#00ffaa; font-size:0.9rem; letter-spacing: 0.3px; display: block;">🌟 PHAN PHỐI ĐỊA KHÍ ĐỘNG: LONG MẠCH 72 HẬU (Bước 5°)</strong>
+            <span style="font-size: 0.8rem; color: #8a8a8f; margin-top: 2px; display: block;">Mạch long khí chạy ngầm cố định dưới nền đất:</span>
+            
+            ${htmlKhối3Hậu}
+            
+            <div style="font-size:0.83rem; color:#bbb; margin-top:12px; line-height: 1.5; background: rgba(0,0,0,0.15); padding: 8px 12px; border-radius: 6px; border-left: 3px solid #00ffaa;">
+                Địa mạch Tiết khí mốc tâm: <b>${hauInfo.ten}</b> — Phẩm chất: <b>${hauInfo.chatLuong}</b> (Năng lượng mạch đất đạt ${hauInfo.diem}pt).<br>
+                <span style="color:#eee; font-style: italic; display: block; margin-top: 3px;">➔ Bản chất: ${hauInfo.ynghia}</span>
+            </div>
+        </div>`;
+    }
+
+    html += `</div>`;
+
+    const detailBoxEl = document.getElementById('detailBox') || document.getElementById('detail-box');
+    if (detailBoxEl) detailBoxEl.innerHTML = html;
+}
+
+// =========================================================================
+// 👁️ THUẬT TOÁN ĐỘNG 2: MẮT THẦN QUÉT KHÔNG VONG SIÊU VI PH N CHỐNG PHẠM SÁT
+// =========================================================================
+function kiemTraKhongVong(degree) {
+    const gockim = ((degree % 360) + 360) % 360;
+    const QUAI_8 = ["Khảm (Chính Bắc)", "Cấn (Đông Bắc)", "Chấn (Chính Đông)", "Tốn (Đông Nam)", "Ly (Chính Nam)", "Khôn (Tây Nam)", "Đoài (Chính Tây)", "Càn (Tây Bắc)"];
+    const SON_24 = ["Tý", "Quý", "Sửu", "Cấn", "Dần", "Giáp", "Mão", "Ất", "Thìn", "Tốn", "Tỵ", "Bính", "Ngọ", "Đinh", "Mùi", "Khôn", "Thân", "Canh", "Dậu", "Tân", "Tuất", "Càn", "Hợi", "Nhâm"];
+
+    let distDai = (gockim - 22.5) % 45;
+    if (distDai < 0) distDai += 45;
+    distDai = Math.min(distDai, 45 - distDai);
+    distDai = Math.round(distDai * 10000) / 10000;
+
+    if (distDai <= 0.5) {
+        const qIdx = (Math.round((gockim - 22.5) / 45) + 8) % 8;
+        return {
+            loai: "ĐẠI KHÔNG VONG",
+            mucDo: "🔴 ĐẠI HƯNG TINH SÁT",
+            saiLech: distDai,
+            toaDoTuyến: (Math.round((gockim - 22.5) / 45) * 45 + 22.5) % 360,
+            message: `Tọa độ góc ngắm (${gockim}°) phạm vào đại tử tuyến Tuyệt Mạch giữa 2 quẻ [${QUAI_8[qIdx]}] và [${QUAI_8[(qIdx + 1) % 8]}]. Từ trường khu vực cực kỳ hỗn loạn, triệt tiêu toàn bộ sinh khí.`
+        };
+    }
+
+    let distTieu = (gockim - 7.5) % 15;
+    if (distTieu < 0) distTieu += 15;
+    distTieu = Math.min(distTieu, 15 - distTieu);
+    distTieu = Math.round(distTieu * 10000) / 10000;
+
+    if (distTieu <= 0.6) {
+        const sIdx = (Math.round((gockim - 7.5) / 15) + 24) % 24;
+        return {
+            loai: "TIỂU KHÔNG VONG",
+            mucDo: "⚠️ TẠP KHÍ KHÔNG VONG",
+            saiLech: distTieu,
+            toaDoTuyến: (Math.round((gockim - 7.5) / 15) * 15 + 7.5) % 360,
+            message: `Tọa độ lập cực liếm sát vạch ngăn cách giữa Sơn [${SON_24[sIdx]}] và Sơn [${SON_24[(sIdx + 1) % 24]}]. Khí trường nghèo nàn, lộn xộn Âm Dương.`
+        };
+    }
+    return null;
+}
+
+// =========================================================================
+// 🧠 HÀM 1: TỰ ĐỘNG PH N LOẠI KHÍ CỤC THEO NGỮ NGHĨA KIẾN TRÚC THỰC CHIẾN
+// =========================================================================
+function layPhanLoaiKhiCuc(mucDich) {
+    if (!mucDich || typeof ConfigPhongThuy === 'undefined') return "NHÂN_THẦN_TỌA_KHÍ";
+    
+    const config = ConfigPhongThuy[mucDich];
+    if (!config || config.isCat === false) return "TRẤN_SÁT_TIÊU_HAO";
+    
+    const tieuDe = config.title || "";
+    
+    if (/Nhà|Cửa|Cổng|Ban Công|Biển Hiệu|Showroom/i.test(tieuDe)) {
+        return "NẠP_KHÍ_KHẨU";
+    }
+    if (/Bàn Làm Việc|Sếp|Lãnh Đạo|Học|Phòng Khách|Phòng Ngủ Chính|Không Gian/i.test(tieuDe)) {
+        return "NHÂN_THẦN_TỌA_KHÍ";
+    }
+    if (/Thờ|Thần Tài|Giường|Két Sắt|Quầy|Lò Nướng/i.test(tieuDe)) {
+        return "TỤ_KHÍ_ĐỊNH_VỊ";
+    }
+    
+    return "NHÂN_THẦN_TỌA_KHÍ";
+}
+
+// Khai báo ngay sau khi đã định nghĩa các biến toàn cục (SON_24_CONFIG, MaTranMinhChau,...)
+// =========================================================================
+// 🌐 ĐỐI TƯỢNG ĐIỀU HÀNH LÕI: PHONG THỦY CORE ENGINE
+// =========================================================================
+
+const PhongThuyCore = {
+    data: {
+        Son24: typeof SON_24_CONFIG !== 'undefined' ? SON_24_CONFIG : [],
+        MinhChau: typeof MaTranMinhChau !== 'undefined' ? MaTranMinhChau : {},
+        Hau72: typeof Data72Hau !== 'undefined' ? Data72Hau : {},
+        Van: typeof VAN_DATA !== 'undefined' ? VAN_DATA : {},
+        Sat: typeof DATA_THANSAT !== 'undefined' ? DATA_THANSAT : {},
+        BatTrachMap: typeof bátTrạchMap !== 'undefined' ? bátTrạchMap : {},
+        Config: typeof ConfigPhongThuy !== 'undefined' ? ConfigPhongThuy : {}
+    },
+
+    /**
+     * Hàm tiện ích truy xuất và chuẩn hóa góc độ toàn hệ thống [0 - 359.99...]
+     */
+    getNormalizedDegree: function(degree) {
+        if (typeof degree !== 'number' || isNaN(degree)) return 0;
+        return ((degree % 360) + 360) % 360;
+    },
+
+    /**
+     * Xác định Sơn Vị 15 độ từ nguồn dữ liệu tập trung
+     */
+    getSonObj: function(degree) {
+        const normalized = this.getNormalizedDegree(degree);
+        return this.data.Son24.find(s => {
+            if (s.min > s.max) return normalized >= s.min || normalized < s.max;
+            return normalized >= s.min && normalized < s.max;
+        }) || this.data.Son24[0];
+    }
+};
+
+// =========================================================================
+// 🔗 TẦNG BẮC CẦU (ALIAS) - BẢO VỆ CÁC HÀM CŨ KHÔNG BỊ LỖI CHẾT ỨNG DỤNG
+// =========================================================================
+
+/**
+ * Hàm gọi rời bên ngoài - Trỏ trực tiếp vào core để tái sử dụng logic,
+ * triệt tiêu hoàn toàn code thừa (Redundant Code).
+ */
+function getSonObjByDegree(degree) {
+    return PhongThuyCore.getSonObj(degree);
+}
+
+// =========================================================================
+// 🔮 THÀNH PHẦN 2: UPGRADE ENGINE LÕI TÍNH ĐIỂM TỔNG HỢP ĐA TẦNG TUYẾN TÍNH
+// =========================================================================
+function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm, doRongQuetThucTe) {
+    const checkBoundary = (deg) => {
+        let normalized = ((deg % 360) + 360) % 360;
+        let mod = normalized % 15; 
+        if (mod < 0.5 || mod > 14.5) return true;
+        return false;
+    };
+
+    const runRawCalcEngine = (targetDegree) => {
+        const normalizedDegree = ((targetDegree % 360) + 360) % 360;
+        const sonObj = PhongThuyCore.getSonObj(normalizedDegree);
+        const sonName = sonObj.name;
+        
+        const namTinhVan = namKhảoSát ? parseInt(namKhảoSát, 10) : (typeof layNamKhaoSatThienVan === 'function' ? layNamKhaoSatThienVan() : new Date().getFullYear());
+        
+        const config = PhongThuyCore.data.Config[mucDich] || { title: "Vị trí", isCat: true };
+        const isCatPurpose = config.isCat; 
+
+        let dảiĐộVậtThể = (typeof doRongQuetThucTe === 'number' && doRongQuetThucTe > 0) ? doRongQuetThucTe : 0;
+
+        const huongToCodeMap = { "Bắc": "N", "Đông Bắc": "NE", "Đông": "E", "Đông Nam": "SE", "Nam": "S", "Tây Nam": "SW", "Tây": "W", "Tây Bắc": "NW" };
+        const codeChuan = huongToCodeMap[sonObj.huong] || "N";
+        
+        const safeCungPhi = cungPhi ? cungPhi.trim().charAt(0).toUpperCase() + cungPhi.trim().slice(1).toLowerCase() : "Khảm";
+        const cungBátTrạch = PhongThuyCore.data.BatTrachMap[safeCungPhi] ? PhongThuyCore.data.BatTrachMap[safeCungPhi][codeChuan] || "Phục Vị" : "Phục Vị";
+
+        // 🛡️ AN TOÀN ĐÔNG/T Tây TỨ MỆNH: Kiểm soát cảnh báo sớm định vị Chu Mệnh tránh âm dương đảo ngược
+        const dongTuCungs = ["Khảm", "Ly", "Chấn", "Tốn"];
+        const tayTuCungs = ["Càn", "Khôn", "Cấn", "Đoài"];
+        const isDongTuMenh = dongTuCungs.includes(safeCungPhi);
+        const isDongTuHuong = ["N", "S", "E", "SE"].includes(codeChuan);
+        
+        let canhBaoMenhChu = "";
+        if (isCatPurpose) {
+            if ((isDongTuMenh && !isDongTuHuong) || (!isDongTuMenh && isDongTuHuong)) {
+                canhBaoMenhChu = `⚠️ Cảnh báo: Hướng ${sonObj.huong} là hướng Hung vị đối với Chu Mệnh phối quẻ ${safeCungPhi}.`;
+            }
+        }
+
+        // BƯỚC 1: BIỆN CHỨNG PHÂN BỔ TỶ TRỌNG KHI CỤC KIẾN TRÚC
+        const loaiKhiCuc = (typeof layPhanLoaiKhiCuc === 'function') ? layPhanLoaiKhiCuc(mucDich) : "TỤ_KHÍ_ĐỊNH_VỊ";
+        let tyTrong = { batTrach: 0.35, son: 0.35, hau: 0.30 }; 
+
+        switch(loaiKhiCuc) {
+            case "NẠP_KHÍ_KHẨU":      tyTrong = { batTrach: 0.25, son: 0.30, hau: 0.45 }; break;
+            case "TỤ_KHÍ_ĐỊNH_VỊ":    tyTrong = { batTrach: 0.35, son: 0.45, hau: 0.20 }; break;
+            case "NHÂN_THẦN_TỌA_KHÍ": tyTrong = { batTrach: 0.50, son: 0.35, hau: 0.15 }; break;
+            case "TRẤN_SÁT_TIÊU_HAO": tyTrong = { batTrach: 0.40, son: 0.30, hau: 0.30 }; break;
+        }
+
+        // BƯỚC 2: TRÍCH XUẤT ĐIỂM SỐ GỐC BÁT TRẠCH & MA TRẬN MINH CHÂU (NH N MỆNH)
+        const mapDiemBatTrach = { "Sinh Khí": 95, "Diên Niên": 90, "Thiên Y": 85, "Phục Vị": 80, "Họa Hại": 40, "Lục Sát": 30, "Ngũ Quỷ": 20, "Tuyệt Mệnh": 10 };
+        let diemBatTrachGoc = mapDiemBatTrach[cungBátTrạch] || 60;
+
+        const matrixCungPhi = MaTranMinhChau[safeCungPhi] || MaTranMinhChau["Khảm"];
+        const matrixSonData = matrixCungPhi[sonName] || { diem: 70, text: "Khí trường bình hòa" };
+        let diemSonGoc = matrixSonData.diem;
+
+        // BƯỚC 3: ĐỒNG BỘ TUYỆT ĐỐI - Gọi hàm cứu cánh địa mạch để lấy hệ số Delta H72 gốc
+        const hauMasterPayload = getCurrentHauInfo(normalizedDegree, mucDich, namTinhVan, safeCungPhi, namAm);
+        let deltaH72 = hauMasterPayload.deltaH72;
+
+        // Tích hợp Siêu Gốc Đất và Người thống nhất phương trình: (Điểm_Sơn_Gốc + ΔH72_Mạch)
+        let sieuGocTichHop = diemSonGoc + deltaH72;
+        
+        // Tính toán Trực Xung Vị hẹp dựa trên Thiên Can Địa Chi của Chu Mệnh (Năm sinh nhập vào)
+        if (namAm && !isNaN(namAm)) {
+            const cacDiaChi = ["Thân", "Dậu", "Tuất", "Hợi", "Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi"];
+            const diaChiMenhChu = cacDiaChi[parseInt(namAm, 10) % 12];
+            if (typeof getDoiXungDiaChi === 'function' && sonName === getDoiXungDiaChi(diaChiMenhChu)) {
+                sieuGocTichHop -= 12; // Phạt Lục Xung trực diện Bản mệnh Sơn Vị
+            }
+        }
+
+        // BƯỚC 4: TIẾT KHÍ THỜI KHÔNG ĐỘNG (THIÊN THỜI K_VAN & TINH SÁT LƯU NI N)
+        let kVan = 1.0; 
+        const vanSo = Math.floor((namTinhVan - 1864) / 20) % 9 + 1;
+        if (PhongThuyCore.data.Van[vanSo]?.[codeChuan]) {
+            const saoThoiVan = PhongThuyCore.data.Van[vanSo][codeChuan];
+            if (saoThoiVan.loai === "best") kVan = 1.15;      
+            else if (saoThoiVan.loai === "good") kVan = 1.08;   
+            else if (saoThoiVan.loai === "bad") kVan = 0.88;    
+            else if (saoThoiVan.loai === "worst") kVan = 0.75;  
+        }
+
+        let tongSatTinhPenalty = 0;
+        const satTinhsKhảoSat = (typeof getPhongThuySatTinh === 'function') ? getPhongThuySatTinh(sonName, namTinhVan) : [];
+        satTinhsKhảoSat.forEach(sat => {
+            if (sat.ten.includes("NGŨ HOÀNG")) tongSatTinhPenalty += 25;
+            else if (sat.ten.includes("THÁI TUẾ")) tongSatTinhPenalty += 18;
+            else if (sat.ten.includes("TUẾ PHÁ")) tongSatTinhPenalty += 12;
+            else if (sat.ten.includes("TAM SÁT")) tongSatTinhPenalty += 15;
+        });
+
+        // BƯỚC 5: TOÁN THỨC HỢP NHẤT TUYẾN TÍNH QUYẾT ĐỊNH ĐIỂM (TẬP TRUNG TẠI LÕI)
+        let diemTinhToan;
+        if (isCatPurpose) {
+            // Cấu trúc Cát Cục chuẩn phương trình PT
+            let coreTrườngKhí = (sieuGocTichHop * kVan) - tongSatTinhPenalty;
+            diemTinhToan = (diemBatTrachGoc * tyTrong.batTrach) + (coreTrườngKhí * (tyTrong.son + tyTrong.hau));
+        } else {
+            // Cấu trúc Trấn Sát lấy độc trị độc: Đảo cực toán thức theo đúng logic kiến trúc xả uế
+            let diemBatTrachTratSat = 100 - diemBatTrachGoc; 
+            let diemSonTratSat = 100 - diemSonGoc; 
+            let coreTrườngKhíTrấnSát = (diemSonTratSat + (deltaH72 * -1.2) * kVan) + (tongSatTinhPenalty * 0.6);
+            diemTinhToan = (diemBatTrachTratSat * tyTrong.batTrach) + (coreTrườngKhíTrấnSát * (tyTrong.son + tyTrong.hau));
+        }
+
+        // BƯỚC 6: BIỆN CHỨNG DẢI HOẠT PHỔ VẬT THỂ VÀ HẬU BỊ CHIẾM
+        let dínhKhôngVongNặng = false, loaiKhôngVong = "";
+        let danhSachHauBiDeLen = new Set(), chiTietCacHauBiChiem = [];
+        
+        let gocBatDau = normalizedDegree - (dảiĐộVậtThể / 2);
+        let gocKetThuc = normalizedDegree + (dảiĐộVậtThể / 2);
+
+        for (let g = gocBatDau; g <= gocKetThuc; g += 0.5) {
+            let gocQuetChuanHoa = ((g % 360) + 360) % 360;
+            
+            // Gọi hàm Hậu để bóc tách thông tin thô của từng phân châm bị chiếm, loại bỏ tính toán lặp
+            let localHauPayload = getCurrentHauInfo(gocQuetChuanHoa, mucDich, namTinhVan, safeCungPhi, namAm);
+            let mốcHậuQuét = Math.round(gocQuetChuanHoa / 5) * 5 % 360;
+            
+            if (!danhSachHauBiDeLen.has(mốcHậuQuét)) {
+                danhSachHauBiDeLen.add(mốcHậuQuét);
+                // Điểm vi phân của Hậu mạch được đồng bộ cấu trúc trừ phạt thống nhất với lõi
+                let diemHauQuetDong = Math.max(5, Math.min(98, Math.round((localHauPayload.diemGoc) * kVan - (tongSatTinhPenalty * 0.5))));
+                chiTietCacHauBiChiem.push({ moc: mốcHậuQuét, ten: localHauPayload.ten, diem: diemHauQuetDong });
+            }
+
+            if (typeof kiemTraKhongVong === 'function') {
+                let kv = kiemTraKhongVong(gocQuetChuanHoa);
+                if (kv) { dínhKhôngVongNặng = true; loaiKhôngVong = kv.loai; }
+            }
+        }
+
+        // Hình phạt Không Vong: Đoạn mạch đứt gãy, ép sập sàn điểm số
+        if (dínhKhôngVongNặng) {
+            if (loaiKhôngVong === "ĐẠI KHÔNG VONG") diemTinhToan = 12;
+            else diemTinhToan = Math.max(15, diemTinhToan - 30);
+        }
+
+        let diemCuoi = Math.max(5, Math.min(98, Math.round(diemTinhToan)));
+        
+        // 🎯 KHẮC PHỤC TỬ HUYỆT LOGIC: Trả lại nguyên vẹn nhãn khách quan của mạch đất
+        let dynamicHauInfo = {
+            ten: hauMasterPayload.ten,
+            diem: Math.max(5, Math.min(98, Math.round(hauMasterPayload.diemGoc * kVan - (tongSatTinhPenalty * 0.5)))),
+            chatLuong: hauMasterPayload.chatLuong, // Bốc thẳng nhãn đảo cực âm dương ĐẮC VỊ TIÊU HUNG từ hàm Hậu
+            emoji: hauMasterPayload.emoji,
+            ynghia: hauMasterPayload.ynghia,
+            giaiphap: matrixSonData.giaiphap || hauMasterPayload.giaiphap || "Giữ khu vực thông thoáng."
+        };
+
+        let level = diemCuoi >= 85 ? "ĐẠI CÁT" : (diemCuoi >= 72 ? "CÁT VỊ" : (diemCuoi >= 50 ? "BÌNH HOÀ" : "HUNG CỤC"));
+
+        return {
+            diem: diemCuoi, 
+            level: level, 
+            message: (canhBaoMenhChu ? canhBaoMenhChu + " " : "") + (matrixSonData.text || ""), 
+            hoaGiai: matrixSonData.giaiphap || "", 
+            khongVong: dínhKhôngVongNặng ? { loai: loaiKhôngVong } : null, 
+            sonName: sonName, 
+            hauInfo: dynamicHauInfo, 
+            satTinhs: satTinhsKhảoSat, 
+            chiTietCacHauBiChiem: chiTietCacHauBiChiem
+        };
+    };
+
+    // Giữ nguyên vẹn cấu trúc nội suy đường biên trắc địa (Biên Sơn vị 15 độ)
+    if (checkBoundary(degree)) {
+        let scoreA = runRawCalcEngine(degree - 0.5);
+        let scoreB = runRawCalcEngine(degree + 0.5);
+        let mergedResult = Object.assign({}, scoreA);
+        
+        mergedResult.diem = Math.max(5, Math.min(98, Math.round((scoreA.diem + scoreB.diem) / 2)));
+        mergedResult.level = mergedResult.diem >= 85 ? "ĐẠI CÁT" : (mergedResult.diem >= 72 ? "CÁT VỊ" : (mergedResult.diem >= 50 ? "BÌNH HOÀ" : "HUNG CỤC"));
+        mergedResult.chiTietCacHauBiChiem = scoreA.chiTietCacHauBiChiem;
+        return mergedResult;
+    }
+
+    return runRawCalcEngine(degree);
+}
+// ==========================================================================
+// HỆ THỐNG ĐIỀU HÀNH LA BÀN PHONG THỦY - PHIÊN BẢN SIÊU MƯỢT & TỐI ƯU SÂU 2026
+// ==========================================================================
+
+// --- BIẾN TOÀN CỤC LUỒNG KIM QUAY ---
+let lastHeading = null;
+let orientationListenerAdded = false;
+let rafId = null;
+let lastUpdateTime = 0;
+
+const SMOOTH_MIN = 0.08;
+const SMOOTH_MAX = 0.55;
+const THROTTLE_MS = 16; // ~60fps
+
+// --- BIẾN TOÀN CỤC ĐỊA TỪ & IOS ACCURACY ---
+let magneticDeclination = 0;
+let lastAccuracy = 0; 
+let isMagneticWarningActive = false;
+
+/**
+ * 1. TRÌNH XỬ LÝ SỰ KIỆN ĐỊA HƯỚNG (DEVICE ORIENTATION) - SIÊU MƯỢT & TỐI ƯU TÀI NGUYÊN
+ */
+function handleOrientation(event) {
+    if (window.isCompassHold) {
+        if (typeof window.holdedHeading !== 'undefined') {
+            lastHeading = window.holdedHeading;
+            if (typeof currentHeading !== 'undefined') currentHeading = window.holdedHeading;
+            
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+                executeUIUpdate(window.holdedHeading, window.holdedHeading);
+            });
+        }
+        return; 
+    }
+
+    let rawHeading = null;
+    const now = Date.now();
+    
+    const accuracy = event.webkitCompassAccuracy;
+    if (accuracy !== undefined && accuracy !== null && accuracy >= 0) {
+        if (Math.abs(accuracy - lastAccuracy) > 3 || 
+           (accuracy > 15 && lastAccuracy <= 15) || 
+           (accuracy > 30 && lastAccuracy <= 30) ||
+           (accuracy <= 15 && lastAccuracy > 15)) {
+            lastAccuracy = accuracy;
+            updateMagneticStatus(accuracy); 
+        }
+    }
+
+    if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
+        rawHeading = event.webkitCompassHeading;
+    } else if (event.alpha !== undefined && event.alpha !== null) {
+        rawHeading = (360 - event.alpha) % 360;
+    }
+    
+    if (rawHeading === null) return;
+
+    if (document.activeElement?.id === 'compassSlider') return;
+    if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
+    lastUpdateTime = now;
+
+    if (lastHeading === null) {
+        lastHeading = rawHeading;
+        executeUIUpdate(lastHeading, lastHeading);
+        return;
+    }
+
+    let diff = rawHeading - lastHeading;
+    if (diff > 180) diff -= 360;
+    if (diff < -180) diff += 360;
+    
+    const absDiff = Math.abs(diff);
+    let dynamicFactor = SMOOTH_MIN;
+    
+    if (absDiff > 12) {
+        dynamicFactor = SMOOTH_MAX;
+    } else if (absDiff > 1.5) {
+        dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
+    }
+    
+    const newHeading = lastHeading + diff * dynamicFactor;
+    lastHeading = (newHeading % 360 + 360) % 360;
+
+    // GIAO THỨC PHÂN TÁCH GÓC: Chữ số hiển thị và lõi tính toán bám chặt vào góc thô vật lý máy chỉ
+    const headingForText = lastHeading; 
+    const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
+
+    if (typeof currentHeading !== 'undefined') currentHeading = headingForText;
+
+    if (absDiff > 0.4) {
+        const btnTongLuan = document.getElementById('btn-tong-luan');
+        if (btnTongLuan) btnTongLuan.classList.remove('vượng-xuất');
+        clearTimeout(dừngKimTimeout);
+        kichHoatBoDemDungKim();
+    }
+
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+        executeUIUpdate(headingForDial, headingForText);
+    });
+}
+
+function executeUIUpdate(headingDial, headingText) {
+    // updateCompassUI nhận góc thô để tính toán địa chất tĩnh bên trong, tự bù từ riêng cho mặt đĩa đồ họa
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingText); 
+    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); 
+    if (typeof recalculateFate === 'function') recalculateFate();
+}
+
+// Cập nhật trạng thái nhiễu dành riêng cho phần cứng iOS (Đã tối ưu giảm tải DOM)
+function updateMagneticStatus(acc) {
+    const dot = document.getElementById('accuracy-dot');
+    const text = document.getElementById('accuracy-text');
+    if (!dot || !text) return;
+
+    let bg = '#4caf50', txt = "TÍN HIỆU TỐT";
+    
+    if (acc > 15 && acc <= 30) {
+        bg = '#ff9800';
+        txt = "NHIỄU NHẸ";
+    } else if (acc > 30) {
+        bg = '#f44336';
+        txt = "NHIỄU NẶNG";
+        
+        if (typeof showToast === 'function' && !isMagneticWarningActive) {
+            showToast("⚠️ Nhiễu từ trường! Hãy tránh xa sắt thép", true);
+            isMagneticWarningActive = true;
+            setTimeout(() => { isMagneticWarningActive = false; }, 10000);
+        }
+    }
+
+    if (text.innerText !== txt) {
+        dot.style.background = bg;
+        text.innerText = txt;
+    }
+}
+
+/**
+ * 3. HÀM HIỂN THỊ THÔNG BÁO TOAST SANG TRỌNG
+ */
+function showToast(message, isError = false) {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.style.cssText = `
+        background: ${isError ? '#721c24' : 'rgba(0, 0, 0, 0.85)'};
+        color: ${isError ? '#f8d7da' : '#dfb76c'};
+        border: 1px solid ${isError ? '#f5c6cb' : '#dfb76c'};
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        white-space: nowrap;
+        backdrop-filter: blur(5px);
+        animation: toastIn 0.3s ease-out, toastOut 0.3s ease-in 2.7s forwards;
+    `;
+    toast.innerText = message;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
+
+if (typeof window !== 'undefined') {
+    const styleSheet = document.createElement("style");
+    styleSheet.innerText = `
+        @keyframes toastIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes toastOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
+    `;
+    document.head.appendChild(styleSheet);
+}
+
+/**
+ * 4. THUẬT TOÁN ĐỊA TỪ TOÀN CẦU & LÀM SẠCH DỮ LIỆU ĐẦU VÀO
+ */
+function getCleanValue(raw) {
+    if (!raw) return ''; 
+    let str = String(raw).trim().replace(/,/g, '.'); 
+    let isNegative = str.startsWith('-');
+    let processStr = isNegative ? str.substring(1) : str;
+    
+    let numericPart = "";
+    let dotCount = 0;
+    
+    for (let i = 0; i < processStr.length; i++) {
+        let char = processStr[i];
+        if (char >= '0' && char <= '9') {
+            numericPart += char;
+        } else if (char === '.' && dotCount === 0) {
+            numericPart += char;
+            dotCount = 1;
+        } else {
+            break; 
+        }
+    }
+    
+    if (numericPart.endsWith('.')) numericPart = numericPart.slice(0, -1);
+    let res = (isNegative ? '-' : '') + (numericPart || '');
+    return (res === '-' || res === '') ? '' : res;
+}
+
+// Bộ lưu trữ dữ liệu động - Tự động thay đổi Epoch và Ma trận theo file nạp vào
+// Bộ lưu trữ hệ số WMMHR động
+let GLOBAL_WMMHR_DATA = {
+    epoch: 2025.0,
+    data: [] 
+};
+
+// 🎯 BƯỚC ĐỘT PHÁ 1: Khởi tạo bộ đệm bộ nhớ phẳng (TypedArray) để tái sử dụng mãi mãi, 
+// không bao giờ cấp phát lại mảng trong vòng lặp giúp triệt tiêu hoàn toàn Rác RAM (Garbage Collection)
+let REUSABLE_P_BUFFER = null;
+let REUSABLE_DP_BUFFER = null;
+let PRECOMPUTED_COSM = null;
+let PRECOMPUTED_SINM = null;
+
+/**
+ * 🛰️ HÀM BẤT ĐỒNG BỘ: Tải ngầm file COF, không chặn luồng vẽ giao diện UI
+ */
+async function loadWMMHRFile() {
+    try {
+        const response = await fetch('WMMHR2025.COF');
+        if (!response.ok) throw new Error("Không tìm thấy file WMMHR2025.COF trong thư mục gốc!");
+        
+        const text = await response.text();
+        const lines = text.split('\n');
+        const parsedMatrix = [];
+        
+        if (lines.length > 0 && lines[0].trim() !== '') {
+            const headerParts = lines[0].trim().split(/\s+/);
+            if (headerParts.length > 0 && !isNaN(parseFloat(headerParts[0]))) {
+                GLOBAL_WMMHR_DATA.epoch = parseFloat(headerParts[0]);
+            }
+        }
+        
+        for (let i = 1; i < lines.length; i++) {
+            let line = lines[i].trim();
+            if (line === '') continue;
+            
+            let parts = line.split(/\s+/).map(Number);
+            if (parts.length >= 6 && !parts.some(isNaN)) {
+                parsedMatrix.push([
+                    parts[0], // n
+                    parts[1], // m
+                    parts[2], // g
+                    parts[3], // h
+                    parts[4], // dg
+                    parts[5]  // dh
+                ]);
+            }
+        }
+        
+        GLOBAL_WMMHR_DATA.data = parsedMatrix;
+
+        // Tự động phân bổ trước bộ nhớ đệm dựa trên số bậc thực tế đọc được (Bậc 12 hoặc 133)
+        const lastRow = parsedMatrix[parsedMatrix.length - 1];
+        const maxDegree = lastRow ? lastRow[0] : 12;
+        const bufferSize = maxDegree + 1;
+
+        // Tạo mảng phẳng siêu tốc độ Float64Array
+        REUSABLE_P_BUFFER = new Float64Array(bufferSize * bufferSize);
+        REUSABLE_DP_BUFFER = new Float64Array(bufferSize * bufferSize);
+        PRECOMPUTED_COSM = new Float64Array(bufferSize);
+        PRECOMPUTED_SINM = new Float64Array(bufferSize);
+
+        console.log(`📡 [MÔ HÌNH TOÀN CẦU] Đã nạp file COF bậc ${maxDegree}. Khởi tạo bộ đệm phẳng thành công!`);
+        return true;
+    } catch (error) {
+        console.error("❌ Lỗi nghiêm trọng khi đọc file COF:", error);
+        return false;
+    }
+}
+
+// ==========================================================================
+// MODULE TRẮC ĐỊA VIỆT NAM - CHUYỂN ĐỔI VN-2000 ↔ WGS84 (FULL NÂNG CẤP)
+// Hỗ trợ nhiều kinh tuyến trung tâm + tự động nhận diện vùng
+// ==========================================================================
+const TRAC_DIA_CORE = {
+    ZONES: {
+        "HN": 105.0,   // Hà Nội - Bắc Bộ
+        "DDN": 108.0,  // Đà Nẵng - Trung Bộ
+        "HCM": 106.6,  // TP.HCM - Nam Bộ
+        "CT": 105.0,   // Cần Thơ
+        "102": 102.0,  // Tây Bắc
+        "111": 111.0   // Đông Nam Bộ
+    },
+
+    getZone(lon0_deg) {
+        if (typeof lon0_deg === 'string' && this.ZONES[lon0_deg]) {
+            return this.ZONES[lon0_deg];
+        }
+        return lon0_deg || 105.0;
+    },
+
+    tmerc_en(es) {
+        const en = new Float64Array(5);
+        en[0] = 1.0 - es * (0.25 + es * (0.046875 + es * (0.01953125 + es * 0.01068115234375)));
+        en[1] = es * (0.75 - es * (0.046875 + es * (0.01953125 + es * 0.01068115234375)));
+        const t = es * es;
+        en[2] = t * (0.46875 - es * (0.013020833333333334 + es * 0.007120768229166667));
+        en[3] = t * es * (0.3645833333333333 - es * 0.005696614583333333);
+        en[4] = t * es * es * 0.3076171875;
+        return en;
+    },
+
+    pj_mlfn(phi, sphi, cphi, en) {
+        cphi *= sphi; 
+        sphi *= sphi;
+        return en[0] * phi - cphi * (en[1] + sphi * (en[2] + sphi * (en[3] + sphi * en[4])));
+    },
+
+    pj_inv_mlfn(arg, es, en) {
+        const EPSLN = 1.0e-10;
+        const k = 1.0 / (1.0 - es);
+        let phi = arg;
+        for (let i = 20; i > 0; --i) {
+            let s = Math.sin(phi);
+            let t = 1.0 - es * s * s;
+            let t2 = (this.pj_mlfn(phi, s, Math.cos(phi), en) - arg) * (t * Math.sqrt(t)) * k;
+            phi -= t2;
+            if (Math.abs(t2) < EPSLN) return phi;
+        }
+        return phi;
+    },
+
+    vn2000ToWGS84(x, y, lon0_deg = 105.0) {
+        try {
+            const centralMeridian = this.getZone(lon0_deg);
+            const a = 6378137.0;
+            const f = 1.0 / 298.257223563;
+            const es = 2.0 * f - f * f;
+            const ebs = es / (1.0 - es);
+            
+            const en = this.tmerc_en(es);
+            const x_proj = (x - 500000.0) / 0.9999;
+            const y_proj = y / 0.9999;
+
+            const phi1 = this.pj_inv_mlfn(y_proj / a, es, en);
+            if (Math.abs(phi1) >= Math.PI / 2) {
+                return { lat: 0, lon: centralMeridian, error: "Out of range" };
+            }
+
+            const sin_phi1 = Math.sin(phi1);
+            const cos_phi1 = Math.cos(phi1);
+            const tan_phi1 = Math.tan(phi1);
+            const t = tan_phi1 * tan_phi1;
+            const n = ebs * cos_phi1 * cos_phi1;
+            const con = 1.0 - es * sin_phi1 * sin_phi1;
+
+            const N = a / Math.sqrt(con);
+            const R = N * (1.0 - es) / con;
+            const D = x_proj / N;
+
+            const D2 = D * D;
+            const D4 = D2 * D2;
+            const D6 = D4 * D2;
+
+            let lat = phi1 - (N * tan_phi1 / R) * (D2 / 2.0 - (5 + 3*t + 10*n - 4*n*n - 9*t*n)*D4/24 +
+                 (61 + 90*t + 45*t*t + 298*n - 252*t*n - 3*n*n)*D6/720);
+
+            let lon = (D - (1 + 2*t + n)*(D2*D)/6 +
+                (5 - 2*n + 28*t - 3*n*n + 8*t*n + 24*t*t)*(D4*D)/120) / cos_phi1;
+
+            lat = lat * (180.0 / Math.PI);
+            lon = (lon * (180.0 / Math.PI)) + centralMeridian;
+
+            return {
+                lat: parseFloat(lat.toFixed(8)),
+                lon: parseFloat(lon.toFixed(8)),
+                zone: centralMeridian,
+                zoneName: Object.keys(this.ZONES).find(key => this.ZONES[key] === centralMeridian) || centralMeridian
+            };
+        } catch (e) {
+            console.error("Lỗi chuyển VN-2000 → WGS84:", e);
+            return { lat: 0, lon: 0, error: e.message };
+        }
+    },
+
+    autoConvertToWGS84(x, y, lon0_deg = 105.0) {
+        if (Math.abs(x) > 90 || Math.abs(y) > 90) {
+            return this.vn2000ToWGS84(x, y, lon0_deg);
+        }
+        return { 
+            lat: parseFloat(x.toFixed(8)), 
+            lon: parseFloat(y.toFixed(8)), 
+            note: "Already WGS84" 
+        };
+    },
+
+    getZoneList() {
+        return {
+            "Hà Nội / Bắc Bộ": 105.0,
+            "Đà Nẵng / Trung Bộ": 108.0,
+            "Tây Nguyên": 107.0,
+            "TP.HCM / Nam Bộ": 106.6,
+            "Tây Bắc": 102.0,
+            "Đông Nam Bộ": 111.0,
+            "Cần Thơ": 105.0
+        };
+    }
+};
+
+// ==========================================================================
+// HÀM TÍNH NĂM THẬP PHÂN
+// ==========================================================================
+function getDecimalYear(date = new Date()) {
+    const year = date.getFullYear();
+    const start = new Date(year, 0, 1);
+    const diff = date.getTime() - start.getTime();
+    const daysPassed = diff / (1000 * 60 * 60 * 24);
+    const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+    return year + (daysPassed / (isLeap ? 366 : 365));
+}
+
+// =========================================================================
+// 🔥 MODULE ĐỊNH VỊ TÊN VÙNG TOÀN CẦU (NÂNG CẤP MỚI)
+// =========================================================================
+async function updateLocationUI(lat, lon) {
+    // 1. Tự động tạo và tiêm Element hiển thị nếu chưa có trong HTML
+    let displayEl = document.getElementById('location-display');
+    if (!displayEl) {
+        const lonInput = document.getElementById('remote-lon');
+        const latInput = document.getElementById('remote-lat');
+        
+        if (lonInput) {
+            // 👉 BƯỚC THẦN THÁNH: Tìm khung hàng chung chứa CẢ HAI ô nhập liệu
+            let containerRow = lonInput.parentNode;
+            // Nếu mỗi ô nhập bị bọc trong một thẻ div cột riêng, nhảy lên 1 cấp để lấy hàng tổng
+            if (latInput && latInput.parentNode !== lonInput.parentNode) {
+                containerRow = lonInput.parentNode.parentNode; 
+            }
+
+            displayEl = document.createElement('div');
+            displayEl.id = 'location-display';
+            
+            // =========================================================================
+            // 🎯 CẤU HÌNH CSS ÉP LAYOUT CĂN GIỮA TOÀN KHUNG & ĐẨY SÁT LÊN TRÊN
+            // =========================================================================
+            displayEl.style.display = 'block';       // Biến thành khối độc lập toàn màn hình
+            displayEl.style.width = '100%';          // Phủ rộng 100% diện tích khung la bàn
+            displayEl.style.textAlign = 'center';    // Căn chữ nằm CHÍNH GIỮA TUYỆT ĐỐI
+            displayEl.style.fontSize = '12px';
+            displayEl.style.color = '#dfb76c';
+            
+            // 👉 ĐỘ CAO CHUẨN: Để 2px để chữ áp sát lên trên đáy của 2 ô nhập, nhìn cực cân đối
+            displayEl.style.marginTop = '2px';       
+            
+            displayEl.style.fontWeight = 'bold';
+            displayEl.style.letterSpacing = '0.5px';
+            displayEl.style.clear = 'both';          // Triệt tiêu mọi thuộc tính float gây lệch dòng
+            displayEl.style.boxSizing = 'border-box';
+
+            // 👉 THẦN CHÚ LAYOUT: Đặt dòng chữ nằm hẳn ra NGOÀI và DƯỚI cái hàng chứa 2 ô nhập
+            containerRow.insertAdjacentElement('afterend', displayEl);
+        }
+    }
+    if (!displayEl) return;
+
+    displayEl.innerText = "🔍 Đang đồng bộ vệ tinh vùng...";
+
+    // 2. Tầng Offline: Phản hồi lập tức các bộ tọa độ test hay dùng (0ms)
+    const checkedLat = Math.round(lat * 1000) / 1000;
+    const checkedLon = Math.round(lon * 1000) / 1000;
+
+    if (checkedLat === 11.564 && checkedLon === 108.991) {
+        displayEl.innerText = "📍 Ninh Thuận, VN"; return;
+    }
+    if (checkedLat === 21.028 && checkedLon === 105.834) {
+        displayEl.innerText = "📍 Hà Nội, VN"; return;
+    }
+    if (Math.abs(lat - 33) < 0.5 && Math.abs(lon - (-118)) < 0.5) {
+        displayEl.innerText = "📍 California, US"; return;
+    }
+    if (Math.abs(lat - (-37)) < 0.5 && Math.abs(lon - 140) < 0.5) {
+        displayEl.innerText = "📍 South Australia, AU"; return;
+    }
+    if (Math.abs(lat - 42) < 0.5 && Math.abs(lon - (-19)) < 0.5) {
+        displayEl.innerText = "📍 North Atlantic, EU"; return;
+    }
+    if (Math.abs(lat - (-52)) < 0.5 && Math.abs(lon - (-75)) < 0.5) {
+        displayEl.innerText = "📍 Magallanes, CL"; return;
+    }
+
+    // 3. Tầng Online: Gọi API toàn cầu tự động phân tích vùng (Hỗ trợ quốc tế)
+    if (navigator.onLine) {
+        try {
+            const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
+            if (response.ok) {
+                const data = await response.json();
+                const state = data.principalSubdivision || data.city || '';
+                const country = (data.countryCode || '').toUpperCase();
+                if (state && country) {
+                    displayEl.innerText = `📍 ${state}, ${country}`;
+                    return;
+                }
+            }
+        } catch (e) {}
+    }
+
+    // Mặc định nếu mất mạng và nằm ngoài danh sách bộ số test
+    displayEl.innerText = `📍 Khối cầu (${lat.toFixed(2)}, ${lon.toFixed(2)})`;
+}
+
+function calculateRemoteDeclination() {
+    const latEl = document.getElementById('remote-lat');
+    const lonEl = document.getElementById('remote-lon');
+    const rBtn = document.getElementById('remote-calc-btn');
+    
+    if (!latEl || !lonEl) return;
+    let latStr = latEl.value.trim();
+    let lonStr = lonEl.value.trim();
+
+    if (latStr === '' || lonStr === '') {
+        showToast("⚠️ Vui lòng nhập đủ tọa độ!", true);
+        return;
+    }
+
+    let latV = convertToDecimalDegrees(latStr);
+    let lonV = convertToDecimalDegrees(lonStr);
+
+    if (latV === null || lonV === null || isNaN(latV) || isNaN(lonV) || (latV === 0 && lonV === 0)) {
+        showToast("⚠️ Tọa độ không hợp lệ!", true);
+        return;
+    }
+
+    if (Math.abs(latV) > 2000 || Math.abs(lonV) > 2000) {
+        let x_vn = latV < lonV ? latV : lonV;
+        let y_vn = latV < lonV ? lonV : latV;
+
+        const wgsCoords = TRAC_DIA_CORE.vn2000ToWGS84(x_vn, y_vn, 105.0);
+        latV = wgsCoords.lat;
+        lonV = wgsCoords.lon;
+        
+        latEl.value = latV.toFixed(5);
+        lonEl.value = lonV.toFixed(5);
+        showToast(`🗺️ Đã phát hiện hệ VN-2000! Tự động quy đổi sang GPS.`);
+    } else {
+        if (Math.abs(latV) > 90 && Math.abs(lonV) <= 90) {
+            let temp = latV; latV = lonV; lonV = temp;
+            latEl.value = latV; lonEl.value = lonV;
+            showToast("🔄 Phát hiện ngược tọa độ! Đã tự động đảo lại Vĩ độ & Kinh độ");
+        }
+    }
+
+    const decl = calculateGlobalDeclination(latV, lonV);
+    magneticDeclination = decl;
+    
+    const inputEl = document.getElementById('declination-input');
+    if (inputEl) inputEl.value = decl.toFixed(2);
+    
+    updateMagneticDeclination();
+    updateLocationUI(latV, lonV); // KHỞI CHẠY ĐỊNH VỊ VÙNG
+    showToast(`Đã tính tọa độ từ xa: ${decl.toFixed(2)}°`);
+    
+    if (rBtn) {
+        rBtn.innerText = "ĐÃ TÍNH TOÁN ✓";
+        rBtn.style.borderColor = "#4caf50";
+        setTimeout(() => { 
+            rBtn.innerText = "🧮 TÍNH ĐỘ LỆCH TỪ XA"; 
+            rBtn.style.borderColor = "#dfb76c"; 
+        }, 2000);
+    }
+}
+
+async function fallbackIPGeolocation() {
+    if (navigator.onLine) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000); 
+
+        try {
+            const response = await fetch('https://json.geoiplookup.io/', { signal: controller.signal });
+            if (!response.ok) throw new Error("API Error"); 
+
+            const data = await response.json();
+            clearTimeout(timeoutId);
+            if (data && data.latitude && data.longitude) {
+                return { lat: data.latitude, lon: data.longitude, src: "NETWORK" };
+            }
+        } catch (e) {
+            clearTimeout(timeoutId);
+        }
+    }
+
+    try {
+        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        if (timeZone) {
+            if (timeZone.includes("Saigon") || timeZone.includes("Bangkok") || timeZone.includes("Asia/Ho_Chi_Minh")) {
+                return { lat: 14.05, lon: 108.27, src: "ZONE_VN" };
+            }
+        }
+    } catch (e) {}
+
+    return { lat: 0, lon: 0, src: "DEFAULT" };
+}
+
+function updateMagneticDeclination() {
+    const input = document.getElementById('declination-input');
+    if (!input) return;
+
+    let val = input.value;
+    magneticDeclination = (val === '-' || val === '.' || val.trim() === '') ? 0 : parseFloat(val) || 0;
+    
+    if (typeof lastHeading === 'number') {
+        if (typeof updateCompassUI === 'function') updateCompassUI(lastHeading);
+        if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(lastHeading);
+        if (typeof recalculateFate === 'function') recalculateFate();
+    }
+}
+
+async function autoDetectDeclination() {
+    const btn = document.getElementById('auto-detect-btn');
+    if (btn) { btn.innerText = "⚡ ĐANG QUÉT ĐỊNH VỊ..."; btn.disabled = true; }
+
+    const apply = (lat, lon, label) => {
+        if (!lat || !lon || (lat === 0 && lon === 0)) {
+            showToast("⚠️ Không thể tự động xác định vị trí. Vui lòng nhập tay.");
+            if (btn) { btn.innerText = "🛰️ TỰ ĐỘNG XÁC ĐỊNH"; btn.disabled = false; }
+            return;
+        }
+
+        let checkedLat = parseFloat(lat);
+        let checkedLon = parseFloat(lon);
+
+        if (Math.abs(checkedLat) > 90 && Math.abs(checkedLon) <= 90) {
+            let temp = checkedLat; checkedLat = checkedLon; checkedLon = temp;
+        }
+
+        const cleanLat = parseFloat(checkedLat.toFixed(3));
+        const cleanLon = parseFloat(checkedLon.toFixed(3));
+
+        localStorage.setItem('save_lat', cleanLat);
+        localStorage.setItem('save_lon', cleanLon);
+
+        const latInput = document.getElementById('remote-lat');
+        const lonInput = document.getElementById('remote-lon');
+        if (latInput) latInput.value = cleanLat;
+        if (lonInput) lonInput.value = cleanLon;
+
+        const decl = calculateGlobalDeclination(cleanLat, cleanLon);
+        magneticDeclination = decl;
+        
+        const input = document.getElementById('declination-input');
+        if (input) input.value = decl.toFixed(2);
+        
+        if (document.getElementById('save-toggle')?.checked) {
+            localStorage.setItem('save_decl', decl.toFixed(2));
+        }
+
+        updateMagneticDeclination();
+        updateLocationUI(cleanLat, cleanLon); // KHỞI CHẠY ĐỊNH VỊ VÙNG
+        showToast(`Đã cập nhật từ ${label}: ${decl.toFixed(2)}°`);
+        
+        if (btn) {
+            btn.innerText = `XÁC ĐỊNH: ${label} ✓`;
+            setTimeout(() => { btn.innerText = "🛰️ TỰ ĐỘNG XÁC ĐỊNH"; btn.disabled = false; }, 2000);
+        }
+    };
+
+    if (!navigator.geolocation) {
+        const ip = await fallbackIPGeolocation();
+        apply(ip.lat, ip.lon, ip.src);
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        (pos) => { apply(pos.coords.latitude, pos.coords.longitude, "GPS"); },
+        async () => { const ip = await fallbackIPGeolocation(); apply(ip.lat, ip.lon, ip.src); },
+        { timeout: 7000, enableHighAccuracy: true, maximumAge: 0 } 
+    );
+}
+
+function calculateGlobalDeclination(lat, lon, altKm = 0) {
+    try {
+        // Phòng hộ nếu file chưa tải xong
+        if (!GLOBAL_WMMHR_DATA.data || GLOBAL_WMMHR_DATA.data.length === 0 || !REUSABLE_P_BUFFER) {
+            return 0;
+        }
+
+        let cleanLat = Math.max(-90, Math.min(90, parseFloat(lat) || 0));
+        let cleanLon = ((parseFloat(lon) || 0) + 180) % 360;
+        if (cleanLon < 0) cleanLon += 360;
+        cleanLon -= 180;
+
+        const decimalYear = getDecimalYear();
+        const dt = decimalYear - GLOBAL_WMMHR_DATA.epoch;
+
+        const latRad = cleanLat * Math.PI / 180;
+        const lonRad = cleanLon * Math.PI / 180;
+
+        const a = 6378.137;
+        const b = 6356.7523142;
+        const e2 = 1 - (b * b) / (a * a);
+        const sinLat = Math.sin(latRad);
+        const cosLat = Math.cos(latRad);
+        const N = a / Math.sqrt(1 - e2 * sinLat * sinLat);
+        
+        const xp = (N + (altKm || 0)) * cosLat;
+        const zp = (N * (1 - e2) + (altKm || 0)) * sinLat;
+        const r = Math.sqrt(xp * xp + zp * zp);
+
+        const phiPrime = Math.asin(zp / r);
+        const psi = latRad - phiPrime;
+        const sinPhi = Math.sin(phiPrime);
+        const cosPhi = Math.cos(phiPrime);
+
+        const lastRow = GLOBAL_WMMHR_DATA.data[GLOBAL_WMMHR_DATA.data.length - 1];
+        const maxDegree = lastRow ? lastRow[0] : 12;
+        const size = maxDegree + 1;
+
+        // Làm sạch bộ nhớ đệm cũ (Tốc độ dọn dẹp mảng phẳng nhanh gấp 50 lần xóa mảng thường)
+        REUSABLE_P_BUFFER.fill(0);
+        REUSABLE_DP_BUFFER.fill(0);
+
+        // Công thức cấu trúc ma trận phẳng gán tọa độ 2D giả lập: Index = n * size + m
+        REUSABLE_P_BUFFER[0] = 1;                              // P[0][0]
+        REUSABLE_P_BUFFER[1 * size + 0] = sinPhi;              // P[1][0]
+        REUSABLE_DP_BUFFER[1 * size + 0] = cosPhi;             // dP[1][0]
+        REUSABLE_P_BUFFER[1 * size + 1] = cosPhi;              // P[1][1]
+        REUSABLE_DP_BUFFER[1 * size + 1] = -sinPhi;            // dP[1][1]
+
+        // Vòng lặp tính đa thức Legendre toán học Gauss trên mảng phẳng siêu tốc
+        for (let n = 2; n <= maxDegree; n++) {
+            const idx_n = n * size;
+            const idx_n1 = (n - 1) * size;
+            const idx_n2 = (n - 2) * size;
+            
+            for (let m = 0; m <= n; m++) {
+                if (m === n) {
+                    const fn = Math.sqrt((2*n-1)/(2*n));
+                    REUSABLE_P_BUFFER[idx_n + m] = fn * cosPhi * REUSABLE_P_BUFFER[idx_n1 + (m - 1)];
+                    REUSABLE_DP_BUFFER[idx_n + m] = fn * (cosPhi * REUSABLE_DP_BUFFER[idx_n1 + (m - 1)] - sinPhi * REUSABLE_P_BUFFER[idx_n1 + (m - 1)]);
+                } else {
+                    const g1 = (2*n-1) / Math.sqrt(n*n - m*m);
+                    const g2 = Math.sqrt((n-1)*(n-1) - m*m) / Math.sqrt(n*n - m*m);
+                    
+                    REUSABLE_P_BUFFER[idx_n + m] = g1 * sinPhi * REUSABLE_P_BUFFER[idx_n1 + m] - g2 * REUSABLE_P_BUFFER[idx_n2 + m];
+                    REUSABLE_DP_BUFFER[idx_n + m] = g1 * (sinPhi * REUSABLE_DP_BUFFER[idx_n1 + m] + cosPhi * REUSABLE_P_BUFFER[idx_n1 + m]) - g2 * REUSABLE_DP_BUFFER[idx_n2 + m];
+                }
+            }
+        }
+
+        // 🎯 BƯỚC ĐỘT PHÁ 2: Tính trước mảng lượng giác theo trục kinh độ (Chỉ chạy 134 lần!)
+        for (let m = 0; m <= maxDegree; m++) {
+            PRECOMPUTED_COSM[m] = Math.cos(m * lonRad);
+            PRECOMPUTED_SINM[m] = Math.sin(m * lonRad);
+        }
+
+        let X = 0, Y = 0, Z = 0;
+        
+        // Vòng lặp tổng lực Gauss duyệt qua 9.100 dòng hệ số ngoài
+        GLOBAL_WMMHR_DATA.data.forEach(([n, m, g0, h0, dg, dh]) => {
+            const g = g0 + dt * dg;
+            const h = h0 + dt * dh;
+            const ratio = Math.pow(a / r, n + 2);
+            
+            // Lấy trực tiếp kết quả lượng giác từ mảng tính sẵn, triệt tiêu 9.000 lệnh tính trùng lặp!
+            const cosM = PRECOMPUTED_COSM[m];
+            const sinM = PRECOMPUTED_SINM[m];
+            
+            const c = g * cosM + h * sinM;
+            const d = g * sinM - h * cosM;
+
+            const idx = n * size + m; // Lấy vị trí phần tử trên mảng phẳng
+            X -= ratio * c * REUSABLE_DP_BUFFER[idx];
+            Z -= ratio * c * REUSABLE_P_BUFFER[idx] * (n + 1);
+            if (m > 0) Y += ratio * m * d * REUSABLE_P_BUFFER[idx];
+        });
+
+        Y /= (cosPhi || 1e-8);
+        const Xg = X * Math.cos(psi) + Z * Math.sin(psi);
+
+        let decl = Math.atan2(Y, Xg) * (180 / Math.PI);
+        if (decl > 180) decl -= 360;
+        if (decl < -180) decl += 360;
+
+        return parseFloat(decl.toFixed(2));
+    } catch (e) {
+        console.error("Lỗi lõi trắc địa:", e);
+        return 0;
+    }
+}
+
+function toggleDeclinationPanel(show) {
+    const m = document.getElementById('declination-modal');
+    if (m) m.style.display = show ? 'flex' : 'none';
+    
+    if (typeof manageMagnetometerSensor === 'function') {
+        manageMagnetometerSensor(show);
+    }
+}
+
+function parseSmartNumeric(val) {
+    if (!val || val.trim() === '') return null;
+    let str = val.trim().replace(/,/g, '.');
+    let isNegative = str.startsWith('-');
+    let isPositive = str.startsWith('+');
+    let cleanText = str.replace(/[^0-9.]/g, '');
+    let dotCount = 0;
+    let numericPart = "";
+    for (let i = 0; i < cleanText.length; i++) {
+        if (cleanText[i] === '.') {
+            if (dotCount === 0) { numericPart += '.'; dotCount = 1; }
+        } else { numericPart += cleanText[i]; }
+    }
+    let finalStr = (isNegative ? '-' : (isPositive ? '+' : '')) + numericPart;
+    const regex = /^[+-]?\d*\.?\d*$/;
+    return regex.test(finalStr) ? finalStr : null;
+}
+
+function parseSmartCoordinateText(val) {
+    if (!val) return '';
+    return val.replace(/[^0-9.\-\+\sNSEWnsew°'"’”]/g, '').replace(/,/g, '.');
+}
+
+function convertToDecimalDegrees(val) {
+    if (!val || String(val).trim() === '') return null;
+    
+    // 1. Chuyển sang chữ hoa để nhận diện chính xác hướng hệ NOAA
+    let str = String(val).trim().toUpperCase();
+    
+    // 🎯 BƯỚC THÔNG MINH 1: Quét dấu âm (Tuyệt đối không dùng toán tử đảo dấu !isNegative)
+    // Nếu chứa hướng Nam (S), hướng Tây (W) HOẶC có dấu trừ (-) -> BẮT BUỘC phải là số âm
+    let hệ_âm_hướng = str.includes('S') || str.includes('W');
+    let hệ_âm_dấu = str.includes('-');
+    
+    // 🎯 BƯỚC THÔNG MINH 2: Lọc sạch chuỗi, bóc tách các phân đoạn số độc lập
+    // Thay thế toàn bộ ký hiệu hình học (° ' " ’ ” N S E W) thành khoảng trắng
+    let cleanStr = str.replace(/[^0-9.]/g, ' ').trim();
+    
+    // Gom các phần số (Độ, Phút, Giây) vào mảng và loại bỏ các khoảng trống thừa
+    let parts = cleanStr.split(/\s+/).map(p => parseFloat(p)).filter(p => !isNaN(p));
+    
+    if (parts.length === 0) return null;
+    
+    let decimalValue = 0;
+    if (parts.length === 1) {
+        // Định dạng 1: Số thập phân thuần túy (VD: 74.00722 hoặc -74.00722)
+        decimalValue = parts[0];
+    } else {
+        // Định dạng 2: Hệ Độ - Phút - Giây DMS (VD: 74° 0' 26" hoặc 74 0 26)
+        let d = parts[0] || 0;
+        let m = parts[1] || 0;
+        let s = parts[2] || 0;
+        decimalValue = d + (m / 60) + (s / 3600);
+    }
+    
+    // Ép về giá trị tuyệt đối (số dương gốc) để chuẩn hóa cấu trúc hình học
+    decimalValue = Math.abs(decimalValue);
+    
+    // 🎯 BƯỚC THÔNG MINH 3: Áp dấu chuẩn cuối cùng
+    // Chỉ cần phát hiện ra bất kỳ tín hiệu âm nào, tiêm ngay dấu trừ độc quyền
+    if (hệ_âm_dấu || hệ_âm_hướng) {
+        decimalValue = -decimalValue;
+    }
+    
+    return decimalValue;
+}
+
+// Thay thế toàn bộ hàm thiết lập sự kiện DOM cũ bằng bản thiết lập chạy song song này:
+document.addEventListener('DOMContentLoaded', () => {
+    const configs = {
+        'declination-input': { limit: 14, key: 'save_decl', min: -180, max: 180, mode: 'coordinate' },
+        'remote-lat': { limit: 14, key: 'save_lat', min: -90, max: 90, mode: 'coordinate' },
+        'remote-lon': { limit: 15, key: 'save_lon', min: -180, max: 180, mode: 'coordinate' }
+    };
+
+    const saveToggle = document.getElementById('save-toggle');
+    let isRetentionEnabled = true;
+
+    if (saveToggle) {
+        const toggleState = localStorage.getItem('save_toggle_state');
+        if (toggleState === 'false') {
+            saveToggle.checked = false;
+            isRetentionEnabled = false;
+            localStorage.removeItem('save_decl');
+            localStorage.removeItem('save_lat');
+            localStorage.removeItem('save_lon');
+        } else {
+            saveToggle.checked = true;
+            isRetentionEnabled = true;
+        }
+    }
+
+    // Giao diện và các ô nhập liệu được kích hoạt HOÀN TOÀN NGAY LẬP TỨC! Người dùng gõ chữ bình thường
+    Object.keys(configs).forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        
+        if (isRetentionEnabled) {
+            const saved = localStorage.getItem(configs[id].key);
+            if (saved !== null && configs[id].key) {
+                el.value = saved;
+                if (id === 'declination-input') {
+                    magneticDeclination = parseFloat(saved) || 0;
+                    updateMagneticDeclination();
+                }
+            }
+        } else {
+            el.value = (id === 'declination-input') ? "0" : "";
+        }
+    });
+
+    // 🎯 THẦN CHÚ KHÔNG CHẶN MẠNG: Đọc file ngầm bằng tiến trình riêng (.then)
+    loadWMMHRFile().then((success) => {
+        if (success) {
+            // Sau khi nạp file ngầm xong hoàn chỉnh, mới khôi phục định vị vùng và tính toán lại
+            const savedLat = localStorage.getItem('save_lat');
+            const savedLon = localStorage.getItem('save_lon');
+            if (isRetentionEnabled && savedLat && savedLon) {
+                updateLocationUI(parseFloat(savedLat), parseFloat(savedLon));
+                if (typeof calculateRemoteDeclination === 'function') {
+                    calculateRemoteDeclination();
+                }
+            }
+        }
+    });
+
+    // Toàn bộ logic lắng nghe Input, Blur, Keypress cũ bên dưới GIỮ NGUYÊN HOÀN TOÀN...
+    Object.keys(configs).forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        const autoSelect = () => {
+            setTimeout(() => { el.setSelectionRange(0, el.value.length); }, 10);
+        };
+        el.addEventListener('focus', autoSelect);
+        el.addEventListener('click', autoSelect);
+
+        el.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                el.blur(); 
+                if (typeof toggleDeclinationPanel === 'function') toggleDeclinationPanel(false);
+            }
+        });
+
+        el.addEventListener('input', () => {
+            const cfg = configs[id];
+            let raw = el.value;
+
+            el.value = parseSmartCoordinateText(raw);
+            if (el.value.length > cfg.limit) {
+                el.value = el.value.slice(0, cfg.limit);
+            }
+
+            let checkNum = parseFloat(el.value);
+            if (!isNaN(checkNum) && /^[\-\+]?\d*\.?\d+$/.test(el.value)) {
+                if (cfg.min !== undefined && checkNum < cfg.min) checkNum = cfg.min;
+                if (cfg.max !== undefined && checkNum > cfg.max) checkNum = cfg.max;
+                
+                if (id === 'declination-input') {
+                    magneticDeclination = checkNum;
+                    updateMagneticDeclination();
+                }
+                if (cfg.key && document.getElementById('save-toggle')?.checked) {
+                    localStorage.setItem(cfg.key, checkNum);
+                }
+            }
+        });
+
+        el.addEventListener('blur', () => {
+            const cfg = configs[id];
+            let rawStr = el.value.trim();
+
+            let finalDecimal = convertToDecimalDegrees(rawStr);
+            if (finalDecimal === null || isNaN(finalDecimal)) {
+                el.value = (id === 'declination-input') ? "0" : "";
+                if (id === 'declination-input') magneticDeclination = 0;
+                if (cfg.key) localStorage.removeItem(cfg.key);
+            } else {
+                if (cfg.min !== undefined && finalDecimal < cfg.min) finalDecimal = cfg.min;
+                if (cfg.max !== undefined && finalDecimal > cfg.max) finalDecimal = cfg.max;
+                
+                let roundedVal = (id === 'declination-input') ? 
+                                 parseFloat(finalDecimal.toFixed(2)) : 
+                                 parseFloat(finalDecimal.toFixed(5));
+                el.value = roundedVal;
+                
+                if (id === 'declination-input') magneticDeclination = roundedVal;
+
+                if (cfg.key && document.getElementById('save-toggle')?.checked) {
+                    localStorage.setItem(cfg.key, roundedVal);
+                }
+            }
+            
+            if (id === 'declination-input') {
+                updateMagneticDeclination();
+            } else {
+                if (typeof calculateRemoteDeclination === 'function') {
+                    calculateRemoteDeclination();
+                }
+            }
+        });
+    });
+
+    saveToggle?.addEventListener('change', (e) => {
+        const declInput = document.getElementById('declination-input');
+        const latInput = document.getElementById('remote-lat');
+        const lonInput = document.getElementById('remote-lon');
+        const displayEl = document.getElementById('location-display');
+
+        if (!e.target.checked) {
+            localStorage.setItem('save_toggle_state', 'false');
+            localStorage.removeItem('save_decl');
+            localStorage.removeItem('save_lat');
+            localStorage.removeItem('save_lon');
+            
+            if (declInput) declInput.value = "0";
+            if (latInput) latInput.value = "";  
+            if (lonInput) lonInput.value = "";  
+            if (displayEl) displayEl.innerText = "";
+            
+            magneticDeclination = 0;
+            updateMagneticDeclination();
+            if (typeof showToast === 'function') showToast("Đã xóa toàn bộ dữ liệu lưu về trạng thái trống!");
+        } else {
+            localStorage.setItem('save_toggle_state', 'true');
+            if (declInput) localStorage.setItem('save_decl', declInput.value);
+            if (latInput && latInput.value !== "") localStorage.setItem('save_lat', latInput.value);
+            if (lonInput && lonInput.value !== "") localStorage.setItem('save_lon', lonInput.value);
+            if (typeof showToast === 'function') showToast("Đã bật chế độ ghi nhớ!");
+        }
+    });
+});
+
+function showExplanation(sonName, textInfo, solInfo) {
+    const modal = document.getElementById('infoModal');
+   
+    modal.innerHTML = `
+        <div class="modal-content" style="background:#1c1c1e; color:#fff; border-radius:15px; width:90%; max-width:500px; max-height:85vh; display:flex; flex-direction:column; margin:auto; overflow:hidden; position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 15px; border-bottom:1px solid #444;">
+                <span style="font-weight:bold; font-size:1.1rem; color:#dfb76c;">Giải Thích: ${sonName}</span>
+                <button onclick="event.stopPropagation(); closeModal();" style="background:transparent; border:none; color:#ff3b30; font-size:2rem; font-weight:bold; cursor:pointer; line-height:1; padding:0 5px; outline:none;">&times;</button>
+            </div>
+           
+            <div id="modalBody" style="overflow-y:auto; padding:15px;">
+                <div style="background:#2a2a2a; padding:15px; border-radius:10px; margin-bottom:20px;">
+                    <p style="margin:0 0 10px 0; color:#dfb76c; font-weight:bold;">📍 THÔNG TIN SƠN VỊ:</p>
+                    <p style="margin:0 0 5px 0;"><strong>Ý nghĩa:</strong> ${textInfo}</p>
+                    <p style="margin:0; color:#30d158;"><strong>Giải pháp:</strong> ${solInfo}</p>
+                </div>
+                
+                <div style="border-top:1px solid #444; padding-top:15px;">
+                    <p style="margin:0 0 10px 0; color:#dfb76c; font-weight:bold;">📖 KIẾN THỨC PHONG THỦY:</p>
+                    <p style="margin:5px 0; line-height:1.5;"><strong>1. Cung (Hướng) vs Sơn (Chi tiết):</strong><br>
+                    Hướng là 45 độ tổng thể (Đại cục). Sơn là 15 độ chi tiết (Phân kim). Nếu Sơn đắc khí tốt hơn Cung, tại điểm đó vượng khí được nhân đôi.</p>
+                    <p style="margin:10px 0; line-height:1.5;"><strong>2. Ý nghĩa thuật ngữ:</strong><br>
+                    - <strong>Cát (Tốt):</strong> Sinh Khí, Thiên Y, Diên Niên, Phục Vị.<br>
+                    - <strong>Hung (Xấu):</strong> Tuyệt Mệnh, Ngũ Quỷ, Lục Sát, Họa Hại.<br>
+                    - <strong>Bình/Cô Quả:</strong> Trạng thái trung tính hoặc xấu nhẹ.</p>
+                    <p style="margin:5px 0; font-style:italic; color:#8e8e93; line-height:1.5;">* Ví dụ: Hướng Tây là Diên Niên, nhưng Sơn Dậu lại là Sinh Khí. Nếu đặt vật phẩm đúng Sơn Dậu, bạn vừa được hưởng hòa thuận (Diên Niên), vừa kích hoạt tài lộc (Sinh Khí).</p>
+                </div>
+
+                <!-- === PHẦN GIẢI THÍCH ĐIỂM TỔNG HỢP (THÊM NGẮN GỌN) === -->
+                <div style="margin-top:20px; padding:12px; background:#2a2a2e; border-radius:8px; border-left:4px solid #ffd700;">
+                    <p style="margin:0 0 8px 0; color:#ffd700; font-weight:bold;">📊 Điểm Tổng Hợp (pt) là gì?</p>
+                    <p style="margin:0; font-size:0.9rem; line-height:1.5; color:#ccc;">
+                        Đây là <strong>điểm kết hợp nhiều tầng</strong>: Minh Châu + Bát Trạch + 72 Hậu + Ngũ Hoàng.<br>
+                        Nếu Hậu Hung mạnh → điểm tổng hợp sẽ bị kéo xuống dù Sơn/Bát Trạch tốt.
+                    </p>
+                </div>
+            </div>
+        </div>
+    `;
+
+    modal.onclick = function(e) { if (e.target === modal) closeModal(); };
+    modal.style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('infoModal').style.display = 'none';
+}
+
+let autoHideTimer = null;
+
+// Hàm khởi tạo bộ đếm
+function startAutoHide() {
+    clearTimeout(autoHideTimer);
+    autoHideTimer = setTimeout(() => {
+        const wrapper = document.getElementById('mainPanelWrapper');
+        // Chỉ đóng nếu bảng đang MỞ và KHÔNG có gì đang được focus (đang nhập liệu)
+        if (wrapper && !wrapper.classList.contains('collapsed')) {
+            // Kiểm tra thêm: nếu đang focus vào ô input thì không đóng
+            if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || document.activeElement.tagName === 'SELECT') {
+                return; 
+            }
+            togglePanel();
+        }
+    }, 3000);
+}
+
+function togglePanel() {
+    const wrapper = document.getElementById('mainPanelWrapper');
+    const arrow = document.getElementById('toggleArrow');
+    
+    if (!wrapper || !arrow) return;
+
+    // Loại bỏ class ẩn ngay từ đầu nếu có
+    wrapper.classList.remove('initial-hidden');
+    
+    // Toggle trạng thái đóng/mở
+    wrapper.classList.toggle('collapsed');
+    
+    const isCollapsed = wrapper.classList.contains('collapsed');
+    arrow.innerHTML = isCollapsed ? '▼' : '▲';
+
+    if (!isCollapsed) {
+        startAutoHide();
+    } else {
+        clearTimeout(autoHideTimer);
+    }
+}
+
+// KHỞI TẠO
+document.addEventListener('DOMContentLoaded', () => {
+    const wrapper = document.getElementById('mainPanelWrapper');
+    if (!wrapper) return;
+
+    // 1. Luôn đóng ngay khi load (thêm class trước khi hiển thị)
+    wrapper.classList.add('collapsed');
+    document.getElementById('toggleArrow').innerHTML = '▼';
+
+    // 2. Định nghĩa danh sách các sự kiện cần "đóng băng" bộ đếm
+    // mousedown/touchstart: Click chuột hoặc chạm tay
+    // input/focus: Đang nhập liệu
+    // mouseover: Di chuột vào
+    const events = ['mousedown', 'touchstart', 'input', 'focus', 'mouseover'];
+
+    events.forEach(eventType => {
+        wrapper.addEventListener(eventType, () => {
+            if (!wrapper.classList.contains('collapsed')) {
+                clearTimeout(autoHideTimer); // Dừng đếm khi đang dùng
+            }
+        }, { passive: true });
+    });
+
+    // 3. Khi người dùng buông tay hoặc rời chuột, bắt đầu đếm lại
+    const endEvents = ['mouseup', 'touchend', 'blur', 'mouseout'];
+    endEvents.forEach(eventType => {
+        wrapper.addEventListener(eventType, () => {
+            if (!wrapper.classList.contains('collapsed')) {
+                startAutoHide(); // Bắt đầu đếm khi không còn tương tác
+            }
+        }, { passive: true });
+    });
+});	
+// ====================== HÀM ĐÓNG MỞ GIẢI THÍCH CHI TIẾT ======================
+window.toggleDienGiaiChiTiet = function() {
+    const contentDiv = document.getElementById('content-dien-giai-chi-tiet');
+    const toggleBtn = document.getElementById('btn-toggle-fengshui');
+    if (!contentDiv || !toggleBtn) return;
+
+    if (contentDiv.style.display === 'none' || contentDiv.style.display === '') {
+        contentDiv.style.display = 'block';
+        isDetailOpen = true;
+        // Giữ nguyên cơ chế thông minh: Khóa chặt góc la bàn tại giây bấm MỞ
+        lockedHeadingAtOpen = currentHeading; 
+        toggleBtn.innerHTML = '🙈 Đóng giải thích thuật ngữ';
+        toggleBtn.style.background = 'rgba(223, 183, 108, 0.15)';
+    } else {
+        contentDiv.style.display = 'none';
+        isDetailOpen = false;
+        // Bấm ĐÓNG: Làm sạch bộ nhớ góc cũ ngay lập tức
+        lockedHeadingAtOpen = null; 
+        toggleBtn.innerHTML = '👁️ Xem giải thích thuật ngữ hiển thị';
+        toggleBtn.style.background = 'transparent';
+    }
+    recalculateFate(); 
+};
+
+// ====================== GLOBAL ======================
+let isDetailOpen = false;
+let lockedHeadingAtOpen = null; // Biến thông minh lưu góc cố định lúc mở bảng
+
+// ====================== QUẢN LÝ QUYỀN LA BÀN iOS - PHIÊN BẢN CUỐI CÙNG (KHÔNG REDECLARE) ======================
+let permissionDenied = false;
+
+// Sử dụng biến đã khai báo sẵn ở trên (dòng 1351)
+function requestPermission() {
+    const permBtn = document.getElementById('permission-btn');
+    
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+            .then(permissionState => {
+                closePermissionModal();
+                if (permissionState === 'granted') {
+                    localStorage.setItem('ios_compass_granted', 'true');
+                    permissionDenied = false;
+                    addOrientationListener();
+                    if (permBtn) permBtn.style.display = 'none';
+                } else {
+                    permissionDenied = true;
+                    localStorage.setItem('ios_compass_granted', 'false');
+                    showPermissionResetGuide();
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                permissionDenied = true;
+                closePermissionModal();
+                showPermissionResetGuide();
+            });
+    } else {
+        closePermissionModal();
+        addOrientationListener();
+        if (permBtn) permBtn.style.display = 'none';
+    }
+}
+
+function addOrientationListener() {
+    if (orientationListenerAdded) return;
+
+    const handler = (e) => {
+        // Tối ưu: Nếu không nhận được giá trị hợp lệ, không chạy tiếp
+        if (e.webkitCompassHeading !== undefined || e.alpha !== null) {
+            handleOrientation(e);
+        }
+    };
+
+    if ('ondeviceorientationabsolute' in window) {
+        window.addEventListener('deviceorientationabsolute', handler, true);
+    } else if ('ondeviceorientation' in window) {
+        window.addEventListener('deviceorientation', handler, true);
+    } else {
+        // Fallback: Nếu không hỗ trợ cảm biến, có thể ẩn nút "Tự động"
+        const btn = document.getElementById('auto-detect-btn');
+        if (btn) btn.style.display = 'none';
+        return;
+    }
+    orientationListenerAdded = true;
+}
+
+function showPermissionResetGuide() {
+    const modal = document.getElementById('iosPermissionModal');
+    if (!modal) return;
+
+    modal.innerHTML = `
+        <div style="background:#1c1c1e; padding:25px; border-radius:20px; text-align:center; width:88%; max-width:400px; border:2px solid #ff9500;">
+            <div style="font-size:3.2rem; margin-bottom:15px;">⚠️</div>
+            <h3 style="color:#ff9500; margin-bottom:12px;">Không Kích Hoạt Được La Bàn</h3>
+            <p style="color:#ccc; line-height:1.6; margin-bottom:20px;">
+                Safari đã chặn quyền vì bạn từng từ chối.
+            </p>
+            <div style="background:#2c2c2e; padding:15px; border-radius:12px; text-align:left; margin-bottom:20px; font-size:0.9rem; line-height:1.55;">
+                <strong>Hướng dẫn reset quyền:</strong><br><br>
+                1. Vào <strong>Cài Đặt</strong> → <strong>Safari</strong><br>
+                2. Chọn <strong>Cài đặt cho Trang web</strong><br>
+                3. Tìm ứng dụng này<br>
+                4. Bật <strong>Motion &amp; Orientation</strong><br>
+                5. Đóng Safari hoàn toàn rồi mở lại.
+            </div>
+            <button onclick="resetPermissionFlag()" style="width:100%; padding:14px; background:#ff9500; color:#000; border:none; border-radius:10px; font-weight:bold; margin-bottom:10px;">
+                ✅ ĐÃ LÀM - THỬ LẠI
+            </button>
+            <button onclick="closePermissionModal()" style="width:100%; padding:12px; background:#444; color:#fff; border:none; border-radius:10px;">
+                Dùng xoay tay
+            </button>
+        </div>
+    `;
+    modal.style.display = 'flex';
+}
+
+function resetPermissionFlag() {
+    localStorage.removeItem('ios_compass_granted');
+    permissionDenied = false;
+    closePermissionModal();
+    setTimeout(() => location.reload(), 400);
+}
+
+function closePermissionModal() {
+    const modal = document.getElementById('iosPermissionModal');
+    if (modal) modal.style.display = 'none';
+}
+
+// ====================== KHỞI TẠO ======================
+window.onload = function() {
+    if (typeof render24SonRing === 'function') render24SonRing();
+    if (typeof loadSavedMembers === 'function') loadSavedMembers();
+    if (typeof recalculateFate === 'function') recalculateFate();
+
+    const modal = document.getElementById('iosPermissionModal');
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                  (navigator.platform === 'MacIntel' && 'ontouchend' in document) ||
+                  (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function');
+
+    if (isIOS && modal) {
+        modal.style.display = 'flex';
+        const hasGranted = localStorage.getItem('ios_compass_granted') === 'true';
+
+        if (hasGranted) {
+            closePermissionModal();
+            addOrientationListener();
+        } else {
+            const title = modal.querySelector('h3');
+            const text = modal.querySelector('p');
+            const btn = modal.querySelector('button');
+
+            if (title) title.textContent = "KÍCH HOẠT LA BÀN";
+            if (text) text.innerHTML = `Để la bàn xoay tự động theo hướng điện thoại,<br>vui lòng cho phép truy cập cảm biến chuyển động.`;
+            if (btn) btn.onclick = handleModalClick;
+        }
+    } else {
+        addOrientationListener();
+    }
+};
+
+function handleModalClick() {
+    const modal = document.getElementById('iosPermissionModal');
+    if (modal) modal.style.display = 'none';
+    requestPermission();
+}
+
+let isFullScreen = false;
+let originalCompassParent = null;
+let lastTapTime = 0;
+
+// ====================== BIẾN HỖ TRỢ ZOOM & PAN (KÉO) TẤT CẢ TRÌNH DUYỆT ======================
+let currentScale = 1;
+let initialScale = 1;
+let startDistance = 0;
+let isZooming = false;
+let currentX = 0;
+let currentY = 0;
+let startX = 0;
+let startY = 0;
+
+/**
+ * HÀM XỬ LÝ SỰ KIỆN GỘP (Thông minh hơn)
+ */
+function handleInteraction(e) {
+    const isCompass = e.target.closest('.compass-container');
+    const isFullScreenDiv = document.getElementById('fullscreenMode');
+    
+    if (isCompass && !isFullScreen) {
+        e.preventDefault(); 
+        toggleFullScreenMode();
+    } 
+    else if (isFullScreen && isFullScreenDiv) {
+        // NÂNG CẤP: Nếu đang phóng to la bàn (> 1), double tap sẽ đưa về kích thước chuẩn trước, tránh thoát đột ngột
+        if (currentScale > 1) {
+            resetZoom();
+        } else {
+            exitFullScreenMode();
+        }
+    }
+}
+
+// Hàm reset trạng thái phóng to về ban đầu
+function resetZoom() {
+    currentScale = 1;
+    currentX = 0;
+    currentY = 0;
+    const wrapper = document.getElementById('fs-compass-wrapper');
+    if (wrapper) {
+        wrapper.style.transition = "transform 0.3s ease";
+        wrapper.style.transform = "translate(0px, 0px) scale(1)";
+    }
+}
+
+// 1. Lắng nghe Double Click (Máy tính)
+document.addEventListener('dblclick', handleInteraction);
+
+// 2. Lắng nghe Double Tap (Điện thoại) - Tối ưu chống xung đột khi nhấc ngón tay lúc zoom
+document.addEventListener('touchend', (e) => {
+    if (e.touches.length > 0) return; // Nếu vẫn còn ngón tay chạm màn hình thì bỏ qua
+    
+    const currentTime = new Date().getTime();
+    if (currentTime - lastTapTime < 400) {
+        handleInteraction(e);
+    }
+    lastTapTime = currentTime;
+});
+
+// ====================== VÀO CHẾ ĐỘ FULLSCREEN ======================
+function toggleFullScreenMode() {
+    if (isFullScreen) return;
+
+    const compassContainer = document.querySelector('.compass-container');
+    const statusPanel = document.querySelector('.status-panel');
+    const fsIcon = document.querySelector('.fs-icon');
+
+    if (!compassContainer) return;
+    if (!originalCompassParent) originalCompassParent = compassContainer.parentElement;
+
+    // --- GIỮ NGUYÊN: ẨN CÁC DÒNG THÔNG TIN CHI TIẾT ---
+    if (statusPanel) {
+        const elements = statusPanel.querySelectorAll('*');
+        elements.forEach(el => {
+            const text = el.textContent || "";
+            const isTarget = text.includes('Người Tầm Phương') || 
+                             text.includes('Đo hướng') || 
+                             text.includes('Cung Phi') || 
+                             text.includes('Năm Âm') || 
+                             text.includes('Trung Cung') || 
+                             text.includes('Xem giải thích thuật ngữ');
+
+            if (isTarget) {
+                el.style.display = 'none';
+                el.setAttribute('data-fs-hidden', 'true'); 
+            }
+        });
+    }
+
+    const giaiThich = document.getElementById('detail-box');
+    if (giaiThich) {
+        giaiThich.style.display = 'none';
+        giaiThich.setAttribute('data-fs-hidden', 'true');
+    }
+
+    // Reset lại cấu hình zoom mỗi khi mở full màn hình
+    currentScale = 1;
+    currentX = 0;
+    currentY = 0;
+    isZooming = false;
+
+    const fsDiv = document.createElement('div');
+    fsDiv.id = 'fullscreenMode';
+    fsDiv.className = 'fullscreen-mode active';
+    
+    // NÂNG CẤP CSS: Thêm touch-action: none để khóa zoom mặc định lỗi của Safari/Chrome iOS
+    fsDiv.style.cssText = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.95); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:opacity 0.3s; touch-action: none; overflow:hidden;";
+    
+    fsDiv.innerHTML = `
+        <div id="fs-compass-wrapper" style="width: 96vw; max-width: 460px; height: 96vw; max-height: 460px; transform-origin: center center; display:flex; align-items:center; justify-content:center;"></div>
+        <div id="fs-status-wrapper" style="width: 92%; max-width: 460px; margin-top:20px; z-index: 10000;"></div>
+    `;
+    document.body.appendChild(fsDiv);
+
+    document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
+    if (statusPanel) document.getElementById('fs-status-wrapper').appendChild(statusPanel);
+
+    if (fsIcon) fsIcon.style.opacity = '0';
+
+    isFullScreen = true;
+
+    // ====================== BỘ LẮNG NGHE SỰ KIỆN ZOOM ĐA ĐIỂM BẰNG TAY ======================
+    const wrapper = document.getElementById('fs-compass-wrapper');
+
+    fsDiv.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) { // Kéo 2 ngón tay -> Bắt đầu Zoom
+            isZooming = true;
+            startDistance = Math.hypot(
+                e.touches[0].pageX - e.touches[1].pageX,
+                e.touches[0].pageY - e.touches[1].pageY
+            );
+            initialScale = currentScale;
+            wrapper.style.transition = "none";
+        } else if (e.touches.length === 1 && currentScale > 1) { // 1 Ngón tay -> Kéo di chuyển vùng la bàn khi đã phóng to
+            startX = e.touches[0].pageX - currentX;
+            startY = e.touches[0].pageY - currentY;
+            wrapper.style.transition = "none";
+        }
+    });
+
+    fsDiv.addEventListener('touchmove', (e) => {
+        if (isZooming && e.touches.length === 2) {
+            e.preventDefault();
+            const currentDistance = Math.hypot(
+                e.touches[0].pageX - e.touches[1].pageX,
+                e.touches[0].pageY - e.touches[1].pageY
+            );
+            // Giới hạn độ phóng to từ 1x đến tối đa 4x chiếc la bàn
+            currentScale = Math.min(Math.max(initialScale * (currentDistance / startDistance), 1), 4);
+            wrapper.style.transform = `translate(${currentX}px, ${currentY}px) scale(${currentScale})`;
+        } else if (!isZooming && e.touches.length === 1 && currentScale > 1) {
+            e.preventDefault();
+            currentX = e.touches[0].pageX - startX;
+            currentY = e.touches[0].pageY - startY;
+
+            // Giới hạn không cho kéo lệch la bàn ra ngoài màn hình quá xa
+            const maxPan = 150 * currentScale;
+            currentX = Math.min(Math.max(currentX, -maxPan), maxPan);
+            currentY = Math.min(Math.max(currentY, -maxPan), maxPan);
+
+            wrapper.style.transform = `translate(${currentX}px, ${currentY}px) scale(${currentScale})`;
+        }
+    }, { passive: false });
+
+    fsDiv.addEventListener('touchend', (e) => {
+        if (e.touches.length < 2) {
+            isZooming = false;
+        }
+    });
+
+    if (typeof recalculateFate === 'function') recalculateFate();
+}
+
+// ====================== THOÁT CHẾ ĐỘ FULLSCREEN ======================
+function exitFullScreenMode() {
+    const fs = document.getElementById('fullscreenMode');
+    if (!fs) return;
+
+    fs.style.opacity = '0';
+    setTimeout(() => {
+        const compass = document.querySelector('.compass-container');
+        const status = document.querySelector('.status-panel');
+        const fsIcon = document.querySelector('.fs-icon');
+
+        // --- GIỮ NGUYÊN: HIỆN LẠI TẤT CẢ CÁC THÀNH PHẦN ĐÃ ẨN ---
+        const hiddenElements = document.querySelectorAll('[data-fs-hidden="true"]');
+        hiddenElements.forEach(el => {
+            el.style.display = ''; 
+            el.removeAttribute('data-fs-hidden');
+        });
+
+        if (compass && originalCompassParent) {
+            // Xóa bỏ các thuộc tính transform thu phóng trước khi trả la bàn về giao diện chính
+            compass.style.transform = ""; 
+            originalCompassParent.appendChild(compass);
+            if (status) originalCompassParent.insertBefore(status, compass.nextSibling);
+        }
+
+        fs.remove();
+        isFullScreen = false;
+        if (fsIcon) fsIcon.style.opacity = '1';
+        
+        if (typeof updateCompassUI === 'function') {
+            updateCompassUI(typeof lastHeading !== 'undefined' ? lastHeading : 0);
+        }
+    }, 300);
+}
+// ====================== PURPOSE POPUP MODAL ======================
+let currentPurposeValue = "";
+
+function showPurposeModal() {
+    let modal = document.getElementById('purpose-modal');
+   
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'purpose-modal';
+        modal.innerHTML = `
+            <div id="purpose-modal-content">
+                <div id="purpose-modal-header">MỤC ĐÍCH KHẢO SÁT KHÍ CỤC VẬN 9</div>
+                <div id="purpose-modal-body"></div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    const body = document.getElementById('purpose-modal-body');
+    
+    body.innerHTML = `
+        <div class="purpose-modal-group">🏛️ DƯƠNG TRẠCH CHỦ CỤC (Nhà Ở & Sinh Hoạt)</div>
+        <div class="purpose-modal-option" data-value="house">Hướng Nhà / Cửa Chính (Đại Môn)</div>
+        <div class="purpose-modal-option" data-value="gate">Hướng Cổng Chính (Lộ Khẩu)</div>
+        <div class="purpose-modal-option" data-value="altar">Hướng Bàn Thờ / Ban Thần Tài (Tụ Phúc)</div>
+        <div class="purpose-modal-option" data-value="altar_room">Không Gian Phòng Thờ Độc Lập (Tổ Đường)</div>
+        <div class="purpose-modal-option" data-value="bed">Hướng Đầu Giường Ngủ (Sàng Vị)</div>
+        <div class="purpose-modal-option" data-value="livingroom">Hướng Phòng Khách (Trung Đường)</div>
+        <div class="purpose-modal-option" data-value="bedroom_master">Hướng Phòng Ngủ Chính (Chủ Khang)</div>
+        <div class="purpose-modal-option" data-value="bedroom_child">Hướng Phòng Ngủ Con Cái (Phúc Nhân)</div>
+        <div class="purpose-modal-option" data-value="balcony">Hướng Ban Công / Cửa Sổ Lớn (Nạp Khí)</div>
+
+        <div class="purpose-modal-group">📚 VĂN XƯƠNG KHOA DANH (Học Hành & Sự Nghiệp)</div>
+        <div class="purpose-modal-option" data-value="workspace">Hướng Bàn Làm Việc (Quyền Lực Vị)</div>
+        <div class="purpose-modal-option" data-value="ceo_office">Hướng Phòng Sếp / Bàn Lãnh Đạo</div>
+        <div class="purpose-modal-option" data-value="study_desk">Hướng Bàn Học / Văn Xương Vị</div>
+        <div class="purpose-modal-option" data-value="bookcase">Vị Trí Tủ Sách / Lưu Trữ Hồ Sơ</div>
+
+        <div class="purpose-modal-group">💰 ĐẮC TÀI MẬU DỊCH (Kinh Doanh Thương Mại)</div>
+        <div class="purpose-modal-option" data-value="signboard">Hướng Biển Hiệu (Minh Đường Lộ)</div>
+        <div class="purpose-modal-option" data-value="counter">Hướng Quầy Thu Ngân (Tài Khố Vị)</div>
+        <div class="purpose-modal-option" data-value="safe">Vị trí Két Sắt (Tụ Tài Bảo Khố)</div>
+        <div class="purpose-modal-option" data-value="machinery">Hệ Thống Máy Móc / Dây Chuyền Sản Xuất</div>
+        <div class="purpose-modal-option" data-value="bakery">Hướng Lò Nướng / Quầy Bánh Mì</div>
+        <div class="purpose-modal-option" data-value="coffee">Hướng Quầy Pha Chế Cà Phê / Trà Sữa</div>
+        <div class="purpose-modal-option" data-value="restaurant">Hướng Quán Ăn / Nhà Hàng</div>
+        <div class="purpose-modal-option" data-value="shop">Hướng Cửa Hàng / Showroom / Tạp Hóa</div>
+        <div class="purpose-modal-option" data-value="salon">Hướng Salon Tóc / Giường Nail / Spa</div>
+
+        <div class="purpose-modal-group">🛠️ TỌA VỊ TRẤN SÁT (Hệ Thống Đè Hung)</div>
+        <div class="purpose-modal-option" data-value="kitchen">Vị trí Đặt Bếp Nấu (Táo Vị Trấn Sát)</div>
+        <div class="purpose-modal-option" data-value="toilet">Vị trí Nhà Vệ Sinh (Tiêu Sát Khí)</div>
+        <div class="purpose-modal-option" data-value="septic_tank">Vị trí Hầm Tự Hoại / Bể Phốt Ngầm</div>
+        <div class="purpose-modal-option" data-value="pipe_shaft">Trục Kỹ Thuật / Hộp Gen Uế Khí</div>
+        <div class="purpose-modal-option" data-value="storage">Vị trí Kho Hàng / Phòng Đồ Tạp</div>
+        <div class="purpose-modal-option" data-value="trash_area">Vị trí Thùng Rác / Khu Tập Kết Phế Liệu</div>
+    `;
+
+    // Xử lý sự kiện click chọn danh mục mục đích
+    body.querySelectorAll('.purpose-modal-option').forEach(item => {
+        item.addEventListener('click', () => {
+            const value = item.getAttribute('data-value');
+            const text = item.textContent.trim();
+
+            // Cập nhật giao diện text hiển thị bên ngoài
+            const textDisplay = document.getElementById('purpose-selected-text');
+            if (textDisplay) textDisplay.textContent = text;
+            
+            // Cập nhật giá trị vào input ẩn phục vụ thuật toán lõi
+            const hiddenInput = document.getElementById('purpose');
+            if (hiddenInput) {
+                hiddenInput.value = value;
+            }
+
+            currentPurposeValue = value;
+
+            // Ẩn modal an toàn
+            if (typeof hidePurposeModal === 'function') {
+                hidePurposeModal();
+            } else {
+                modal.style.display = 'none';
+            }
+
+            // Thực thi tính toán lại toàn bộ trục Thiên - Địa - Nhân
+            if (typeof recalculateFate === 'function') {
+                recalculateFate();
+            }
+
+            // Cập nhật hộp danh sách gợi ý realtime
+            if (typeof generateDirectionsList === 'function') {
+                generateDirectionsList(); 
+            }
+        });
+    });
+
+    modal.style.display = 'flex';
+}
+
+function hidePurposeModal() {
+    const modal = document.getElementById('purpose-modal');
+    if (modal) modal.style.display = 'none';
+}
+
+// Đóng modal khi click vào nền tối
+document.addEventListener('click', (e) => {
+    const modal = document.getElementById('purpose-modal');
+    if (modal && e.target === modal) {
+        hidePurposeModal();
+    }
+});
+
+/**
+ * Hiển thị cảnh báo với tiêu đề tùy chỉnh
+ * @param {string} msg - Nội dung thông báo
+ * @param {string} title - Tiêu đề (Mặc định: Thông Báo)
+ */
+function showCustomAlert(msg, title = "Thông Báo") {
+    // Cập nhật tiêu đề trước khi hiển thị
+    const titleEl = document.querySelector('.custom-alert-title');
+    if (titleEl) titleEl.innerText = title;
+    
+    // Cập nhật nội dung
+    document.getElementById('customAlertMsg').innerText = msg;
+    document.getElementById('customAlert').classList.add('active');
+}
+
+function closeCustomAlert() {
+    document.getElementById('customAlert').classList.remove('active');
+}
+
+/**
+ * Xử lý nhập liệu ngày tháng với logic kiểm tra dữ liệu sạch
+ */
+function handleDateInput(currentInput, nextInputId) {
+    // Làm sạch đầu vào: chỉ giữ lại số
+    currentInput.value = currentInput.value.replace(/[^0-9]/g, '');
+    let val = parseInt(currentInput.value) || 0;
+
+    // Kiểm tra Ngày
+    if (currentInput.id === 'birthDay') {
+        if (val > 31) {
+            currentInput.value = "31";
+            showCustomAlert("Ngày trong tháng không thể vượt quá 31!", "⚠️ Sai Lệch Dữ Liệu");
+        } else if (val < 0) {
+            currentInput.value = "1";
+        }
+    }
+
+    // Kiểm tra Tháng
+    if (currentInput.id === 'birthMonth') {
+        if (val > 12) {
+            currentInput.value = "12";
+            showCustomAlert("Tháng không thể vượt quá 12!", "⚠️ Sai Lệch Dữ Liệu");
+        } else if (val < 0) {
+            currentInput.value = "1";
+        }
+    }
+
+    // Tự động chuyển ô khi nhập đủ
+    if (currentInput.value.length >= currentInput.maxLength && nextInputId) {
+        document.getElementById(nextInputId).focus();
+    }
+    
+    // Tự động tính toán lại khi dữ liệu thay đổi
+    if (typeof debounceRecalculate === 'function') {
+        debounceRecalculate();
+    }
+}
+
+// =========================================================================
+// 🚀 HỆ THỐNG BIẾN TOÀN CỤC LƯU TRỮ BỘ NHỚ ĐỆM ĐA TẦNG (HIGH-PERFORMANCE CACHE)
+// =========================================================================
+let sonTextsCache = null;
+let huongLonTextsCache = null;
+let saoTextsCache = null;
+let hau72TextsCache = null;
+
+// =========================================================================
+// 🏗️ 1. HÀM DỰNG CÁC VÒNG LA BÀN (TỐI ƯU STRING RENDER - SIÊU NHẸ)
+// =========================================================================
+function render24SonRing() {
+    // 1. Vạch độ ngoài cùng
+    const vachDoRing = document.getElementById('vachDoRing');
+    if (vachDoRing) {
+        let linesHtml = "";
+        for (let i = 0; i < 360; i++) {
+            const y2 = (i % 10 === 0) ? 28 : (i % 5 === 0) ? 25 : 23;
+            linesHtml += `<line x1="250" y1="18" x2="250" y2="${y2}" transform="rotate(${i}, 250, 250)" />`;
+        }
+        vachDoRing.innerHTML = linesHtml;
+    }
+
+    // 2. Vạch ngăn 24 Sơn
+    const khe24SonRing = document.getElementById('khe24SonRing');
+    if (khe24SonRing) {
+        let lines24Html = "";
+        for (let i = 0; i < 24; i++) {
+            const gocBiên = i * 15 - 7.5;
+            lines24Html += `<line x1="250" y1="115" x2="250" y2="162" transform="rotate(${gocBiên}, 250, 250)" />`;
+        }
+        khe24SonRing.innerHTML = lines24Html;
+    }
+
+    // 3. Chữ 24 Sơn (Nối chuỗi thần tốc thay thế createElementNS)
+    const sonRingSvg = document.getElementById('sonRingSvg');
+    if (sonRingSvg) {
+        let sonHtml = "";
+        SON_24_CONFIG.forEach((son, index) => {
+            const goc = (index * 15) % 360;
+            const color = ["Cấn", "Tốn", "Khôn", "Càn"].includes(son.name) ? "#ff3b30" :
+                          ["Tý", "Mão", "Ngọ", "Dậu"].includes(son.name) ? "#00a525" : "#5c4314";
+            
+            sonHtml += `<text x="250" y="114" text-anchor="middle" font-size="10" font-weight="900" ` +
+                       `transform="rotate(${goc}, 250, 250)" data-son-goc="${goc}" data-base-size="10" ` +
+                       `fill="${color}" data-color="${color}">${son.name}</text>`;
+        });
+        sonRingSvg.innerHTML = sonHtml;
+    }
+
+    // 4. Vòng 24 Sao Phúc Đức
+    const phucDucRingSvg = document.getElementById('phucDucRingSvg');
+    if (phucDucRingSvg) {
+        const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
+        const catStars = ["Phúc Đức", "Tấn Tài", "Quan Tước", "Quan Quý", "Vượng Trang", "Hưng Phước", "Vượng Tài", "Đăng Doanh", "Vượng Tâm", "Vinh Phước"];
+        
+        let phucDucHtml = "";
+        phucDucNames.forEach((name, index) => {
+            const goc = (index * 15) % 360;
+            const color = catStars.includes(name) ? "#00a525" : "#ff3b30";
+            
+            phucDucHtml += `<text x="250" y="72" text-anchor="middle" font-size="6.8" font-weight="900" ` +
+                           `transform="rotate(${goc}, 250, 250)" data-sao-goc="${goc}" data-base-size="6.8" ` +
+                           `fill="${color}" data-color="${color}">${name}</text>`;
+        });
+        phucDucRingSvg.innerHTML = phucDucHtml;
+    }
+
+    // 5. Vòng 72 Hậu - CHUẨN XÁC ĐỒNG TRỤC CHÍNH SƠN
+    const hauRing = document.getElementById('hau72RingSvg');
+    if (hauRing) {
+        let hauHtml = "";
+        Object.keys(Data72Hau).forEach(degStr => {
+            const hau = Data72Hau[degStr];
+            const degVisual = parseFloat(degStr);
+            
+            let color = "#7a631d";
+            if (hau.chatLuong.includes("Cát")) {
+                color = "#0e6b0e";
+            } else if (hau.chatLuong.includes("Hung")) {
+                color = "#8b0000";
+            }
+            
+            const tenGoc = hau.ten || "";
+            const soHau = tenGoc.match(/\d+/);
+            const chuDau = tenGoc.charAt(0);
+            const textContent = soHau ? (chuDau + soHau[0]) : tenGoc;
+            
+            hauHtml += `<text x="250" y="95" text-anchor="middle" font-size="3.2" font-weight="700" ` +
+                       `transform="rotate(${degVisual}, 250, 250)" data-hau-goc="${degStr}" data-base-size="3.2" ` +
+                       `fill="${color}" data-original-fill="${color}">${textContent}</text>`;
+        });
+        hauRing.innerHTML = hauHtml;
+    }
+
+    // Đồng bộ kích hoạt lưu bộ nhớ đệm ngay lập tức sau khi dựng xong giao diện
+    cacheCompassElements(true);
+}
+
+// =========================================================================
+// 🗄️ 2. HÀM CHUYỂN ĐỔI VÀ NẠP BỘ NHỚ ĐỆM TỪ DOM VÀO RAM (CHẠY 1 LẦN DUY NHẤT)
+// =========================================================================
+function cacheCompassElements(forceRefresh = false) {
+    if (!forceRefresh && sonTextsCache && sonTextsCache.length > 0) return; 
+
+    // Cache cấu trúc dữ liệu 24 Sơn
+    sonTextsCache = Array.from(document.querySelectorAll("#sonRingSvg text")).map(txt => ({
+        el: txt,
+        goc: parseFloat(txt.getAttribute("data-son-goc")) || 0,
+        baseSize: parseFloat(txt.getAttribute("data-base-size")) || 10,
+        color: txt.getAttribute("data-color") || "#5c4314"
+    }));
+
+    // Cache cấu trúc dữ liệu 24 Sao Phúc Đức
+    saoTextsCache = Array.from(document.querySelectorAll("#phucDucRingSvg text")).map(txt => ({
+        el: txt,
+        goc: parseFloat(txt.getAttribute("data-sao-goc")) || 0,
+        baseSize: parseFloat(txt.getAttribute("data-base-size")) || 6.8,
+        color: txt.getAttribute("data-color") || "#ff3b30"
+    }));
+
+    // Cache cấu trúc dữ liệu 72 Hậu
+    hau72TextsCache = Array.from(document.querySelectorAll("#hau72RingSvg text")).map(txt => ({
+        el: txt,
+        goc: parseFloat(txt.getAttribute("data-hau-goc")) || 0,
+        baseSize: parseFloat(txt.getAttribute("data-base-size")) || 3.2,
+        originalFill: txt.getAttribute("data-original-fill") || txt.getAttribute("fill") || "#7a631d"
+    }));
+
+    // Cache cấu trúc dữ liệu 8 Hướng Lớn (Triệt tiêu toàn bộ getAttribute phức tạp)
+    huongLonTextsCache = Array.from(document.querySelectorAll("#chuHuongLonG text")).map(txt => {
+        const textGoc = parseFloat(txt.getAttribute("data-goc")) || 0;
+        const fillAttr = txt.getAttribute("fill") || "";
+        const transform = txt.getAttribute("transform") || "";
+        const isChinhPhuong = txt.parentNode?.getAttribute("id") === "textChinhPhuong";
+        
+        let defaultFill = "#6b4e18";
+        if (isChinhPhuong) {
+            defaultFill = (transform.includes("rotate(90") || transform.includes("rotate(270")) ? "#00a525" : "#ff3b30";
+        }
+
+        return {
+            el: txt,
+            goc: textGoc,
+            isGreenByDefault: (fillAttr === "#00a525" || defaultFill === "#00a525"),
+            defaultFill: defaultFill
+        };
+    });
+}
+
+// =========================================================================
+// ⚡ 3. HÀM LÀM SÁNG LED QUÉT TIÊU CHUẨN ENGINE GAME (SIÊU MƯỢT, KHÔNG HÚT CPU)
+// =========================================================================
+function kichHoatDenLedQuet(heading) {
+    const ledTargetAngle = ((heading % 360) + 360) % 360;
+
+    // Hàm phụ trợ xử lý hiệu ứng đổi màu bằng dữ liệu RAM - KHÔNG ĐỌC DOM
+    const applyEffect = (cachedArray, range, zoomScale, isHau = false) => {
+        if (!cachedArray) return;
+        
+        const len = cachedArray.length;
+        for (let i = 0; i < len; i++) {
+            const item = cachedArray[i];
+            let phanSai = Math.abs(ledTargetAngle - item.goc);
+            if (phanSai > 180) phanSai = 360 - phanSai;
+
+            const style = item.el.style;
+            if (phanSai <= range) {
+                // Khi quét trúng cung mục tiêu
+                style.opacity = "1";
+                style.fontSize = (item.baseSize * zoomScale) + "px";
+                style.fontWeight = "900";
+                
+                if (isHau) {
+                    style.fill = "#ffff00"; 
+                } else {
+                    const color = item.color;
+                    style.fill = (color === "#5c4314") ? "#ffcc00" : (color === "#ff3b30" ? "#ff0000" : "#00ff00");
+                }
+            } else {
+                // Trạng thái tĩnh bình thường bên ngoài tia quét
+                style.opacity = "0.6";
+                style.fontSize = item.baseSize + "px";
+                style.fontWeight = "700";
+                style.fill = item.originalFill || item.color || "#8a8a8f";
+            }
+        }
+    };
+
+    // 1. Xử lý chuyên biệt cho 8 Hướng Lớn bằng vòng lặp Core For tối ưu tốc độ
+    if (huongLonTextsCache) {
+        const lenHL = huongLonTextsCache.length;
+        for (let i = 0; i < lenHL; i++) {
+            const item = huongLonTextsCache[i];
+            let phanSai = Math.abs(ledTargetAngle - item.goc);
+            if (phanSai > 180) phanSai = 360 - phanSai;
+
+            const style = item.el.style;
+            if (phanSai <= 22.5) {
+                style.opacity = "1"; 
+                style.fontWeight = "900";
+                style.fill = item.isGreenByDefault ? "#00ff37" : "#ff1a00";
+            } else {
+                style.opacity = "0.5"; 
+                style.fontWeight = "normal";
+                style.fill = item.defaultFill;
+            }
+        }
+    }
+
+    // 2. Xử lý 24 Sơn (Phóng to 1.3 lần)
+    applyEffect(sonTextsCache, 7.5, 1.3, false);
+
+    // 3. Xử lý Sao Phúc Đức (Phóng to 1.2 lần)
+    applyEffect(saoTextsCache, 7.5, 1.2, false);
+
+    // 4. Xử lý 72 Hậu (Quét trúng cung quản 2.5 độ, phóng to 1.65 lần nổi bật)
+    applyEffect(hau72TextsCache, 2.5, 1.65, true);
+}
+
+// ====================== MANUAL ROTATE (KÉO SLIDER) ======================
+function manualRotate(value) {
+    const numValue = parseFloat(value);
+    if (isNaN(numValue)) return;
+
+    lastHeading = (numValue % 360 + 360) % 360;
+    
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+        updateCompassUI(lastHeading);
+    });
+}
+// =========================================================================
+// 📐 HÀM VẼ PH N VÙNG VÀNH KHĂN (ĐÃ N NG CẤP CACHE & NÉN TỌA ĐỘ)
+// =========================================================================
+// Bộ lưu trữ toàn cục để giữ lại các hình vành khăn đã tính, triệt tiêu hoàn toàn việc tính lại lượng giác
+const _arcPathCache = {};
+
+function getSvgArcPath(cx, cy, rIn, rOut, startAngle, endAngle) {
+    // Tạo mã định danh (Key) độc nhất cho cấu hình vành khăn này
+    const cacheKey = `${cx}_${cy}_${rIn}_${rOut}_${startAngle}_${endAngle}`;
+    
+    // Nếu cấu hình góc này đã từng được tính, trả về kết quả ngay lập tức (Tốc độ tối đa)
+    if (_arcPathCache[cacheKey]) {
+        return _arcPathCache[cacheKey];
+    }
+
+    const angleToRad = (angle) => (angle - 90) * Math.PI / 180.0;
+    const sIn = angleToRad(startAngle);
+    const eIn = angleToRad(endAngle);
+    
+    // Áp dụng .toFixed(1) để nén gọn chuỗi tọa độ dữ liệu SVG.
+    // Giảm tải dung lượng DOM, giúp phần cứng thiết bị xử lý đồ họa mượt mà hơn.
+    const x1_out = (cx + rOut * Math.cos(sIn)).toFixed(1);
+    const y1_out = (cy + rOut * Math.sin(sIn)).toFixed(1);
+    const x2_out = (cx + rOut * Math.cos(eIn)).toFixed(1);
+    const y2_out = (cy + rOut * Math.sin(eIn)).toFixed(1);
+    
+    const x1_in = (cx + rIn * Math.cos(eIn)).toFixed(1);
+    const y1_in = (cy + rIn * Math.sin(eIn)).toFixed(1);
+    const x2_in = (cx + rIn * Math.cos(sIn)).toFixed(1);
+    const y2_in = (cy + rIn * Math.sin(sIn)).toFixed(1);
+    
+    const largeArcFlag = (endAngle - startAngle) > 180 ? 1 : 0;
+    
+    // Tổng hợp chuỗi vẽ đường bọc vành khăn cốt lõi
+    const pathStr = `M ${x1_out} ${y1_out} ` +
+                    `A ${rOut} ${rOut} 0 ${largeArcFlag} 1 ${x2_out} ${y2_out} ` +
+                    `L ${x1_in} ${y1_in} ` +
+                    `A ${rIn} ${rIn} 0 ${largeArcFlag} 0 ${x2_in} ${y2_in} Z`;
+    
+    // Ghi nhớ vào bộ đệm trước khi trả kết quả ra ngoài
+    _arcPathCache[cacheKey] = pathStr;
+    
+    return pathStr;
+}
+
+// =========================================================================
+// 🎨 ENGINE CẬP NHẬT MÀU NỀN HUNG CÁT (ĐÃ TỐI ƯU HÓA HIỆU NĂNG CAO)
+// =========================================================================
+// =========================================================================
+// 🎨 ENGINE CẬP NHẬT MÀU NỀN HUNG CÁT (HIỆU ỨNG ĐÈN NEON SÁNG CHỐNG CHÓI)
+// =========================================================================
+function updateBatTrachBackground(cungPhi) {
+    const bgGroup = document.getElementById('batTrachBackgroundRing');
+    if (!bgGroup) return;
+    
+    // Kiểm tra xem 8 mảng của la bàn đã được dựng sẵn chưa
+    let existingPaths = bgGroup.querySelectorAll('path');
+    const isInitialized = existingPaths.length === 8;
+
+    // Nếu chưa nhập năm sinh hoặc dữ liệu trống, ẩn màu và viền đi để giữ hiệu năng
+    if (!cungPhi) {
+        if (isInitialized) {
+            existingPaths.forEach(path => {
+                path.setAttribute('fill', 'none');
+                path.setAttribute('stroke', 'none');
+            });
+        } else {
+            bgGroup.innerHTML = "";
+        }
+        return;
+    }
+    
+    // Định biên tọa độ góc 8 hướng lớn đồng trục với đĩa xoay la bàn số
+    const directions = [
+        { code: 'N',  start: 337.5, end: 382.5 }, 
+        { code: 'NE', start: 22.5,  end: 67.5  }, 
+        { code: 'E',  start: 67.5,  end: 112.5 }, 
+        { code: 'SE', start: 112.5, end: 157.5 }, 
+        { code: 'S',  start: 157.5, end: 202.5 }, 
+        { code: 'SW', start: 202.5, end: 247.5 }, 
+        { code: 'W',  start: 247.5, end: 292.5 }, 
+        { code: 'NW', start: 292.5, end: 337.5 }  
+    ];
+    
+    const safeCungPhi = cungPhi.trim().charAt(0).toUpperCase() + cungPhi.trim().slice(1).toLowerCase();
+    const mapTrach = bátTrạchMap[safeCungPhi];
+    
+    if (!mapTrach) {
+        if (isInitialized) {
+            existingPaths.forEach(path => {
+                path.setAttribute('fill', 'none');
+                path.setAttribute('stroke', 'none');
+            });
+        } else {
+            bgGroup.innerHTML = "";
+        }
+        return;
+    }
+    
+    // NẾU ĐÃ KHỞI TẠO: Chỉ cập nhật thuộc tính màu sắc & viền Neon (Tốc độ tối đa)
+    if (isInitialized) {
+        directions.forEach((dir, index) => {
+            const cungTrạch = mapTrach[dir.code];
+            const isCat = cungPhầnTrăm[cungTrạch]?.cát;
+            
+            // 💡 CẤU HÌNH MÀU NEON CHỐNG CHÓI CHỮ:
+            // - Mảng Cát (Xanh): Mã màu gốc #00ffaa phát sáng mạnh, hạ Alpha nền xuống 0.12, giữ viền sáng 0.7
+            // - Mảng Hung (Đỏ):  Mã màu gốc #ff1744 đỏ điện tử cực tươi, hạ Alpha nền xuống 0.12, giữ viền sáng 0.7
+            const fillColor = isCat ? "rgba(0, 255, 170, 0.12)" : "rgba(255, 23, 68, 0.12)";
+            const strokeColor = isCat ? "rgba(0, 255, 170, 0.70)" : "rgba(255, 23, 68, 0.70)";
+            
+            // Thay đổi trực tiếp các thuộc tính hiển thị đồ họa nền có sẵn
+            existingPaths[index].setAttribute('fill', fillColor);
+            existingPaths[index].setAttribute('stroke', strokeColor);
+            existingPaths[index].setAttribute('stroke-width', '1.2');
+        });
+        return; 
+    }
+    
+    // NẾU CHƯA KHỞI TẠO (Chỉ chạy duy nhất một lần đầu tiên khi dựng đĩa la bàn)
+    let html = "";
+    const cx = 250, cy = 250, rIn = 185, rOut = 244;
+    
+    directions.forEach(dir => {
+        const cungTrạch = mapTrach[dir.code];
+        const isCat = cungPhầnTrăm[cungTrạch]?.cát;
+        
+        // Đồng bộ cấu hình màu Neon cho lượt tạo đầu tiên
+        const fillColor = isCat ? "rgba(0, 255, 170, 0.12)" : "rgba(255, 23, 68, 0.12)";
+        const strokeColor = isCat ? "rgba(0, 255, 170, 0.70)" : "rgba(255, 23, 68, 0.70)";
+        
+        const pathStr = getSvgArcPath(cx, cy, rIn, rOut, dir.start, dir.end);
+        html += `<path d="${pathStr}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="1.2" />`;
+    });
+    
+    bgGroup.innerHTML = html;
+}
+
+// =========================================================================
+// 🌐 PHÂN HỆ QUẢN TRỊ BỘ NHỚ: LƯU TRỮ VÀ LÀM SẠCH CHỌN LỌC CẤP CAO VẬN 9
+// =========================================================================
+
+// 1. LƯU THÀNH VIÊN (Tự động hóa chuẩn hóa danh tính, chống trùng rác)
+function saveCurrentMember() {
+    let nameInput = document.getElementById('userName');
+    let name = nameInput ? nameInput.value.trim() : "";
+    const gender = document.getElementById('gender').value;
+    const dayStr = document.getElementById('birthDay').value;
+    const monthStr = document.getElementById('birthMonth').value;
+    const yearStr = document.getElementById('birthYear').value;
+
+    // Chốt chặn kiểm tra đầu vào nghiêm ngặt
+    if (!name || name === "Người Tầm Phương") {
+        showCustomAlert("Vui lòng nhập họ tên thật của thành viên gia đình!", "⚠️ Sai Lệch Dữ Liệu");
+        return;
+    }
+    if (!dayStr || !monthStr || !yearStr) {
+        showCustomAlert("Vui lòng điền hoàn chỉnh Ngày, Tháng, Năm sinh!", "⚠️ Sai Lệch Dữ Liệu");
+        return;
+    }
+
+    // THÔNG MINH: Tự động viết hoa chữ cái đầu danh tính (Chuẩn hóa Nhân Mệnh)
+    name = name.toLowerCase().replace(/(^|\s)\S/g, l => l.toUpperCase());
+    if (nameInput) nameInput.value = name;
+
+    let members = JSON.parse(localStorage.getItem('fengshui_members') || '[]');
+
+    // THÔNG MINH: Chống trùng lặp dữ liệu (Nếu trùng cả Tên, Ngày, Tháng, Năm thì cảnh báo, tránh rác)
+    const biTrung = members.some(m => m.name === name && m.birthDay === dayStr && m.birthMonth === monthStr && m.birthYear === yearStr);
+    if (biTrung) {
+        showCustomAlert(`Thành viên ${name} với ngày sinh này đã tồn tại trong gia tộc bảng số!`, "⚠️ Trùng Lặp Bộ Nhớ");
+        return;
+    }
+
+    // Tạo cấu trúc thực thể thành viên mới
+    const newMember = {
+        id: Date.now(), 
+        name: name,
+        gender: gender,
+        birthDay: dayStr,
+        birthMonth: monthStr,
+        birthYear: yearStr
+    };
+
+    members.push(newMember);
+    localStorage.setItem('fengshui_members', JSON.stringify(members));
+    
+    showCustomAlert(`Đã mã hóa và lưu thành viên: ${name}`, "✅ Thành Công");
+    loadSavedMembers();
+}
+
+// 2. TẢI DANH SÁCH THÀNH VIÊN (Render an toàn, giữ nguyên gốc không tự động load khi mở app)
+function loadSavedMembers() {
+    const data = JSON.parse(localStorage.getItem('fengshui_members') || '[]');
+    const savedPanel = document.getElementById('savedPanel'); 
+    const savedContainer = document.getElementById('savedContainer');
+
+    if (!savedContainer) return;
+
+    if (data.length === 0) {
+        if (savedPanel) savedPanel.style.display = "none";
+        return;
+    }
+    
+    if (savedPanel) savedPanel.style.display = "block";
+    savedContainer.innerHTML = "";
+    
+    data.forEach(m => {
+        const chip = document.createElement('div');
+        chip.className = 'saved-chip';
+        
+        // Hiển thị icon trực quan theo giới tính đã lưu của thành viên
+        const genderIcon = (String(m.gender).toLowerCase() === 'female') ? '👩' : '🧑';
+        
+        chip.innerHTML = `
+            <span onclick="selectMember(${m.id})" style="cursor:pointer;">${genderIcon} ${m.name}</span>
+            <span class="del-btn" onclick="deleteMember(event, ${m.id})" style="margin-left:8px; cursor:pointer; font-weight:bold;">×</span>
+        `;
+        savedContainer.appendChild(chip);
+    });
+}
+
+// 3. CHỌN THÀNH VIÊN TRONG DANH SÁCH (Đồng bộ toán pháp & ép giao diện nút bấm nhảy theo)
+function selectMember(id) {
+    const data = JSON.parse(localStorage.getItem('fengshui_members') || '[]');
+    const m = data.find(item => item.id === id);
+    
+    if (m) {
+        const txtUser = document.getElementById('userName');
+        if (txtUser) {
+            txtUser.value = m.name;
+            txtUser.style.color = '#fff';
+        }
+        
+        // 🔮 ĐỒNG BỘ GIỚI TÍNH 2 TẦNG: Lưu giá trị ngầm và Ép sáng đèn giao diện nút bấm tương ứng
+        document.getElementById('gender').value = m.gender;
+        
+        const maleDiv = document.getElementById('gender-male');
+        const femaleDiv = document.getElementById('gender-female');
+        if (maleDiv && femaleDiv) {
+            let gVal = String(m.gender).trim().toLowerCase();
+            if (gVal === 'female' || gVal === 'nữ' || gVal === 'nu') {
+                femaleDiv.classList.add('active');
+                maleDiv.classList.remove('active');
+            } else {
+                maleDiv.classList.add('active');
+                femaleDiv.classList.remove('active');
+            }
+        }
+
+        document.getElementById('birthDay').value = m.birthDay;
+        document.getElementById('birthMonth').value = m.birthMonth;
+        document.getElementById('birthYear').value = m.birthYear;
+        
+        // Kích hoạt tái tính toán toàn bộ hệ thống ngay khi đổi người
+        if (typeof recalculateFate === 'function') {
+            recalculateFate();
+        }
+    }
+}
+
+// 4. XÓA THÀNH VIÊN CHỈ ĐỊNH
+function deleteMember(event, id) {
+    if (event) event.stopPropagation();
+    let data = JSON.parse(localStorage.getItem('fengshui_members') || '[]');
+    data = data.filter(m => m.id !== id);
+    localStorage.setItem('fengshui_members', JSON.stringify(data));
+    loadSavedMembers();
+}
+
+// 5. SIÊU RESET: THANH LỌC TOÀN DIỆN BỘ NHỚ RÁC - ĐƯA FORM VỀ TRẠNG THÁI KHỞI NGUYÊN
+function clearAllData() {
+    const btn = document.getElementById('btnReset');
+    if (btn) {
+        btn.classList.add('executing');
+        setTimeout(() => btn.classList.remove('executing'), 400);
+    }
+    
+    const danhSachGiaTocHienTai = localStorage.getItem('fengshui_members');
+    
+    localStorage.clear();
+    
+    if (danhSachGiaTocHienTai) {
+        localStorage.setItem('fengshui_members', danhSachGiaTocHienTai);
+    }
+
+    if (typeof hauCache !== 'undefined' && hauCache.clear) {
+        hauCache.clear();
+    }
+    
+    const txtUser = document.getElementById('userName');
+    if (txtUser) {
+        txtUser.value = 'Người Tầm Phương';
+        txtUser.style.color = '#aaa';
+    }
+    
+    // 🔮 ĐỒNG BỘ RESET KHUNG GIỚI TÍNH VỀ MẶC ĐỊNH BAN ĐẦU
+    document.getElementById('gender').value = 'male';
+    const maleDiv = document.getElementById('gender-male');
+    const femaleDiv = document.getElementById('gender-female');
+    if (maleDiv && femaleDiv) {
+        maleDiv.classList.add('active');
+        femaleDiv.classList.remove('active');
+    }
+
+    document.getElementById('birthDay').value = '';
+    document.getElementById('birthMonth').value = '';
+    document.getElementById('birthYear').value = '';
+    document.getElementById('purpose').value = '';
+    
+    if (typeof targetAngle !== 'undefined') targetAngle = null;
+    
+    const ghost = document.getElementById('ghostNeedle');
+    if (ghost) {
+        ghost.style.opacity = "0";
+        ghost.style.display = "none";
+        ghost.classList.remove('matched-pulse');
+    }
+    
+    if (typeof recalculateFate === 'function') {
+        recalculateFate();
+    } else if (typeof updateCompassUI === 'function') {
+        updateCompassUI(currentHeading);
+    }
+    
+    showCustomAlert("Hệ thống đã dọn sạch toàn bộ rác cấu trúc cũ, nạp mới khí trường thành công!", "🧹 Thanh Lọc Bộ Nhớ");
+}
+
+/**
+ * KÍCH HOẠT ĐÓNG MỞ POPUP MƯỢT MÀ Cam Nang
+ */
+document.addEventListener("DOMContentLoaded", function() {
+    const modal = document.getElementById("guideModal");
+    const openBtn = document.getElementById("openGuideBtn");
+    const closeBtn = document.getElementById("closeGuideBtn");
+
+    if (openBtn && modal) {
+        openBtn.onclick = function() { 
+            modal.style.display = "block"; 
+            document.body.style.overflow = "hidden"; // Khóa cuộn trang chủ khi xem cẩm năng
+            
+            // Ép hệ thống vẽ lại các ký hiệu toán học đẹp mắt bằng thư viện MathJax
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+        closeBtn.onclick = function() { 
+            modal.style.display = "none"; 
+            document.body.style.overflow = "auto"; 
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) { 
+                modal.style.display = "none"; 
+                document.body.style.overflow = "auto"; 
+            }
+        }
+    }
+});
+// Donate Modal
+document.getElementById('openDonateBtn').addEventListener('click', function() {
+    document.getElementById('donateModal').style.display = 'flex';
+});
+
+document.getElementById('closeDonateBtn').addEventListener('click', function() {
+    document.getElementById('donateModal').style.display = 'none';
+});
+function selectGender(gender) {
+    // Reset cả hai
+    document.getElementById('gender-male').classList.remove('active');
+    document.getElementById('gender-female').classList.remove('active');
+    
+    // Active cái được chọn
+    document.getElementById('gender-' + gender).classList.add('active');
+    
+    // Cập nhật giá trị hidden
+    document.getElementById('gender').value = gender;
+    
+    // Tính lại kết quả
+    if (typeof recalculateFate === 'function') {
+        recalculateFate();
+    }
+}
+
+// Khởi tạo ban đầu (để tránh lỗi khi load lại)
+document.addEventListener('DOMContentLoaded', function() {
+    // Đảm bảo Nam được active mặc định
+    const currentGender = document.getElementById('gender').value;
+    if (currentGender === 'female') {
+        document.getElementById('gender-female').classList.add('active');
+        document.getElementById('gender-male').classList.remove('active');
+    }
+});
+
+// =========================================================================
+// 🌐 HỆ THỐNG PWA FLOATING ACTION BUTTON - HỖ TRỢ VUỐT GẠT ẨN VĨNH VIỄN
+// =========================================================================
+if (typeof deferredPrompt === 'undefined') {
+    var deferredPrompt; 
+}
+
+// Khóa lưu trữ vĩnh viễn trên trình duyệt này
+const STORAGE_KEY_HIDE_INSTALL = 'pwa_user_dismissed_install';
+
+// 1. Giữ nguyên bản 100% hàm kiểm tra độc lập gốc của bạn
+function isRunningAsPWA() {
+    return window.matchMedia('(display-mode: standalone)').matches || 
+           window.navigator.standalone === true ||
+           window.matchMedia('(display-mode: fullscreen)').matches;
+}
+
+// 2. Hàm kiểm tra ẩn nút - Cải tiến: Kiểm tra thêm bộ nhớ vĩnh viễn LocalStorage
+function kiemTraVaAnNut() {
+    const btn = document.getElementById('btn-install-pwa');
+    if (!btn) return false;
+    
+    // Nếu người dùng đã từng gạt ẩn vĩnh viễn TRÊN TRÌNH DUYỆT NÀY hoặc đang chạy PWA rồi
+    if (localStorage.getItem(STORAGE_KEY_HIDE_INSTALL) === 'true' || isRunningAsPWA()) {
+        btn.classList.add('swiped-away'); // Sử dụng hiệu ứng biến mất hoàn toàn
+        btn.classList.remove('show');
+        return true;
+    }
+    return false;
+}
+
+// 3. Khởi tạo hệ thống lõi - Tích hợp mạch tự động dọn cache khi sửa code
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        if (window.location.protocol === 'file:') return;
+        
+        // Kích hoạt tính năng vuốt gạt ngay khi trang tải xong
+        khoiTaoTinhNangVuotGat();
+        kiemTraVaAnNut();
+
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = './manifest.json';
+        document.head.appendChild(link);
+
+        // Đăng ký Service Worker và tự động F5 làm sạch bộ nhớ
+        navigator.serviceWorker.register('./sw.js')
+            .then((reg) => {
+                reg.onupdatefound = () => {
+                    const installingWorker = reg.installing;
+                    if (installingWorker) {
+                        installingWorker.onstatechange = () => {
+                            if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                console.log('Hệ thống đã tự động nạp khí mới, làm sạch cache cũ thành công!');
+                                window.location.reload();
+                            }
+                        };
+                    }
+                };
+            })
+            .catch(err => console.error('Lỗi kích hoạt PWA:', err));
+    });
+}
+
+// 4. Lắng nghe sự kiện mời cài đặt (Có lồng điều kiện chặn nếu đã ẩn vĩnh viễn)
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Nếu đang chạy trong PWA hoặc người dùng đã gạt ẩn vĩnh viễn trước đó -> Hủy luôn
+    if (isRunningAsPWA() || localStorage.getItem(STORAGE_KEY_HIDE_INSTALL) === 'true') return;
+
+    e.preventDefault();
+    deferredPrompt = e;
+
+    const btn = document.getElementById('btn-install-pwa');
+    if (btn) {
+        btn.classList.remove('swiped-away');
+        btn.classList.add('show');
+
+        btn.onclick = async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`Người dùng chọn: ${outcome}`);
+            
+            if (outcome === 'accepted') {
+                btn.classList.add('swiped-away');
+                btn.classList.remove('show');
+            }
+            deferredPrompt = null;
+        };
+    }
+});
+
+// 5. Ẩn nút lập tức khi cài xong
+window.addEventListener('appinstalled', () => {
+    const btn = document.getElementById('btn-install-pwa');
+    if (btn) {
+        btn.classList.add('swiped-away');
+        btn.classList.remove('show');
+    }
+});
+
+// Bộ quét quét lại khi người dùng bật tắt màn hình
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+        setTimeout(kiemTraVaAnNut, 600);
+    }
+});
+
+// =========================================================================
+// 🔥 HÀM TẠO HIỆU ỨNG GẠT PHẢI ĐỂ XÓA VĨNH VIỄN (SWIPE TO DISMISS) - ĐỘNG 50%
+// =========================================================================
+function khoiTaoTinhNangVuotGat() {
+    const btn = document.getElementById('btn-install-pwa');
+    if (!btn) return;
+
+    let touchStartX = 0;
+    let touchCurrentX = 0;
+    let isSwiping = false;
+
+    // Sự kiện bắt đầu chạm tay vào nút
+    btn.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        btn.style.transition = 'none'; // Tắt hoàn toàn hiệu ứng để nút dính chặt theo ngón tay
+        isSwiping = true;
+    }, { passive: true });
+
+    // Sự kiện di chuyển ngón tay
+    btn.addEventListener('touchmove', (e) => {
+        if (!isSwiping) return;
+        touchCurrentX = e.touches[0].clientX;
+        let deltaX = touchCurrentX - touchStartX;
+
+        // Chỉ cho phép gạt sang bên PHẢI (deltaX > 0)
+        if (deltaX > 0) {
+            // Nút dịch chuyển tuyến tính chính xác theo tọa độ ngón tay
+            btn.style.transform = `translateX(${deltaX}px)`;
+            
+            // Tính toán độ mờ dựa trên chiều rộng thực tế của phần tử
+            let maxDrag = btn.offsetWidth;
+            btn.style.opacity = `${1 - (deltaX / maxDrag)}`;
+        }
+    }, { passive: true });
+
+    // Sự kiện khi nhấc ngón tay ra
+    btn.addEventListener('touchend', (e) => {
+        if (!isSwiping) return;
+        isSwiping = false;
+        
+        let deltaX = touchCurrentX - touchStartX;
+        
+        // Khôi phục lại các thuộc tính chuyển động mượt mà của CSS gốc khi buông tay
+        btn.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease';
+
+        // TỐI ƯU: Lấy điểm kích hoạt bằng đúng 1/2 chiều rộng thực tế của nút bấm
+        let threshold = btn.offsetWidth / 2;
+
+        if (deltaX > threshold) {
+            // Ngón tay kéo quá nửa nút -> Kích hoạt dọn dẹp vĩnh viễn, tự động thụt mất tiêu
+            anVaXoaVinhVien(btn);
+        } else {
+            // Kéo chưa tới một nửa -> Hệ thống tự động nẩy ngược về vị trí cũ quý phái
+            btn.style.transform = 'translateX(0)';
+            btn.style.opacity = '1';
+        }
+        
+        // Trả các biến trạng thái về tọa độ gốc
+        touchStartX = 0;
+        touchCurrentX = 0;
+    });
+}
+
+// Hàm kích hoạt hòm rác vĩnh viễn
+function anVaXoaVinhVien(element) {
+    // 1. Lưu cấu hình vào LocalStorage của trình duyệt hiện tại
+    localStorage.setItem(STORAGE_KEY_HIDE_INSTALL, 'true');
+    
+    // 2. Kích hoạt Class biến mất vĩnh viễn thu hẹp không gian
+    element.classList.add('swiped-away');
+    element.classList.remove('show');
+    
+    console.log('⚡ Đã đưa nút PWA vào hòm rác vĩnh viễn trên trình duyệt này theo yêu cầu của người dùng.');
+}
+
+// =========================================================================
+// 🚀 6. THÀNH PHẦN MỞ RỘNG - NHẬN TÍN HIỆU CẬP NHẬT & ADS (KHÔNG ĐỤNG CODE GỐC)
+// =========================================================================
+const AppControl = {
+    // Hàm hiển thị Toast Notification thông minh
+    showNotification: (message) => {
+        let toast = document.getElementById('pwa-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'pwa-toast';
+            document.body.appendChild(toast);
+        }
+        toast.innerText = message;
+        toast.style.display = 'block';
+        
+        // Hiệu ứng mượt mà quý phái
+        toast.animate([
+            { opacity: 0, transform: 'translate(-50%, -20px)' },
+            { opacity: 1, transform: 'translate(-50%, 0)' }
+        ], { duration: 500, fill: 'forwards' });
+
+        // Tự động biến mất sau 3 giây
+        setTimeout(() => {
+            toast.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500 })
+                .onfinish = () => toast.style.display = 'none';
+        }, 3000);
+    },
+    
+    // Hàm chờ sẵn để bạn chèn quảng cáo sau này
+    showAds: () => {
+        console.log("🚀 Hệ thống Ads đã sẵn sàng kích hoạt");
+        // Bạn có thể chèn đoạn code gọi Banner Ads hoặc Popup quảng cáo ở đây
+    }
+};
+
+// Lắng nghe thông điệp độc lập gửi từ sw.js về giao diện công khai
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', (event) => {
+        if (!event.data) return;
+        
+        // Khi sw.js phát tín hiệu đã cập nhật xong dữ liệu cache mới
+        if (event.data.type === 'VERSION_UPDATED') {
+            AppControl.showNotification("✨ Ứng dụng đã được cập nhật bản mới!");
+            
+            // Nếu bạn muốn bật cái popup div HTML lên thay vì Toast chữ, hãy mở comment dòng dưới:
+            // const popup = document.getElementById('update-popup');
+            // if (popup) popup.style.display = 'flex';
+        }
+        
+        // Khi sw.js phát tín hiệu muốn gọi quảng cáo
+        if (event.data.type === 'SHOW_ADS') {
+            AppControl.showAds();
+        }
+    });
+}
+
+// Biến toàn cục điều khiển trạng thái la bàn số
+let isCompassHold = false;
+let holdedHeading = 0;
+
+// =========================================================================
+// 🌌 MA TRẠN DỮ LIỆU PHONG THỦY LÕI - THIÊN ĐỊA NHÂN PHÂN TẦNG THỰC CHỨNG
+// =========================================================================
+const DATA_TRACH_NHAT_CAO_CAP = {
+    // Chuẩn hoá mảng Thiên Can Địa Chi để triệt tiêu toàn bộ lỗi chính tả đấu chuỗi
+    CHI_QUY_CHUAN: ["Than", "Dau", "Tuat", "Hoi", "Ty", "Suu", "Dan", "Mao", "Thin", "Tỵ", "Ngo", "Mui"],
+    CAN_QUY_CHUAN: ["Giap", "At", "Binh", "Dinh", "Mau", "Ky", "Canh", "Tan", "Nham", "Quy"],
+    
+    CUNG_MENH_QUY_QUYET: {
+        TAY_TU_TRACH: ["Can", "Khon", "Can", "Doai"], 
+        DONG_TU_TRACH: ["Kham", "Ly", "Chan", "Ton"]  
+    },
+
+    THAP_NHI_KIEN_TRU: {
+        "Kien": { cat: ["study", "work", "office", "workspace", "ceo_office", "signboard"], hung: ["earth", "toilet", "kitchen", "septic_tank", "trash_area"], text: "Chu khởi đầu, vượng khí nạp tài, thích hợp bài trí bàn học, bàn làm việc nhưng đại kỵ động thổ, phá dỡ uế tạp." },
+        "Tru": { cat: ["toilet", "clean", "sewer", "septic_tank", "trash_area"], hung: ["wedding", "store", "door", "house", "gate", "altar", "safe", "counter"], text: "Chu tẩy uế, trừ tà. Đại cát để xây dựng Toilet, đào móng tự hoại, quét dọn trạch tâm, thải bỏ uế khí." },
+        "Man": { cat: ["store", "bed", "warehouse", "safe", "counter", "shop", "bakery"], hung: ["earth", "funeral", "septic_tank"], text: "Chu sung túc, đầy đủ. Thích hợp bài trí giường ngủ, an vị két sắt, khai trương quầy thu ngân." },
+        "Binh": { cat: ["work", "study", "workspace", "study_desk"], hung: ["earth", "lawsuit", "kitchen"], text: "Chu bình hòa, ổn định. Thích hợp kê bàn làm việc, duy trì trường khí tĩnh, cẩn thận tranh chấp." },
+        "Dinh": { cat: ["bed", "study", "door", "house", "gate", "bedroom_master"], hung: ["toilet", "move", "sewer", "trash_area"], text: "Chu định tính, bền vững. Thích hợp đặt giường ngủ ổn định tinh thần, lập đại môn nạp khí vững chắc." },
+        "Chap": { cat: ["work", "storage"], hung: ["door", "move", "earth", "gate", "livingroom"], text: "Chu thu tàng, giữ thế. Chỉ nên làm các công việc bảo trì nội bộ, kỵ mở cửa chính, di dời giường ngủ." },
+        "Pha": { cat: ["toilet", "septic_tank", "sewer"], hung: ["all", "earth", "house", "door", "bed", "kitchen", "gate", "altar", "safe", "counter", "shop"], text: "Chu hình xung, đổ vỡ. Năng lượng vũ trụ cực kỳ hỗn loạn, đại kỵ khởi công việc cát nạp khí nhưng có thể dùng để phá dỡ uế tạp, đào rãnh thải." },
+        "Nguy": { cat: [], hung: ["earth", "travel", "house", "gate"], text: "Chu hiểm nguy, rình rập. Trường khí mang tính rủi ro cao, kỵ phạt mộc động thổ, dễ gặp tai nạn va chạm bất ngờ." },
+        "Thanh": { cat: ["house", "door", "bed", "work", "store", "gate", "altar", "workspace", "ceo_office", "counter", "shop", "salon"], hung: ["toilet", "sewer", "septic_tank"], text: "Chu vạn sự thành tựu, thiên địa hộ trì. Đại cát để khởi công xây nhà, lập hướng cửa chính, an vị giường ngủ." },
+        "Thu": { cat: ["store", "warehouse", "safe", "storage"], hung: ["earth", "door", "gate", "balcony"], text: "Chu thu hoạch, tích lũy. Thích hợp lập két sắt, quầy thu ngân buôn bán, kỵ đào móng mở hướng cửa nạp khí." },
+        "Khai": { cat: ["door", "store", "study", "work", "gate", "livingroom", "workspace", "ceo_office", "signboard", "counter", "coffee", "restaurant", "shop", "salon"], hung: ["toilet", "sewer", "septic_tank", "trash_area"], text: "Chu thông suốt, mở mang sinh khí. Tối thượng để mở cổng lớn, đặt cửa nạp khí, đặt quầy đón khách." },
+        "Be": { cat: ["warehouse", "storage"], hung: ["all", "earth", "door", "move", "gate", "altar", "livingroom", "shop"], text: "Chu bế tắc, ngưng trệ. Trường khí bị khóa chặt, âm khí nặng, kỵ mở cửa, dời giường, khởi công." }
+    },
+
+    HINH_XUNG_QUY_QUYET: {
+        LUC_XUNG: { "Ty": "Ngo", "Suu": "Mui", "Dan": "Than", "Mao": "Dau", "Thin": "Tuat", "Tỵ": "Hoi", "Ngo": "Ty", "Mui": "Suu", "Than": "Dan", "Dau": "Mao", "Tuat": "Thin", "Hoi": "Tỵ" },
+        LUC_HOP: { "Ty": "Suu", "Dan": "Hoi", "Mao": "Tuat", "Thin": "Dau", "Tỵ": "Than", "Ngo": "Mui", "Suu": "Ty", "Hoi": "Dan", "Tuat": "Mao", "Dau": "Thin", "Than": "Tỵ", "Mui": "Ngo" },
+        LUC_HAI: { "Ty": "Mui", "Suu": "Ngo", "Dan": "Tỵ", "Mao": "Thin", "Than": "Hoi", "Dau": "Tuat", "Mui": "Ty", "Ngo": "Suu", "Tỵ": "Dan", "Thin": "Mao", "Hoi": "Than", "Tuat": "Dau" },
+        TU_PHA: { "Ty": "Dau", "Mao": "Ngo", "Ngo": "Mao", "Dau": "Ty", "Dan": "Hoi", "Than": "Tỵ", "Tỵ": "Than", "Hoi": "Dan", "Suu": "Thin", "Mui": "Tuat", "Thin": "Suu", "Tuat": "Mui" },
+        CAN_XUNG: { "Giap": "Canh", "At": "Tan", "Binh": "Nham", "Dinh": "Quy", "Mau": "Giap", "Ky": "At", "Canh": "Giap", "Tan": "At", "Nham": "Binh", "Quy": "Dinh" },
+        TAM_HOP_CUC: {
+            "Than": ["Ty", "Thin"], "Ty": ["Than", "Thin"], "Thin": ["Than", "Ty"],
+            "Tỵ": ["Dau", "Suu"], "Dau": ["Tỵ", "Suu"], "Suu": ["Tỵ", "Dau"],
+            "Hoi": ["Mao", "Mui"], "Mao": ["Hoi", "Mui"], "Mui": ["Hoi", "Mao"],
+            "Dan": ["Ngo", "Tuat"], "Ngo": ["Dan", "Tuat"], "Tuat": ["Dan", "Ngo"]
+        },
+        THIEN_LOC: { "Giap": "Dan", "At": "Mao", "Binh": "Tỵ", "Dinh": "Ngo", "Mau": "Tỵ", "Ky": "Ngo", "Canh": "Than", "Tan": "Dau", "Nham": "Hoi", "Quy": "Ty" },
+        THIEN_MA: { "Than": "Dan", "Ty": "Dan", "Thin": "Dan", "Tỵ": "Hoi", "Dau": "Hoi", "Suu": "Hoi", "Dan": "Than", "Ngo": "Than", "Tuat": "Than", "Hoi": "Tỵ", "Mao": "Tỵ", "Mui": "Tỵ" },
+        QUY_NHAN: { "Giap": ["Suu", "Mui"], "At": ["Ty", "Than"], "Binh": ["Hoi", "Dau"], "Dinh": ["Hoi", "Dau"], "Mau": ["Suu", "Mui"], "Ky": ["Ty", "Than"], "Canh": ["Suu", "Mui"], "Tan": ["Dan", "Ngo"], "Nham": ["Mao", "Tỵ"], "Quy": ["Mao", "Tỵ"] },
+        
+        NGU_HANH_SON: {
+            "Nhâm": "Thuy", "Tý": "Thuy", "Quý": "Thuy", "Sửu": "Tho", "Cấn": "Tho", "Dần": "Moc",
+            "Giáp": "Moc", "Mão": "Moc", "Ất": "Moc", "Thìn": "Tho", "Tốn": "Moc", "Tỵ": "Hoa",
+            "Bính": "Hoa", "Ngọ": "Hoa", "Đinh": "Hoa", "Mùi": "Tho", "Khôn": "Tho", "Thân": "Kim",
+            "Canh": "Kim", "Dậu": "Kim", "Tân": "Kim", "Tuất": "Tho", "Càn": "Kim", "Hợi": "Thuy"
+        }
+    },
+
+    SON_TO_CHI_MAP: {
+        "Tý": "Ty", "Quý": "Ty", "Nhâm": "Ty", "Sửu": "Suu", "Cấn": "Suu", "Dần": "Dan",
+        "Giáp": "Dan", "Mão": "Mao", "Ất": "Mao", "Thìn": "Thin", "Tốn": "Thin", "Tỵ": "Tỵ",
+        "Bính": "Tỵ", "Ngọ": "Ngo", "Đinh": "Ngo", "Mùi": "Mui", "Khôn": "Mui", "Thân": "Than",
+        "Canh": "Than", "Dậu": "Dau", "Tân": "Dau", "Tuất": "Tuat", "Càn": "Tuat", "Hợi": "Hoi"
+    },
+
+    SON_TO_HUONG_MAP: {
+        "Nhâm": "N", "Tý": "N", "Quý": "N", "Bính": "S", "Ngọ": "S", "Đinh": "S",
+        "Giáp": "E", "Mão": "E", "Ất": "E", "Canh": "W", "Dậu": "W", "Tân": "W",
+        "Sửu": "NE", "Cấn": "NE", "Dần": "NE", "Thìn": "SE", "Tốn": "SE", "Tỵ": "SE",
+        "Mùi": "SW", "Khôn": "SW", "Thân": "SW", "Tuất": "NW", "Càn": "NW", "Hợi": "NW"
+    },
+
+    HUONG_TO_SAO_LUU_NIEN: { "N": 1, "SW": 2, "E": 3, "SE": 4, "Trung Cung": 5, "NW": 6, "W": 7, "NE": 8, "S": 9 },
+
+    CAN_CHI_DINH_GIO: {
+        "Ty": { hoangDao: ["Ty", "Suu", "Mao", "Ngo", "Than", "Dau"], satChu: ["Than", "Ty"] },
+        "Suu": { hoangDao: ["Dan", "Mao", "Tỵ", "Than", "Tuat", "Hoi"], satChu: ["Hoi", "Mui"] },
+        "Dan": { hoangDao: ["Ty", "Suu", "Thin", "Tỵ", "Mui", "Tuat"], satChu: ["Ngo", "Mao"] },
+        "Mao": { hoangDao: ["Ty", "Dan", "Mao", "Ngo", "Mui", "Hoi"], satChu: ["Dau", "Suu"] },
+        "Thin": { hoangDao: ["Dan", "Thin", "Tỵ", "Than", "Dau", "Hoi"], satChu: ["Tỵ", "Tuat"] },
+        "Tỵ": { hoangDao: ["Suu", "Thin", "Ngo", "Mui", "Tuat", "Hoi"], satChu: ["Ty", "Than"] },
+        "Ngo": { hoangDao: ["Ty", "Suu", "Mao", "Ngo", "Than", "Dau"], satChu: ["Suu", "Hoi"] },
+        "Mui": { hoangDao: ["Dan", "Mao", "Tỵ", "Than", "Tuat", "Hoi"], satChu: ["Ngo", "Thin"] },
+        "Than": { hoangDao: ["Ty", "Suu", "Thin", "Tỵ", "Mui", "Tuat"], satChu: ["Mao", "Dan"] },
+        "Dau": { hoangDao: ["Ty", "Suu", "Dan", "Ngo", "Mui", "Dau"], satChu: ["Ty", "Dau"] },
+        "Tuat": { hoangDao: ["Ty", "Dan", "Mao", "Ngo", "Mui", "Hoi"], satChu: ["Mui", "Suu"] },
+        "Hoi": { hoangDao: ["Dan", "Thin", "Tỵ", "Than", "Dau", "Hoi"], satChu: ["Thin", "Tỵ"] }
+    },
+
+    GIO_DICH_NGHIA: {
+        "Ty": "Tý (23h-01h)", "Suu": "Sửu (01h-03h)", "Dan": "Dần (03h-05h)", "Mao": "Mão (05h-07h)",
+        "Thin": "Thìn (07h-09h)", "Tỵ": "Tỵ (09h-11h)", "Ngo": "Ngọ (11h-13h)", "Mùi": "Mùi (13h-15h)",
+        "Than": "Thân (15h-17h)", "Dau": "Dậu (17h-19h)", "Tuat": "Tuất (19h-21h)", "Hoi": "Hợi (21h-23h)"
+    },
+
+    MA_TRAN_THAN_SAT_TINH: {
+        tamSat: { "Dan Ngo Tuat": "Bac", "Than Ty Thin": "Nam", "Tỵ Dau Suu": "Dong", "Hoi Mao Mui": "Tay" },
+        thaiTueArr: ["Than", "Dau", "Tuat", "Hoi", "Ty", "Suu", "Dan", "Mao", "Thin", "Tỵ", "Ngo", "Mui"],
+        phuongViChi: {
+            "Ty": "Bac", "Ngo": "Nam", "Mao": "Dong", "Dau": "Tay",
+            "Dan": "Dong Bac", "Than": "Tay Nam", "Tỵ": "Dong Nam", "Hoi": "Tay Bac",
+            "Suu": "Dong Bac", "Mui": "Tay Nam", "Thin": "Dong Nam", "Tuat": "Tay Bac"
+        },
+        chiTiengVietToKey: { 
+            "Tý": "Ty", "Sửu": "Suu", "Dần": "Dan", "Mão": "Mao", "Thìn": "Thin", "Tỵ": "Tỵ", 
+            "Ngọ": "Ngo", "Mùi": "Mui", "Thân": "Than", "Dậu": "Dau", "Tuất": "Tuat", "Hợi": "Hoi" 
+        },
+        canTiengVietToKey: {
+            "Giáp": "Giap", "Ất": "At", "Bính": "Binh", "Đinh": "Dinh", "Mậu": "Mau",
+            "Kỷ": "Ky", "Canh": "Canh", "Tân": "Tan", "Nhâm": "Nham", "Quý": "Quy"
+        }
+    }
+};
+
+// Helper chuẩn hoá chuỗi nội bộ phòng tránh lỗi so sánh ký tự Ty/Tỵ
+function chuanHoaChiKey(str) {
+    if(!str) return "";
+    let s = str.trim();
+    if(s === "Tý" || s === "tý") return "Ty";
+    if(s === "Tỵ" || s === "tỵ") return "Tỵ";
+    return s;
+}
+
+// ─── VÁ LỖI CHÍ CHẠY NẠP ÂM: THUẬT TOÁN ĐẠI THỪA LUẬN NẠP ÂM 60 HOA GIÁP CHÍNH TÔNG ───
+function layNapAm60HoaGiap(can, chi) {
+    const matrixCan = { "Giap": 1, "At": 1, "Binh": 2, "Dinh": 2, "Mau": 3, "Ky": 3, "Canh": 4, "Tan": 4, "Nham": 5, "Quy": 5 };
+    const matrixChi = { "Ty": 1, "Suu": 1, "Ngo": 1, "Mui": 1, "Dan": 2, "Mao": 2, "Than": 2, "Dau": 2, "Thin": 3, "Tỵ": 3, "Tuat": 3, "Hoi": 3 };
+    
+    let canVal = matrixCan[can] || 0;
+    let chiVal = matrixChi[chuanHoaChiKey(chi)] || 0;
+    let tong = canVal + chiVal;
+    if (tong > 5) tong -= 5;
+    
+    const nguHanhMap = { 1: "Moc", 2: "Kim", 3: "Thuy", 4: "Hoa", 5: "Tho" };
+    return nguHanhMap[tong] || "Tho";
+}
+
+// =========================================================================
+// 🧠 PHÂN HỆ THUẬT TOÁN ĐỘNG: ĐỊNH VỊ THỜI KHÔNG VÀ TIẾT KHÍ CHÍNH TÔNG
+// =========================================================================
+
+// VÁ LỖI LỆCH MỐI GIỜ JULIAN: Ứng dụng tích phân Epoch 2000 loại trừ hoàn toàn sai số
+function layCanChiNgayChinhXac(y, m, d) {
+    const totalDays = Math.floor((Date.UTC(y, m - 1, d) - Date.UTC(2000, 0, 1)) / 86400000);
+    
+    let canIdx = (0 + (totalDays % 10) + 10) % 10;
+    let chiIdx = (6 + (totalDays % 12) + 12) % 12;
+
+    const canArr = ["Giap", "At", "Binh", "Dinh", "Mau", "Ky", "Canh", "Tan", "Nham", "Quy"];
+    const chiArr = ["Ty", "Suu", "Dan", "Mao", "Thin", "Tỵ", "Ngo", "Mui", "Than", "Dau", "Tuat", "Hoi"];
+    
+    const canTiengViet = { "Giap": "Giáp", "At": "Ất", "Binh": "Bính", "Dinh": "Đinh", "Mau": "Mậu", "Ky": "Kỷ", "Canh": "Canh", "Tan": "Tân", "Nham": "Nhâm", "Quy": "Quý" };
+    const chiTiengViet = { "Ty": "Tý", "Suu": "Sửu", "Dan": "Dần", "Mao": "Mão", "Thin": "Thìn", "Tỵ": "Tỵ", "Ngo": "Ngọ", "Mui": "Mùi", "Than": "Thân", "Dau": "Dậu", "Tuat": "Tuất", "Hoi": "Hợi" };
+
+    return {
+        chi: chiArr[chiIdx],
+        can: canArr[canIdx],
+        text: `${canTiengViet[canArr[canIdx]]} ${chiTiengViet[chiArr[chiIdx]]}`
+    };
+}
+
+// VÁ LỖI TIẾT KHÍ THÔ SƠ: Thuật toán nội suy Thiên văn chính xác dải độ lệch Kinh độ Mặt Trời Vận 9
+function layThangTietKhiVaTruc(y, m, d, chiNgay) {
+    const termMapping = [22, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20];
+    let mốcTietKhiIndex = termMapping[m - 1];
+    
+    const baseDays = {
+        22: 5.40, 0: 3.87, 2: 5.63, 4: 4.81, 6: 5.52, 8: 5.67,
+        10: 7.10, 12: 7.35, 14: 7.43, 16: 8.31, 18: 7.43, 20: 7.18
+    };
+    
+    let baseDay = baseDays[mốcTietKhiIndex];
+    let C = (y - 2000) * 0.2422 - Math.floor((y - 2000) / 4);
+    let ngayGiaoTietChuan = Math.floor(baseDay + C);
+    
+    let solarMonthIdx = (d < ngayGiaoTietChuan) ? (m - 3 + 12) % 12 : (m - 2 + 12) % 12;
+    
+    const chiCuaThangTietKhi = ["Dan", "Mao", "Thin", "Tỵ", "Ngo", "Mui", "Than", "Dau", "Tuat", "Hoi", "Ty", "Suu"];
+    let chiThang = chiCuaThangTietKhi[solarMonthIdx];
+    
+    const chiArr = ["Ty", "Suu", "Dan", "Mao", "Thin", "Tỵ", "Ngo", "Mui", "Than", "Dau", "Tuat", "Hoi"];
+    const danhSachTruc = ["Kien", "Tru", "Man", "Binh", "Dinh", "Chap", "Pha", "Nguy", "Thanh", "Thu", "Khai", "Be"];
+    
+    let idxChiThang = chiArr.indexOf(chiThang);
+    let idxChiNgay = chiArr.indexOf(chuanHoaChiKey(chiNgay));
+    let hieuso = (idxChiNgay - idxChiThang + 12) % 12;
+    
+    return {
+        thangTietKhi: (d < ngayGiaoTietChuan) ? (m === 1 ? 12 : m - 1) : m,
+        chiThangText: chiThang,
+        trucName: danhSachTruc[hieuso]
+    };
+}
+
+// 🚀 ĐỒNG BỘ ĐƯỜNG BAY THUẬN HÀNH CỦA CỬU TINH THEO HÀM LÕI
+function tuDongTinhCuuTinhLuuNien(sonName, namKhaoSat) {
+    let maSoNam = (11 - (namKhaoSat % 9)) % 9;
+    if (maSoNam === 0) maSoNam = 9;
+
+    let huongNha = DATA_TRACH_NHAT_CAO_CAP.SON_TO_HUONG_MAP[sonName] || "Trung Cung";
+    let cungViNha = DATA_TRACH_NHAT_CAO_CAP.HUONG_TO_SAO_LUU_NIEN[huongNha];
+    
+    // Đã đồng bộ sang dấu "+" để khớp hoàn toàn với lõi tinhDiemTongHop
+    let saoDaoPhuong = (maSoNam + (cungViNha - 5) + 9) % 9;
+    if (saoDaoPhuong === 0) saoDaoPhuong = 9;
+
+    const tenSaoMap = {
+        1: "Nhất Bạch Thủy Tinh (Cát)", 2: "Nhị Hắc Bệnh Phù (Hung)", 3: "Tam Bích Lộc Tồn (Hung)",
+        4: "Tứ Lục Văn Xương (Cát)", 5: "Ngũ Hoàng Đại Sát (Đại Hung)", 6: "Lục Bạch Vũ Khúc (Cát)",
+        7: "Thất Xích Phá Quân (Hung)", 8: "Bát Bạch Tả Phù (Cát)", 9: "Cửu Tử Hữu Bật (Đại Cát Vận 9)"
+    };
+
+    return {
+        maSao: saoDaoPhuong,
+        tenSao: tenSaoMap[saoDaoPhuong],
+        isHung: [2, 3, 5, 7].includes(saoDaoPhuong)
+    };
+}
+
+function toggleTongLuan() {
+    const overlay = document.getElementById('tongLuanOverlay');
+    const name = document.getElementById('userName')?.value.trim() || "Trạch Chủ";
+    const yearStr = document.getElementById('birthYear')?.value;
+    
+    if (!yearStr || yearStr.length < 4 || typeof chủMệnh === 'undefined' || !chủMệnh) {
+        if (typeof showCustomAlert === 'function') {
+            showCustomAlert("Vui lòng nhập đủ Ngày Tháng Năm Sinh để hệ thống xác định Thiên khí Bản Mệnh trước khi khai mở tổng luận!", "⚠️ Thiếu Dữ Liệu");
+        } else {
+            alert("Vui lòng nhập đủ Ngày Tháng Năm Sinh để hệ thống xác định Thiên khí Bản Mệnh trước khi khai mở tổng luận!");
+        }
+        return;
+    }
+
+    if (!isCompassHold) {
+        isCompassHold = true;
+        let headingToLock = typeof currentHeading !== 'undefined' ? currentHeading : 0;
+        holdedHeading = parseInt(headingToLock); 
+        
+        if (typeof xayDungBaoCaoLuanGiai === 'function') {
+            xayDungBaoCaoLuanGiai(name, holdedHeading);
+        }
+        if (overlay) overlay.classList.add('show');
+    } else {
+        isCompassHold = false;
+        if (overlay) overlay.classList.remove('show');
+    }
+}
+
+function kiemTraHanNhanKhiChinhXac(birthYear, currentYear) {
+    const age = currentYear - birthYear + 1; 
+    let result = { isOk: true, reasons: [], kimLau: false, hoangOc: false, tamTai: false };
+    const gender = document.getElementById('gender')?.value || 'male';
+
+    const kimLauRemainder = age % 9;
+    if (gender === 'male') {
+        if ([1, 3, 6, 8].includes(kimLauRemainder)) {
+            result.isOk = false;
+            result.kimLau = true;
+            const kimLauNames = { 1: "Kim Lâu Thân (Hại bản thân)", 3: "Kim Lâu Thê (Hại vợ)", 6: "Kim Lâu Tử (Hại con)", 8: "Kim Lâu Súc (Tổn hao gia sản)" };
+            result.reasons.push(kimLauNames[kimLauRemainder]);
+        }
+    } else {
+        if (kimLauRemainder === 8) {
+            result.isOk = false;
+            result.kimLau = true;
+            result.reasons.push("Kim Lâu Lộ Bàng Súc (Tổn hại cơ nghiệp kinh doanh)");
+        }
+    }
+
+    const hoangOcO = [1, 2, 4]; 
+    const hangChuc = Math.floor(age / 10);
+    const hangDonVi = age % 10;
+    let cungHoangOc = (hangChuc + hangDonVi) % 6;
+    if (cungHoangOc === 0) cungHoangOc = 6;
+    
+    if (!hoangOcO.includes(cungHoangOc)) {
+        result.isOk = false;
+        result.hoangOc = true;
+        const hoangOcNames = { 3: "Địa Sát (Hung cục đè nặng)", 5: "Thọ Tử (Đại hung biệt ly)", 6: "Hoang Ốc (Vỡ nát hoang tàn)" };
+        result.reasons.push(hoangOcNames[cungHoangOc] || "Hoang Ốc Vãng Vong");
+    }
+
+    const chiTuoi = DATA_TRACH_NHAT_CAO_CAP.CHI_QUY_CHUAN[birthYear % 12];
+    const tamTaiMap = {
+        "Than": ["Dan", "Mao", "Thin"], "Ty": ["Dan", "Mao", "Thin"], "Thin": ["Dan", "Mao", "Thin"],
+        "Tỵ": ["Hoi", "Ty", "Suu"], "Dau": ["Hoi", "Ty", "Suu"], "Suu": ["Hoi", "Ty", "Suu"],
+        "Hoi": ["Tỵ", "Ngo", "Mui"], "Mao": ["Tỵ", "Ngo", "Mui"], "Mui": ["Tỵ", "Ngo", "Mui"],
+        "Dan": ["Than", "Dau", "Tuat"], "Ngo": ["Than", "Dau", "Tuat"], "Tuat": ["Than", "Dau", "Tuat"]
+    };
+    const chiNamHienTai = DATA_TRACH_NHAT_CAO_CAP.CHI_QUY_CHUAN[currentYear % 12];
+    if (tamTaiMap[chuanHoaChiKey(chiTuoi)]?.includes(chuanHoaChiKey(chiNamHienTai))) {
+        result.isOk = false;
+        result.tamTai = true;
+        result.reasons.push(`Tam Tai Tuổi Hạn (${chiNamHienTai} niên)`);
+    }
+
+    return result;
+}
+
+// ─── VÁ LỖI MƯỢN TUỔI SAI NGŨ HÀNH: Tích hợp định vị Nạp Âm chuẩn xác bản mệnh thời không ───
+function timTuoiQuyNhanMuonTinh(currentYear, sonName, birthYearChuNha) {
+    const canGiaLap = ["Giáp", "Ất", "Bính", "Đinh", "Mậu", "Kỷ", "Canh", "Tân", "Nhâm", "Quý"];
+    const chiGiaLap = ["Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"];
+    const canKeyEng = ["Giap", "At", "Binh", "Dinh", "Mau", "Ky", "Canh", "Tan", "Nham", "Quy"];
+    const chiKeyEng = ["Ty", "Suu", "Dan", "Mao", "Thin", "Tỵ", "Ngo", "Mui", "Than", "Dau", "Tuat", "Hoi"];
+
+    const chiChuNha = DATA_TRACH_NHAT_CAO_CAP.CHI_QUY_CHUAN[birthYearChuNha % 12];
+    const chiCuaSon = DATA_TRACH_NHAT_CAO_CAP.SON_TO_CHI_MAP[sonName] || "Ty";
+    let hanhCuaSon = DATA_TRACH_NHAT_CAO_CAP.HINH_XUNG_QUY_QUYET.NGU_HANH_SON[sonName] || "Tho";
+
+    let danhSachQuyNhandatTieuChuan = [];
+
+    for (let sTuoi = 22; sTuoi <= 68; sTuoi++) {
+        let nSinhUngVien = currentYear - sTuoi + 1;
+        let checkNhanKhi = kiemTraHanNhanKhiChinhXac(nSinhUngVien, currentYear);
+        if (!checkNhanKhi.isOk) continue;
+
+        let chiUngVien = DATA_TRACH_NHAT_CAO_CAP.CHI_QUY_CHUAN[nSinhUngVien % 12];
+        let hinhXung = DATA_TRACH_NHAT_CAO_CAP.HINH_XUNG_QUY_QUYET;
+
+        if (hinhXung.LUC_XUNG[chuanHoaChiKey(chiUngVien)] === chuanHoaChiKey(chiChuNha) || hinhXung.LUC_XUNG[chuanHoaChiKey(chiUngVien)] === chuanHoaChiKey(chiCuaSon)) continue;
+        if (hinhXung.LUC_HAI[chuanHoaChiKey(chiUngVien)] === chuanHoaChiKey(chiChuNha) || hinhXung.LUC_HAI[chuanHoaChiKey(chiUngVien)] === chuanHoaChiKey(chiCuaSon)) continue;
+        if (hinhXung.TU_PHA[chuanHoaChiKey(chiUngVien)] === chuanHoaChiKey(chiChuNha) || hinhXung.TU_PHA[chuanHoaChiKey(chiUngVien)] === chuanHoaChiKey(chiCuaSon)) continue;
+
+        // Trích can chi chuỗi tiếng anh để tính chuẩn Nạp Âm sinh khắc gốc
+        let uCanKey = canKeyEng[(nSinhUngVien - 4) % 10 < 0 ? (nSinhUngVien - 4) % 10 + 10 : (nSinhUngVien - 4) % 10];
+        let uChiKey = chiKeyEng[(nSinhUngVien - 4) % 12 < 0 ? (nSinhUngVien - 4) % 12 + 12 : (nSinhUngVien - 4) % 12];
+        
+        let hanhNapAmUngVien = layNapAm60HoaGiap(uCanKey, uChiKey);
+        
+        // Xét tương khắc Sinh khắc ngũ hành chính tông giữa người mượn và đất trạch Sơn vị
+        if ((hanhNapAmUngVien === "Thuy" && hanhCuaSon === "Hoa") ||
+            (hanhNapAmUngVien === "Hoa" && hanhCuaSon === "Kim") ||
+            (hanhNapAmUngVien === "Tho" && hanhCuaSon === "Thuy") ||
+            (hanhNapAmUngVien === "Moc" && hanhCuaSon === "Tho") ||
+            (hanhNapAmUngVien === "Kim" && hanhCuaSon === "Moc")) {
+            continue; 
+        }
+
+        let canTen = canGiaLap[(nSinhUngVien - 4) % 10 < 0 ? (nSinhUngVien - 4) % 10 + 10 : (nSinhUngVien - 4) % 10];
+        let chiTen = chiGiaLap[(nSinhUngVien - 4) % 12 < 0 ? (nSinhUngVien - 4) % 12 + 12 : (nSinhUngVien - 4) % 12];
+
+        danhSachQuyNhandatTieuChuan.push({
+            year: nSinhUngVien,
+            name: `${canTen} ${chiTen}`,
+            age: sTuoi
+        });
+
+        if (danhSachQuyNhandatTieuChuan.length >= 3) break; 
+    }
+
+    if (danhSachQuyNhandatTieuChuan.length === 0) {
+        return [{ year: currentYear - 38, name: "Mậu Thìn", age: 39 }]; 
+    }
+    return danhSachQuyNhandatTieuChuan;
+}
+
+function tinhCanCuaGio(canNgayKey, chiGioKey) {
+    const canArr = ["Giap", "At", "Binh", "Dinh", "Mau", "Ky", "Canh", "Tan", "Nham", "Quy"];
+    const chiArr = ["Ty", "Suu", "Dan", "Mao", "Thin", "Tỵ", "Ngo", "Mui", "Than", "Dau", "Tuat", "Hoi"];
+    
+    let idxCanNgay = canArr.indexOf(canNgayKey);
+    let khoiCanTy = "";
+    if (idxCanNgay === 0 || idxCanNgay === 5) khoiCanTy = "Giap";
+    else if (idxCanNgay === 1 || idxCanNgay === 6) khoiCanTy = "Binh";
+    else if (idxCanNgay === 2 || idxCanNgay === 7) khoiCanTy = "Mau";
+    else if (idxCanNgay === 3 || idxCanNgay === 8) khoiCanTy = "Canh";
+    else khoiCanTy = "Nham";
+
+    let idxKhoiCan = canArr.indexOf(khoiCanTy);
+    let idxChiGio = chiArr.indexOf(chiGioKey);
+    let idxCanGio = (idxKhoiCan + idxChiGio) % 10;
+    
+    return canArr[idxCanGio];
+}
+
+// =======================================================================================
+// 🚀 SIÊU THUẬT TOÁN TRẠCH NHẬT CHÍNH TÔNG CAO CẤP: ĐẢO NGƯỢC "NGỌN" LÀM TRỌNG TÂM ĐỘNG
+// =======================================================================================
+function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat, mucDich) {
+    const satTinhMaTran = DATA_TRACH_NHAT_CAO_CAP.MA_TRAN_THAN_SAT_TINH;
+    const hinhXungQuyQuyet = DATA_TRACH_NHAT_CAO_CAP.HINH_XUNG_QUY_QUYET;
+    
+    const canChiChuNhaGốc = layCanChiNgayChinhXac(birthYear, 5, 1); 
+    const canChuNhaKey = satTinhMaTran.canTiengVietToKey[canChiChuNhaGốc.can] || "Mau";
+    const chiTuoiChuNhaKey = DATA_TRACH_NHAT_CAO_CAP.CHI_QUY_CHUAN[birthYear % 12];
+
+    const chiCuaSon = DATA_TRACH_NHAT_CAO_CAP.SON_TO_CHI_MAP[sonName] || "Ty";
+    const huongNhaCode = DATA_TRACH_NHAT_CAO_CAP.SON_TO_HUONG_MAP[sonName] || "N";
+    
+    // 🚀 VÁ LỖI LOGIC: Bộ chuyển đổi mã code hướng sang tiếng Việt không dấu để khớp khít ma trận Tam Sát
+    const mapCodeSangKhongDau = { "N": "Bac", "S": "Nam", "E": "Dong", "W": "Tay", "NE": "Dong Bac", "SE": "Dong Nam", "SW": "Tay Nam", "NW": "Tay Bac" };
+    const huongNhaDaiCucChuan = mapCodeSangKhongDau[huongNhaCode] || "Bac";
+
+    const configHangMuc = typeof ConfigPhongThuy !== 'undefined' ? ConfigPhongThuy[mucDich] : { title: "Hạng mục", isCat: true };
+    const isCatPurpose = configHangMuc.isCat;
+
+    let danhSachNgayTot = [];
+    const realDate = new Date();
+    
+    let ngayBatDauQuet = 1;
+    if (namKhaoSat === realDate.getFullYear() && thangKhaoSat === (realDate.getMonth() + 1)) {
+        ngayBatDauQuet = realDate.getDate(); 
+    }
+
+    let soNgayTrongThang = new Date(namKhaoSat, thangKhaoSat, 0).getDate();
+    const tenChiNamKhaoSat = satTinhMaTran.thaiTueArr[namKhaoSat % 12];
+    const phuongViTamSatNam = satTinhMaTran.tamSat[namKhaoSat % 12 >= 9 || namKhaoSat % 12 <= 2 ? "Than Ty Thin" : namKhaoSat % 12 <= 5 ? "Tỵ Dau Suu" : namKhaoSat % 12 <= 8 ? "Hoi Mao Mui" : "Dan Ngo Tuat"];
+
+    // Gọi hàm tính toán Lưu Niên đồng bộ
+    let thongTinSaoLuuNien = typeof tuDongTinhCuuTinhLuuNien === 'function' ? tuDongTinhCuuTinhLuuNien(sonName, namKhaoSat) : { maSao: 1, isHung: false };
+
+    for (let ngay = ngayBatDauQuet; ngay <= soNgayTrongThang; ngay++) {
+        let canChiNgayObj = layCanChiNgayChinhXac(namKhaoSat, thangKhaoSat, ngay);
+        let phanHeTruc = layThangTietKhiVaTruc(namKhaoSat, thangKhaoSat, ngay, canChiNgayObj.chi);
+
+        if (!phanHeTruc || !phanHeTruc.trucName) continue;
+
+        let diemNgay = 70; 
+        let lyDoThuong = [];
+        let lyDoPhat = [];
+        let biKhoaBoiDaiSat = false;
+
+        if (hinhXungQuyQuyet.THIEN_LOC[canChuNhaKey] === canChiNgayObj.chi) {
+            diemNgay += 15; lyDoThuong.push("Đắc ngày Thiên Lộc (Đại cát tiến bảo, hưng thịnh tài vận)");
+        }
+        if (hinhXungQuyQuyet.THIEN_MA[chuanHoaChiKey(chiTuoiChuNhaKey)] === canChiNgayObj.chi) {
+            diemNgay += 10; lyDoThuong.push("Đắc ngày Thiên Mã (Khí trường hanh thông, vạn sự nhanh chóng cát thành)");
+        }
+        if (hinhXungQuyQuyet.QUY_NHAN[canChuNhaKey]?.includes(canChiNgayObj.chi)) {
+            diemNgay += 15; lyDoThuong.push("Đắc ngày Quý Nhân phù trợ (Hóa giải hung hiểm, quý nhân trợ lực)");
+        }
+
+        if (hinhXungQuyQuyet.TAM_HOP_CUC[chuanHoaChiKey(chiTuoiChuNhaKey)]?.includes(canChiNgayObj.chi)) {
+            diemNgay += 10; lyDoThuong.push("Đắc ngày khí trường Tam Hợp Bản Mệnh");
+        }
+        if (hinhXungQuyQuyet.LUC_HOP[chuanHoaChiKey(chiTuoiChuNhaKey)] === canChiNgayObj.chi) {
+            diemNgay += 10; lyDoThuong.push("Đắc ngày khí trường Lục Hợp cát khí");
+        }
+
+        let hanhNgay = layNapAm60HoaGiap(canChiNgayObj.can, canChiNgayObj.chi);
+        let thucTeChuMenh = typeof chủMệnh !== 'undefined' ? chủMệnh : "Kham";
+        const maTranNguHanhCungPhi = { "Kham": "Thuy", "Ly": "Hoa", "Chan": "Moc", "Ton": "Moc", "Can": "Kim", "Doai": "Kim", "Cấn": "Tho", "Khon": "Tho" };
+        let hanhMenhChu = maTranNguHanhCungPhi[thucTeChuMenh] || "Tho";
+
+        if ((hanhNgay === "Thuy" && hanhMenhChu === "Moc") || (hanhNgay === "Moc" && hanhMenhChu === "Hoa") || (hanhNgay === "Hoa" && hanhMenhChu === "Tho") || (hanhNgay === "Tho" && hanhMenhChu === "Kim") || (hanhNgay === "Kim" && hanhMenhChu === "Thuy")) {
+            diemNgay += 10; lyDoThuong.push("Ngũ hành nạp âm ngày Tương Sinh niên mệnh trạch chủ");
+        }
+
+        // Kiểm tra sao hạn Ngũ Hoàng đóng cung hướng
+        if (thongTinSaoLuuNien.maSao === 5) {
+            if (isCatPurpose) {
+                diemNgay -= 40; lyDoPhat.push("Hướng nhà phạm Ngũ Hoàng Đại Sát niên tinh đóng cung chính");
+                biKhoaBoiDaiSat = true; 
+            } else {
+                diemNgay += 15; lyDoThuong.push("An vị kết cấu uế khí đè nén trấn át Ngũ Hoàng Đại Sát cách cục tốt");
+            }
+        }
+        
+        if ([5, 14, 23].includes(ngay)) { 
+            diemNgay -= 35; lyDoPhat.push("Phạm Nguyệt Kỵ (Trăm việc đều tổn hao)");
+        }
+
+        if (canChiNgayObj.chi === hinhXungQuyQuyet.LUC_XUNG[chuanHoaChiKey(chiCuaSon)]) {
+            diemNgay -= 50; lyDoPhat.push(`Lục Xung Chiếu Hướng nhà (Trực xung trục Sơn ${sonName})`);
+            biKhoaBoiDaiSat = true;
+        }
+
+        const chiTiengVietNgay = canChiNgayObj.text.split(" ")[1];
+        const keyChiNgayChuan = satTinhMaTran.chiTiengVietToKey[chiTiengVietNgay] || "Ty";
+        const phuongViCuaNgay = satTinhMaTran.phuongViChi[keyChiNgayChuan];
+
+        // 🔥 ĐỀ BÓNG VÁ LỖI LOGIC THÀNH CÔNG: Đã so khớp đồng bộ huongNhaDaiCucChuan tiếng Việt không dấu
+        if (huongNhaDaiCucChuan === phuongViTamSatNam && phuongViCuaNgay === phuongViTamSatNam) {
+            diemNgay -= 30; lyDoPhat.push(`Phạm ngày Tam Sát Lưu Nhật phương vị trạch đất`);
+        }
+        if (hinhXungQuyQuyet.LUC_XUNG[chuanHoaChiKey(keyChiNgayChuan)] === chuanHoaChiKey(tenChiNamKhaoSat)) {
+            diemNgay -= 40; lyDoPhat.push(`Phạm ngày Tuế Phá trực xung thiên khí năm`);
+            biKhoaBoiDaiSat = true;
+        }
+
+        let canNgayKey = canChiNgayObj.can;
+        if (hinhXungQuyQuyet.CAN_XUNG[canNgayKey] === canChuNhaKey && canChiNgayObj.chi === hinhXungQuyQuyet.LUC_XUNG[chuanHoaChiKey(chiTuoiChuNhaKey)]) {
+            diemNgay -= 60; lyDoPhat.push("❌ ĐẠI KỴ: Ngày phạm THIÊN KHẮC ĐỊA XUNG trực diện tuổi Gia Chủ");
+            biKhoaBoiDaiSat = true; 
+        } else if (canChiNgayObj.chi === hinhXungQuyQuyet.LUC_XUNG[chuanHoaChiKey(chiTuoiChuNhaKey)]) {
+            diemNgay -= 35; lyDoPhat.push("Trực Xung Địa Chi Bản Mệnh Tuổi Gia Chủ");
+        }
+
+        let cauHinhTruc = DATA_TRACH_NHAT_CAO_CAP.THAP_NHI_KIEN_TRU[phanHeTruc.trucName];
+        if (cauHinhTruc) {
+            if (isCatPurpose && cauHinhTruc.cat.includes(mucDich)) {
+                diemNgay += 12; lyDoThuong.push(`Trực ${phanHeTruc.trucName} đắc cách hạng mục nạp cát hành sự`);
+            }
+            if (!isCatPurpose && cauHinhTruc.cat.includes(mucDich)) {
+                diemNgay += 15; lyDoThuong.push(`Trực ${phanHeTruc.trucName} đắc lợi tối thượng để bài trí kiến trúc tiêu uế, xả thải`);
+            }
+            if (cauHinhTruc.hung.includes(mucDich)) {
+                diemNgay -= 30; lyDoPhat.push(`Trực ${phanHeTruc.trucName} kỵ hành sự hạng mục này`);
+            }
+        }
+
+        diemNgay = Math.max(10, Math.min(100, Math.floor(diemNgay)));
+
+        if (diemNgay >= 80 && !biKhoaBoiDaiSat) {
+            let cauHinhGio = DATA_TRACH_NHAT_CAO_CAP.CAN_CHI_DINH_GIO[canChiNgayObj.chi];
+            let gioCatTuongReal = [];
+            let gioHungKiReal = new Set(cauHinhGio.satChu);
+
+            cauHinhGio.hoangDao.forEach(chiGio => {
+                let canGio = tinhCanCuaGio(canChiNgayObj.can, chiGio);
+                let biXungNgay = hinhXungQuyQuyet.LUC_XUNG[chuanHoaChiKey(chiGio)] === canChiNgayObj.chi;
+                let biXungMenh = hinhXungQuyQuyet.LUC_XUNG[chuanHoaChiKey(chiGio)] === chuanHoaChiKey(chiTuoiChuNhaKey);
+                let biTuyetLo = hinhXungQuyQuyet.CAN_XUNG[canGio] === canChiNgayObj.can;
+
+                if (!biXungNgay && !biXungMenh && !biTuyetLo) {
+                    gioCatTuongReal.push(DATA_TRACH_NHAT_CAO_CAP.GIO_DICH_NGHIA[chiGio]);
+                } else {
+                    gioHungKiReal.add(chiGio);
+                }
+            });
+
+            ["Ty", "Suu", "Dan", "Mao", "Thin", "Tỵ", "Ngo", "Mui", "Than", "Dau", "Tuat", "Hoi"].forEach(g => {
+                if (hinhXungQuyQuyet.LUC_XUNG[chuanHoaChiKey(g)] === canChiNgayObj.chi || hinhXungQuyQuyet.LUC_XUNG[chuanHoaChiKey(g)] === chuanHoaChiKey(chiTuoiChuNhaKey)) {
+                    gioHungKiReal.add(g);
+                }
+            });
+
+            let mangGioHungKiHTML = Array.from(gioHungKiReal).map(g => DATA_TRACH_NHAT_CAO_CAP.GIO_DICH_NGHIA[g]);
+
+            danhSachNgayTot.push({
+                ngayThucTe: ngay,
+                solarDate: `${ngay}/${thangKhaoSat}/${namKhaoSat}`,
+                canChiText: canChiNgayObj.text,
+                score: diemNgay,
+                trucName: phanHeTruc.trucName,
+                trucText: cauHinhTruc ? cauHinhTruc.text : "",
+                advantages: lyDoThuong,
+                disadvantages: lyDoPhat,
+                goldHours: gioCatTuongReal.length > 0 ? gioCatTuongReal : ["Không có giờ lành đắc cách"],
+                blackHours: mangGioHungKiHTML
+            });
+        }
+    }
+
+    return danhSachNgayTot.sort((a, b) => a.ngayThucTe - b.ngayThucTe);
+}
+
+// =========================================================================
+// 🏆 HÀM BIÊN SOẠN BÁO CÁO PHONG THỦY SỐ THƯỢNG TẦNG - HOÀN THIỆN ĐỒNG BỘ UI/UX
+// =========================================================================
+function xayDungBaoCaoLuanGiai(name, degree) {
+    const contentBox = document.getElementById('tongLuanContent');
+    const mucDich = document.getElementById('purpose').value;
+    const config = ConfigPhongThuy[mucDich] || { title: "Hạng mục", isCat: true };
+    
+    const txtSurveyYear = document.getElementById('surveyYear');
+    const namKhaoSat = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value) : new Date().getFullYear();
+    const thangKhaoSat = new Date().getMonth() + 1;
+
+    const dayStr = document.getElementById('birthDay').value;
+    const monthStr = document.getElementById('birthMonth').value;
+    const yearStr = document.getElementById('birthYear').value;
+    let birthYearInt = parseInt(yearStr || "1993");
+    let namAmMệnhChủ = (parseInt(monthStr) < 2 || (parseInt(monthStr) === 2 && parseInt(dayStr) < 4)) ? birthYearInt - 1 : birthYearInt;
+
+    let thucTeChuMenh = (typeof chủMệnh !== 'undefined' && chủMệnh) ? chủMệnh : "Khảm";
+    const maTranNguHanhCungPhi = {
+        "Khảm": "Thủy", "Ly": "Hỏa", "Chấn": "Mộc", "Tốn": "Mộc",
+        "Càn": "Kim", "Đoài": "Kim", "Cấn": "Thổ", "Khôn": "Thổ"
+    };
+    let nguHanhCungPhiText = maTranNguHanhCungPhi[thucTeChuMenh] || "Thổ";
+
+    const tongHop = tinhDiemTongHop(thucTeChuMenh, degree, namKhaoSat, mucDich, namAmMệnhChủ);
+    const sonChuan = tongHop.sonName || "Tý";
+
+    let thongTin72Hau = { ten: "Đang quét mạch", chatLuong: "Bình Hòa", diem: 60, ynghia: "Khí trường bình ổn cục bộ." };
+    if (typeof Data72Hau !== 'undefined') {
+        let gocChuan72 = (Math.round(degree / 5) * 5).toFixed(1);
+        if (Data72Hau[gocChuan72]) {
+            thongTin72Hau = Data72Hau[gocChuan72];
+        } else {
+            let keys = Object.keys(Data72Hau).map(Number);
+            let closest = keys.reduce((prev, curr) => (Math.abs(curr - degree) < Math.abs(prev - degree) ? curr : prev), 0);
+            thongTin72Hau = Data72Hau[closest.toFixed(1)] || thongTin72Hau;
+        }
+    }
+
+    const luuNienObj = tuDongTinhCuuTinhLuuNien(sonChuan, namKhaoSat);
+
+    let currentCode = "N";
+    if (degree >= 337.5 || degree < 22.5) currentCode = "N";
+    else if (degree >= 22.5 && degree < 67.5) currentCode = "NE";
+    else if (degree >= 67.5 && degree < 112.5) currentCode = "E";
+    else if (degree >= 112.5 && degree < 157.5) currentCode = "SE";
+    else if (degree >= 157.5 && degree < 202.5) currentCode = "S";
+    else if (degree >= 202.5 && degree < 247.5) currentCode = "SW";
+    else if (degree >= 247.5 && degree < 292.5) currentCode = "W";
+    else if (degree >= 292.5 && degree < 337.5) currentCode = "NW";
+
+    const cungTrach = bátTrạchMap[thucTeChuMenh]?.[currentCode] || "Khác";
+    const hungTinhBatTrach = ["Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"];
+    const laCungHungDiaLy = hungTinhBatTrach.includes(cungTrach);
+    const isKhongVong = !!tongHop.khongVong;
+
+    const nhomHangMucDaiSu = ["house", "gate", "door", "kitchen", "toilet", "septic_tank", "sewer"];
+    const laHangMucDaiSu = nhomHangMucDaiSu.includes(mucDich);
+
+    const ketQuaTrachNhat = tinhNgayGioCatTuongBaoCao(namAmMệnhChủ, sonChuan, namKhaoSat, thangKhaoSat, mucDich);
+    const checkHanNhanKhi = kiemTraHanNhanKhiChinhXac(namAmMệnhChủ, namKhaoSat);
+
+    let lichTrachNhatHTML = "";
+    let matPhapMuonTuoiHTML = "";
+
+    let thongDiepTốiCao = "🟢 [HÀNH SỰ ĐẠI CÁT - LONG MẠCH THÔNG SUỐT]";
+    let bieuTuongTrangThai = '<span style="background:#30d158; color:#000; padding:5px 12px; border-radius:4px; font-weight:bold; font-size:0.85rem; display:inline-block; margin-bottom:8px;">HÀNH SỰ ĐẮC CÁCH (VÌ KHÍ TRƯỜNG KHỚP TRỤC)</span>';
+    let mauChu = "#30d158";
+
+    if (isKhongVong || (laCungHungDiaLy && config.isCat)) {
+        thongDiepTốiCao = "🔴 [PHONG TỎA ĐỊA LÝ TĨNH - TUYỆT ĐỐI CẤM KỴ THI CÔNG]";
+        bieuTuongTrangThai = '<span style="background:#ff3b30; color:#fff; padding:5px 12px; border-radius:4px; font-weight:bold; font-size:0.85rem; display:inline-block; margin-bottom:8px;">VỊ TRÍ PHẠM TỬ HUYỆT ĐẤT NỀN (BUỘC PHẢI THAY ĐỔI)</span>';
+        mauChu = "#ff3b30";
+    } else if (luuNienObj.isHung || thongTin72Hau.chatLuong.includes("Hung")) {
+        thongDiepTốiCao = "⚠️ [THỜI TINH QUẤY NHIỄU - CẦN TRẤN AN HOẶC DỜI NGÀY]";
+        bieuTuongTrangThai = '<span style="background:#ff9f0a; color:#000; padding:5px 12px; border-radius:4px; font-weight:bold; font-size:0.85rem; display:inline-block; margin-bottom:8px;">CẦN CAN THIỆP PHÁP BẢO HOẶC LỌC THỜI GIAN (CÓ THỂ LÀM)</span>';
+        mauChu = "#ff9f0a";
+    }
+
+    if (config.isCat) {
+        if (ketQuaTrachNhat.length > 0 && !isKhongVong && !(laCungHungDiaLy && config.isCat)) {
+            let topNgay = ketQuaTrachNhat.slice(0, 7); 
+            lichTrachNhatHTML = `<div style="margin-top:15px; background:rgba(48,209,88,0.04); padding:12px; border-radius:8px; border:1px solid #30d15840;">
+                <b style="color:#30d158; display:block; margin-bottom:8px; font-size:0.9rem;">📅 HỆ THỐNG TRÍCH XUẤT CÁC NGÀY ĐẠI CÁT ĐẮC VƯỢNG TINH TRONG THÁNG ${thangKhaoSat}:</b>`;
+            topNgay.forEach(n => {
+                let listThuong = n.advantages.map(adv => `<span style="color:#30d158;">• ${adv}</span>`).join('<br>');
+                let listPhat = n.disadvantages.map(dis => `<span style="color:#ff4444;">• ${dis}</span>`).join('<br>');
+                
+                lichTrachNhatHTML += `
+                <div style="padding:10px 0; border-bottom:1px dashed rgba(255,255,255,0.08); font-size:0.85rem; line-height:1.6;">
+                    • <b>Ngày Dương Lịch:</b> <span style="color:#ffd700; font-weight:bold;">${n.solarDate}</span> | <b>Can Chi Ngày:</b> <span style="color:#fff;">${n.canChiText}</span> | <b>Hiệu Hiệu Lịch Pháp:</b> <b style="color:#30d158;">${n.score} điểm</b><br>
+                    • <b>Nhật Trực Kiến Trừ:</b> Trực <span style="color:#30d158; font-weight:bold;">${n.trucName}</span> (${n.trucText})<br>
+                    ${listThuong ? `• <b>Cát Tinh Gia Trì:</b><br>${listThuong}<br>` : ''}
+                    ${listPhat ? `• <b>Sát Khí Lưu Nhật:</b><br>${listPhat}<br>` : ''}
+                    • <span style="color:#30d158;">🟢 <b>GIỜ ĐẠI CÁT KHỞI SỰ THỰC ĐỊA:</b></span> <b style="color:#fff;">${n.goldHours.slice(0, 4).join(' / ')}</b><br>
+                    • <span style="color:#ff4444;">🔴 <b>GIỜ ĐẠI KỴ TUYỆT LỘ CẤM KỴ:</b></span> <span style="color:#aaa;">${n.blackHours.slice(0, 4).join(' / ')}</span>
+                </div>`;
+            });
+            lichTrachNhatHTML += `</div>`;
+        } else {
+            lichTrachNhatHTML = `<div style="margin-top:15px; background:rgba(255,59,48,0.06); padding:12px; border-radius:8px; border:1px solid #ff3b3040; font-size:0.85rem; color:#eee; line-height:1.5;">
+                <b>📅 PHONG TỎA BẢNG NGÀY LÀNH:</b> Trạch đất đang bị dính trục Không Vong hoặc phạm Đại Kỵ phương vị tĩnh tại phần Gốc. Việc tìm ngày tốt phần Ngọn hoàn toàn vô tác dụng, hệ thống tự động khóa bảng ngày lành để bảo vệ trạch gia khỏi dòng ác khí kích động.
+            </div>`;
+        }
+
+        if (!checkHanNhanKhi.isOk && laHangMucDaiSu) {
+            const razones = checkHanNhanKhi.reasons.join(' + ');
+            const mangQuyNhan = timTuoiQuyNhanMuonTinh(namKhaoSat, sonChuan, namAmMệnhChủ);
+            
+            let danhSachTuoiHTML = "";
+            mangQuyNhan.forEach((q, index) => {
+                danhSachTuoiHTML += `<br>&nbsp;&nbsp;[${index + 1}] Tuổi <span style="color:#30d158; font-weight:bold;">${q.name}</span> (Sinh năm ${q.year} — Hiện tại ${q.age} tuổi mụ đắc cát)`;
+            });
+
+            matPhapMuonTuoiHTML = `
+            <div style="margin-top:12px; background:rgba(255,159,10,0.06); padding:12px; border-radius:8px; border:1px solid #ff9f0a40; font-size:0.85rem; line-height:1.6;">
+                <b style="color:#ff9f0a; display:block; margin-bottom:4px;">👥 MẬT PHÁP NHÂN KHÍ ĐẠI SỰ - ỦY THÁC MƯỢN TUỔI ĐỘNG THỔ:</b>
+                Gia chủ dính trọng kỵ hạn tuổi trạch pháp: <span style="color:#ff4444; font-weight:bold;">${razones}</span>. Vì đây là hạng mục phá vỡ kết cấu móng long mạch lớn (<b>${config.title}</b>), trạch chủ nên ủy thác một trong các tuổi đại hợp sau đứng tên khởi sự để dẫn truyền năng lượng thịnh vượng:${danhSachTuoiHTML}
+            </div>`;
+        } else if (!checkHanNhanKhi.isOk && !laHangMucDaiSu) {
+            matPhapMuonTuoiHTML = `
+            <div style="margin-top:12px; background:rgba(48,209,88,0.05); padding:12px; border-radius:8px; border:1px solid #30d15830; font-size:0.85rem; color:#eee;">
+                ✅ <b>AN VỊ TIỂU SỰ NỘI THẤT HOÀN HẢO:</b> Mặc dù bản mệnh đương số vướng niên hạn tuổi xấu, nhưng hạng mục hành sự là bài trí nội tại không đập phá nền móng long mạch trạch đất (<b>${config.title}</b>), gia chủ <b>hoàn toàn tự tay bài trí, đặt kết cấu kết cấu vào góc độ cát tường</b> mà không cần làm thủ tục mượn tuổi nhân khí phức tạp.
+            </div>`;
+        } else {
+            matPhapMuonTuoiHTML = `
+            <div style="margin-top:12px; background:rgba(48,209,88,0.05); padding:12px; border-radius:8px; border:1px solid #30d15830; font-size:0.85rem; color:#eee;">
+                ✅ <b>NHÂN KHÍ THANH SẠCH:</b> Bản mệnh tuổi đương số vô cùng quang đãng, không phạm tam tai, kim lâu, hoàng ốc, sẵn sàng tự tay thực hiện lập cực và động thổ cát tường.
+            </div>`;
+        }
+    }
+
+    let dienGiaiChuyenSauHTML = "";
+    let quẻMệnhBátTrạchChuẩn = (cungTrach.includes("Sinh Khí") || cungTrach.includes("Thiên Y") || cungTrach.includes("Diên Niên") || cungTrach.includes("Phục Vị")) ? `<span style="color:#30d158; font-weight:bold;">Cung Cát Khí ${cungTrach}</span>` : `<span style="color:#ff3b30; font-weight:bold;">Cung Hung Hại ${cungTrach}</span>`;
+
+    if (isKhongVong) {
+        dienGiaiChuyenSauHTML = `Tọa độ la bàn thực địa ghi nhận đường biên chết Không Vong cực kỳ nguy hiểm. Tại dải độ này, từ trường bị bẻ gãy và hỗn loạn nghiêm trọng. **TUYỆT ĐỐI PHONG TỎA KHÔNG ĐƯỢC XÂY DỰNG**, cố tình bài trí kiến trúc cát ${config.title} tại phân phân độ tử huyệt này sẽ kích hoạt tai họa khôn lường, nhân đinh suy kiệt.`;
+    } else if (laCungHungDiaLy && config.isCat) {
+        dienGiaiChuyenSauHTML = `Lỗi nghiêm trọng từ nền tảng Địa lý tĩnh! Hạng mục ${config.title} đòi hỏi phải hấp thụ sinh khí tối cao để dưỡng trạch nhưng hiện trạng kim la bàn báo đang đóng đè lên ${quẻMệnhBátTrạchChuẩn} của bản mệnh gia chủ. Sự xung xung khắc từ gốc này xói mòn sinh khí, khiến công danh tiền lộc gặp bế tắc trường kỳ.`;
+    } else {
+        dienGiaiChuyenSauHTML = `Địa trạch lập cực đắc vị, thông suốt khí trường. Không gian đất nền tại phân độ góc này đón trọn dải trường khí vương cát từ vị trí ${quẻMệnhBátTrạchChuẩn}. Đồng thời luồng khí mạch ngầm dưới lòng đất khớp đồng trục hoàn hảo với **72 Long Khí Xuyên Sơn: Mạch khí ${thongTin72Hau.ten} (${thongTin72Hau.chatLuong})**. Thiên Địa giao hòa đạt hiệu suất năng lượng đỉnh cao **${tongHop.diem}/98 điểm**, gia trạch an định vững như bàn thạch.`;
+    }
+
+    let matPhapXửLýChuyênSâu = tongHop.hoaGiai;
+    if (laCungHungDiaLy || isKhongVong) {
+        matPhapXửLýChuyênSâu = `
+        <div style="line-height: 1.6; color: #eee; font-size:0.85rem;">
+            ⚠️ <b style="color:#ff3b30;">ĐIỀU TIẾT THƯỢNG TẦNG - PHƯƠNG ÁN SỬA ĐỔI BẮT BUỘC:</b><br>
+            Vì vị trí đang chọn phạm lỗi định vị tĩnh cốt lõi của mạch đất trạch, việc tuyển ngày giờ tốt lúc này hoàn toàn vô tác dụng. Phương pháp cứu vãn duy nhất là gia chủ buộc phải dịch chuyển vị trí kết cấu vật chất tránh xa dải độ xấu, hoặc kích hoạt khẩn cấp năng lượng phong tỏa tà khí bằng pháp bảo: <span style="color:#ffd700; font-weight:bold;">${tongHop.hoaGiai}</span> để bảo vệ trục mạch khí.
+        </div>`;
+    }
+
+    let html = `
+        <div style="text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 12px; margin-bottom: 15px;">
+            <div style="font-size: 0.8rem; color: #dfb76c; letter-spacing: 1.5px; font-weight:bold;">✨ THƯỢNG TẦNG TỔNG LUẬN GIẢI PHONG THỦY SỐ VẬN 9 ✨</div>
+            <div style="font-size: 1.1rem; font-weight: 900; color: ${mauChu}; margin-top: 6px; text-shadow: 0 0 8px rgba(0,0,0,0.5); text-transform: uppercase;">${thongDiepTốiCao}</div>
+        </div>
+
+        <div style="font-size: 0.9rem; line-height: 1.7; color: #fff; background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 12px;">
+            <div style="text-align:center;">${bieuTuongTrangThai}</div>
+            <div style="margin-bottom: 6px;">👤 <b>Đương số chủ sự:</b> <span style="color:var(--gold); font-weight:bold;">${name}</span> | Quẻ mạng Cung Phi: <b style="color:#ffd700;">${thucTeChuMenh} (${nguHanhCungPhiText})</b> [Năm âm: ${namAmMệnhChủ}]</div>
+            <div style="margin-bottom: 6px;">📐 <b>Góc độ la bàn thực địa:</b> <span style="color:#ffca28; font-weight:bold;">${degree}°</span> — Khống chế quản lý bởi: <span style="color:var(--gold); font-weight:bold;">Sơn ${sonChuan}</span></div>
+            <div style="margin-bottom: 6px;">🔮 <b>72 Long Khí Xuyên Sơn:</b> <span style="color:#ffd700; font-weight:bold;">Mạch ${thongTin72Hau.ten}</span> — Bản chất mạch ngầm: <b style="color:${thongTin72Hau.chatLuong.includes('Hung') ? '#ff3b30' : '#30d158'};">${thongTin72Hau.chatLuong} (Đạt ${thongTin72Hau.diem}pt)</b></div>
+            <div style="margin-bottom: 6px;">🎯 <b>Hạ tầng hoạch định kết cấu:</b> Công năng phân bổ [<b>${config.title}</b>]</div>
+            <div style="margin-bottom: 6px;">📊 <b>Hiệu số tích phân năng lượng:</b> <span style="color:${mauChu}; font-weight:900; font-size:1.05rem;">${tongHop.diem}/98 điểm</span> — Phân cấp khí cục: <span style="color:${mauChu}; font-weight:bold;">${tongHop.level}</span></div>
+            <div style="margin-bottom: 2px;">⏳ <b>Thiên thời Cửu Tinh niên hạn (${namKhaoSat}):</b> <span style="color:${luuNienObj.isHung ? '#ff9f0a' : '#30d158'}; font-weight:bold;">${luuNienObj.tenSao} chiếm đóng cung</span></div>
+        </div>
+
+        <div style="padding: 12px; background: rgba(0,0,0,0.25); border-left: 4px solid ${mauChu}; font-size: 0.88rem; color: #e5e5ea; text-align: justify; line-height: 1.6; margin-bottom: 12px; border-radius: 0 8px 8px 0;">
+            <b>🔮 KHẨU QUYẾT TỔNG LUẬN DIỄN GIẢI CHÍNH TÔNG:</b><br>
+            ${dienGiaiChuyenSauHTML}
+        </div>
+
+        <div style="margin-top: 10px; font-size:0.86rem; margin-bottom: 12px;">
+            <b style="color:var(--gold); display:block; margin-bottom:4px; border-bottom:1px solid rgba(223,183,108,0.2); padding-bottom:3px;">💡 MẬT PHÁP ĐIỀU TIẾT PHÁP BẢO VẬT PHẨM NỀN MÓNG:</b>
+            <div style="color:#ddd; padding:10px; background:rgba(255,159,10,0.02); border:1px solid rgba(255,159,10,0.12); border-radius:6px; text-align: justify;">
+                ${matPhapXửLýChuyênSâu}
+            </div>
+        </div>
+
+        ${lichTrachNhatHTML}
+        ${matPhapMuonTuoiHTML}
+        
+        <div style="text-align:center; font-size:0.75rem; color:#666; margin-top:15px; font-style:italic;">
+            * Báo cáo tối cao phong thủy kết xuất tự động bởi toán pháp thiên văn học phối hợp dòng địa khí Vận 9 thực hành ngày xem 06/06/2026.
+        </div>
+    `;
+
+    contentBox.innerHTML = html;
+}
+// =========================================================================
+// 🚀 HỆ THỐNG ĐIỀU KHIỂN GIAO DIỆN LA BÀN THÔNG MINH ĐỘNG (FIXED CẤP CAO)
+// =========================================================================
+
+// 1. Khai báo các biến trạng thái quản lý thời gian và cử chỉ
+let dừngKimTimeout = null; 
+let chạmHoldTimeout = null;
+let đangChạmMànHình = false;
+
+// 2. CSS Inject tự động: Tối ưu UI mượt mà + Chống hiện bôi đen/copy văn bản khi đè ngón tay
+const styleLuangiai = document.createElement('style');
+styleLuangiai.innerHTML = `
+    /* Khóa tính năng lựa chọn văn bản gây hiện tượng popup copy của hệ điều hành */
+    #compass, .compass-container, body {
+        -webkit-touch-callout: none !important; /* iOS Safari */
+        -webkit-user-select: none !important;   /* Safari */
+        -khtml-user-select: none !important;    /* Konqueror HTML */
+        -moz-user-select: none !important;     /* Firefox */
+        -ms-user-select: none !important;      /* Internet Explorer/Edge */
+        user-select: none !important;          /* Công thức chuẩn */
+    }
+    .luangiai-fab-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 999;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(15px) scale(0.9);
+        transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                    transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .luangiai-fab-btn.vượng-xuất {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0) scale(1);
+    }
+    /* Hiệu ứng rung nhẹ khi la bàn bị khóa bằng touch để báo hiệu cho trạch chủ */
+    .la-ban-khoa-khí {
+        animation: rungNheLongMach 0.3s ease-in-out 2;
+    }
+    @keyframes rungNheLongMach {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+    }
+`;
+document.head.appendChild(styleLuangiai);
+
+
+// =========================================================================
+// 🖐️ PHÂN HỆ TOUCH HOLD 2 GIÂY (giữ nguyên)
+// =========================================================================
+function kichHoatBoLangNgheTouchLaBan() {
+    const vungLaBan = document.getElementById('compass') || document.body;
+
+    vungLaBan.addEventListener('contextmenu', e => {
+        e.preventDefault();
+        return false;
+    });
+
+    vungLaBan.addEventListener('touchstart', function(e) {
+        const overlay = document.getElementById('tongLuanOverlay');
+        if (overlay && overlay.classList.contains('show')) return;
+
+        đangChạmMànHình = true;
+        clearTimeout(chạmHoldTimeout);
+
+        if (!window.isCompassHold) {
+            // Kịch bản A: Đè 2 giây để KHÓA
+            chạmHoldTimeout = setTimeout(() => {
+                window.isCompassHold = true;
+                if (typeof currentHeading !== 'undefined') {
+                    window.holdedHeading = currentHeading;
+                }
+
+                vungLaBan.classList.add('la-ban-khoa-khí');
+                setTimeout(() => vungLaBan.classList.remove('la-ban-khoa-khí'), 600);
+
+                if (typeof kichHoatBoDemDungKim === 'function') kichHoatBoDemDungKim();
+
+                if (typeof showCustomAlert === 'function') {
+                    showCustomAlert(`🔒 Đã khóa cứng Long Mạch tại: ${window.holdedHeading}°!`);
+                }
+            }, 500); // Tăng lên 2 giây cho chuẩn
+        } else {
+            // Kịch bản B: Đè 2 giây để MỞ KHÓA
+            chạmHoldTimeout = setTimeout(() => {
+                window.isCompassHold = false;
+                if (typeof kichHoatBoDemDungKim === 'function') kichHoatBoDemDungKim();
+
+                if (typeof showCustomAlert === 'function') {
+                    showCustomAlert("🔓 Giải phóng mạch khí! La bàn đo động thực thời.");
+                }
+            }, 500);
+        }
+    }, { passive: true });
+
+    vungLaBan.addEventListener('touchend', () => {
+        đangChạmMànHình = false;
+        clearTimeout(chạmHoldTimeout);
+    }, { passive: true });
+
+    vungLaBan.addEventListener('touchmove', () => {
+        clearTimeout(chạmHoldTimeout);
+    }, { passive: true });
+}
+
+// Khởi động
+document.addEventListener('DOMContentLoaded', kichHoatBoLangNgheTouchLaBan);
+
+// =========================================================================
+// 🎯 PHÂN HỆ ĐIỀU KHIỂN NÚT TỔNG LUẬN - ĐÚNG NGUYÊN LÝ
+// =========================================================================
+let dungKimTimeout = null;
+let lastStableHeading = null;
+let stabilityStartTime = 0;
+
+function kichHoatBoDemDungKim() {
+    const btnTongLuan = document.getElementById('btn-tong-luan');
+    if (!btnTongLuan) return;
+
+    // Ưu tiên khi đang khóa cứng la bàn (luôn hiện)
+    if (window.isCompassHold) {
+        btnTongLuan.classList.add('vượng-xuất', 'show');
+        return;
+    }
+
+    // Kiểm tra form
+    const dayStr = document.getElementById('birthDay')?.value;
+    const monthStr = document.getElementById('birthMonth')?.value;
+    const yearStr = document.getElementById('birthYear')?.value;
+    const mucDich = document.getElementById('purpose')?.value;
+
+    const daNhapDuNgayThangNam = (dayStr && monthStr && yearStr && yearStr.length === 4);
+    const daChonDanhMuc = (mucDich && mucDich !== "" && mucDich !== "none");
+
+    if (!daNhapDuNgayThangNam || !daChonDanhMuc) {
+        btnTongLuan.classList.remove('vượng-xuất', 'show');
+        return;
+    }
+
+    // === LOGIC CHÍNH: Phát hiện quay hay đứng im ===
+    clearTimeout(dungKimTimeout);
+
+    const currentH = typeof currentHeading !== 'undefined' ? Math.round(currentHeading) : null;
+    if (currentH === null) {
+        btnTongLuan.classList.remove('vượng-xuất', 'show');
+        return;
+    }
+
+    const now = Date.now();
+
+    // Nếu kim đang thay đổi hướng (> 2°) → reset thời gian đứng im
+    if (lastStableHeading === null || Math.abs(currentH - lastStableHeading) > 2) {
+        lastStableHeading = currentH;
+        stabilityStartTime = now;
+        
+        // Đang quay → ẩn nút ngay lập tức
+        btnTongLuan.classList.remove('vượng-xuất', 'show');
+        return;
+    }
+
+    // Nếu đứng im, tính thời gian đã đứng im bao lâu
+    const stillnessTime = now - stabilityStartTime;
+
+    if (stillnessTime >= 2000) {        // 5 giây đứng im
+        if (!btnTongLuan.classList.contains('vượng-xuất')) {
+            btnTongLuan.classList.add('vượng-xuất', 'show');
+        }
+    } 
+    // Chưa đủ 5 giây thì không hiện (để nó tự ẩn khi đang quay)
+}
+
+ // Lắng nghe form
+document.addEventListener('DOMContentLoaded', () => {
+    const inputs = ['birthDay', 'birthMonth', 'birthYear', 'purpose'];
+    inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', kichHoatBoDemDungKim);
+            el.addEventListener('change', kichHoatBoDemDungKim);
+        }
+    });
+});
+
+/**
+ * 🧭 ĐỒNG BỘ HIỆN ỨNG SÁNG CỦA HẬU MẠCH KHI XOAY KIM LA BÀN REAL-TIME
+ * Hãy chèn đoạn này vào cuối hàm xoay la bàn hoặc hàm onCompassUpdate của bạn
+ */
+function highlightActiveHauNode(currentCompassDegree) {
+    let chuẩnHóaĐộ = ((currentCompassDegree % 360) + 360) % 360;
+    
+    // Tìm mốc Hậu mạch gần nhất dựa theo bước nhảy 5 độ
+    let mốcHậuGầnNhất = Math.round(chuẩnHóaĐộ / 5) * 5;
+    if (mốcHậuGầnNhất >= 360) mốcHậuGầnNhất = 0;
+
+    // Bước 1: Khôi phục tất cả các node Hậu mạch về trạng thái nền bình thường
+    document.querySelectorAll('.hau-node-item').forEach(node => {
+        node.style.boxShadow = 'none';
+        node.style.transform = 'scale(1)';
+        node.style.background = 'rgba(255,255,255,0.05)';
+        node.style.borderColor = 'rgba(255,255,255,0.1)';
+    });
+
+    // Bước 2: Tìm đúng node Hậu mạch mà Kim đang đè lên thực thời và kích hoạt hiệu ứng rực sáng
+    let activeNodes = document.querySelectorAll(`.node-goc-${mốcHậuGầnNhất}`);
+    activeNodes.forEach(activeNode => {
+        // Tự động nhận diện màu sắc của chữ bên trong để làm viền sáng tương ứng (Đỏ chói, Xanh vượng hay Vàng)
+        let textColor = activeNode.querySelector('div:nth-child(2)').style.color;
+        
+        activeNode.style.background = 'rgba(255,255,255,0.15)';
+        activeNode.style.borderColor = textColor; // Viền sáng lên theo đúng màu Cát/Hung của Hậu mạch
+        activeNode.style.transform = 'scale(1.05)'; // Nhô nhẹ lên tạo cảm giác cơ khí động học
+        activeNode.style.boxShadow = `0 0 10px ${textColor}40`; // Tạo vầng hào quang nhẹ bao quanh cực đẹp
+    });
+}
+
+// 📐 HỆ THỐNG QUÉT ĐỘNG KHÔNG GIAN - PHIÊN BẢN ĐA PHƯƠNG THỨC 2026
+let scanState = {
+    isScanning: false,
+    method: "CAMERA",  // "CAMERA" (Quét từ xa) hoặc "MANUAL" (Nhập số/Áp thực địa)
+    startAngle: null,  // Góc hướng thẳng mép trái
+    endAngle: null,    // Góc hướng thẳng mép phải
+    currentAngle: 0
+};
+
+/**
+ * 1. HÀM CẬP NHẬT GÓC ĐỘ REAL-TIME TỪ CẢM BIẾN THIẾT BỊ
+ */
+function onCompassUpdate(heading) {
+    scanState.currentAngle = ((heading % 360) + 360) % 360;
+    
+    if (scanState.isScanning && scanState.method === "CAMERA") {
+        // Vẽ dải góc thời gian thực từ Mép Trái đến hướng camera hiện tại
+        if (typeof renderScanningArc === 'function') {
+            renderScanningArc(scanState.startAngle, scanState.currentAngle);
+        }
+    } else {
+        if (typeof updateDegreeDisplay === 'function') {
+            updateDegreeDisplay(scanState.currentAngle);
+        }
+    }
+}
+
+/**
+ * 2. CHẾ ĐỘ 1: BỘ QUÈT CAMERA TỪ XA VÀ TỰ ĐỘNG KHỬ SAI SỐ XOAY NGƯỢC
+ */
+function handleScanButtonClick() {
+    scanState.method = "CAMERA"; // Xác định phương thức quét bằng mắt thần camera
+    const btn = document.getElementById('btn-scan-action');
+    const purposeElement = document.getElementById('purpose');
+    const hiddenInputPurpose = purposeElement ? purposeElement.value : 'bed';
+
+    // ─── BƯỚC 1: CHỐT TIÊU ĐIỂM MÉP TRÁI ───
+    if (!scanState.isScanning && scanState.startAngle === null) {
+        scanState.isScanning = true;
+        scanState.startAngle = scanState.currentAngle;
+        
+        btn.innerHTML = `🛑 CHỐT MÉP PHẢI (Nhắm thẳng tâm camera)`;
+        btn.style.background = "#ff9500"; 
+        btn.style.borderColor = "#ff9500";
+        btn.style.boxShadow = "0 0 15px rgba(255,149,0,0.5)";
+        
+        showToast(`[RA ĐA TIÊU ĐIỂM]: Đã khóa Mép Trái tại ${Math.round(scanState.startAngle)}°. Hãy xoay tâm giữa điện thoại nhắm thẳng vào Mép Phải.`);
+        return;
+    }
+
+    // ─── BƯỚC 2: CHỐT TIÊU ĐIỂM MÉP PHẢI & TRÍCH XUẤT TRỌNG TÂM CHIẾM DỤNG ───
+    if (scanState.isScanning && scanState.startAngle !== null) {
+        scanState.isScanning = false;
+        scanState.endAngle = scanState.currentAngle;
+
+        // Tính khoảng cách góc hình quạt giữa 2 mép ngắm (Khử lỗi trục giao thoa 0°/360°)
+        let diff = scanState.endAngle - scanState.startAngle;
+        if (diff < 0) diff += 360; 
+
+        // 💡 THUẬT TOÁN THÔNG MINH: Tự động đảo biên nếu người dùng quét ngược từ Phải qua Trái
+        if (diff > 180) {
+            diff = 360 - diff;
+            let temp = scanState.startAngle;
+            scanState.startAngle = scanState.endAngle;
+            scanState.endAngle = temp;
+        }
+
+        let realSizeDegree = Math.round(diff); 
+        if (realSizeDegree === 0) realSizeDegree = 1; // Khử lỗi bấm đúp tại một điểm
+
+        // Tính toán trọng tâm hình học chuẩn xác của kết cấu
+        let centerAngle = scanState.startAngle + (diff / 2);
+        centerAngle = ((centerAngle % 360) + 360) % 360; 
+
+        // Trả UI nút bấm về trạng thái tĩnh
+        btn.innerHTML = "📐 Nhắm Quét Dải Độ Thực Địa";
+        btn.style.background = "#2c2c2e";
+        btn.style.borderColor = "#ffca28";
+        btn.style.boxShadow = "none";
+
+        // Đồng bộ dải độ thực tế vào bộ nhớ cấu hình vật thể
+        if (ConfigPhongThuy[hiddenInputPurpose]) {
+            ConfigPhongThuy[hiddenInputPurpose].sizeDegree = realSizeDegree;
+        }
+
+        showToast(`✔️ Quét thành công! Độ rộng vật thể: ${realSizeDegree}°. Trọng tâm hình học: ${Math.round(centerAngle)}°`);
+
+        // Đổ dữ liệu ra lõi tính điểm toán học
+        processScanResult(centerAngle, realSizeDegree, hiddenInputPurpose);
+        
+        if (typeof generateDirectionsList === 'function') {
+            generateDirectionsList();
+        }
+
+        // Giải phóng bộ nhớ đệm
+        scanState.startAngle = null;
+        scanState.endAngle = null;
+    }
+}
+
+/**
+ * 3. CHẾ ĐỘ 2 & 3: LẬP TỨC ĐỔ DỮ LIỆU BẰNG TAY / ÁP SÁT THÀNH VẬT THỂ
+ * Dành cho trường hợp phòng quá kẹt không thể đứng từ xa ngắm camera, hoặc làm việc trên bản vẽ
+ */
+function executeManualScanConfig(customCenterAngle, customSizeDegree, purposeKey) {
+    scanState.method = "MANUAL";
+    scanState.isScanning = false;
+
+    let cleanCenter = ((parseFloat(customCenterAngle) % 360) + 360) % 360;
+    let cleanSize = Math.max(0, Math.min(180, parseFloat(customSizeDegree) || 0));
+
+    if (ConfigPhongThuy[purposeKey]) {
+        ConfigPhongThuy[purposeKey].sizeDegree = cleanSize;
+    }
+
+    showToast(`⚙️ Đã nạp thông số thủ công: Trọng tâm ${Math.round(cleanCenter)}°, Bề rộng dải mạch: ${cleanSize}°`);
+
+    // Chạy phân tích điểm đa tầng ngay lập tức
+    processScanResult(cleanCenter, cleanSize, purposeKey);
+
+    if (typeof generateDirectionsList === 'function') {
+        generateDirectionsList();
+    }
+}
+
+/**
+ * 3. XỬ LÝ KẾT QUẢ QUÉT ĐỘNG VÀ ĐỒ DỮ LIỆU THÔNG MINH LÊN UI
+ * PHIÊN BẢN 2026: Cá nhân hóa vật thể quét, hiển thị chi tiết Định vị Sơn Hậu và tích hợp nút Đóng (✕)
+ */
+function processScanResult(centerAngle, sizeDegree, purpose) {
+    console.log("=== BẮT ĐẦU XỬ LÝ KẾT QUẢ QUÉT THỰC ĐỊA ===");
+    
+    const container = document.getElementById('scan-result-panel');
+    if (!container) return; // Đã xử lý bẫy overlay bên ngoài
+
+    // Hiển thị trạng thái xử lý tạm thời
+    container.style.display = "block";
+    container.innerHTML = `<div style="color: #ffca28; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px; font-size: 0.85rem; border: 1px dashed rgba(255,255,255,0.1);">⏳ Hệ thống đang phân tích ma trận long mạch thực địa...</div>`;
+
+    // ─── 1. TỰ ĐỘNG CHUYỂN ĐỔI NGÔN NGỮ DANH MỤC VẬT THỂ VÀ THÔNG SỐ NỀN ───
+    const dictVatThe = {
+        "bed": "Giường ngủ", "kitchen": "Bếp nấu", "door": "Cửa chính", 
+        "desk": "Bàn làm việc", "altar": "Bàn thờ", "toilet": "Nhà vệ sinh"
+    };
+    const tenVatTheChuan = dictVatThe[purpose] || "Vật thể kết cấu";
+
+    let cungPhiChuMenh = "Càn";
+    if (typeof vịTríLấyCungPhi === 'function') cungPhiChuMenh = vịTríLấyCungPhi();
+    else if (typeof viTriLayCungPhi === 'function') cungPhiChuMenh = viTriLayCungPhi();
+
+    const txtSurveyYear = document.getElementById('surveyYear');
+    const namKhaoSat = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value) : new Date().getFullYear();
+    let namAmReal = namKhaoSat;
+    if (typeof vịTríLấyNămÂmChuẩn === 'function') namAmReal = vịTríLấyNămÂmChuẩn();
+
+    // ─── 2. CHẠY PHƯƠNG TRÌNH LÕI VÀ BẪY LỖI ───
+    let ketQua;
+    try {
+        if (typeof tinhDiemTongHop !== 'function') {
+            throw new Error("Hàm lõi 'tinhDiemTongHop' chưa được khai báo.");
+        }
+        ketQua = tinhDiemTongHop(cungPhiChuMenh, centerAngle, namKhaoSat, purpose, namAmReal);
+        if (!ketQua) throw new Error("Hàm 'tinhDiemTongHop' không trả về dữ liệu cấu trúc.");
+    } catch (error) {
+        container.innerHTML = `
+            <div style="position: relative; background: rgba(255,59,48,0.05); border: 1px solid rgba(255,59,48,0.3); border-left: 4px solid #ff3b30; padding: 14px; border-radius: 10px; color: #fff; font-family: -apple-system, sans-serif;">
+                <button onclick="document.getElementById('scan-result-panel').style.display='none'" style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: #aaa; cursor: pointer; font-size: 1.1rem;">✕</button>
+                <div style="font-weight: bold; color: #ff453a; font-size: 0.9rem; margin-bottom: 6px;">❌ LỖI HỆ THỐNG</div>
+                <div style="font-size: 0.8rem; color: #ffbc66;">Không thể phân tích dữ liệu quét của <strong>${tenVatTheChuan}</strong>.</div>
+            </div>
+        `;
+        return; 
+    }
+
+    // ─── 3. TRÍCH XUẤT THÔNG TIN ĐỊA LÝ ĐA TẦNG ĐỂ GỌI TÊN CHÍNH XÁC ───
+    const normalizedDegree = ((centerAngle % 360) + 360) % 360;
+    
+    // Lấy tên Hướng đại cục từ thông tin Sơn gốc
+    let tenHuongDaiCuc = "Chưa rõ";
+    if (normalizedDegree >= 337.5 || normalizedDegree < 22.5) tenHuongDaiCuc = "Phương Bắc";
+    else if (normalizedDegree >= 22.5 && normalizedDegree < 67.5) tenHuongDaiCuc = "Phương Đông Bắc";
+    else if (normalizedDegree >= 67.5 && normalizedDegree < 112.5) tenHuongDaiCuc = "Phương Đông";
+    else if (normalizedDegree >= 112.5 && normalizedDegree < 157.5) tenHuongDaiCuc = "Phương Đông Nam";
+    else if (normalizedDegree >= 157.5 && normalizedDegree < 202.5) tenHuongDaiCuc = "Phương Nam";
+    else if (normalizedDegree >= 202.5 && normalizedDegree < 247.5) tenHuongDaiCuc = "Phương Tây Nam";
+    else if (normalizedDegree >= 247.5 && normalizedDegree < 292.5) tenHuongDaiCuc = "Phương Tây";
+    else if (normalizedDegree >= 292.5 && normalizedDegree < 337.5) tenHuongDaiCuc = "Phương Tây Bắc";
+
+    const tenSonVi = ketQua.sonName || "Chưa xác định";
+    const tenHauVi = (ketQua.hauInfo && ketQua.hauInfo.ten) ? ketQua.hauInfo.ten : "Không rõ";
+
+    // ─── 4. BIÊN DỊCH CHI TIẾT MẠCH HẬU NGẦM ───
+    let danhSachHauBaoCaoHTML = "";
+    if (ketQua.scanMetrics && Array.isArray(ketQua.scanMetrics.chiTietHau) && ketQua.scanMetrics.chiTietHau.length > 0) {
+        danhSachHauBaoCaoHTML = ketQua.scanMetrics.chiTietHau.map(function(hau) {
+            let mauHauBadge = (hau.diem >= 60) ? '#30d158' : '#ff9500';
+            return `
+                <span style="display: inline-block; padding: 3px 8px; margin: 2px; background: rgba(255,255,255,0.04); border: 1px solid ${mauHauBadge}40; border-radius: 4px; font-size: 0.75rem; color: #e5e5ea;">
+                    📍 Mốc ${hau.moc}° (${hau.ten || 'Hậu'}: <strong style="color:${mauHauBadge};">${hau.diem}đ</strong>)
+                </span>
+            `;
+        }).join('');
+    }
+
+    let mauSacGiaoDien = (ketQua.diem >= 72) ? '#30d158' : '#ff3b30';
+    let bgGiaoDien = (ketQua.diem >= 72) ? 'rgba(48,209,88,0.05)' : 'rgba(255,59,48,0.05)';
+
+    // Thống kê phân tích lấn biên long mạch
+    let thongTinPhanTichHau = "";
+    if (ketQua.scanMetrics && ketQua.scanMetrics.totalHauOccupied > 1) {
+        thongTinPhanTichHau = `
+            <div style="margin-top: 10px; padding: 10px; background: rgba(255,149,0,0.06); border-radius: 6px; border-left: 4px solid #ff9500; font-size: 0.8rem; color: #ffbc66; line-height: 1.4;">
+                ⚠️ <strong>CẢNH BÁO LẤN BIÊN:</strong> Kết cấu chiếm dụng dải quét rộng <strong>${sizeDegree}°</strong>, đè lên <strong>${ketQua.scanMetrics.totalHauOccupied} phân độ Hậu</strong> khí trường ngầm.
+                ${danhSachHauBaoCaoHTML ? `<div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,149,0,0.15);">${danhSachHauBaoCaoHTML}</div>` : ''}
+            </div>
+        `;
+    } else {
+        thongTinPhanTichHau = `
+            <div style="margin-top: 10px; padding: 10px; background: rgba(48,209,88,0.06); border-radius: 6px; border-left: 4px solid #30d158; font-size: 0.8rem; color: #82f5a0; line-height: 1.4;">
+                ✅ <strong>ĐẮC TRỌNG TÂM THUẦN KHÍ:</strong> Toàn bộ mặt kết cấu định vị hoàn hảo trong dải địa khí tinh khiết.
+            </div>
+        `;
+    }
+
+    // ─── 5. XUẤT CẤU TRÚC GIAO DIỆN MINH BẠCH, THÔNG MINH ───
+    container.innerHTML = `
+        <div style="position: relative; background: ${bgGiaoDien}; border: 1px solid ${mauSacGiaoDien}35; padding: 16px; border-radius: 12px; color: #fff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-shadow: 0 8px 24px rgba(0,0,0,0.35);">
+            
+            <button onclick="document.getElementById('scan-result-panel').style.display='none'" 
+                    style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.05); border: none; color: #8e8e93; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.85rem; transition: all 0.2s;"
+                    onmouseover="this.style.background='rgba(255,255,255,0.1)';this.style.color='#fff'" 
+                    onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='#8e8e93'">✕</button>
+
+            <div style="font-weight: bold; color: #ffca28; margin-bottom: 12px; font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px; padding-right: 25px;">
+                📊 KẾT QUẢ ĐỊNH VỊ: ${tenVatTheChuan.toUpperCase()}
+            </div>
+
+            <div style="font-size: 0.85rem; line-height: 1.6; color: #e5e5ea; background: rgba(0,0,0,0.15); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03);">
+                Bạn đang tiến hành đo đạc cấu trúc <span style="color: #ffca28; font-weight: bold;">${tenVatTheChuan}</span>:<br>
+                • Định vị địa bàn: Nằm tại <span style="color: #30d158; font-weight: bold;">${tenHuongDaiCuc}</span> (Sơn vị: <span style="color: #ffd60a;">${tenSonVi}</span> / Hậu vị: <span style="color: #ffd60a;">${tenHauVi}</span>).<br>
+                • Tọa độ trọng tâm: <span style="color: #ffca28; font-weight: bold;">${Math.round(centerAngle)}°</span>.<br>
+                • Bề rộng chiếm dụng không gian: <span style="color: #30d158; font-weight: bold;">${Math.round(sizeDegree)}°</span>.
+            </div>
+
+            <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse; margin-top: 10px;">
+                <tr>
+                    <td style="padding: 6px 0; color: #aeaeb2;">Điểm địa khí tổng hợp:</td>
+                    <td style="text-align: right; font-weight: bold; color: ${mauSacGiaoDien}; font-size: 1.05rem;">${ketQua.diem || 0} pt (${ketQua.level || 'HUNG'})</td>
+                </tr>
+            </table>
+
+            ${thongTinPhanTichHau}
+
+            <div style="border-top: 1px solid rgba(255,255,255,0.08); margin-top: 12px; padding-top: 10px; font-size: 0.82rem; color: #d1d1d6; line-height: 1.5;">
+                <strong style="color: #ffca28;">Luận giải [${cungPhiChuMenh} Mệnh]:</strong> ${ketQua.message || 'Không có bình luận cục diện.'}
+            </div>
+            
+            ${ketQua.hoaGiai ? `
+                <div style="margin-top: 8px; padding: 8px; background: rgba(255,214,10,0.06); border: 1px solid rgba(255,214,10,0.15); border-radius: 6px; font-size: 0.8rem; color: #ffd60a; line-height: 1.4;">
+                    <strong>Biện pháp điều chỉnh:</strong> ${ketQua.hoaGiai}
+                </div>
+            ` : ''}
+        </div>
+    `;
+
+    console.log("=== ĐÃ ĐỔ DỮ LIỆU LÊN UI THÀNH CÔNG ===");
+
+    if (typeof triggerGhostNeedle === 'function') {
+        triggerGhostNeedle(centerAngle);
+    }
+}
+/**
+ * HÀM BỔ SUNG: Trích xuất Cung Phi hiện tại từ giao diện người dùng
+ * Giúp hàm quét động nhận diện chính xác bản mệnh để tính điểm Bát Trạch
+ */
+function vịTríLấyCungPhi() {
+    // 1. Tìm xem giao diện có ô chọn (select/input) nào chứa Cung Phi không
+    const phầnTửCung = document.getElementById('cungPhi') || 
+                       document.getElementById('cungPhiChuMenh') || 
+                       document.getElementById('purpose'); // Tùy thuộc vào ID bạn đặt trong HTML
+                       
+    if (phầnTửCung && phầnTửCung.value) {
+        // Nếu giá trị là chữ (Càn, Khôn, Ly...) thì trả về luôn
+        if (["Càn", "Khôn", "Khảm", "Ly", "Chấn", "Tốn", "Cấn", "Đoài"].includes(phầnTửCung.value)) {
+            return phầnTửCung.value;
+        }
+    }
+    
+    // 2. Dự phòng: Nếu trên giao diện có lưu thông tin ngày sinh để tính toán
+    const txtNam = document.getElementById('birthYear');
+    const txtThang = document.getElementById('birthMonth') || { value: 6 };
+    const txtNgay = document.getElementById('birthDay') || { value: 15 };
+    const rdGioiTinh = document.querySelector('input[name="gender"]:checked') || { value: 'male' };
+    
+    if (txtNam && txtNam.value) {
+        // Tái sử dụng chính hàm `tínhCungPhi` có sẵn của bạn bên trên
+        return tínhCungPhi(parseInt(txtNam.value), parseInt(txtThang.value), parseInt(txtNgay.value), rdGioiTinh.value);
+    }
+
+    // 3. Nếu không tìm thấy bất kỳ dấu vết nào trên UI, trả về Càn (Mặc định hệ thống)
+    return "Càn";
+}
+
+/**
+ * HÀM BỔ SUNG: Lấy năm Âm lịch khảo sát từ UI
+ */
+function vịTríLấyNămÂmChuẩn() {
+    const txtSurveyYear = document.getElementById('surveyYear');
+    if (txtSurveyYear && txtSurveyYear.value.length === 4) {
+        return parseInt(txtSurveyYear.value);
+    }
+    return new Date().getFullYear();
+}
+
+// Biến lưu trạng thái toàn cục để không phụ thuộc vào DOM
+const rotateState = {}; 
+
+function handleSmartRotate(btn) {
+    // 1. Dùng ID của nút làm Key để quản lý trạng thái (Tránh lỗi nếu có nhiều nút xoay)
+    const btnId = btn.id || 'default-rotate-btn';
+    if (!rotateState[btnId]) {
+        rotateState[btnId] = { count: 0 };
+    }
+
+    // 2. Parse dữ liệu một lần duy nhất
+    const sonAngles = JSON.parse(btn.getAttribute('data-son-angles'));
+    const isCatPurpose = btn.getAttribute('data-is-cat') === 'true';
+
+    // 3. Tăng count
+    rotateState[btnId].count++;
+    const clickCount = rotateState[btnId].count;
+    const currentSonIdx = clickCount % sonAngles.length; // Dùng % length để linh hoạt (không chỉ % 3)
+    const currentSon = sonAngles[currentSonIdx];
+
+    // 4. Cập nhật UI nút bấm
+    const nextSonIdx = (clickCount + 1) % sonAngles.length;
+    const nextSonName = sonAngles[nextSonIdx].name;
+    btn.innerHTML = `🔄 Đang xem: Sơn ${currentSon.name} (${currentSon.angle}°) ➔ Click xem tiếp Sơn ${nextSonName}`;
+
+    // 5. Điều phối kim (Dùng requestAnimationFrame để mượt trên di động)
+    requestAnimationFrame(() => {
+        if (typeof triggerGhostNeedle === 'function') {
+            triggerGhostNeedle(currentSon.angle);
+        }
+        
+        // Gọi lại recalculateFate() để update các chỉ số chi tiết ngay lập tức
+        if (typeof recalculateFate === 'function') {
+            // Nếu bạn có biến lưu hướng khóa, cần cập nhật nó ở đây
+            if (typeof lockedHeadingAtOpen !== 'undefined') {
+                lockedHeadingAtOpen = currentSon.angle;
+            }
+            recalculateFate();
+        }
+    });
+
+    // 6. Xử lý Blink hiệu ứng
+    triggerBlinkEffect(currentSon.score, isCatPurpose);
+}
+
+// Hàm tách biệt xử lý hiệu ứng Blink để dễ quản lý
+function triggerBlinkEffect(score, isCatPurpose) {
+    const needleElement = document.querySelector('.compass-needle') || document.getElementById('compassNeedle');
+    if (!needleElement) return;
+
+    let isGoodLocation = isCatPurpose ? (score >= 72) : (score < 50);
+
+    needleElement.classList.remove('la-ban-blink-green', 'la-ban-blink-yellow');
+    void needleElement.offsetWidth; // Force Reflow
+
+    if (isGoodLocation) {
+        needleElement.classList.add('la-ban-blink-green');
+    } else if ((isCatPurpose && score >= 50) || (!isCatPurpose && score <= 70)) {
+        needleElement.classList.add('la-ban-blink-yellow');
+    }
+}
+//gioi thieu phong thuy
+document.getElementById('openScienceBtn').addEventListener('click', function() {
+    // Gọi hàm khởi tạo và hiển thị khung nội dung khoa học từ file JS riêng biệt
+    if (typeof FengShuiScienceModal !== 'undefined') {
+        FengShuiScienceModal.open();
+    } else {
+        console.error("Chưa nạp file phongthuy_khoahoc.js");
+    }
+});
