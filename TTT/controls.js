@@ -300,43 +300,7 @@ const Data72Hau = {
     "330": { ten: "Hợi Hậu 2", chatLuong: "Bình", hanh: "Thủy", ynghia: "Quản lý tài chính thận trọng.", diem: 60, giaiphap: "Thận trọng.", interactionLevel: "Trung bình", overrideIf: null },
     "335": { ten: "Hợi Hậu 3", chatLuong: "Bình", hanh: "Thủy", ynghia: "Giữ cân bằng, tránh thay đổi lớn.", diem: 59, giaiphap: "Cân bằng.", interactionLevel: "Trung bình", overrideIf: null }
 };
-// =========================================================================
-// ID-06: MẠNG LƯỚI TIỆN ÍCH TRẮC ĐỊA TOÁN HỌC VÀ CHUẨN HÓA DỮ LIỆU CỐT LÕI
-// =========================================================================
-const PhongThuyUtils = {
-    // Chuẩn hóa góc độ luôn nằm trong dải [0, 359.9999] chống tràn số
-    normalizeDegree: function(degree) {
-        if (typeof degree !== 'number' || isNaN(degree)) return 0;
-        return ((degree % 360) + 360) % 360;
-    },
 
-    // Chuẩn hóa chuỗi văn bản chữ hoa đầu để khớp khít cấu trúc map dữ liệu
-    toTitleCase: function(str) {
-        if (!str || typeof str !== 'string') return "Khảm";
-        const trimmed = str.trim();
-        return trimmed.charAt(0).toUpperCase() + trimmed.slice(1).toLowerCase();
-    },
-
-    // Trích xuất Năm Khảo Sát thực thời khách quan từ UI hoặc thời gian máy tính
-    getSurveyYear: function() {
-        const txtSurveyYear = document.getElementById('surveyYear');
-        if (txtSurveyYear && txtSurveyYear.value.length === 4) {
-            const parsed = parseInt(txtSurveyYear.value, 10);
-            if (!isNaN(parsed)) return parsed;
-        }
-        return new Date().getFullYear();
-    },
-
-    // Trích xuất Năm Sinh Mệnh Chủ từ UI dạng Số
-    getBirthYear: function() {
-        const txtBirthYear = document.getElementById('birthYear');
-        if (txtBirthYear && txtBirthYear.value.length === 4) {
-            const parsed = parseInt(txtBirthYear.value, 10);
-            if (!isNaN(parsed)) return parsed;
-        }
-        return null;
-    }
-};
 // =========================================================================
 // ⏱️ 1. HỆ THỐNG KIỂM SOÁT THỜI GIAN & TIẾT KHÍ TỰ ĐỘNG KHÁCH QUAN
 // =========================================================================
@@ -693,6 +657,10 @@ function recalculateFate() {
         listPanelTitle.innerText = "Mạng lưới phương vị la bàn";
         const oldPanel = document.getElementById('dien-giai-bo-sung');
         if (oldPanel) oldPanel.remove();
+        
+        // Trả nền la bàn về trạng thái cổ điển sạch khi chưa có dữ liệu năm sinh
+        updateBatTrachBackground(null);
+        
         updateCompassUI(currentHeading);
         return;
     }
@@ -706,7 +674,10 @@ function recalculateFate() {
         return;
     }
 
+    // Tính toán Quẻ mệnh thực tế và kích hoạt ma trận đổ màu nền tự động
     chủMệnh = tínhCungPhi(y, m, d, gender);
+    updateBatTrachBackground(chủMệnh);
+
     const namAmMệnhChủ = (m < 2 || (m === 2 && d < 4)) ? y - 1 : y;
     const hanHinhCungPhi = bátTrạchMap[chủMệnh]?.element || "Thổ";
     const nhomMenh = bátTrạchMap[chủMệnh]?.group || "Tây Tứ Mệnh";
@@ -811,93 +782,84 @@ function recalculateFate() {
     updateCompassUI(currentHeading);
 }
 
+// =========================================================================
+// 🌐 THÀNH PHẦN 1: REFACTOR HÀM TRÍCH XUẤT HẬU (NGƯỜI ĐỌC ĐỊA MẠCH)
+// =========================================================================
 function getCurrentHauInfo(degree, mucDich = 'house', namKhaoSat = null, cungPhi = 'Khảm', namAm = null) {
     const normalized = ((degree % 360) + 360) % 360;
     
-    // Khóa cứng phân vị trắc địa của long mạch ngầm theo bước 5 độ cố định (GỐC ĐỊA MẠCH)
+    // Khóa dữ liệu cache theo độ thực tế làm tròn để triệt tiêu lỗi rò rỉ nhãn sang góc kề bên
+    const cacheKey = normalized.toFixed(1);
+    
+    // Khóa cứng phân vị trắc địa của long mạch ngầm theo bước 5 độ cố định để tra cứu data gốc
     const keyHau = (Math.round(normalized / 5) * 5) % 360;
     
     const hau = Data72Hau[keyHau.toString()] || { 
         ten: "Xung Không Hậu", chatLuong: "Bình Hòa", diem: 60, ynghia: "Khí trường chuyển dịch điều hòa ổn định."
     };
 
-    const y = namKhaoSat ? parseInt(namKhaoSat, 10) : (typeof layNamKhaoSatThienVan === 'function' ? layNamKhaoSatThienVan() : new Date().getFullYear());
     const config = (typeof ConfigPhongThuy !== 'undefined' && ConfigPhongThuy[mucDich]) ? ConfigPhongThuy[mucDich] : { isCat: true };
     const isCatPurpose = config.isCat;
+    const chatLuongGoc = hau.chatLuong || "Bình Hòa";
 
-    // Phóng hệ số Vận tinh động của thời đại vào mạch Hậu để đo lường điểm thực thời
-    let kVan = 1.0;
-    const vanSo = Math.floor((y - 1864) / 20) % 9 + 1;
-    const sonObj = (typeof PhongThuyCore !== 'undefined') ? PhongThuyCore.getSonObj(normalized) : { name: "Tý", huong: "Bắc" };
-    
-    const mapHuongToCode = { "Bắc": "N", "Đông Bắc": "NE", "Đông": "E", "Đông Nam": "SE", "Nam": "S", "Tây Nam": "SW", "Tây": "W", "Tây Bắc": "NW" };
-    const codeChuan = mapHuongToCode[sonObj.huong] || "N";
-    
-    if (typeof VAN_DATA !== 'undefined' && VAN_DATA[vanSo]?.[codeChuan]) {
-        const saoThoiVan = VAN_DATA[vanSo][codeChuan];
-        if (saoThoiVan.loai === "best") kVan = 1.15;
-        else if (saoThoiVan.loai === "good") kVan = 1.08;
-        else if (saoThoiVan.loai === "bad") kVan = 0.88;
-        else if (saoThoiVan.loai === "worst") kVan = 0.75;
-    }
-
-    const chatLuongGoc = hau.chatLuong || hau.chatQuality || "Bình Hòa";
-    
-    // ĐỒNG BỘ NỘI HÀM TOÁN THỨC: Điểm vi phân của Hậu mạch tích hợp đầy đủ cấu trúc trừ phạt thiên thời
-    let diemGocHau = Number(hau.diem) || 60;
-    let diemSauVan = Math.round(diemGocHau * kVan);
-    
-    // Nếu có Sát Tinh Lưu Niên chiếu vào dải độ hẹp này, tự động đồng bộ trừ phạt điểm Ngọn
-    if (typeof tinhDiemTongHop === 'function') {
-        const safeCung = cungPhi ? cungPhi.trim() : "Khảm";
-        const masterCheck = tinhDiemTongHop(safeCung, normalized, y, mucDich, namAm, 0);
-        if (masterCheck && masterCheck.satTinhs && masterCheck.satTinhs.length > 0) {
-            diemSauVan -= (masterCheck.satTinhs.length * 12); // Trừ điểm phạt sát tinh đồng trục
-        }
-    }
+    let deltaH72 = 0;
+    if (chatLuongGoc.includes("Đại Cát")) deltaH72 = 12;
+    else if (chatLuongGoc.includes("Cát")) deltaH72 = 6;
+    else if (chatLuongGoc.includes("Tiểu Hung")) deltaH72 = -15;
+    else if (chatLuongGoc.includes("Đại Hung") || chatLuongGoc.includes("Không Vong") || chatLuongGoc.includes("Sai Thác")) deltaH72 = -35;
 
     let result = {
         ten: hau.ten || "Xung Không Hậu",
         chatLuongStatic: chatLuongGoc,
         ynghia: hau.ynghia || "Khí trường chuyển dịch luân hồi.",
-        diemGoc: diemGocHau,
-        diem: Math.max(5, Math.min(98, diemSauVan)),
+        diemGoc: Number(hau.diem) || 60,
+        deltaH72: deltaH72, 
         giaiphap: String(hau.giaiphap || "Bố trí kết cấu trạch pháp an vị cát tường."),
         emoji: "🟡",
         chatLuong: "Bình Hòa"
     };
 
-    // BIỆN CHỨNG ĐẢO CỰC CÁT HUNG ĐỒNG BỘ 100% THEO CÔNG NĂNG Γ_KHAI
+    // Nhãn UI cơ bản theo phân lớp Địa khí mạch đất
     const isHungHau = chatLuongGoc.includes("Hung") || chatLuongGoc.includes("Không Vong") || chatLuongGoc.includes("Sai Thác");
     if (isCatPurpose) {
-        if (isHungHau) { result.chatLuong = "ĐẠI HUNG ĐỊA MẠCH"; result.emoji = "🔴"; } 
-        else if (chatLuongGoc.includes("Cát")) { result.chatLuong = "CÁT MẠCH PHƯỚC ĐIỀN"; result.emoji = "🟢"; } 
-        else { result.chatLuong = "BÌNH HÒA AN ĐỊNH"; result.emoji = "🟡"; }
+        if (isHungHau) { result.chatLuong = "ĐẠI HUNG"; result.emoji = "🔴"; } 
+        else if (chatLuongGoc.includes("Cát")) { result.chatLuong = "CÁT MẠCH"; result.emoji = "🟢"; } 
+        else { result.chatLuong = "BÌNH HÒA"; result.emoji = "🟡"; }
     } else {
-        if (isHungHau) { result.chatLuong = "ĐẮC VỊ TIÊU HUNG"; result.emoji = "🟢"; } 
-        else if (chatLuongGoc.includes("Cát")) { result.chatLuong = "KỊ ĐÈ TRÚNG CÁT MẠCH"; result.emoji = "🔴"; } 
-        else { result.chatLuong = "TRUNG TÍNH PHÂN BỔ"; result.emoji = "🟡"; }
+        if (isHungHau) { result.chatLuong = "ĐẮC VỊ"; result.emoji = "🟢"; } 
+        else if (chatLuongGoc.includes("Cát")) { result.chatLuong = "PHẠM CÁT"; result.emoji = "🔴"; } 
+        else { result.chatLuong = "TRUNG TÍNH"; result.emoji = "🟡"; }
     }
 
-    // Mắt thần quét Không Vong tại tầng Hậu
+    // 🎯 ĐỒNG BỘ N NG CAO KHÔNG VONG: Đè chữ ngắn gọn và nạp văn bản giải thích chuẩn phong thủy vào Popup
     if (typeof kiemTraKhongVong === 'function') {
         const khongVong = kiemTraKhongVong(normalized);
         if (khongVong) {
+            result.chatLuongStatic = khongVong.loai; // Đồng bộ sang "ĐẠI KHÔNG VONG" hoặc "TIỂU KHÔNG VONG"
+            result.ynghia = khongVong.message;      // Đẩy thông điệp tính toán chi tiết của tuyến độ vào ý nghĩa
+            
             if (khongVong.loai === "ĐẠI KHÔNG VONG") {
-                result.chatLuong = isCatPurpose ? "ĐẠI HUNG (Tuyệt Mạch Không Vong)" : "TỬ TUYẾN TIÊU UẾ (Đại Không Vong)";
+                result.chatLuong = isCatPurpose ? "TUYỆT MẠCH" : "TỬ TUYẾN";
                 result.emoji = isCatPurpose ? "☠️" : "🔮";
+                result.giaiphap = isCatPurpose 
+                    ? "Tuyệt đối không xây dựng móng, ban thờ hay cửa chính tại đây. Hãy đổi hướng la bàn."
+                    : "Tọa độ lý tưởng để đặt tâm xả thải uế khí, giúp triệt tiêu hoàn toàn đại hung tinh sát của mạch đất.";
             } else {
-                result.chatLuong = isCatPurpose ? "TIỂU KHÔNG VONG (Khí Sai Thác)" : "TRẤN SÁT TIỂU KHÔNG VONG";
+                result.chatLuong = isCatPurpose ? "SAI THÁC" : "LỆCH KHÍ";
                 result.emoji = "⚠️";
+                result.giaiphap = isCatPurpose
+                    ? "Chủ động xoay vi phân kết cấu xây dựng lệch sang trái hoặc phải từ 1.5° đến 2.5° để thoát vạch nhiễu khí."
+                    : "Có thể đặt uế cục phụ. Không cần vi chỉnh nếu mặt bằng hình học bị giới hạn diện tích.";
             }
         }
     }
 
+    // Lưu vào hệ thống Cache theo khóa độ thực tế chính xác
     if (typeof hauCache !== 'undefined' && hauCache && hauCache.set) {
-        hauCache.set(keyHau, result);
+        hauCache.set(cacheKey, result);
     }
     
-    return result;
+    return result; 
 }
 
 // =========================================================================
@@ -991,7 +953,6 @@ function generateDirectionsList() {
     const mucDich = purposeEl ? purposeEl.value : "";
     const directionsContainerEl = document.getElementById('directionsContainer') || (typeof directionsContainer !== 'undefined' ? directionsContainer : null);
     
-    // Bọc lót an toàn tuyệt đối cho Config dữ liệu phong thủy
     const nguonConfig = (typeof ConfigPhongThuy !== 'undefined') ? ConfigPhongThuy : ((typeof PhongThuyCore !== 'undefined' && PhongThuyCore.data?.Config) ? PhongThuyCore.data.Config : {});
     const config = nguonConfig[mucDich];
     
@@ -1017,20 +978,17 @@ function generateDirectionsList() {
         namAmMệnhChủ = (parseInt(monthStr, 10) < 2 || (parseInt(monthStr, 10) === 2 && parseInt(dayStr, 10) < 4)) ? parseInt(yearStr, 10) - 1 : parseInt(yearStr, 10);
     }
 
-    // Bọc lót an toàn biến quẻ Mệnh Chủ Lõi
     let quẻMệnhChủLõi = "Khảm";
     if (typeof chủMệnh !== 'undefined' && chủMệnh) {
         quẻMệnhChủLõi = chủMệnh;
     } else if (typeof chủMệnhToànCục !== 'undefined' && chủMệnhToànCục) {
         quẻMệnhChủLõi = chủMệnhToànCục;
     }
-    quẻMệnhChủLõi = quẻMệnhChủLõi.trim();
-    quẻMệnhChủLõi = quẻMệnhChủLõi.charAt(0).toUpperCase() + quẻMệnhChủLõi.slice(1).toLowerCase();
+    quẻMệnhChủLõi = quẻMệnhChủLõi.trim().charAt(0).toUpperCase() + quẻMệnhChủLõi.slice(1).toLowerCase();
 
     const cacCungTot = ["Sinh Khí", "Diên Niên", "Thiên Y", "Phục Vị"];
     const cacCungXau = ["Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"];
 
-    // Bọc lót mảng dữ liệu directionMeta định vị hướng lớn la bàn mặc định
     const nguồnMeta = (typeof directionMeta !== 'undefined') ? directionMeta : [
         { name: "Chính Bắc", code: "N", angle: 0 }, { name: "Đông Bắc", code: "NE", angle: 45 },
         { name: "Chính Đông", code: "E", angle: 90 }, { name: "Đông Nam", code: "SE", angle: 135 },
@@ -1043,14 +1001,12 @@ function generateDirectionsList() {
     nguồnMeta.forEach(dir => {
         const cungTrạch = (nguonBatTrach[quẻMệnhChủLõi]) ? nguonBatTrach[quẻMệnhChủLõi][dir.code] || "Khác" : "Khác";
         
-        // Sàng lọc thô ban đầu theo đúng bản chất âm trạch dương cơ
         if (isCatPurpose) {
             if (!cacCungTot.includes(cungTrạch)) return; 
         } else {
             if (!cacCungXau.includes(cungTrạch)) return;
         }
 
-        // Tính toán điểm số chính xác tại trục tâm ngắm lập cực
         if (typeof tinhDiemTongHop === 'function') {
             const tongHopDir = tinhDiemTongHop(quẻMệnhChủLõi, dir.angle, namKhaoSatThucTe, mucDich, namAmMệnhChủ, 0);
             listDirections.push({
@@ -1067,7 +1023,6 @@ function generateDirectionsList() {
         }
     });
 
-    // Sắp xếp danh sách thứ tự ưu tiên điểm số thực tế từ cao xuống thấp
     listDirections.sort((a, b) => b.priority - a.priority);
     
     const listPanelTitleEl = document.getElementById('listPanelTitle') || (typeof listPanelTitle !== 'undefined' ? listPanelTitle : null);
@@ -1084,7 +1039,6 @@ function generateDirectionsList() {
     }
 
     listDirections.forEach(item => {
-        // ─── TỰ CUNG CẤP LOGIC O(1) NỘI CỤC: Không gọi hàm ngoài ───
         const mapSonGroup = {
             "N":  ["Nhâm", "Tý", "Quý"], "NE": ["Sửu", "Cấn", "Dần"],
             "E":  ["Giáp", "Mão", "Ất"], "SE": ["Thìn", "Tốn", "Tỵ"],
@@ -1098,7 +1052,6 @@ function generateDirectionsList() {
 
         sonGroup.forEach((son, index) => {
             let gocCuaSon = (item.angle + (index - 1) * 15 + 360) % 360;
-            
             let score = 60;
             let thongTinHạnSon = "";
             let thongTinSonDong = null;
@@ -1110,50 +1063,49 @@ function generateDirectionsList() {
             
             if (thongTinSonDong && thongTinSonDong.satTinhs && thongTinSonDong.satTinhs.length > 0) {
                 let tenSaoSơn = thongTinSonDong.satTinhs.map(s => s.ten).join(", ");
-                thongTinHạnSon = `\\n\\n⚠️ BIẾN THIÊN LƯU NIÊN: Sơn vị này năm nay vướng phải [${tenSaoSơn}] quấy phá phần Ngọn, làm hao hụt sinh khí đoản kỳ. Qua năm sau khi hệ sao tinh chuyển dịch, trường khí tại tọa độ hẹp này sẽ tự động khôi phục, ấm áp trở lại.`;
+                thongTinHạnSon = `<br><br>⚠️ <b>BIẾN THIÊN LƯU NIÊN:</b> Sơn vị này năm nay vướng [${tenSaoSơn}] quấy phá phần Ngọn, tạm thời hao hụt khí trường. Qua năm hạn sao chuyển dịch, năng lượng tọa độ hẹp này sẽ tự động khôi phục vượng cát.`;
             } else {
-                thongTinHạnSon = `\\n\\n✨ THỜI VẬN AN ĐỊNH: Toàn bộ phân độ Sơn vị sạch bóng sát tinh lưu niên, từ trường thuần khiết vững vàng.`;
+                thongTinHạnSon = `<br><br>✨ <b>THỜI VẬN AN ĐỊNH:</b> Phân độ Sơn vị sạch bóng sát tinh lưu niên, trường khí thuần khiết vững vàng.`;
             }
 
-            let titleInfo = `Sơn vị ${son} [Trắc địa vi phân: ${score}pt]`;
+            let titleInfo = `Phương vị hình học Sơn ${son} [Điểm lập cực: ${score}pt]`;
             let textInfo = "";
-            let solInfo = "Biện pháp: Giữ phương vị sạch sẽ, điều hòa nạp khí.";
+            let solInfo = "";
             let sonColor = "#dfb76c";
 
             if (isCatPurpose) {
                 if (score >= 70) {
                     sonColor = "#30d158"; countSonXanh++;
-                    textInfo = `ĐẮC THỜI ĐẮC VỊ: Phân độ Sơn vị ${son} đạt năng lượng cát lợi cao (${score}pt). Khí mạch phối hợp đồng trục hoàn hảo với bản mệnh gia chủ.${thongTinHạnSon}`;
-                    solInfo = "Giải pháp: Ưu tiên đặt tâm cửa, thiết bị ngắm đón khí chính xác vào dải độ xanh này để đón trọn tài lộc.";
+                    textInfo = `<b>ĐẮC THỜI ĐẮC VỊ:</b> Tọa độ Sơn vị ${son} đạt năng lượng cát lợi cao (${score}pt). Khí trường phối hợp đồng trục hoàn hảo với bản mệnh gia chủ, sinh khí dồi dào.${thongTinHạnSon}`;
+                    solInfo = "Thiết kế: Ưu tiên đặt tâm cửa chính, ban thờ hoặc giường ngủ lọt khít vào dải độ xanh này để hút tài lộc.";
                 } else if (score >= 50) {
                     sonColor = "#dfb76c"; countSonVang++;
-                    textInfo = `BÌNH HÒA TRẠCH PHÁP: Sơn vị ${son} đạt trạng thái năng lượng trung tính ổn định (${score}pt), không sinh họa, an toàn cho gia đạo.${thongTinHạnSon}`;
-                    solInfo = "Giải pháp: Hoàn toàn có thể an tâm bố trí quy hoạch công năng nội cục, phối hợp màu sắc ngũ hành tương sinh để bổ trợ.";
+                    textInfo = `<b>BÌNH HÒA TRẠCH PHÁP:</b> Sơn vị ${son} đạt trạng thái trường khí cân bằng ổn định (${score}pt), an toàn, không sinh họa cho gia vận.${thongTinHạnSon}`;
+                    solInfo = "Thiết kế: An tâm bố trí công năng sinh hoạt nội cục, có thể phối màu ngũ hành tương sinh để bổ trợ khí.";
                 } else {
                     sonColor = "#ff3b30"; countSonDo++;
-                    textInfo = `⚠️ SUY KIỆT KHÍ TRƯỜNG: Phân độ Sơn vị ${son} chỉ đạt chỉ số thấp (${score}pt) do ảnh hưởng từ sao hạn hoặc tương khắc trắc địa cấu trúc.${thongTinHạnSon}`;
-                    solInfo = "Lời khuyên điều tiết: Khi bài trí kiến trúc, ưu tiên dịch chuyển tâm nạp khí ra khỏi tọa độ phân châm hẹp này để sang các dải Sơn vị cát tường kề bên. Trường hợp kết cấu cố định cố hữu, hãy áp dụng vật phẩm hóa giải để thanh lọc dòng khí.";
+                    textInfo = `⚠️ <b>SUY KIỆT TRƯỜNG KHÍ:</b> Phân độ Sơn vị ${son} chỉ đạt chỉ số thấp (${score}pt) do xung khắc trắc địa hoặc niên tinh tà khí xâm phạm.${thongTinHạnSon}`;
+                    solInfo = "Điều tiết: Tránh đặt các yếu tố nạp khí chính tại dải độ này. Nếu kết cấu cố định, dùng vật phẩm ngũ hành chuyển hóa khí.";
                 }
             } else {
                 if (score >= 70) {
                     sonColor = "#30d158"; countSonXanh++; 
-                    titleInfo = `Sơn vị ${son} [Trấn Sát Đắc Cách]`;
-                    textInfo = `THẦN CÁCH TRẤN YỂM: Sơn vị mang khí chế sát đắc hiệu (${score}pt). Đặt uế cục đè tại đây giúp khóa chặt hung khí dòng long mạch.`;
-                    solInfo = "Giải pháp: Cấu trúc lập cực lý tưởng về mặt kiến trúc phong thủy, giữ nguyên vị trí công năng.";
+                    titleInfo = `Sơn vị Trấn Sát ${son} [Đắc Cách Đại Cát]`;
+                    textInfo = `<b>THẦN CÁCH TRẤN YỂM:</b> Sơn vị mang năng lượng hung tính lớn của Bát Trạch hung quẻ, cực kỳ lý tưởng để đặt thiết bị xả uế nhằm khóa chặt ác khí long mạch, hóa hung thành cát thành công.`;
+                    solInfo = "Quy hoạch: Kết cấu hoàn hảo về mặt trạch pháp kiến trúc. Hãy đặt uế cục kiên cố tại đây.";
                 } else if (score >= 50) {
                     sonColor = "#dfb76c"; countSonVang++;
-                    titleInfo = `Sơn vị ${son} [Trấn Sát Bình Hòa]`;
-                    textInfo = `Khu vực Sơn vị ${son} đạt trạng thái bình hòa hóa sát (${score}pt). Đặt uế cục tại đây an toàn, không sinh họa.`;
-                    solInfo = "Giải pháp: Có thể sử dụng được nếu mặt bằng kiến trúc bị giới hạn diện tích không gian nội cục.";
+                    titleInfo = `Sơn vị Trấn Sát ${son} [Bình Hòa]`;
+                    textInfo = `<b>TRUNG TÍNH HÓA SÁT:</b> Khu vực dải độ Sơn vị ${son} đạt trạng thái tiêu giảm sát khí ổn định (${score}pt), đặt công năng phụ thải uế an toàn, không sinh tai họa.`;
+                    solInfo = "Quy hoạch: Chấp nhận được hoàn toàn nếu mặt bằng kiến trúc đô thị bị bó hẹp diện tích.";
                 } else {
                     sonColor = "#ff3b30"; countSonDo++; 
                     titleInfo = `⚠️ TRƯỜNG KHÍ THANH SẠCH CẦN BẢO VỆ`;
-                    textInfo = `ĐIỀU HÒA TRẠCH PHÁP: Tọa độ Sơn vị này (${score}pt) hiện đang lưu giữ dòng sinh khí sạch thuần khiết của trạch đất trong nguyên vận. Việc thiết lập nhà vệ sinh, hầm tự hoại trực xung đè lên dễ gây ô nhiễm địa mạch và suy giảm năng lượng chung.`;
-                    solInfo = "Mật pháp điều tiết: Nên chủ động vi chỉnh thiết thiết bị xả uế lệch tâm sang phân độ Sơn vị báo màu xanh lợi trấn sát kề cận. Trong trường hợp diện tích đô thị bó hẹp bắt buộc phải đặt tại đây, hãy dùng đá thạch anh trắng thô khối lớn kết hợp than hoạt tính lót dưới nền để phong tỏa uế khí.";
+                    textInfo = `<b>ĐIỀU HÒA TRẠCH PHÁP ĐẠI KỴ:</b> Tọa độ Sơn vị này (${score}pt) bản chất đang giữ dòng địa khí sạch, thanh khiết của ngôi nhà trong nguyên vận. Đặt hầm tự hoại hoặc nhà vệ sinh trực trực xung đè lên sẽ làm ô nhiễm ngầm mạch đất, tổn hại âm đức trạch nhà.`;
+                    solInfo = "Mật pháp vi chỉnh: Chủ động tịnh tiến thiết bị xả uế lệch tâm sang phân độ Sơn vị báo màu xanh kề bên để bảo vệ long mạch.";
                 }
             }
             
-            // ─── TỰ XỬ LÝ ESCAPE CHUỖI NỘI CỤC: Không gọi hàm ngoài ───
             const cleanStr = (s) => s ? s.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;') : "";
             const safeTitle = cleanStr(titleInfo);
             const safeText = cleanStr(textInfo);
@@ -1166,78 +1118,108 @@ function generateDirectionsList() {
             if (index < sonGroup.length - 1) sonHTML += ` • `;
         });
 
-        // ĐỒNG BỘ TOÁN PHÁP 3 HẬU ĐỊA MẠCH LONG KHÍ THỰC TẾ TRÊN UI
         let mốcTâm = item.angle;
         let mốcTrái = (mốcTâm - 5 + 360) % 360;
         let mốcPhải = (mốcTâm + 5) % 360;
 
-        let resTrái = typeof tinhDiemTongHop === 'function' ? tinhDiemTongHop(quẻMệnhChủLõi, mốcTrái, namKhaoSatThucTe, mucDich, namAmMệnhChủ, 0) : { hauInfo: { ten: "Hậu", chatLuong: "Bình Hòa", diem: 60, giaiphap: "", ynghia: "" } };
-        let resTâm  = typeof tinhDiemTongHop === 'function' ? tinhDiemTongHop(quẻMệnhChủLõi, mốcTâm, namKhaoSatThucTe, mucDich, namAmMệnhChủ, 0) : { hauInfo: { ten: "Hậu", chatLuong: "Bình Hòa", diem: 60, giaiphap: "", ynghia: "" } };
-        let resPhải = typeof tinhDiemTongHop === 'function' ? tinhDiemTongHop(quẻMệnhChủLõi, mốcPhải, namKhaoSatThucTe, mucDich, namAmMệnhChủ, 0) : { hauInfo: { ten: "Hậu", chatLuong: "Bình Hòa", diem: 60, giaiphap: "", ynghia: "" } };
+        let hauInfoTrái = typeof getCurrentHauInfo === 'function' ? getCurrentHauInfo(mốcTrái, mucDich, namKhaoSatThucTe, quẻMệnhChủLõi, namAmMệnhChủ) : { ten: "Hậu", chatLuongStatic: "Bình Hòa", diemGoc: 60, emoji: "🟡", chatLuong: "Bình Hòa", ynghia: "", giaiphap: "" };
+        let hauInfoTâm  = typeof getCurrentHauInfo === 'function' ? getCurrentHauInfo(mốcTâm, mucDich, namKhaoSatThucTe, quẻMệnhChủLõi, namAmMệnhChủ) : { ten: "Hậu", chatLuongStatic: "Bình Hòa", diemGoc: 60, emoji: "🟡", chatLuong: "Bình Hòa", ynghia: "", giaiphap: "" };
+        let hauInfoPhải = typeof getCurrentHauInfo === 'function' ? getCurrentHauInfo(mốcPhải, mucDich, namKhaoSatThucTe, quẻMệnhChủLõi, namAmMệnhChủ) : { ten: "Hậu", chatLuongStatic: "Bình Hòa", diemGoc: 60, emoji: "🟡", chatLuong: "Bình Hòa", ynghia: "", giaiphap: "" };
 
-        let hauInfoTrái = resTrái.hauInfo;
-        let hauInfoTâm  = resTâm.hauInfo;
-        let hauInfoPhải = resPhải.hauInfo;
-
-        let countHauXanh = 0, countHauVang = 0, countHauDo = 0;
-        const getHauStatusAndCount = (hauObj, isCat) => {
-    // CHỮA LỖI XUNG ĐỘT MÀU SẮC: Chuyển hoàn toàn từ kiểm tra ký tự chuỗi tĩnh (includes)
-    // sang đối sánh trực tiếp dải điểm số thực tế sau khi tính toán đa tầng để đồng bộ Card.
-    const score = hauObj.diem || 60;
-    
-    if (isCat) {
-        if (score >= 70) { 
-            countHauXanh++; 
-            return { color: '#30d158', label: 'CÁT MẠCH', desc: 'Địa mạch long thần thuần khiết vượng khí, gia trì bệ đỡ phong thủy vững chắc lâu dài.' }; 
-        }
-        if (score < 50) { 
-            countHauDo++; 
-            return { color: '#ff3b30', label: 'ĐẠI HUNG', desc: 'Mạch khí ngầm dưới lòng đất bị đứt gãy hoặc vướng tạp khí xấu cục bộ. Cực kỳ kỵ dẫn khí vào nhà.' }; 
-        }
-        countHauVang++; 
-        return { color: '#dfb76c', label: 'BÌNH HÒA', desc: 'Địa mạch ngầm giữ trạng thái an định ổn định, an toàn không sinh tai họa.' };
-    } else {
-        if (score >= 70) { 
-            countHauXanh++; 
-            return { color: '#30d158', label: 'ĐẮC VỊ', desc: 'Mạch địa khí ngầm mang tính hung sát, rất lý tưởng để đặt công năng xả uế để tiêu trừ tà khí.' }; 
-        }
-        if (score < 50) { 
-            countHauDo++; 
-            return { color: '#ff3b30', label: 'K. NÊN ĐẶT', desc: 'Long mạch ngầm vượng sạch và thanh khiết, tuyệt đối tránh đặt bể phốt, uế cục đè lên.' }; 
-        }
-        countHauVang++; 
-        return { color: '#dfb76c', label: 'TRUNG TÍNH', desc: 'Địa mạch trung hòa ổn định, có thể cân nhắc đặt công năng kiến trúc phụ.' };
-    }
-};
-
-        const statusTrái = getHauStatusAndCount(hauInfoTrái, isCatPurpose);
-        const statusTâm = getHauStatusAndCount(hauInfoTâm, isCatPurpose);
-        const statusPhải = getHauStatusAndCount(hauInfoPhải, isCatPurpose);
-
-        const getHauExplanation = (hauObj, curStatus, resObj) => {
-            let nienHanHau = "";
-            if (resObj.satTinhs && resObj.satTinhs.length > 0) {
-                nienHanHau = `\\n\\n⚠️ CẢNH BÁO: Mạch ngầm phân vị này năm nay bị ảnh hưởng bởi sát tinh thời vận quấy nhiễu. Điểm số động thực tế ghi nhận ${hauObj.diem}pt. Sau niên độ khảo sát, năng lượng sẽ tự động luân chuyển điều hòa trở lại chu kỳ tĩnh.`;
-            } else {
-                nienHanHau = `\\n\\n✨ TÌNH TRẠNG: Mạch đất ngầm sạch sẽ, trường khí vận hành thông suốt suốt cả năm khảo sát.`;
+        const getDynamicHauScoreAndSat = (angle, hauObj) => {
+            let localKVan = 1.0;
+            if (typeof PhongThuyCore !== 'undefined' && typeof VAN_DATA !== 'undefined') {
+                const sObj = PhongThuyCore.getSonObj(angle);
+                const hMap = { "Bắc": "N", "Đông Bắc": "NE", "Đông": "E", "Đông Nam": "SE", "Nam": "S", "Tây Nam": "SW", "Tây": "W", "Tây Bắc": "NW" };
+                const cCode = hMap[sObj.huong] || "N";
+                let vSo = Math.floor((namKhaoSatThucTe - 1864) / 20) % 9 + 1;
+                if (VAN_DATA[vSo]?.[cCode]) {
+                    const sao = VAN_DATA[vSo][cCode];
+                    if (sao.loai === "best") localKVan = 1.15;
+                    else if (sao.loai === "good") localKVan = 1.08;
+                    else if (sao.loai === "bad") localKVan = 0.88;
+                    else if (sao.loai === "worst") localKVan = 0.75;
+                }
             }
-            return `Phân vị Hậu mạch địa tầng ngầm: ${hauObj.ten}\\nChỉ số năng lượng Địa khí: ${hauObj.diem}pt.\\n\\n🔍 TRẮC ĐỊA BẢN CHẤT: ${curStatus.desc}${nienHanHau}`;
+            let penalty = 0;
+            const sonContext = typeof PhongThuyCore !== 'undefined' ? PhongThuyCore.getSonObj(angle) : { name: "Tý" };
+            const localSats = (typeof getPhongThuySatTinh === 'function') ? getPhongThuySatTinh(sonContext.name, namKhaoSatThucTe) : [];
+            localSats.forEach(sat => {
+                if (sat.ten.includes("NGŨ HOÀNG")) penalty += 25;
+                else if (sat.ten.includes("THÁI TUẾ")) penalty += 18;
+                else if (sat.ten.includes("TUẾ PHÁ")) penalty += 12;
+                else if (sat.ten.includes("TAM SÁT")) penalty += 15;
+            });
+            return {
+                diemDong: Math.max(5, Math.min(98, Math.round(hauObj.diemGoc * localKVan - (penalty * 0.5)))),
+                satList: localSats
+            };
+        };
+
+        let dynTrái = getDynamicHauScoreAndSat(mốcTrái, hauInfoTrái);
+        let dynTâm  = getDynamicHauScoreAndSat(mốcTâm, hauInfoTâm);
+        let dynPhải = getDynamicHauScoreAndSat(mốcPhải, hauInfoPhải);
+
+        const parseHauStatusCard = (hauObj) => {
+            const emoji = hauObj.emoji || "🟡";
+            let color = "#dfb76c";
+            if (emoji === "🟢" || emoji === "🔮") color = "#30d158";
+            if (emoji === "🔴" || emoji === "☠️") color = "#ff3b30";
+            if (emoji === "🟡" || emoji === "⚠️") color = "#dfb76c";
+            return { color: color, label: hauObj.chatLuong };
+        };
+
+        const statusTrái = parseHauStatusCard(hauInfoTrái);
+        const statusTâm   = parseHauStatusCard(hauInfoTâm);
+        const statusPhải = parseHauStatusCard(hauInfoPhải);
+
+        // 🧠 HÀM PHÂN TÍCH VÀ SÀNG LỌC ĐỊA MẠCH CAO CẤP: Khử hoàn toàn giải pháp hời hợt (Rèm cửa, bình nước)
+        const getHauExplanation = (hauObj, dynScore, satList, isCat) => {
+            let nienHanHau = (satList && satList.length > 0)
+                ? `<br><br>⚠️ <b>CẢNH BÁO NIÊN HẠN:</b> Phân vị vướng sát tinh lưu niên, địa khí thực thời biến động còn <b>${dynScore}pt</b>. Qua chu kỳ năm hạn khí mạch sẽ tự phục hồi.`
+                : `<br><br>✨ <b>TÌNH TRẠNG LƯU NIÊN:</b> Long mạch tầng sâu sạch sẽ, trường khí vận hành thông suốt thông thuận suốt năm khảo sát.`;
+            
+            let nghiaThucTe = hauObj.ynghia || "Khí mạch luên hồi tịnh tiến ổn định.";
+            
+            // 🎯 TIÊU DIỆT TỬ HUYỆT GIẢI PHÁP SAI LỆCH CỦA CƠ SỞ DỮ LIỆU TĨNH:
+            // Tự động ép giải pháp về đúng bản chất trạch vật lý kiến trúc (Dùng đá địa tầng hoặc móng ngăn khí)
+            let phuongAnThucTe = "Giữ khu vực thông thoáng, điều hòa dòng khí ngầm sàn.";
+            const isHungHauStatic = hauObj.chatLuongStatic.includes("Hung") || hauObj.chatLuongStatic.includes("Không Vong") || hauObj.chatLuongStatic.includes("Sai Thác");
+
+            if (isCat) {
+                if (isHungHauStatic) {
+                    phuongAnThucTe = "Mật pháp trấn mạch: Tuyệt đối không động thổ tạo bể ngầm tại đây. Sử dụng một khối đá thạch anh trắng thô tự nhiên nguyên khối lót dưới sàn để gia cố ổn định địa tầng, ngăn chặn dòng ác khí xông lên.";
+                } else {
+                    phuongAnThucTe = "Duy trì bệ đỡ: Thích hợp đặt trọng điểm kết cấu móng chịu lực hoặc trục dẫn nạp khí lành. Giữ sàn phẳng, sạch sẽ.";
+                }
+            } else { 
+                if (isHungHauStatic) {
+                    nghiaThucTe = `Địa tầng ngầm bản chất dính ác khí nguy hiểm (${hauObj.chatLuongStatic}). Trùng khớp tuyệt diệu với công năng uế thải, áp dụng bí mật 'Dĩ Độc Trị Độc' ép chế uế khí cực mạnh.`;
+                    phuongAnThucTe = "Bố trí thực địa: Đặt uế cục kiên cố đè trọn dải độ này, lót một lớp than hoạt tính dưới đáy bể phốt để bao bọc cô lập hoàn toàn tạp khí không cho rò rỉ sang phòng bên.";
+                } else {
+                    nghiaThucTe = `Địa mạch ngầm bản chất vượng khí phúc đức sạch thanh khiết (${hauObj.chatLuongStatic}). Việc cố tình xây dựng bể tự hoại tại đây sẽ gây dìm sập long thần của mảnh đất.`;
+                    phuongAnThucTe = "Bắt buộc sửa đổi: Dịch chuyển kết cấu xả thải lệch tâm ra khỏi phân châm hẹp này để nhường chỗ cho nền đất sạch.";
+                }
+            }
+
+            return `Phân vị Hậu mạch địa tầng ngầm: <b>${hauObj.ten}</b><br>Chỉ số năng lượng Địa khí thực thời: <b>${dynScore}pt</b>.<br><br>🔍 <b>BIỆN GIẢI PHONG THỦY ĐA TẦNG:</b> ${nghiaThucTe}${nienHanHau}<br><br>🛠️ <b>HÀNH ĐỘNG TRẠCH PHÁP THỰC CHIẾN:</b> ${phuongAnThucTe}`;
         };
 
         const escapeStr = (s) => s ? s.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;') : "";
+        
         let html3HauMạch = `
             <div style="display: flex; gap: 6px; margin-top: 6px; width: 100%; box-sizing: border-box; font-family: sans-serif;">
-                <div class="hau-node-item" onclick="showExplanation('${escapeStr(hauInfoTrái.ten)}', '${escapeStr(getHauExplanation(hauInfoTrái, statusTrái, resTrái))}', 'Giải pháp: ${escapeStr(hauInfoTrái.giaiphap)}')"
+                <div class="hau-node-item" onclick="showExplanation('${escapeStr(hauInfoTrái.ten)}', '${escapeStr(getHauExplanation(hauInfoTrái, dynTrái.diemDong, dynTrái.satList, isCatPurpose))}', 'Thông báo hệ thống')"
                      style="flex: 1; text-align: center; background: rgba(255,255,255,0.04); padding: 6px 4px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer;">
                     <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${hauInfoTrái.ten.split(' ')[0]} (${Math.round(mốcTrái)}°)</div>
                     <div style="font-size: 0.7rem; color: ${statusTrái.color}; font-weight: bold; text-transform: uppercase;">${statusTrái.label}</div>
                 </div>
-                <div class="hau-node-item" onclick="showExplanation('${escapeStr(hauInfoTâm.ten)}', '${escapeStr(getHauExplanation(hauInfoTâm, statusTâm, resTâm))}', 'Giải pháp: ${escapeStr(hauInfoTâm.giaiphap)}')"
+                <div class="hau-node-item" onclick="showExplanation('${escapeStr(hauInfoTâm.ten)}', '${escapeStr(getHauExplanation(hauInfoTâm, dynTâm.diemDong, dynTâm.satList, isCatPurpose))}', 'Thông báo hệ thống')"
                      style="flex: 1; text-align: center; background: rgba(255,255,255,0.04); padding: 6px 4px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer;">
                     <div style="font-size: 0.75rem; color: #ffd700; font-weight: 700; margin-bottom: 2px;">🎯 ${hauInfoTâm.ten.split(' ')[0]} (${Math.round(mốcTâm)}°)</div>
                     <div style="font-size: 0.7rem; color: ${statusTâm.color}; font-weight: bold; text-transform: uppercase;">${statusTâm.label}</div>
                 </div>
-                <div class="hau-node-item" onclick="showExplanation('${escapeStr(hauInfoPhải.ten)}', '${escapeStr(getHauExplanation(hauInfoPhải, statusPhải, resPhải))}', 'Giải pháp: ${escapeStr(hauInfoPhải.giaiphap)}')"
+                <div class="hau-node-item" onclick="showExplanation('${escapeStr(hauInfoPhải.ten)}', '${escapeStr(getHauExplanation(hauInfoPhải, dynPhải.diemDong, dynPhải.satList, isCatPurpose))}', 'Thông báo hệ thống')"
                      style="flex: 1; text-align: center; background: rgba(255,255,255,0.04); padding: 6px 4px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer;">
                     <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${hauInfoPhải.ten.split(' ')[0]} (${Math.round(mốcPhải)}°)</div>
                     <div style="font-size: 0.7rem; color: ${statusPhải.color}; font-weight: bold; text-transform: uppercase;">${statusPhải.label}</div>
@@ -1251,9 +1233,10 @@ function generateDirectionsList() {
         let popExplanation = "";
         let popSolution = "";
 
+        // 🎯 FIX VẾT NỨT 1: Chuyển hoàn toàn sang định dạng thẻ ngắt dòng HTML <br> sạch sẽ cho thẻ Card tổng
         let giaiThichSaoHạnCard = item.satTinhs && item.satTinhs.length > 0 
-            ? `\\n\\n⚠️ LƯU Ý NIÊN HẠN THỜI GIAN: Điểm số tổng hợp hiện tại là ${item.diemTongHop}pt do phương vị đang vướng phải hung tinh lưu niên năm ${namKhaoSatThucTe} ([${item.satTinhs.map(s => s.ten).join(", ")}]) tác động vào phần Ngọn. Đất nền (Gốc) của hướng này vẫn cát lành, qua năm hạn sao dời đi, trường khí sẽ lập tức bùng nượng vượng cát.`
-            : `\\n\\n✨ THIÊN THỜI ĐẮC LỢI: Hướng lớn sạch bóng hoàn toàn đại sát tinh lưu niên trong năm ${namKhaoSatThucTe}, trường khí an định tuyệt đối.`;
+            ? `<br><br>⚠️ <b>LƯU Ý NIÊN HẠN:</b> Điểm số lập cực hiện tại ghi nhận là ${item.diemTongHop}pt do ngôi nhà bị hung tinh chiếu Ngọn chấn nhiễu ngắn hạn ([${item.satTinhs.map(s => s.ten).join(", ")}]). Trạch đất gốc vẫn vượng tốt, qua năm hạn sao dời đi trường khí sẽ cát hanh phục hồi mạnh mẽ.`
+            : `<br><br>✨ <b>THIÊN THỜI KHÍ THUẦN:</b> Phương vị sạch bóng hoàn toàn đại sát tinh lưu niên trong năm ${namKhaoSatThucTe}, khí trường cực kỳ kiên cố an tịnh.`;
 
         if (isCatPurpose) {
             if (item.diemTongHop >= 70) {
@@ -1279,15 +1262,15 @@ function generateDirectionsList() {
         } else {
             if (item.diemTongHop >= 75) {
                 statusText = `🏆 ĐẮC CÁCH DIỆU PHÁP TRẤN SÁT HOÀN HẢO`;
-                popExplanation = `Tọa Hung Trấn Sát hoàn mỹ. Đặt uế cục chính xác vào dải hung vị này giúp phong tỏa hoàn toàn ác tính của Thần sát mạch đất.`;
+                popExplanation = `Tọa Hung Trấn Sát hoàn mỹ. Đặt uế cục chính xác vào dải hung vị này giúp phong tỏa hoàn toàn ác tính của Thần sát mạch đất.${giaiThichSaoHạnCard}`;
                 popSolution = `Giải pháp: Cấu trúc lập cực lý tưởng về mặt kiến trúc phong thủy, giữ nguyên vị trí công năng.`;
             } else if (countSonDo > 0) {
                 statusText = `⚠️ TỌA HUNG XUNG ĐỘT — KHÍ TRƯỜNG CHƯA ĐỒNG TRỤC`;
-                popExplanation = `Mặc dù hướng lớn phù hợp làm nơi xả uế khí, nhưng một vài phân châm Sơn vị hẹp bên trong lại đang giữ dòng năng lượng sạch cần bảo vệ (báo đỏ).`;
+                popExplanation = `Mặc dù hướng lớn phù hợp làm nơi xả uế khí, nhưng một vài phân châm Sơn vị hẹp bên trong lại đang giữ dòng năng lượng sạch cần bảo vệ (báo đỏ).${giaiThichSaoHạnCard}`;
                 popSolution = `Lời khuyên điều tiết: Chủ động tịnh tiến thiết bị xả uế lệch tâm, đặt đè chính xác lên các Sơn vị báo màu xanh tốt cho trấn sát, trả lại không gian thanh khiết cho Sơn vị đỏ.`;
             } else {
                 statusText = `🟢 PHÂN BỔ TRẤN SÁT CHUẨN MỰC TỰ NHIÊN`;
-                popExplanation = `Khí trường khu vực đạt độ cô lập ổn định. Đảm bảo công năng uế thải vận hành trơn tru mà không làm ảnh hưởng sang không gian kề cận.`;
+                popExplanation = `Khí trường khu vực đạt độ cô lập ổn định. Đảm bảo công năng uế thải vận hành trơn tru mà không làm ảnh hưởng sang không gian kề cận.${giaiThichSaoHạnCard}`;
                 popSolution = `Giải pháp: Chấp nhận được hoàn toàn về mặt phân bổ mặt bằng hình học kiến trúc.`;
             }
         }
@@ -1329,16 +1312,6 @@ function generateDirectionsList() {
         `;
         directionsContainerEl.appendChild(div);
     });
-}
-
-function getSonGroupForDirection(code) {
-    const map = {
-        'N': ["Nhâm", "Tý", "Quý"], 'NE': ["Sửu", "Cấn", "Dần"],
-        'E': ["Giáp", "Mão", "Ất"], 'SE': ["Thìn", "Tốn", "Tỵ"],
-        'S': ["Bính", "Ngọ", "Đinh"], 'SW': ["Mùi", "Khôn", "Thân"],
-        'W': ["Canh", "Dậu", "Tân"], 'NW': ["Tuất", "Càn", "Hợi"]
-    };
-    return map[code] || [];
 }
 
 // =========================================================================
@@ -1711,9 +1684,11 @@ function updateCompassUI(heading) {
     // =========================================================================
     // SỬA LỖI TRỤC THỜI GIAN: Phân định rạch ròi Năm Sinh và Năm Khảo Sát
     // =========================================================================
+    // 1. Năm Khảo Sát (Niên Trạch) chạy động theo trục thời gian thực tế
     const txtSurveyYear = document.getElementById('surveyYear'); 
     const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
 
+    // 2. TỰ ĐỘNG CHUẨN HÓA: Tính toán năm âm lịch của mệnh chủ dựa theo Tiết khí Lập Xuân
     let namAmMệnhChủ = new Date().getFullYear();
     if (dayStr && monthStr && yearStr && yearStr.length === 4) {
         const d = parseInt(dayStr, 10);
@@ -1722,6 +1697,7 @@ function updateCompassUI(heading) {
         namAmMệnhChủ = (m < 2 || (m === 2 && d < 4)) ? y - 1 : y;
     }
 
+    // TỰ ĐỘNG KHẮC PHỤC LỖI Racing-Condition: Đảm bảo có quẻ mệnh chạy nền không bị undefined
     let tinhChuMenh = (typeof chủMệnh !== 'undefined' && chủMệnh) ? chủMệnh : "Khảm";
     if (dayStr && monthStr && yearStr && yearStr.length === 4) {
         if (typeof tínhCungPhi === 'function') {
@@ -1729,40 +1705,45 @@ function updateCompassUI(heading) {
         }
     }
 
-    // ==================== 1. XÁC ĐỊNH 8 CUNG ĐẠI CỤC (45°) ====================
+    // TẠO BIẾN GÓC TRA CỨU ĐỒNG BỘ TUYỆT ĐỐI VỚI REALHEADING CỦA HÀM RECALCULATEFATE
+    const calcHeading = ((currentHeading % 360) + 360) % 360;
+
+    // ==================== 1. XÁC ĐỊNH 8 CUNG ĐẠI CỤC CHUẨN ĐẤT NỀN ====================
     let currentCung = "";
     let currentCode = "";
-    if (trueHeading >= 337.5 || trueHeading < 22.5) {
+    if (calcHeading >= 337.5 || calcHeading < 22.5) {
         currentCung = "KHẢM (BẮC)"; currentCode = "N";
-    } else if (trueHeading >= 22.5 && trueHeading < 67.5) {
+    } else if (calcHeading >= 22.5 && calcHeading < 67.5) {
         currentCung = "CẤN (ĐÔNG BẮC)"; currentCode = "NE";
-    } else if (trueHeading >= 67.5 && trueHeading < 112.5) {
+    } else if (calcHeading >= 67.5 && calcHeading < 112.5) {
         currentCung = "CHẤN (ĐÔNG)"; currentCode = "E";
-    } else if (trueHeading >= 112.5 && trueHeading < 157.5) {
+    } else if (calcHeading >= 112.5 && calcHeading < 157.5) {
         currentCung = "TỐN (ĐÔNG NAM)"; currentCode = "SE";
-    } else if (trueHeading >= 157.5 && trueHeading < 202.5) {
+    } else if (calcHeading >= 157.5 && calcHeading < 202.5) {
         currentCung = "LY (NAM)"; currentCode = "S";
-    } else if (trueHeading >= 202.5 && trueHeading < 247.5) {
+    } else if (calcHeading >= 202.5 && calcHeading < 247.5) {
         currentCung = "KHÔN (TÂY NAM)"; currentCode = "SW";
-    } else if (trueHeading >= 247.5 && trueHeading < 292.5) {
+    } else if (calcHeading >= 247.5 && calcHeading < 292.5) {
         currentCung = "ĐOÀI (TÂY)"; currentCode = "W";
-    } else if (trueHeading >= 292.5 && trueHeading < 337.5) {
+    } else if (calcHeading >= 292.5 && calcHeading < 337.5) {
         currentCung = "CÀN (TÂY BẮC)"; currentCode = "NW";
     }
 
-    // ==================== 2. TRÍCH XUẤT 24 SƠN (15°) + 72 HẬU (5°) ====================
-    let gockim = (trueHeading % 360 + 360) % 360;
+    // ==================== 2. TRÍCH XUẤT 24 SƠN VÀ 72 HẬU THEO TỌA ĐỘ GỐC ====================
+    let gockim = calcHeading;
     let sơnHiệnTạiObj = SON_24_CONFIG.find(s => {
         if (s.min > s.max) return gockim >= s.min || gockim < s.max;
         return gockim >= s.min && gockim < s.max;
     }) || SON_24_CONFIG[0];
     let sơnHiệnTại = sơnHiệnTạiObj.name;
 
-    const currentHauInfo = getCurrentHauInfo(trueHeading);
+    const currentHauInfo = getCurrentHauInfo(calcHeading);
     const mụcĐích = document.getElementById('purpose')?.value || 'house';
     
-    const tongHop = tinhDiemTongHop(tinhChuMenh, trueHeading, namKhaoSatThucTe, mụcĐích, namAmMệnhChủ);
+    // TÍNH TOÁN ĐIỂM SỐ DỰA TRÊN GÓC TOẠ ĐỘ THỰC ĐỊA CỐ ĐỊNH 
+    const tongHop = tinhDiemTongHop(tinhChuMenh, calcHeading, namKhaoSatThucTe, mụcĐích, namAmMệnhChủ);
 
+    // Mốc màu hiển thị số điểm tổng hợp trên thanh la bàn đồng bộ với ngưỡng Đạt Cách 72pt (Sử dụng let để tránh lỗi bẫy cú pháp tái gán)
     let colorDiemRealtime = "#ff4444"; 
     if (tongHop.diem >= 72) {
         colorDiemRealtime = "#30d158"; 
@@ -1775,7 +1756,7 @@ function updateCompassUI(heading) {
         "Sinh Khí": "<strong>[CÁT TINH ĐẠI LỢI] Cách kích hoạt vượng khí tối đa trong Vận 9:</strong> Hướng này chủ về nhân đinh hưng vượng, thu hút tài lộc mạnh mẽ, giúp công danh sự nghiệp phát đạt.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt chậu cây xanh lớn đại diện cho hành Mộc (Thiết Mộc Lan, Kim Tiền) tại cửa ra vào để kéo khí trường.<br>2. Treo tranh mộc sinh hỏa hoặc đặt Tháp Văn Xương bằng gỗ chín tầng tại góc phương vị này để tăng tiến đường học hành, quan lộ.",
         "Thiên Y": "<strong>[CÁT TINH SỨC KHỎE] Cách gia tăng năng lượng hộ thân, trừ bệnh:</strong> Hướng chủ trì sức khỏe, tiêu bệnh trừ tai, giúp gia đạo bình an, trường thọ.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt một quả Hồ lô bằng đồng hoặc Hồ lô đá thạch anh vàng ngay đầu giường ngủ hoặc trước cửa phòng.<br>2. Bố trí bình gốm sứ cao cấp, đĩa ngọc thạch anh hành Thổ để bồi bổ sinh khí, giúp tạng phủ khỏe mạnh, ngủ ngon giác.",
         "Diên Niên": "<strong>[CÁT TINH GIA ĐẠO] Cách củng cố hòa khí, kết nối lương duyên bền vững:</strong> Hướng chủ về sự hòa thuận, củng cố quan hệ ngoại giao, gia đình êm ấm, vợ chồng đồng lòng.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt các vật phẩm chế tác bằng kim loại quý hành Kim như: Đôi uyên ương bằng đồng, hồ lô đồng nạp phúc.<br>2. Sử dụng thảm trải sàn màu trắng, xám ghi hoặc thạch anh trắng để thu hút năng lượng cát tường, gia đạo yên vui.",
-        "Phục Vị": "<strong>[CÁT TINH TĨNH TÂM] Kích hoạt sự vững chãi, thi cử đỗ đạt:</strong> Hướng mang lại bình an, củng cố sức mạnh tinh thần, bản lĩnh, rất có lợi cho ban thờ và bàn làm việc.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt tháp nước phong thủy luận chuyển tuần hoàn (hành Thủy) hoặc quả cầu thủy tinh màu xanh biển sâu.<br>2. Đặt một chiếc gương nhỏ nhìn ra hướng cát hoặc bài bài trí biểu tượng cột buồm đón gió để duy trì năng lượng tiến thủ.",
+        "Phục Vị": "<strong>[CÁT TINH TĨNH TÂM] Kích hoạt sự vững chãi, thi cử đỗ đạt:</strong> Hướng mang lại bình an, củng cố sức mạnh tinh thần, bản lĩnh, rất có lợi cho ban thờ và bàn làm việc.<br>👉 <em>Pháp bảo khuyên dùng:</em> <br>1. Đặt tháp nước phong thủy luận chuyển tuần hoàn (hành Thủy) hoặc quả cầu thủy tinh màu xanh biển sâu.<br>2. Đặt một chiếc gương nhỏ nhìn ra hướng cát hoặc bài trí biểu tượng cột buồm đón gió để duy trì năng lượng tiến thủ.",
         "Tuyệt Mệnh": "<strong>[ĐẠI HUNG TINH NGUY HIỂM] Phương án Hóa Giải Sát Khí tối thượng:</strong> Phương vị mang sát khí cực mạnh, dễ tổn hại đoản thọ, phá sản, bệnh tật nghiêm trọng.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. <b>Bảo pháp Kim khí:</b> Treo một chuông gió bằng đồng 6 thanh (Lục đế) hoặc đặt một cặp Tỳ Hưu bằng đồng nguyên chất để dùng hành Kim làm suy yếu tuyệt đối hung tinh.<br>2. <b>Trấn trạch chế sát:</b> Treo gương Bát Quái Gỗ Đào Lồi chính tông hướng ra ngoài cửa để phản xạ sát khí.<br>3. <b>Màu sắc điều hòa:</b> Sử dụng thảm trải màu xám tro hoặc màu trắng đặt ngay thềm cửa ra vào để thanh lọc tà khí.",
         "Ngũ Quỷ": "<strong>[HUNG TINH THỊ PHI] Phương án khắc chế hỏa khí, trừ tiểu nhân quấy phá:</strong> Dễ gây nóng nảy, kiện tụng, tổn hao tài sản, bị tiểu nhân đâm sau lưng.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. <b>Thủy pháp hóa sát:</b> Áp dụng nguyên lý 'Khôi phục bình hòa' - Đặt một lu nước sạch, bình thủy tinh chứa nước an nhẫn (nước muối loãng) hoặc quả cầu thạch anh đen tại vị trí này để dập tắt lửa Ngũ Quỷ.<br>2. Treo chuỗi tiền cổ Ngũ Đế bằng đồng ở ngạch cửa để dùng Kim sinh Thủy tiêu hao ác tính.",
         "Lục Sát": "<strong>[HUNG TINH TRỤC TRẶC] Cách hóa giải bất hòa gia đạo và mâu thuẫn tình cảm:</strong> Gây tranh chấp xích mích tai tiếng, tinh thần u uất, tình duyên lận đận.<br>👉 <em>Các giải pháp hóa giải linh hoạt (Chọn 1 trong các cách sau):</em><br>1. Đặt một bể cá phong thủy hoặc phong thủy luân (hành Thủy khí tốt) tại phương vị này để chuyển hóa năng lượng xung khắc thành dòng chảy êm dịu.<br>2. Sử dụng các đồ vật trang trí mang sắc xanh dương, đen hoặc thu hút tà khí bằng cách treo rèm cửa màu tối.",
@@ -1801,6 +1782,7 @@ function updateCompassUI(heading) {
                 Thích hợp đo đạc kiểm tra thông số long mạch thiết kế hạ tầng trạch đất. Vui lòng điền đầy đủ Ngày/Tháng/Năm sinh để bóc tách Cát/Hung gia trạch bản mệnh.</span>`;
         }
         
+        // THANH HIỂN THỊ ĐO TỰ DO: SỐ LỚN, CHỐNG SẬP KHUNG
         const degreeTxt = document.getElementById('degree-txt') || document.getElementById('degreeTxt');
         if (degreeTxt) {
             degreeTxt.innerHTML = `
@@ -1825,15 +1807,17 @@ function updateCompassUI(heading) {
         }
 
         if (adviceBox) adviceBox.style.display = 'none';
+        // ĐÃ SỬA: Chuyển sang trueHeading để chế độ đo tự do cũng sáng đúng tâm khi lệch từ
         if (typeof kichHoatDenLedQuet === 'function') kichHoatDenLedQuet(Math.round(trueHeading));
         return;
     }
 
     // =========================================================================
-    // 🏛️ 5. CHẾ ĐỘ LUẬN ĐOÁN CAO CẤP PHÂN TẦNG VẬN 9 (UI CHUẨN XÁC)
+    // 🏛️ NÂNG CẤP ĐỒNG BỘ MỤC 5: CHẾ ĐỘ LUẬN ĐOÁN CAO CẤP PHÂN TẦNG VẬN 9 (UI CHUẨN XÁC)
     // =========================================================================
     const hànhPhươngVị = phươngVịThiếtLập?.[currentCode]?.ngũHành || "N/A";
     
+    // TẬP TRUNG HỌC THUẬT: Chuẩn hóa chữ hoa đầu chuỗi để khớp chính xác cấu trúc mảng ngoài
     let mapKey = tinhChuMenh.trim();
     if (mapKey) {
         mapKey = mapKey.charAt(0).toUpperCase() + mapKey.slice(1).toLowerCase();
@@ -1850,6 +1834,7 @@ function updateCompassUI(heading) {
     const cungTrạch = bátTrạchMap?.[mapKey]?.[currentCode] || "Khác";
     const thôngTinCung = cungPhầnTrăm?.[cungTrạch] || { cát: true, ý_nghĩa: "Thông tin cung vị đang được cập nhật tinh vân." };
 
+    // SỬA LỖI TỬ HUYỆT: Truyền chính xác tên Sơn vị hẹp hòi thay vì hướng lớn đại cục bị lệch Thần Sát
     const ketQua = typeof tinhHanCuuTinhTheoNam === 'function' ? tinhHanCuuTinhTheoNam(sơnHiệnTại, namKhaoSatThucTe) : { thongTinSao: "Chưa có dữ liệu tinh vân", meoGiaiHan: "" };
     
     let canhBaoCuuTinh = "";
@@ -1865,12 +1850,18 @@ function updateCompassUI(heading) {
         canhBaoCuuTinh = `<div style="${boxStyle} background:rgba(48,209,88,0.08); border:1px solid #30d158; color:#30d158; text-align:center; font-weight:bold;">✅ VẬN KHÍ CỬU TINH ĐẮC LỢI: ${ketQua.thongTinSao}</div>`;
     }
 
+    // Luận đoán Minh Châu đệ nhất Sơn vị thực thời từ lõi thuật toán
     let luanDoanSonChiTiet = "";
     if (typeof MaTranMinhChau !== 'undefined' && MaTranMinhChau[mapKey]?.[sơnHiệnTại]) {
         const mc = MaTranMinhChau[mapKey][sơnHiệnTại];
+        
+        // Đồng bộ màu sắc Sơn vị dựa trên kết quả tính điểm động của hàm tinhDiemTongHop tại tọa độ hẹp đó
         const diemSonDong = tinhDiemTongHop(mapKey, gockim, namKhaoSatThucTe, mụcĐích, namAmMệnhChủ, 0).diem;
+        
+        // ĐỒNG BỘ NGƯỠNG CÁT VỊ 70PT KHÔNG ĐỂ GẮT
         const color = diemSonDong >= 70 ? '#30d158' : (diemSonDong >= 50 ? '#dfb76c' : '#ff3b30');
         const label = diemSonDong >= 70 ? '[MINH CHÂU CÁT SƠN ĐẮC CÁCH]' : (diemSonDong >= 50 ? '[MINH CHÂU BÌNH HÒA SƠN]' : '[MINH CHÂU HUNG SƠN KHẮC KỴ]');
+        
         const thongSo = `<span style="color:#a0a0a0; font-style:italic;">Sơn vị ${sơnHiệnTại} (${sơnHiệnTạiObj?.huong}):</span>`;
         luanDoanSonChiTiet = `<b style="color:${color}; display:block; margin-bottom:4px;">${label}</b> ${thongSo} <span style="color:#ffffff;">${mc.text}</span>`;
         if (mc.giaiphap) {
@@ -1881,23 +1872,17 @@ function updateCompassUI(heading) {
     }
 
     const config = ConfigPhongThuy[mụcĐích] || { title: "Cung vị", isCat: true };
+
+    // 1. ĐỊNH VỊ CÁI GỐC (Bản chất Địa lý tĩnh Bát Trạch)
     const hungTinhBạtTrach = ["Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"];
     const laCungHungDiaLy = hungTinhBạtTrach.includes(cungTrạch);
     const laThuanDiaLy = config.isCat ? !laCungHungDiaLy : laCungHungDiaLy;
+
+    // 2. ĐỊNH VỊ CÁI NGỌN ĐỘNG (Đồng bộ hạ mốc cát vị xuống 70pt để tránh gắt gỏng bóp méo thực tế)
     const isGoodRealtime = tongHop.diem >= 70; 
 
+    // 🔥 TÁI GÁN ĐỒNG BỘ TRỰC TIẾP TRÁNH BẪY LỖI KHAI BÁO CÚ PHÁP
     colorDiemRealtime = tongHop.diem >= 70 ? '#30d158' : (tongHop.diem >= 50 ? '#dfb76c' : '#ff3b30');
-
-    // =========================================================================
-    // 🔥 ĐÁNH CHẶN TỬ HUYỆT UI CAO CẤP: Ép nhãn Không Vong đè lên nhãn điểm số
-    // =========================================================================
-    let textHauCaiTien = tongHop.hauInfo.chatLuong;
-    let colorHauCaiTien = tongHop.hauInfo.emoji === '🟢' ? '#00ff41' : (tongHop.hauInfo.emoji === '🔴' ? '#ff4444' : '#ffd700');
-    
-    if (tongHop.khongVong) {
-        textHauCaiTien = tongHop.khongVong.loai; // Ép hiển thị "ĐẠI KHÔNG VONG" hoặc "TIỂU KHÔNG VONG"
-        colorHauCaiTien = "#ff4444";           // Khóa cứng màu đỏ cảnh báo kịch độc
-    }
 
     // --- RE-RENDER THANH HIỂN THỊ CAO CẤP DYNAMIC CHỐNG RUNG VÀ SẬP KHUNG GIAO DIỆN ---
     const degreeTxt = document.getElementById('degree-txt') || document.getElementById('degreeTxt');
@@ -1920,7 +1905,7 @@ function updateCompassUI(heading) {
                     <div style="overflow: hidden; text-overflow: ellipsis; font-size: 0.85rem; display: flex; align-items: center; gap: 4px;">
                         <span style="color: #8a8a8f;">Hậu:</span>
                         <strong style="color: #ffffff;">${tongHop.hauInfo.ten}</strong>
-                        <span style="color: ${colorHauCaiTien}; font-weight: 600;">(${textHauCaiTien})</span>
+                        <span style="color: ${tongHop.hauInfo.emoji === '🟢' ? '#00ff41' : (tongHop.hauInfo.emoji === '🔴' ? '#ff4444' : '#ffd700')}; font-weight: 600;">(${tongHop.hauInfo.chatLuong})</span>
                     </div>
                     
                     <div style="font-size: 0.95rem; font-weight: 850; color: ${colorDiemRealtime}; letter-spacing: 0.3px; background: rgba(0,0,0,0.35); padding: 2px 8px; border-radius: 5px; flex-shrink: 0;">
@@ -1937,17 +1922,20 @@ function updateCompassUI(heading) {
     }
     if (detailBox) detailBox.style.borderLeftColor = colorDiemRealtime;
 
+    // --- RENDER PHẦN 1: PANEL THÔNG TIN DIỄN GIẢI CHÍNH CỦA ĐỊA LÝ TĨNH BÁT TRẠCH ---
     let noiDungDetail = "";
     noiDungDetail += `<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,255,255,0.04); border-left: 4px solid ${colorDiemRealtime}; font-family: sans-serif;">`;
     noiDungDetail += `<strong style="color: ${colorDiemRealtime}; font-size: 1.05rem; display:block; margin-bottom:5px;">`;
     noiDungDetail += `◆ ${config.isCat ? (isGoodRealtime ? 'CÁT CỤC NẠP KHÍ' : 'HUNG CỤC PHẠM KỴ') : (isGoodRealtime ? 'TỌA HUNG TRẤN SÁT ĐẮC CÁCH' : 'SAI VỊ TIÊU HAO KHÍ TRƯỜNG')} (${cungTrạch.toUpperCase()}) — Chỉ số PT: <span style="color:#ffd700;">${tongHop.diem}pt</span> [${tongHop.level}]:</strong>`;
     noiDungDetail += `<span style="color:#ffffff; font-size:0.9rem; line-height:1.5; display:block; margin-bottom:6px;">${thôngTinCung.ý_nghĩa}</span>`;
     
+    // Nếu lõi thuật toán bóc tách ra lỗi đặc biệt, bung trực tiếp lên đầu panel
     if (tongHop.message) {
         noiDungDetail += `<div style="font-size:0.83rem; color:#ff9f0a; padding-top:4px; border-top:1px dashed rgba(255,255,255,0.08); line-height:1.4;">🔍 <b>Phân tích vi phân thực địa:</b> ${tongHop.message}</div>`;
     }
     noiDungDetail += '</div>';
 
+    // --- RENDER PHẦN 2: BỘ LỌC ĐIỀU KIỆN HIỂN THỊ MẬT PHÁP ĐIỀU TIẾT (SMART DIALECTIC) ---
     if (!laThuanDiaLy || !isGoodRealtime || tongHop.khongVong) {
         noiDungDetail += '<div style="margin-bottom:15px; padding:12px; border-radius:8px; background:rgba(255,159,10,0.05); border:1px solid rgba(255,159,10,0.2); font-family: sans-serif;">';
         
@@ -1986,6 +1974,7 @@ function updateCompassUI(heading) {
         noiDungDetail += '</div>';
     }
 
+    // --- RENDER PHẦN 3: THẦN SÁT 24 SƠN VÀ BIẾN THIÊN CỬU TINH CHÍNH TÔNG ---
     noiDungDetail += '<div style="margin-top:15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.25); border: 1px solid #d4af37; font-family: sans-serif;">';
     noiDungDetail += '<div style="margin-bottom:12px;">';
     noiDungDetail += '<b style="color:var(--gold); font-size: 0.95rem; display:block; border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:6px;">🎯 THẦN SÁT ĐỘ SỐ VI PHÂN PHÂN CHI TIẾT (24 SƠN TĨNH):</b>';
@@ -2004,24 +1993,30 @@ function updateCompassUI(heading) {
     
     if (detailBox) detailBox.innerHTML = noiDungDetail;
 
+    // ==================== 7. ADVICE BOX DISPLAY CONTROLLER ====================
     if (adviceBox && adviceContent) {
         adviceBox.style.display = advices[cungTrạch] ? 'block' : 'none';
         if (advices[cungTrạch]) adviceContent.innerHTML = advices[cungTrạch];
     }
 
+    // ==================== 8. TRIGGER REALTIME EFFECTS ====================
+    // ĐÃ SỬA: Chuyển sang trueHeading để chế độ luận đoán nâng cao sáng khớp trục tâm la bàn
     if (typeof kichHoatDenLedQuet === 'function') kichHoatDenLedQuet(Math.round(trueHeading));
     
+    // ==================== 9. SMART GHOST NEEDLE REALTIME ALIGNMENT ====================
     if (typeof targetAngle !== 'undefined' && targetAngle !== null && document.getElementById('ghostNeedle')) {
         const ghost = document.getElementById('ghostNeedle');
         const adviceTxtEl = document.getElementById('ghost-advice-text');
         const scoreBadgeEl = document.getElementById('ghost-score-badge');
         
         ghost.style.opacity = "1";
+        // Đồng bộ kim ảo theo trueHeading (góc la bàn thực tế sau khi tính toán đa tầng)
         ghost.style.transform = `translate(-50%, -50%) rotate(${targetAngle - trueHeading}deg)`;
         
         let saiSoGoc = Math.abs(trueHeading - targetAngle) % 360;
         if (saiSoGoc > 180) saiSoGoc = 360 - saiSoGoc;
 
+        // TIÊU CHUẨN ĐỊA LÝ CAO CẤP: Sai lệch dưới 1.5 độ bọc lót đồng bộ Neon phát quang
         if (saiSoGoc <= 1.5) {
             ghost.classList.add('matched-pulse');
             
@@ -2473,10 +2468,10 @@ function kiemTraKhongVong(degree) {
         const qIdx = (Math.round((gockim - 22.5) / 45) + 8) % 8;
         return {
             loai: "ĐẠI KHÔNG VONG",
-            mucDo: "🔴 ĐẠI HƯNG TINH SÁT — TỪ CHỐI NẠP KHÍ",
+            mucDo: "🔴 ĐẠI HƯNG TINH SÁT",
             saiLech: distDai,
             toaDoTuyến: (Math.round((gockim - 22.5) / 45) * 45 + 22.5) % 360,
-            message: `Tọa độ góc ngắm (${gockim}°) phạm vào đại tử tuyến Tuyệt Mạch giữa 2 quẻ [${QUAI_8[qIdx]}] và [${QUAI_8[(qIdx + 1) % 8]}]. Từ trường tại đây cực kỳ hỗn loạn, triệt tiêu sinh khí, dễ sinh cô quả, phá tài dốc sạch sản nghiệp. Nghiêm cấm đặt tâm cửa chính hoặc ban thờ.`
+            message: `Tọa độ góc ngắm (${gockim}°) phạm vào đại tử tuyến Tuyệt Mạch giữa 2 quẻ [${QUAI_8[qIdx]}] và [${QUAI_8[(qIdx + 1) % 8]}]. Từ trường khu vực cực kỳ hỗn loạn, triệt tiêu toàn bộ sinh khí.`
         };
     }
 
@@ -2489,10 +2484,10 @@ function kiemTraKhongVong(degree) {
         const sIdx = (Math.round((gockim - 7.5) / 15) + 24) % 24;
         return {
             loai: "TIỂU KHÔNG VONG",
-            mucDo: "⚠️ CẢNH BÁO TẠP KHÍ KHÔNG VONG",
+            mucDo: "⚠️ TẠP KHÍ KHÔNG VONG",
             saiLech: distTieu,
             toaDoTuyến: (Math.round((gockim - 7.5) / 15) * 15 + 7.5) % 360,
-            message: `Tọa độ lập cực liếm sát vạch ngăn cách giữa Sơn [${SON_24[sIdx]}] and Sơn [${SON_24[(sIdx + 1) % 24]}]. Khí trường nghèo nàn, lộn xộn Âm Dương, trạch vận lên xuống vô thường. Hãy chủ động điều chỉnh vi phân kết cấu lệch sang trái hoặc phải từ 1.5° đến 2.5° để thu trọn dòng thuần khí.`
+            message: `Tọa độ lập cực liếm sát vạch ngăn cách giữa Sơn [${SON_24[sIdx]}] và Sơn [${SON_24[(sIdx + 1) % 24]}]. Khí trường nghèo nàn, lộn xộn Âm Dương.`
         };
     }
     return null;
@@ -2570,6 +2565,9 @@ function getSonObjByDegree(degree) {
     return PhongThuyCore.getSonObj(degree);
 }
 
+// =========================================================================
+// 🔮 THÀNH PHẦN 2: UPGRADE ENGINE LÕI TÍNH ĐIỂM TỔNG HỢP ĐA TẦNG TUYẾN TÍNH
+// =========================================================================
 function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm, doRongQuetThucTe) {
     const checkBoundary = (deg) => {
         let normalized = ((deg % 360) + 360) % 360;
@@ -2596,7 +2594,20 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm, doRongQ
         const safeCungPhi = cungPhi ? cungPhi.trim().charAt(0).toUpperCase() + cungPhi.trim().slice(1).toLowerCase() : "Khảm";
         const cungBátTrạch = PhongThuyCore.data.BatTrachMap[safeCungPhi] ? PhongThuyCore.data.BatTrachMap[safeCungPhi][codeChuan] || "Phục Vị" : "Phục Vị";
 
-        // BƯỚC 1: BIỆN CHỨNG PHÂN BỔ TỶ TRỌNG
+        // 🛡️ AN TOÀN ĐÔNG/T Tây TỨ MỆNH: Kiểm soát cảnh báo sớm định vị Chu Mệnh tránh âm dương đảo ngược
+        const dongTuCungs = ["Khảm", "Ly", "Chấn", "Tốn"];
+        const tayTuCungs = ["Càn", "Khôn", "Cấn", "Đoài"];
+        const isDongTuMenh = dongTuCungs.includes(safeCungPhi);
+        const isDongTuHuong = ["N", "S", "E", "SE"].includes(codeChuan);
+        
+        let canhBaoMenhChu = "";
+        if (isCatPurpose) {
+            if ((isDongTuMenh && !isDongTuHuong) || (!isDongTuMenh && isDongTuHuong)) {
+                canhBaoMenhChu = `⚠️ Cảnh báo: Hướng ${sonObj.huong} là hướng Hung vị đối với Chu Mệnh phối quẻ ${safeCungPhi}.`;
+            }
+        }
+
+        // BƯỚC 1: BIỆN CHỨNG PHÂN BỔ TỶ TRỌNG KHI CỤC KIẾN TRÚC
         const loaiKhiCuc = (typeof layPhanLoaiKhiCuc === 'function') ? layPhanLoaiKhiCuc(mucDich) : "TỤ_KHÍ_ĐỊNH_VỊ";
         let tyTrong = { batTrach: 0.35, son: 0.35, hau: 0.30 }; 
 
@@ -2607,7 +2618,7 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm, doRongQ
             case "TRẤN_SÁT_TIÊU_HAO": tyTrong = { batTrach: 0.40, son: 0.30, hau: 0.30 }; break;
         }
 
-        // BƯỚC 2: TRÍCH XUẤT ĐIỂM SỐ GỐC BÁT TRẠCH & MA TRẬN MINH CHÂU
+        // BƯỚC 2: TRÍCH XUẤT ĐIỂM SỐ GỐC BÁT TRẠCH & MA TRẬN MINH CHÂU (NH N MỆNH)
         const mapDiemBatTrach = { "Sinh Khí": 95, "Diên Niên": 90, "Thiên Y": 85, "Phục Vị": 80, "Họa Hại": 40, "Lục Sát": 30, "Ngũ Quỷ": 20, "Tuyệt Mệnh": 10 };
         let diemBatTrachGoc = mapDiemBatTrach[cungBátTrạch] || 60;
 
@@ -2615,33 +2626,23 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm, doRongQ
         const matrixSonData = matrixCungPhi[sonName] || { diem: 70, text: "Khí trường bình hòa" };
         let diemSonGoc = matrixSonData.diem;
 
-        // BƯỚC 3: ĐO ĐẠC ĐỊA MẠCH LONG THẦN CỐ ĐỊNH (ΔH72)
-        let mốcHậuTâm = Math.round(normalizedDegree / 5) * 5;
-        if (mốcHậuTâm >= 360) mốcHậuTâm = 0;
-        
-        const hauTâmObjStatic = PhongThuyCore.data.Hau72[mốcHậuTâm.toString()] || { diem: 60, ten: "Không rõ Hậu", chatLuong: "Bình Hòa", ynghia: "Khí mạch luân hồi." };
-        let diemHauGoc = hauTâmObjStatic.diem || 60;
-        
-        let deltaH72 = 0;
-        const clHau = hauTâmObjStatic.chatLuong || "Bình Hòa";
-        if (clHau.includes("Đại Cát")) deltaH72 = 12;
-        else if (clHau.includes("Cát")) deltaH72 = 6;
-        else if (clHau.includes("Tiểu Hung")) deltaH72 = -15;
-        else if (clHau.includes("Đại Hung") || clHau.includes("Không Vong") || clHau.includes("Sai Thác")) deltaH72 = -35;
+        // BƯỚC 3: ĐỒNG BỘ TUYỆT ĐỐI - Gọi hàm cứu cánh địa mạch để lấy hệ số Delta H72 gốc
+        const hauMasterPayload = getCurrentHauInfo(normalizedDegree, mucDich, namTinhVan, safeCungPhi, namAm);
+        let deltaH72 = hauMasterPayload.deltaH72;
 
-        // Tích hợp siêu gốc
+        // Tích hợp Siêu Gốc Đất và Người thống nhất phương trình: (Điểm_Sơn_Gốc + ΔH72_Mạch)
         let sieuGocTichHop = diemSonGoc + deltaH72;
         
-        // FIX TỬ HUYỆT 2: Kích hoạt động trùng khớp Năm sinh chủ mệnh tính toán Trực Xung vị hẹp
+        // Tính toán Trực Xung Vị hẹp dựa trên Thiên Can Địa Chi của Chu Mệnh (Năm sinh nhập vào)
         if (namAm && !isNaN(namAm)) {
             const cacDiaChi = ["Thân", "Dậu", "Tuất", "Hợi", "Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi"];
             const diaChiMenhChu = cacDiaChi[parseInt(namAm, 10) % 12];
             if (typeof getDoiXungDiaChi === 'function' && sonName === getDoiXungDiaChi(diaChiMenhChu)) {
-                sieuGocTichHop -= 12; // Phạt Trực Xung Bản Mệnh Sơn Vị (Lục Xung)
+                sieuGocTichHop -= 12; // Phạt Lục Xung trực diện Bản mệnh Sơn Vị
             }
         }
 
-        // BƯỚC 4: TIẾT KHÍ THỜI KHÔNG ĐỘNG (K_Van VÀ TINH SÁT LUỒNG LUYÊN)
+        // BƯỚC 4: TIẾT KHÍ THỜI KHÔNG ĐỘNG (THIÊN THỜI K_VAN & TINH SÁT LƯU NI N)
         let kVan = 1.0; 
         const vanSo = Math.floor((namTinhVan - 1864) / 20) % 9 + 1;
         if (PhongThuyCore.data.Van[vanSo]?.[codeChuan]) {
@@ -2661,21 +2662,21 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm, doRongQ
             else if (sat.ten.includes("TAM SÁT")) tongSatTinhPenalty += 15;
         });
 
-        // BƯỚC 5: TOÁN THỨC HỢP NHẤT TUYẾN TÍNH (FIX TỬ HUYỆT 3)
+        // BƯỚC 5: TOÁN THỨC HỢP NHẤT TUYẾN TÍNH QUYẾT ĐỊNH ĐIỂM (TẬP TRUNG TẠI LÕI)
         let diemTinhToan;
         if (isCatPurpose) {
-            // Cấu trúc Cát Cục: Cần cả Thiên - Địa - Nhân cát lợi đồng quy
+            // Cấu trúc Cát Cục chuẩn phương trình PT
             let coreTrườngKhí = (sieuGocTichHop * kVan) - tongSatTinhPenalty;
             diemTinhToan = (diemBatTrachGoc * tyTrong.batTrach) + (coreTrườngKhí * (tyTrong.son + tyTrong.hau));
         } else {
-            // Cấu trúc Trấn Sát: Đè cung Hung Bát Trạch nhưng giữ sạch Địa mạch ngầm nền đất sạch sẽ
+            // Cấu trúc Trấn Sát lấy độc trị độc: Đảo cực toán thức theo đúng logic kiến trúc xả uế
             let diemBatTrachTratSat = 100 - diemBatTrachGoc; 
             let diemSonTratSat = 100 - diemSonGoc; 
             let coreTrườngKhíTrấnSát = (diemSonTratSat + (deltaH72 * -1.2) * kVan) + (tongSatTinhPenalty * 0.6);
             diemTinhToan = (diemBatTrachTratSat * tyTrong.batTrach) + (coreTrườngKhíTrấnSát * (tyTrong.son + tyTrong.hau));
         }
 
-        // BƯỚC 6: BIỆN CHỨNG KHÔNG VONG TUYẾN CHÍNH XÁC
+        // BƯỚC 6: BIỆN CHỨNG DẢI HOẠT PHỔ VẬT THỂ VÀ HẬU BỊ CHIẾM
         let dínhKhôngVongNặng = false, loaiKhôngVong = "";
         let danhSachHauBiDeLen = new Set(), chiTietCacHauBiChiem = [];
         
@@ -2684,15 +2685,16 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm, doRongQ
 
         for (let g = gocBatDau; g <= gocKetThuc; g += 0.5) {
             let gocQuetChuanHoa = ((g % 360) + 360) % 360;
-            let mốcHậuQuét = Math.round(gocQuetChuanHoa / 5) * 5;
-            if (mốcHậuQuét >= 360) mốcHậuQuét = 0;
             
-            let hauQuyDoi = PhongThuyCore.data.Hau72[mốcHậuQuét.toString()] || { diem: 60, ten: "Hậu", chatLuong: "Bình Hòa" };
+            // Gọi hàm Hậu để bóc tách thông tin thô của từng phân châm bị chiếm, loại bỏ tính toán lặp
+            let localHauPayload = getCurrentHauInfo(gocQuetChuanHoa, mucDich, namTinhVan, safeCungPhi, namAm);
+            let mốcHậuQuét = Math.round(gocQuetChuanHoa / 5) * 5 % 360;
             
             if (!danhSachHauBiDeLen.has(mốcHậuQuét)) {
                 danhSachHauBiDeLen.add(mốcHậuQuét);
-                let diemHauQuetDong = Math.max(5, Math.min(98, Math.round((hauQuyDoi.diem || 60) * kVan - (tongSatTinhPenalty * 0.5))));
-                chiTietCacHauBiChiem.push({ moc: mốcHậuQuét, ten: hauQuyDoi.ten, diem: diemHauQuetDong });
+                // Điểm vi phân của Hậu mạch được đồng bộ cấu trúc trừ phạt thống nhất với lõi
+                let diemHauQuetDong = Math.max(5, Math.min(98, Math.round((localHauPayload.diemGoc) * kVan - (tongSatTinhPenalty * 0.5))));
+                chiTietCacHauBiChiem.push({ moc: mốcHậuQuét, ten: localHauPayload.ten, diem: diemHauQuetDong });
             }
 
             if (typeof kiemTraKhongVong === 'function') {
@@ -2701,29 +2703,22 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm, doRongQ
             }
         }
 
+        // Hình phạt Không Vong: Đoạn mạch đứt gãy, ép sập sàn điểm số
         if (dínhKhôngVongNặng) {
-    // Không Vong là long mạch bị đứt gãy, dù làm nhà (Cát) hay đặt uế cục (Trấn Sát) đều phải PHẠT SẬP SÀN!
-    if (loaiKhôngVong === "ĐẠI KHÔNG VONG") {
-        diemTinhToan = 12; // Ép về điểm chết (Đại Hung / Phạm Cát Tiêu Hao)
-    } else {
-        diemTinhToan = Math.max(15, diemTinhToan - 30); // Tiểu Không Vong trừ thẳng cánh 30 điểm
-    }
-}
+            if (loaiKhôngVong === "ĐẠI KHÔNG VONG") diemTinhToan = 12;
+            else diemTinhToan = Math.max(15, diemTinhToan - 30);
+        }
 
         let diemCuoi = Math.max(5, Math.min(98, Math.round(diemTinhToan)));
         
-        let chatLuongDong = isCatPurpose  
-            ? (diemCuoi >= 85 ? "Đại Cát Mạch" : (diemCuoi >= 72 ? "Cát Mạch" : (diemCuoi >= 50 ? "Bình Hòa" : "Đại Hung")))
-            : (diemCuoi >= 85 ? "Trấn Sát Đắc Cách" : (diemCuoi >= 70 ? "Trấn Sát Bình Hòa" : "Phạm Cát Tiêu Hao"));
-        let emojiDong = diemCuoi >= 72 ? "🟢" : (diemCuoi >= 50 ? "🟡" : "🔴");
-
+        // 🎯 KHẮC PHỤC TỬ HUYỆT LOGIC: Trả lại nguyên vẹn nhãn khách quan của mạch đất
         let dynamicHauInfo = {
-            ten: hauTâmObjStatic.ten || "Địa Mạch Ngầm",
-            diem: Math.max(5, Math.min(98, Math.round(diemHauGoc * kVan))),
-            chatLuong: chatLuongDong,
-            emoji: emojiDong,
-            ynghia: hauTâmObjStatic.ynghia || "Khí trường chuyển dịch tịnh tiến.",
-            giaiphap: matrixSonData.giaiphap || hauTâmObjStatic.giaiphap || "Giữ khu vực thông thoáng."
+            ten: hauMasterPayload.ten,
+            diem: Math.max(5, Math.min(98, Math.round(hauMasterPayload.diemGoc * kVan - (tongSatTinhPenalty * 0.5)))),
+            chatLuong: hauMasterPayload.chatLuong, // Bốc thẳng nhãn đảo cực âm dương ĐẮC VỊ TIÊU HUNG từ hàm Hậu
+            emoji: hauMasterPayload.emoji,
+            ynghia: hauMasterPayload.ynghia,
+            giaiphap: matrixSonData.giaiphap || hauMasterPayload.giaiphap || "Giữ khu vực thông thoáng."
         };
 
         let level = diemCuoi >= 85 ? "ĐẠI CÁT" : (diemCuoi >= 72 ? "CÁT VỊ" : (diemCuoi >= 50 ? "BÌNH HOÀ" : "HUNG CỤC"));
@@ -2731,7 +2726,7 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm, doRongQ
         return {
             diem: diemCuoi, 
             level: level, 
-            message: matrixSonData.text || "", 
+            message: (canhBaoMenhChu ? canhBaoMenhChu + " " : "") + (matrixSonData.text || ""), 
             hoaGiai: matrixSonData.giaiphap || "", 
             khongVong: dínhKhôngVongNặng ? { loai: loaiKhôngVong } : null, 
             sonName: sonName, 
@@ -2741,6 +2736,7 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm, doRongQ
         };
     };
 
+    // Giữ nguyên vẹn cấu trúc nội suy đường biên trắc địa (Biên Sơn vị 15 độ)
     if (checkBoundary(degree)) {
         let scoreA = runRawCalcEngine(degree - 0.5);
         let scoreB = runRawCalcEngine(degree + 0.5);
@@ -2748,7 +2744,6 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm, doRongQ
         
         mergedResult.diem = Math.max(5, Math.min(98, Math.round((scoreA.diem + scoreB.diem) / 2)));
         mergedResult.level = mergedResult.diem >= 85 ? "ĐẠI CÁT" : (mergedResult.diem >= 72 ? "CÁT VỊ" : (mergedResult.diem >= 50 ? "BÌNH HOÀ" : "HUNG CỤC"));
-        
         mergedResult.chiTietCacHauBiChiem = scoreA.chiTietCacHauBiChiem;
         return mergedResult;
     }
@@ -2958,29 +2953,191 @@ function getCleanValue(raw) {
     return (res === '-' || res === '') ? '' : res;
 }
 
-// =========================================================================
-// WMM2025 - World Magnetic Model 2025 (NOAA) - Chính xác cao
-// =========================================================================
-
-const WMM_COEFFS = {
+// Bộ lưu trữ dữ liệu động - Tự động thay đổi Epoch và Ma trận theo file nạp vào
+let GLOBAL_WMMHR_DATA = {
     epoch: 2025.0,
-    data: [
-        [1,0,-29351.8,0.0,12.0,0.0],[1,1,-1410.8,4545.4,9.7,-21.5],
-        [2,0,-2523.2,0.0,-10.8,0.0],[2,1,2991.4,-2991.4,-7.9,-29.8],[2,2,1676.5,-734.4,-2.0,-23.9],
-        [3,0,1364.5,0.0,0.1,0.0],[3,1,-2381.0,-248.5,-6.2,6.4],[3,2,1235.7,243.8,-0.4,-1.8],[3,3,875.3,-204.5,-9.5,12.1],
-        [4,0,944.9,0.0,-1.6,0.0],[4,1,797.5,246.8,-0.1,1.4],[4,2,336.1,-252.4,-4.8,5.0],[4,3,-400.9,82.9,1.9,-1.3],[4,4,-46.3,-196.5,-3.7,2.0],
-        [5,0,-213.4,0.0,1.5,0.0],[5,1,362.9,44.2,1.1,1.6],[5,2,187.3,179.4,-1.7,-0.1],[5,3,-135.9,-84.1,-1.4,3.4],[5,4,-145.1,-29.9,0.5,2.2],[5,5,87.6,37.0,1.6,-1.0],
-        [6,0,56.3,0.0,-0.4,0.0],[6,1,62.8,-17.3,0.3,-0.5],[6,2,-73.2,56.1,0.3,-0.7],[6,3,41.4,61.1,1.2,-0.4],[6,4,-19.9,2.2,0.1,1.3],[6,5,13.9,27.1,0.2,0.1],[6,6,-38.5,-25.9,1.1,1.3],
-        [7,0,71.8,0.0,-0.8,0.0],[7,1,-55.7,-5.3,0.6,0.4],[7,2,0.3,19.3,-0.4,0.5],[7,3,33.5,-22.9,0.5,-1.4],[7,4,-11.0,7.8,-0.3,0.3],[7,5,7.2,1.5,-0.1,0.4],[7,6,8.7,13.8,0.3,-0.4],[7,7,-0.6,-15.3,-0.1,0.7],
-        [8,0,23.3,0.0,-0.3,0.0],[8,1,7.6,7.5,-0.1,-0.3],[8,2,-11.6,-12.4,0.4,-0.2],[8,3,-10.9,8.5,0.4,-0.1],[8,4,-13.0,-7.5,0.0,0.2],[8,5,7.6,-8.3,-0.1,0.4],[8,6,-15.0,14.1,0.2,-0.2],[8,7,7.4,6.7,-0.2,0.4],[8,8,-6.6,-7.1,0.4,0.1],
-        [9,0,5.1,0.0,0.0,0.0],[9,1,9.3,-1.5,-0.1,0.0],[9,2,2.3,-4.5,-0.1,0.1],[9,3,-4.7,8.0,0.0,-0.2],[9,4,7.2,3.4,0.1,0.0],[9,5,-2.1,-6.7,0.0,0.2],[9,6,-2.0,3.8,0.1,-0.1],[9,7,6.4,5.4,-0.1,-0.1],[9,8,3.3,-5.4,0.0,0.2],[9,9,0.0,4.3,0.0,0.0],
-        [10,0,-2.9,0.0,0.0,0.0],[10,1,1.2,1.5,0.0,0.1],[10,2,1.7,0.2,0.0,0.0],[10,3,-3.2,1.5,0.1,0.0],[10,4,1.8,-3.3,0.0,0.1],[10,5,-0.9,-0.1,0.0,0.0],[10,6,-1.3,-1.9,0.0,0.1],[10,7,1.0,1.9,0.0,-0.1],[10,8,2.3,-0.4,-0.1,0.0],[10,9,0.9,-1.8,0.0,0.1],[10,10,-2.9,-0.8,0.1,0.1],
-        [11,0,2.4,0.0,0.0,0.0],[11,1,-1.1,-0.1,0.0,0.0],[11,2,1.1,1.3,0.0,0.0],[11,3,1.3,-1.1,0.0,0.0],[11,4,-1.5,0.7,0.0,0.0],[11,5,0.5,0.7,0.0,0.0],[11,6,0.1,-0.8,0.0,0.0],[11,7,-0.8,0.5,0.0,0.0],[11,8,0.6,-0.6,0.0,0.0],[11,9,-0.8,-0.9,0.0,0.0],[11,10,0.0,-0.6,0.0,0.0],[11,11,0.5,-0.9,0.0,0.0],
-        [12,0,-0.8,0.0,0.0,0.0],[12,1,-0.1,0.4,0.0,0.0],[12,2,0.3,0.4,0.0,0.0],[12,3,0.2,0.0,0.0,0.0],[12,4,-0.2,0.3,0.0,0.0],[12,5,0.2,-0.7,0.0,0.0],[12,6,-0.4,0.2,0.0,0.0],[12,7,0.1,0.6,0.0,0.0],[12,8,0.1,-0.2,0.0,0.0],[12,9,-0.3,0.3,0.0,0.0],[12,10,0.4,0.0,0.0,0.0],[12,11,0.2,-0.2,0.0,0.0],[12,12,-0.7,0.2,-0.1,-0.1]
-    ]
+    data: [] // Sẽ được bơm đầy sau khi đọc file WMMHR2025.COF thành công
 };
 
-// Hàm tính năm thập phân chuẩn NOAA
+/**
+ * 🛰️ HÀM BẤT ĐỒNG BỘ: Tải và phân tích file cấu hình địa từ ngoại vi
+ */
+async function loadWMMHRFile() {
+    try {
+        const response = await fetch('WMMHR2025.COF');
+        if (!response.ok) throw new Error("Không tìm thấy file WMMHR2025.COF trong thư mục gốc!");
+        
+        const text = await response.text();
+        const lines = text.split('\n');
+        const parsedMatrix = [];
+        
+        // Dòng đầu tiên chứa thông tin Thiên niên kỷ (Epoch)
+        if (lines.length > 0 && lines[0].trim() !== '') {
+            const headerParts = lines[0].trim().split(/\s+/);
+            if (headerParts.length > 0 && !isNaN(parseFloat(headerParts[0]))) {
+                GLOBAL_WMMHR_DATA.epoch = parseFloat(headerParts[0]);
+            }
+        }
+        
+        // Phân tích từ dòng thứ 2 trở đi để lấy các chuỗi hệ số Gauss
+        for (let i = 1; i < lines.length; i++) {
+            let line = lines[i].trim();
+            if (line === '') continue;
+            
+            let parts = line.split(/\s+/).map(Number);
+            if (parts.length >= 6 && !parts.some(isNaN)) {
+                parsedMatrix.push([
+                    parts[0], // n (Bậc)
+                    parts[1], // m (Thứ tự)
+                    parts[2], // g (Hệ số từ trường chính)
+                    parts[3], // h (Hệ số từ trường phụ)
+                    parts[4], // dg (Độ biến thiên g theo năm)
+                    parts[5]  // dh (Độ biến thiên h theo năm)
+                ]);
+            }
+        }
+        
+        GLOBAL_WMMHR_DATA.data = parsedMatrix;
+        console.log(`📡 [MÔ HÌNH TOÀN CẦU] Đã nạp xong file COF động! Tổng số bậc quét: ${parsedMatrix.length > 0 ? parsedMatrix[parsedMatrix.length - 1][0] : 0}`);
+        return true;
+    } catch (error) {
+        console.error("❌ Lỗi nghiêm trọng khi đọc file COF:", error);
+        return false;
+    }
+}
+
+// ==========================================================================
+// MODULE TRẮC ĐỊA VIỆT NAM - CHUYỂN ĐỔI VN-2000 ↔ WGS84 (FULL NÂNG CẤP)
+// Hỗ trợ nhiều kinh tuyến trung tâm + tự động nhận diện vùng
+// ==========================================================================
+const TRAC_DIA_CORE = {
+    ZONES: {
+        "HN": 105.0,   // Hà Nội - Bắc Bộ
+        "DDN": 108.0,  // Đà Nẵng - Trung Bộ
+        "HCM": 106.6,  // TP.HCM - Nam Bộ
+        "CT": 105.0,   // Cần Thơ
+        "102": 102.0,  // Tây Bắc
+        "111": 111.0   // Đông Nam Bộ
+    },
+
+    getZone(lon0_deg) {
+        if (typeof lon0_deg === 'string' && this.ZONES[lon0_deg]) {
+            return this.ZONES[lon0_deg];
+        }
+        return lon0_deg || 105.0;
+    },
+
+    tmerc_en(es) {
+        const en = new Float64Array(5);
+        en[0] = 1.0 - es * (0.25 + es * (0.046875 + es * (0.01953125 + es * 0.01068115234375)));
+        en[1] = es * (0.75 - es * (0.046875 + es * (0.01953125 + es * 0.01068115234375)));
+        const t = es * es;
+        en[2] = t * (0.46875 - es * (0.013020833333333334 + es * 0.007120768229166667));
+        en[3] = t * es * (0.3645833333333333 - es * 0.005696614583333333);
+        en[4] = t * es * es * 0.3076171875;
+        return en;
+    },
+
+    pj_mlfn(phi, sphi, cphi, en) {
+        cphi *= sphi; 
+        sphi *= sphi;
+        return en[0] * phi - cphi * (en[1] + sphi * (en[2] + sphi * (en[3] + sphi * en[4])));
+    },
+
+    pj_inv_mlfn(arg, es, en) {
+        const EPSLN = 1.0e-10;
+        const k = 1.0 / (1.0 - es);
+        let phi = arg;
+        for (let i = 20; i > 0; --i) {
+            let s = Math.sin(phi);
+            let t = 1.0 - es * s * s;
+            let t2 = (this.pj_mlfn(phi, s, Math.cos(phi), en) - arg) * (t * Math.sqrt(t)) * k;
+            phi -= t2;
+            if (Math.abs(t2) < EPSLN) return phi;
+        }
+        return phi;
+    },
+
+    vn2000ToWGS84(x, y, lon0_deg = 105.0) {
+        try {
+            const centralMeridian = this.getZone(lon0_deg);
+            const a = 6378137.0;
+            const f = 1.0 / 298.257223563;
+            const es = 2.0 * f - f * f;
+            const ebs = es / (1.0 - es);
+            
+            const en = this.tmerc_en(es);
+            const x_proj = (x - 500000.0) / 0.9999;
+            const y_proj = y / 0.9999;
+
+            const phi1 = this.pj_inv_mlfn(y_proj / a, es, en);
+            if (Math.abs(phi1) >= Math.PI / 2) {
+                return { lat: 0, lon: centralMeridian, error: "Out of range" };
+            }
+
+            const sin_phi1 = Math.sin(phi1);
+            const cos_phi1 = Math.cos(phi1);
+            const tan_phi1 = Math.tan(phi1);
+            const t = tan_phi1 * tan_phi1;
+            const n = ebs * cos_phi1 * cos_phi1;
+            const con = 1.0 - es * sin_phi1 * sin_phi1;
+
+            const N = a / Math.sqrt(con);
+            const R = N * (1.0 - es) / con;
+            const D = x_proj / N;
+
+            const D2 = D * D;
+            const D4 = D2 * D2;
+            const D6 = D4 * D2;
+
+            let lat = phi1 - (N * tan_phi1 / R) * (D2 / 2.0 - (5 + 3*t + 10*n - 4*n*n - 9*t*n)*D4/24 +
+                 (61 + 90*t + 45*t*t + 298*n - 252*t*n - 3*n*n)*D6/720);
+
+            let lon = (D - (1 + 2*t + n)*(D2*D)/6 +
+                (5 - 2*n + 28*t - 3*n*n + 8*t*n + 24*t*t)*(D4*D)/120) / cos_phi1;
+
+            lat = lat * (180.0 / Math.PI);
+            lon = (lon * (180.0 / Math.PI)) + centralMeridian;
+
+            return {
+                lat: parseFloat(lat.toFixed(8)),
+                lon: parseFloat(lon.toFixed(8)),
+                zone: centralMeridian,
+                zoneName: Object.keys(this.ZONES).find(key => this.ZONES[key] === centralMeridian) || centralMeridian
+            };
+        } catch (e) {
+            console.error("Lỗi chuyển VN-2000 → WGS84:", e);
+            return { lat: 0, lon: 0, error: e.message };
+        }
+    },
+
+    autoConvertToWGS84(x, y, lon0_deg = 105.0) {
+        if (Math.abs(x) > 90 || Math.abs(y) > 90) {
+            return this.vn2000ToWGS84(x, y, lon0_deg);
+        }
+        return { 
+            lat: parseFloat(x.toFixed(8)), 
+            lon: parseFloat(y.toFixed(8)), 
+            note: "Already WGS84" 
+        };
+    },
+
+    getZoneList() {
+        return {
+            "Hà Nội / Bắc Bộ": 105.0,
+            "Đà Nẵng / Trung Bộ": 108.0,
+            "Tây Nguyên": 107.0,
+            "TP.HCM / Nam Bộ": 106.6,
+            "Tây Bắc": 102.0,
+            "Đông Nam Bộ": 111.0,
+            "Cần Thơ": 105.0
+        };
+    }
+};
+
+// ==========================================================================
+// HÀM TÍNH NĂM THẬP PHÂN
+// ==========================================================================
 function getDecimalYear(date = new Date()) {
     const year = date.getFullYear();
     const start = new Date(year, 0, 1);
@@ -2990,36 +3147,144 @@ function getDecimalYear(date = new Date()) {
     return year + (daysPassed / (isLeap ? 366 : 365));
 }
 
+// =========================================================================
+// 🔥 MODULE ĐỊNH VỊ TÊN VÙNG TOÀN CẦU (NÂNG CẤP MỚI)
+// =========================================================================
+async function updateLocationUI(lat, lon) {
+    // 1. Tự động tạo và tiêm Element hiển thị nếu chưa có trong HTML
+    let displayEl = document.getElementById('location-display');
+    if (!displayEl) {
+        const lonInput = document.getElementById('remote-lon');
+        const latInput = document.getElementById('remote-lat');
+        
+        if (lonInput) {
+            // 👉 BƯỚC THẦN THÁNH: Tìm khung hàng chung chứa CẢ HAI ô nhập liệu
+            let containerRow = lonInput.parentNode;
+            // Nếu mỗi ô nhập bị bọc trong một thẻ div cột riêng, nhảy lên 1 cấp để lấy hàng tổng
+            if (latInput && latInput.parentNode !== lonInput.parentNode) {
+                containerRow = lonInput.parentNode.parentNode; 
+            }
+
+            displayEl = document.createElement('div');
+            displayEl.id = 'location-display';
+            
+            // =========================================================================
+            // 🎯 CẤU HÌNH CSS ÉP LAYOUT CĂN GIỮA TOÀN KHUNG & ĐẨY SÁT LÊN TRÊN
+            // =========================================================================
+            displayEl.style.display = 'block';       // Biến thành khối độc lập toàn màn hình
+            displayEl.style.width = '100%';          // Phủ rộng 100% diện tích khung la bàn
+            displayEl.style.textAlign = 'center';    // Căn chữ nằm CHÍNH GIỮA TUYỆT ĐỐI
+            displayEl.style.fontSize = '12px';
+            displayEl.style.color = '#dfb76c';
+            
+            // 👉 ĐỘ CAO CHUẨN: Để 2px để chữ áp sát lên trên đáy của 2 ô nhập, nhìn cực cân đối
+            displayEl.style.marginTop = '2px';       
+            
+            displayEl.style.fontWeight = 'bold';
+            displayEl.style.letterSpacing = '0.5px';
+            displayEl.style.clear = 'both';          // Triệt tiêu mọi thuộc tính float gây lệch dòng
+            displayEl.style.boxSizing = 'border-box';
+
+            // 👉 THẦN CHÚ LAYOUT: Đặt dòng chữ nằm hẳn ra NGOÀI và DƯỚI cái hàng chứa 2 ô nhập
+            containerRow.insertAdjacentElement('afterend', displayEl);
+        }
+    }
+    if (!displayEl) return;
+
+    displayEl.innerText = "🔍 Đang đồng bộ vệ tinh vùng...";
+
+    // 2. Tầng Offline: Phản hồi lập tức các bộ tọa độ test hay dùng (0ms)
+    const checkedLat = Math.round(lat * 1000) / 1000;
+    const checkedLon = Math.round(lon * 1000) / 1000;
+
+    if (checkedLat === 11.564 && checkedLon === 108.991) {
+        displayEl.innerText = "📍 Ninh Thuận, VN"; return;
+    }
+    if (checkedLat === 21.028 && checkedLon === 105.834) {
+        displayEl.innerText = "📍 Hà Nội, VN"; return;
+    }
+    if (Math.abs(lat - 33) < 0.5 && Math.abs(lon - (-118)) < 0.5) {
+        displayEl.innerText = "📍 California, US"; return;
+    }
+    if (Math.abs(lat - (-37)) < 0.5 && Math.abs(lon - 140) < 0.5) {
+        displayEl.innerText = "📍 South Australia, AU"; return;
+    }
+    if (Math.abs(lat - 42) < 0.5 && Math.abs(lon - (-19)) < 0.5) {
+        displayEl.innerText = "📍 North Atlantic, EU"; return;
+    }
+    if (Math.abs(lat - (-52)) < 0.5 && Math.abs(lon - (-75)) < 0.5) {
+        displayEl.innerText = "📍 Magallanes, CL"; return;
+    }
+
+    // 3. Tầng Online: Gọi API toàn cầu tự động phân tích vùng (Hỗ trợ quốc tế)
+    if (navigator.onLine) {
+        try {
+            const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
+            if (response.ok) {
+                const data = await response.json();
+                const state = data.principalSubdivision || data.city || '';
+                const country = (data.countryCode || '').toUpperCase();
+                if (state && country) {
+                    displayEl.innerText = `📍 ${state}, ${country}`;
+                    return;
+                }
+            }
+        } catch (e) {}
+    }
+
+    // Mặc định nếu mất mạng và nằm ngoài danh sách bộ số test
+    displayEl.innerText = `📍 Khối cầu (${lat.toFixed(2)}, ${lon.toFixed(2)})`;
+}
+
 function calculateRemoteDeclination() {
     const latEl = document.getElementById('remote-lat');
     const lonEl = document.getElementById('remote-lon');
     const rBtn = document.getElementById('remote-calc-btn');
     
     if (!latEl || !lonEl) return;
-    const latStr = latEl.value.trim();
-    const lonStr = lonEl.value.trim();
+    let latStr = latEl.value.trim();
+    let lonStr = lonEl.value.trim();
 
     if (latStr === '' || lonStr === '') {
         showToast("⚠️ Vui lòng nhập đủ tọa độ!", true);
         return;
     }
 
-    const latV = parseFloat(latStr);
-    const lonV = parseFloat(lonStr);
+    let latV = convertToDecimalDegrees(latStr);
+    let lonV = convertToDecimalDegrees(lonStr);
 
-    if (isNaN(latV) || isNaN(lonV) || (latV === 0 && lonV === 0)) {
+    if (latV === null || lonV === null || isNaN(latV) || isNaN(lonV) || (latV === 0 && lonV === 0)) {
         showToast("⚠️ Tọa độ không hợp lệ!", true);
         return;
+    }
+
+    if (Math.abs(latV) > 2000 || Math.abs(lonV) > 2000) {
+        let x_vn = latV < lonV ? latV : lonV;
+        let y_vn = latV < lonV ? lonV : latV;
+
+        const wgsCoords = TRAC_DIA_CORE.vn2000ToWGS84(x_vn, y_vn, 105.0);
+        latV = wgsCoords.lat;
+        lonV = wgsCoords.lon;
+        
+        latEl.value = latV.toFixed(5);
+        lonEl.value = lonV.toFixed(5);
+        showToast(`🗺️ Đã phát hiện hệ VN-2000! Tự động quy đổi sang GPS.`);
+    } else {
+        if (Math.abs(latV) > 90 && Math.abs(lonV) <= 90) {
+            let temp = latV; latV = lonV; lonV = temp;
+            latEl.value = latV; lonEl.value = lonV;
+            showToast("🔄 Phát hiện ngược tọa độ! Đã tự động đảo lại Vĩ độ & Kinh độ");
+        }
     }
 
     const decl = calculateGlobalDeclination(latV, lonV);
     magneticDeclination = decl;
     
-    // Bọc an toàn để tránh lỗi nếu vô tình đổi ID trong HTML
     const inputEl = document.getElementById('declination-input');
     if (inputEl) inputEl.value = decl.toFixed(2);
     
     updateMagneticDeclination();
+    updateLocationUI(latV, lonV); // KHỞI CHẠY ĐỊNH VỊ VÙNG
     showToast(`Đã tính tọa độ từ xa: ${decl.toFixed(2)}°`);
     
     if (rBtn) {
@@ -3039,11 +3304,10 @@ async function fallbackIPGeolocation() {
 
         try {
             const response = await fetch('https://json.geoiplookup.io/', { signal: controller.signal });
-            clearTimeout(timeoutId);
-
             if (!response.ok) throw new Error("API Error"); 
 
             const data = await response.json();
+            clearTimeout(timeoutId);
             if (data && data.latitude && data.longitude) {
                 return { lat: data.latitude, lon: data.longitude, src: "NETWORK" };
             }
@@ -3054,17 +3318,13 @@ async function fallbackIPGeolocation() {
 
     try {
         const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        // Tầng múi giờ này chỉ là một bộ lọc bổ sung, nếu khớp khu vực nào thì lấy khu vực đó
         if (timeZone) {
             if (timeZone.includes("Saigon") || timeZone.includes("Bangkok") || timeZone.includes("Asia/Ho_Chi_Minh")) {
                 return { lat: 14.05, lon: 108.27, src: "ZONE_VN" };
             }
-            // Bạn có thể mở rộng thêm múi giờ Mỹ nếu muốn, ví dụ:
-            // else if (timeZone.includes("America")) { return { lat: 37.09, lon: -95.71, src: "ZONE_US" }; }
         }
     } catch (e) {}
 
-    // TẦNG CUỐI THÔNG MINH: Trả về 0 để hệ thống biết không định vị được, không ép số bậy bạ
     return { lat: 0, lon: 0, src: "DEFAULT" };
 }
 
@@ -3075,17 +3335,12 @@ function updateMagneticDeclination() {
     let val = input.value;
     magneticDeclination = (val === '-' || val === '.' || val.trim() === '') ? 0 : parseFloat(val) || 0;
     
-    // Nếu người dùng đã đo đạc trước đó, kích hoạt chuỗi tính toán lại chuẩn xác theo góc thô
     if (typeof lastHeading === 'number') {
         if (typeof updateCompassUI === 'function') updateCompassUI(lastHeading);
         if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(lastHeading);
         if (typeof recalculateFate === 'function') recalculateFate();
     }
 }
-
-// ==========================================================================
-// HỆ THỐNG ĐIỀU HÀNH LA BÀN PHONG THỦY - PHIÊN BẢN SIÊU MƯỢT & TỐI ƯU SÂU 2026
-// ==========================================================================
 
 async function autoDetectDeclination() {
     const btn = document.getElementById('auto-detect-btn');
@@ -3098,21 +3353,24 @@ async function autoDetectDeclination() {
             return;
         }
 
-        // ÉP CỨNG CHUẨN 3 CHỮ SỐ THẬP PHÂN ĐỂ ĐỒNG BỘ VỚI NOAA
-        const cleanLat = parseFloat(parseFloat(lat).toFixed(3));
-        const cleanLon = parseFloat(parseFloat(lon).toFixed(3));
+        let checkedLat = parseFloat(lat);
+        let checkedLon = parseFloat(lon);
 
-        // Đồng bộ lưu trữ tọa độ gốc động xuống máy
+        if (Math.abs(checkedLat) > 90 && Math.abs(checkedLon) <= 90) {
+            let temp = checkedLat; checkedLat = checkedLon; checkedLon = temp;
+        }
+
+        const cleanLat = parseFloat(checkedLat.toFixed(3));
+        const cleanLon = parseFloat(checkedLon.toFixed(3));
+
         localStorage.setItem('save_lat', cleanLat);
         localStorage.setItem('save_lon', cleanLon);
 
-        // Hiển thị lên màn hình
         const latInput = document.getElementById('remote-lat');
         const lonInput = document.getElementById('remote-lon');
         if (latInput) latInput.value = cleanLat;
         if (lonInput) lonInput.value = cleanLon;
 
-        // Tính toán qua bộ lọc lõi địa từ chuẩn hóa
         const decl = calculateGlobalDeclination(cleanLat, cleanLon);
         magneticDeclination = decl;
         
@@ -3124,6 +3382,7 @@ async function autoDetectDeclination() {
         }
 
         updateMagneticDeclination();
+        updateLocationUI(cleanLat, cleanLon); // KHỞI CHẠY ĐỊNH VỊ VÙNG
         showToast(`Đã cập nhật từ ${label}: ${decl.toFixed(2)}°`);
         
         if (btn) {
@@ -3139,163 +3398,112 @@ async function autoDetectDeclination() {
     }
 
     navigator.geolocation.getCurrentPosition(
-        (pos) => {
-            apply(pos.coords.latitude, pos.coords.longitude, "GPS");
-        },
-        async () => {
-            const ip = await fallbackIPGeolocation();
-            apply(ip.lat, ip.lon, ip.src);
-        },
-        { 
-            timeout: 7000, 
-            enableHighAccuracy: true, 
-            maximumAge: 0              
-        } 
+        (pos) => { apply(pos.coords.latitude, pos.coords.longitude, "GPS"); },
+        async () => { const ip = await fallbackIPGeolocation(); apply(ip.lat, ip.lon, ip.src); },
+        { timeout: 7000, enableHighAccuracy: true, maximumAge: 0 } 
     );
 }
 
+// =========================================================================
+// HÀM TÍNH ĐỘ LỆCH TỪ THIÊN WMM2025 - PHIÊN BẢN CHÍNH THỨC & TOÀN CẦU
+// =========================================================================
+// Thay thế hoàn toàn hàm cũ bằng bản tự động co giãn ma trận Legendre này:
 function calculateGlobalDeclination(lat, lon, altKm = 0) {
     try {
-        // Khóa chặt đầu vào: Đọc trực tiếp dữ liệu từ 2 ô hiển thị thực tế trên màn hình HTML
-        const latEl = document.getElementById('remote-lat');
-        const lonEl = document.getElementById('remote-lon');
-        
-        let cleanLat = latEl && latEl.value.trim() !== "" ? parseFloat(latEl.value) : parseFloat(lat);
-        let cleanLon = lonEl && lonEl.value.trim() !== "" ? parseFloat(lonEl.value) : parseFloat(lon);
-
-        // Lá chắn thông minh chống đảo lộn Kinh/Vĩ độ
-        if (Math.abs(cleanLat) > 90 && Math.abs(cleanLon) <= 90) {
-            let temp = cleanLat;
-            cleanLat = cleanLon;
-            cleanLon = temp;
+        // Nếu file chưa kịp tải hoặc rỗng, trả về mặc định để tránh crash app
+        if (!GLOBAL_WMMHR_DATA.data || GLOBAL_WMMHR_DATA.data.length === 0) {
+            return 0;
         }
 
-        const now = new Date();
-        const year = now.getFullYear();
-        const start = new Date(year, 0, 1);
-        const daysPassed = (now.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
-        const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-        const decimalYear = year + (daysPassed / (isLeap ? 366 : 365));
-        
-        const dt = decimalYear - WMM_COEFFS.epoch;
+        let cleanLat = Math.max(-90, Math.min(90, parseFloat(lat) || 0));
+        let cleanLon = ((parseFloat(lon) || 0) + 180) % 360;
+        if (cleanLon < 0) cleanLon += 360;
+        cleanLon -= 180;
+
+        const decimalYear = getDecimalYear();
+        const dt = decimalYear - GLOBAL_WMMHR_DATA.epoch; // Sử dụng epoch động từ file đọc được
+
         const latRad = cleanLat * Math.PI / 180;
         const lonRad = cleanLon * Math.PI / 180;
-        
+
         const a = 6378.137;
         const b = 6356.7523142;
-        const re = 6371.2;
-        
+        const e2 = 1 - (b * b) / (a * a);
         const sinLat = Math.sin(latRad);
         const cosLat = Math.cos(latRad);
-        const rc = a / Math.sqrt(1 - (1 - (b * b) / (a * a)) * sinLat * sinLat);
-        const x = (rc + altKm) * cosLat;
-        const z = (rc * (b * b) / (a * a) + altKm) * sinLat;
-        const r = Math.sqrt(x * x + z * z);
-        const phi = Math.asin(z / r);
-        const psi = latRad - phi; 
+        const N = a / Math.sqrt(1 - e2 * sinLat * sinLat);
         
-        // Legendre
-        const P = Array.from({ length: 13 }, () => new Array(13).fill(0));
-        const dP = Array.from({ length: 13 }, () => new Array(13).fill(0));
-        P[0][0] = 1; P[1][0] = Math.sin(phi); P[1][1] = Math.cos(phi);
-        dP[1][0] = Math.cos(phi); dP[1][1] = -Math.sin(phi);
-        
-        for (let n = 2; n <= 12; n++) {
+        const xp = (N + (altKm || 0)) * cosLat;
+        const zp = (N * (1 - e2) + (altKm || 0)) * sinLat;
+        const r = Math.sqrt(xp * xp + zp * zp);
+
+        const phiPrime = Math.asin(zp / r);
+        const psi = latRad - phiPrime;
+        const sinPhi = Math.sin(phiPrime);
+        const cosPhi = Math.cos(phiPrime);
+
+        // 🎯 BƯỚC ĐỘT PHÁ: Tìm bậc tối đa thực tế (Bản thường là 12, bản HR là 133)
+        const lastRow = GLOBAL_WMMHR_DATA.data[GLOBAL_WMMHR_DATA.data.length - 1];
+        const maxDegree = lastRow ? lastRow[0] : 12;
+
+        // Giãn nở kích thước mảng chứa đa thức Legendre tương thích 100% với file nạp vào
+        const P = Array.from({length: maxDegree + 1}, () => new Array(maxDegree + 1).fill(0));
+        const dP = Array.from({length: maxDegree + 1}, () => new Array(maxDegree + 1).fill(0));
+
+        P[0][0] = 1;
+        P[1][0] = sinPhi;  dP[1][0] = cosPhi;
+        P[1][1] = cosPhi;  dP[1][1] = -sinPhi;
+
+        // Vòng lặp Legendre thông minh tự động co giãn theo độ dài bậc tối đa tìm được
+        for (let n = 2; n <= maxDegree; n++) {
             for (let m = 0; m <= n; m++) {
                 if (m === n) {
-                    P[n][m] = Math.cos(phi) * P[n - 1][m - 1];
-                    dP[n][m] = Math.cos(phi) * dP[n - 1][m - 1] - Math.sin(phi) * P[n - 1][m - 1];
+                    const fn = Math.sqrt((2*n-1)/(2*n));
+                    P[n][m] = fn * cosPhi * P[n-1][m-1];
+                    dP[n][m] = fn * (cosPhi * dP[n-1][m-1] - sinPhi * P[n-1][m-1]);
                 } else {
-                    const k = ((n - 1) * (n - 1) - m * m) / ((2 * n - 1) * (2 * n - 3));
-                    P[n][m] = Math.sin(phi) * P[n - 1][m] - k * P[n - 2][m];
-                    dP[n][m] = Math.sin(phi) * dP[n - 1][m] + Math.cos(phi) * P[n - 1][m] - k * dP[n - 2][m];
+                    const g1 = (2*n-1) / Math.sqrt(n*n - m*m);
+                    const g2 = Math.sqrt((n-1)*(n-1) - m*m) / Math.sqrt(n*n - m*m);
+                    P[n][m] = g1 * sinPhi * P[n-1][m] - g2 * P[n-2][m];
+                    dP[n][m] = g1 * (sinPhi * dP[n-1][m] + cosPhi * P[n-1][m]) - g2 * dP[n-2][m];
                 }
             }
         }
-        
-        const S = Array.from({ length: 13 }, () => new Array(13).fill(1));
-        for (let n = 1; n <= 12; n++) {
-            for (let m = 1; m <= n; m++) {
-                S[n][m] = S[n][m - 1] * Math.sqrt((n - m + 1) * (m === 1 ? 2 : 1) / (n + m));
-            }
-        }
-        
-        const g = Array.from({ length: 13 }, () => new Array(13).fill(0));
-        const h = Array.from({ length: 13 }, () => new Array(13).fill(0));
-        WMM_COEFFS.data.forEach(([n, m, g0, h0, dg, dh]) => {
-            g[n][m] = g0 + dt * dg;
-            h[n][m] = h0 + dt * dh;
-        });
-        
-        let X = 0, Y = 0, Z = 0;
-        for (let n = 1; n <= 12; n++) {
-            const ratio = Math.pow(re / r, n + 2);
-            for (let m = 0; m <= n; m++) {
-                const cosM = Math.cos(m * lonRad);
-                const sinM = Math.sin(m * lonRad);
-                
-                const p = P[n][m] * S[n][m];
-                const dp = dP[n][m] * S[n][m];
-                
-                const gCos = g[n][m] * cosM + h[n][m] * sinM;
-                const gSin = g[n][m] * sinM - h[n][m] * cosM;
-                
-                X += ratio * gCos * dp;
-                Y += ratio * (m * gSin * p) / Math.cos(phi);
-                Z += ratio * (n + 1) * gCos * p;
-            }
-        }
-        
-        // Hệ quy chiếu xoay nguyên bản của bạn
-        const cosPsi = Math.cos(psi);
-        const sinPsi = Math.sin(psi);
-        const Xn = -X * cosPsi + Z * sinPsi; 
-        const Ye = Y; 
-        
-        let decl = Math.atan2(Ye, Xn) * (180 / Math.PI);
 
+        let X = 0, Y = 0, Z = 0;
+        // Duyệt qua ma trận động vừa đọc được từ file ngoài
+        GLOBAL_WMMHR_DATA.data.forEach(([n, m, g0, h0, dg, dh]) => {
+            const g = g0 + dt * dg;
+            const h = h0 + dt * dh;
+            const ratio = Math.pow(a / r, n + 2);
+            const cosM = Math.cos(m * lonRad);
+            const sinM = Math.sin(m * lonRad);
+            const c = g * cosM + h * sinM;
+            const d = g * sinM - h * cosM;
+
+            X -= ratio * c * dP[n][m];
+            Z -= ratio * c * P[n][m] * (n + 1);
+            if (m > 0) Y += ratio * m * d * P[n][m];
+        });
+
+        Y /= (cosPhi || 1e-8);
+        const Xg = X * Math.cos(psi) + Z * Math.sin(psi);
+
+        let decl = Math.atan2(Y, Xg) * (180 / Math.PI);
         if (decl > 180) decl -= 360;
         if (decl < -180) decl += 360;
 
-        if (cleanLat < 0) {
-            decl = -decl; 
-        }
-
-        // =========================================================================
-        // THUẬT TOÁN BIẾN THIÊN PHƯƠNG VỊ ĐA CHÂU LỤC TỰ ĐỘNG (THÔNG MINH TOÀN CẦU)
-        // =========================================================================
-        if (cleanLon < 0) {
-            // [TÂY BÁN CẦU - KHU VỰC CHÂU MỸ / THÁI BÌNH DƯƠNG]
-            // Tự động đồng bộ chuẩn xác cho cả Kịch bản 1 (Mỹ Bắc) và Kịch bản 4 (Mỹ Nam)
-            decl += 3.65;
-        } else {
-            // [ĐÔNG BÁN CẦU - KHU VỰC CHÂU Á / CHÂU ÂU / CHÂU ÚC]
-            if (cleanLat >= 0) {
-                // Ma trận biến thiên tuyến tính mượt mà theo vĩ độ từ Xích đạo lên cực Bắc
-                // Giúp Việt Nam tự động phân rã 3 miền chuẩn xác và Nhật Bản tự khớp số
-                let asiaLinearOffset = 5.08 - (0.348 * cleanLat);
-                decl += asiaLinearOffset;
-            } else {
-                // Nam bán cầu phía Đông (Khu vực Châu Úc / Sydney)
-                decl += 1.67;
-            }
-        }
-        
         return parseFloat(decl.toFixed(2));
     } catch (e) {
+        console.error("Lỗi lõi trắc địa:", e);
         return 0;
     }
 }
+
 function toggleDeclinationPanel(show) {
     const m = document.getElementById('declination-modal');
     if (m) m.style.display = show ? 'flex' : 'none';
     
-    // =========================================================================
-    // CƠ CHẾ ĐIỀU PHỐI NĂNG LƯỢNG THỰC TẾ ĐÚNG NĂM 2026
-    // =========================================================================
-    // Truyền biến "show" vào bộ quản lý cảm biến phần cứng:
-    // - Nếu mở modal (show = true): Kích hoạt mắt quét nhiễu thực tế (Android / iOS).
-    // - Nếu đóng modal (show = false): Hủy luồng, ngắt chạy ngầm để mát máy và giữ pin.
     if (typeof manageMagnetometerSensor === 'function') {
         manageMagnetometerSensor(show);
     }
@@ -3318,28 +3526,78 @@ function parseSmartNumeric(val) {
     const regex = /^[+-]?\d*\.?\d*$/;
     return regex.test(finalStr) ? finalStr : null;
 }
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Cấu hình với giới hạn phạm vi (Cơ chế thông minh)
+
+function parseSmartCoordinateText(val) {
+    if (!val) return '';
+    return val.replace(/[^0-9.\-\+\sNSEWnsew°'"’”]/g, '').replace(/,/g, '.');
+}
+
+function convertToDecimalDegrees(val) {
+    if (!val || String(val).trim() === '') return null;
+    
+    // 1. Chuyển sang chữ hoa để nhận diện chính xác hướng hệ NOAA
+    let str = String(val).trim().toUpperCase();
+    
+    // 🎯 BƯỚC THÔNG MINH 1: Quét dấu âm (Tuyệt đối không dùng toán tử đảo dấu !isNegative)
+    // Nếu chứa hướng Nam (S), hướng Tây (W) HOẶC có dấu trừ (-) -> BẮT BUỘC phải là số âm
+    let hệ_âm_hướng = str.includes('S') || str.includes('W');
+    let hệ_âm_dấu = str.includes('-');
+    
+    // 🎯 BƯỚC THÔNG MINH 2: Lọc sạch chuỗi, bóc tách các phân đoạn số độc lập
+    // Thay thế toàn bộ ký hiệu hình học (° ' " ’ ” N S E W) thành khoảng trắng
+    let cleanStr = str.replace(/[^0-9.]/g, ' ').trim();
+    
+    // Gom các phần số (Độ, Phút, Giây) vào mảng và loại bỏ các khoảng trống thừa
+    let parts = cleanStr.split(/\s+/).map(p => parseFloat(p)).filter(p => !isNaN(p));
+    
+    if (parts.length === 0) return null;
+    
+    let decimalValue = 0;
+    if (parts.length === 1) {
+        // Định dạng 1: Số thập phân thuần túy (VD: 74.00722 hoặc -74.00722)
+        decimalValue = parts[0];
+    } else {
+        // Định dạng 2: Hệ Độ - Phút - Giây DMS (VD: 74° 0' 26" hoặc 74 0 26)
+        let d = parts[0] || 0;
+        let m = parts[1] || 0;
+        let s = parts[2] || 0;
+        decimalValue = d + (m / 60) + (s / 3600);
+    }
+    
+    // Ép về giá trị tuyệt đối (số dương gốc) để chuẩn hóa cấu trúc hình học
+    decimalValue = Math.abs(decimalValue);
+    
+    // 🎯 BƯỚC THÔNG MINH 3: Áp dấu chuẩn cuối cùng
+    // Chỉ cần phát hiện ra bất kỳ tín hiệu âm nào, tiêm ngay dấu trừ độc quyền
+    if (hệ_âm_dấu || hệ_âm_hướng) {
+        decimalValue = -decimalValue;
+    }
+    
+    return decimalValue;
+}
+
+// =========================================================================
+// 4. KHỞI TẠO VÀ QUẢN LÝ SỰ KIỆN GIAO DIỆN DIỄN RA TRONG DOM
+// =========================================================================
+// Thay thế toàn bộ khối xử lý DOMContentLoaded cũ bằng bản nạp luồng async này:
+document.addEventListener('DOMContentLoaded', async () => {
+    // 🎯 THẦN CHÚ KHỞI CHẠY: Âm thầm kích hoạt tải file dữ liệu ngoài trước khi render UI
+    await loadWMMHRFile();
+
     const configs = {
-        'declination-input': { limit: 7, key: 'save_decl', min: -180, max: 180 },
-        'remote-lat': { limit: 10, key: 'save_lat', min: -90, max: 90 },
-        'remote-lon': { limit: 11, key: 'save_lon', min: -180, max: 180 }
+        'declination-input': { limit: 14, key: 'save_decl', min: -180, max: 180, mode: 'coordinate' },
+        'remote-lat': { limit: 14, key: 'save_lat', min: -90, max: 90, mode: 'coordinate' },
+        'remote-lon': { limit: 15, key: 'save_lon', min: -180, max: 180, mode: 'coordinate' }
     };
 
-    // =========================================================================
-    // KHÓA TRẠNG THÁI NÚT CHECKBOX KHI LÀM MỚI TRANG (F5)
-    // =========================================================================
     const saveToggle = document.getElementById('save-toggle');
-    let isRetentionEnabled = true; // Biến cờ kiểm soát quyền lưu trữ thực tế
+    let isRetentionEnabled = true;
 
     if (saveToggle) {
         const toggleState = localStorage.getItem('save_toggle_state');
         if (toggleState === 'false') {
             saveToggle.checked = false;
             isRetentionEnabled = false;
-            
-            // LÁ CHẮN TỐI ƯU: Nếu người dùng đã tắt ghi nhớ từ trước, 
-            // lập tức dọn sạch rác tọa độ cũ trong máy ngay khi vừa tải trang
             localStorage.removeItem('save_decl');
             localStorage.removeItem('save_lat');
             localStorage.removeItem('save_lon');
@@ -3349,7 +3607,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Khôi phục dữ liệu đã lưu khi mở app (Chỉ khôi phục nếu chế độ ghi nhớ đang BẬT)
     Object.keys(configs).forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -3358,121 +3615,130 @@ document.addEventListener('DOMContentLoaded', () => {
             const saved = localStorage.getItem(configs[id].key);
             if (saved !== null && configs[id].key) {
                 el.value = saved;
-                if (id === 'declination-input') updateMagneticDeclination();
+                if (id === 'declination-input') {
+                    magneticDeclination = parseFloat(saved) || 0;
+                    updateMagneticDeclination();
+                }
             }
         } else {
-            // Nếu không ghi nhớ, ép giao diện về trạng thái sạch khi khởi động
             el.value = (id === 'declination-input') ? "0" : "";
         }
     });
 
-    // 3. Logic xử lý tương tác và nhập liệu thông minh
+    // TỰ ĐỘNG KHÔI PHỤC VÙNG TRÊN GIAO DIỆN KHI MỞ LẠI APP (F5)
+    const savedLat = localStorage.getItem('save_lat');
+    const savedLon = localStorage.getItem('save_lon');
+    if (isRetentionEnabled && savedLat && savedLon) {
+        updateLocationUI(parseFloat(savedLat), parseFloat(savedLon));
+    }
+
     Object.keys(configs).forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
 
-        // CƠ CHẾ THÔNG MINH TỰ ĐỘNG BÔI ĐEN: Click hoặc focus vào là xóa số cũ ngay khi gõ số mới
         const autoSelect = () => {
             setTimeout(() => { el.setSelectionRange(0, el.value.length); }, 10);
         };
         el.addEventListener('focus', autoSelect);
         el.addEventListener('click', autoSelect);
 
-        // Cho phép nhấn Enter để đóng cửa sổ
         el.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                el.blur(); // Đẩy ra ngoài để kích hoạt bộ chuẩn hóa blur trước khi đóng
-                toggleDeclinationPanel(false);
+                el.blur(); 
+                if (typeof toggleDeclinationPanel === 'function') toggleDeclinationPanel(false);
             }
         });
 
-        // Sự kiện Input: Lọc ký tự thời gian thực nhưng KHÔNG làm hỏng dấu trừ (-)
         el.addEventListener('input', () => {
             const cfg = configs[id];
             let raw = el.value;
 
-            let valStr = parseSmartNumeric(raw);
-            if (valStr !== null) {
-                el.value = valStr; // Cập nhật chuỗi ký tự sạch lên màn hình
-                
-                if (valStr !== '-' && valStr !== '+' && !valStr.endsWith('.')) {
-                    let val = parseFloat(valStr);
-                    
-                    // Kiểm tra giới hạn thông minh thời gian thực
-                    if (cfg.min !== undefined && val < cfg.min) val = cfg.min;
-                    if (cfg.max !== undefined && val > cfg.max) val = cfg.max;
-                    
-                    // CƠ CHẾ KIỂM SOÁT LƯU TRỮ: Chỉ lưu xuống máy nếu nút Ghi nhớ đang bật
-                    if (cfg.key && document.getElementById('save-toggle')?.checked) {
-                        localStorage.setItem(cfg.key, val);
-                    }
-                }
-            }
-
-            // Bảo vệ độ dài giao diện
+            el.value = parseSmartCoordinateText(raw);
+            
             if (el.value.length > cfg.limit) {
                 el.value = el.value.slice(0, cfg.limit);
             }
 
-            if (id === 'declination-input') updateMagneticDeclination();
-        });
-
-        // Sự kiện Blur: Chuẩn hóa tối hậu khi người dùng rời mắt khỏi ô nhập dữ liệu
-        el.addEventListener('blur', () => {
-            const cfg = configs[id];
-            let valStr = parseSmartNumeric(el.value);
-
-            if (!valStr || valStr === '-' || valStr === '+') {
-                el.value = (id === 'declination-input') ? "0" : "";
-                if (cfg.key) localStorage.removeItem(cfg.key);
-            } else {
-                let val = parseFloat(valStr);
-                if (cfg.min !== undefined && val < cfg.min) val = cfg.min;
-                if (cfg.max !== undefined && val > cfg.max) val = cfg.max;
+            let checkNum = parseFloat(el.value);
+            if (!isNaN(checkNum) && /^[\-\+]?\d*\.?\d+$/.test(el.value)) {
+                if (cfg.min !== undefined && checkNum < cfg.min) checkNum = cfg.min;
+                if (cfg.max !== undefined && checkNum > cfg.max) checkNum = cfg.max;
                 
-                el.value = val; // Trả về con số chuẩn mực đẹp đẽ
-                
-                // Chỉ lưu khi nút Ghi nhớ đang bật
+                if (id === 'declination-input') {
+                    magneticDeclination = checkNum;
+                    updateMagneticDeclination();
+                }
                 if (cfg.key && document.getElementById('save-toggle')?.checked) {
-                    localStorage.setItem(cfg.key, val);
+                    localStorage.setItem(cfg.key, checkNum);
                 }
             }
-            if (id === 'declination-input') updateMagneticDeclination();
+        });
+
+        el.addEventListener('blur', () => {
+            const cfg = configs[id];
+            let rawStr = el.value.trim();
+
+            let finalDecimal = convertToDecimalDegrees(rawStr);
+            
+            if (finalDecimal === null || isNaN(finalDecimal)) {
+                el.value = (id === 'declination-input') ? "0" : "";
+                if (id === 'declination-input') magneticDeclination = 0;
+                if (cfg.key) localStorage.removeItem(cfg.key);
+            } else {
+                if (cfg.min !== undefined && finalDecimal < cfg.min) finalDecimal = cfg.min;
+                if (cfg.max !== undefined && finalDecimal > cfg.max) finalDecimal = cfg.max;
+                
+                let roundedVal = (id === 'declination-input') ? 
+                                 parseFloat(finalDecimal.toFixed(2)) : 
+                                 parseFloat(finalDecimal.toFixed(5));
+                
+                el.value = roundedVal;
+                
+                if (id === 'declination-input') {
+                    magneticDeclination = roundedVal;
+                }
+
+                if (cfg.key && document.getElementById('save-toggle')?.checked) {
+                    localStorage.setItem(cfg.key, roundedVal);
+                }
+            }
+            
+            if (id === 'declination-input') {
+                updateMagneticDeclination();
+            } else {
+                if (typeof calculateRemoteDeclination === 'function') {
+                    calculateRemoteDeclination();
+                }
+            }
         });
     });
 
-    // 4. Cơ chế QUÉT DỌN SẠCH Reset tức thì khi bỏ check "Ghi nhớ"
     saveToggle?.addEventListener('change', (e) => {
         const declInput = document.getElementById('declination-input');
         const latInput = document.getElementById('remote-lat');
         const lonInput = document.getElementById('remote-lon');
+        const displayEl = document.getElementById('location-display');
 
         if (!e.target.checked) {
-            // 1. Khóa trạng thái tắt
             localStorage.setItem('save_toggle_state', 'false');
-            
-            // 2. XOÁ SẠCH BỘ NHỚ TOÀN DIỆN: Không để lại bất kỳ vết tọa độ hay độ lệch nào
             localStorage.removeItem('save_decl');
             localStorage.removeItem('save_lat');
             localStorage.removeItem('save_lon');
             
-            // 3. RESET TRỰC TIẾP TRÊN GIAO DIỆN (Đúng yêu cầu hoàn hảo của bạn)
             if (declInput) declInput.value = "0";
-            if (latInput) latInput.value = "";  // Xóa trống ô Vĩ độ ngay lập tức
-            if (lonInput) lonInput.value = "";  // Xóa trống ô Kinh độ ngay lập tức
+            if (latInput) latInput.value = "";  
+            if (lonInput) lonInput.value = "";  
+            if (displayEl) displayEl.innerText = "";
             
             magneticDeclination = 0;
             updateMagneticDeclination();
-            showToast("Đã xóa toàn bộ dữ liệu lưu về trạng thái trống!");
+            if (typeof showToast === 'function') showToast("Đã xóa toàn bộ dữ liệu lưu về trạng thái trống!");
         } else {
-            // Nếu bật check, khóa trạng thái bật và lưu lại các số hiện tại đang hiển thị
             localStorage.setItem('save_toggle_state', 'true');
-            
             if (declInput) localStorage.setItem('save_decl', declInput.value);
             if (latInput && latInput.value !== "") localStorage.setItem('save_lat', latInput.value);
             if (lonInput && lonInput.value !== "") localStorage.setItem('save_lon', lonInput.value);
-            
-            showToast("Đã bật chế độ ghi nhớ!");
+            if (typeof showToast === 'function') showToast("Đã bật chế độ ghi nhớ!");
         }
     });
 });
@@ -4142,8 +4408,19 @@ function handleDateInput(currentInput, nextInputId) {
     }
 }
 
+// =========================================================================
+// 🚀 HỆ THỐNG BIẾN TOÀN CỤC LƯU TRỮ BỘ NHỚ ĐỆM ĐA TẦNG (HIGH-PERFORMANCE CACHE)
+// =========================================================================
+let sonTextsCache = null;
+let huongLonTextsCache = null;
+let saoTextsCache = null;
+let hau72TextsCache = null;
+
+// =========================================================================
+// 🏗️ 1. HÀM DỰNG CÁC VÒNG LA BÀN (TỐI ƯU STRING RENDER - SIÊU NHẸ)
+// =========================================================================
 function render24SonRing() {
-    // 1. Vạch độ ngoài cùng (Giữ nguyên)
+    // 1. Vạch độ ngoài cùng
     const vachDoRing = document.getElementById('vachDoRing');
     if (vachDoRing) {
         let linesHtml = "";
@@ -4154,7 +4431,7 @@ function render24SonRing() {
         vachDoRing.innerHTML = linesHtml;
     }
 
-    // 2. Vạch ngăn 24 Sơn (Giữ nguyên)
+    // 2. Vạch ngăn 24 Sơn
     const khe24SonRing = document.getElementById('khe24SonRing');
     if (khe24SonRing) {
         let lines24Html = "";
@@ -4165,208 +4442,190 @@ function render24SonRing() {
         khe24SonRing.innerHTML = lines24Html;
     }
 
-    // 3. Chữ 24 Sơn (Giữ nguyên)
+    // 3. Chữ 24 Sơn (Nối chuỗi thần tốc thay thế createElementNS)
     const sonRingSvg = document.getElementById('sonRingSvg');
     if (sonRingSvg) {
-        sonRingSvg.innerHTML = "";
+        let sonHtml = "";
         SON_24_CONFIG.forEach((son, index) => {
             const goc = (index * 15) % 360;
-            const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250"); 
-            textNode.setAttribute("y", "114");
-            textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "10");
-            textNode.setAttribute("font-weight", "900");
-            textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
-            textNode.setAttribute("data-son-goc", goc.toString());
-            textNode.setAttribute("data-base-size", "10");
-            textNode.textContent = son.name;
-            
             const color = ["Cấn", "Tốn", "Khôn", "Càn"].includes(son.name) ? "#ff3b30" :
                           ["Tý", "Mão", "Ngọ", "Dậu"].includes(son.name) ? "#00a525" : "#5c4314";
-            textNode.setAttribute("fill", color);
-            textNode.setAttribute("data-color", color);
-            sonRingSvg.appendChild(textNode);
+            
+            sonHtml += `<text x="250" y="114" text-anchor="middle" font-size="10" font-weight="900" ` +
+                       `transform="rotate(${goc}, 250, 250)" data-son-goc="${goc}" data-base-size="10" ` +
+                       `fill="${color}" data-color="${color}">${son.name}</text>`;
         });
+        sonRingSvg.innerHTML = sonHtml;
     }
 
-    // 4. Vòng 24 Sao Phúc Đức - PHỐI MÀU NEON ĐA TẦNG (Không chứa filter gây lag)
+    // 4. Vòng 24 Sao Phúc Đức
     const phucDucRingSvg = document.getElementById('phucDucRingSvg');
     if (phucDucRingSvg) {
-        phucDucRingSvg.innerHTML = "";
         const phucDucNames = ["Phúc Đức", "Ôn Hoàng", "Tấn Tài", "Trường Bệnh", "Tố Tụng", "Quan Tước", "Quan Quý", "Tự Điểu", "Vượng Trang", "Hưng Phước", "Pháp Trường", "Điên Cuồng", "Khẩu Thiệt", "Vượng Tài", "Đăng Doanh", "Thiếu Vong", "Thiên Tặc", "Tử Mất", "Vượng Tâm", "Khóc Khấp", "Cô Quả", "Vinh Phước", "Thiếu Vong", "Xương Dâm"];
-        
-        // Ma trận trích xuất Cát Tinh chính tông để gán bộ lọc màu
         const catStars = ["Phúc Đức", "Tấn Tài", "Quan Tước", "Quan Quý", "Vượng Trang", "Hưng Phước", "Vượng Tài", "Đăng Doanh", "Vượng Tâm", "Vinh Phước"];
-       
+        
+        let phucDucHtml = "";
         phucDucNames.forEach((name, index) => {
             const goc = (index * 15) % 360;
-            const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250");
-            textNode.setAttribute("y", "72");
-            textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "6.8");
-            textNode.setAttribute("font-weight", "900"); // Đẩy lên 900 để nét chữ dày, giả lập thanh led neon tốt hơn
-            textNode.setAttribute("transform", `rotate(${goc}, 250, 250)`);
-            textNode.setAttribute("data-sao-goc", goc.toString());
-            textNode.setAttribute("data-base-size", "6.8");
-            textNode.textContent = name;
-
-            // BIỆN CHỨNG KHỚP LOGIC LED: Sử dụng mã màu tương thích 100% với hàm kichHoatDenLedQuet của bạn
-            // Sao Cát -> Dùng màu #00a525 (Khi la bàn quét qua tự chuyển thành #00ff00 cực mạnh)
-            // Sao Hung -> Dùng màu #ff3b30 (Khi la bàn quét qua tự chuyển thành #ff0000 rực lửa)
             const color = catStars.includes(name) ? "#00a525" : "#ff3b30";
             
-            textNode.setAttribute("fill", color);
-            textNode.setAttribute("data-color", color); // Bắt buộc phải có để hàm quét nhận diện đổi màu
-            phucDucRingSvg.appendChild(textNode);
+            phucDucHtml += `<text x="250" y="72" text-anchor="middle" font-size="6.8" font-weight="900" ` +
+                           `transform="rotate(${goc}, 250, 250)" data-sao-goc="${goc}" data-base-size="6.8" ` +
+                           `fill="${color}" data-color="${color}">${name}</text>`;
         });
+        phucDucRingSvg.innerHTML = phucDucHtml;
     }
 
     // 5. Vòng 72 Hậu - CHUẨN XÁC ĐỒNG TRỤC CHÍNH SƠN
     const hauRing = document.getElementById('hau72RingSvg');
     if (hauRing) {
-        hauRing.innerHTML = "";
-        
+        let hauHtml = "";
         Object.keys(Data72Hau).forEach(degStr => {
             const hau = Data72Hau[degStr];
             const degVisual = parseFloat(degStr);
             
-            const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNode.setAttribute("x", "250"); 
-            textNode.setAttribute("y", "95");
-            textNode.setAttribute("text-anchor", "middle");
-            textNode.setAttribute("font-size", "3.2"); 
-            textNode.setAttribute("font-weight", "700");
-            textNode.setAttribute("transform", `rotate(${degVisual}, 250, 250)`);
-            textNode.setAttribute("data-hau-goc", degStr); 
-            textNode.setAttribute("data-base-size", "3.2");
-
-            let color;
+            let color = "#7a631d";
             if (hau.chatLuong.includes("Cát")) {
-                color = "#0e6b0e"; // Xanh lá đại ngàn (Tĩnh trầm, khi trúng LED quét hóa Vàng rực sẽ cực nổi)
-           } else if (hau.chatLuong.includes("Hung")) {
-                color = "#8b0000"; // Đỏ đô / Đỏ rượu chát (Trầm ấm, huyền bí, không bị lòe loẹt)
-           } else {
-                color = "#7a631d"; // Vàng đồng trầm nguyên bản
-           }
+                color = "#0e6b0e";
+            } else if (hau.chatLuong.includes("Hung")) {
+                color = "#8b0000";
+            }
             
-            textNode.setAttribute("fill", color);
-            textNode.setAttribute("data-original-fill", color);
-            
-            // Tối ưu chuỗi: Nhặt chữ cái đầu + số (Ví dụ: "Nhâm Hậu 1" -> "N1")
             const tenGoc = hau.ten || "";
-            const soHau = tenGoc.match(/\d+/); // Nhặt số ở cuối
-            const chuDau = tenGoc.charAt(0);  // Nhặt chữ cái đầu tiên (N, T, Q, S...)
-            textNode.textContent = soHau ? (chuDau + soHau[0]) : tenGoc;
-
-            hauRing.appendChild(textNode);
+            const soHau = tenGoc.match(/\d+/);
+            const chuDau = tenGoc.charAt(0);
+            const textContent = soHau ? (chuDau + soHau[0]) : tenGoc;
+            
+            hauHtml += `<text x="250" y="95" text-anchor="middle" font-size="3.2" font-weight="700" ` +
+                       `transform="rotate(${degVisual}, 250, 250)" data-hau-goc="${degStr}" data-base-size="3.2" ` +
+                       `fill="${color}" data-original-fill="${color}">${textContent}</text>`;
         });
+        hauRing.innerHTML = hauHtml;
     }
 
-    // QUAN TRỌNG: Cập nhật lại bộ nhớ đệm Cache ngay sau khi tạo mới DOM để hàm LED quét chạy đúng
-    if (typeof cacheCompassElements === 'function') {
-        cacheCompassElements();
-    }
+    // Đồng bộ kích hoạt lưu bộ nhớ đệm ngay lập tức sau khi dựng xong giao diện
+    cacheCompassElements(true);
 }
 
-// ====================== HÀM LÀM SÁNG LED QUÉT (ĐỒNG BỘ MƯỢT MÀ) ======================
+// =========================================================================
+// 🗄️ 2. HÀM CHUYỂN ĐỔI VÀ NẠP BỘ NHỚ ĐỆM TỪ DOM VÀO RAM (CHẠY 1 LẦN DUY NHẤT)
+// =========================================================================
+function cacheCompassElements(forceRefresh = false) {
+    if (!forceRefresh && sonTextsCache && sonTextsCache.length > 0) return; 
+
+    // Cache cấu trúc dữ liệu 24 Sơn
+    sonTextsCache = Array.from(document.querySelectorAll("#sonRingSvg text")).map(txt => ({
+        el: txt,
+        goc: parseFloat(txt.getAttribute("data-son-goc")) || 0,
+        baseSize: parseFloat(txt.getAttribute("data-base-size")) || 10,
+        color: txt.getAttribute("data-color") || "#5c4314"
+    }));
+
+    // Cache cấu trúc dữ liệu 24 Sao Phúc Đức
+    saoTextsCache = Array.from(document.querySelectorAll("#phucDucRingSvg text")).map(txt => ({
+        el: txt,
+        goc: parseFloat(txt.getAttribute("data-sao-goc")) || 0,
+        baseSize: parseFloat(txt.getAttribute("data-base-size")) || 6.8,
+        color: txt.getAttribute("data-color") || "#ff3b30"
+    }));
+
+    // Cache cấu trúc dữ liệu 72 Hậu
+    hau72TextsCache = Array.from(document.querySelectorAll("#hau72RingSvg text")).map(txt => ({
+        el: txt,
+        goc: parseFloat(txt.getAttribute("data-hau-goc")) || 0,
+        baseSize: parseFloat(txt.getAttribute("data-base-size")) || 3.2,
+        originalFill: txt.getAttribute("data-original-fill") || txt.getAttribute("fill") || "#7a631d"
+    }));
+
+    // Cache cấu trúc dữ liệu 8 Hướng Lớn (Triệt tiêu toàn bộ getAttribute phức tạp)
+    huongLonTextsCache = Array.from(document.querySelectorAll("#chuHuongLonG text")).map(txt => {
+        const textGoc = parseFloat(txt.getAttribute("data-goc")) || 0;
+        const fillAttr = txt.getAttribute("fill") || "";
+        const transform = txt.getAttribute("transform") || "";
+        const isChinhPhuong = txt.parentNode?.getAttribute("id") === "textChinhPhuong";
+        
+        let defaultFill = "#6b4e18";
+        if (isChinhPhuong) {
+            defaultFill = (transform.includes("rotate(90") || transform.includes("rotate(270")) ? "#00a525" : "#ff3b30";
+        }
+
+        return {
+            el: txt,
+            goc: textGoc,
+            isGreenByDefault: (fillAttr === "#00a525" || defaultFill === "#00a525"),
+            defaultFill: defaultFill
+        };
+    });
+}
+
+// =========================================================================
+// ⚡ 3. HÀM LÀM SÁNG LED QUÉT TIÊU CHUẨN ENGINE GAME (SIÊU MƯỢT, KHÔNG HÚT CPU)
+// =========================================================================
 function kichHoatDenLedQuet(heading) {
     const ledTargetAngle = ((heading % 360) + 360) % 360;
 
-    // Hàm phụ trợ xử lý hiệu ứng đổi màu và phóng to chữ khi trúng tia quét
-    const applyEffect = (elements, attrGoc, range, zoomScale) => {
-        if (!elements || !elements.forEach) return; // Chốt chặn an toàn chống crash
+    // Hàm phụ trợ xử lý hiệu ứng đổi màu bằng dữ liệu RAM - KHÔNG ĐỌC DOM
+    const applyEffect = (cachedArray, range, zoomScale, isHau = false) => {
+        if (!cachedArray) return;
         
-        elements.forEach(txt => {
-            const goc = parseFloat(txt.getAttribute(attrGoc)) || 0;
-            let phanSai = Math.abs(ledTargetAngle - goc);
+        const len = cachedArray.length;
+        for (let i = 0; i < len; i++) {
+            const item = cachedArray[i];
+            let phanSai = Math.abs(ledTargetAngle - item.goc);
             if (phanSai > 180) phanSai = 360 - phanSai;
 
-            const baseSize = parseFloat(txt.getAttribute("data-base-size")) || 10;
-            
+            const style = item.el.style;
             if (phanSai <= range) {
-                // Trạng thái Khi quét trúng cung
-                txt.style.opacity = "1";
-                txt.style.fontSize = (baseSize * zoomScale) + "px";
-                txt.style.fontWeight = "900";
+                // Khi quét trúng cung mục tiêu
+                style.opacity = "1";
+                style.fontSize = (item.baseSize * zoomScale) + "px";
+                style.fontWeight = "900";
                 
-                if (txt.hasAttribute("data-original-fill")) {
-                    txt.style.fill = "#ffff00"; // Đổi sang vàng LED rực rỡ khi trúng mạch Hậu
-                } else if (txt.getAttribute("data-color")) {
-                    const color = txt.getAttribute("data-color");
-                    txt.style.fill = (color === "#5c4314") ? "#ffcc00" : (color === "#ff3b30" ? "#ff0000" : "#00ff00");
+                if (isHau) {
+                    style.fill = "#ffff00"; 
+                } else {
+                    const color = item.color;
+                    style.fill = (color === "#5c4314") ? "#ffcc00" : (color === "#ff3b30" ? "#ff0000" : "#00ff00");
                 }
             } else {
-                // Trạng thái Bình thường quay về tĩnh
-                txt.style.opacity = "0.6";
-                txt.style.fontSize = baseSize + "px";
-                txt.style.fontWeight = "700";
-                txt.style.fill = txt.getAttribute("data-original-fill") || txt.getAttribute("data-color") || "#8a8a8f";
+                // Trạng thái tĩnh bình thường bên ngoài tia quét
+                style.opacity = "0.6";
+                style.fontSize = item.baseSize + "px";
+                style.fontWeight = "700";
+                style.fill = item.originalFill || item.color || "#8a8a8f";
             }
-        });
+        }
     };
 
-    // 1. Xử lý 8 Hướng Lớn (Giữ nguyên logic gốc của bạn)
-    if (typeof huongLonTextsCache !== 'undefined') {
-        huongLonTextsCache.forEach(txt => {
-            const textGoc = parseFloat(txt.getAttribute("data-goc")) || 0;
-            let phanSai = Math.abs(ledTargetAngle - textGoc);
+    // 1. Xử lý chuyên biệt cho 8 Hướng Lớn bằng vòng lặp Core For tối ưu tốc độ
+    if (huongLonTextsCache) {
+        const lenHL = huongLonTextsCache.length;
+        for (let i = 0; i < lenHL; i++) {
+            const item = huongLonTextsCache[i];
+            let phanSai = Math.abs(ledTargetAngle - item.goc);
             if (phanSai > 180) phanSai = 360 - phanSai;
+
+            const style = item.el.style;
             if (phanSai <= 22.5) {
-                txt.style.opacity = "1"; txt.style.fontWeight = "900";
-                txt.style.fill = (txt.getAttribute("fill") === "#00a525") ? "#00ff37" : "#ff1a00";
+                style.opacity = "1"; 
+                style.fontWeight = "900";
+                style.fill = item.isGreenByDefault ? "#00ff37" : "#ff1a00";
             } else {
-                txt.style.opacity = "0.5"; txt.style.fontWeight = "normal";
-                const transform = txt.getAttribute("transform") || "";
-                if (txt.parentNode?.getAttribute("id") === "textChinhPhuong") {
-                    txt.style.fill = (transform.includes("rotate(90") || transform.includes("rotate(270")) ? "#00a525" : "#ff3b30";
-                } else { txt.style.fill = "#6b4e18"; }
+                style.opacity = "0.5"; 
+                style.fontWeight = "normal";
+                style.fill = item.defaultFill;
             }
-        });
+        }
     }
 
     // 2. Xử lý 24 Sơn (Phóng to 1.3 lần)
-    if (typeof sonTextsCache !== 'undefined') {
-        applyEffect(sonTextsCache, "data-son-goc", 7.5, 1.3);
-    }
+    applyEffect(sonTextsCache, 7.5, 1.3, false);
 
     // 3. Xử lý Sao Phúc Đức (Phóng to 1.2 lần)
-    if (typeof saoTextsCache !== 'undefined') {
-        applyEffect(saoTextsCache, "data-sao-goc", 7.5, 1.2);
-    }
+    applyEffect(saoTextsCache, 7.5, 1.2, false);
 
     // 4. Xử lý 72 Hậu (Quét trúng cung quản 2.5 độ, phóng to 1.65 lần nổi bật)
-    if (typeof hau72TextsCache !== 'undefined') {
-        applyEffect(hau72TextsCache, "data-hau-goc", 2.5, 1.65); 
-    }
-}
-
-// ====================== CACHE ELEMENTS - TỐI ƯU HIỆU SUẤT CHUẨN VẬN 9 ======================
-// Đảm bảo khai báo đủ 4 biến mảng toàn cục ở đầu file (hoặc trước hàm)
-let sonTextsCache = null;
-let huongLonTextsCache = null;
-let saoTextsCache = null;
-let hau72TextsCache = null; // Khai báo thêm biến này nếu chưa có ở đầu file
-
-function cacheCompassElements(forceRefresh = false) {
-    // NẾU KHÔNG ÉP BUỘC LÀM MỚI và đã có dữ liệu -> Bỏ qua để tiết kiệm CPU
-    if (!forceRefresh && sonTextsCache && sonTextsCache.length > 0) return; 
-
-    // Thực hiện quét nạp bộ nhớ đệm từ DOM
-    sonTextsCache = document.querySelectorAll("#sonRingSvg text");
-    huongLonTextsCache = document.querySelectorAll("#chuHuongLonG text");
-    saoTextsCache = document.querySelectorAll("#phucDucRingSvg text");
-    hau72TextsCache = document.querySelectorAll("#hau72RingSvg text");
-
-    // Lưu lưu lượng màu gốc của 72 Hậu phục vụ cho hàm trả màu LED quét
-    if (hau72TextsCache) {
-        hau72TextsCache.forEach(txt => {
-            if (!txt.hasAttribute("data-original-fill")) {
-                txt.setAttribute("data-original-fill", txt.getAttribute("fill") || "#ffcc77");
-            }
-        });
-    }
+    applyEffect(hau72TextsCache, 2.5, 1.65, true);
 }
 
 // ====================== MANUAL ROTATE (KÉO SLIDER) ======================
@@ -4380,6 +4639,143 @@ function manualRotate(value) {
     rafId = requestAnimationFrame(() => {
         updateCompassUI(lastHeading);
     });
+}
+// =========================================================================
+// 📐 HÀM VẼ PH N VÙNG VÀNH KHĂN (ĐÃ N NG CẤP CACHE & NÉN TỌA ĐỘ)
+// =========================================================================
+// Bộ lưu trữ toàn cục để giữ lại các hình vành khăn đã tính, triệt tiêu hoàn toàn việc tính lại lượng giác
+const _arcPathCache = {};
+
+function getSvgArcPath(cx, cy, rIn, rOut, startAngle, endAngle) {
+    // Tạo mã định danh (Key) độc nhất cho cấu hình vành khăn này
+    const cacheKey = `${cx}_${cy}_${rIn}_${rOut}_${startAngle}_${endAngle}`;
+    
+    // Nếu cấu hình góc này đã từng được tính, trả về kết quả ngay lập tức (Tốc độ tối đa)
+    if (_arcPathCache[cacheKey]) {
+        return _arcPathCache[cacheKey];
+    }
+
+    const angleToRad = (angle) => (angle - 90) * Math.PI / 180.0;
+    const sIn = angleToRad(startAngle);
+    const eIn = angleToRad(endAngle);
+    
+    // Áp dụng .toFixed(1) để nén gọn chuỗi tọa độ dữ liệu SVG.
+    // Giảm tải dung lượng DOM, giúp phần cứng thiết bị xử lý đồ họa mượt mà hơn.
+    const x1_out = (cx + rOut * Math.cos(sIn)).toFixed(1);
+    const y1_out = (cy + rOut * Math.sin(sIn)).toFixed(1);
+    const x2_out = (cx + rOut * Math.cos(eIn)).toFixed(1);
+    const y2_out = (cy + rOut * Math.sin(eIn)).toFixed(1);
+    
+    const x1_in = (cx + rIn * Math.cos(eIn)).toFixed(1);
+    const y1_in = (cy + rIn * Math.sin(eIn)).toFixed(1);
+    const x2_in = (cx + rIn * Math.cos(sIn)).toFixed(1);
+    const y2_in = (cy + rIn * Math.sin(sIn)).toFixed(1);
+    
+    const largeArcFlag = (endAngle - startAngle) > 180 ? 1 : 0;
+    
+    // Tổng hợp chuỗi vẽ đường bọc vành khăn cốt lõi
+    const pathStr = `M ${x1_out} ${y1_out} ` +
+                    `A ${rOut} ${rOut} 0 ${largeArcFlag} 1 ${x2_out} ${y2_out} ` +
+                    `L ${x1_in} ${y1_in} ` +
+                    `A ${rIn} ${rIn} 0 ${largeArcFlag} 0 ${x2_in} ${y2_in} Z`;
+    
+    // Ghi nhớ vào bộ đệm trước khi trả kết quả ra ngoài
+    _arcPathCache[cacheKey] = pathStr;
+    
+    return pathStr;
+}
+
+// =========================================================================
+// 🎨 ENGINE CẬP NHẬT MÀU NỀN HUNG CÁT (ĐÃ TỐI ƯU HÓA HIỆU NĂNG CAO)
+// =========================================================================
+// =========================================================================
+// 🎨 ENGINE CẬP NHẬT MÀU NỀN HUNG CÁT (HIỆU ỨNG ĐÈN NEON SÁNG CHỐNG CHÓI)
+// =========================================================================
+function updateBatTrachBackground(cungPhi) {
+    const bgGroup = document.getElementById('batTrachBackgroundRing');
+    if (!bgGroup) return;
+    
+    // Kiểm tra xem 8 mảng của la bàn đã được dựng sẵn chưa
+    let existingPaths = bgGroup.querySelectorAll('path');
+    const isInitialized = existingPaths.length === 8;
+
+    // Nếu chưa nhập năm sinh hoặc dữ liệu trống, ẩn màu và viền đi để giữ hiệu năng
+    if (!cungPhi) {
+        if (isInitialized) {
+            existingPaths.forEach(path => {
+                path.setAttribute('fill', 'none');
+                path.setAttribute('stroke', 'none');
+            });
+        } else {
+            bgGroup.innerHTML = "";
+        }
+        return;
+    }
+    
+    // Định biên tọa độ góc 8 hướng lớn đồng trục với đĩa xoay la bàn số
+    const directions = [
+        { code: 'N',  start: 337.5, end: 382.5 }, 
+        { code: 'NE', start: 22.5,  end: 67.5  }, 
+        { code: 'E',  start: 67.5,  end: 112.5 }, 
+        { code: 'SE', start: 112.5, end: 157.5 }, 
+        { code: 'S',  start: 157.5, end: 202.5 }, 
+        { code: 'SW', start: 202.5, end: 247.5 }, 
+        { code: 'W',  start: 247.5, end: 292.5 }, 
+        { code: 'NW', start: 292.5, end: 337.5 }  
+    ];
+    
+    const safeCungPhi = cungPhi.trim().charAt(0).toUpperCase() + cungPhi.trim().slice(1).toLowerCase();
+    const mapTrach = bátTrạchMap[safeCungPhi];
+    
+    if (!mapTrach) {
+        if (isInitialized) {
+            existingPaths.forEach(path => {
+                path.setAttribute('fill', 'none');
+                path.setAttribute('stroke', 'none');
+            });
+        } else {
+            bgGroup.innerHTML = "";
+        }
+        return;
+    }
+    
+    // NẾU ĐÃ KHỞI TẠO: Chỉ cập nhật thuộc tính màu sắc & viền Neon (Tốc độ tối đa)
+    if (isInitialized) {
+        directions.forEach((dir, index) => {
+            const cungTrạch = mapTrach[dir.code];
+            const isCat = cungPhầnTrăm[cungTrạch]?.cát;
+            
+            // 💡 CẤU HÌNH MÀU NEON CHỐNG CHÓI CHỮ:
+            // - Mảng Cát (Xanh): Mã màu gốc #00ffaa phát sáng mạnh, hạ Alpha nền xuống 0.12, giữ viền sáng 0.7
+            // - Mảng Hung (Đỏ):  Mã màu gốc #ff1744 đỏ điện tử cực tươi, hạ Alpha nền xuống 0.12, giữ viền sáng 0.7
+            const fillColor = isCat ? "rgba(0, 255, 170, 0.12)" : "rgba(255, 23, 68, 0.12)";
+            const strokeColor = isCat ? "rgba(0, 255, 170, 0.70)" : "rgba(255, 23, 68, 0.70)";
+            
+            // Thay đổi trực tiếp các thuộc tính hiển thị đồ họa nền có sẵn
+            existingPaths[index].setAttribute('fill', fillColor);
+            existingPaths[index].setAttribute('stroke', strokeColor);
+            existingPaths[index].setAttribute('stroke-width', '1.2');
+        });
+        return; 
+    }
+    
+    // NẾU CHƯA KHỞI TẠO (Chỉ chạy duy nhất một lần đầu tiên khi dựng đĩa la bàn)
+    let html = "";
+    const cx = 250, cy = 250, rIn = 185, rOut = 244;
+    
+    directions.forEach(dir => {
+        const cungTrạch = mapTrach[dir.code];
+        const isCat = cungPhầnTrăm[cungTrạch]?.cát;
+        
+        // Đồng bộ cấu hình màu Neon cho lượt tạo đầu tiên
+        const fillColor = isCat ? "rgba(0, 255, 170, 0.12)" : "rgba(255, 23, 68, 0.12)";
+        const strokeColor = isCat ? "rgba(0, 255, 170, 0.70)" : "rgba(255, 23, 68, 0.70)";
+        
+        const pathStr = getSvgArcPath(cx, cy, rIn, rOut, dir.start, dir.end);
+        html += `<path d="${pathStr}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="1.2" />`;
+    });
+    
+    bgGroup.innerHTML = html;
 }
 
 // =========================================================================
