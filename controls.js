@@ -300,43 +300,7 @@ const Data72Hau = {
     "330": { ten: "Hợi Hậu 2", chatLuong: "Bình", hanh: "Thủy", ynghia: "Quản lý tài chính thận trọng.", diem: 60, giaiphap: "Thận trọng.", interactionLevel: "Trung bình", overrideIf: null },
     "335": { ten: "Hợi Hậu 3", chatLuong: "Bình", hanh: "Thủy", ynghia: "Giữ cân bằng, tránh thay đổi lớn.", diem: 59, giaiphap: "Cân bằng.", interactionLevel: "Trung bình", overrideIf: null }
 };
-// =========================================================================
-// ID-06: MẠNG LƯỚI TIỆN ÍCH TRẮC ĐỊA TOÁN HỌC VÀ CHUẨN HÓA DỮ LIỆU CỐT LÕI
-// =========================================================================
-const PhongThuyUtils = {
-    // Chuẩn hóa góc độ luôn nằm trong dải [0, 359.9999] chống tràn số
-    normalizeDegree: function(degree) {
-        if (typeof degree !== 'number' || isNaN(degree)) return 0;
-        return ((degree % 360) + 360) % 360;
-    },
 
-    // Chuẩn hóa chuỗi văn bản chữ hoa đầu để khớp khít cấu trúc map dữ liệu
-    toTitleCase: function(str) {
-        if (!str || typeof str !== 'string') return "Khảm";
-        const trimmed = str.trim();
-        return trimmed.charAt(0).toUpperCase() + trimmed.slice(1).toLowerCase();
-    },
-
-    // Trích xuất Năm Khảo Sát thực thời khách quan từ UI hoặc thời gian máy tính
-    getSurveyYear: function() {
-        const txtSurveyYear = document.getElementById('surveyYear');
-        if (txtSurveyYear && txtSurveyYear.value.length === 4) {
-            const parsed = parseInt(txtSurveyYear.value, 10);
-            if (!isNaN(parsed)) return parsed;
-        }
-        return new Date().getFullYear();
-    },
-
-    // Trích xuất Năm Sinh Mệnh Chủ từ UI dạng Số
-    getBirthYear: function() {
-        const txtBirthYear = document.getElementById('birthYear');
-        if (txtBirthYear && txtBirthYear.value.length === 4) {
-            const parsed = parseInt(txtBirthYear.value, 10);
-            if (!isNaN(parsed)) return parsed;
-        }
-        return null;
-    }
-};
 // =========================================================================
 // ⏱️ 1. HỆ THỐNG KIỂM SOÁT THỜI GIAN & TIẾT KHÍ TỰ ĐỘNG KHÁCH QUAN
 // =========================================================================
@@ -1739,40 +1703,43 @@ function updateCompassUI(heading) {
         }
     }
 
-    // ==================== 1. XÁC ĐỊNH 8 CUNG ĐẠI CỤC (45°) ====================
+    // TẠO BIẾN GÓC TRA CỨU ĐỒNG BỘ TUYỆT ĐỐI VỚI REALHEADING CỦA HÀM RECALCULATEFATE
+    const calcHeading = ((currentHeading % 360) + 360) % 360;
+
+    // ==================== 1. XÁC ĐỊNH 8 CUNG ĐẠI CỤC CHUẨN ĐẤT NỀN ====================
     let currentCung = "";
     let currentCode = "";
-    if (trueHeading >= 337.5 || trueHeading < 22.5) {
+    if (calcHeading >= 337.5 || calcHeading < 22.5) {
         currentCung = "KHẢM (BẮC)"; currentCode = "N";
-    } else if (trueHeading >= 22.5 && trueHeading < 67.5) {
+    } else if (calcHeading >= 22.5 && calcHeading < 67.5) {
         currentCung = "CẤN (ĐÔNG BẮC)"; currentCode = "NE";
-    } else if (trueHeading >= 67.5 && trueHeading < 112.5) {
+    } else if (calcHeading >= 67.5 && calcHeading < 112.5) {
         currentCung = "CHẤN (ĐÔNG)"; currentCode = "E";
-    } else if (trueHeading >= 112.5 && trueHeading < 157.5) {
+    } else if (calcHeading >= 112.5 && calcHeading < 157.5) {
         currentCung = "TỐN (ĐÔNG NAM)"; currentCode = "SE";
-    } else if (trueHeading >= 157.5 && trueHeading < 202.5) {
+    } else if (calcHeading >= 157.5 && calcHeading < 202.5) {
         currentCung = "LY (NAM)"; currentCode = "S";
-    } else if (trueHeading >= 202.5 && trueHeading < 247.5) {
+    } else if (calcHeading >= 202.5 && calcHeading < 247.5) {
         currentCung = "KHÔN (TÂY NAM)"; currentCode = "SW";
-    } else if (trueHeading >= 247.5 && trueHeading < 292.5) {
+    } else if (calcHeading >= 247.5 && calcHeading < 292.5) {
         currentCung = "ĐOÀI (TÂY)"; currentCode = "W";
-    } else if (trueHeading >= 292.5 && trueHeading < 337.5) {
+    } else if (calcHeading >= 292.5 && calcHeading < 337.5) {
         currentCung = "CÀN (TÂY BẮC)"; currentCode = "NW";
     }
 
-    // ==================== 2. TRÍCH XUẤT 24 SƠN (15°) + 72 HẬU (5°) ====================
-    let gockim = (trueHeading % 360 + 360) % 360;
+    // ==================== 2. TRÍCH XUẤT 24 SƠN VÀ 72 HẬU THEO TỌA ĐỘ GỐC ====================
+    let gockim = calcHeading;
     let sơnHiệnTạiObj = SON_24_CONFIG.find(s => {
         if (s.min > s.max) return gockim >= s.min || gockim < s.max;
         return gockim >= s.min && gockim < s.max;
     }) || SON_24_CONFIG[0];
     let sơnHiệnTại = sơnHiệnTạiObj.name;
 
-    const currentHauInfo = getCurrentHauInfo(trueHeading);
+    const currentHauInfo = getCurrentHauInfo(calcHeading);
     const mụcĐích = document.getElementById('purpose')?.value || 'house';
     
-    // ĐỒNG BỘ TOÁN PHÁP CHÍNH TÔNG: Truyền đầy đủ cả 5 tham số cốt lõi vào bộ xử lý tính điểm
-    const tongHop = tinhDiemTongHop(tinhChuMenh, trueHeading, namKhaoSatThucTe, mụcĐích, namAmMệnhChủ);
+    // TÍNH TOÁN ĐIỂM SỐ DỰA TRÊN GÓC TOẠ ĐỘ THỰC ĐỊA CỐ ĐỊNH 
+    const tongHop = tinhDiemTongHop(tinhChuMenh, calcHeading, namKhaoSatThucTe, mụcĐích, namAmMệnhChủ);
 
     // Mốc màu hiển thị số điểm tổng hợp trên thanh la bàn đồng bộ với ngưỡng Đạt Cách 72pt (Sử dụng let để tránh lỗi bẫy cú pháp tái gán)
     let colorDiemRealtime = "#ff4444"; 
