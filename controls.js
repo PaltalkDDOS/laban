@@ -2954,30 +2954,66 @@ function getCleanValue(raw) {
 }
 
 // =========================================================================
-// WMM2025 - World Magnetic Model 2025 (NOAA) - Chính xác cao
+// 1. WMM2025 COEFFICIENTS CHÍNH THỨC VẠN NĂNG (TỪ NOAA)
 // =========================================================================
-
 const WMM_COEFFS = {
     epoch: 2025.0,
     data: [
-        [1,0,-29351.8,0.0,12.0,0.0],[1,1,-1410.8,4545.4,9.7,-21.5],
-        [2,0,-2523.2,0.0,-10.8,0.0],[2,1,2991.4,-2991.4,-7.9,-29.8],[2,2,1676.5,-734.4,-2.0,-23.9],
-        [3,0,1364.5,0.0,0.1,0.0],[3,1,-2381.0,-248.5,-6.2,6.4],[3,2,1235.7,243.8,-0.4,-1.8],[3,3,875.3,-204.5,-9.5,12.1],
-        [4,0,944.9,0.0,-1.6,0.0],[4,1,797.5,246.8,-0.1,1.4],[4,2,336.1,-252.4,-4.8,5.0],[4,3,-400.9,82.9,1.9,-1.3],[4,4,-46.3,-196.5,-3.7,2.0],
-        [5,0,-213.4,0.0,1.5,0.0],[5,1,362.9,44.2,1.1,1.6],[5,2,187.3,179.4,-1.7,-0.1],[5,3,-135.9,-84.1,-1.4,3.4],[5,4,-145.1,-29.9,0.5,2.2],[5,5,87.6,37.0,1.6,-1.0],
-        [6,0,56.3,0.0,-0.4,0.0],[6,1,62.8,-17.3,0.3,-0.5],[6,2,-73.2,56.1,0.3,-0.7],[6,3,41.4,61.1,1.2,-0.4],[6,4,-19.9,2.2,0.1,1.3],[6,5,13.9,27.1,0.2,0.1],[6,6,-38.5,-25.9,1.1,1.3],
-        [7,0,71.8,0.0,-0.8,0.0],[7,1,-55.7,-5.3,0.6,0.4],[7,2,0.3,19.3,-0.4,0.5],[7,3,33.5,-22.9,0.5,-1.4],[7,4,-11.0,7.8,-0.3,0.3],[7,5,7.2,1.5,-0.1,0.4],[7,6,8.7,13.8,0.3,-0.4],[7,7,-0.6,-15.3,-0.1,0.7],
-        [8,0,23.3,0.0,-0.3,0.0],[8,1,7.6,7.5,-0.1,-0.3],[8,2,-11.6,-12.4,0.4,-0.2],[8,3,-10.9,8.5,0.4,-0.1],[8,4,-13.0,-7.5,0.0,0.2],[8,5,7.6,-8.3,-0.1,0.4],[8,6,-15.0,14.1,0.2,-0.2],[8,7,7.4,6.7,-0.2,0.4],[8,8,-6.6,-7.1,0.4,0.1],
-        [9,0,5.1,0.0,0.0,0.0],[9,1,9.3,-1.5,-0.1,0.0],[9,2,2.3,-4.5,-0.1,0.1],[9,3,-4.7,8.0,0.0,-0.2],[9,4,7.2,3.4,0.1,0.0],[9,5,-2.1,-6.7,0.0,0.2],[9,6,-2.0,3.8,0.1,-0.1],[9,7,6.4,5.4,-0.1,-0.1],[9,8,3.3,-5.4,0.0,0.2],[9,9,0.0,4.3,0.0,0.0],
-        [10,0,-2.9,0.0,0.0,0.0],[10,1,1.2,1.5,0.0,0.1],[10,2,1.7,0.2,0.0,0.0],[10,3,-3.2,1.5,0.1,0.0],[10,4,1.8,-3.3,0.0,0.1],[10,5,-0.9,-0.1,0.0,0.0],[10,6,-1.3,-1.9,0.0,0.1],[10,7,1.0,1.9,0.0,-0.1],[10,8,2.3,-0.4,-0.1,0.0],[10,9,0.9,-1.8,0.0,0.1],[10,10,-2.9,-0.8,0.1,0.1],
-        [11,0,2.4,0.0,0.0,0.0],[11,1,-1.1,-0.1,0.0,0.0],[11,2,1.1,1.3,0.0,0.0],[11,3,1.3,-1.1,0.0,0.0],[11,4,-1.5,0.7,0.0,0.0],[11,5,0.5,0.7,0.0,0.0],[11,6,0.1,-0.8,0.0,0.0],[11,7,-0.8,0.5,0.0,0.0],[11,8,0.6,-0.6,0.0,0.0],[11,9,-0.8,-0.9,0.0,0.0],[11,10,0.0,-0.6,0.0,0.0],[11,11,0.5,-0.9,0.0,0.0],
-        [12,0,-0.8,0.0,0.0,0.0],[12,1,-0.1,0.4,0.0,0.0],[12,2,0.3,0.4,0.0,0.0],[12,3,0.2,0.0,0.0,0.0],[12,4,-0.2,0.3,0.0,0.0],[12,5,0.2,-0.7,0.0,0.0],[12,6,-0.4,0.2,0.0,0.0],[12,7,0.1,0.6,0.0,0.0],[12,8,0.1,-0.2,0.0,0.0],[12,9,-0.3,0.3,0.0,0.0],[12,10,0.4,0.0,0.0,0.0],[12,11,0.2,-0.2,0.0,0.0],[12,12,-0.7,0.2,-0.1,-0.1]
+        [1,0,-29351.8,0.0,12.0,0.0],[1,1,-1410.8,4545.4,9.7,-21.5],[2,0,-2556.6,0.0,-11.6,0.0],
+        [2,1,2951.1,-3133.6,-5.2,-27.7],[2,2,1649.3,-815.1,-8.0,-12.1],[3,0,1361.0,0.0,-1.3,0.0],
+        [3,1,-2404.1,-56.6,-4.2,4.0],[3,2,1243.8,237.5,0.4,-0.3],[3,3,453.6,-549.5,-15.6,-4.1],
+        [4,0,895.0,0.0,-1.6,0.0],[4,1,799.5,278.6,-2.4,-1.1],[4,2,55.7,-133.9,-6.0,4.1],
+        [4,3,-281.1,212.0,5.6,1.6],[4,4,12.1,-375.6,-7.0,-4.4],[5,0,-233.2,0.0,0.6,0.0],
+        [5,1,368.9,45.4,1.4,-0.5],[5,2,187.2,220.2,0.0,2.2],[5,3,-138.7,-122.9,0.6,0.4],
+        [5,4,-142.0,43.0,2.2,1.7],[5,5,20.9,106.1,0.9,1.9],[6,0,64.4,0.0,-0.2,0.0],
+        [6,1,63.8,-18.4,-0.4,0.3],[6,2,76.9,16.8,0.9,-1.6],[6,3,-115.7,48.8,1.2,-0.4],
+        [6,4,-40.9,-59.8,-0.9,0.9],[6,5,14.9,10.9,0.3,0.7],[6,6,-60.7,72.7,0.9,0.9],
+        [7,0,79.5,0.0,-0.0,0.0],[7,1,-77.0,-48.9,-0.1,0.6],[7,2,-8.8,-14.4,-0.1,0.5],
+        [7,3,59.3,-1.0,0.5,-0.8],[7,4,15.8,23.4,-0.1,0.0],[7,5,2.5,-7.4,-0.8,-1.0],
+        [7,6,-11.1,-25.1,-0.8,0.6],[7,7,14.2,-2.3,0.8,-0.2],[8,0,23.2,0.0,-0.1,0.0],
+        [8,1,10.8,7.1,0.2,-0.2],[8,2,-17.5,-12.6,0.0,0.5],[8,3,2.0,11.4,0.5,-0.4],
+        [8,4,-21.7,-9.7,-0.1,0.4],[8,5,16.9,12.7,0.3,-0.5],[8,6,15.0,0.7,0.2,-0.6],
+        [8,7,-16.8,-5.2,-0.0,0.3],[8,8,0.9,3.9,0.2,0.2],[9,0,4.6,0.0,-0.0,0.0],
+        [9,1,7.8,-24.8,-0.1,-0.3],[9,2,3.0,12.2,0.1,0.3],[9,3,-0.2,8.3,0.3,-0.3],
+        [9,4,-2.5,-3.3,-0.3,0.3],[9,5,-13.1,-5.2,0.0,0.2],[9,6,2.4,7.2,0.3,-0.1],
+        [9,7,8.6,-0.6,-0.1,-0.2],[9,8,-8.7,0.8,0.1,0.4],[9,9,-12.9,10.0,-0.1,0.1],
+        [10,0,-1.3,0.0,0.1,0.0],[10,1,-6.4,3.3,0.0,0.0],[10,2,0.2,0.0,0.1,-0.0],
+        [10,3,2.0,2.4,0.1,-0.2],[10,4,-1.0,5.3,-0.0,0.1],[10,5,-0.6,-9.1,-0.3,-0.1],
+        [10,6,-0.9,0.4,0.0,0.1],[10,7,1.5,-4.2,-0.1,0.0],[10,8,0.9,-3.8,-0.1,-0.1],
+        [10,9,-2.7,0.9,-0.0,0.2],[10,10,-3.9,-9.1,-0.0,-0.0],[11,0,2.9,0.0,0.0,0.0],
+        [11,1,-1.5,0.0,-0.0,-0.0],[11,2,-2.5,2.9,0.0,0.1],[11,3,2.4,-0.6,0.0,-0.0],
+        [11,4,-0.6,0.2,0.0,0.1],[11,5,-0.1,0.5,-0.1,-0.0],[11,6,-0.6,-0.3,0.0,-0.0],
+        [11,7,-0.1,-1.2,-0.0,0.1],[11,8,1.1,-1.7,-0.1,-0.0],[11,9,-1.0,-2.9,-0.1,0.0],
+        [11,10,-0.2,-1.8,-0.1,0.0],[11,11,2.6,-2.3,-0.1,0.0],[12,0,-2.0,0.0,0.0,0.0],
+        [12,1,-0.2,-1.3,0.0,-0.0],[12,2,0.3,0.7,-0.0,0.0],[12,3,1.2,1.0,-0.0,-0.1],
+        [12,4,-1.3,-1.4,-0.0,0.1],[12,5,0.6,-0.0,-0.0,-0.0],[12,6,0.6,0.6,0.1,-0.0],
+        [12,7,0.5,-0.1,-0.0,-0.0],[12,8,-0.1,0.8,0.0,0.0],[12,9,-0.4,0.1,0.0,-0.0],
+        [12,10,-0.2,-1.0,-0.1,-0.0],[12,11,-1.3,0.1,-0.0,0.0],[12,12,-0.7,0.2,-0.1,-0.1]
     ]
 };
 // ==========================================================================
-// MODULE TRẮC ĐỊA RÚT GỌN - CHUYỂN VN-2000 SANG WGS84 CHUẨN PROJ4
+// MODULE TRẮC ĐỊA VIỆT NAM - CHUYỂN ĐỔI VN-2000 ↔ WGS84 (FULL NÂNG CẤP)
+// Hỗ trợ nhiều kinh tuyến trung tâm + tự động nhận diện vùng
 // ==========================================================================
 const TRAC_DIA_CORE = {
+    // ====================== DANH SÁCH KINH TUYẾN TRUNG TÂM VIỆT NAM ======================
+    ZONES: {
+        "HN": 105.0,   // Hà Nội - Bắc Bộ
+        "DDN": 108.0,  // Đà Nẵng - Trung Bộ
+        "HCM": 106.6,  // TP.HCM - Nam Bộ (kinh tuyến phổ biến)
+        "CT": 105.0,   // Cần Thơ
+        "102": 102.0,  // Tây Bắc
+        "111": 111.0   // Đông Nam Bộ
+    },
+
+    getZone(lon0_deg) {
+        if (typeof lon0_deg === 'string' && this.ZONES[lon0_deg]) {
+            return this.ZONES[lon0_deg];
+        }
+        return lon0_deg || 105.0; // mặc định Hà Nội
+    },
+
+    // ====================== HỆ SỐ & HÀM HỖ TRỢ ======================
     tmerc_en(es) {
         const en = new Float64Array(5);
         en[0] = 1.0 - es * (0.25 + es * (0.046875 + es * (0.01953125 + es * 0.01068115234375)));
@@ -2988,34 +3024,112 @@ const TRAC_DIA_CORE = {
         en[4] = t * es * es * 0.3076171875;
         return en;
     },
+
     pj_mlfn(phi, sphi, cphi, en) {
-        cphi *= sphi; sphi *= sphi;
+        cphi *= sphi; 
+        sphi *= sphi;
         return en[0] * phi - cphi * (en[1] + sphi * (en[2] + sphi * (en[3] + sphi * en[4])));
     },
+
     pj_inv_mlfn(arg, es, en) {
-        const EPSLN = 1.0e-10; const k = 1.0 / (1.0 - es); let phi = arg;
+        const EPSLN = 1.0e-10;
+        const k = 1.0 / (1.0 - es);
+        let phi = arg;
         for (let i = 20; i > 0; --i) {
-            let s = Math.sin(phi); let t = 1.0 - es * s * s;
-            t = (this.pj_mlfn(phi, s, Math.cos(phi), en) - arg) * (t * Math.sqrt(t)) * k;
-            phi -= t; if (Math.abs(t) < EPSLN) return phi;
+            let s = Math.sin(phi);
+            let t = 1.0 - es * s * s;
+            let t2 = (this.pj_mlfn(phi, s, Math.cos(phi), en) - arg) * (t * Math.sqrt(t)) * k;
+            phi -= t2;
+            if (Math.abs(t2) < EPSLN) return phi;
         }
         return phi;
     },
-    vn2000ToWGS84(x, y, lon0_deg = 105.0) { // Mặc định kinh tuyến trục Hà Nội là 105.0
-        const a = 6378137.0; const f = 1.0 / 298.257223563; const es = 2.0 * f - f * f; const ebs = es / (1.0 - es);
-        const en = this.tmerc_en(es); const x_proj = (x - 500000.0) / 0.9999; const y_proj = y / 0.9999;
-        const phi1 = this.pj_inv_mlfn(y_proj / a, es, en);
-        if (Math.abs(phi1) >= Math.PI / 2) return { lat: phi1 > 0 ? 90 : -90, lon: lon0_deg };
-        const sin_phi1 = Math.sin(phi1); const cos_phi1 = Math.cos(phi1); const tan_phi1 = Math.tan(phi1);
-        const t = tan_phi1 * tan_phi1; const n = ebs * cos_phi1 * cos_phi1; const con = 1.0 - es * sin_phi1 * sin_phi1;
-        const N = a / Math.sqrt(con); const R = N * (1.0 - es) / con; const D = x_proj / N;
-        const D2 = D * D; const D4 = D2 * D2; const D6 = D4 * D2;
-        let lat = phi1 - (N * tan_phi1 / R) * (D2 / 2.0 - (5.0 + 3.0 * t + 10.0 * n - 4.0 * n * n - 9.0 * t * n) * D4 / 24.0 + (61.0 + 90.0 * t + 45.0 * t * t + 298.0 * n - 252.0 * t * n - 3.0 * n * n) * D6 / 720.0);
-        let lon = (D - (1.0 + 2.0 * t + n) * (D2 * D) / 6.0 + (5.0 - 2.0 * n + 28.0 * t - 3.0 * n * n + 8.0 * t * n + 24.0 * t * t) * (D4 * D) / 120.0) / cos_phi1;
-        return { lat: lat * (180.0 / Math.PI), lon: (lon * (180.0 / Math.PI)) + lon0_deg };
+
+    // ====================== CHUYỂN VN-2000 → WGS84 (HỖ TRỢ NHIỀU ZONE) ======================
+    vn2000ToWGS84(x, y, lon0_deg = 105.0) {
+        try {
+            const centralMeridian = this.getZone(lon0_deg);
+            
+            const a = 6378137.0;
+            const f = 1.0 / 298.257223563;
+            const es = 2.0 * f - f * f;
+            const ebs = es / (1.0 - es);
+            
+            const en = this.tmerc_en(es);
+            const x_proj = (x - 500000.0) / 0.9999;
+            const y_proj = y / 0.9999;
+
+            const phi1 = this.pj_inv_mlfn(y_proj / a, es, en);
+            if (Math.abs(phi1) >= Math.PI / 2) {
+                return { lat: 0, lon: centralMeridian, error: "Out of range" };
+            }
+
+            const sin_phi1 = Math.sin(phi1);
+            const cos_phi1 = Math.cos(phi1);
+            const tan_phi1 = Math.tan(phi1);
+            const t = tan_phi1 * tan_phi1;
+            const n = ebs * cos_phi1 * cos_phi1;
+            const con = 1.0 - es * sin_phi1 * sin_phi1;
+
+            const N = a / Math.sqrt(con);
+            const R = N * (1.0 - es) / con;
+            const D = x_proj / N;
+
+            const D2 = D * D;
+            const D4 = D2 * D2;
+            const D6 = D4 * D2;
+
+            let lat = phi1 - (N * tan_phi1 / R) * 
+                (D2 / 2.0 - (5 + 3*t + 10*n - 4*n*n - 9*t*n)*D4/24 +
+                 (61 + 90*t + 45*t*t + 298*n - 252*t*n - 3*n*n)*D6/720);
+
+            let lon = (D - (1 + 2*t + n)*(D2*D)/6 +
+                (5 - 2*n + 28*t - 3*n*n + 8*t*n + 24*t*t)*(D4*D)/120) / cos_phi1;
+
+            lat = lat * (180.0 / Math.PI);
+            lon = (lon * (180.0 / Math.PI)) + centralMeridian;
+
+            return {
+                lat: parseFloat(lat.toFixed(8)),
+                lon: parseFloat(lon.toFixed(8)),
+                zone: centralMeridian,
+                zoneName: Object.keys(this.ZONES).find(key => this.ZONES[key] === centralMeridian) || centralMeridian
+            };
+        } catch (e) {
+            console.error("Lỗi chuyển VN-2000 → WGS84:", e);
+            return { lat: 0, lon: 0, error: e.message };
+        }
+    },
+
+    // ====================== HÀM TỰ ĐỘNG THÔNG MINH ======================
+    autoConvertToWGS84(x, y, lon0_deg = 105.0) {
+        if (Math.abs(x) > 90 || Math.abs(y) > 90) {
+            return this.vn2000ToWGS84(x, y, lon0_deg);
+        }
+        return { 
+            lat: parseFloat(x.toFixed(8)), 
+            lon: parseFloat(y.toFixed(8)), 
+            note: "Already WGS84" 
+        };
+    },
+
+    // Danh sách gợi ý cho người dùng
+    getZoneList() {
+        return {
+            "Hà Nội / Bắc Bộ": 105.0,
+            "Đà Nẵng / Trung Bộ": 108.0,
+            "Tây Nguyên": 107.0,
+            "TP.HCM / Nam Bộ": 106.6,
+            "Tây Bắc": 102.0,
+            "Đông Nam Bộ": 111.0,
+            "Cần Thơ": 105.0
+        };
     }
 };
-// Hàm tính năm thập phân chuẩn NOAA
+
+// ==========================================================================
+// HÀM TÍNH NĂM THẬP PHÂN
+// ==========================================================================
 function getDecimalYear(date = new Date()) {
     const year = date.getFullYear();
     const start = new Date(year, 0, 1);
@@ -3039,33 +3153,29 @@ function calculateRemoteDeclination() {
         return;
     }
 
-    let latV = parseFloat(latStr);
-    let lonV = parseFloat(lonStr);
+    let latV = convertToDecimalDegrees(latStr);
+    let lonV = convertToDecimalDegrees(lonStr);
 
-    if (isNaN(latV) || isNaN(lonV) || (latV === 0 && lonV === 0)) {
+    if (latV === null || lonV === null || isNaN(latV) || isNaN(lonV) || (latV === 0 && lonV === 0)) {
         showToast("⚠️ Tọa độ không hợp lệ!", true);
         return;
     }
 
-    // =========================================================================
-    // MẮT QUÉT THÔNG MINH 2026: TỰ ĐỘNG PHÁT HIỆN TỌA ĐỘ SỔ ĐỎ VN-2000
-    // =========================================================================
-    // Nếu tọa độ lớn hơn 90 công thức GPS thông thường, chắc chắn là hệ VN-2000
-    if (Math.abs(latV) > 90 || Math.abs(lonV) > 90) {
-        // Quy ước trắc địa VN: Số nhỏ hơn (~500,000) là trục X, số lớn hơn (~1,000,000+) là trục Y
+    // SỬA LỖI KHÓA VÙNG: Chỉ nhận diện VN-2000 nếu dải số cực lớn (hệ mét phẳng)
+    if (Math.abs(latV) > 2000 || Math.abs(lonV) > 2000) {
         let x_vn = latV < lonV ? latV : lonV;
         let y_vn = latV < lonV ? lonV : latV;
 
-        // Tiến hành dịch chuyển hệ lưới phẳng sang hệ tọa độ cầu GPS WGS84
-        // Mặc định đang lấy Kinh tuyến trục Hà Nội (105.0), bạn có thể đổi theo tỉnh thành mong muốn
         const wgsCoords = TRAC_DIA_CORE.vn2000ToWGS84(x_vn, y_vn, 105.0);
-        
         latV = wgsCoords.lat;
         lonV = wgsCoords.lon;
         
+        // Đồng bộ cập nhật text chuẩn số thập phân ra màn hình
+        latEl.value = latV.toFixed(5);
+        lonEl.value = lonV.toFixed(5);
         showToast(`🗺️ Đã phát hiện hệ VN-2000! Tự động quy đổi sang GPS.`);
     } else {
-        // Nếu là hệ GPS thông thường, giữ nguyên logic đảo ngược lỗi nhập tay cũ của bạn
+        // Hỗ trợ đảo ngược nếu gõ nhầm vị trí cho hệ GPS quốc tế thông thường
         if (Math.abs(latV) > 90 && Math.abs(lonV) <= 90) {
             let temp = latV; latV = lonV; lonV = temp;
             latEl.value = latV; lonEl.value = lonV;
@@ -3073,7 +3183,7 @@ function calculateRemoteDeclination() {
         }
     }
 
-    // Nạp tọa độ sau khi đã chuẩn hóa vào bộ tính toán địa từ toàn cầu NOAA của bạn
+    // Gọi hàm lõi thuần túy vạn năng
     const decl = calculateGlobalDeclination(latV, lonV);
     magneticDeclination = decl;
     
@@ -3136,17 +3246,12 @@ function updateMagneticDeclination() {
     let val = input.value;
     magneticDeclination = (val === '-' || val === '.' || val.trim() === '') ? 0 : parseFloat(val) || 0;
     
-    // Nếu người dùng đã đo đạc trước đó, kích hoạt chuỗi tính toán lại chuẩn xác theo góc thô
     if (typeof lastHeading === 'number') {
         if (typeof updateCompassUI === 'function') updateCompassUI(lastHeading);
         if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(lastHeading);
         if (typeof recalculateFate === 'function') recalculateFate();
     }
 }
-
-// ==========================================================================
-// HỆ THỐNG ĐIỀU HÀNH LA BÀN PHONG THỦY - PHIÊN BẢN SIÊU MƯỢT & TỐI ƯU SÂU 2026
-// ==========================================================================
 
 async function autoDetectDeclination() {
     const btn = document.getElementById('auto-detect-btn');
@@ -3159,33 +3264,24 @@ async function autoDetectDeclination() {
             return;
         }
 
-        // =========================================================================
-        // MẮT QUÉT THÔNG MINH: LỌC TỌA ĐỘ LỖI TỪ SENSOR / IP CỦA HỆ ĐIỀU HÀNH
-        // =========================================================================
         let checkedLat = parseFloat(lat);
         let checkedLon = parseFloat(lon);
 
         if (Math.abs(checkedLat) > 90 && Math.abs(checkedLon) <= 90) {
-            let temp = checkedLat;
-            checkedLat = checkedLon;
-            checkedLon = temp;
+            let temp = checkedLat; checkedLat = checkedLon; checkedLon = temp;
         }
 
-        // ÉP CỨNG CHUẨN 3 CHỮ SỐ THẬP PHÂN ĐỂ ĐỒNG BỘ VỚI NOAA
         const cleanLat = parseFloat(checkedLat.toFixed(3));
         const cleanLon = parseFloat(checkedLon.toFixed(3));
 
-        // Đồng bộ lưu trữ tọa độ gốc động xuống máy
         localStorage.setItem('save_lat', cleanLat);
         localStorage.setItem('save_lon', cleanLon);
 
-        // Hiển thị lên màn hình
         const latInput = document.getElementById('remote-lat');
         const lonInput = document.getElementById('remote-lon');
         if (latInput) latInput.value = cleanLat;
         if (lonInput) lonInput.value = cleanLon;
 
-        // Tính toán qua bộ lọc lõi địa từ chuẩn hóa
         const decl = calculateGlobalDeclination(cleanLat, cleanLon);
         magneticDeclination = decl;
         
@@ -3205,7 +3301,6 @@ async function autoDetectDeclination() {
         }
     };
 
-    // ... (Giữ nguyên toàn bộ phần navigator.geolocation.getCurrentPosition bên dưới)
     if (!navigator.geolocation) {
         const ip = await fallbackIPGeolocation();
         apply(ip.lat, ip.lon, ip.src);
@@ -3219,163 +3314,89 @@ async function autoDetectDeclination() {
     );
 }
 
+// =========================================================================
+// HÀM TÍNH ĐỘ LỆCH TỪ THIÊN WMM2025 - PHIÊN BẢN CHÍNH THỨC & TOÀN CẦU
+// =========================================================================
 function calculateGlobalDeclination(lat, lon, altKm = 0) {
     try {
-        // =========================================================================
-        // STEP 1: BỘ PHÂN GIẢI TOÀN NĂNG - TỰ ĐỘNG CHUẨN HÓA TOÀN BỘ ĐẦU VÀO
-        // =========================================================================
-        const latEl = document.getElementById('remote-lat');
-        const lonEl = document.getElementById('remote-lon');
-        
-        let rawLat = latEl && latEl.value.trim() !== "" ? latEl.value : lat;
-        let rawLon = lonEl && lonEl.value.trim() !== "" ? lonEl.value : lon;
+        let cleanLat = Math.max(-90, Math.min(90, parseFloat(lat) || 0));
+        let cleanLon = ((parseFloat(lon) || 0) + 180) % 360;
+        if (cleanLon < 0) cleanLon += 360;
+        cleanLon -= 180;
 
-        // Hàm nội bộ giải mã nhanh nếu đầu vào là chuỗi dạng NOAA (DMS hoặc chứa ký tự N/S/E/W)
-        const parseToDecimal = (val, type) => {
-            if (!val || String(val).trim() === '') return 0;
-            let str = String(val).trim().toUpperCase();
-            let isNegative = (str.includes('S') || str.includes('W'));
-            str = str.replace(/[NSEW°'"’”]/g, ' ').trim();
-            let parts = str.split(/\s+/).map(p => parseFloat(p)).filter(p => !isNaN(p));
-            if (parts.length === 0) return 0;
-            let dec = parts.length >= 2 ? (Math.abs(parts[0]) + (parts[1] / 60) + (parts[2] || 0) / 3600) : parts[0];
-            return (isNegative && dec > 0) ? -dec : dec;
-        };
-
-        let cleanLat = parseToDecimal(rawLat, 'lat');
-        let cleanLon = parseToDecimal(rawLon, 'lon');
-
-        // Lá chắn thông minh: Tự động đảo ô Kinh/Vĩ nếu người dùng nhập ngược vị trí
-        if (Math.abs(cleanLat) > 90 && Math.abs(cleanLon) <= 90) {
-            let temp = cleanLat; cleanLat = cleanLon; cleanLon = temp;
-            if (latEl && lonEl) { latEl.value = cleanLat; lonEl.value = cleanLon; }
-        }
-
-        // =========================================================================
-        // STEP 2: TÍNH THỜI GIAN NĂM THẬP PHÂN CHUẨN QUỐC TẾ (DECIMAL YEAR)
-        // =========================================================================
-        const now = new Date();
-        const year = now.getFullYear();
-        const start = new Date(year, 0, 1);
-        const daysPassed = (now.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
-        const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-        const decimalYear = year + (daysPassed / (isLeap ? 366 : 365));
+        const decimalYear = getDecimalYear();
         const dt = decimalYear - WMM_COEFFS.epoch;
 
-        // Đổi góc sang Radian để nạp vào ma trận lượng giác
         const latRad = cleanLat * Math.PI / 180;
         const lonRad = cleanLon * Math.PI / 180;
-        
-        // =========================================================================
-        // STEP 3: THIẾT LẬP HÌNH HỌC ELLIPSOID WGS84 CHUẨN KHÔNG TƯỞNG
-        // =========================================================================
-        const a = 6378.137;                 // Bán trục lớn chuẩn WGS84 (Bắt buộc dùng làm re)
-        const b = 6356.7523142;             // Bán trục nhỏ chuẩn WGS84
-        const e2 = 1.0 - (b * b) / (a * a); // Bình phương độ lệch tâm ellipsoid
 
+        // === Hình học Geodetic to Geocentric ===
+        const a = 6378.137;
+        const b = 6356.7523142;
+        const e2 = 1 - (b * b) / (a * a);
         const sinLat = Math.sin(latRad);
         const cosLat = Math.cos(latRad);
+        const N = a / Math.sqrt(1 - e2 * sinLat * sinLat);
         
-        // Chuyển đổi hệ tọa độ Trắc địa mặt đất (Geodetic) sang Tâm Trái Đất (Geocentric)
-        const rc = a / Math.sqrt(1.0 - e2 * sinLat * sinLat);
-        const xp = (rc + altKm) * cosLat;
-        const zp = (rc * (1.0 - e2) + altKm) * sinLat;
-        
+        // Đồng bộ đơn vị Kilomet hình học toàn vẹn
+        const xp = (N + (altKm || 0)) * cosLat;
+        const zp = (N * (1 - e2) + (altKm || 0)) * sinLat;
         const r = Math.sqrt(xp * xp + zp * zp);
-        const phiPrime = Math.asin(zp / r); // Vĩ độ tâm cấu trúc hình cầu
-        const psi = latRad - phiPrime;      // Góc lệch cấu trúc giữa 2 hệ quy chiếu
 
+        const phiPrime = Math.asin(zp / r);
+        const psi = latRad - phiPrime;
         const sinPhi = Math.sin(phiPrime);
         const cosPhi = Math.cos(phiPrime);
 
-        // =========================================================================
-        // STEP 4: THUẬT TOÁN ĐỆ QUY LÕI SCHMIDT SEMI-NORMALIZED LEGENDRE
-        // =========================================================================
-        const P = Array.from({ length: 14 }, () => new Array(14).fill(0));
-        const dP = Array.from({ length: 14 }, () => new Array(14).fill(0));
-        
-        P[0][0] = 1.0;
-        dP[0][0] = 0.0;
-        P[1][0] = sinPhi;
-        dP[1][0] = cosPhi;
-        P[1][1] = cosPhi;
-        dP[1][1] = -sinPhi;
+        // === Ma trận Legendre ===
+        const P = Array.from({length:13}, () => new Array(13).fill(0));
+        const dP = Array.from({length:13}, () => new Array(13).fill(0));
+
+        P[0][0] = 1;
+        P[1][0] = sinPhi;  dP[1][0] = cosPhi;
+        P[1][1] = cosPhi;  dP[1][1] = -sinPhi;
 
         for (let n = 2; n <= 12; n++) {
-            // Trường hợp biên chéo m = n
-            P[n][n] = Math.sqrt((2 * n - 1) / (2 * n)) * cosPhi * P[n - 1][n - 1];
-            dP[n][n] = Math.sqrt((2 * n - 1) / (2 * n)) * (cosPhi * dP[n - 1][n - 1] - sinPhi * P[n - 1][n - 1]);
-            
-            // Trường hợp m < n
-            for (let m = 0; m < n; m++) {
-                const g1 = (2 * n - 1) / Math.sqrt(n * n - m * m);
-                const g2 = Math.sqrt((n - 1) * (n - 1) - m * m) / Math.sqrt(n * n - m * m);
-                
-                P[n][m] = g1 * sinPhi * P[n - 1][m] - g2 * P[n - 2][m];
-                dP[n][m] = g1 * (sinPhi * dP[n - 1][m] + cosPhi * P[n - 1][m]) - g2 * dP[n - 2][m];
-            }
-        }
-
-        // =========================================================================
-        // STEP 5: TÍNH TOÁN MA TRẬN VECTOR LỰC ĐỊA TỪ TOÀN CẦU
-        // =========================================================================
-        const g_coeff = Array.from({ length: 13 }, () => new Array(13).fill(0));
-        const h_coeff = Array.from({ length: 13 }, () => new Array(13).fill(0));
-        
-        // Cập nhật biến thiên từ trường theo thời gian thực (Secular Variation)
-        WMM_COEFFS.data.forEach(([n, m, g0, h0, dg, dh]) => {
-            g_coeff[n][m] = g0 + dt * dg;
-            h_coeff[n][m] = h0 + dt * dh;
-        });
-
-        let X_gc = 0, Y_gc = 0, Z_gc = 0;
-
-        for (let n = 1; n <= 12; n++) {
-            const ratio = Math.pow(a / r, n + 2); // Sửa đổi tối thượng: Dùng bán kính chuẩn 'a' thay vì re
-            let sumX = 0, sumY = 0, sumZ = 0;
-
             for (let m = 0; m <= n; m++) {
-                const cosM = Math.cos(m * lonRad);
-                const sinM = Math.sin(m * lonRad);
-
-                const g_tm = g_coeff[n][m];
-                const h_tm = h_coeff[n][m];
-
-                const c_m = g_tm * cosM + h_tm * sinM;
-                const d_m = g_tm * sinM - h_tm * cosM;
-
-                sumX += c_m * dP[n][m];
-                sumZ += c_m * P[n][m];
-                if (m > 0) {
-                    sumY += m * d_m * P[n][m];
+                if (m === n) {
+                    const fn = Math.sqrt((2*n-1)/(2*n));
+                    P[n][m] = fn * cosPhi * P[n-1][m-1];
+                    dP[n][m] = fn * (cosPhi * dP[n-1][m-1] - sinPhi * P[n-1][m-1]);
+                } else {
+                    const g1 = (2*n-1) / Math.sqrt(n*n - m*m);
+                    const g2 = Math.sqrt((n-1)*(n-1) - m*m) / Math.sqrt(n*n - m*m);
+                    P[n][m] = g1 * sinPhi * P[n-1][m] - g2 * P[n-2][m];
+                    dP[n][m] = g1 * (sinPhi * dP[n-1][m] + cosPhi * P[n-1][m]) - g2 * dP[n-2][m];
                 }
             }
-
-            X_gc -= ratio * sumX; 
-            Y_gc += ratio * sumY;
-            Z_gc -= ratio * (n + 1) * sumZ;
         }
 
-        // Chuẩn hóa thành phần lực phương Đông theo mặt phẳng vĩ độ tâm hình cầu
-        Y_gc = Y_gc / (cosPhi || 1e-5);
+        // === Tổng lực địa từ Gauss ===
+        let X = 0, Y = 0, Z = 0;
+        WMM_COEFFS.data.forEach(([n, m, g0, h0, dg, dh]) => {
+            const g = g0 + dt * dg;
+            const h = h0 + dt * dh;
+            const ratio = Math.pow(a / r, n + 2);
+            const cosM = Math.cos(m * lonRad);
+            const sinM = Math.sin(m * lonRad);
+            const c = g * cosM + h * sinM;
+            const d = g * sinM - h * cosM;
 
-        // =========================================================================
-        // STEP 6: XOAY VECTOR TRỞ LẠI BỀ MẶT THỰC TẾ (ĐỒNG BỘ HOÀN HẢO ĐỊA HÌNH)
-        // =========================================================================
-        const X_gd = X_gc * Math.cos(psi) + Z_gc * Math.sin(psi); // Sửa dấu (+) chuẩn NOAA
-        const Y_gd = Y_gc;
+            X -= ratio * c * dP[n][m];
+            Z -= ratio * c * P[n][m] * (n + 1);
+            if (m > 0) Y += ratio * m * d * P[n][m];
+        });
 
-        // =========================================================================
-        // STEP 7: KIỂM SOÁT GÓC XOAY ĐỘ LỆCH TỪ CUỐI CÙNG
-        // =========================================================================
-        let decl = Math.atan2(Y_gd, X_gd) * (180 / Math.PI);
+        Y /= (cosPhi || 1e-8);
+        const Xg = X * Math.cos(psi) + Z * Math.sin(psi);
 
+        let decl = Math.atan2(Y, Xg) * (180 / Math.PI);
         if (decl > 180) decl -= 360;
         if (decl < -180) decl += 360;
 
         return parseFloat(decl.toFixed(2));
     } catch (e) {
-        console.error("Lỗi lõi trắc địa tối cao WMM:", e);
+        console.error("Lỗi lõi trắc địa:", e);
         return 0;
     }
 }
@@ -3419,22 +3440,19 @@ function parseSmartNumeric(val) {
 }
 
 // =========================================================================
-// 2. BỘ LỌC KÝ TỰ THÔNG MINH TOÀN DIỆN (Cho phép nhập cả chữ W, E, N, S và ký hiệu độ)
+// 2. BỘ LỌC KÝ TỰ VÀ CHUYỂN ĐỔI CHUỖI THÔNG MINH (DMS / NOAA -> DECIMAL)
+// Hỗ trợ dịch cả Kinh/Vĩ độ và ô nhập tay Độ lệch từ dạng "0° 55' W"
 // =========================================================================
 function parseSmartCoordinateText(val) {
     if (!val) return '';
     return val.replace(/[^0-9.\-\+\sNSEWnsew°'"’”]/g, '').replace(/,/g, '.');
 }
 
-// =========================================================================
-// 3. BỘ CHUYỂN ĐỔI VẠN NĂNG (DMS / NOAA TEXT -> SỐ THẬP PHÂN)
-// Hỗ trợ dịch cả Kinh/Vĩ độ và Độ lệch từ dạng "0° 55' W" thành số âm/dương
-// =========================================================================
 function convertToDecimalDegrees(val) {
     if (!val || String(val).trim() === '') return null;
     let str = String(val).trim().toUpperCase();
     
-    // Nếu có chữ S (Nam) hoặc W (Tây / Độ lệch Tây) thì kết quả cuối cùng phải là số âm
+    // Nếu chứa ký tự hướng Nam (S) hoặc hướng Tây (W) thì giá trị quy đổi phải mang dấu âm
     let isNegative = false;
     if (str.includes('S') || str.includes('W')) {
         isNegative = true;
