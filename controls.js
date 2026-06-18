@@ -3507,31 +3507,45 @@ function parseSmartCoordinateText(val) {
 
 function convertToDecimalDegrees(val) {
     if (!val || String(val).trim() === '') return null;
+    
+    // 1. Chuyển sang chữ hoa để nhận diện chính xác hướng hệ NOAA
     let str = String(val).trim().toUpperCase();
     
-    let isNegative = false;
-    if (str.includes('S') || str.includes('W')) {
-        isNegative = true;
-    }
+    // 🎯 BƯỚC THÔNG MINH 1: Quét dấu âm (Tuyệt đối không dùng toán tử đảo dấu !isNegative)
+    // Nếu chứa hướng Nam (S), hướng Tây (W) HOẶC có dấu trừ (-) -> BẮT BUỘC phải là số âm
+    let hệ_âm_hướng = str.includes('S') || str.includes('W');
+    let hệ_âm_dấu = str.includes('-');
     
-    str = str.replace(/[NSEW°'"’”]/g, ' ').trim();
-    let parts = str.split(/\s+/).map(p => parseFloat(p)).filter(p => !isNaN(p));
+    // 🎯 BƯỚC THÔNG MINH 2: Lọc sạch chuỗi, bóc tách các phân đoạn số độc lập
+    // Thay thế toàn bộ ký hiệu hình học (° ' " ’ ” N S E W) thành khoảng trắng
+    let cleanStr = str.replace(/[^0-9.]/g, ' ').trim();
+    
+    // Gom các phần số (Độ, Phút, Giây) vào mảng và loại bỏ các khoảng trống thừa
+    let parts = cleanStr.split(/\s+/).map(p => parseFloat(p)).filter(p => !isNaN(p));
+    
     if (parts.length === 0) return null;
     
     let decimalValue = 0;
     if (parts.length === 1) {
+        // Định dạng 1: Số thập phân thuần túy (VD: 74.00722 hoặc -74.00722)
         decimalValue = parts[0];
-    } else if (parts.length >= 2) {
+    } else {
+        // Định dạng 2: Hệ Độ - Phút - Giây DMS (VD: 74° 0' 26" hoặc 74 0 26)
         let d = parts[0] || 0;
         let m = parts[1] || 0;
         let s = parts[2] || 0;
-        decimalValue = Math.abs(d) + (m / 60) + (s / 3600);
-        if (d < 0) isNegative = !isNegative;
+        decimalValue = d + (m / 60) + (s / 3600);
     }
     
-    if (isNegative && decimalValue > 0) {
+    // Ép về giá trị tuyệt đối (số dương gốc) để chuẩn hóa cấu trúc hình học
+    decimalValue = Math.abs(decimalValue);
+    
+    // 🎯 BƯỚC THÔNG MINH 3: Áp dấu chuẩn cuối cùng
+    // Chỉ cần phát hiện ra bất kỳ tín hiệu âm nào, tiêm ngay dấu trừ độc quyền
+    if (hệ_âm_dấu || hệ_âm_hướng) {
         decimalValue = -decimalValue;
     }
+    
     return decimalValue;
 }
 
