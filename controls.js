@@ -788,7 +788,10 @@ function recalculateFate() {
 function getCurrentHauInfo(degree, mucDich = 'house', namKhaoSat = null, cungPhi = 'Khảm', namAm = null) {
     const normalized = ((degree % 360) + 360) % 360;
     
-    // Khóa cứng phân vị trắc địa của long mạch ngầm theo bước 5 độ cố định (GỐC ĐỊA MẠCH)
+    // Khóa dữ liệu cache theo độ thực tế làm tròn để triệt tiêu lỗi rò rỉ nhãn sang góc kề bên
+    const cacheKey = normalized.toFixed(1);
+    
+    // Khóa cứng phân vị trắc địa của long mạch ngầm theo bước 5 độ cố định để tra cứu data gốc
     const keyHau = (Math.round(normalized / 5) * 5) % 360;
     
     const hau = Data72Hau[keyHau.toString()] || { 
@@ -799,7 +802,6 @@ function getCurrentHauInfo(degree, mucDich = 'house', namKhaoSat = null, cungPhi
     const isCatPurpose = config.isCat;
     const chatLuongGoc = hau.chatLuong || "Bình Hòa";
 
-    // 🎯 ĐỒNG BỘ GỐC ĐỊA KHÍ: Trích xuất chính xác Delta H72 biến thiên từ lõi dữ liệu tĩnh
     let deltaH72 = 0;
     if (chatLuongGoc.includes("Đại Cát")) deltaH72 = 12;
     else if (chatLuongGoc.includes("Cát")) deltaH72 = 6;
@@ -811,43 +813,53 @@ function getCurrentHauInfo(degree, mucDich = 'house', namKhaoSat = null, cungPhi
         chatLuongStatic: chatLuongGoc,
         ynghia: hau.ynghia || "Khí trường chuyển dịch luân hồi.",
         diemGoc: Number(hau.diem) || 60,
-        deltaH72: deltaH72, // Trả về hệ số gốc để hàm Tổng hợp áp dụng phương trình toán học
+        deltaH72: deltaH72, 
         giaiphap: String(hau.giaiphap || "Bố trí kết cấu trạch pháp an vị cát tường."),
         emoji: "🟡",
         chatLuong: "Bình Hòa"
     };
 
-    // ☯️ BIỆN CHỨNG ĐẢO CỰC M DƯƠNG (LẤY ĐỘC TRỊ ĐỘC): Quyết định nhãn khách quan của mạch đất
+    // Nhãn UI cơ bản theo phân lớp Địa khí mạch đất
     const isHungHau = chatLuongGoc.includes("Hung") || chatLuongGoc.includes("Không Vong") || chatLuongGoc.includes("Sai Thác");
     if (isCatPurpose) {
-        if (isHungHau) { result.chatLuong = "ĐẠI HUNG ĐỊA MẠCH"; result.emoji = "🔴"; } 
-        else if (chatLuongGoc.includes("Cát")) { result.chatLuong = "CÁT MẠCH PHƯỚC ĐIỀN"; result.emoji = "🟢"; } 
-        else { result.chatLuong = "BÌNH HÒA AN ĐỊNH"; result.emoji = "🟡"; }
+        if (isHungHau) { result.chatLuong = "ĐẠI HUNG"; result.emoji = "🔴"; } 
+        else if (chatLuongGoc.includes("Cát")) { result.chatLuong = "CÁT MẠCH"; result.emoji = "🟢"; } 
+        else { result.chatLuong = "BÌNH HÒA"; result.emoji = "🟡"; }
     } else {
-        if (isHungHau) { result.chatLuong = "ĐẮC VỊ TIÊU HUNG"; result.emoji = "🟢"; } 
-        else if (chatLuongGoc.includes("Cát")) { result.chatLuong = "KỊ ĐÈ TRÚNG CÁT MẠCH"; result.emoji = "🔴"; } 
-        else { result.chatLuong = "TRUNG TÍNH PHÂN BỔ"; result.emoji = "🟡"; }
+        if (isHungHau) { result.chatLuong = "ĐẮC VỊ"; result.emoji = "🟢"; } 
+        else if (chatLuongGoc.includes("Cát")) { result.chatLuong = "PHẠM CÁT"; result.emoji = "🔴"; } 
+        else { result.chatLuong = "TRUNG TÍNH"; result.emoji = "🟡"; }
     }
 
-    // Mắt thần quét Không Vong tại tầng Hậu mạch ngầm
+    // 🎯 ĐỒNG BỘ N NG CAO KHÔNG VONG: Đè chữ ngắn gọn và nạp văn bản giải thích chuẩn phong thủy vào Popup
     if (typeof kiemTraKhongVong === 'function') {
         const khongVong = kiemTraKhongVong(normalized);
         if (khongVong) {
+            result.chatLuongStatic = khongVong.loai; // Đồng bộ sang "ĐẠI KHÔNG VONG" hoặc "TIỂU KHÔNG VONG"
+            result.ynghia = khongVong.message;      // Đẩy thông điệp tính toán chi tiết của tuyến độ vào ý nghĩa
+            
             if (khongVong.loai === "ĐẠI KHÔNG VONG") {
-                result.chatLuong = isCatPurpose ? "ĐẠI HUNG (Tuyệt Mạch Không Vong)" : "TỬ TUYẾN TIÊU UẾ (Đại Không Vong)";
+                result.chatLuong = isCatPurpose ? "TUYỆT MẠCH" : "TỬ TUYẾN";
                 result.emoji = isCatPurpose ? "☠️" : "🔮";
+                result.giaiphap = isCatPurpose 
+                    ? "Tuyệt đối không xây dựng móng, ban thờ hay cửa chính tại đây. Hãy đổi hướng la bàn."
+                    : "Tọa độ lý tưởng để đặt tâm xả thải uế khí, giúp triệt tiêu hoàn toàn đại hung tinh sát của mạch đất.";
             } else {
-                result.chatLuong = isCatPurpose ? "TIỂU KHÔNG VONG (Khí Sai Thác)" : "TRẤN SÁT TIỂU KHÔNG VONG";
+                result.chatLuong = isCatPurpose ? "SAI THÁC" : "LỆCH KHÍ";
                 result.emoji = "⚠️";
+                result.giaiphap = isCatPurpose
+                    ? "Chủ động xoay vi phân kết cấu xây dựng lệch sang trái hoặc phải từ 1.5° đến 2.5° để thoát vạch nhiễu khí."
+                    : "Có thể đặt uế cục phụ. Không cần vi chỉnh nếu mặt bằng hình học bị giới hạn diện tích.";
             }
         }
     }
 
+    // Lưu vào hệ thống Cache theo khóa độ thực tế chính xác
     if (typeof hauCache !== 'undefined' && hauCache && hauCache.set) {
-        hauCache.set(keyHau, result);
+        hauCache.set(cacheKey, result);
     }
     
-    return result; // Trả ra Object thuần nguyên lý thô, KHÔNG tự tính toán kVan hay điểm động
+    return result; 
 }
 
 // =========================================================================
@@ -2456,10 +2468,10 @@ function kiemTraKhongVong(degree) {
         const qIdx = (Math.round((gockim - 22.5) / 45) + 8) % 8;
         return {
             loai: "ĐẠI KHÔNG VONG",
-            mucDo: "🔴 ĐẠI HƯNG TINH SÁT — TỪ CHỐI NẠP KHÍ",
+            mucDo: "🔴 ĐẠI HƯNG TINH SÁT",
             saiLech: distDai,
             toaDoTuyến: (Math.round((gockim - 22.5) / 45) * 45 + 22.5) % 360,
-            message: `Tọa độ góc ngắm (${gockim}°) phạm vào đại tử tuyến Tuyệt Mạch giữa 2 quẻ [${QUAI_8[qIdx]}] và [${QUAI_8[(qIdx + 1) % 8]}]. Từ trường tại đây cực kỳ hỗn loạn, triệt tiêu sinh khí, dễ sinh cô quả, phá tài dốc sạch sản nghiệp. Nghiêm cấm đặt tâm cửa chính hoặc ban thờ.`
+            message: `Tọa độ góc ngắm (${gockim}°) phạm vào đại tử tuyến Tuyệt Mạch giữa 2 quẻ [${QUAI_8[qIdx]}] và [${QUAI_8[(qIdx + 1) % 8]}]. Từ trường khu vực cực kỳ hỗn loạn, triệt tiêu toàn bộ sinh khí.`
         };
     }
 
@@ -2472,10 +2484,10 @@ function kiemTraKhongVong(degree) {
         const sIdx = (Math.round((gockim - 7.5) / 15) + 24) % 24;
         return {
             loai: "TIỂU KHÔNG VONG",
-            mucDo: "⚠️ CẢNH BÁO TẠP KHÍ KHÔNG VONG",
+            mucDo: "⚠️ TẠP KHÍ KHÔNG VONG",
             saiLech: distTieu,
             toaDoTuyến: (Math.round((gockim - 7.5) / 15) * 15 + 7.5) % 360,
-            message: `Tọa độ lập cực liếm sát vạch ngăn cách giữa Sơn [${SON_24[sIdx]}] and Sơn [${SON_24[(sIdx + 1) % 24]}]. Khí trường nghèo nàn, lộn xộn Âm Dương, trạch vận lên xuống vô thường. Hãy chủ động điều chỉnh vi phân kết cấu lệch sang trái hoặc phải từ 1.5° đến 2.5° để thu trọn dòng thuần khí.`
+            message: `Tọa độ lập cực liếm sát vạch ngăn cách giữa Sơn [${SON_24[sIdx]}] và Sơn [${SON_24[(sIdx + 1) % 24]}]. Khí trường nghèo nàn, lộn xộn Âm Dương.`
         };
     }
     return null;
