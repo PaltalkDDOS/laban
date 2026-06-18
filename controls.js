@@ -2953,44 +2953,58 @@ function getCleanValue(raw) {
     return (res === '-' || res === '') ? '' : res;
 }
 
-// =========================================================================
-// 1. WMM2025 COEFFICIENTS CHÍNH THỨC VẠN NĂNG (TỪ NOAA)
-// =========================================================================
-const WMM_COEFFS = {
+// Bộ lưu trữ dữ liệu động - Tự động thay đổi Epoch và Ma trận theo file nạp vào
+let GLOBAL_WMMHR_DATA = {
     epoch: 2025.0,
-    data: [
-        [1,0,-29351.8,0.0,12.0,0.0],[1,1,-1410.8,4545.4,9.7,-21.5],[2,0,-2556.6,0.0,-11.6,0.0],
-        [2,1,2951.1,-3133.6,-5.2,-27.7],[2,2,1649.3,-815.1,-8.0,-12.1],[3,0,1361.0,0.0,-1.3,0.0],
-        [3,1,-2404.1,-56.6,-4.2,4.0],[3,2,1243.8,237.5,0.4,-0.3],[3,3,453.6,-549.5,-15.6,-4.1],
-        [4,0,895.0,0.0,-1.6,0.0],[4,1,799.5,278.6,-2.4,-1.1],[4,2,55.7,-133.9,-6.0,4.1],
-        [4,3,-281.1,212.0,5.6,1.6],[4,4,12.1,-375.6,-7.0,-4.4],[5,0,-233.2,0.0,0.6,0.0],
-        [5,1,368.9,45.4,1.4,-0.5],[5,2,187.2,220.2,0.0,2.2],[5,3,-138.7,-122.9,0.6,0.4],
-        [5,4,-142.0,43.0,2.2,1.7],[5,5,20.9,106.1,0.9,1.9],[6,0,64.4,0.0,-0.2,0.0],
-        [6,1,63.8,-18.4,-0.4,0.3],[6,2,76.9,16.8,0.9,-1.6],[6,3,-115.7,48.8,1.2,-0.4],
-        [6,4,-40.9,-59.8,-0.9,0.9],[6,5,14.9,10.9,0.3,0.7],[6,6,-60.7,72.7,0.9,0.9],
-        [7,0,79.5,0.0,-0.0,0.0],[7,1,-77.0,-48.9,-0.1,0.6],[7,2,-8.8,-14.4,-0.1,0.5],
-        [7,3,59.3,-1.0,0.5,-0.8],[7,4,15.8,23.4,-0.1,0.0],[7,5,2.5,-7.4,-0.8,-1.0],
-        [7,6,-11.1,-25.1,-0.8,0.6],[7,7,14.2,-2.3,0.8,-0.2],[8,0,23.2,0.0,-0.1,0.0],
-        [8,1,10.8,7.1,0.2,-0.2],[8,2,-17.5,-12.6,0.0,0.5],[8,3,2.0,11.4,0.5,-0.4],
-        [8,4,-21.7,-9.7,-0.1,0.4],[8,5,16.9,12.7,0.3,-0.5],[8,6,15.0,0.7,0.2,-0.6],
-        [8,7,-16.8,-5.2,-0.0,0.3],[8,8,0.9,3.9,0.2,0.2],[9,0,4.6,0.0,-0.0,0.0],
-        [9,1,7.8,-24.8,-0.1,-0.3],[9,2,3.0,12.2,0.1,0.3],[9,3,-0.2,8.3,0.3,-0.3],
-        [9,4,-2.5,-3.3,-0.3,0.3],[9,5,-13.1,-5.2,0.0,0.2],[9,6,2.4,7.2,0.3,-0.1],
-        [9,7,8.6,-0.6,-0.1,-0.2],[9,8,-8.7,0.8,0.1,0.4],[9,9,-12.9,10.0,-0.1,0.1],
-        [10,0,-1.3,0.0,0.1,0.0],[10,1,-6.4,3.3,0.0,0.0],[10,2,0.2,0.0,0.1,-0.0],
-        [10,3,2.0,2.4,0.1,-0.2],[10,4,-1.0,5.3,-0.0,0.1],[10,5,-0.6,-9.1,-0.3,-0.1],
-        [10,6,-0.9,0.4,0.0,0.1],[10,7,1.5,-4.2,-0.1,0.0],[10,8,0.9,-3.8,-0.1,-0.1],
-        [10,9,-2.7,0.9,-0.0,0.2],[10,10,-3.9,-9.1,-0.0,-0.0],[11,0,2.9,0.0,0.0,0.0],
-        [11,1,-1.5,0.0,-0.0,-0.0],[11,2,-2.5,2.9,0.0,0.1],[11,3,2.4,-0.6,0.0,-0.0],
-        [11,4,-0.6,0.2,0.0,0.1],[11,5,-0.1,0.5,-0.1,-0.0],[11,6,-0.6,-0.3,0.0,-0.0],
-        [11,7,-0.1,-1.2,-0.0,0.1],[11,8,1.1,-1.7,-0.1,-0.0],[11,9,-1.0,-2.9,-0.1,0.0],
-        [11,10,-0.2,-1.8,-0.1,0.0],[11,11,2.6,-2.3,-0.1,0.0],[12,0,-2.0,0.0,0.0,0.0],
-        [12,1,-0.2,-1.3,0.0,-0.0],[12,2,0.3,0.7,-0.0,0.0],[12,3,1.2,1.0,-0.0,-0.1],
-        [12,4,-1.3,-1.4,-0.0,0.1],[12,5,0.6,-0.0,-0.0,-0.0],[12,6,0.6,0.6,0.1,-0.0],
-        [12,7,0.5,-0.1,-0.0,-0.0],[12,8,-0.1,0.8,0.0,0.0],[12,9,-0.4,0.1,0.0,-0.0],
-        [12,10,-0.2,-1.0,-0.1,-0.0],[12,11,-1.3,0.1,-0.0,0.0],[12,12,-0.7,0.2,-0.1,-0.1]
-    ]
+    data: [] // Sẽ được bơm đầy sau khi đọc file WMMHR2025.COF thành công
 };
+
+/**
+ * 🛰️ HÀM BẤT ĐỒNG BỘ: Tải và phân tích file cấu hình địa từ ngoại vi
+ */
+async function loadWMMHRFile() {
+    try {
+        const response = await fetch('WMMHR2025.COF');
+        if (!response.ok) throw new Error("Không tìm thấy file WMMHR2025.COF trong thư mục gốc!");
+        
+        const text = await response.text();
+        const lines = text.split('\n');
+        const parsedMatrix = [];
+        
+        // Dòng đầu tiên chứa thông tin Thiên niên kỷ (Epoch)
+        if (lines.length > 0 && lines[0].trim() !== '') {
+            const headerParts = lines[0].trim().split(/\s+/);
+            if (headerParts.length > 0 && !isNaN(parseFloat(headerParts[0]))) {
+                GLOBAL_WMMHR_DATA.epoch = parseFloat(headerParts[0]);
+            }
+        }
+        
+        // Phân tích từ dòng thứ 2 trở đi để lấy các chuỗi hệ số Gauss
+        for (let i = 1; i < lines.length; i++) {
+            let line = lines[i].trim();
+            if (line === '') continue;
+            
+            let parts = line.split(/\s+/).map(Number);
+            if (parts.length >= 6 && !parts.some(isNaN)) {
+                parsedMatrix.push([
+                    parts[0], // n (Bậc)
+                    parts[1], // m (Thứ tự)
+                    parts[2], // g (Hệ số từ trường chính)
+                    parts[3], // h (Hệ số từ trường phụ)
+                    parts[4], // dg (Độ biến thiên g theo năm)
+                    parts[5]  // dh (Độ biến thiên h theo năm)
+                ]);
+            }
+        }
+        
+        GLOBAL_WMMHR_DATA.data = parsedMatrix;
+        console.log(`📡 [MÔ HÌNH TOÀN CẦU] Đã nạp xong file COF động! Tổng số bậc quét: ${parsedMatrix.length > 0 ? parsedMatrix[parsedMatrix.length - 1][0] : 0}`);
+        return true;
+    } catch (error) {
+        console.error("❌ Lỗi nghiêm trọng khi đọc file COF:", error);
+        return false;
+    }
+}
 
 // ==========================================================================
 // MODULE TRẮC ĐỊA VIỆT NAM - CHUYỂN ĐỔI VN-2000 ↔ WGS84 (FULL NÂNG CẤP)
@@ -3393,15 +3407,21 @@ async function autoDetectDeclination() {
 // =========================================================================
 // HÀM TÍNH ĐỘ LỆCH TỪ THIÊN WMM2025 - PHIÊN BẢN CHÍNH THỨC & TOÀN CẦU
 // =========================================================================
+// Thay thế hoàn toàn hàm cũ bằng bản tự động co giãn ma trận Legendre này:
 function calculateGlobalDeclination(lat, lon, altKm = 0) {
     try {
+        // Nếu file chưa kịp tải hoặc rỗng, trả về mặc định để tránh crash app
+        if (!GLOBAL_WMMHR_DATA.data || GLOBAL_WMMHR_DATA.data.length === 0) {
+            return 0;
+        }
+
         let cleanLat = Math.max(-90, Math.min(90, parseFloat(lat) || 0));
         let cleanLon = ((parseFloat(lon) || 0) + 180) % 360;
         if (cleanLon < 0) cleanLon += 360;
         cleanLon -= 180;
 
         const decimalYear = getDecimalYear();
-        const dt = decimalYear - WMM_COEFFS.epoch;
+        const dt = decimalYear - GLOBAL_WMMHR_DATA.epoch; // Sử dụng epoch động từ file đọc được
 
         const latRad = cleanLat * Math.PI / 180;
         const lonRad = cleanLon * Math.PI / 180;
@@ -3422,14 +3442,20 @@ function calculateGlobalDeclination(lat, lon, altKm = 0) {
         const sinPhi = Math.sin(phiPrime);
         const cosPhi = Math.cos(phiPrime);
 
-        const P = Array.from({length:13}, () => new Array(13).fill(0));
-        const dP = Array.from({length:13}, () => new Array(13).fill(0));
+        // 🎯 BƯỚC ĐỘT PHÁ: Tìm bậc tối đa thực tế (Bản thường là 12, bản HR là 133)
+        const lastRow = GLOBAL_WMMHR_DATA.data[GLOBAL_WMMHR_DATA.data.length - 1];
+        const maxDegree = lastRow ? lastRow[0] : 12;
+
+        // Giãn nở kích thước mảng chứa đa thức Legendre tương thích 100% với file nạp vào
+        const P = Array.from({length: maxDegree + 1}, () => new Array(maxDegree + 1).fill(0));
+        const dP = Array.from({length: maxDegree + 1}, () => new Array(maxDegree + 1).fill(0));
 
         P[0][0] = 1;
         P[1][0] = sinPhi;  dP[1][0] = cosPhi;
         P[1][1] = cosPhi;  dP[1][1] = -sinPhi;
 
-        for (let n = 2; n <= 12; n++) {
+        // Vòng lặp Legendre thông minh tự động co giãn theo độ dài bậc tối đa tìm được
+        for (let n = 2; n <= maxDegree; n++) {
             for (let m = 0; m <= n; m++) {
                 if (m === n) {
                     const fn = Math.sqrt((2*n-1)/(2*n));
@@ -3445,7 +3471,8 @@ function calculateGlobalDeclination(lat, lon, altKm = 0) {
         }
 
         let X = 0, Y = 0, Z = 0;
-        WMM_COEFFS.data.forEach(([n, m, g0, h0, dg, dh]) => {
+        // Duyệt qua ma trận động vừa đọc được từ file ngoài
+        GLOBAL_WMMHR_DATA.data.forEach(([n, m, g0, h0, dg, dh]) => {
             const g = g0 + dt * dg;
             const h = h0 + dt * dh;
             const ratio = Math.pow(a / r, n + 2);
@@ -3552,7 +3579,11 @@ function convertToDecimalDegrees(val) {
 // =========================================================================
 // 4. KHỞI TẠO VÀ QUẢN LÝ SỰ KIỆN GIAO DIỆN DIỄN RA TRONG DOM
 // =========================================================================
-document.addEventListener('DOMContentLoaded', () => {
+// Thay thế toàn bộ khối xử lý DOMContentLoaded cũ bằng bản nạp luồng async này:
+document.addEventListener('DOMContentLoaded', async () => {
+    // 🎯 THẦN CHÚ KHỞI CHẠY: Âm thầm kích hoạt tải file dữ liệu ngoài trước khi render UI
+    await loadWMMHRFile();
+
     const configs = {
         'declination-input': { limit: 14, key: 'save_decl', min: -180, max: 180, mode: 'coordinate' },
         'remote-lat': { limit: 14, key: 'save_lat', min: -90, max: 90, mode: 'coordinate' },
