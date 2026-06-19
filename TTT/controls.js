@@ -743,6 +743,15 @@ function recalculateFate() {
         </p>`;
     }
 
+    // =========================================================================
+    // 🌍 TỰ ĐỘNG KHẢO SÁT TỪ XA: ĐỒNG BỘ TOÁN THỨC TỊNH TIẾN LỆCH TÚ
+    // =========================================================================
+    // Lấy giá trị lệch tú từ môi trường (ví dụ nhập vào 5 hoặc -5)
+    let declinationValue = typeof magneticDeclination !== 'undefined' ? Number(magneticDeclination) : 0;
+    // Tính tọa độ thực tế điểm dừng tại khu vực của khách phương xa (Bù trừ độ lệch từ trực tiếp)
+    let remoteClientHeading = ((realHeading + declinationValue) % 360 + 360) % 360;
+    let remoteSonInfo = layThongTin24Son(remoteClientHeading, chủMệnh, namAmMệnhChủ);
+
     targetContainer.innerHTML = `
         <div style="text-align: center; margin: 10px 0;">
             <button id="btn-toggle-fengshui" onclick="toggleDienGiaiChiTiet()"
@@ -759,7 +768,15 @@ function recalculateFate() {
                 📖 BIỆN CHỨNG KHÍ CỤC CẤU TRÚC HẠNG MỤC KỸ THUẬT
             </p>
             
-            <p style="margin:8px 0;">📍 <b>Tọa độ trắc địa thực tế:</b> ${realHeading.toFixed(1)}° (Độ lệch từ địa phương hiệu chỉnh: ${magneticDeclination}° — Đĩa la bàn số tự động điều hướng tịnh tiến nhằm triệt tiêu hoàn toàn nhiễu trường từ tính của thiết bị điện tử, định vị tọa độ lõi).</p>
+            <p style="margin:8px 0;">📍 <b>Tọa độ trắc địa tại máy:</b> ${realHeading.toFixed(1)}° (Góc xoay đĩa la bàn cơ học đã đồng bộ độ lệch từ ${declinationValue}° nhằm định hướng thực địa chính xác).</p>
+            
+            <p style="margin:10px 0; padding: 8px; background: rgba(0,200,255,0.08); border-left: 4px solid #00c8ff; border-radius: 4px; color: #e1f5fe;">
+                🌍 <b>THÔNG SỐ GỬI KHÁCH PHƯƠNG XA:</b> <br>
+                • Tọa độ thực tế tại khu đất: <span style="color:#00c8ff; font-weight:bold; font-size:1rem;">${remoteClientHeading.toFixed(1)}°</span><br>
+                • Phương vị thực: <b>${remoteSonInfo.huong}</b> — Bản Sơn chiếm mạch: <span style="color:#ffd700; font-weight:bold;">Sơn ${remoteSonInfo.son}</span><br>
+                <small style="color:#b0bec5;">(Hệ thống tự động cộng gộp sai lệch từ trường địa phương ${declinationValue > 0 ? '+' : ''}${declinationValue}° để xuất dữ liệu chuẩn chỉnh cho khách đối chiếu bản vẽ)</small>
+            </p>
+
             <p style="margin:8px 0;">📍 <b>Phương vị la bàn số:</b> Ngũ hành từ trường phương vị thuộc <b>${hanhPhuongVi}</b> (Góc quay cảm biến: <b>${Math.round(headingToCalculate)}°</b>).</p>
             <p style="margin:8px 0;">🎯 <b>Quẻ mệnh Nhân chủ (Hành ${hanHinhCungPhi}):</b> Cung phi cốt lõi <b>${chủMệnh}</b> (${nhomMenh}).</p>
             
@@ -966,6 +983,11 @@ function generateDirectionsList() {
     const isCatPurpose = config.isCat; 
     let listDirections = [];
     
+    // =========================================================================
+    // 🛡️ ĐỊNH NGHĨA DUY NHẤT: Bộ lọc dọn dẹp chuỗi và triệt tiêu dấu xuống dòng phá cấu trúc HTML Token
+    // =========================================================================
+    const escapeStr = (s) => s ? s.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/[\r\n]+/g, ' ') : "";
+    
     const dayStr = document.getElementById('birthDay')?.value || "";
     const monthStr = document.getElementById('birthMonth')?.value || document.getElementById('monthStr')?.value || "";
     const yearStr = document.getElementById('birthYear')?.value || document.getElementById('yearStr')?.value || "";
@@ -1097,7 +1119,7 @@ function generateDirectionsList() {
                     sonColor = "#dfb76c"; countSonVang++;
                     titleInfo = `Sơn vị Trấn Sát ${son} [Bình Hòa]`;
                     textInfo = `<b>TRUNG TÍNH HÓA SÁT:</b> Khu vực dải độ Sơn vị ${son} đạt trạng thái tiêu giảm sát khí ổn định (${score}pt), đặt công năng phụ thải uế an toàn, không sinh tai họa.`;
-                    solInfo = "Quy hoạch: Chấp nhận được hoàn toàn nếu mặt bằng kiến trúc đô thị bị bó hẹp diện tích.";
+                    solInfo = "Quy hoạch: Chấp nhận được hoàn toàn về mặt phân bổ mặt bằng hình học kiến trúc.";
                 } else {
                     sonColor = "#ff3b30"; countSonDo++; 
                     titleInfo = `⚠️ TRƯỜNG KHÍ THANH SẠCH CẦN BẢO VỆ`;
@@ -1106,10 +1128,9 @@ function generateDirectionsList() {
                 }
             }
             
-            const cleanStr = (s) => s ? s.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;') : "";
-            const safeTitle = cleanStr(titleInfo);
-            const safeText = cleanStr(textInfo);
-            const safeSol = cleanStr(solInfo);
+            const safeTitle = escapeStr(titleInfo);
+            const safeText = escapeStr(textInfo);
+            const safeSol = escapeStr(solInfo);
 
             sonHTML += `<span style="display:inline-block; white-space:nowrap; cursor:pointer;" onclick="showExplanation('${safeTitle}', '${safeText}', '${safeSol}')">` +
                        `<span style="color:${sonColor}; font-weight:700;">${son}</span>` +
@@ -1126,39 +1147,20 @@ function generateDirectionsList() {
         let hauInfoTâm  = typeof getCurrentHauInfo === 'function' ? getCurrentHauInfo(mốcTâm, mucDich, namKhaoSatThucTe, quẻMệnhChủLõi, namAmMệnhChủ) : { ten: "Hậu", chatLuongStatic: "Bình Hòa", diemGoc: 60, emoji: "🟡", chatLuong: "Bình Hòa", ynghia: "", giaiphap: "" };
         let hauInfoPhải = typeof getCurrentHauInfo === 'function' ? getCurrentHauInfo(mốcPhải, mucDich, namKhaoSatThucTe, quẻMệnhChủLõi, namAmMệnhChủ) : { ten: "Hậu", chatLuongStatic: "Bình Hòa", diemGoc: 60, emoji: "🟡", chatLuong: "Bình Hòa", ynghia: "", giaiphap: "" };
 
-        const getDynamicHauScoreAndSat = (angle, hauObj) => {
-            let localKVan = 1.0;
-            if (typeof PhongThuyCore !== 'undefined' && typeof VAN_DATA !== 'undefined') {
-                const sObj = PhongThuyCore.getSonObj(angle);
-                const hMap = { "Bắc": "N", "Đông Bắc": "NE", "Đông": "E", "Đông Nam": "SE", "Nam": "S", "Tây Nam": "SW", "Tây": "W", "Tây Bắc": "NW" };
-                const cCode = hMap[sObj.huong] || "N";
-                let vSo = Math.floor((namKhaoSatThucTe - 1864) / 20) % 9 + 1;
-                if (VAN_DATA[vSo]?.[cCode]) {
-                    const sao = VAN_DATA[vSo][cCode];
-                    if (sao.loai === "best") localKVan = 1.15;
-                    else if (sao.loai === "good") localKVan = 1.08;
-                    else if (sao.loai === "bad") localKVan = 0.88;
-                    else if (sao.loai === "worst") localKVan = 0.75;
-                }
+        const getDynamicHauScoreAndSat = (angle) => {
+            if (typeof tinhDiemTongHop === 'function') {
+                const ketQuaLoi = tinhDiemTongHop(quẻMệnhChủLõi, angle, namKhaoSatThucTe, mucDich, namAmMệnhChủ, 0);
+                return {
+                    diemDong: ketQuaLoi.hauInfo.diem, 
+                    satList: ketQuaLoi.satTinhs       
+                };
             }
-            let penalty = 0;
-            const sonContext = typeof PhongThuyCore !== 'undefined' ? PhongThuyCore.getSonObj(angle) : { name: "Tý" };
-            const localSats = (typeof getPhongThuySatTinh === 'function') ? getPhongThuySatTinh(sonContext.name, namKhaoSatThucTe) : [];
-            localSats.forEach(sat => {
-                if (sat.ten.includes("NGŨ HOÀNG")) penalty += 25;
-                else if (sat.ten.includes("THÁI TUẾ")) penalty += 18;
-                else if (sat.ten.includes("TUẾ PHÁ")) penalty += 12;
-                else if (sat.ten.includes("TAM SÁT")) penalty += 15;
-            });
-            return {
-                diemDong: Math.max(5, Math.min(98, Math.round(hauObj.diemGoc * localKVan - (penalty * 0.5)))),
-                satList: localSats
-            };
+            return { diemDong: 60, satList: [] };
         };
 
-        let dynTrái = getDynamicHauScoreAndSat(mốcTrái, hauInfoTrái);
-        let dynTâm  = getDynamicHauScoreAndSat(mốcTâm, hauInfoTâm);
-        let dynPhải = getDynamicHauScoreAndSat(mốcPhải, hauInfoPhải);
+        let dynTrái = getDynamicHauScoreAndSat(mốcTrái);
+        let dynTâm  = getDynamicHauScoreAndSat(mốcTâm);
+        let dynPhải = getDynamicHauScoreAndSat(mốcPhải);
 
         const parseHauStatusCard = (hauObj) => {
             const emoji = hauObj.emoji || "🟡";
@@ -1173,7 +1175,6 @@ function generateDirectionsList() {
         const statusTâm   = parseHauStatusCard(hauInfoTâm);
         const statusPhải = parseHauStatusCard(hauInfoPhải);
 
-        // 🧠 HÀM PHÂN TÍCH VÀ SÀNG LỌC ĐỊA MẠCH CAO CẤP: Khử hoàn toàn giải pháp hời hợt (Rèm cửa, bình nước)
         const getHauExplanation = (hauObj, dynScore, satList, isCat) => {
             let nienHanHau = (satList && satList.length > 0)
                 ? `<br><br>⚠️ <b>CẢNH BÁO NIÊN HẠN:</b> Phân vị vướng sát tinh lưu niên, địa khí thực thời biến động còn <b>${dynScore}pt</b>. Qua chu kỳ năm hạn khí mạch sẽ tự phục hồi.`
@@ -1181,8 +1182,6 @@ function generateDirectionsList() {
             
             let nghiaThucTe = hauObj.ynghia || "Khí mạch luên hồi tịnh tiến ổn định.";
             
-            // 🎯 TIÊU DIỆT TỬ HUYỆT GIẢI PHÁP SAI LỆCH CỦA CƠ SỞ DỮ LIỆU TĨNH:
-            // Tự động ép giải pháp về đúng bản chất trạch vật lý kiến trúc (Dùng đá địa tầng hoặc móng ngăn khí)
             let phuongAnThucTe = "Giữ khu vực thông thoáng, điều hòa dòng khí ngầm sàn.";
             const isHungHauStatic = hauObj.chatLuongStatic.includes("Hung") || hauObj.chatLuongStatic.includes("Không Vong") || hauObj.chatLuongStatic.includes("Sai Thác");
 
@@ -1194,7 +1193,7 @@ function generateDirectionsList() {
                 }
             } else { 
                 if (isHungHauStatic) {
-                    nghiaThucTe = `Địa tầng ngầm bản chất dính ác khí nguy hiểm (${hauObj.chatLuongStatic}). Trùng khớp tuyệt diệu với công năng uế thải, áp dụng bí mật 'Dĩ Độc Trị Độc' ép chế uế khí cực mạnh.`;
+                    nghiaThucTe = `Địa tầng ngầm bản chất dính ác khí nguy hiểm (${hauObj.chatLuongStatic}). Trùng khớp tuyệt diệu with công năng uế thải, áp dụng bí mật 'Dĩ Độc Trị Độc' ép chế uế khí cực mạnh.`;
                     phuongAnThucTe = "Bố trí thực địa: Đặt uế cục kiên cố đè trọn dải độ này, lót một lớp than hoạt tính dưới đáy bể phốt để bao bọc cô lập hoàn toàn tạp khí không cho rò rỉ sang phòng bên.";
                 } else {
                     nghiaThucTe = `Địa mạch ngầm bản chất vượng khí phúc đức sạch thanh khiết (${hauObj.chatLuongStatic}). Việc cố tình xây dựng bể tự hoại tại đây sẽ gây dìm sập long thần của mảnh đất.`;
@@ -1204,8 +1203,6 @@ function generateDirectionsList() {
 
             return `Phân vị Hậu mạch địa tầng ngầm: <b>${hauObj.ten}</b><br>Chỉ số năng lượng Địa khí thực thời: <b>${dynScore}pt</b>.<br><br>🔍 <b>BIỆN GIẢI PHONG THỦY ĐA TẦNG:</b> ${nghiaThucTe}${nienHanHau}<br><br>🛠️ <b>HÀNH ĐỘNG TRẠCH PHÁP THỰC CHIẾN:</b> ${phuongAnThucTe}`;
         };
-
-        const escapeStr = (s) => s ? s.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;') : "";
         
         let html3HauMạch = `
             <div style="display: flex; gap: 6px; margin-top: 6px; width: 100%; box-sizing: border-box; font-family: sans-serif;">
@@ -1233,7 +1230,6 @@ function generateDirectionsList() {
         let popExplanation = "";
         let popSolution = "";
 
-        // 🎯 FIX VẾT NỨT 1: Chuyển hoàn toàn sang định dạng thẻ ngắt dòng HTML <br> sạch sẽ cho thẻ Card tổng
         let giaiThichSaoHạnCard = item.satTinhs && item.satTinhs.length > 0 
             ? `<br><br>⚠️ <b>LƯU Ý NIÊN HẠN:</b> Điểm số lập cực hiện tại ghi nhận là ${item.diemTongHop}pt do ngôi nhà bị hung tinh chiếu Ngọn chấn nhiễu ngắn hạn ([${item.satTinhs.map(s => s.ten).join(", ")}]). Trạch đất gốc vẫn vượng tốt, qua năm hạn sao dời đi trường khí sẽ cát hanh phục hồi mạnh mẽ.`
             : `<br><br>✨ <b>THIÊN THỜI KHÍ THUẦN:</b> Phương vị sạch bóng hoàn toàn đại sát tinh lưu niên trong năm ${namKhaoSatThucTe}, khí trường cực kỳ kiên cố an tịnh.`;
@@ -1275,9 +1271,33 @@ function generateDirectionsList() {
             }
         }
 
+        // =========================================================================
+        // 🔮 KHẮC PHỤC CHÍNH XÁC: Viết chuỗi liền mạch, dùng toán tử cộng, triệt tiêu gãy dòng
+        // =========================================================================
+        const scorePopTitle = `Bóc tách Chỉ Số Lập Cực: Hướng ${item.name} [${item.diemTongHop} Điểm]`;
+        
+        const scorePopExplanation = `Hệ thống Phong Thủy Số tiến hành bóc tách đa tầng tọa độ vật lý tại mốc <b>${item.angle}°</b> để minh bạch điểm số tổng hợp:<br><br>` +
+            `🎭 <b>1. THƯỢNG TẦNG (Nhân Mệnh Bát Trạch):</b><br>` +
+            `Phương vị kết hợp với quẻ mệnh cốt lõi <b>${quẻMệnhChủLõi}</b> kiến tạo nên cung số <b>${item.cungTrạch}</b>. Đây là mốc năng lượng tĩnh gốc đóng vai trò bệ đỡ sinh cơ ban đầu.<br><br>` +
+            `💎 <b>2. TRUNG TẦNG (24 Sơn Minh Châu):</b><br>` +
+            `Khí trường thực địa tại Sơn vị được xác định cụ thể thông qua ma trận tương tác: <i>"${item.phanTichGoc}"</i>.<br><br>` +
+            `🌟 <b>3. HẠ TẦNG SÂU (Địa Mạch 72 Hậu):</b><br>` +
+            `Dòng chảy mạch ngầm long khí tại tâm hướng đang lọt trọn vào phân vị <b>${item.hau.ten}</b>, ghi nhận mức năng lượng địa khí đạt <b>${item.hau.diem} điểm</b>. Trạng thái mạch đất được đánh giá: <b>${item.hau.chatLuong}</b>.<br><br>` +
+            `⏳ <b>4. THỜI KHÔNG ĐỘNG (Huyền Không Vận 9 & Niên Tinh):</b><br>` +
+            `Xét chu kỳ thiên văn trong năm khảo sát <b>${namKhaoSatThucTe}</b> (nguyên vận 9), phương vị này ${item.satTinhs && item.satTinhs.length > 0 ? `đang chịu lực phạt giảm trừ trực tiếp do bị nhóm hung tinh sát khí ([${item.satTinhs.map(s => s.ten).join(", ")}]) quấy phá phần Ngọn.` : 'hoàn toàn thanh khiết, không vướng ám tinh quấy phá, đắc thiên thời an tịnh để nuôi dưỡng long mạch lâu dài.'}<br><br>` +
+            `🎯 <b>KẾT LUẬN LẬP CỰC:</b> Chỉ số <b>${item.diemTongHop} PT</b> là kết quả giao thoa tuyến tính chuẩn xác giữa Địa Khí ngầm tầng sâu, Nhân Mệnh của chủ nhà và Thời Vận biến thiên.`;
+
+        const scorePopSolution = isCatPurpose 
+            ? `Ứng dụng thực chiến: ${item.diemTongHop >= 70 ? 'Tọa độ hoàn mỹ đại cát. Ưu tiên đặt trục nạp khí chính hoặc mở cửa khẩu để đón trọn vượng khí.' : 'Khí trường trung tính, an tâm bố trí không gian sinh hoạt, chú ý phối màu nội thất tương sinh.'}`
+            : `Ứng dụng thực chiến: ${item.diemTongHop >= 75 ? 'Thần cách trấn yểm diệu pháp. Đặt uế cục tại đây để dùng hung trấn hung cực kỳ đắc cách.' : 'Xem xét vi chỉnh kết cấu xả uế lệch tâm ra khỏi vạch đỏ để bảo vệ long mạch đất.'}`;
+
         const safePopTitle = escapeStr(`Biện giải Trạch Pháp: Hướng ${item.name} [${item.cungTrạch}]`);
         const safePopDesc = escapeStr(popExplanation);
         const safePopSol = escapeStr(popSolution);
+
+        const safeScoreTitle = escapeStr(scorePopTitle);
+        const safeScoreDesc = escapeStr(scorePopExplanation);
+        const safeScoreSol = escapeStr(scorePopSolution);
 
         const div = document.createElement('div');
         div.className = `direction-item`;
@@ -1286,10 +1306,14 @@ function generateDirectionsList() {
         div.innerHTML = `
             <div class="item-info" style="width:100%;">
                 <div style="color:#fff; font-size:0.95rem; margin-bottom:6px; font-weight:bold; display:flex; justify-content:space-between; align-items:center;">
+                    <!-- SỰ KIỆN CLICK 1: XEM DIỄN GIẢI HƯỚNG ĐẠI CỤC -->
                     <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; cursor:pointer;" onclick="showExplanation('${safePopTitle}', '${safePopDesc}', '${safePopSol}')">
                         Hướng ${item.name} ➔ <span style="color:${scoreColor};">${item.cungTrạch}</span>
                     </span>
-                    <span style="font-size:0.8rem; padding:2px 8px; border-radius:6px; font-weight:800; background:rgba(0,0,0,0.3); color:${scoreColor}; border:1px solid ${scoreColor}; white-space:nowrap; cursor:pointer;" onclick="showExplanation('${safePopTitle}', '${safePopDesc}', '${safePopSol}')">
+                    
+                    <!-- SỰ KIỆN CLICK 2: BÓC TÁCH CHI TIẾT ĐIỂM SỐ LIÊN THÔNG (ĐÃ FIX KHỚP CHUỖI TOKEN) -->
+                    <span style="font-size:0.8rem; padding:2px 8px; border-radius:6px; font-weight:800; background:rgba(0,0,0,0.3); color:${scoreColor}; border:1px solid ${scoreColor}; white-space:nowrap; cursor:pointer;"  
+                          onclick="showExplanation('${safeScoreTitle}', '${safeScoreDesc}', '${safeScoreSol}')">
                         ${item.diemTongHop} PT
                     </span>
                 </div>
@@ -2332,18 +2356,37 @@ function renderMultiLayerDetail(result, van, degree) {
         colorStatus = "#dfb76c"; 
     }
 
+    // Trích xuất thông tin lịch pháp phục vụ tính toán Hậu mạch đồng trục
+    const dayStr = document.getElementById('birthDay')?.value || "";
+    const monthStr = document.getElementById('birthMonth')?.value || "";
+    const yearStr = document.getElementById('birthYear')?.value || "";
+    const txtSurveyYear = document.getElementById('surveyYear');
+    const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
+
+    let namAmMệnhChủ = new Date().getFullYear();
+    if (dayStr && monthStr && yearStr && yearStr.length === 4) {
+        namAmMệnhChủ = (parseInt(monthStr, 10) < 2 || (parseInt(monthStr, 10) === 2 && parseInt(dayStr, 10) < 4)) ? parseInt(yearStr, 10) - 1 : parseInt(yearStr, 10);
+    }
+
+    let quẻMệnhChủLõi = "Khảm";
+    if (typeof chủMệnh !== 'undefined' && chủMệnh) {
+        quẻMệnhChủLõi = chủMệnh;
+    } else if (typeof chủMệnhToànCục !== 'undefined' && chủMệnhToànCục) {
+        quẻMệnhChủLõi = chủMệnhToànCục;
+    }
+    quẻMệnhChủLõi = quẻMệnhChủLõi.trim().charAt(0).toUpperCase() + quẻMệnhChủLõi.slice(1).toLowerCase();
+
     let html = `<div style="font-size:0.92rem; line-height:1.6; color:#e0e0e0; font-family: sans-serif; width: 100%; box-sizing: border-box;">`;
 
     // --- TẦNG 1: THƯỢNG ĐỈNH TỔNG ĐIỂM SỐ CHỐNG SẬP KHUNG KHI ĐỔI ĐỘ TRỰC TIẾP ---
-    html += `
-    <div style="text-align:center; padding:20px; background:rgba(255,255,255,0.02); border-radius:16px; margin-bottom:20px; border: 1px solid ${colorStatus}40; box-shadow: inset 0 0 15px ${colorStatus}10;">
-        <div style="font-size:0.75rem; color:#888; text-transform:uppercase; letter-spacing: 2px; font-weight: bold;">Chỉ số Thống kê PT [${config.title}] Vận 9</div>
-        <div style="font-size:3.5rem; font-weight:900; color:${colorStatus}; margin: 5px 0; text-shadow: 0 0 10px ${colorStatus}20;">${diem}<span style="font-size:1.2rem; font-weight:400;">pt</span></div>
-        <div style="font-weight:700; color:${colorStatus}; letter-spacing: 1px; padding: 4px 16px; background: ${colorStatus}15; display: inline-block; border-radius: 20px; text-transform: uppercase; font-size: 0.85rem; border: 1px solid ${colorStatus}30;">${level}</div>
-        <div style="margin-top:12px; font-size:0.75rem; color:#8a8a8f; font-family: monospace; line-height: 1.4; border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 8px;">
-            Toán thức Lập cực: PT = [ ( BT<sub>Gốc</sub> + Δ<sub>H72</sub> ) × K<sub>Van</sub> ${isCatPurpose ? '-' : '+'} ΣΨ<sub>Sat</sub> ] × Γ<sub>Khai</sub>
-        </div>
-    </div>`;
+    html += `<div style="text-align:center; padding:20px; background:rgba(255,255,255,0.02); border-radius:16px; margin-bottom:20px; border: 1px solid ` + colorStatus + `40; box-shadow: inset 0 0 15px ` + colorStatus + `10;">` +
+        `<div style="font-size:0.75rem; color:#888; text-transform:uppercase; letter-spacing: 2px; font-weight: bold;">Chỉ số Thống kê PT [${config.title}] Vận 9</div>` +
+        `<div style="font-size:3.5rem; font-weight:900; color:` + colorStatus + `; margin: 5px 0; text-shadow: 0 0 10px ` + colorStatus + `20;">${diem}<span style="font-size:1.2rem; font-weight:400;">pt</span></div>` +
+        `<div style="font-weight:700; color:` + colorStatus + `; letter-spacing: 1px; padding: 4px 16px; background: ` + colorStatus + `15; display: inline-block; border-radius: 20px; text-transform: uppercase; font-size: 0.85rem; border: 1px solid ` + colorStatus + `30;">${level}</div>` +
+        `<div style="margin-top:12px; font-size:0.75rem; color:#8a8a8f; font-family: monospace; line-height: 1.4; border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 8px;">` +
+            `Toán thức Lập cực: PT = [ ( BT<sub>Gốc</sub> + Δ<sub>H72</sub> ) × K<sub>Van</sub> ${isCatPurpose ? '-' : '+'} ΣΨ<sub>Sat</sub> ] × Γ<sub>Khai</sub>` +
+        `</div>` +
+    `</div>`;
 
     // --- TẦNG 2: BỘ LỌC CẢNH BÁO ĐẠI KÌ LƯU NIÊN ĐỘNG ---
     if (khongVong || (satTinhs && satTinhs.length > 0)) {
@@ -2357,11 +2400,10 @@ function renderMultiLayerDetail(result, van, degree) {
                 `Hạng mục cấu trúc đang đặt đè trúng trục đứt gãy năng lượng của vòng Không Vong, khiến dòng sinh khí bị xé toạc, hỗn tạp, phá tài tốn đinh.` : 
                 `Thuật Phong thủy đỉnh cao! Chọn đúng tọa độ đứt gãy mạch từ trường để đặt thiết bị xả uế, uế khí theo dòng xoáy Không Vong xả thẳng ra ngoài.`;
 
-            html += `
-            <div style="background:${kvBg}; padding:12px 15px; border-radius:12px; border:1px solid ${kvBorder};">
-                <strong style="color:${kvBorder}; font-size: 0.9rem; display: block; margin-bottom: 3px;">${kvTitle}</strong>
-                <span style="font-size:0.85rem; color: #eee;">${kvMsg}</span>
-            </div>`;
+            html += `<div style="background:${kvBg}; padding:12px 15px; border-radius:12px; border:1px solid ${kvBorder};">` +
+                `<strong style="color:${kvBorder}; font-size: 0.9rem; display: block; margin-bottom: 3px;">${kvTitle}</strong>` +
+                `<span style="font-size:0.85rem; color: #eee;">${kvMsg}</span>` +
+            `</div>`;
         }
 
         if (satTinhs && satTinhs.length > 0) {
@@ -2373,63 +2415,80 @@ function renderMultiLayerDetail(result, van, degree) {
                     (sat.giaiPhap || "Năng lượng lưu niên hung hãn giáng lâm, trong năm nay trạch chủ tránh tuyệt đối việc khoan đục sâu tại góc phân độ này.") :
                     "Công năng xả uế/đè nén đặt tại đây đóng vai trò như một trận pháp trấn yểm cực mạnh, đốt cháy hoàn toàn ác tính của hung tinh lưu niên.";
 
-                html += `
-                <div style="background:${satBg}; padding:10px 15px; border-radius:10px; border-left:4px solid ${satColor}; border-top: 1px solid ${satColor}15; border-right: 1px solid ${satColor}15; border-bottom: 1px solid ${satColor}15;">
-                    <strong style="color:${satColor}; font-size:0.88rem; display: block; margin-bottom: 2px;">${satTitle}</strong>
-                    <span style="font-size:0.82rem; color:#ccc;">${satMsg}</span>
-                </div>`;
+                html += `<div style="background:${satBg}; padding:10px 15px; border-radius:10px; border-left:4px solid ${satColor}; border-top: 1px solid ${satColor}15; border-right: 1px solid ${satColor}15; border-bottom: 1px solid ${satColor}15;">` +
+                    `<strong style="color:${satColor}; font-size:0.88rem; display: block; margin-bottom: 2px;">${satTitle}</strong>` +
+                    `<span style="font-size:0.82rem; color:#ccc;">${satMsg}</span>` +
+                `</div>`;
             });
         }
         
         html += `</div>`;
     }
 
-    // --- TẦNG 3: DIỄN GIẢI MINH CHÂU CHÍNH TÔNG TRẬN ĐỒ PHÂN CH M ---
-    html += `
-    <div style="background:rgba(255,255,255,0.01); padding:15px; border-radius:12px; border:1px solid rgba(255,255,255,0.08); box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
-        <strong style="color:#dfb76c; display:block; margin-bottom:8px; font-size:0.9rem; letter-spacing: 0.5px;">◆ KẾT QUẢ ĐO ĐẠC: SƠN VỊ ${sonName || "Tý"} (${degree}°)</strong>
-        <div style="font-size: 0.88rem; color: #ddd; text-align: justify; line-height: 1.5;">${message || "Khí trường biến thiên ôn hòa, điều hòa trạch cát."}</div>
-        <div style="margin-top:12px; color:#ffd700; font-size:0.85rem; border-top:1px solid rgba(255,255,255,0.08); padding-top:10px; line-height: 1.45;">
-            <b style="color:#dfb76c; display: block; margin-bottom: 3px;">💡 Pháp bảo bố trí / Mật pháp quy hoạch bổ trợ:</b> ${hoaGiai || "Giữ góc la bàn sạch sẽ để tụ khí."}
-        </div>
-    </div>`;
+    // --- TẦNG 3: DIỄN GIẢI MINH CHÂU CHÍNH TÔNG TRẬN ĐỒ PHÂN CHÂM ---
+    html += `<div style="background:rgba(255,255,255,0.01); padding:15px; border-radius:12px; border:1px solid rgba(255,255,255,0.08); box-shadow: 0 4px 12px rgba(0,0,0,0.25);">` +
+        `<strong style="color:#dfb76c; display:block; margin-bottom:8px; font-size:0.9rem; letter-spacing: 0.5px;">◆ KẾT QUẢ ĐO ĐẠC: SƠN VỊ ${sonName || "Tý"} (${degree}°)</strong>` +
+        `<div style="font-size: 0.88rem; color: #ddd; text-align: justify; line-height: 1.5;">${message || "Khí trường biến thiên ôn hòa, điều hòa trạch cát."}</div>` +
+        `<div style="margin-top:12px; color:#ffd700; font-size:0.85rem; border-top:1px solid rgba(255,255,255,0.08); padding-top:10px; line-height: 1.45;">` +
+            `<b style="color:#dfb76c; display: block; margin-bottom: 3px;">💡 Pháp bảo bố trí / Mật pháp quy hoạch bổ trợ:</b> ${hoaGiai || "Giữ góc la bàn sạch sẽ để tụ khí."}` +
+        `</div>` +
+    `</div>`;
 
     // --- TẦNG 4: ĐỒ HOÀ 3 HẬU ĐỊA LONG NỀN TẢNG ĐỊA KHÍ CỐ ĐỊNH ---
     const nguonHau72 = (typeof Data72Hau !== 'undefined') ? Data72Hau : ((typeof PhongThuyCore !== 'undefined' && PhongThuyCore.data?.Hau72) ? PhongThuyCore.data.Hau72 : null);
     if (hauInfo && nguonHau72) {
-        let mốcTâm = Math.round(degree / 5) * 5;
-        if (mốcTâm >= 360) mốcTâm = 0;
+        let mốcTâm = Math.round(degree / 5) * 5 % 360;
         let mốcTrái = (mốcTâm - 5 + 360) % 360;
         let mốcPhải = (mốcTâm + 5) % 360;
 
-        let hauTrái = nguonHau72[mốcTrái.toString()] || { ten: "Nhâm Hậu", chatLuong: "Bình Hòa", diem: 60 };
-        let hauTâm  = nguonHau72[mốcTâm.toString()] || { ten: "Tý Hậu", chatLuong: "Bình Hòa", diem: 60 };
-        let hauPhải = nguonHau72[mốcPhải.toString()] || { ten: "Quý Hậu", chatLuong: "Bình Hòa", diem: 60 };
+        // 🔄 ĐỒNG BỘ TUYỆT ĐỐI: Gọi qua hàm core để lấy trạng thái dynamic của Hậu trái/phải
+        const getHauSideNodeInfo = (angle) => {
+            if (typeof tinhDiemTongHop === 'function') {
+                const sideRes = tinhDiemTongHop(quẻMệnhChủLõi, angle, namKhaoSatThucTe, mucDich, namAmMệnhChủ, 0);
+                return {
+                    ten: sideRes.hauInfo.ten,
+                    chatLuong: sideRes.hauInfo.chatLuong,
+                    emoji: sideRes.hauInfo.emoji
+                };
+            }
+            const raw = nguonHau72[angle.toString()] || { ten: "Hậu mạch", chatLuong: "Bình Hòa" };
+            return { ten: raw.ten, chatLuong: raw.chatLuong, emoji: "🟡" };
+        };
 
-        const checkHauColor = (cl) => cl.includes('Cát') ? '#30d158' : (cl.includes('Hung') ? '#ff3b30' : '#dfb76c');
+        let nodeTrái = getHauSideNodeInfo(mốcTrái);
+        let nodePhải = getHauSideNodeInfo(mốcPhải);
+
+        const checkHauColorByEmoji = (emoji, label) => {
+            if (emoji === "🟢" || emoji === "🔮") return '#30d158';
+            if (emoji === "🔴" || emoji === "☠️") return '#ff3b30';
+            if (label.includes('Cát')) return '#30d158';
+            if (label.includes('Hung')) return '#ff3b30';
+            return '#dfb76c';
+        };
         
+        let colorTrái = isCatPurpose ? checkHauColorByEmoji(nodeTrái.emoji, nodeTrái.chatLuong) : (nodeTrái.chatLuong.includes('Hung') || nodeTrái.emoji === '🔴' ? '#30d158' : '#ff3b30');
+        let colorTâm  = isCatPurpose ? checkHauColorByEmoji(hauInfo.emoji, hauInfo.chatLuong) : (hauInfo.chatLuong.includes('Hung') || hauInfo.emoji === '🔴' ? '#30d158' : '#ff3b30');
+        let colorPhải = isCatPurpose ? checkHauColorByEmoji(nodePhải.emoji, nodePhải.chatLuong) : (nodePhải.chatLuong.includes('Hung') || nodePhải.emoji === '🔴' ? '#30d158' : '#ff3b30');
+
+        let textTrái = isCatPurpose ? nodeTrái.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.') : (nodeTrái.chatLuong.includes('Hung') || nodeTrái.emoji === '🔴' ? 'ĐẮC VỊ' : 'K. NÊN ĐẶT');
+        let textTâm  = isCatPurpose ? hauInfo.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.') : (hauInfo.chatLuong.includes('Hung') || hauInfo.emoji === '🔴' ? 'ĐẮC VỊ' : 'K. NÊN ĐẶT');
+        let textPhải = isCatPurpose ? nodePhải.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.') : (nodePhải.chatLuong.includes('Hung') || nodePhải.emoji === '🔴' ? 'ĐẮC VỊ' : 'K. NÊN ĐẶT');
+
         let htmlKhối3Hậu = `
             <div style="display: flex; gap: 6px; margin-top: 10px; width: 100%; box-sizing: border-box;">
                 <div style="flex: 1; text-align: center; background: rgba(255,255,255,0.03); padding: 8px 4px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
-                    <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${(hauTrái.ten || "Hậu").split(' ')[0]} (${mốcTrái}°)</div>
-                    <div style="font-size: 0.68rem; color: ${isCatPurpose ? checkHauColor(hauTrái.chatLuong) : (hauTrái.chatLuong.includes('Hung') ? '#30d158' : '#ff3b30')}; font-weight: bold; text-transform: uppercase;">
-                        ${isCatPurpose ? hauTrái.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.') : (hauTrái.chatLuong.includes('Hung') ? 'ĐẮC VỊ' : 'K. NÊN ĐẶT')}
-                    </div>
+                    <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${(nodeTrái.ten || "Hậu").split(' ')[0]} (${mốcTrái}°)</div>
+                    <div style="font-size: 0.68rem; color: ${colorTrái}; font-weight: bold; text-transform: uppercase;">${textTrái}</div>
                 </div>
-                <div style="flex: 1; text-align: center; background: rgba(255,255,255,0.08); padding: 8px 4px; border-radius: 8px; border: 1px solid ${isCatPurpose ? checkHauColor(hauTâm.chatLuong) : (hauTâm.chatLuong.includes('Hung') ? '#30d158' : '#ff3b30')}; box-shadow: 0 0 8px ${isCatPurpose ? checkHauColor(hauTâm.chatLuong) : (hauTâm.chatLuong.includes('Hung') ? '#30d158' : '#ff3b30')}30;">
-                    <div style="font-size: 0.75rem; color: #ffd700; font-weight: bold; margin-bottom: 2px;">🎯 ${(hauTâm.ten || "Hậu").split(' ')[0]} (${mốcTâm}°)</div>
-                    <div style="font-size: 0.68rem; color: ${isCatPurpose ? checkHauColor(hauTâm.chatLuong) : (hauTâm.chatLuong.includes('Hung') ? '#30d158' : '#ff3b30')}; font-weight: bold; text-transform: uppercase;">
-                        ${isCatPurpose ? hauTâm.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.') : (hauTâm.chatLuong.includes('Hung') ? 'ĐẮC VỊ' : 'K. NÊN ĐẶT')}
-                    </div>
+                <div style="flex: 1; text-align: center; background: rgba(255,255,255,0.08); padding: 8px 4px; border-radius: 8px; border: 1px solid ${colorTâm}; box-shadow: 0 0 8px ${colorTâm}30;">
+                    <div style="font-size: 0.75rem; color: #ffd700; font-weight: bold; margin-bottom: 2px;">🎯 ${(hauInfo.ten || "Hậu").split(' ')[0]} (${mốcTâm}°)</div>
+                    <div style="font-size: 0.68rem; color: ${colorTâm}; font-weight: bold; text-transform: uppercase;">${textTâm}</div>
                 </div>
                 <div style="flex: 1; text-align: center; background: rgba(255,255,255,0.03); padding: 8px 4px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
-                    <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${(hauPhải.ten || "Hậu").split(' ')[0]} (${mốcPhải}°)</div>
-                    <div style="font-size: 0.68rem; color: ${isCatPurpose ? checkHauColor(hauPhải.chatLuong) : (hauPhải.chatLuong.includes('Hung') ? '#30d158' : '#ff3b30')}; font-weight: bold; text-transform: uppercase;">
-                        ${isCatPurpose ? hauPhải.chatLuong.replace('Đại ', 'Đ.').replace('Tiểu ', 'T.') : (hauPhải.chatLuong.includes('Hung') ? 'ĐẮC VỊ' : 'K. NÊN ĐẶT')}
-                    </div>
+                    <div style="font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px;">${(nodePhải.ten || "Hậu").split(' ')[0]} (${mốcPhải}°)</div>
+                    <div style="font-size: 0.68rem; color: ${colorPhải}; font-weight: bold; text-transform: uppercase;">${textPhải}</div>
                 </div>
-            </div>
-        `;
+            </div>`;
 
         html += `
         <div style="margin-top:20px; padding:15px; background:rgba(0,255,120,0.02); border-radius:12px; border:1px solid rgba(0,255,170,0.15);">
