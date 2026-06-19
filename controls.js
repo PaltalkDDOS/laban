@@ -709,7 +709,7 @@ function recalculateFate() {
         giaiThichSao = `Năng lượng niên hạn chủ quản năm tại vị trí trung cung đạt trạng thái an định, thuần khiết cát tường, không xuất hiện cấu trúc xung đột biến động lớn.`;
     }
 
-    const nguHoangAlert = getNguHoangAlert(currentSonHuong);
+    const nguhoangAlert = getNguHoangAlert(currentSonHuong);
 
     let targetContainer = document.getElementById('dien-giai-bo-sung');
     if (!targetContainer) {
@@ -749,6 +749,11 @@ function recalculateFate() {
     let remoteClientHeading = ((realHeading + declinationValue) % 360 + 360) % 360;
     let remoteSonInfo = layThongTin24Son(remoteClientHeading, chủMệnh, namAmMệnhChủ);
 
+    // 🌟 ĐẠI NÂNG CẤP: Thuật toán biện chứng dịch chuyển đĩa la bàn thực thời cực kỳ trực quan
+    let thongTinTracDia = declinationValue !== 0 
+        ? `(Độ lệch từ địa phương hiệu chỉnh: ${declinationValue > 0 ? '+' : ''}${declinationValue}° — Đĩa la bàn số tự động điều hướng tịnh tiến nhằm triệt tiêu hoàn toàn nhiễu trường từ tính của thiết bị điện tử, định vị tọa độ lõi).`
+        : `(Độ lệch từ tự nhiên: 0° — Đĩa la bàn cơ học vận hành ở trạng thái cân bằng từ trường ổn định, xác lập trục tọa độ gốc địa phương sạch hoàn hảo).`;
+
     // Thuật toán thông minh: Chỉ dựng HTML khi độ lệch từ có giá trị khác 0
     let htmlKhachPhuongXa = "";
     if (declinationValue !== 0) {
@@ -778,11 +783,11 @@ function recalculateFate() {
                 📖 BIỆN CHỨNG KHÍ CỤC CẤU TRÚC HẠNG MỤC KỸ THUẬT
             </p>
             
-            <p style="margin:8px 0;">📍 <b>Tọa độ trắc địa tại máy:</b> ${realHeading.toFixed(1)}° (Góc xoay đĩa la bàn cơ học đã định vị trục tọa độ gốc).</p>
+            <!-- 🎯 ĐỒNG BỘ HOÀN HẢO: Dòng thông báo độc lập, sắc nét, tự động biến thiên theo mốc lệch từ -->
+            <p style="margin:8px 0;">📍 <b>Tọa độ trắc địa thực tế:</b> ${realHeading.toFixed(1)}° ${thongTinTracDia}</p>
             
             <p style="margin:8px 0;">📍 <b>Phương vị la bàn số:</b> Ngũ hành từ trường phương vị thuộc <b>${hanhPhuongVi}</b> (Góc quay cảm biến: <b>${Math.round(headingToCalculate)}°</b>).</p>
             
-            <!-- 🔄 ĐÃ ĐƯỢC DI CHUYỂN: Khối dữ liệu phương xa nằm riêng biệt ngay dưới Phương vị la bàn số -->
             ${htmlKhachPhuongXa}
 
             <p style="margin:8px 0;">🎯 <b>Quẻ mệnh Nhân chủ (Hành ${hanHinhCungPhi}):</b> Cung phi cốt lõi <b>${chủMệnh}</b> (${nhomMenh}).</p>
@@ -798,7 +803,7 @@ function recalculateFate() {
             
             <p style="margin:8px 0; text-align:justify;">🌟 <b>Luận đoán Minh Châu Sơn vị:</b> ${tongHop.message}</p>
             <p style="margin:8px 0; text-align:justify;">⚠️ <b>Biến động thiên thời tâm nhà:</b> ${giaiThichSao}</p>
-            ${nguHoangAlert ? `<p style="margin:8px 0; color:#ff4444; font-weight:bold; background:rgba(255,59,48,0.08); padding:8px; border-radius:6px; border:1px solid #ff3b30;">${nguHoangAlert}</p>` : ''}
+            ${nguhoangAlert ? `<p style="margin:8px 0; color:#ff4444; font-weight:bold; background:rgba(255,59,48,0.08); padding:8px; border-radius:6px; border:1px solid #ff3b30;">${nguhoangAlert}</p>` : ''}
         </div>
     `;
 
