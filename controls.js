@@ -3823,79 +3823,173 @@ function closeModal() {
     document.getElementById('infoModal').style.display = 'none';
 }
 
-let autoHideTimer = null;
+// =========================================================================
+// 🚀 ENGINE ĐIỀU KHIỂN SMOOTH-BUNG BÓNG V10.1 - TRIỆT TIÊU GHOST CLICK MOBILE
+// =========================================================================
 
-// Hàm khởi tạo bộ đếm
-function startAutoHide() {
-    clearTimeout(autoHideTimer);
-    autoHideTimer = setTimeout(() => {
+let autoHideTimerV10 = null;
+
+/**
+ * ⏱️ BỘ ĐẾM NGƯỢC TỰ ĐỘNG THU GỌN BẢNG
+ */
+function startAutoHideV10() {
+    clearTimeout(autoHideTimerV10);
+    autoHideTimerV10 = setTimeout(() => {
         const wrapper = document.getElementById('mainPanelWrapper');
-        // Chỉ đóng nếu bảng đang MỞ và KHÔNG có gì đang được focus (đang nhập liệu)
-        if (wrapper && !wrapper.classList.contains('collapsed')) {
-            // Kiểm tra thêm: nếu đang focus vào ô input thì không đóng
-            if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || document.activeElement.tagName === 'SELECT') {
+        
+        if (wrapper && wrapper.classList.contains('panel-open-v10')) {
+            const activeTag = document.activeElement.tagName;
+            if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT') {
                 return; 
             }
-            togglePanel();
+            toggleMainPanelV10(); 
         }
     }, 3000);
 }
 
-function togglePanel() {
-    const wrapper = document.getElementById('mainPanelWrapper');
-    const arrow = document.getElementById('toggleArrow');
-    
-    if (!wrapper || !arrow) return;
-
-    // Loại bỏ class ẩn ngay từ đầu nếu có
-    wrapper.classList.remove('initial-hidden');
-    
-    // Toggle trạng thái đóng/mở
-    wrapper.classList.toggle('collapsed');
-    
-    const isCollapsed = wrapper.classList.contains('collapsed');
-    arrow.innerHTML = isCollapsed ? '▼' : '▲';
-
-    if (!isCollapsed) {
-        startAutoHide();
-    } else {
-        clearTimeout(autoHideTimer);
-    }
-}
-
-// KHỞI TẠO
-document.addEventListener('DOMContentLoaded', () => {
+/**
+ * 🔄 HÀM ĐẢO TRẠNG THÁI ĐÓNG/MỞ BẰNG BONG BÓNG
+ */
+function toggleMainPanelV10() {
     const wrapper = document.getElementById('mainPanelWrapper');
     if (!wrapper) return;
 
-    // 1. Luôn đóng ngay khi load (thêm class trước khi hiển thị)
-    wrapper.classList.add('collapsed');
-    document.getElementById('toggleArrow').innerHTML = '▼';
+    wrapper.style.removeProperty('display');
+    wrapper.style.removeProperty('height');
+    wrapper.classList.remove('initial-hidden');
+    
+    wrapper.classList.toggle('panel-open-v10');
+    const isOpen = wrapper.classList.contains('panel-open-v10');
 
-    // 2. Định nghĩa danh sách các sự kiện cần "đóng băng" bộ đếm
-    // mousedown/touchstart: Click chuột hoặc chạm tay
-    // input/focus: Đang nhập liệu
-    // mouseover: Di chuột vào
-    const events = ['mousedown', 'touchstart', 'input', 'focus', 'mouseover'];
+    if (isOpen) {
+        startAutoHideV10();
+    } else {
+        clearTimeout(autoHideTimerV10);
+    }
 
-    events.forEach(eventType => {
-        wrapper.addEventListener(eventType, () => {
-            if (!wrapper.classList.contains('collapsed')) {
-                clearTimeout(autoHideTimer); // Dừng đếm khi đang dùng
+    if (typeof recalculateFate === 'function') {
+        recalculateFate();
+    }
+}
+
+/**
+ * 🛡️ KHỞI TẠO, ĐÁNH CHẶN LƯU LƯỢNG & ENGINE KÉO THẢ ĐA ĐIỂM
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    if (!document.getElementById('floatingMenuBtnV10')) {
+        const bubbleHTML = `
+            <div id="floatingMenuBtnV10">
+                👤
+                <span class="pulse-ring-v10"></span>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', bubbleHTML);
+    }
+
+    const bubble = document.getElementById('floatingMenuBtnV10');
+    const wrapper = document.getElementById('mainPanelWrapper');
+    if (!wrapper || !bubble) return;
+
+    wrapper.classList.remove('panel-open-v10');
+    wrapper.classList.add('initial-hidden');
+
+    let isDragging = false;
+    let startX = 0, startY = 0;
+    let initialLeft = 0, initialTop = 0;
+
+    const getPointerCoords = (e) => e.touches ? e.touches[0] : e;
+
+    // Sự kiện BẮT ĐẦU KÉO
+    const onDragStart = (e) => {
+        const coords = getPointerCoords(e);
+        isDragging = false;
+        startX = coords.clientX;
+        startY = coords.clientY;
+
+        const rect = bubble.getBoundingClientRect();
+        initialLeft = rect.left;
+        initialTop = rect.top;
+
+        bubble.style.right = 'auto';
+        bubble.style.bottom = 'auto';
+        bubble.style.left = initialLeft + 'px';
+        bubble.style.top = initialTop + 'px';
+        
+        bubble.style.setProperty('transition', 'none', 'important');
+    };
+
+    // Sự kiện ĐANG KÉO
+    const onDragMove = (e) => {
+        if (startX === 0 && startY === 0) return;
+
+        const coords = getPointerCoords(e);
+        const diffX = coords.clientX - startX;
+        const diffY = coords.clientY - startY;
+
+        if (Math.abs(diffX) > 4 || Math.abs(diffY) > 4) {
+            isDragging = true;
+            if (e.cancelable) e.preventDefault(); 
+        }
+
+        bubble.style.left = (initialLeft + diffX) + 'px';
+        bubble.style.top = (initialTop + diffY) + 'px';
+    };
+
+    // Sự kiện THẢ TAY (Quyết định triệt tiêu Click ma)
+    const onDragEnd = (e) => {
+        if (startX === 0 && startY === 0) return;
+        
+        // ⚡ CHIÊU THỨC CHÍ MẠNG: Nếu là touch trên điện thoại, chặn đứng luồng giả lập chuột tiếp theo
+        if (e.type === 'touchend' && e.cancelable) {
+            e.preventDefault();
+        }
+        
+        bubble.style.setProperty('transition', 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)', 'important');
+        startX = 0;
+        startY = 0;
+
+        if (!isDragging) {
+            toggleMainPanelV10();
+        }
+    };
+
+    // ĐĂNG KÝ CHO MÁY TÍNH (MOUSE)
+    bubble.addEventListener('mousedown', onDragStart);
+    document.addEventListener('mousemove', onDragMove, { passive: false });
+    document.addEventListener('mouseup', onDragEnd);
+
+    // ĐĂNG KÝ CHO ĐIỆN THOẠI (TOUCH - Mở khóa tính năng chặn click ma)
+    bubble.addEventListener('touchstart', onDragStart, { passive: true });
+    document.addEventListener('touchmove', onDragMove, { passive: false });
+    bubble.addEventListener('touchend', onDragEnd, { passive: false }); // Đổi passive thành false để preventDefault hoạt động ổn định
+
+    // ĐÓNG BĂNG BỘ ĐẾM KHI ĐANG NHẬP LIỆU
+    const stopEvents = ['mousedown', 'touchstart', 'input', 'focus', 'mouseover', 'mouseenter'];
+    stopEvents.forEach(evtName => {
+        wrapper.addEventListener(evtName, () => {
+            if (wrapper.classList.contains('panel-open-v10')) {
+                clearTimeout(autoHideTimerV10);
             }
         }, { passive: true });
     });
 
-    // 3. Khi người dùng buông tay hoặc rời chuột, bắt đầu đếm lại
-    const endEvents = ['mouseup', 'touchend', 'blur', 'mouseout'];
-    endEvents.forEach(eventType => {
-        wrapper.addEventListener(eventType, () => {
-            if (!wrapper.classList.contains('collapsed')) {
-                startAutoHide(); // Bắt đầu đếm khi không còn tương tác
+    // KÍCH HOẠT ĐẾM LẠI KHI RỜI KHỎI BẢNG
+    const resumeEvents = ['mouseup', 'touchend', 'blur', 'mouseout', 'mouseleave'];
+    resumeEvents.forEach(evtName => {
+        wrapper.addEventListener(evtName, () => {
+            if (wrapper.classList.contains('panel-open-v10')) {
+                startAutoHideV10();
             }
         }, { passive: true });
     });
-});	
+});
+
+function togglePanel() {
+    toggleMainPanelV10();
+}
+
+window.toggleMainPanelV10 = toggleMainPanelV10;
+window.togglePanel = togglePanel;
 // ====================== HÀM ĐÓNG MỞ GIẢI THÍCH CHI TIẾT ======================
 window.toggleDienGiaiChiTiet = function() {
     const contentDiv = document.getElementById('content-dien-giai-chi-tiet');

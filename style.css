@@ -1465,7 +1465,7 @@ mjx-container {
     align-items: center;
     gap: 8px;
     box-shadow: 0 4px 15px rgba(223, 183, 108, 0.4);
-    z-index: 99999;
+    z-index: 99998;
     white-space: nowrap;
     -webkit-tap-highlight-color: transparent;
 
@@ -1580,8 +1580,8 @@ mjx-container {
     display: flex;
     align-items: center;
     gap: 8px;
-    box-shadow: 0 4px 15px rgba(223, 183, 108, 0.4);
-    z-index: 99998;
+    box-shadow: 0 4px 15px rgba(48, 209, 88, 0.4);
+    z-index: 9999;
     white-space: nowrap;
     -webkit-tap-highlight-color: transparent;
 
@@ -1704,55 +1704,119 @@ mjx-container {
         filter: drop-shadow(0 0 15px #dfb76c) brightness(1.4);
     }
 }
+/* =========================================================================
+   🔮 ENGINE PHẲNG V10.3 - SEMI-TRANSPARENT GLASSMORPHISM EDITION
+   ========================================================================= */
+
+/* 1. BONG BÓNG MENU NỔI CAO CẤP (Đã làm mờ nhìn xuyên thấu + Viền mịn) */
+#floatingMenuBtnV10 {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 18px !important;
+    
+    /* Sử dụng RGBA (mức 0.75 và 0.85) để tạo độ trong suốt nhẹ cho khối nền */
+    background: radial-gradient(circle, rgba(37, 37, 38, 0.75) 0%, rgba(13, 13, 15, 0.85) 100%) !important;
+    
+    /* Hạ độ mờ đục của viền vàng xuống mức 0.5 để tệp vào nền kính */
+    border: 2px solid rgba(223, 183, 108, 0.5) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 99999 !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5) !important;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: move !important;
+    touch-action: none !important;
+    
+    /* ⚡ CHIÊU THỨC KÍNH MỜ: Giúp làm nhòe các phần tử trôi phía sau bong bóng khi di chuyển */
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.3s ease !important;
+}
+
+/* Hiệu ứng nén lò xo khi ngón tay đè/chuột nhấn chặt vào bong bóng */
+#floatingMenuBtnV10:active {
+    transform: scale(0.8) !important;
+    cursor: grabbing !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+    background: radial-gradient(circle, rgba(37, 37, 38, 0.85) 0%, rgba(13, 13, 15, 0.95) 100%) !important;
+}
+
+/* Vòng tròn sóng lan tỏa cũng được hạ opacity viền cho đồng điệu */
+.pulse-ring-v10 {
+    position: absolute; width: 100%; height: 100%;
+    border: 1px solid rgba(223, 183, 108, 0.4) !important; 
+    border-radius: 50%;
+    animation: bubblePulseV10 2.5s infinite ease-out; pointer-events: none;
+}
+@keyframes bubblePulseV10 { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.4); opacity: 0; } }
+
+/* 2. CẤU TRÚC KHUNG CHÍNH (Vừa khít phom đẩy tự nhiên theo dòng trang) */
 #mainPanelWrapper {
-    overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    max-height: 500px; /* Chiều cao khi mở */
+    position: relative !important;
+    width: 90% !important;
+    max-width: 500px !important;
+    margin: 10px auto !important;
+    background: #161616 !important;
+    border: 1px solid #333 !important;
+    border-radius: 12px !important;
+    box-sizing: border-box !important;
+    
+    overflow: hidden !important;
+    will-change: max-height, opacity;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                opacity 0.3s ease, 
+                padding 0.4s ease, 
+                box-shadow 0.4s ease !important;
+
+    max-height: 0px !important;
+    opacity: 0 !important;
+    padding: 0 15px !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
-#mainPanelWrapper.collapsed {
-    max-height: 10px; /* Chiều cao khi đóng */
+/* Trạng thái mở bung trượt phẳng */
+#mainPanelWrapper.panel-open-v10 {
+    max-height: 750px !important; 
+    opacity: 1 !important;
+    padding: 15px !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
 }
 
-#panelContent {
-    transition: opacity 0.3s ease;
+/* Tối ưu cảm biến chạm */
+#mainPanelWrapper input, 
+#mainPanelWrapper button, 
+#mainPanelWrapper .gender-option, 
+#mainPanelWrapper .purpose-btn,
+#mainPanelWrapper .lk-guide-trigger-icon {
+    touch-action: manipulation !important;
+    position: relative;
+    z-index: 10;
 }
 
-#mainPanelWrapper.collapsed #panelContent {
-    opacity: 0;
-    pointer-events: none;
-}
-#toggleArrow svg {
-    transition: transform 0.3s ease;
-}
-#toggleArrow:active {
-    transform: scale(0.85); /* Hiệu ứng nhấn nút thu nhỏ lại */
-}
-/* Hiệu ứng nẩy khi bấm */
+/* Hiệu ứng nẩy cho các nút bấm con */
 .btn-rotate:active {
-    transform: scale(0.96);
-    background-color: #262626 !important; /* Màu tối hơn một chút khi nhấn */
+    transform: scale(0.96) !important;
+    background-color: #262626 !important;
     box-shadow: 0 1px 2px rgba(0,0,0,0.5) !important;
 }
-
-/* Hiệu ứng hover cho máy tính (nếu cần) */
 .btn-rotate:hover {
     background-color: #222 !important;
 }
-/* Trạng thái mặc định khi đóng (dùng cho cả initial-hidden và collapsed) */
-.initial-hidden, .collapsed {
-    max-height: 10px !important; /* Chiều cao nút mũi tên */
-    overflow: hidden;
-}
 
-/* Trạng thái khi mở */
-#mainPanelWrapper {
-    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-    max-height: 500px; /* Một con số đủ lớn để chứa hết nội dung */
-}
-
-/* Khi có class .collapsed thì đè lên max-height trên */
-#mainPanelWrapper.collapsed {
-    max-height: 10px !important;
+/* Loại bỏ vĩnh viễn nút mũi tên cũ */
+#toggleArrow {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
 }
