@@ -1705,35 +1705,43 @@ mjx-container {
     }
 }
 /* =========================================================================
-   🔮 ENGINE PHẲNG V10 - TỐI ƯU PHẦN CỨNG DI ĐỘNG & CO GIÃN ĐA ĐIỂM
+   🔮 ENGINE PHẲNG V10.2 - TỐI ƯU THU NHỎ BONG BÓNG & HIỆU ỨNG NẨY ĐÀN HỒI
    ========================================================================= */
 
-/* 1. BONG BÓNG MENU NỔI CAO CẤP CHỐNG LỆCH HÀNG */
+/* 1. BONG BÓNG MENU NỔI (Đã thu nhỏ & tích hợp lò xo nẩy) */
 #floatingMenuBtnV10 {
     position: fixed !important;
     bottom: 20px !important;
     right: 20px !important;
-    width: 56px !important;
-    height: 56px !important;
+    
+    /* Thu nhỏ kích thước xuống phom tinh tế chuẩn trắc địa */
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 18px !important;
+    
     background: radial-gradient(circle, #252526 0%, #0d0d0f 100%) !important;
     border: 2px solid #dfb76c !important;
     border-radius: 50% !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    font-size: 22px !important;
     z-index: 99999 !important;
-    box-shadow: 0 4px 25px rgba(0,0,0,0.75) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.65) !important;
     user-select: none;
     -webkit-user-select: none;
     cursor: move !important;
-    touch-action: none !important; /* Ngăn chặn trình duyệt mobile hiểu lầm hành vi kéo nút là cuộn trang */
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    touch-action: none !important;
+    
+    /* Sử dụng hàm bezier lò xo đặc biệt tạo độ nẩy bật (overshoot) cực sinh động */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.3s ease !important;
 }
 
+/* Hiệu ứng nén lò xo khi ngón tay đè/chuột nhấn chặt vào bong bóng */
 #floatingMenuBtnV10:active {
-    transform: scale(0.9) !important;
+    transform: scale(0.8) !important; /* Nén sâu hơn chút để khi thả ra lực bật nẩy mạnh hơn */
     cursor: grabbing !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4) !important;
 }
 
 .pulse-ring-v10 {
@@ -1754,7 +1762,6 @@ mjx-container {
     border-radius: 12px !important;
     box-sizing: border-box !important;
     
-    /* Ép tầng chuyển động phẳng mượt mà */
     overflow: hidden !important;
     will-change: max-height, opacity;
     transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
@@ -1762,7 +1769,6 @@ mjx-container {
                 padding 0.4s ease, 
                 box-shadow 0.4s ease !important;
 
-    /* Mặc định khóa chặt hoàn toàn khi vừa tải trang */
     max-height: 0px !important;
     opacity: 0 !important;
     padding: 0 15px !important;
@@ -1770,7 +1776,7 @@ mjx-container {
     pointer-events: none !important;
 }
 
-/* 🟢 TRẠNG THÁI MỞ BUNG: Hạ giới hạn xuống 750px để điện thoại tính toán gia tốc mượt, ko bị snap mất hiệu ứng */
+/* 🟢 TRẠNG THÁI MỞ BUNG MƯỢT MÀ */
 #mainPanelWrapper.panel-open-v10 {
     max-height: 750px !important; 
     opacity: 1 !important;
