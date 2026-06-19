@@ -4159,13 +4159,17 @@ function handleModalClick() {
 let isFullScreen = false;
 let lastTapTime = 0;
 
-// ====================== BỘ BIẾN GHI NHỚ VỊ TRÍ GỐC VẠN NĂNG ======================
+// ====================== BỘ NHỚ LƯU VỊ TRÍ DOM TUYỆT ĐỐI VẠN NĂNG ======================
 let originalCompassParent = null;
 let originalCompassNextSibling = null;
 let originalStatusParent = null;
 let originalStatusNextSibling = null;
 
-// ====================== BIẾN HỖ TRỢ ZOOM & PAN (KÉO) ======================
+// Biến lưu trạng thái gốc của hộp giải thích thuật ngữ để khôi phục khi thoát
+let originalDetailBoxStyle = "";
+let originalDetailBoxClass = "";
+
+// ====================== BIẾN HỖ TRỢ ZOOM & PAN (KÉO) BIẾN TẦN SIÊU MƯỢT ======================
 let currentScale = 1;
 let initialScale = 1;
 let startDistance = 0;
@@ -4176,7 +4180,7 @@ let startX = 0;
 let startY = 0;
 
 /**
- * HÀM XỬ LÝ SỰ KIỆN GỘP (Thông minh & mượt mà)
+ * HÀM XỬ LÝ SỰ KIỆN GỘP THÔNG MINH
  */
 function handleInteraction(e) {
     const isCompass = e.target.closest('.compass-container');
@@ -4187,7 +4191,7 @@ function handleInteraction(e) {
         toggleFullScreenMode();
     } 
     else if (isFullScreen && isFullScreenDiv) {
-        // NÂNG CẤP: Nếu đang thu phóng, đưa về kích thước chuẩn trước bằng animation mượt
+        // Nếu la bàn đang phóng to, click đúp sẽ thu nhỏ về 1x trước chứ không thoát đột ngột
         if (currentScale !== 1 || currentX !== 0 || currentY !== 0) {
             resetZoom();
         } else {
@@ -4196,7 +4200,7 @@ function handleInteraction(e) {
     }
 }
 
-// Hàm reset trạng thái phóng to về ban đầu
+// Hàm hồi phục kích thước la bàn bằng chuyển động nội suy mượt mà
 function resetZoom() {
     currentScale = 1;
     currentX = 0;
@@ -4208,31 +4212,32 @@ function resetZoom() {
     }
 }
 
-// 1. Lắng nghe Double Click (Máy tính)
+// 1. Lắng nghe Double Click (Thiết bị Máy tính)
 document.addEventListener('dblclick', handleInteraction);
 
-// 2. Lắng nghe Double Tap (Điện thoại)
+// 2. Lắng nghe Double Tap (Thiết bị Di động) - Tối ưu tốc độ phản hồi 350ms
 document.addEventListener('touchend', (e) => {
     if (e.touches.length > 0) return; 
     
     const currentTime = new Date().getTime();
-    if (currentTime - lastTapTime < 350) { // Giảm xuống 350ms để nhạy và tránh lag nhầm
+    if (currentTime - lastTapTime < 350) {
         handleInteraction(e);
     }
     lastTapTime = currentTime;
 });
 
-// ====================== VÀO CHẾ ĐỘ FULLSCREEN ======================
+// ====================== VÀO CHẾ ĐỘ FULLSCREEN (ẨN SẠCH CHỮ RÁC) ======================
 function toggleFullScreenMode() {
     if (isFullScreen) return;
 
     const compassContainer = document.querySelector('.compass-container');
     const statusPanel = document.querySelector('.status-panel');
     const fsIcon = document.querySelector('.fs-icon');
+    const giaiThich = document.getElementById('detail-box');
 
     if (!compassContainer) return;
 
-    // 🎯 BƯỚC ĐỘT PHÁ CHÍNH XÁC: Chụp ảnh lưu lại toàn bộ cấu trúc DOM gốc
+    // 🎯 CHỤP ẢNH TỌA ĐỘ DOM GỐC: Ghi nhớ hộ khẩu để chống lỗi chạy khối chữ khi thoát
     originalCompassParent = compassContainer.parentElement;
     originalCompassNextSibling = compassContainer.nextSibling;
     if (statusPanel) {
@@ -4240,61 +4245,72 @@ function toggleFullScreenMode() {
         originalStatusNextSibling = statusPanel.nextSibling;
     }
 
-    // --- GIỮ NGUYÊN: ẨN CÁC DÒNG THÔNG TIN CHI TIẾT ---
+    // 🎯 SỬA LỖI 1: Khóa chặt hộp giải thích thuật ngữ không cho đè la bàn
+    if (giaiThich) {
+        originalDetailBoxStyle = giaiThich.style.cssText;
+        originalDetailBoxClass = giaiThich.className;
+        
+        // Dùng lệnh ép công lực cao nhất cấu hình ẩn hoàn toàn, gỡ bỏ các class mở rộng
+        giaiThich.style.setProperty('display', 'none', 'important');
+        giaiThich.style.setProperty('position', 'static', 'important');
+        giaiThich.setAttribute('data-fs-hidden', 'true');
+    }
+
+    // 🎯 SỬA LỖI 2: Quét và quét triệt để thông tin năm sinh, bản mệnh của người xem
     if (statusPanel) {
         const elements = statusPanel.querySelectorAll('*');
         elements.forEach(el => {
             const text = el.textContent || "";
+            
+            // Thêm các từ khóa nhận diện chuyên sâu về năm sinh và bản mệnh gia chủ
             const isTarget = text.includes('Người Tầm Phương') || 
                              text.includes('Đo hướng') || 
                              text.includes('Cung Phi') || 
                              text.includes('Năm Âm') || 
                              text.includes('Trung Cung') || 
-                             text.includes('Xem giải thích thuật ngữ');
+                             text.includes('Xem giải thích thuật ngữ') ||
+                             text.includes('Sinh năm') || 
+                             text.includes('Mệnh') || 
+                             text.includes('Mạng') || 
+                             text.includes('Cung Mệnh') || 
+                             text.includes('Tuổi');
 
             if (isTarget) {
-                el.style.display = 'none';
+                el.style.setProperty('display', 'none', 'important');
                 el.setAttribute('data-fs-hidden', 'true'); 
             }
         });
     }
 
-    const giaiThich = document.getElementById('detail-box');
-    if (giaiThich) {
-        giaiThich.style.display = 'none';
-        giaiThich.setAttribute('data-fs-hidden', 'true');
-    }
-
-    // Khởi tạo trạng thái zoom mới tinh
+    // Reset thông số kích thước thu phóng la bàn
     currentScale = 1;
     currentX = 0;
     currentY = 0;
     isZooming = false;
 
+    // Tạo màn nền đen phủ Fullscreen
     const fsDiv = document.createElement('div');
     fsDiv.id = 'fullscreenMode';
     fsDiv.className = 'fullscreen-mode active';
-    
-    // Tối ưu hóa opacity ban đầu bằng 0 để kết hợp tạo animation fade-in mượt mà
-    fsDiv.style.cssText = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.95); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0; transition:opacity 0.3s ease; touch-action: none; overflow:hidden;";
+    fsDiv.style.cssText = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.97); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0; transition:opacity 0.2s ease; touch-action: none; overflow:hidden;";
     
     fsDiv.innerHTML = `
         <div id="fs-compass-wrapper" style="width: 96vw; max-width: 460px; height: 96vw; max-height: 460px; transform-origin: center center; display:flex; align-items:center; justify-content:center; transform: translate(0px, 0px) scale(1);"></div>
-        <div id="fs-status-wrapper" style="width: 92%; max-width: 460px; margin-top:20px; z-index: 10000;"></div>
+        <div id="fs-status-wrapper" style="width: 92%; max-width: 460px; margin-top:15px; z-index: 10000;"></div>
     `;
     document.body.appendChild(fsDiv);
 
-    // Kích hoạt animation hiện hình mượt mà
+    // Kích hoạt hiệu ứng hiện hình mượt động lực học
     requestAnimationFrame(() => { fsDiv.style.opacity = '1'; });
 
+    // Bốc la bàn và bảng kết quả gọn vào màn hình đen
     document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
     if (statusPanel) document.getElementById('fs-status-wrapper').appendChild(statusPanel);
 
     if (fsIcon) fsIcon.style.opacity = '0';
-
     isFullScreen = true;
 
-    // ====================== BỘ LẮNG NGHE SỰ KIỆN ZOOM ĐA ĐIỂM BẰNG TAY ======================
+    // ====================== BỘ LẮNG NGHE SỰ KIỆN ZOOM CHỐNG KHỰNG LAG ======================
     const wrapper = document.getElementById('fs-compass-wrapper');
 
     fsDiv.addEventListener('touchstart', (e) => {
@@ -4305,7 +4321,7 @@ function toggleFullScreenMode() {
                 e.touches[0].pageY - e.touches[1].pageY
             );
             initialScale = currentScale;
-            wrapper.style.transition = "none";
+            wrapper.style.transition = "none"; // Tắt transition khi kéo để chống trễ hình
         } else if (e.touches.length === 1 && currentScale > 1) { 
             startX = e.touches[0].pageX - currentX;
             startY = e.touches[0].pageY - currentY;
@@ -4327,7 +4343,8 @@ function toggleFullScreenMode() {
             currentX = e.touches[0].pageX - startX;
             currentY = e.touches[0].pageY - startY;
 
-            const maxPan = 180 * currentScale; // Tăng biên độ kéo di chuyển la bàn cho thoáng rộng
+            // Giới hạn biên độ kéo thông minh theo độ phóng đại
+            const maxPan = 160 * currentScale;
             currentX = Math.min(Math.max(currentX, -maxPan), maxPan);
             currentY = Math.min(Math.max(currentY, -maxPan), maxPan);
 
@@ -4336,26 +4353,25 @@ function toggleFullScreenMode() {
     }, { passive: false });
 
     fsDiv.addEventListener('touchend', (e) => {
-        if (e.touches.length < 2) {
-            isZooming = false;
-        }
+        if (e.touches.length < 2) isZooming = false;
     });
 
     if (typeof recalculateFate === 'function') recalculateFate();
 }
 
-// ====================== THOÁT CHẾ ĐỘ FULLSCREEN ======================
+// ====================== THOÁT CHẾ ĐỘ FULLSCREEN (TRẢ VỀ NGUYÊN BẢN) ======================
 function exitFullScreenMode() {
     const fs = document.getElementById('fullscreenMode');
     if (!fs) return;
 
-    fs.style.opacity = '0'; // Hiệu ứng mờ dần biến mất
+    fs.style.opacity = '0';
     setTimeout(() => {
         const compass = document.querySelector('.compass-container');
         const status = document.querySelector('.status-panel');
         const fsIcon = document.querySelector('.fs-icon');
+        const giaiThich = document.getElementById('detail-box');
 
-        // Hiện lại các thành phần chữ đã ẩn của riêng bảng status, tránh quét nhầm toàn cục
+        // Hiện lại toàn bộ các dòng thông tin cung mệnh, chữ đã ẩn lúc nãy trong status-panel
         if (status) {
             const hiddenElements = status.querySelectorAll('[data-fs-hidden="true"]');
             hiddenElements.forEach(el => {
@@ -4364,14 +4380,14 @@ function exitFullScreenMode() {
             });
         }
 
-        const giaiThich = document.getElementById('detail-box');
+        // 🎯 PHỤC HỒI HỘP GIẢI THÍCH THUẬT NGỮ: Trả lại nguyên vẹn trạng thái mở/đóng lúc đầu
         if (giaiThich && giaiThich.getAttribute('data-fs-hidden') === 'true') {
-            giaiThich.style.display = '';
+            giaiThich.className = originalDetailBoxClass;
+            giaiThich.style.cssText = originalDetailBoxStyle;
             giaiThich.removeAttribute('data-fs-hidden');
         }
 
-        // 🎯 BƯỚC HOÀN TRẢ VỊ TRÍ TUYỆT ĐỐI CHUẨN XÁC:
-        // Trả la bàn về đúng vị trí nguyên bản 100% trước khi đứng kế ai
+        // 🎯 PHỤC HỒI VỊ TRÍ DOM HOÀN HẢO: Đặt lại chính xác vào vị trí cũ (Chống lệch khối chữ ngoài UI)
         if (compass && originalCompassParent) {
             compass.style.transform = ""; 
             if (originalCompassNextSibling) {
@@ -4381,7 +4397,6 @@ function exitFullScreenMode() {
             }
         }
 
-        // Trả bảng chữ status về đúng nới nó sinh ra, không can thiệp vào chỗ của la bàn
         if (status && originalStatusParent) {
             if (originalStatusNextSibling) {
                 originalStatusParent.insertBefore(status, originalStatusNextSibling);
@@ -4394,15 +4409,15 @@ function exitFullScreenMode() {
         isFullScreen = false;
         if (fsIcon) fsIcon.style.opacity = '1';
         
-        // Trả lại các thông số biến tọa độ zoom về trạng thái trống sạch sẽ để chuẩn bị cho lần bấm sau
         currentScale = 1;
         currentX = 0;
         currentY = 0;
         
+        // Đồng bộ và làm tươi lại hướng xoay của kim la bàn phần cứng ngay lập tức
         if (typeof updateCompassUI === 'function') {
             updateCompassUI(typeof lastHeading !== 'undefined' ? lastHeading : 0);
         }
-    }, 300);
+    }, 250); // Giảm thời gian chờ xuống 250ms để tăng độ nhạy bén thoát trang
 }
 // =========================================================================
 // 🚀 ENGINE PURPOSE MODAL V10.5 - GIỮ NGUYÊN CƠ CHẾ DISPLAY GỐC CHỐNG LỖI LÕI
