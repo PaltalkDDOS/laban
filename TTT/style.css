@@ -1723,8 +1723,8 @@ mjx-container {
     position: fixed !important;
     bottom: 20px !important;
     right: 20px !important;
-    width: 45px !important;
-    height: 45px !important;
+    width: 50px !important;
+    height: 50px !important;
     font-size: 18px !important;
     
     /* Sử dụng RGBA (mức 0.75 và 0.85) để tạo độ trong suốt nhẹ cho khối nền */
