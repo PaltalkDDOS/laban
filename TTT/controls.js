@@ -3839,7 +3839,7 @@ function startAutoHideV10() {
             }
             toggleMainPanelV10(); 
         }
-    }, 3000);
+    }, 3000); // 3 giây
 }
 
 /**
@@ -3849,11 +3849,12 @@ function toggleMainPanelV10() {
     const wrapper = document.getElementById('mainPanelWrapper');
     if (!wrapper) return;
 
+    // Dọn sạch inline style cũ tồn đọng gây kẹt hiển thị
     wrapper.style.removeProperty('display');
     wrapper.style.removeProperty('height');
     wrapper.classList.remove('initial-hidden');
-    wrapper.classList.toggle('panel-open-v10');
     
+    wrapper.classList.toggle('panel-open-v10');
     const isOpen = wrapper.classList.contains('panel-open-v10');
 
     if (isOpen) {
@@ -3895,12 +3896,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let startX = 0, startY = 0;
     let initialLeft = 0, initialTop = 0;
 
-    // Hàm lấy tọa độ chuẩn bất kể là Chuột (Mouse) hay Chạm (Touch)
     const getPointerCoords = (e) => e.touches ? e.touches[0] : e;
 
     // Thiết lập sự kiện BẮT ĐẦU KÉO
     const onDragStart = (e) => {
-        // Nếu click chuột vào thì cho phép, nếu là touch thì ko cản scroll mặc định trừ khi kéo thực sự
         const coords = getPointerCoords(e);
         isDragging = false;
         startX = coords.clientX;
@@ -3916,7 +3915,6 @@ document.addEventListener('DOMContentLoaded', () => {
         bubble.style.left = initialLeft + 'px';
         bubble.style.top = initialTop + 'px';
         
-        // Tắt CSS Transition tạm thời để tránh bong bóng chạy đuổi theo tay gây lag
         bubble.style.setProperty('transition', 'none', 'important');
     };
 
@@ -3931,10 +3929,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Sai số 4px để phân biệt giữa cú chạm nhẹ (Click) và hành vi kéo (Drag)
         if (Math.abs(diffX) > 4 || Math.abs(diffY) > 4) {
             isDragging = true;
-            if (e.cancelable) e.preventDefault(); // Cấm màn hình điện thoại bị cuộn khi đang kéo nút
+            if (e.cancelable) e.preventDefault(); 
         }
 
-        // Ép tọa độ thực thi trực tiếp lên phần cứng
         bubble.style.left = (initialLeft + diffX) + 'px';
         bubble.style.top = (initialTop + diffY) + 'px';
     };
@@ -3943,7 +3940,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const onDragEnd = () => {
         if (startX === 0 && startY === 0) return;
         
-        // Khôi phục lại hiệu ứng đàn hồi mịn khi người dùng nhấp chạm
         bubble.style.setProperty('transition', 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)', 'important');
         startX = 0;
         startY = 0;
@@ -3954,12 +3950,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // ĐĂNG KÝ ENGINE CHO MÁY TÍNH (MOUSE EVENTS)
+    // ĐĂNG KÝ ENGINE CHO PC (MOUSE)
     bubble.addEventListener('mousedown', onDragStart);
     document.addEventListener('mousemove', onDragMove, { passive: false });
     document.addEventListener('mouseup', onDragEnd);
 
-    // ĐĂNG KÝ ENGINE CHO DI ĐỘNG (TOUCH EVENTS)
+    // ĐĂNG KÝ ENGINE CHO MOBILE (TOUCH)
     bubble.addEventListener('touchstart', onDragStart, { passive: true });
     document.addEventListener('touchmove', onDragMove, { passive: false });
     bubble.addEventListener('touchend', onDragEnd);

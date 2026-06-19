@@ -1704,60 +1704,8 @@ mjx-container {
         filter: drop-shadow(0 0 15px #dfb76c) brightness(1.4);
     }
 }
-#mainPanelWrapper {
-    overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    max-height: 500px; /* Chiều cao khi mở */
-}
-
-#mainPanelWrapper.collapsed {
-    max-height: 10px; /* Chiều cao khi đóng */
-}
-
-#panelContent {
-    transition: opacity 0.3s ease;
-}
-
-#mainPanelWrapper.collapsed #panelContent {
-    opacity: 0;
-    pointer-events: none;
-}
-#toggleArrow svg {
-    transition: transform 0.3s ease;
-}
-#toggleArrow:active {
-    transform: scale(0.85); /* Hiệu ứng nhấn nút thu nhỏ lại */
-}
-/* Hiệu ứng nẩy khi bấm */
-.btn-rotate:active {
-    transform: scale(0.96);
-    background-color: #262626 !important; /* Màu tối hơn một chút khi nhấn */
-    box-shadow: 0 1px 2px rgba(0,0,0,0.5) !important;
-}
-
-/* Hiệu ứng hover cho máy tính (nếu cần) */
-.btn-rotate:hover {
-    background-color: #222 !important;
-}
-/* Trạng thái mặc định khi đóng (dùng cho cả initial-hidden và collapsed) */
-.initial-hidden, .collapsed {
-    max-height: 10px !important; /* Chiều cao nút mũi tên */
-    overflow: hidden;
-}
-
-/* Trạng thái khi mở */
-#mainPanelWrapper {
-    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-    max-height: 500px; /* Một con số đủ lớn để chứa hết nội dung */
-}
-
-/* Khi có class .collapsed thì đè lên max-height trên */
-#mainPanelWrapper.collapsed {
-    max-height: 10px !important;
-}
 /* =========================================================================
-   🔮 ENGINE PHẲNG V10 - TỐI ƯU CẢM ỨNG ĐA ĐIỂM & CHUYỂN ĐỘNG SIÊU MƯỢT
+   🔮 ENGINE PHẲNG V10 - TỐI ƯU PHẦN CỨNG DI ĐỘNG & CO GIÃN ĐA ĐIỂM
    ========================================================================= */
 
 /* 1. BONG BÓNG MENU NỔI CAO CẤP CHỐNG LỆCH HÀNG */
@@ -1774,17 +1722,20 @@ mjx-container {
     align-items: center !important;
     justify-content: center !important;
     font-size: 22px !important;
-    cursor: pointer !important;
     z-index: 99999 !important;
     box-shadow: 0 4px 25px rgba(0,0,0,0.75) !important;
     user-select: none;
     -webkit-user-select: none;
-    touch-action: manipulation; /* Tối ưu hóa phản hồi chạm, loại bỏ độ trễ 300ms của mobile */
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    cursor: move !important;
+    touch-action: none !important; /* Ngăn chặn trình duyệt mobile hiểu lầm hành vi kéo nút là cuộn trang */
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
 #floatingMenuBtnV10:active {
-    transform: scale(0.9) !important; /* Hiệu ứng lún xuống khi chạm nhẹ */
+    transform: scale(0.9) !important;
+    cursor: grabbing !important;
 }
+
 .pulse-ring-v10 {
     position: absolute; width: 100%; height: 100%;
     border: 1px solid #dfb76c; border-radius: 50%;
@@ -1792,88 +1743,67 @@ mjx-container {
 }
 @keyframes bubblePulseV10 { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.4); opacity: 0; } }
 
-/* 2. CẤU TRÚC KHUNG Wrapper GỐC (Vẫn giữ dạng Relative theo ý bạn nhưng trượt mượt) */
+/* 2. CẤU TRÚC KHUNG CHÍNH (Vừa khít phom đẩy tự nhiên theo dòng trang) */
 #mainPanelWrapper {
     position: relative !important;
     width: 90% !important;
     max-width: 500px !important;
     margin: 10px auto !important;
+    background: #161616 !important;
+    border: 1px solid #333 !important;
+    border-radius: 12px !important;
     box-sizing: border-box !important;
     
-    /* Engine trượt phẳng bằng max-height gia tốc GPU */
+    /* Ép tầng chuyển động phẳng mượt mà */
     overflow: hidden !important;
     will-change: max-height, opacity;
-    transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
                 opacity 0.3s ease, 
-                box-shadow 0.3s ease !important;
-}
+                padding 0.4s ease, 
+                box-shadow 0.4s ease !important;
 
-/* 🔴 TRẠNG THÁI ĐÓNG: Ẩn hoàn toàn bảng, không chiếm diện tích */
-#mainPanelWrapper.initial-hidden,
-#mainPanelWrapper:not(.panel-open-v10) {
-    display: block !important;
+    /* Mặc định khóa chặt hoàn toàn khi vừa tải trang */
     max-height: 0px !important;
     opacity: 0 !important;
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
-    border: 1px solid transparent !important; /* Ẩn viền khi đóng */
-    pointer-events: none !important; /* Vô hiệu hóa vùng chạm khi đóng để tránh bấm nhầm */
+    padding: 0 15px !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
-/* 🟢 TRẠNG THÁI MỞ BUNG: Hiển thị trọn vẹn và tăng độ nhạy cảm ứng */
+/* 🟢 TRẠNG THÁI MỞ BUNG: Hạ giới hạn xuống 750px để điện thoại tính toán gia tốc mượt, ko bị snap mất hiệu ứng */
 #mainPanelWrapper.panel-open-v10 {
-    display: block !important;
-    max-height: 2500px !important; /* Đủ rộng cho các nội dung dài */
+    max-height: 750px !important; 
     opacity: 1 !important;
-    border: 1px solid #333 !important;
-    pointer-events: auto !important; /* Mở khóa toàn bộ tương tác cho input và button */
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+    padding: 15px !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
 }
 
-/* ⚡ GIẢI QUYẾT TRIỆT ĐỂ LỖI KHÓ BẤM, ĐƠ NUT BUTTON/INPUT TRÊN MOBILE */
+/* TỐI ƯU CẢM ỨNG NÚT BẤM KHI CHẠM TRÊN ĐIỆN THOẠI */
 #mainPanelWrapper input, 
 #mainPanelWrapper button, 
 #mainPanelWrapper .gender-option, 
 #mainPanelWrapper .purpose-btn,
 #mainPanelWrapper .lk-guide-trigger-icon {
     touch-action: manipulation !important;
-    cursor: pointer;
     position: relative;
-    z-index: 10; /* Đẩy lên lớp trên cùng để không bị chìm dưới layer khác */
+    z-index: 10;
 }
 
-/* Ẩn hoàn toàn nút mũi tên cũ khỏi DOM để dọn sạch không gian */
+/* 💥 GIỮ LẠI HIỆU ỨNG NẨY VÀ HOVER CHO CÁC NÚT XOAY/HÀNH ĐỘNG CỦA BẠN */
+.btn-rotate:active {
+    transform: scale(0.96) !important;
+    background-color: #262626 !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.5) !important;
+}
+.btn-rotate:hover {
+    background-color: #222 !important;
+}
+
+/* Loại bỏ vĩnh viễn nút mũi tên cũ */
 #toggleArrow {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
-}
-#floatingMenuBtnV10 {
-    position: fixed !important;
-    bottom: 20px !important;
-    right: 20px !important;
-    width: 56px !important;
-    height: 56px !important;
-    background: radial-gradient(circle, #252526 0%, #0d0d0f 100%) !important;
-    border: 2px solid #dfb76c !important;
-    border-radius: 50% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 22px !important;
-    z-index: 99999 !important;
-    box-shadow: 0 4px 25px rgba(0,0,0,0.75) !important;
-    user-select: none;
-    -webkit-user-select: none;
-    
-    /* Bổ sung 2 thuộc tính này để tối ưu kéo thả */
-    cursor: move !important; /* Đổi icon chuột thành dạng 4 mũi tên di chuyển trên PC */
-    touch-action: none !important; /* Ngăn chặn trình duyệt mobile hiểu lầm hành vi kéo nút là hành vi kéo cuộn trang */
-    
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-#floatingMenuBtnV10:active {
-    transform: scale(0.9) !important;
-    cursor: grabbing !important; /* Khi đang giữ chặt để kéo thì đổi sang dạng bàn tay nắm lại */
 }
