@@ -4509,34 +4509,31 @@ document.addEventListener('click', (e) => {
     }
 });
 
-/**
- * Hiển thị cảnh báo với tiêu đề tùy chỉnh
- * @param {string} msg - Nội dung thông báo
- * @param {string} title - Tiêu đề (Mặc định: Thông Báo)
- */
-function showCustomAlert(msg, title = "Thông Báo") {
-    // Cập nhật tiêu đề trước khi hiển thị
+(msg, title = "Thông Báo") {
     const titleEl = document.querySelector('.custom-alert-title');
     if (titleEl) titleEl.innerText = title;
     
-    // Cập nhật nội dung
-    document.getElementById('customAlertMsg').innerText = msg;
-    document.getElementById('customAlert').classList.add('active');
+    const msgEl = document.getElementById('customAlertMsg');
+    if (msgEl) msgEl.innerText = msg;
+
+    const alertBox = document.getElementById('customAlert');
+    if (alertBox) alertBox.classList.add('active');
 }
 
 function closeCustomAlert() {
-    document.getElementById('customAlert').classList.remove('active');
+    const alertBox = document.getElementById('customAlert');
+    if (alertBox) alertBox.classList.remove('active');
 }
 
 /**
- * Xử lý nhập liệu ngày tháng với logic kiểm tra dữ liệu sạch
+ * 📅 XỬ LÝ NHẬP LIỆU NGÀY THÁNG SẠCH ĐA NỀN TẢNG
  */
 function handleDateInput(currentInput, nextInputId) {
-    // Làm sạch đầu vào: chỉ giữ lại số
+    // Làm sạch đầu vào ngay lập tức
     currentInput.value = currentInput.value.replace(/[^0-9]/g, '');
     let val = parseInt(currentInput.value) || 0;
 
-    // Kiểm tra Ngày
+    // Kiểm tra tính hợp lệ của Ngày
     if (currentInput.id === 'birthDay') {
         if (val > 31) {
             currentInput.value = "31";
@@ -4546,7 +4543,7 @@ function handleDateInput(currentInput, nextInputId) {
         }
     }
 
-    // Kiểm tra Tháng
+    // Kiểm tra tính hợp lệ của Tháng
     if (currentInput.id === 'birthMonth') {
         if (val > 12) {
             currentInput.value = "12";
@@ -4556,14 +4553,17 @@ function handleDateInput(currentInput, nextInputId) {
         }
     }
 
-    // Tự động chuyển ô khi nhập đủ
+    // Tự động chuyển tiêu điểm sang ô tiếp theo
     if (currentInput.value.length >= currentInput.maxLength && nextInputId) {
-        document.getElementById(nextInputId).focus();
+        const nextEl = document.getElementById(nextInputId);
+        if (nextEl) nextEl.focus();
     }
     
-    // Tự động tính toán lại khi dữ liệu thay đổi
+    // Tích hợp an toàn cả hai kiểu đặt tên hàm đệm khử lag chữ của bạn
     if (typeof debounceRecalculate === 'function') {
         debounceRecalculate();
+    } else if (typeof debouncedRecalculate === 'function') {
+        debouncedRecalculate();
     }
 }
 
@@ -5166,31 +5166,103 @@ document.getElementById('closeDonateBtn').addEventListener('click', function() {
     document.getElementById('donateModal').style.display = 'none';
 });
 function selectGender(gender) {
-    // Reset cả hai
-    document.getElementById('gender-male').classList.remove('active');
-    document.getElementById('gender-female').classList.remove('active');
-    
-    // Active cái được chọn
+    const maleBtn = document.getElementById('gender-male');
+    const femaleBtn = document.getElementById('gender-female');
+    const hiddenGenderInput = document.getElementById('gender');
+
+    if (!maleBtn || !femaleBtn || !hiddenGenderInput) return;
+
+    // ⚡ BƯỚC 1: Thay đổi giao diện lập tức (Ưu tiên luồng vẽ phản hồi 0ms cho người dùng)
+    maleBtn.classList.remove('active');
+    femaleBtn.classList.remove('active');
     document.getElementById('gender-' + gender).classList.add('active');
+    hiddenGenderInput.value = gender;
     
-    // Cập nhật giá trị hidden
-    document.getElementById('gender').value = gender;
-    
-    // Tính lại kết quả
-    if (typeof recalculateFate === 'function') {
-        recalculateFate();
-    }
+    // ⚡ BƯỚC 2: Đẩy phép tính phong thủy nặng ra luồng chạy ngầm sau 30ms 
+    // Giúp trình duyệt kịp thời đổi màu nút bấm trước khi CPU bị vắt kiệt để tính toán
+    setTimeout(() => {
+        if (typeof recalculateFate === 'function') {
+            recalculateFate();
+        }
+    }, 30);
 }
 
-// Khởi tạo ban đầu (để tránh lỗi khi load lại)
-document.addEventListener('DOMContentLoaded', function() {
-    // Đảm bảo Nam được active mặc định
-    const currentGender = document.getElementById('gender').value;
-    if (currentGender === 'female') {
-        document.getElementById('gender-female').classList.add('active');
-        document.getElementById('gender-male').classList.remove('active');
+/**
+ * 🪐 KHỞI TẠO ĐỒNG BỘ VÀ ĐĂNG KÝ SỰ KIỆN AN TOÀN (KHÔNG ĐÈ BIẾN TOÀN CỤC)
+ */
+document.addEventListener("DOMContentLoaded", function() {
+    
+    // 1. Đồng bộ trạng thái Giới tính mặc định khi vừa nạp trang
+    const hiddenGenderInput = document.getElementById('gender');
+    if (hiddenGenderInput) {
+        const currentGender = hiddenGenderInput.value;
+        const maleBtn = document.getElementById('gender-male');
+        const femaleBtn = document.getElementById('gender-female');
+        
+        if (maleBtn && femaleBtn) {
+            if (currentGender === 'female') {
+                femaleBtn.classList.add('active');
+                maleBtn.classList.remove('active');
+            } else {
+                maleBtn.classList.add('active');
+                femaleBtn.classList.remove('active');
+            }
+        }
     }
+
+    // 2. Quản lý sự kiện Cẩm Nang Modal (Sử dụng addEventListener thay vì ép cứng onclick)
+    const guideModal = document.getElementById("guideModal");
+    const openGuideBtn = document.getElementById("openGuideBtn");
+    const closeGuideBtn = document.getElementById("closeGuideBtn");
+
+    if (openGuideBtn && guideModal && closeGuideBtn) {
+        openGuideBtn.addEventListener('click', function() {
+            guideModal.style.display = "block"; 
+            document.body.style.overflow = "hidden"; // Khóa cuộn trang nền hiệu quả
+            
+            if (window.MathJax && typeof MathJax.typesetPromise === 'function') {
+                MathJax.typesetPromise();
+            }
+        });
+
+        closeGuideBtn.addEventListener('click', function() {
+            guideModal.style.display = "none"; 
+            document.body.style.overflow = "auto"; 
+        });
+    }
+
+    // 3. Quản lý sự kiện Ủng Hộ (Donate Modal) bảo mật chống crash
+    const donateModal = document.getElementById('donateModal');
+    const openDonateBtn = document.getElementById('openDonateBtn');
+    const closeDonateBtn = document.getElementById('closeDonateBtn');
+
+    if (openDonateBtn && donateModal && closeDonateBtn) {
+        openDonateBtn.addEventListener('click', function() {
+            donateModal.style.display = 'flex';
+        });
+
+        closeDonateBtn.addEventListener('click', function() {
+            donateModal.style.display = 'none';
+        });
+    }
+
+    // 4. CHỐNG ĐÈ SỰ KIỆN TOÀN CỤC: Đóng các modal an toàn khi click ra ngoài vùng xám
+    window.addEventListener('click', function(event) {
+        if (guideModal && event.target === guideModal) {
+            guideModal.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+        if (donateModal && event.target === donateModal) {
+            donateModal.style.display = 'none';
+        }
+    });
 });
+
+// Phơi biến ra phạm vi window toàn cục chống lỗi biên dịch khi băm code nén mã hóa
+window.selectGender = selectGender;
+window.handleDateInput = handleDateInput;
+window.showCustomAlert = showCustomAlert;
+window.closeCustomAlert = closeCustomAlert;
 
 // =========================================================================
 // 🌐 HỆ THỐNG PWA FLOATING ACTION BUTTON - HỖ TRỢ VUỐT GẠT ẨN VĨNH VIỄN
