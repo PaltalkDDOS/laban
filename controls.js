@@ -4063,10 +4063,15 @@ function handleModalClick() {
 }
 
 let isFullScreen = false;
-let originalCompassParent = null;
 let lastTapTime = 0;
 
-// ====================== BIẾN HỖ TRỢ ZOOM & PAN (KÉO) TẤT CẢ TRÌNH DUYỆT ======================
+// ====================== BỘ BIẾN GHI NHỚ VỊ TRÍ GỐC VẠN NĂNG ======================
+let originalCompassParent = null;
+let originalCompassNextSibling = null;
+let originalStatusParent = null;
+let originalStatusNextSibling = null;
+
+// ====================== BIẾN HỖ TRỢ ZOOM & PAN (KÉO) ======================
 let currentScale = 1;
 let initialScale = 1;
 let startDistance = 0;
@@ -4077,7 +4082,7 @@ let startX = 0;
 let startY = 0;
 
 /**
- * HÀM XỬ LÝ SỰ KIỆN GỘP (Thông minh hơn)
+ * HÀM XỬ LÝ SỰ KIỆN GỘP (Thông minh & mượt mà)
  */
 function handleInteraction(e) {
     const isCompass = e.target.closest('.compass-container');
@@ -4088,8 +4093,8 @@ function handleInteraction(e) {
         toggleFullScreenMode();
     } 
     else if (isFullScreen && isFullScreenDiv) {
-        // NÂNG CẤP: Nếu đang phóng to la bàn (> 1), double tap sẽ đưa về kích thước chuẩn trước, tránh thoát đột ngột
-        if (currentScale > 1) {
+        // NÂNG CẤP: Nếu đang thu phóng, đưa về kích thước chuẩn trước bằng animation mượt
+        if (currentScale !== 1 || currentX !== 0 || currentY !== 0) {
             resetZoom();
         } else {
             exitFullScreenMode();
@@ -4104,7 +4109,7 @@ function resetZoom() {
     currentY = 0;
     const wrapper = document.getElementById('fs-compass-wrapper');
     if (wrapper) {
-        wrapper.style.transition = "transform 0.3s ease";
+        wrapper.style.transition = "transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)";
         wrapper.style.transform = "translate(0px, 0px) scale(1)";
     }
 }
@@ -4112,12 +4117,12 @@ function resetZoom() {
 // 1. Lắng nghe Double Click (Máy tính)
 document.addEventListener('dblclick', handleInteraction);
 
-// 2. Lắng nghe Double Tap (Điện thoại) - Tối ưu chống xung đột khi nhấc ngón tay lúc zoom
+// 2. Lắng nghe Double Tap (Điện thoại)
 document.addEventListener('touchend', (e) => {
-    if (e.touches.length > 0) return; // Nếu vẫn còn ngón tay chạm màn hình thì bỏ qua
+    if (e.touches.length > 0) return; 
     
     const currentTime = new Date().getTime();
-    if (currentTime - lastTapTime < 400) {
+    if (currentTime - lastTapTime < 350) { // Giảm xuống 350ms để nhạy và tránh lag nhầm
         handleInteraction(e);
     }
     lastTapTime = currentTime;
@@ -4132,7 +4137,14 @@ function toggleFullScreenMode() {
     const fsIcon = document.querySelector('.fs-icon');
 
     if (!compassContainer) return;
-    if (!originalCompassParent) originalCompassParent = compassContainer.parentElement;
+
+    // 🎯 BƯỚC ĐỘT PHÁ CHÍNH XÁC: Chụp ảnh lưu lại toàn bộ cấu trúc DOM gốc
+    originalCompassParent = compassContainer.parentElement;
+    originalCompassNextSibling = compassContainer.nextSibling;
+    if (statusPanel) {
+        originalStatusParent = statusPanel.parentElement;
+        originalStatusNextSibling = statusPanel.nextSibling;
+    }
 
     // --- GIỮ NGUYÊN: ẨN CÁC DÒNG THÔNG TIN CHI TIẾT ---
     if (statusPanel) {
@@ -4159,7 +4171,7 @@ function toggleFullScreenMode() {
         giaiThich.setAttribute('data-fs-hidden', 'true');
     }
 
-    // Reset lại cấu hình zoom mỗi khi mở full màn hình
+    // Khởi tạo trạng thái zoom mới tinh
     currentScale = 1;
     currentX = 0;
     currentY = 0;
@@ -4169,14 +4181,17 @@ function toggleFullScreenMode() {
     fsDiv.id = 'fullscreenMode';
     fsDiv.className = 'fullscreen-mode active';
     
-    // NÂNG CẤP CSS: Thêm touch-action: none để khóa zoom mặc định lỗi của Safari/Chrome iOS
-    fsDiv.style.cssText = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.95); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:opacity 0.3s; touch-action: none; overflow:hidden;";
+    // Tối ưu hóa opacity ban đầu bằng 0 để kết hợp tạo animation fade-in mượt mà
+    fsDiv.style.cssText = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.95); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0; transition:opacity 0.3s ease; touch-action: none; overflow:hidden;";
     
     fsDiv.innerHTML = `
-        <div id="fs-compass-wrapper" style="width: 96vw; max-width: 460px; height: 96vw; max-height: 460px; transform-origin: center center; display:flex; align-items:center; justify-content:center;"></div>
+        <div id="fs-compass-wrapper" style="width: 96vw; max-width: 460px; height: 96vw; max-height: 460px; transform-origin: center center; display:flex; align-items:center; justify-content:center; transform: translate(0px, 0px) scale(1);"></div>
         <div id="fs-status-wrapper" style="width: 92%; max-width: 460px; margin-top:20px; z-index: 10000;"></div>
     `;
     document.body.appendChild(fsDiv);
+
+    // Kích hoạt animation hiện hình mượt mà
+    requestAnimationFrame(() => { fsDiv.style.opacity = '1'; });
 
     document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
     if (statusPanel) document.getElementById('fs-status-wrapper').appendChild(statusPanel);
@@ -4189,7 +4204,7 @@ function toggleFullScreenMode() {
     const wrapper = document.getElementById('fs-compass-wrapper');
 
     fsDiv.addEventListener('touchstart', (e) => {
-        if (e.touches.length === 2) { // Kéo 2 ngón tay -> Bắt đầu Zoom
+        if (e.touches.length === 2) { 
             isZooming = true;
             startDistance = Math.hypot(
                 e.touches[0].pageX - e.touches[1].pageX,
@@ -4197,7 +4212,7 @@ function toggleFullScreenMode() {
             );
             initialScale = currentScale;
             wrapper.style.transition = "none";
-        } else if (e.touches.length === 1 && currentScale > 1) { // 1 Ngón tay -> Kéo di chuyển vùng la bàn khi đã phóng to
+        } else if (e.touches.length === 1 && currentScale > 1) { 
             startX = e.touches[0].pageX - currentX;
             startY = e.touches[0].pageY - currentY;
             wrapper.style.transition = "none";
@@ -4211,7 +4226,6 @@ function toggleFullScreenMode() {
                 e.touches[0].pageX - e.touches[1].pageX,
                 e.touches[0].pageY - e.touches[1].pageY
             );
-            // Giới hạn độ phóng to từ 1x đến tối đa 4x chiếc la bàn
             currentScale = Math.min(Math.max(initialScale * (currentDistance / startDistance), 1), 4);
             wrapper.style.transform = `translate(${currentX}px, ${currentY}px) scale(${currentScale})`;
         } else if (!isZooming && e.touches.length === 1 && currentScale > 1) {
@@ -4219,8 +4233,7 @@ function toggleFullScreenMode() {
             currentX = e.touches[0].pageX - startX;
             currentY = e.touches[0].pageY - startY;
 
-            // Giới hạn không cho kéo lệch la bàn ra ngoài màn hình quá xa
-            const maxPan = 150 * currentScale;
+            const maxPan = 180 * currentScale; // Tăng biên độ kéo di chuyển la bàn cho thoáng rộng
             currentX = Math.min(Math.max(currentX, -maxPan), maxPan);
             currentY = Math.min(Math.max(currentY, -maxPan), maxPan);
 
@@ -4242,29 +4255,55 @@ function exitFullScreenMode() {
     const fs = document.getElementById('fullscreenMode');
     if (!fs) return;
 
-    fs.style.opacity = '0';
+    fs.style.opacity = '0'; // Hiệu ứng mờ dần biến mất
     setTimeout(() => {
         const compass = document.querySelector('.compass-container');
         const status = document.querySelector('.status-panel');
         const fsIcon = document.querySelector('.fs-icon');
 
-        // --- GIỮ NGUYÊN: HIỆN LẠI TẤT CẢ CÁC THÀNH PHẦN ĐÃ ẨN ---
-        const hiddenElements = document.querySelectorAll('[data-fs-hidden="true"]');
-        hiddenElements.forEach(el => {
-            el.style.display = ''; 
-            el.removeAttribute('data-fs-hidden');
-        });
+        // Hiện lại các thành phần chữ đã ẩn của riêng bảng status, tránh quét nhầm toàn cục
+        if (status) {
+            const hiddenElements = status.querySelectorAll('[data-fs-hidden="true"]');
+            hiddenElements.forEach(el => {
+                el.style.display = ''; 
+                el.removeAttribute('data-fs-hidden');
+            });
+        }
 
+        const giaiThich = document.getElementById('detail-box');
+        if (giaiThich && giaiThich.getAttribute('data-fs-hidden') === 'true') {
+            giaiThich.style.display = '';
+            giaiThich.removeAttribute('data-fs-hidden');
+        }
+
+        // 🎯 BƯỚC HOÀN TRẢ VỊ TRÍ TUYỆT ĐỐI CHUẨN XÁC:
+        // Trả la bàn về đúng vị trí nguyên bản 100% trước khi đứng kế ai
         if (compass && originalCompassParent) {
-            // Xóa bỏ các thuộc tính transform thu phóng trước khi trả la bàn về giao diện chính
             compass.style.transform = ""; 
-            originalCompassParent.appendChild(compass);
-            if (status) originalCompassParent.insertBefore(status, compass.nextSibling);
+            if (originalCompassNextSibling) {
+                originalCompassParent.insertBefore(compass, originalCompassNextSibling);
+            } else {
+                originalCompassParent.appendChild(compass);
+            }
+        }
+
+        // Trả bảng chữ status về đúng nới nó sinh ra, không can thiệp vào chỗ của la bàn
+        if (status && originalStatusParent) {
+            if (originalStatusNextSibling) {
+                originalStatusParent.insertBefore(status, originalStatusNextSibling);
+            } else {
+                originalStatusParent.appendChild(status);
+            }
         }
 
         fs.remove();
         isFullScreen = false;
         if (fsIcon) fsIcon.style.opacity = '1';
+        
+        // Trả lại các thông số biến tọa độ zoom về trạng thái trống sạch sẽ để chuẩn bị cho lần bấm sau
+        currentScale = 1;
+        currentX = 0;
+        currentY = 0;
         
         if (typeof updateCompassUI === 'function') {
             updateCompassUI(typeof lastHeading !== 'undefined' ? lastHeading : 0);
