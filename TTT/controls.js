@@ -3818,79 +3818,182 @@ function closeModal() {
     document.getElementById('infoModal').style.display = 'none';
 }
 
-let autoHideTimer = null;
+// =========================================================================
+// 🚀 ENGINE ĐIỀU KHIỂN SMOOTH-BUNG BÓNG V10 - DRAG & DROP PREMIUM EDITION
+// =========================================================================
 
-// Hàm khởi tạo bộ đếm
-function startAutoHide() {
-    clearTimeout(autoHideTimer);
-    autoHideTimer = setTimeout(() => {
+let autoHideTimerV10 = null;
+
+/**
+ * ⏱️ BỘ ĐẾM NGƯỢC TỰ ĐỘNG THU GỌN BẢNG KHI RỜI CHUỘT/BUÔNG TAY
+ */
+function startAutoHideV10() {
+    clearTimeout(autoHideTimerV10);
+    autoHideTimerV10 = setTimeout(() => {
         const wrapper = document.getElementById('mainPanelWrapper');
-        // Chỉ đóng nếu bảng đang MỞ và KHÔNG có gì đang được focus (đang nhập liệu)
-        if (wrapper && !wrapper.classList.contains('collapsed')) {
-            // Kiểm tra thêm: nếu đang focus vào ô input thì không đóng
-            if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || document.activeElement.tagName === 'SELECT') {
+        
+        if (wrapper && wrapper.classList.contains('panel-open-v10')) {
+            const activeTag = document.activeElement.tagName;
+            if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT') {
                 return; 
             }
-            togglePanel();
+            toggleMainPanelV10(); 
         }
     }, 3000);
 }
 
-function togglePanel() {
-    const wrapper = document.getElementById('mainPanelWrapper');
-    const arrow = document.getElementById('toggleArrow');
-    
-    if (!wrapper || !arrow) return;
-
-    // Loại bỏ class ẩn ngay từ đầu nếu có
-    wrapper.classList.remove('initial-hidden');
-    
-    // Toggle trạng thái đóng/mở
-    wrapper.classList.toggle('collapsed');
-    
-    const isCollapsed = wrapper.classList.contains('collapsed');
-    arrow.innerHTML = isCollapsed ? '▼' : '▲';
-
-    if (!isCollapsed) {
-        startAutoHide();
-    } else {
-        clearTimeout(autoHideTimer);
-    }
-}
-
-// KHỞI TẠO
-document.addEventListener('DOMContentLoaded', () => {
+/**
+ * 🔄 HÀM ĐẢO TRẠNG THÁI ĐÓNG/MỞ BẰNG BONG BÓNG
+ */
+function toggleMainPanelV10() {
     const wrapper = document.getElementById('mainPanelWrapper');
     if (!wrapper) return;
 
-    // 1. Luôn đóng ngay khi load (thêm class trước khi hiển thị)
-    wrapper.classList.add('collapsed');
-    document.getElementById('toggleArrow').innerHTML = '▼';
+    wrapper.style.removeProperty('display');
+    wrapper.style.removeProperty('height');
+    wrapper.classList.remove('initial-hidden');
+    wrapper.classList.toggle('panel-open-v10');
+    
+    const isOpen = wrapper.classList.contains('panel-open-v10');
 
-    // 2. Định nghĩa danh sách các sự kiện cần "đóng băng" bộ đếm
-    // mousedown/touchstart: Click chuột hoặc chạm tay
-    // input/focus: Đang nhập liệu
-    // mouseover: Di chuột vào
-    const events = ['mousedown', 'touchstart', 'input', 'focus', 'mouseover'];
+    if (isOpen) {
+        startAutoHideV10();
+    } else {
+        clearTimeout(autoHideTimerV10);
+    }
 
-    events.forEach(eventType => {
-        wrapper.addEventListener(eventType, () => {
-            if (!wrapper.classList.contains('collapsed')) {
-                clearTimeout(autoHideTimer); // Dừng đếm khi đang dùng
+    if (typeof recalculateFate === 'function') {
+        recalculateFate();
+    }
+}
+
+/**
+ * 🛡️ KHỞI TẠO, ĐÁNH CHẶN LƯU LƯỢNG & ENGINE KÉO THẢ ĐA ĐIỂM
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Tự động tiêm phần tử Bong bóng nổi vào body nếu chưa có sẵn
+    if (!document.getElementById('floatingMenuBtnV10')) {
+        const bubbleHTML = `
+            <div id="floatingMenuBtnV10">
+                👤
+                <span class="pulse-ring-v10"></span>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', bubbleHTML);
+    }
+
+    const bubble = document.getElementById('floatingMenuBtnV10');
+    const wrapper = document.getElementById('mainPanelWrapper');
+    if (!wrapper || !bubble) return;
+
+    // Ép bảng khóa chặt ở trạng thái đóng ẩn gọn gàng ngay khi vừa load xong trang
+    wrapper.classList.remove('panel-open-v10');
+    wrapper.classList.add('initial-hidden');
+
+    // 2. BIẾN TOÀN CỤC PHỤC VỤ LOGIC KÉO THẢ (DRAG ENGINE)
+    let isDragging = false;
+    let startX = 0, startY = 0;
+    let initialLeft = 0, initialTop = 0;
+
+    // Hàm lấy tọa độ chuẩn bất kể là Chuột (Mouse) hay Chạm (Touch)
+    const getPointerCoords = (e) => e.touches ? e.touches[0] : e;
+
+    // Thiết lập sự kiện BẮT ĐẦU KÉO
+    const onDragStart = (e) => {
+        // Nếu click chuột vào thì cho phép, nếu là touch thì ko cản scroll mặc định trừ khi kéo thực sự
+        const coords = getPointerCoords(e);
+        isDragging = false;
+        startX = coords.clientX;
+        startY = coords.clientY;
+
+        const rect = bubble.getBoundingClientRect();
+        initialLeft = rect.left;
+        initialTop = rect.top;
+
+        // Chuyển đổi neo tọa độ từ Right/Bottom sang Left/Top để có góc tự do tuyệt đối
+        bubble.style.right = 'auto';
+        bubble.style.bottom = 'auto';
+        bubble.style.left = initialLeft + 'px';
+        bubble.style.top = initialTop + 'px';
+        
+        // Tắt CSS Transition tạm thời để tránh bong bóng chạy đuổi theo tay gây lag
+        bubble.style.setProperty('transition', 'none', 'important');
+    };
+
+    // Thiết lập sự kiện ĐANG KÉO (Move)
+    const onDragMove = (e) => {
+        if (startX === 0 && startY === 0) return;
+
+        const coords = getPointerCoords(e);
+        const diffX = coords.clientX - startX;
+        const diffY = coords.clientY - startY;
+
+        // Sai số 4px để phân biệt giữa cú chạm nhẹ (Click) và hành vi kéo (Drag)
+        if (Math.abs(diffX) > 4 || Math.abs(diffY) > 4) {
+            isDragging = true;
+            if (e.cancelable) e.preventDefault(); // Cấm màn hình điện thoại bị cuộn khi đang kéo nút
+        }
+
+        // Ép tọa độ thực thi trực tiếp lên phần cứng
+        bubble.style.left = (initialLeft + diffX) + 'px';
+        bubble.style.top = (initialTop + diffY) + 'px';
+    };
+
+    // Thiết lập sự kiện THẢ TAY (End)
+    const onDragEnd = () => {
+        if (startX === 0 && startY === 0) return;
+        
+        // Khôi phục lại hiệu ứng đàn hồi mịn khi người dùng nhấp chạm
+        bubble.style.setProperty('transition', 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)', 'important');
+        startX = 0;
+        startY = 0;
+
+        // BIỆN CHỨNG: Nếu không kéo, hoặc khoảng cách kéo quá nhỏ -> Xem như CÚ CLICK mở bảng
+        if (!isDragging) {
+            toggleMainPanelV10();
+        }
+    };
+
+    // ĐĂNG KÝ ENGINE CHO MÁY TÍNH (MOUSE EVENTS)
+    bubble.addEventListener('mousedown', onDragStart);
+    document.addEventListener('mousemove', onDragMove, { passive: false });
+    document.addEventListener('mouseup', onDragEnd);
+
+    // ĐĂNG KÝ ENGINE CHO DI ĐỘNG (TOUCH EVENTS)
+    bubble.addEventListener('touchstart', onDragStart, { passive: true });
+    document.addEventListener('touchmove', onDragMove, { passive: false });
+    bubble.addEventListener('touchend', onDragEnd);
+
+    // 3. ĐÓNG BĂNG BỘ ĐẾM KHI ĐANG TƯƠNG TÁC TRÊN BẢNG
+    const stopEvents = ['mousedown', 'touchstart', 'input', 'focus', 'mouseover', 'mouseenter'];
+    stopEvents.forEach(evtName => {
+        wrapper.addEventListener(evtName, () => {
+            if (wrapper.classList.contains('panel-open-v10')) {
+                clearTimeout(autoHideTimerV10);
             }
         }, { passive: true });
     });
 
-    // 3. Khi người dùng buông tay hoặc rời chuột, bắt đầu đếm lại
-    const endEvents = ['mouseup', 'touchend', 'blur', 'mouseout'];
-    endEvents.forEach(eventType => {
-        wrapper.addEventListener(eventType, () => {
-            if (!wrapper.classList.contains('collapsed')) {
-                startAutoHide(); // Bắt đầu đếm khi không còn tương tác
+    // 4. KHỞI ĐỘNG LẠI BỘ ĐẾM KHI RỜI KHỎI BẢNG
+    const resumeEvents = ['mouseup', 'touchend', 'blur', 'mouseout', 'mouseleave'];
+    resumeEvents.forEach(evtName => {
+        wrapper.addEventListener(evtName, () => {
+            if (wrapper.classList.contains('panel-open-v10')) {
+                startAutoHideV10();
             }
         }, { passive: true });
     });
-});	
+});
+
+/**
+ * 🌟 LỚP VÁ TƯƠNG THÍCH NGƯỢC LEGACY
+ */
+function togglePanel() {
+    toggleMainPanelV10();
+}
+
+window.toggleMainPanelV10 = toggleMainPanelV10;
+window.togglePanel = togglePanel;
 // ====================== HÀM ĐÓNG MỞ GIẢI THÍCH CHI TIẾT ======================
 window.toggleDienGiaiChiTiet = function() {
     const contentDiv = document.getElementById('content-dien-giai-chi-tiet');
