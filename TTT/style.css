@@ -1055,17 +1055,21 @@ body {
     transform: rotate(90deg);
 }
 
-/* ====================== PURPOSE POPUP MODAL ====================== */
+/* =========================================================================
+   🔮 STYLE MỤC ĐÍCH V10.5 - GIỮ TÔNG MÀU GỐC & TỐI ƯU GIA TỐC PHẦN CỨNG
+   ========================================================================= */
+
 #purpose-modal {
-    display: none;
+    display: none; /* Khởi tạo ẩn mặc định */
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.94);
-    z-index: 10000;
+    z-index: 200000; /* Đẩy lớp hiển thị lên trên cùng */
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 #purpose-modal-content {
@@ -1077,6 +1081,9 @@ body {
     max-height: 88vh;
     overflow: hidden;
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+    
+    /* ⚡ KÍCH HOẠT HOẠT HỌA POPIN KHI HIỂN THỊ */
+    animation: popInV10 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.15) forwards;
 }
 
 #purpose-modal-header {
@@ -1090,7 +1097,6 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Body */
 #purpose-modal-body {
     max-height: 68vh;
     overflow-y: auto;
@@ -1099,7 +1105,6 @@ body {
     scrollbar-color: #554433 #221b14;
 }
 
-/* Nhóm (Group) */
 .purpose-modal-group {
     padding: 16px 24px 8px 24px;
     color: #f1c40f;
@@ -1114,48 +1119,53 @@ body {
     border-top: none;
 }
 
-/* Option */
+/* TỐI ƯU CÁC CHỌN LỰA CHỐNG ĐƠ TRÊN ĐIỆN THOẠI */
 .purpose-modal-option {
     padding: 15.5px 24px;
     cursor: pointer;
     border-bottom: 1px solid #332922;
-    transition: all 0.3s ease;
+    color: #e0e0e0;
     font-size: 0.935rem;
     line-height: 1.45;
+    
+    /* Phá bỏ hoàn toàn độ trễ cảm ứng 300ms trên thiết bị di động */
+    touch-action: manipulation !important;
+    
+    transition: background-color 0.2s ease, padding-left 0.25s cubic-bezier(0.25, 1, 0.5, 1), transform 0.25s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
-.purpose-modal-option:hover {
-    background: #3a2f24;
-    color: #fff;
-    padding-left: 34px;
-    transform: translateX(6px);
+/* Hiệu ứng mượt mà khi di chuột trên máy tính (PC) */
+@media (min-width: 1024px) {
+    .purpose-modal-option:hover {
+        background: #3a2f24;
+        color: #fff;
+        padding-left: 34px;
+        transform: translateX(6px);
+    }
+}
+
+/* ⚡ HIỆU ỨNG ĐÀN HỒI PHẢN HỒI LẬP TỨC KHI CHẠM TRÊN ĐIỆN THOẠI */
+.purpose-modal-option:active {
+    background: #dfb76c !important;
+    color: #000 !important;
+    padding-left: 28px !important;
 }
 
 .purpose-modal-option:last-child {
     border-bottom: none;
 }
 
-/* Scrollbar */
-#purpose-modal-body::-webkit-scrollbar {
-    width: 7px;
-}
-#purpose-modal-body::-webkit-scrollbar-thumb {
-    background: #554433;
-    border-radius: 10px;
-}
-#purpose-modal-body::-webkit-scrollbar-thumb:hover {
-    background: #665544;
+/* Tối ưu thanh cuộn trình duyệt */
+#purpose-modal-body::-webkit-scrollbar { width: 7px; }
+#purpose-modal-body::-webkit-scrollbar-thumb { background: #554433; border-radius: 10px; }
+#purpose-modal-body::-webkit-scrollbar-thumb:hover { background: #665544; }
+
+/* Định nghĩa lại keyframe popIn tăng tốc phần cứng */
+@keyframes popInV10 {
+    0% { transform: scale(0.92) translate3d(0,0,0); opacity: 0; }
+    100% { transform: scale(1) translate3d(0,0,0); opacity: 1; }
 }
 
-@keyframes popIn {
-    0% { transform: scale(0.8); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-@keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-/* Khóa chống xê dịch khung hình và thiết lập chuẩn box-sizing */
 .lk-guide-modal, .lk-guide-modal *, .lk-guide-modal *::before, .lk-guide-modal *::after {
     box-sizing: border-box !important;
 }
@@ -1713,8 +1723,8 @@ mjx-container {
     position: fixed !important;
     bottom: 20px !important;
     right: 20px !important;
-    width: 40px !important;
-    height: 40px !important;
+    width: 45px !important;
+    height: 45px !important;
     font-size: 18px !important;
     
     /* Sử dụng RGBA (mức 0.75 và 0.85) để tạo độ trong suốt nhẹ cho khối nền */
