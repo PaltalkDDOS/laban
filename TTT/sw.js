@@ -9,7 +9,6 @@ const ASSETS_TO_CACHE = [
   'ungho.png',
   'style.css',
   'phongthuy_khoahoc.js',
-  'WMMHR2025.COF',
   'controls.js'
 ];
 

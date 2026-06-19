@@ -2952,59 +2952,66 @@ function getCleanValue(raw) {
     let res = (isNegative ? '-' : '') + (numericPart || '');
     return (res === '-' || res === '') ? '' : res;
 }
-
-// Bộ lưu trữ dữ liệu động - Tự động thay đổi Epoch và Ma trận theo file nạp vào
-let GLOBAL_WMMHR_DATA = {
-    epoch: 2025.0,
-    data: [] // Sẽ được bơm đầy sau khi đọc file WMMHR2025.COF thành công
-};
+// 📡 BỘ ĐỆM BỘ NHỚ PHẲNG (SIÊU TỐC ĐỘ): Tái sử dụng mãi mãi, triệt tiêu 100% rác RAM
+let CORE_P_BUFFER = null;
+let CORE_DP_BUFFER = null;
+let CORE_COSM_BUFFER = null;
+let CORE_SINM_BUFFER = null;
 
 /**
- * 🛰️ HÀM BẤT ĐỒNG BỘ: Tải và phân tích file cấu hình địa từ ngoại vi
+ * 🛠️ HÀM KHỞI TẠO BỘ ĐỆM TỰ ĐỘNG: Đo độ dài mảng dữ liệu để cấp phát bộ nhớ phẳng
  */
-async function loadWMMHRFile() {
-    try {
-        const response = await fetch('WMMHR2025.COF');
-        if (!response.ok) throw new Error("Không tìm thấy file WMMHR2025.COF trong thư mục gốc!");
-        
-        const text = await response.text();
-        const lines = text.split('\n');
-        const parsedMatrix = [];
-        
-        // Dòng đầu tiên chứa thông tin Thiên niên kỷ (Epoch)
-        if (lines.length > 0 && lines[0].trim() !== '') {
-            const headerParts = lines[0].trim().split(/\s+/);
-            if (headerParts.length > 0 && !isNaN(parseFloat(headerParts[0]))) {
-                GLOBAL_WMMHR_DATA.epoch = parseFloat(headerParts[0]);
-            }
-        }
-        
-        // Phân tích từ dòng thứ 2 trở đi để lấy các chuỗi hệ số Gauss
-        for (let i = 1; i < lines.length; i++) {
-            let line = lines[i].trim();
-            if (line === '') continue;
-            
-            let parts = line.split(/\s+/).map(Number);
-            if (parts.length >= 6 && !parts.some(isNaN)) {
-                parsedMatrix.push([
-                    parts[0], // n (Bậc)
-                    parts[1], // m (Thứ tự)
-                    parts[2], // g (Hệ số từ trường chính)
-                    parts[3], // h (Hệ số từ trường phụ)
-                    parts[4], // dg (Độ biến thiên g theo năm)
-                    parts[5]  // dh (Độ biến thiên h theo năm)
-                ]);
-            }
-        }
-        
-        GLOBAL_WMMHR_DATA.data = parsedMatrix;
-        console.log(`📡 [MÔ HÌNH TOÀN CẦU] Đã nạp xong file COF động! Tổng số bậc quét: ${parsedMatrix.length > 0 ? parsedMatrix[parsedMatrix.length - 1][0] : 0}`);
-        return true;
-    } catch (error) {
-        console.error("❌ Lỗi nghiêm trọng khi đọc file COF:", error);
-        return false;
-    }
+function initStaticWMMBuffers() {
+    if (!WMM_COEFFS.data || WMM_COEFFS.data.length === 0) return;
+    
+    // Tự động tìm bậc cao nhất trong mảng hệ số cứng (thường là bậc 12)
+    const maxDegree = WMM_COEFFS.data[WMM_COEFFS.data.length - 1][0];
+    const size = maxDegree + 1;
+    
+    // Phân bổ mảng tĩnh siêu tốc độ Float64Array đúng kích thước thực tế
+    CORE_P_BUFFER = new Float64Array(size * size);
+    CORE_DP_BUFFER = new Float64Array(size * size);
+    CORE_COSM_BUFFER = new Float64Array(size);
+    CORE_SINM_BUFFER = new Float64Array(size);
 }
+// =========================================================================
+// 1. WMM2025 COEFFICIENTS CHÍNH THỨC VẠN NĂNG (TỪ NOAA)
+// =========================================================================
+const WMM_COEFFS = {
+    epoch: 2025.0,
+    data: [
+        [1,0,-29351.8,0.0,12.0,0.0],[1,1,-1410.8,4545.4,9.7,-21.5],[2,0,-2556.6,0.0,-11.6,0.0],
+        [2,1,2951.1,-3133.6,-5.2,-27.7],[2,2,1649.3,-815.1,-8.0,-12.1],[3,0,1361.0,0.0,-1.3,0.0],
+        [3,1,-2404.1,-56.6,-4.2,4.0],[3,2,1243.8,237.5,0.4,-0.3],[3,3,453.6,-549.5,-15.6,-4.1],
+        [4,0,895.0,0.0,-1.6,0.0],[4,1,799.5,278.6,-2.4,-1.1],[4,2,55.7,-133.9,-6.0,4.1],
+        [4,3,-281.1,212.0,5.6,1.6],[4,4,12.1,-375.6,-7.0,-4.4],[5,0,-233.2,0.0,0.6,0.0],
+        [5,1,368.9,45.4,1.4,-0.5],[5,2,187.2,220.2,0.0,2.2],[5,3,-138.7,-122.9,0.6,0.4],
+        [5,4,-142.0,43.0,2.2,1.7],[5,5,20.9,106.1,0.9,1.9],[6,0,64.4,0.0,-0.2,0.0],
+        [6,1,63.8,-18.4,-0.4,0.3],[6,2,76.9,16.8,0.9,-1.6],[6,3,-115.7,48.8,1.2,-0.4],
+        [6,4,-40.9,-59.8,-0.9,0.9],[6,5,14.9,10.9,0.3,0.7],[6,6,-60.7,72.7,0.9,0.9],
+        [7,0,79.5,0.0,-0.0,0.0],[7,1,-77.0,-48.9,-0.1,0.6],[7,2,-8.8,-14.4,-0.1,0.5],
+        [7,3,59.3,-1.0,0.5,-0.8],[7,4,15.8,23.4,-0.1,0.0],[7,5,2.5,-7.4,-0.8,-1.0],
+        [7,6,-11.1,-25.1,-0.8,0.6],[7,7,14.2,-2.3,0.8,-0.2],[8,0,23.2,0.0,-0.1,0.0],
+        [8,1,10.8,7.1,0.2,-0.2],[8,2,-17.5,-12.6,0.0,0.5],[8,3,2.0,11.4,0.5,-0.4],
+        [8,4,-21.7,-9.7,-0.1,0.4],[8,5,16.9,12.7,0.3,-0.5],[8,6,15.0,0.7,0.2,-0.6],
+        [8,7,-16.8,-5.2,-0.0,0.3],[8,8,0.9,3.9,0.2,0.2],[9,0,4.6,0.0,-0.0,0.0],
+        [9,1,7.8,-24.8,-0.1,-0.3],[9,2,3.0,12.2,0.1,0.3],[9,3,-0.2,8.3,0.3,-0.3],
+        [9,4,-2.5,-3.3,-0.3,0.3],[9,5,-13.1,-5.2,0.0,0.2],[9,6,2.4,7.2,0.3,-0.1],
+        [9,7,8.6,-0.6,-0.1,-0.2],[9,8,-8.7,0.8,0.1,0.4],[9,9,-12.9,10.0,-0.1,0.1],
+        [10,0,-1.3,0.0,0.1,0.0],[10,1,-6.4,3.3,0.0,0.0],[10,2,0.2,0.0,0.1,-0.0],
+        [10,3,2.0,2.4,0.1,-0.2],[10,4,-1.0,5.3,-0.0,0.1],[10,5,-0.6,-9.1,-0.3,-0.1],
+        [10,6,-0.9,0.4,0.0,0.1],[10,7,1.5,-4.2,-0.1,0.0],[10,8,0.9,-3.8,-0.1,-0.1],
+        [10,9,-2.7,0.9,-0.0,0.2],[10,10,-3.9,-9.1,-0.0,-0.0],[11,0,2.9,0.0,0.0,0.0],
+        [11,1,-1.5,0.0,-0.0,-0.0],[11,2,-2.5,2.9,0.0,0.1],[11,3,2.4,-0.6,0.0,-0.0],
+        [11,4,-0.6,0.2,0.0,0.1],[11,5,-0.1,0.5,-0.1,-0.0],[11,6,-0.6,-0.3,0.0,-0.0],
+        [11,7,-0.1,-1.2,-0.0,0.1],[11,8,1.1,-1.7,-0.1,-0.0],[11,9,-1.0,-2.9,-0.1,0.0],
+        [11,10,-0.2,-1.8,-0.1,0.0],[11,11,2.6,-2.3,-0.1,0.0],[12,0,-2.0,0.0,0.0,0.0],
+        [12,1,-0.2,-1.3,0.0,-0.0],[12,2,0.3,0.7,-0.0,0.0],[12,3,1.2,1.0,-0.0,-0.1],
+        [12,4,-1.3,-1.4,-0.0,0.1],[12,5,0.6,-0.0,-0.0,-0.0],[12,6,0.6,0.6,0.1,-0.0],
+        [12,7,0.5,-0.1,-0.0,-0.0],[12,8,-0.1,0.8,0.0,0.0],[12,9,-0.4,0.1,0.0,-0.0],
+        [12,10,-0.2,-1.0,-0.1,-0.0],[12,11,-1.3,0.1,-0.0,0.0],[12,12,-0.7,0.2,-0.1,-0.1]
+    ]
+};
 
 // ==========================================================================
 // MODULE TRẮC ĐỊA VIỆT NAM - CHUYỂN ĐỔI VN-2000 ↔ WGS84 (FULL NÂNG CẤP)
@@ -3407,13 +3414,13 @@ async function autoDetectDeclination() {
 // =========================================================================
 // HÀM TÍNH ĐỘ LỆCH TỪ THIÊN WMM2025 - PHIÊN BẢN CHÍNH THỨC & TOÀN CẦU
 // =========================================================================
-// Thay thế hoàn toàn hàm cũ bằng bản tự động co giãn ma trận Legendre này:
 function calculateGlobalDeclination(lat, lon, altKm = 0) {
     try {
-        // Nếu file chưa kịp tải hoặc rỗng, trả về mặc định để tránh crash app
-        if (!GLOBAL_WMMHR_DATA.data || GLOBAL_WMMHR_DATA.data.length === 0) {
-            return 0;
+        // Tự động kích hoạt bộ đệm phẳng nếu máy chưa khởi tạo
+        if (!CORE_P_BUFFER) {
+            initStaticWMMBuffers();
         }
+        if (!CORE_P_BUFFER || WMM_COEFFS.data.length === 0) return 0;
 
         let cleanLat = Math.max(-90, Math.min(90, parseFloat(lat) || 0));
         let cleanLon = ((parseFloat(lon) || 0) + 180) % 360;
@@ -3421,7 +3428,7 @@ function calculateGlobalDeclination(lat, lon, altKm = 0) {
         cleanLon -= 180;
 
         const decimalYear = getDecimalYear();
-        const dt = decimalYear - GLOBAL_WMMHR_DATA.epoch; // Sử dụng epoch động từ file đọc được
+        const dt = decimalYear - WMM_COEFFS.epoch;
 
         const latRad = cleanLat * Math.PI / 180;
         const lonRad = cleanLon * Math.PI / 180;
@@ -3442,48 +3449,67 @@ function calculateGlobalDeclination(lat, lon, altKm = 0) {
         const sinPhi = Math.sin(phiPrime);
         const cosPhi = Math.cos(phiPrime);
 
-        // 🎯 BƯỚC ĐỘT PHÁ: Tìm bậc tối đa thực tế (Bản thường là 12, bản HR là 133)
-        const lastRow = GLOBAL_WMMHR_DATA.data[GLOBAL_WMMHR_DATA.data.length - 1];
-        const maxDegree = lastRow ? lastRow[0] : 12;
+        // 🎯 KIẾN TRÚC ĐỘNG: Tự đo bậc tối đa thực tế của mảng dữ liệu cứng
+        const maxDegree = WMM_COEFFS.data[WMM_COEFFS.data.length - 1][0];
+        const size = maxDegree + 1;
 
-        // Giãn nở kích thước mảng chứa đa thức Legendre tương thích 100% với file nạp vào
-        const P = Array.from({length: maxDegree + 1}, () => new Array(maxDegree + 1).fill(0));
-        const dP = Array.from({length: maxDegree + 1}, () => new Array(maxDegree + 1).fill(0));
+        // Làm sạch bộ nhớ đệm cũ trên mảng phẳng với vận tốc cực đại
+        CORE_P_BUFFER.fill(0);
+        CORE_DP_BUFFER.fill(0);
 
-        P[0][0] = 1;
-        P[1][0] = sinPhi;  dP[1][0] = cosPhi;
-        P[1][1] = cosPhi;  dP[1][1] = -sinPhi;
+        // Nạp các giá trị biên lượng giác ban đầu vào ma trận phẳng (Index = n * size + m)
+        CORE_P_BUFFER[0] = 1;                              // P[0][0]
+        CORE_P_BUFFER[1 * size + 0] = sinPhi;              // P[1][0]
+        CORE_DP_BUFFER[1 * size + 0] = cosPhi;             // dP[1][0]
+        CORE_P_BUFFER[1 * size + 1] = cosPhi;              // P[1][1]
+        CORE_DP_BUFFER[1 * size + 1] = -sinPhi;            // dP[1][1]
 
-        // Vòng lặp Legendre thông minh tự động co giãn theo độ dài bậc tối đa tìm được
+        // Vòng lặp đệ quy Legendre toán học Gauss chạy siêu tốc độ trên mảng phẳng phẳng
         for (let n = 2; n <= maxDegree; n++) {
+            const idx_n = n * size;
+            const idx_n1 = (n - 1) * size;
+            const idx_n2 = (n - 2) * size;
+            
             for (let m = 0; m <= n; m++) {
                 if (m === n) {
                     const fn = Math.sqrt((2*n-1)/(2*n));
-                    P[n][m] = fn * cosPhi * P[n-1][m-1];
-                    dP[n][m] = fn * (cosPhi * dP[n-1][m-1] - sinPhi * P[n-1][m-1]);
+                    CORE_P_BUFFER[idx_n + m] = fn * cosPhi * CORE_P_BUFFER[idx_n1 + (m - 1)];
+                    CORE_DP_BUFFER[idx_n + m] = fn * (cosPhi * CORE_DP_BUFFER[idx_n1 + (m - 1)] - sinPhi * CORE_P_BUFFER[idx_n1 + (m - 1)]);
                 } else {
                     const g1 = (2*n-1) / Math.sqrt(n*n - m*m);
                     const g2 = Math.sqrt((n-1)*(n-1) - m*m) / Math.sqrt(n*n - m*m);
-                    P[n][m] = g1 * sinPhi * P[n-1][m] - g2 * P[n-2][m];
-                    dP[n][m] = g1 * (sinPhi * dP[n-1][m] + cosPhi * P[n-1][m]) - g2 * dP[n-2][m];
+                    
+                    CORE_P_BUFFER[idx_n + m] = g1 * sinPhi * CORE_P_BUFFER[idx_n1 + m] - g2 * CORE_P_BUFFER[idx_n2 + m];
+                    CORE_DP_BUFFER[idx_n + m] = g1 * (sinPhi * CORE_DP_BUFFER[idx_n1 + m] + cosPhi * CORE_P_BUFFER[idx_n1 + m]) - g2 * CORE_DP_BUFFER[idx_n2 + m];
                 }
             }
         }
 
+        // 🎯 TIẾT KIỆM NĂNG LƯỢNG: Tính trước chuỗi lượng giác kinh độ (Chỉ chạy đúng 13 lần!)
+        for (let m = 0; m <= maxDegree; m++) {
+            CORE_COSM_BUFFER[m] = Math.cos(m * lonRad);
+            CORE_SINM_BUFFER[m] = Math.sin(m * lonRad);
+        }
+
         let X = 0, Y = 0, Z = 0;
-        // Duyệt qua ma trận động vừa đọc được từ file ngoài
-        GLOBAL_WMMHR_DATA.data.forEach(([n, m, g0, h0, dg, dh]) => {
+        
+        // Vòng lặp tổng lực Gauss quét qua ma trận cứng
+        WMM_COEFFS.data.forEach(([n, m, g0, h0, dg, dh]) => {
             const g = g0 + dt * dg;
             const h = h0 + dt * dh;
             const ratio = Math.pow(a / r, n + 2);
-            const cosM = Math.cos(m * lonRad);
-            const sinM = Math.sin(m * lonRad);
+            
+            // Trích xuất trực tiếp kết quả Sin/Cos từ bộ nhớ đệm, triệt tiêu 77 lệnh tính thừa!
+            const cosM = CORE_COSM_BUFFER[m];
+            const sinM = CORE_SINM_BUFFER[m];
+            
             const c = g * cosM + h * sinM;
             const d = g * sinM - h * cosM;
 
-            X -= ratio * c * dP[n][m];
-            Z -= ratio * c * P[n][m] * (n + 1);
-            if (m > 0) Y += ratio * m * d * P[n][m];
+            const idx = n * size + m; // Định vị vị trí phần tử trên mảng phẳng
+            X -= ratio * c * CORE_DP_BUFFER[idx];
+            Z -= ratio * c * CORE_P_BUFFER[idx] * (n + 1);
+            if (m > 0) Y += ratio * m * d * CORE_P_BUFFER[idx];
         });
 
         Y /= (cosPhi || 1e-8);
@@ -3495,7 +3521,7 @@ function calculateGlobalDeclination(lat, lon, altKm = 0) {
 
         return parseFloat(decl.toFixed(2));
     } catch (e) {
-        console.error("Lỗi lõi trắc địa:", e);
+        console.error("Lỗi lõi trắc địa WMM2025:", e);
         return 0;
     }
 }
@@ -3579,11 +3605,7 @@ function convertToDecimalDegrees(val) {
 // =========================================================================
 // 4. KHỞI TẠO VÀ QUẢN LÝ SỰ KIỆN GIAO DIỆN DIỄN RA TRONG DOM
 // =========================================================================
-// Thay thế toàn bộ khối xử lý DOMContentLoaded cũ bằng bản nạp luồng async này:
-document.addEventListener('DOMContentLoaded', async () => {
-    // 🎯 THẦN CHÚ KHỞI CHẠY: Âm thầm kích hoạt tải file dữ liệu ngoài trước khi render UI
-    await loadWMMHRFile();
-
+document.addEventListener('DOMContentLoaded', () => {
     const configs = {
         'declination-input': { limit: 14, key: 'save_decl', min: -180, max: 180, mode: 'coordinate' },
         'remote-lat': { limit: 14, key: 'save_lat', min: -90, max: 90, mode: 'coordinate' },
@@ -3630,7 +3652,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const savedLon = localStorage.getItem('save_lon');
     if (isRetentionEnabled && savedLat && savedLon) {
         updateLocationUI(parseFloat(savedLat), parseFloat(savedLon));
+		// 👉 Cải tiến thông minh: Tự động chạy lại hàm tính toán địa từ ngay khi F5 ứng dụng
+        if (typeof calculateRemoteDeclination === 'function') {
+            calculateRemoteDeclination();
+        }
     }
+
 
     Object.keys(configs).forEach(id => {
         const el = document.getElementById(id);
@@ -4031,10 +4058,15 @@ function handleModalClick() {
 }
 
 let isFullScreen = false;
-let originalCompassParent = null;
 let lastTapTime = 0;
 
-// ====================== BIẾN HỖ TRỢ ZOOM & PAN (KÉO) TẤT CẢ TRÌNH DUYỆT ======================
+// ====================== BỘ BIẾN GHI NHỚ VỊ TRÍ GỐC VẠN NĂNG ======================
+let originalCompassParent = null;
+let originalCompassNextSibling = null;
+let originalStatusParent = null;
+let originalStatusNextSibling = null;
+
+// ====================== BIẾN HỖ TRỢ ZOOM & PAN (KÉO) ======================
 let currentScale = 1;
 let initialScale = 1;
 let startDistance = 0;
@@ -4045,7 +4077,7 @@ let startX = 0;
 let startY = 0;
 
 /**
- * HÀM XỬ LÝ SỰ KIỆN GỘP (Thông minh hơn)
+ * HÀM XỬ LÝ SỰ KIỆN GỘP (Thông minh & mượt mà)
  */
 function handleInteraction(e) {
     const isCompass = e.target.closest('.compass-container');
@@ -4056,8 +4088,8 @@ function handleInteraction(e) {
         toggleFullScreenMode();
     } 
     else if (isFullScreen && isFullScreenDiv) {
-        // NÂNG CẤP: Nếu đang phóng to la bàn (> 1), double tap sẽ đưa về kích thước chuẩn trước, tránh thoát đột ngột
-        if (currentScale > 1) {
+        // NÂNG CẤP: Nếu đang thu phóng, đưa về kích thước chuẩn trước bằng animation mượt
+        if (currentScale !== 1 || currentX !== 0 || currentY !== 0) {
             resetZoom();
         } else {
             exitFullScreenMode();
@@ -4072,7 +4104,7 @@ function resetZoom() {
     currentY = 0;
     const wrapper = document.getElementById('fs-compass-wrapper');
     if (wrapper) {
-        wrapper.style.transition = "transform 0.3s ease";
+        wrapper.style.transition = "transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)";
         wrapper.style.transform = "translate(0px, 0px) scale(1)";
     }
 }
@@ -4080,12 +4112,12 @@ function resetZoom() {
 // 1. Lắng nghe Double Click (Máy tính)
 document.addEventListener('dblclick', handleInteraction);
 
-// 2. Lắng nghe Double Tap (Điện thoại) - Tối ưu chống xung đột khi nhấc ngón tay lúc zoom
+// 2. Lắng nghe Double Tap (Điện thoại)
 document.addEventListener('touchend', (e) => {
-    if (e.touches.length > 0) return; // Nếu vẫn còn ngón tay chạm màn hình thì bỏ qua
+    if (e.touches.length > 0) return; 
     
     const currentTime = new Date().getTime();
-    if (currentTime - lastTapTime < 400) {
+    if (currentTime - lastTapTime < 350) { // Giảm xuống 350ms để nhạy và tránh lag nhầm
         handleInteraction(e);
     }
     lastTapTime = currentTime;
@@ -4100,7 +4132,14 @@ function toggleFullScreenMode() {
     const fsIcon = document.querySelector('.fs-icon');
 
     if (!compassContainer) return;
-    if (!originalCompassParent) originalCompassParent = compassContainer.parentElement;
+
+    // 🎯 BƯỚC ĐỘT PHÁ CHÍNH XÁC: Chụp ảnh lưu lại toàn bộ cấu trúc DOM gốc
+    originalCompassParent = compassContainer.parentElement;
+    originalCompassNextSibling = compassContainer.nextSibling;
+    if (statusPanel) {
+        originalStatusParent = statusPanel.parentElement;
+        originalStatusNextSibling = statusPanel.nextSibling;
+    }
 
     // --- GIỮ NGUYÊN: ẨN CÁC DÒNG THÔNG TIN CHI TIẾT ---
     if (statusPanel) {
@@ -4127,7 +4166,7 @@ function toggleFullScreenMode() {
         giaiThich.setAttribute('data-fs-hidden', 'true');
     }
 
-    // Reset lại cấu hình zoom mỗi khi mở full màn hình
+    // Khởi tạo trạng thái zoom mới tinh
     currentScale = 1;
     currentX = 0;
     currentY = 0;
@@ -4137,14 +4176,17 @@ function toggleFullScreenMode() {
     fsDiv.id = 'fullscreenMode';
     fsDiv.className = 'fullscreen-mode active';
     
-    // NÂNG CẤP CSS: Thêm touch-action: none để khóa zoom mặc định lỗi của Safari/Chrome iOS
-    fsDiv.style.cssText = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.95); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:opacity 0.3s; touch-action: none; overflow:hidden;";
+    // Tối ưu hóa opacity ban đầu bằng 0 để kết hợp tạo animation fade-in mượt mà
+    fsDiv.style.cssText = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.95); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0; transition:opacity 0.3s ease; touch-action: none; overflow:hidden;";
     
     fsDiv.innerHTML = `
-        <div id="fs-compass-wrapper" style="width: 96vw; max-width: 460px; height: 96vw; max-height: 460px; transform-origin: center center; display:flex; align-items:center; justify-content:center;"></div>
+        <div id="fs-compass-wrapper" style="width: 96vw; max-width: 460px; height: 96vw; max-height: 460px; transform-origin: center center; display:flex; align-items:center; justify-content:center; transform: translate(0px, 0px) scale(1);"></div>
         <div id="fs-status-wrapper" style="width: 92%; max-width: 460px; margin-top:20px; z-index: 10000;"></div>
     `;
     document.body.appendChild(fsDiv);
+
+    // Kích hoạt animation hiện hình mượt mà
+    requestAnimationFrame(() => { fsDiv.style.opacity = '1'; });
 
     document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
     if (statusPanel) document.getElementById('fs-status-wrapper').appendChild(statusPanel);
@@ -4157,7 +4199,7 @@ function toggleFullScreenMode() {
     const wrapper = document.getElementById('fs-compass-wrapper');
 
     fsDiv.addEventListener('touchstart', (e) => {
-        if (e.touches.length === 2) { // Kéo 2 ngón tay -> Bắt đầu Zoom
+        if (e.touches.length === 2) { 
             isZooming = true;
             startDistance = Math.hypot(
                 e.touches[0].pageX - e.touches[1].pageX,
@@ -4165,7 +4207,7 @@ function toggleFullScreenMode() {
             );
             initialScale = currentScale;
             wrapper.style.transition = "none";
-        } else if (e.touches.length === 1 && currentScale > 1) { // 1 Ngón tay -> Kéo di chuyển vùng la bàn khi đã phóng to
+        } else if (e.touches.length === 1 && currentScale > 1) { 
             startX = e.touches[0].pageX - currentX;
             startY = e.touches[0].pageY - currentY;
             wrapper.style.transition = "none";
@@ -4179,7 +4221,6 @@ function toggleFullScreenMode() {
                 e.touches[0].pageX - e.touches[1].pageX,
                 e.touches[0].pageY - e.touches[1].pageY
             );
-            // Giới hạn độ phóng to từ 1x đến tối đa 4x chiếc la bàn
             currentScale = Math.min(Math.max(initialScale * (currentDistance / startDistance), 1), 4);
             wrapper.style.transform = `translate(${currentX}px, ${currentY}px) scale(${currentScale})`;
         } else if (!isZooming && e.touches.length === 1 && currentScale > 1) {
@@ -4187,8 +4228,7 @@ function toggleFullScreenMode() {
             currentX = e.touches[0].pageX - startX;
             currentY = e.touches[0].pageY - startY;
 
-            // Giới hạn không cho kéo lệch la bàn ra ngoài màn hình quá xa
-            const maxPan = 150 * currentScale;
+            const maxPan = 180 * currentScale; // Tăng biên độ kéo di chuyển la bàn cho thoáng rộng
             currentX = Math.min(Math.max(currentX, -maxPan), maxPan);
             currentY = Math.min(Math.max(currentY, -maxPan), maxPan);
 
@@ -4210,29 +4250,55 @@ function exitFullScreenMode() {
     const fs = document.getElementById('fullscreenMode');
     if (!fs) return;
 
-    fs.style.opacity = '0';
+    fs.style.opacity = '0'; // Hiệu ứng mờ dần biến mất
     setTimeout(() => {
         const compass = document.querySelector('.compass-container');
         const status = document.querySelector('.status-panel');
         const fsIcon = document.querySelector('.fs-icon');
 
-        // --- GIỮ NGUYÊN: HIỆN LẠI TẤT CẢ CÁC THÀNH PHẦN ĐÃ ẨN ---
-        const hiddenElements = document.querySelectorAll('[data-fs-hidden="true"]');
-        hiddenElements.forEach(el => {
-            el.style.display = ''; 
-            el.removeAttribute('data-fs-hidden');
-        });
+        // Hiện lại các thành phần chữ đã ẩn của riêng bảng status, tránh quét nhầm toàn cục
+        if (status) {
+            const hiddenElements = status.querySelectorAll('[data-fs-hidden="true"]');
+            hiddenElements.forEach(el => {
+                el.style.display = ''; 
+                el.removeAttribute('data-fs-hidden');
+            });
+        }
 
+        const giaiThich = document.getElementById('detail-box');
+        if (giaiThich && giaiThich.getAttribute('data-fs-hidden') === 'true') {
+            giaiThich.style.display = '';
+            giaiThich.removeAttribute('data-fs-hidden');
+        }
+
+        // 🎯 BƯỚC HOÀN TRẢ VỊ TRÍ TUYỆT ĐỐI CHUẨN XÁC:
+        // Trả la bàn về đúng vị trí nguyên bản 100% trước khi đứng kế ai
         if (compass && originalCompassParent) {
-            // Xóa bỏ các thuộc tính transform thu phóng trước khi trả la bàn về giao diện chính
             compass.style.transform = ""; 
-            originalCompassParent.appendChild(compass);
-            if (status) originalCompassParent.insertBefore(status, compass.nextSibling);
+            if (originalCompassNextSibling) {
+                originalCompassParent.insertBefore(compass, originalCompassNextSibling);
+            } else {
+                originalCompassParent.appendChild(compass);
+            }
+        }
+
+        // Trả bảng chữ status về đúng nới nó sinh ra, không can thiệp vào chỗ của la bàn
+        if (status && originalStatusParent) {
+            if (originalStatusNextSibling) {
+                originalStatusParent.insertBefore(status, originalStatusNextSibling);
+            } else {
+                originalStatusParent.appendChild(status);
+            }
         }
 
         fs.remove();
         isFullScreen = false;
         if (fsIcon) fsIcon.style.opacity = '1';
+        
+        // Trả lại các thông số biến tọa độ zoom về trạng thái trống sạch sẽ để chuẩn bị cho lần bấm sau
+        currentScale = 1;
+        currentX = 0;
+        currentY = 0;
         
         if (typeof updateCompassUI === 'function') {
             updateCompassUI(typeof lastHeading !== 'undefined' ? lastHeading : 0);
