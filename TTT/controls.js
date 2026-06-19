@@ -4399,101 +4399,95 @@ function exitFullScreenMode() {
         }
     }, 300);
 }
-// ====================== PURPOSE POPUP MODAL ======================
+// =========================================================================
+// 🚀 ENGINE PURPOSE MODAL V10.5 - GIỮ NGUYÊN CƠ CHẾ DISPLAY GỐC CHỐNG LỖI LÕI
+// =========================================================================
+
 let currentPurposeValue = "";
 
 function showPurposeModal() {
     let modal = document.getElementById('purpose-modal');
    
+    // ✅ CHỈ DỰNG HTML VÀ GÁN SỰ KIỆN DUY NHẤT 1 LẦN ĐẦU TIÊN
     if (!modal) {
         modal = document.createElement('div');
         modal.id = 'purpose-modal';
         modal.innerHTML = `
             <div id="purpose-modal-content">
                 <div id="purpose-modal-header">MỤC ĐÍCH KHẢO SÁT KHÍ CỤC VẬN 9</div>
-                <div id="purpose-modal-body"></div>
+                <div id="purpose-modal-body">
+                    <div class="purpose-modal-group">🏛️ DƯƠNG TRẠCH CHỦ CỤC (Nhà Ở & Sinh Hoạt)</div>
+                    <div class="purpose-modal-option" data-value="house">Hướng Nhà / Cửa Chính (Đại Môn)</div>
+                    <div class="purpose-modal-option" data-value="gate">Hướng Cổng Chính (Lộ Khẩu)</div>
+                    <div class="purpose-modal-option" data-value="altar">Hướng Bàn Thờ / Ban Thần Tài (Tụ Phúc)</div>
+                    <div class="purpose-modal-option" data-value="altar_room">Không Gian Phòng Thờ Độc Lập (Tổ Đường)</div>
+                    <div class="purpose-modal-option" data-value="bed">Hướng Đầu Giường Ngủ (Sàng Vị)</div>
+                    <div class="purpose-modal-option" data-value="livingroom">Hướng Phòng Khách (Trung Đường)</div>
+                    <div class="purpose-modal-option" data-value="bedroom_master">Hướng Phòng Ngủ Chính (Chủ Khang)</div>
+                    <div class="purpose-modal-option" data-value="bedroom_child">Hướng Phòng Ngủ Con Cái (Phúc Nhân)</div>
+                    <div class="purpose-modal-option" data-value="balcony">Hướng Ban Công / Cửa Sổ Lớn (Nạp Khí)</div>
+
+                    <div class="purpose-modal-group">📚 VĂN XƯƠNG KHOA DANH (Học Hành & Sự Nghiệp)</div>
+                    <div class="purpose-modal-option" data-value="workspace">Hướng Bàn Làm Việc (Quyền Lực Vị)</div>
+                    <div class="purpose-modal-option" data-value="ceo_office">Hướng Phòng Sếp / Bàn Lãnh Đạo</div>
+                    <div class="purpose-modal-option" data-value="study_desk">Hướng Bàn Học / Văn Xương Vị</div>
+                    <div class="purpose-modal-option" data-value="bookcase">Vị Trí Tủ Sách / Lưu Trữ Hồ Sơ</div>
+
+                    <div class="purpose-modal-group">💰 ĐẮC TÀI MẬU DỊCH (Kinh Doanh Thương Mại)</div>
+                    <div class="purpose-modal-option" data-value="signboard">Hướng Biển Hiệu (Minh Đường Lộ)</div>
+                    <div class="purpose-modal-option" data-value="counter">Hướng Quầy Thu Ngân (Tài Khố Vị)</div>
+                    <div class="purpose-modal-option" data-value="safe">Vị trí Két Sắt (Tụ Tài Bảo Khố)</div>
+                    <div class="purpose-modal-option" data-value="machinery">Hệ Thống Máy Móc / Dây Chuyền Sản Xuất</div>
+                    <div class="purpose-modal-option" data-value="bakery">Hướng Lò Nướng / Quầy Bánh Mì</div>
+                    <div class="purpose-modal-option" data-value="coffee">Hướng Quầy Pha Chế Cà Phê / Trà Sữa</div>
+                    <div class="purpose-modal-option" data-value="restaurant">Hướng Quán Ăn / Nhà Hàng</div>
+                    <div class="purpose-modal-option" data-value="shop">Hướng Cửa Hàng / Showroom / Tạp Hóa</div>
+                    <div class="purpose-modal-option" data-value="salon">Hướng Salon Tóc / Giường Nail / Spa</div>
+
+                    <div class="purpose-modal-group">🛠️ TỌA VỊ TRẤN SÁT (Hệ Thống Đè Hung)</div>
+                    <div class="purpose-modal-option" data-value="kitchen">Vị trí Đặt Bếp Nấu (Táo Vị Trấn Sát)</div>
+                    <div class="purpose-modal-option" data-value="toilet">Vị trí Nhà Vệ Sinh (Tiêu Sát Khí)</div>
+                    <div class="purpose-modal-option" data-value="septic_tank">Vị trí Hầm Tự Hoại / Bể Phốt Ngầm</div>
+                    <div class="purpose-modal-option" data-value="pipe_shaft">Trục Kỹ Thuật / Hộp Gen Uế Kh khí</div>
+                    <div class="purpose-modal-option" data-value="storage">Vị trí Kho Hàng / Phòng Đồ Tạp</div>
+                    <div class="purpose-modal-option" data-value="trash_area">Vị trí Thùng Rác / Khu Tập Kết Phế Liệu</div>
+                </div>
             </div>
         `;
         document.body.appendChild(modal);
+
+        // Gắn sự kiện click chọn phương vị một lần duy nhất
+        modal.querySelectorAll('.purpose-modal-option').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.stopPropagation(); // Chống bong bóng sự kiện làm tắt modal ngoài ý muốn
+                
+                const value = item.getAttribute('data-value');
+                const text = item.textContent.trim();
+
+                const textDisplay = document.getElementById('purpose-selected-text');
+                if (textDisplay) textDisplay.textContent = text;
+                
+                const hiddenInput = document.getElementById('purpose');
+                if (hiddenInput) hiddenInput.value = value;
+
+                currentPurposeValue = value;
+
+                hidePurposeModal();
+
+                // Thực thi tính toán lại toàn bộ trục Thiên - Địa - Nhân của bạn
+                if (typeof recalculateFate === 'function') {
+                    recalculateFate();
+                }
+
+                // Cập nhật danh sách gợi ý realtime
+                if (typeof generateDirectionsList === 'function') {
+                    generateDirectionsList(); 
+                }
+            });
+        });
     }
 
-    const body = document.getElementById('purpose-modal-body');
-    
-    body.innerHTML = `
-        <div class="purpose-modal-group">🏛️ DƯƠNG TRẠCH CHỦ CỤC (Nhà Ở & Sinh Hoạt)</div>
-        <div class="purpose-modal-option" data-value="house">Hướng Nhà / Cửa Chính (Đại Môn)</div>
-        <div class="purpose-modal-option" data-value="gate">Hướng Cổng Chính (Lộ Khẩu)</div>
-        <div class="purpose-modal-option" data-value="altar">Hướng Bàn Thờ / Ban Thần Tài (Tụ Phúc)</div>
-        <div class="purpose-modal-option" data-value="altar_room">Không Gian Phòng Thờ Độc Lập (Tổ Đường)</div>
-        <div class="purpose-modal-option" data-value="bed">Hướng Đầu Giường Ngủ (Sàng Vị)</div>
-        <div class="purpose-modal-option" data-value="livingroom">Hướng Phòng Khách (Trung Đường)</div>
-        <div class="purpose-modal-option" data-value="bedroom_master">Hướng Phòng Ngủ Chính (Chủ Khang)</div>
-        <div class="purpose-modal-option" data-value="bedroom_child">Hướng Phòng Ngủ Con Cái (Phúc Nhân)</div>
-        <div class="purpose-modal-option" data-value="balcony">Hướng Ban Công / Cửa Sổ Lớn (Nạp Khí)</div>
-
-        <div class="purpose-modal-group">📚 VĂN XƯƠNG KHOA DANH (Học Hành & Sự Nghiệp)</div>
-        <div class="purpose-modal-option" data-value="workspace">Hướng Bàn Làm Việc (Quyền Lực Vị)</div>
-        <div class="purpose-modal-option" data-value="ceo_office">Hướng Phòng Sếp / Bàn Lãnh Đạo</div>
-        <div class="purpose-modal-option" data-value="study_desk">Hướng Bàn Học / Văn Xương Vị</div>
-        <div class="purpose-modal-option" data-value="bookcase">Vị Trí Tủ Sách / Lưu Trữ Hồ Sơ</div>
-
-        <div class="purpose-modal-group">💰 ĐẮC TÀI MẬU DỊCH (Kinh Doanh Thương Mại)</div>
-        <div class="purpose-modal-option" data-value="signboard">Hướng Biển Hiệu (Minh Đường Lộ)</div>
-        <div class="purpose-modal-option" data-value="counter">Hướng Quầy Thu Ngân (Tài Khố Vị)</div>
-        <div class="purpose-modal-option" data-value="safe">Vị trí Két Sắt (Tụ Tài Bảo Khố)</div>
-        <div class="purpose-modal-option" data-value="machinery">Hệ Thống Máy Móc / Dây Chuyền Sản Xuất</div>
-        <div class="purpose-modal-option" data-value="bakery">Hướng Lò Nướng / Quầy Bánh Mì</div>
-        <div class="purpose-modal-option" data-value="coffee">Hướng Quầy Pha Chế Cà Phê / Trà Sữa</div>
-        <div class="purpose-modal-option" data-value="restaurant">Hướng Quán Ăn / Nhà Hàng</div>
-        <div class="purpose-modal-option" data-value="shop">Hướng Cửa Hàng / Showroom / Tạp Hóa</div>
-        <div class="purpose-modal-option" data-value="salon">Hướng Salon Tóc / Giường Nail / Spa</div>
-
-        <div class="purpose-modal-group">🛠️ TỌA VỊ TRẤN SÁT (Hệ Thống Đè Hung)</div>
-        <div class="purpose-modal-option" data-value="kitchen">Vị trí Đặt Bếp Nấu (Táo Vị Trấn Sát)</div>
-        <div class="purpose-modal-option" data-value="toilet">Vị trí Nhà Vệ Sinh (Tiêu Sát Khí)</div>
-        <div class="purpose-modal-option" data-value="septic_tank">Vị trí Hầm Tự Hoại / Bể Phốt Ngầm</div>
-        <div class="purpose-modal-option" data-value="pipe_shaft">Trục Kỹ Thuật / Hộp Gen Uế Khí</div>
-        <div class="purpose-modal-option" data-value="storage">Vị trí Kho Hàng / Phòng Đồ Tạp</div>
-        <div class="purpose-modal-option" data-value="trash_area">Vị trí Thùng Rác / Khu Tập Kết Phế Liệu</div>
-    `;
-
-    // Xử lý sự kiện click chọn danh mục mục đích
-    body.querySelectorAll('.purpose-modal-option').forEach(item => {
-        item.addEventListener('click', () => {
-            const value = item.getAttribute('data-value');
-            const text = item.textContent.trim();
-
-            // Cập nhật giao diện text hiển thị bên ngoài
-            const textDisplay = document.getElementById('purpose-selected-text');
-            if (textDisplay) textDisplay.textContent = text;
-            
-            // Cập nhật giá trị vào input ẩn phục vụ thuật toán lõi
-            const hiddenInput = document.getElementById('purpose');
-            if (hiddenInput) {
-                hiddenInput.value = value;
-            }
-
-            currentPurposeValue = value;
-
-            // Ẩn modal an toàn
-            if (typeof hidePurposeModal === 'function') {
-                hidePurposeModal();
-            } else {
-                modal.style.display = 'none';
-            }
-
-            // Thực thi tính toán lại toàn bộ trục Thiên - Địa - Nhân
-            if (typeof recalculateFate === 'function') {
-                recalculateFate();
-            }
-
-            // Cập nhật hộp danh sách gợi ý realtime
-            if (typeof generateDirectionsList === 'function') {
-                generateDirectionsList(); 
-            }
-        });
-    });
-
+    // Giữ nguyên lệnh mở bằng display flex chuẩn chỉ của bạn để không làm gãy logic cũ
     modal.style.display = 'flex';
 }
 
@@ -4502,10 +4496,10 @@ function hidePurposeModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// Đóng modal khi click vào nền tối
+// Đóng modal khi click ra nền tối ngoài hộp nội dung
 document.addEventListener('click', (e) => {
     const modal = document.getElementById('purpose-modal');
-    if (modal && e.target === modal) {
+    if (modal && modal.style.display === 'flex' && e.target === modal) {
         hidePurposeModal();
     }
 });
@@ -4516,28 +4510,30 @@ document.addEventListener('click', (e) => {
  * @param {string} title - Tiêu đề (Mặc định: Thông Báo)
  */
 function showCustomAlert(msg, title = "Thông Báo") {
-    // Cập nhật tiêu đề trước khi hiển thị
     const titleEl = document.querySelector('.custom-alert-title');
     if (titleEl) titleEl.innerText = title;
     
-    // Cập nhật nội dung
-    document.getElementById('customAlertMsg').innerText = msg;
-    document.getElementById('customAlert').classList.add('active');
+    const msgEl = document.getElementById('customAlertMsg');
+    if (msgEl) msgEl.innerText = msg;
+
+    const alertBox = document.getElementById('customAlert');
+    if (alertBox) alertBox.classList.add('active');
 }
 
 function closeCustomAlert() {
-    document.getElementById('customAlert').classList.remove('active');
+    const alertBox = document.getElementById('customAlert');
+    if (alertBox) alertBox.classList.remove('active');
 }
 
 /**
- * Xử lý nhập liệu ngày tháng với logic kiểm tra dữ liệu sạch
+ * 📅 XỬ LÝ NHẬP LIỆU NGÀY THÁNG SẠCH ĐA NỀN TẢNG
  */
 function handleDateInput(currentInput, nextInputId) {
-    // Làm sạch đầu vào: chỉ giữ lại số
+    // Làm sạch đầu vào ngay lập tức
     currentInput.value = currentInput.value.replace(/[^0-9]/g, '');
     let val = parseInt(currentInput.value) || 0;
 
-    // Kiểm tra Ngày
+    // Kiểm tra tính hợp lệ của Ngày
     if (currentInput.id === 'birthDay') {
         if (val > 31) {
             currentInput.value = "31";
@@ -4547,7 +4543,7 @@ function handleDateInput(currentInput, nextInputId) {
         }
     }
 
-    // Kiểm tra Tháng
+    // Kiểm tra tính hợp lệ của Tháng
     if (currentInput.id === 'birthMonth') {
         if (val > 12) {
             currentInput.value = "12";
@@ -4557,14 +4553,17 @@ function handleDateInput(currentInput, nextInputId) {
         }
     }
 
-    // Tự động chuyển ô khi nhập đủ
+    // Tự động chuyển tiêu điểm sang ô tiếp theo
     if (currentInput.value.length >= currentInput.maxLength && nextInputId) {
-        document.getElementById(nextInputId).focus();
+        const nextEl = document.getElementById(nextInputId);
+        if (nextEl) nextEl.focus();
     }
     
-    // Tự động tính toán lại khi dữ liệu thay đổi
+    // Tích hợp an toàn cả hai kiểu đặt tên hàm đệm khử lag chữ của bạn
     if (typeof debounceRecalculate === 'function') {
         debounceRecalculate();
+    } else if (typeof debouncedRecalculate === 'function') {
+        debouncedRecalculate();
     }
 }
 
@@ -4788,18 +4787,6 @@ function kichHoatDenLedQuet(heading) {
     applyEffect(hau72TextsCache, 2.5, 1.65, true);
 }
 
-// ====================== MANUAL ROTATE (KÉO SLIDER) ======================
-function manualRotate(value) {
-    const numValue = parseFloat(value);
-    if (isNaN(numValue)) return;
-
-    lastHeading = (numValue % 360 + 360) % 360;
-    
-    if (rafId) cancelAnimationFrame(rafId);
-    rafId = requestAnimationFrame(() => {
-        updateCompassUI(lastHeading);
-    });
-}
 // =========================================================================
 // 📐 HÀM VẼ PH N VÙNG VÀNH KHĂN (ĐÃ N NG CẤP CACHE & NÉN TỌA ĐỘ)
 // =========================================================================
@@ -4845,9 +4832,6 @@ function getSvgArcPath(cx, cy, rIn, rOut, startAngle, endAngle) {
     return pathStr;
 }
 
-// =========================================================================
-// 🎨 ENGINE CẬP NHẬT MÀU NỀN HUNG CÁT (ĐÃ TỐI ƯU HÓA HIỆU NĂNG CAO)
-// =========================================================================
 // =========================================================================
 // 🎨 ENGINE CẬP NHẬT MÀU NỀN HUNG CÁT (HIỆU ỨNG ĐÈN NEON SÁNG CHỐNG CHÓI)
 // =========================================================================
@@ -5167,31 +5151,103 @@ document.getElementById('closeDonateBtn').addEventListener('click', function() {
     document.getElementById('donateModal').style.display = 'none';
 });
 function selectGender(gender) {
-    // Reset cả hai
-    document.getElementById('gender-male').classList.remove('active');
-    document.getElementById('gender-female').classList.remove('active');
-    
-    // Active cái được chọn
+    const maleBtn = document.getElementById('gender-male');
+    const femaleBtn = document.getElementById('gender-female');
+    const hiddenGenderInput = document.getElementById('gender');
+
+    if (!maleBtn || !femaleBtn || !hiddenGenderInput) return;
+
+    // ⚡ BƯỚC 1: Thay đổi giao diện lập tức (Ưu tiên luồng vẽ phản hồi 0ms cho người dùng)
+    maleBtn.classList.remove('active');
+    femaleBtn.classList.remove('active');
     document.getElementById('gender-' + gender).classList.add('active');
+    hiddenGenderInput.value = gender;
     
-    // Cập nhật giá trị hidden
-    document.getElementById('gender').value = gender;
-    
-    // Tính lại kết quả
-    if (typeof recalculateFate === 'function') {
-        recalculateFate();
-    }
+    // ⚡ BƯỚC 2: Đẩy phép tính phong thủy nặng ra luồng chạy ngầm sau 30ms 
+    // Giúp trình duyệt kịp thời đổi màu nút bấm trước khi CPU bị vắt kiệt để tính toán
+    setTimeout(() => {
+        if (typeof recalculateFate === 'function') {
+            recalculateFate();
+        }
+    }, 30);
 }
 
-// Khởi tạo ban đầu (để tránh lỗi khi load lại)
-document.addEventListener('DOMContentLoaded', function() {
-    // Đảm bảo Nam được active mặc định
-    const currentGender = document.getElementById('gender').value;
-    if (currentGender === 'female') {
-        document.getElementById('gender-female').classList.add('active');
-        document.getElementById('gender-male').classList.remove('active');
+/**
+ * 🪐 KHỞI TẠO ĐỒNG BỘ VÀ ĐĂNG KÝ SỰ KIỆN AN TOÀN (KHÔNG ĐÈ BIẾN TOÀN CỤC)
+ */
+document.addEventListener("DOMContentLoaded", function() {
+    
+    // 1. Đồng bộ trạng thái Giới tính mặc định khi vừa nạp trang
+    const hiddenGenderInput = document.getElementById('gender');
+    if (hiddenGenderInput) {
+        const currentGender = hiddenGenderInput.value;
+        const maleBtn = document.getElementById('gender-male');
+        const femaleBtn = document.getElementById('gender-female');
+        
+        if (maleBtn && femaleBtn) {
+            if (currentGender === 'female') {
+                femaleBtn.classList.add('active');
+                maleBtn.classList.remove('active');
+            } else {
+                maleBtn.classList.add('active');
+                femaleBtn.classList.remove('active');
+            }
+        }
     }
+
+    // 2. Quản lý sự kiện Cẩm Nang Modal (Sử dụng addEventListener thay vì ép cứng onclick)
+    const guideModal = document.getElementById("guideModal");
+    const openGuideBtn = document.getElementById("openGuideBtn");
+    const closeGuideBtn = document.getElementById("closeGuideBtn");
+
+    if (openGuideBtn && guideModal && closeGuideBtn) {
+        openGuideBtn.addEventListener('click', function() {
+            guideModal.style.display = "block"; 
+            document.body.style.overflow = "hidden"; // Khóa cuộn trang nền hiệu quả
+            
+            if (window.MathJax && typeof MathJax.typesetPromise === 'function') {
+                MathJax.typesetPromise();
+            }
+        });
+
+        closeGuideBtn.addEventListener('click', function() {
+            guideModal.style.display = "none"; 
+            document.body.style.overflow = "auto"; 
+        });
+    }
+
+    // 3. Quản lý sự kiện Ủng Hộ (Donate Modal) bảo mật chống crash
+    const donateModal = document.getElementById('donateModal');
+    const openDonateBtn = document.getElementById('openDonateBtn');
+    const closeDonateBtn = document.getElementById('closeDonateBtn');
+
+    if (openDonateBtn && donateModal && closeDonateBtn) {
+        openDonateBtn.addEventListener('click', function() {
+            donateModal.style.display = 'flex';
+        });
+
+        closeDonateBtn.addEventListener('click', function() {
+            donateModal.style.display = 'none';
+        });
+    }
+
+    // 4. CHỐNG ĐÈ SỰ KIỆN TOÀN CỤC: Đóng các modal an toàn khi click ra ngoài vùng xám
+    window.addEventListener('click', function(event) {
+        if (guideModal && event.target === guideModal) {
+            guideModal.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+        if (donateModal && event.target === donateModal) {
+            donateModal.style.display = 'none';
+        }
+    });
 });
+
+// Phơi biến ra phạm vi window toàn cục chống lỗi biên dịch khi băm code nén mã hóa
+window.selectGender = selectGender;
+window.handleDateInput = handleDateInput;
+window.showCustomAlert = showCustomAlert;
+window.closeCustomAlert = closeCustomAlert;
 
 // =========================================================================
 // 🌐 HỆ THỐNG PWA FLOATING ACTION BUTTON - HỖ TRỢ VUỐT GẠT ẨN VĨNH VIỄN
