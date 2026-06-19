@@ -735,7 +735,6 @@ function recalculateFate() {
 
     const activeColor = tongHop.diem >= 72 ? '#30d158' : '#ff3b30';
 
-    // Biện chứng trạng thái Không Vong chuyên sâu phục vụ thuyết minh thuật ngữ
     let giaiThichKhongVongHTML = "";
     if (tongHop.khongVong) {
         giaiThichKhongVongHTML = `<p style="margin:8px 0; color:#ff4444; background:rgba(255,59,48,0.06); padding:8px; border-radius:6px; border:1px solid rgba(255,59,48,0.2);">
@@ -744,13 +743,24 @@ function recalculateFate() {
     }
 
     // =========================================================================
-    // 🌍 TỰ ĐỘNG KHẢO SÁT TỪ XA: ĐỒNG BỘ TOÁN THỨC TỊNH TIẾN LỆCH TÚ
+    // 🌍 TOÁN THỨC TỊNH TIẾN LỆCH TÚ & XỬ LÝ ĐIỀU KIỆN HIỂN THỊ THÔNG MINH
     // =========================================================================
-    // Lấy giá trị lệch tú từ môi trường (ví dụ nhập vào 5 hoặc -5)
     let declinationValue = typeof magneticDeclination !== 'undefined' ? Number(magneticDeclination) : 0;
-    // Tính tọa độ thực tế điểm dừng tại khu vực của khách phương xa (Bù trừ độ lệch từ trực tiếp)
     let remoteClientHeading = ((realHeading + declinationValue) % 360 + 360) % 360;
     let remoteSonInfo = layThongTin24Son(remoteClientHeading, chủMệnh, namAmMệnhChủ);
+
+    // Thuật toán thông minh: Chỉ dựng HTML khi độ lệch từ có giá trị khác 0
+    let htmlKhachPhuongXa = "";
+    if (declinationValue !== 0) {
+        htmlKhachPhuongXa = `
+            <div style="margin:10px 0; padding: 10px; background: rgba(0,200,255,0.06); border-left: 4px solid #00c8ff; border-radius: 6px; color: #e1f5fe; border-top: 1px solid rgba(0,200,255,0.1); border-right: 1px solid rgba(0,200,255,0.1); border-bottom: 1px solid rgba(0,200,255,0.1);">
+                🌍 <b>THÔNG SỐ GỬI KHÁCH PHƯƠNG XA (Độ Lệch Từ ${declinationValue > 0 ? '+' : ''}${declinationValue}°):</b> <br>
+                • Tọa độ thực tế tại khu đất: <span style="color:#00c8ff; font-weight:bold; font-size:1rem;">${remoteClientHeading.toFixed(1)}°</span><br>
+                • Phương vị thực: <b>${remoteSonInfo.huong}</b> — Bản Sơn chiếm mạch: <span style="color:#ffd700; font-weight:bold;">Sơn ${remoteSonInfo.son}</span><br>
+                <small style="color:#b0bec5; font-size:0.75rem; display:block; margin-top:4px;">(Hệ thống tự động đồng bộ sai lệch từ trường địa phương để xuất dữ liệu chuẩn chỉnh cho khách đối chiếu bản vẽ thiết kế)</small>
+            </div>
+        `;
+    }
 
     targetContainer.innerHTML = `
         <div style="text-align: center; margin: 10px 0;">
@@ -768,16 +778,13 @@ function recalculateFate() {
                 📖 BIỆN CHỨNG KHÍ CỤC CẤU TRÚC HẠNG MỤC KỸ THUẬT
             </p>
             
-            <p style="margin:8px 0;">📍 <b>Tọa độ trắc địa tại máy:</b> ${realHeading.toFixed(1)}° (Góc xoay đĩa la bàn cơ học đã đồng bộ độ lệch từ ${declinationValue}° nhằm định hướng thực địa chính xác).</p>
+            <p style="margin:8px 0;">📍 <b>Tọa độ trắc địa tại máy:</b> ${realHeading.toFixed(1)}° (Góc xoay đĩa la bàn cơ học đã định vị trục tọa độ gốc).</p>
             
-            <p style="margin:10px 0; padding: 8px; background: rgba(0,200,255,0.08); border-left: 4px solid #00c8ff; border-radius: 4px; color: #e1f5fe;">
-                🌍 <b>THÔNG SỐ GỬI KHÁCH PHƯƠNG XA:</b> <br>
-                • Tọa độ thực tế tại khu đất: <span style="color:#00c8ff; font-weight:bold; font-size:1rem;">${remoteClientHeading.toFixed(1)}°</span><br>
-                • Phương vị thực: <b>${remoteSonInfo.huong}</b> — Bản Sơn chiếm mạch: <span style="color:#ffd700; font-weight:bold;">Sơn ${remoteSonInfo.son}</span><br>
-                <small style="color:#b0bec5;">(Hệ thống tự động cộng gộp sai lệch từ trường địa phương ${declinationValue > 0 ? '+' : ''}${declinationValue}° để xuất dữ liệu chuẩn chỉnh cho khách đối chiếu bản vẽ)</small>
-            </p>
-
             <p style="margin:8px 0;">📍 <b>Phương vị la bàn số:</b> Ngũ hành từ trường phương vị thuộc <b>${hanhPhuongVi}</b> (Góc quay cảm biến: <b>${Math.round(headingToCalculate)}°</b>).</p>
+            
+            <!-- 🔄 ĐÃ ĐƯỢC DI CHUYỂN: Khối dữ liệu phương xa nằm riêng biệt ngay dưới Phương vị la bàn số -->
+            ${htmlKhachPhuongXa}
+
             <p style="margin:8px 0;">🎯 <b>Quẻ mệnh Nhân chủ (Hành ${hanHinhCungPhi}):</b> Cung phi cốt lõi <b>${chủMệnh}</b> (${nhomMenh}).</p>
             
             ${vanInfo}
