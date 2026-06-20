@@ -1715,60 +1715,140 @@ mjx-container {
     }
 }
 /* =========================================================================
-   🔮 ENGINE PHẲNG V10.3 - SEMI-TRANSPARENT GLASSMORPHISM EDITION
+   🔮 ENGINE PHẲNG V10.3 - PLATINUM WHITE GLOW iOS GLASSMORPHISM
    ========================================================================= */
 
-/* 1. BONG BÓNG MENU NỔI CAO CẤP (Đã làm mờ nhìn xuyên thấu + Viền mịn) */
+/* 1. BONG BÓNG MENU NỔI CAO CẤP (Nền kính iPhone xuyên thấu + Viền vàng hổ phách gốc) */
 #floatingMenuBtnV10 {
     position: fixed !important;
     bottom: 20px !important;
     right: 20px !important;
-    width: 50px !important;
-    height: 50px !important;
-    font-size: 18px !important;
+    width: 54px !important; /* Vòng tròn giữ im nguyên bản chuẩn trắc địa */
+    height: 54px !important;
+    font-size: 22px !important; 
     
-    /* Sử dụng RGBA (mức 0.75 và 0.85) để tạo độ trong suốt nhẹ cho khối nền */
-    background: radial-gradient(circle, rgba(37, 37, 38, 0.75) 0%, rgba(13, 13, 15, 0.85) 100%) !important;
+    /* 🍏 NỀN KÍNH TRONG SUỐT IPHONE */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(0, 0, 0, 0.5)) !important;
     
-    /* Hạ độ mờ đục của viền vàng xuống mức 0.5 để tệp vào nền kính */
+    /* Viền vàng hổ phách gốc tinh tế */
     border: 2px solid rgba(223, 183, 108, 0.5) !important;
     border-radius: 50% !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     z-index: 99999 !important;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5) !important;
     user-select: none;
     -webkit-user-select: none;
     cursor: move !important;
     touch-action: none !important;
     
-    /* ⚡ CHIÊU THỨC KÍNH MỜ: Giúp làm nhòe các phần tử trôi phía sau bong bóng khi di chuyển */
-    backdrop-filter: blur(6px) !important;
-    -webkit-backdrop-filter: blur(6px) !important;
+    /* Lớp sương mù mờ sâu thẳm của Apple */
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
     
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                box-shadow 0.3s ease !important;
+    /* Mạch hào quang viền khẽ thở nhẹ theo chu kỳ */
+    animation: bubbleBreathingAuraV10 3s infinite ease-in-out !important;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
 }
 
-/* Hiệu ứng nén lò xo khi ngón tay đè/chuột nhấn chặt vào bong bóng */
+/* 🎯 ĐÃ ĐIỀU CHỈNH: THU NHỎ HÌNH NGƯỜI Ở TÂM & ÉP MẠCH PHÁT SÁNG TRẮNG ÁNH KIM */
+#floatingMenuBtnV10 * {
+    color: #ffffff !important;         /* Nhuộm trắng chữ/icon font gốc */
+    fill: #ffffff !important;          /* Nhuộm trắng nếu là hình vector SVG */
+    
+    /* Khử sắc đen chìm lấp nếu hình người là file ảnh IMG */
+    filter: brightness(1) invert(0); 
+    
+    /* Kích hoạt mạch thở phát sáng trắng ánh kim siêu tốc độ */
+    animation: innerIconGlowV10 2.6s infinite ease-in-out !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transform-origin: center center;
+    
+    /* 🎯 THẦN CHÚ THU NHỎ: Hạ từ 65% xuống 52% tạo độ tinh xảo, gọn gàng trong lòng kính */
+    max-width: 52% !important;
+    max-height: 52% !important;
+}
+
+/* Tối ưu riêng nếu hình người bên trong là thẻ <img> để ôm khít khung tròn */
+#floatingMenuBtnV10 img {
+    object-fit: contain !important;
+}
+
+/* Hiệu ứng đàn hồi nén khí khi đè chặt ngón tay hoặc nhấn chuột */
 #floatingMenuBtnV10:active {
-    transform: scale(0.8) !important;
+    transform: scale(0.85) !important;
     cursor: grabbing !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
-    background: radial-gradient(circle, rgba(37, 37, 38, 0.85) 0%, rgba(13, 13, 15, 0.95) 100%) !important;
+    background: rgba(223, 183, 108, 0.35) !important; /* Giữ nguyên hiệu ứng ửng vàng nguyên bản */
 }
 
-/* Vòng tròn sóng lan tỏa cũng được hạ opacity viền cho đồng điệu */
+/* Vòng sóng siêu âm lan tỏa màu vàng hổ phách tinh tế của bản gốc */
 .pulse-ring-v10 {
-    position: absolute; width: 100%; height: 100%;
-    border: 1px solid rgba(223, 183, 108, 0.4) !important; 
+    position: absolute; 
+    width: 100%; 
+    height: 100%;
+    border: 1px solid rgba(223, 183, 108, 0.45) !important; 
     border-radius: 50%;
-    animation: bubblePulseV10 2.5s infinite ease-out; pointer-events: none;
+    animation: bubblePulseV10 2.6s infinite cubic-bezier(0.165, 0.84, 0.44, 1); 
+    pointer-events: none;
 }
-@keyframes bubblePulseV10 { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.4); opacity: 0; } }
 
-/* 2. CẤU TRÚC KHUNG CHÍNH (Vừa khít phom đẩy tự nhiên theo dòng trang) */
+/* =========================================================================
+   🔥 HỆ THỐNG PHÂN PHỐI LỰC ĐỒ HỌC GPU (KEYFRAMES ANIMATIONS)
+   ========================================================================= */
+
+/* Ma trận 1: Hào quang viền ngoài khẽ thở màu vàng gốc */
+@keyframes bubbleBreathingAuraV10 {
+    0% {
+        border-color: rgba(223, 183, 108, 0.5) !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 4px rgba(223, 183, 108, 0.2) !important;
+    }
+    50% {
+        border-color: rgba(255, 215, 0, 0.9) !important; 
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 215, 0, 0.6) !important;
+    }
+    100% {
+        border-color: rgba(223, 183, 108, 0.5) !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 4px rgba(223, 183, 108, 0.2) !important;
+    }
+}
+
+/* 👑 Ma trận 2: THUẬT TOÁN ĐỐT CHÁY ÁNH SÁNG TRẮNG ÁNH KIM CHO HÌNH NGƯỜI */
+@keyframes innerIconGlowV10 {
+    0% {
+        opacity: 0.75;
+        transform: scale(0.96);
+        /* Trạng thái đầu: Trắng mờ tinh tế phủ sương */
+        filter: invert(1) brightness(1) drop-shadow(0 0 2px rgba(255, 255, 255, 0.6)) !important;
+    }
+    50% {
+        opacity: 1 !important;
+        transform: scale(1.08); /* Nở nhẹ kiêu hãnh vừa vặn */
+        
+        /* 🎯 THẦN CHÚ TRẮNG ÁNH KIM: Đẩy độ sáng cực đại (brightness(3.5)), 
+           chồng 3 tầng bóng đổ từ Trắng tinh khôi, Bạc bạch kim đến Pha lê trong suốt.
+           Biến hình người thành một khối năng lượng kim cương tỏa sáng rực rỡ! */
+        filter: invert(1) brightness(3.5) 
+                drop-shadow(0 0 6px #ffffff) 
+                drop-shadow(0 0 15px #e5e7eb) 
+                drop-shadow(0 0 25px rgba(255, 255, 255, 0.9)) !important;
+    }
+    100% {
+        opacity: 0.75;
+        transform: scale(0.96);
+        filter: invert(1) brightness(1) drop-shadow(0 0 2px rgba(255, 255, 255, 0.6)) !important;
+    }
+}
+
+/* Ma trận 3: Vòng sóng đệm phát tán đều đặn màu vàng */
+@keyframes bubblePulseV10 { 
+    0% { transform: scale(0.95); opacity: 0.8; } 
+    50% { opacity: 0.25; }
+    100% { transform: scale(1.5); opacity: 0; } 
+}
+
+/* 2. CẤU TRÚC KHUNG CHÍNH (VỮA KHÍT PHOM ĐẨY TỰ NHIÊN CHẠY DÒNG) */
 #mainPanelWrapper {
     position: relative !important;
     width: 90% !important;
@@ -1778,14 +1858,12 @@ mjx-container {
     border: 1px solid #333 !important;
     border-radius: 12px !important;
     box-sizing: border-box !important;
-    
     overflow: hidden !important;
     will-change: max-height, opacity;
     transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
                 opacity 0.3s ease, 
                 padding 0.4s ease, 
                 box-shadow 0.4s ease !important;
-
     max-height: 0px !important;
     opacity: 0 !important;
     padding: 0 15px !important;
@@ -1793,7 +1871,6 @@ mjx-container {
     pointer-events: none !important;
 }
 
-/* Trạng thái mở bung trượt phẳng */
 #mainPanelWrapper.panel-open-v10 {
     max-height: 750px !important; 
     opacity: 1 !important;
@@ -1803,7 +1880,6 @@ mjx-container {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
 }
 
-/* Tối ưu cảm biến chạm */
 #mainPanelWrapper input, 
 #mainPanelWrapper button, 
 #mainPanelWrapper .gender-option, 
@@ -1814,7 +1890,6 @@ mjx-container {
     z-index: 10;
 }
 
-/* Hiệu ứng nẩy cho các nút bấm con */
 .btn-rotate:active {
     transform: scale(0.96) !important;
     background-color: #262626 !important;
@@ -1824,7 +1899,6 @@ mjx-container {
     background-color: #222 !important;
 }
 
-/* Loại bỏ vĩnh viễn nút mũi tên cũ */
 #toggleArrow {
     display: none !important;
     opacity: 0 !important;
