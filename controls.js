@@ -3678,11 +3678,16 @@ function convertToDecimalDegrees(val) {
 }
 
 /**
- * 📡 ENGINE TÌM KIẾM TOẠ ĐỘ TOÀN CẦU QUA ĐỊA DANH (Đã fix hoàn toàn tương phản màu chữ)
+ * Chuyển đổi tọa độ định dạng 60° 6' 31" N về dạng thập phân 60.10861
  */
-/**
- * 📡 ENGINE TÌM KIẾM TOẠ ĐỘ TOÀN CẦU QUA ĐỊA DANH (Bản tối ưu hóa định vị sâu)
- */
+function dmsToDecimal(d, m, s, direction) {
+    let dd = d + m/60 + s/3600;
+    if (direction == "S" || direction == "W") {
+        dd = dd * -1;
+    }
+    return dd;
+}
+
 async function getLocationFromAddress() {
     const addressInput = document.getElementById('address-lookup');
     const latInput = document.getElementById('remote-lat');
@@ -3711,7 +3716,9 @@ async function getLocationFromAddress() {
 
     try {
         // Đã thêm cấu hình thu thập chi tiết địa danh (addressdetails=1 & nâng độ chính xác truy vấn)
-        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&addressdetails=1`;
+        
+		// Sử dụng &featuretype để ưu tiên tìm kiếm thành phố/tỉnh/bang thay vì các địa điểm lẻ tẻ
+const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&addressdetails=1&extratags=1&namedetails=1`;
         const response = await fetch(url, { headers: { 'Accept-Language': 'en,vi;q=0.9' } });
 
         if (!response.ok) throw new Error("API Network error");
