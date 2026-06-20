@@ -3237,7 +3237,7 @@ function getDecimalYear(date = new Date()) {
 // 🔥 MODULE ĐỊNH VỊ TÊN VÙNG TOÀN CẦU (NÂNG CẤP MỚI)
 // =========================================================================
 /**
- * 🛰️ ENGINE ĐỊNH VỊ VÙNG TỰ ĐỘNG (FULL GLOBAL SUPPORT)
+ * 🛰️ ENGINE ĐỊNH VỊ VÙNG TỰ ĐỘNG (FULL GLOBAL SUPPORT - FIX LỖI 400)
  */
 async function updateLocationUI(lat, lon) {
     let displayEl = document.getElementById('location-display');
@@ -3261,11 +3261,21 @@ async function updateLocationUI(lat, lon) {
     }
     if (!displayEl) return;
 
+    // 2. LÀM SẠCH TỌA ĐỘ (CHỐNG LỖI 400 BAD REQUEST)
+    // Giới hạn 5 chữ số thập phân, ép kiểu số, và kiểm tra phạm vi địa lý
+    const safeLat = parseFloat(lat);
+    const safeLon = parseFloat(lon);
+
+    if (isNaN(safeLat) || isNaN(safeLon) || Math.abs(safeLat) > 90 || Math.abs(safeLon) > 180) {
+        displayEl.innerText = `📍 Tọa độ (${lat.toFixed(2)}, ${lon.toFixed(2)})`;
+        return;
+    }
+
     displayEl.innerText = "🔍 Đang đồng bộ vệ tinh...";
 
-    // 2. TẦNG OFFLINE: TỐC ĐỘ CỰC NHANH CHO CÁC VỊ TRÍ HAY DÙNG
-    const checkedLat = Math.round(lat * 1000) / 1000;
-    const checkedLon = Math.round(lon * 1000) / 1000;
+    // 3. TẦNG OFFLINE: TỐC ĐỘ CỰC NHANH
+    const checkedLat = Math.round(safeLat * 1000) / 1000;
+    const checkedLon = Math.round(safeLon * 1000) / 1000;
 
     const testLocations = [
         { lat: 11.564, lon: 108.991, name: "📍 Ninh Thuận, VN" },
@@ -3279,25 +3289,23 @@ async function updateLocationUI(lat, lon) {
         }
     }
 
-    // 3. TẦNG ONLINE: API ĐỊA DANH TOÀN CẦU (BIGDATA CLOUD)
+    // 4. TẦNG ONLINE: API ĐỊA DANH TOÀN CẦU VỚI TỌA ĐỘ LÀM SẠCH
     if (navigator.onLine) {
         try {
-            // Thêm timeout để tránh treo app
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 4000);
 
-            const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=vi`, { signal: controller.signal });
+            // Gửi tọa độ đã làm sạch bằng toFixed(5)
+            const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${safeLat.toFixed(5)}&longitude=${safeLon.toFixed(5)}&localityLanguage=vi`, { signal: controller.signal });
             clearTimeout(timeoutId);
 
             if (response.ok) {
                 const data = await response.json();
                 
-                // Thuật toán thông minh chọn tên địa danh: City -> State -> Country
-                const city = data.city || data.locality || "";
+                const city = data.city || data.locality || data.town || data.village || "";
                 const state = data.principalSubdivision || "";
                 const country = data.countryName || "";
                 
-                // Kết hợp thông minh: Nếu có thành phố thì lấy thành phố + quốc gia, nếu không thì lấy bang + quốc gia
                 if (city) {
                     displayEl.innerText = `📍 ${city}, ${country}`;
                 } else if (state) {
@@ -3308,12 +3316,12 @@ async function updateLocationUI(lat, lon) {
                 return;
             }
         } catch (e) {
-            console.warn("Lỗi API địa danh, chuyển về mặc định.");
+            console.warn("Lỗi API địa danh, hiển thị tọa độ thô.");
         }
     }
 
-    // 4. TRẠNG THÁI MẶC ĐỊNH (KHI MẤT MẠNG HOẶC NGOÀI VÙNG)
-    displayEl.innerText = `📍 Tọa độ (${lat.toFixed(2)}, ${lon.toFixed(2)})`;
+    // 5. TRẠNG THÁI MẶC ĐỊNH
+    displayEl.innerText = `📍 Tọa độ (${safeLat.toFixed(2)}, ${safeLon.toFixed(2)})`;
 }
 
 function calculateRemoteDeclination() {
