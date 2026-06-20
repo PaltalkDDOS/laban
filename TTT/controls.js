@@ -6121,7 +6121,7 @@ function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat,
 }
 
 // =========================================================================
-// 🏆 HÀM BIÊN SOẠN BÁO CÁO PHONG THỦY SỐ THƯỢNG TẦNG - HOÀN THIỆN ĐỒNG BỘ UI/UX
+// 🏆 HÀM BIÊN SOẠN BÁO CÁO PHONG THỦY SỐ THƯỢNG TẦNG - ĐÃ ĐỒNG BỘ 100% DỮ LIỆU LÕI
 // =========================================================================
 function xayDungBaoCaoLuanGiai(name, degree) {
     const contentBox = document.getElementById('tongLuanContent');
@@ -6145,20 +6145,12 @@ function xayDungBaoCaoLuanGiai(name, degree) {
     };
     let nguHanhCungPhiText = maTranNguHanhCungPhi[thucTeChuMenh] || "Thổ";
 
+    // ─── KÍCH HOẠT ENGINE LÕI ───
     const tongHop = tinhDiemTongHop(thucTeChuMenh, degree, namKhaoSat, mucDich, namAmMệnhChủ);
     const sonChuan = tongHop.sonName || "Tý";
 
-    let thongTin72Hau = { ten: "Đang quét mạch", chatLuong: "Bình Hòa", diem: 60, ynghia: "Khí trường bình ổn cục bộ." };
-    if (typeof Data72Hau !== 'undefined') {
-        let gocChuan72 = (Math.round(degree / 5) * 5).toFixed(1);
-        if (Data72Hau[gocChuan72]) {
-            thongTin72Hau = Data72Hau[gocChuan72];
-        } else {
-            let keys = Object.keys(Data72Hau).map(Number);
-            let closest = keys.reduce((prev, curr) => (Math.abs(curr - degree) < Math.abs(prev - degree) ? curr : prev), 0);
-            thongTin72Hau = Data72Hau[closest.toFixed(1)] || thongTin72Hau;
-        }
-    }
+    // 🎯 ĐỒNG BỘ CHÍ MẠNG: Bốc thẳng dữ liệu 72 Hậu đã qua xử lý thuật toán tinh lọc từ tâm ma trận
+    const thongTin72Hau = tongHop.hauInfo || { ten: "Đang quét mạch", chatLuong: "Bình Hòa", diem: 60, ynghia: "Khí trường bình ổn cục bộ." };
 
     const luuNienObj = tuDongTinhCuuTinhLuuNien(sonChuan, namKhaoSat);
 
