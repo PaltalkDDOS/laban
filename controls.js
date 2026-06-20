@@ -3677,17 +3677,9 @@ function convertToDecimalDegrees(val) {
     return decimalValue;
 }
 
-
-function convertToDMS(decimal) {
-    const d = Math.floor(Math.abs(decimal));
-    const m = Math.floor((Math.abs(decimal) - d) * 60);
-    const s = Math.round((Math.abs(decimal) - d - m / 60) * 3600);
-    return `${d}° ${m}' ${s}"`;
-}
-
-// Khi hiển thị kết quả từ API, hãy dùng:
-// Lat: ${convertToDMS(cleanLat)} ${cleanLat >= 0 ? 'N' : 'S'}
-// Lon: ${convertToDMS(cleanLon)} ${cleanLon >= 0 ? 'E' : 'W'}
+/**
+ * 📡 ENGINE TÌM KIẾM TOẠ ĐỘ TOÀN CẦU QUA ĐỊA DANH (Bản tối ưu hóa định vị sâu)
+ */
 async function getLocationFromAddress() {
     const addressInput = document.getElementById('address-lookup');
     const latInput = document.getElementById('remote-lat');
@@ -3715,8 +3707,8 @@ async function getLocationFromAddress() {
     }
 
     try {
-        // Đã thêm cấu hình thu thập chi tiết địa danh (addressdetails=1 & nâng độ chính xác truy vấn)
 
+        // Dùng tham số này để ưu tiên tìm địa chỉ cụ thể thay vì vùng hành chính rộng
         const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&addressdetails=1&dedupe=1&polygon_geojson=0`;
         const response = await fetch(url, { headers: { 'Accept-Language': 'en,vi;q=0.9' } });
 
