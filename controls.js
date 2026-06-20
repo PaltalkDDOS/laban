@@ -3355,7 +3355,7 @@ function calculateRemoteDeclination(san_ten_vung = null) {
     
     updateMagneticDeclination();
     
-    // 🎯 CHUYỂN TIẾP: Đưa tên địa danh xuống hàm hiển thị đồ họa UI
+    // 🎯 BƯỚC NÂNG CẤP VÀNG: Bỏ truyền rỗng, chuyển tiếp san_ten_vung xuống tầng hiển thị UI
     updateLocationUI(latV, lonV, san_ten_vung); 
     
     showToast(`Đã tính tọa độ từ xa: ${decl.toFixed(2)}°`);
@@ -3692,7 +3692,7 @@ async function getLocationFromAddress() {
 
     try {
         const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&addressdetails=1&extratags=1&namedetails=1&dedupe=1`;
-        const response = await fetch(url, { headers: { 'Accept-Language': 'en,vi;q=0.9' } });
+        const response = await fetch(url, { headers: { 'Accept-Language': 'vi,en;q=0.9' } });
 
         if (!response.ok) throw new Error("API Network error");
         const data = await response.json();
@@ -3713,12 +3713,15 @@ async function getLocationFromAddress() {
                 localStorage.setItem('save_lon', cleanLon);
             }
 
-            // 🎯 TRÍCH XUẤT TÊN SẠCH NGAY TỪ ĐẦU
-            const shortName = displayName.split(',').slice(0, 2).join(',');
+            // 🎯 THUẬT TOÁN ĐỘT PHÁ: Tách chuỗi thành mảng và làm sạch khoảng trắng
+            const parts = displayName.split(',').map(p => p.trim());
+            
+            // Lấy phần tử đầu tiên (Địa danh cụ thể) + phần tử cuối cùng (Quốc gia) để luôn luôn có tên nước
+            const shortName = parts.length > 1 ? `${parts[0]}, ${parts[parts.length - 1]}` : parts[0];
 
-            // 🎯 NỐI MẮT XÍCH: Truyền shortName vào các hàm xử lý tiếp theo
+            // KÍCH HOẠT TÍNH TOÁN ĐỒNG BỘ
             if (typeof calculateRemoteDeclination === 'function') {
-                calculateRemoteDeclination(shortName);
+                calculateRemoteDeclination(shortName);  
             } else if (typeof calculateGlobalDeclination === 'function') {
                 const decl = calculateGlobalDeclination(cleanLat, cleanLon);
                 magneticDeclination = decl;
@@ -3753,7 +3756,7 @@ async function getLocationFromAddress() {
             btn.innerText = "Get & Add Lat / Lon";
             btn.disabled = false;
             btn.style.background = "rgba(223, 183, 108, 0.08)"; 
-            btn.style.color = "#dfb76c";                                         
+            btn.style.color = "#dfb76c";                         
         }, 1500);
     }
     
