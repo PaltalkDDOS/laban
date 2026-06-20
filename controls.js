@@ -6248,7 +6248,7 @@ function xayDungBaoCaoLuanGiai(name, degree) {
         const kvBg = isDaiKV ? "rgba(255,59,48,0.06)" : "rgba(255,159,10,0.06)";
         khongVongAlertHTML = `
         <div style="margin-top: 8px; padding: 10px 14px; background: ${kvBg}; border: 1px solid ${kvColor}; border-radius: 6px; color: #fff; font-size: 0.85rem; line-height: 1.5; font-family: sans-serif;">
-            <strong style="color: ${kvColor}; display: block; margin-bottom: 3px;">⚠️ PHẠM PH N CÁCH KHÔNG VONG LUẬN CỤC: ${khongVongLoi.loai}</strong>
+            <strong style="color: ${kvColor}; display: block; margin-bottom: 3px;">⚠️ PHẠM PHÂN CÁCH KHÔNG VONG LUẬN CỤC: ${khongVongLoi.loai}</strong>
             • <b>Bản chất tuyến độ:</b> ${khongVongLoi.mucDo || "Tạp khí loạn âm dương"}<br>
             • <b>Biện giải thực địa:</b> ${khongVongLoi.message}
         </div>`;
