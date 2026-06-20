@@ -3677,17 +3677,17 @@ function convertToDecimalDegrees(val) {
     return decimalValue;
 }
 
-/**
- * Chuyển đổi tọa độ định dạng 60° 6' 31" N về dạng thập phân 60.10861
- */
-function dmsToDecimal(d, m, s, direction) {
-    let dd = d + m/60 + s/3600;
-    if (direction == "S" || direction == "W") {
-        dd = dd * -1;
-    }
-    return dd;
+
+function convertToDMS(decimal) {
+    const d = Math.floor(Math.abs(decimal));
+    const m = Math.floor((Math.abs(decimal) - d) * 60);
+    const s = Math.round((Math.abs(decimal) - d - m / 60) * 3600);
+    return `${d}° ${m}' ${s}"`;
 }
 
+// Khi hiển thị kết quả từ API, hãy dùng:
+// Lat: ${convertToDMS(cleanLat)} ${cleanLat >= 0 ? 'N' : 'S'}
+// Lon: ${convertToDMS(cleanLon)} ${cleanLon >= 0 ? 'E' : 'W'}
 async function getLocationFromAddress() {
     const addressInput = document.getElementById('address-lookup');
     const latInput = document.getElementById('remote-lat');
@@ -3716,9 +3716,8 @@ async function getLocationFromAddress() {
 
     try {
         // Đã thêm cấu hình thu thập chi tiết địa danh (addressdetails=1 & nâng độ chính xác truy vấn)
-        
-		// Sử dụng &featuretype để ưu tiên tìm kiếm thành phố/tỉnh/bang thay vì các địa điểm lẻ tẻ
-const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&addressdetails=1&extratags=1&namedetails=1`;
+
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&addressdetails=1&dedupe=1&polygon_geojson=0`;
         const response = await fetch(url, { headers: { 'Accept-Language': 'en,vi;q=0.9' } });
 
         if (!response.ok) throw new Error("API Network error");
