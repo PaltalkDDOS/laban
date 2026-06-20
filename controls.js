@@ -3678,6 +3678,9 @@ function convertToDecimalDegrees(val) {
 }
 
 /**
+ * 📡 ENGINE TÌM KIẾM TOẠ ĐỘ TOÀN CẦU QUA ĐỊA DANH (Đã fix hoàn toàn tương phản màu chữ)
+ */
+/**
  * 📡 ENGINE TÌM KIẾM TOẠ ĐỘ TOÀN CẦU QUA ĐỊA DANH (Bản tối ưu hóa định vị sâu)
  */
 async function getLocationFromAddress() {
@@ -3707,9 +3710,8 @@ async function getLocationFromAddress() {
     }
 
     try {
-
-        // Dùng tham số này để ưu tiên tìm địa chỉ cụ thể thay vì vùng hành chính rộng
-        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&addressdetails=1&dedupe=1&polygon_geojson=0`;
+        // Đã thêm cấu hình thu thập chi tiết địa danh (addressdetails=1 & nâng độ chính xác truy vấn)
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&addressdetails=1&extratags=1&namedetails=1&dedupe=1`;
         const response = await fetch(url, { headers: { 'Accept-Language': 'en,vi;q=0.9' } });
 
         if (!response.ok) throw new Error("API Network error");
