@@ -3609,7 +3609,105 @@ function convertToDecimalDegrees(val) {
     return decimalValue;
 }
 
-// Thay thế toàn bộ hàm thiết lập sự kiện DOM cũ bằng bản thiết lập chạy song song này:
+async function getLocationFromAddress() {
+    const addressInput = document.getElementById('address-lookup');
+    const latInput = document.getElementById('remote-lat');
+    const lonInput = document.getElementById('remote-lon');
+    const btn = document.getElementById('lookupLocation');
+    
+    if (!addressInput || !addressInput.value.trim()) {
+        if (typeof showToast === 'function') showToast("⚠️ Vui lòng nhập tên vùng hoặc địa chỉ cần tìm!", true);
+        return;
+    }
+
+    const query = addressInput.value.trim();
+    
+    // ⚡ TRẠNG THÁI ĐANG TÌM: Đổi sang nền tối chữ xám rõ ràng
+    if (btn) {
+        btn.innerText = "⚡ ĐANG TÌM...";
+        btn.disabled = true;
+        btn.style.background = "rgba(255, 255, 255, 0.05)";
+        btn.style.color = "#888";
+    }
+
+    if (!navigator.onLine) {
+        if (typeof showToast === 'function') showToast("❌ Mất kết nối Internet!", true);
+        resetBtnState();
+        return;
+    }
+
+    try {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`;
+        const response = await fetch(url, { headers: { 'Accept-Language': 'vi,en;q=0.9' } });
+
+        if (!response.ok) throw new Error("API Network error");
+        const data = await response.json();
+
+        if (data && data.length > 0) {
+            const rawLat = parseFloat(data[0].lat);
+            const rawLon = parseFloat(data[0].lon);
+            const displayName = data[0].display_name;
+
+            const cleanLat = parseFloat(rawLat.toFixed(5));
+            const cleanLon = parseFloat(rawLon.toFixed(5));
+
+            if (latInput) latInput.value = cleanLat;
+            if (lonInput) lonInput.value = cleanLon;
+
+            if (document.getElementById('save-toggle')?.checked) {
+                localStorage.setItem('save_lat', cleanLat);
+                localStorage.setItem('save_lon', cleanLon);
+            }
+
+            // KÍCH HOẠT TÍNH TOÁN ĐỒNG BỘ
+            if (typeof calculateRemoteDeclination === 'function') {
+                calculateRemoteDeclination();
+            } else if (typeof calculateGlobalDeclination === 'function') {
+                const decl = calculateGlobalDeclination(cleanLat, cleanLon);
+                magneticDeclination = decl;
+                const inputEl = document.getElementById('declination-input');
+                if (inputEl) inputEl.value = decl.toFixed(2);
+                if (typeof updateMagneticDeclination === 'function') updateMagneticDeclination();
+                if (typeof updateLocationUI === 'function') updateLocationUI(cleanLat, cleanLon);
+            }
+
+            if (typeof showToast === 'function') {
+                const shortName = displayName.split(',').slice(0, 2).join(',');
+                showToast(`📍 Đã tìm thấy: ${shortName}`);
+            }
+
+            // 🟢 TRẠNG THÁI THÀNH CÔNG: Nền xanh lục, chữ đen tương phản cao
+            if (btn) {
+                btn.innerText = "THÀNH CÔNG ✓";
+                btn.style.background = "#30d158";
+                btn.style.color = "#000";
+            }
+        } else {
+            if (typeof showToast === 'function') showToast("⚠️ Không tìm thấy tọa độ địa danh này!", true);
+            resetBtnState();
+        }
+    } catch (error) {
+        console.error("Lỗi tìm kiếm tọa độ:", error);
+        if (typeof showToast === 'function') showToast("❌ Lỗi hệ thống định vị vùng!", true);
+        resetBtnState();
+    }
+
+    function resetBtnState() {
+        if (!btn) return;
+        setTimeout(() => {
+            btn.innerText = "Get & Add Lat / Lon";
+            btn.disabled = false;
+            btn.style.background = "rgba(223, 183, 108, 0.08)"; // Trả về màu nền mờ gốc HTML
+            btn.style.color = "#dfb76c";                         // Trả về chữ màu vàng nhạt gốc
+        }, 1500);
+    }
+    
+    setTimeout(resetBtnState, 1500);
+}
+
+// =========================================================================
+// 4. KHỞI TẠO VÀ QUẢN LÝ SỰ KIỆN GIAO DIỆN DIỄN RA TRONG DOM (BẢN SỬA ĐỒNG TRỤC CỐT LÕI)
+// =========================================================================
 document.addEventListener('DOMContentLoaded', () => {
     const configs = {
         'declination-input': { limit: 14, key: 'save_decl', min: -180, max: 180, mode: 'coordinate' },
@@ -3634,7 +3732,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Giao diện và các ô nhập liệu được kích hoạt HOÀN TOÀN NGAY LẬP TỨC! Người dùng gõ chữ bình thường
+    // Hiển thị ngay giá trị lưu trữ lên màn hình cho người dùng gõ nhập bình thường
     Object.keys(configs).forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -3645,7 +3743,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 el.value = saved;
                 if (id === 'declination-input') {
                     magneticDeclination = parseFloat(saved) || 0;
-                    updateMagneticDeclination();
+                    if (typeof updateMagneticDeclination === 'function') updateMagneticDeclination();
                 }
             }
         } else {
@@ -3653,22 +3751,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 🎯 THẦN CHÚ KHÔNG CHẶN MẠNG: Đọc file ngầm bằng tiến trình riêng (.then)
-    loadWMMHRFile().then((success) => {
-        if (success) {
-            // Sau khi nạp file ngầm xong hoàn chỉnh, mới khôi phục định vị vùng và tính toán lại
-            const savedLat = localStorage.getItem('save_lat');
-            const savedLon = localStorage.getItem('save_lon');
-            if (isRetentionEnabled && savedLat && savedLon) {
-                updateLocationUI(parseFloat(savedLat), parseFloat(savedLon));
-                if (typeof calculateRemoteDeclination === 'function') {
-                    calculateRemoteDeclination();
+    // =========================================================================
+    // 🎯 KHỐI LỆNH QUAN TRỌNG: CHỜ FILE NẠP XONG MỚI CHẠY LẠI ENGINE ĐỊA TỪ
+    // =========================================================================
+    if (typeof loadWMMHRFile === 'function') {
+        loadWMMHRFile().then((success) => {
+            if (success) {
+                const savedLat = localStorage.getItem('save_lat');
+                const savedLon = localStorage.getItem('save_lon');
+                if (isRetentionEnabled && savedLat && savedLon) {
+                    if (typeof updateLocationUI === 'function') {
+                        updateLocationUI(parseFloat(savedLat), parseFloat(savedLon));
+                    }
+                    if (typeof calculateRemoteDeclination === 'function') {
+                        calculateRemoteDeclination();
+                    }
                 }
             }
+        });
+    } else {
+        // Phương án dự phòng nếu trỏ thẳng vào file coeffs tĩnh không qua hàm load file
+        const savedLat = localStorage.getItem('save_lat');
+        const savedLon = localStorage.getItem('save_lon');
+        if (isRetentionEnabled && savedLat && savedLon) {
+            if (typeof updateLocationUI === 'function') updateLocationUI(parseFloat(savedLat), parseFloat(savedLon));
+            if (typeof calculateRemoteDeclination === 'function') calculateRemoteDeclination();
         }
-    });
+    }
 
-    // Toàn bộ logic lắng nghe Input, Blur, Keypress cũ bên dưới GIỮ NGUYÊN HOÀN TOÀN...
+    // Lắng nghe sự kiện Focus, Click, Keypress, Input, Blur của các ô nhập liệu
     Object.keys(configs).forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -3690,7 +3801,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const cfg = configs[id];
             let raw = el.value;
 
-            el.value = parseSmartCoordinateText(raw);
+            if (typeof parseSmartCoordinateText === 'function') {
+                el.value = parseSmartCoordinateText(raw);
+            }
             if (el.value.length > cfg.limit) {
                 el.value = el.value.slice(0, cfg.limit);
             }
@@ -3702,7 +3815,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (id === 'declination-input') {
                     magneticDeclination = checkNum;
-                    updateMagneticDeclination();
+                    if (typeof updateMagneticDeclination === 'function') updateMagneticDeclination();
                 }
                 if (cfg.key && document.getElementById('save-toggle')?.checked) {
                     localStorage.setItem(cfg.key, checkNum);
@@ -3714,7 +3827,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const cfg = configs[id];
             let rawStr = el.value.trim();
 
-            let finalDecimal = convertToDecimalDegrees(rawStr);
+            let finalDecimal = typeof convertToDecimalDegrees === 'function' ? convertToDecimalDegrees(rawStr) : parseFloat(rawStr);
+            
             if (finalDecimal === null || isNaN(finalDecimal)) {
                 el.value = (id === 'declination-input') ? "0" : "";
                 if (id === 'declination-input') magneticDeclination = 0;
@@ -3736,7 +3850,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             if (id === 'declination-input') {
-                updateMagneticDeclination();
+                if (typeof updateMagneticDeclination === 'function') updateMagneticDeclination();
             } else {
                 if (typeof calculateRemoteDeclination === 'function') {
                     calculateRemoteDeclination();
@@ -3745,6 +3859,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // =========================================================================
+    // 🚀 LẮNG NGHE SỰ KIỆN CHO KHUNG TÌM ĐỊA DANH MỚI
+    // =========================================================================
+    const lookupBtn = document.getElementById('lookupLocation');
+    const addressInp = document.getElementById('address-lookup');
+
+    if (lookupBtn) {
+        lookupBtn.addEventListener('click', () => {
+            if (typeof getLocationFromAddress === 'function') getLocationFromAddress();
+        });
+    }
+
+    if (addressInp) {
+        addressInp.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (typeof getLocationFromAddress === 'function') getLocationFromAddress();
+                addressInp.blur();
+            }
+        });
+    }
+
+    // Biện chứng lưu trữ của nút Save Toggle Checkbox
     saveToggle?.addEventListener('change', (e) => {
         const declInput = document.getElementById('declination-input');
         const latInput = document.getElementById('remote-lat');
@@ -3760,11 +3897,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (declInput) declInput.value = "0";
             if (latInput) latInput.value = "";  
             if (lonInput) lonInput.value = "";  
+            if (addressInp) addressInp.value = "";
             if (displayEl) displayEl.innerText = "";
             
             magneticDeclination = 0;
-            updateMagneticDeclination();
-            if (typeof showToast === 'function') showToast("Đã xóa toàn bộ dữ liệu lưu về trạng thái trống!");
+            if (typeof updateMagneticDeclination === 'function') updateMagneticDeclination();
+            if (typeof showToast === 'function') showToast("Đã xóa dữ liệu ghi nhớ!");
         } else {
             localStorage.setItem('save_toggle_state', 'true');
             if (declInput) localStorage.setItem('save_decl', declInput.value);
