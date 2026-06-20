@@ -3684,7 +3684,7 @@ function convertToDecimalDegrees(val) {
 }
 
 /**
- * 📡 ENGINE TÌM KIẾM TOẠ ĐỘ TOÀN CẦU QUA ĐỊA DANH
+ * 📡 ENGINE TÌM KIẾM TOẠ ĐỘ TOÀN CẦU QUA ĐỊA DANH (Đã fix hoàn toàn tương phản màu chữ)
  */
 async function getLocationFromAddress() {
     const addressInput = document.getElementById('address-lookup');
