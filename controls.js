@@ -3236,90 +3236,84 @@ function getDecimalYear(date = new Date()) {
 // =========================================================================
 // 🔥 MODULE ĐỊNH VỊ TÊN VÙNG TOÀN CẦU (NÂNG CẤP MỚI)
 // =========================================================================
+/**
+ * 🛰️ ENGINE ĐỊNH VỊ VÙNG TỰ ĐỘNG (FULL GLOBAL SUPPORT)
+ */
 async function updateLocationUI(lat, lon) {
-    // 1. Tự động tạo và tiêm Element hiển thị nếu chưa có trong HTML
     let displayEl = document.getElementById('location-display');
+    
+    // 1. TỰ ĐỘNG TẠO GIAO DIỆN NẾU CHƯA CÓ
     if (!displayEl) {
         const lonInput = document.getElementById('remote-lon');
         const latInput = document.getElementById('remote-lat');
         
         if (lonInput) {
-            // 👉 BƯỚC THẦN THÁNH: Tìm khung hàng chung chứa CẢ HAI ô nhập liệu
             let containerRow = lonInput.parentNode;
-            // Nếu mỗi ô nhập bị bọc trong một thẻ div cột riêng, nhảy lên 1 cấp để lấy hàng tổng
             if (latInput && latInput.parentNode !== lonInput.parentNode) {
                 containerRow = lonInput.parentNode.parentNode; 
             }
 
             displayEl = document.createElement('div');
             displayEl.id = 'location-display';
-            
-            // =========================================================================
-            // 🎯 CẤU HÌNH CSS ÉP LAYOUT CĂN GIỮA TOÀN KHUNG & ĐẨY SÁT LÊN TRÊN
-            // =========================================================================
-            displayEl.style.display = 'block';       // Biến thành khối độc lập toàn màn hình
-            displayEl.style.width = '100%';          // Phủ rộng 100% diện tích khung la bàn
-            displayEl.style.textAlign = 'center';    // Căn chữ nằm CHÍNH GIỮA TUYỆT ĐỐI
-            displayEl.style.fontSize = '12px';
-            displayEl.style.color = '#dfb76c';
-            
-            // 👉 ĐỘ CAO CHUẨN: Để 2px để chữ áp sát lên trên đáy của 2 ô nhập, nhìn cực cân đối
-            displayEl.style.marginTop = '2px';       
-            
-            displayEl.style.fontWeight = 'bold';
-            displayEl.style.letterSpacing = '0.5px';
-            displayEl.style.clear = 'both';          // Triệt tiêu mọi thuộc tính float gây lệch dòng
-            displayEl.style.boxSizing = 'border-box';
-
-            // 👉 THẦN CHÚ LAYOUT: Đặt dòng chữ nằm hẳn ra NGOÀI và DƯỚI cái hàng chứa 2 ô nhập
+            displayEl.style.cssText = 'display:block; width:100%; text-align:center; font-size:12px; color:#dfb76c; margin-top:2px; font-weight:bold; letter-spacing:0.5px; clear:both; box-sizing:border-box;';
             containerRow.insertAdjacentElement('afterend', displayEl);
         }
     }
     if (!displayEl) return;
 
-    displayEl.innerText = "🔍 Đang đồng bộ vệ tinh vùng...";
+    displayEl.innerText = "🔍 Đang đồng bộ vệ tinh...";
 
-    // 2. Tầng Offline: Phản hồi lập tức các bộ tọa độ test hay dùng (0ms)
+    // 2. TẦNG OFFLINE: TỐC ĐỘ CỰC NHANH CHO CÁC VỊ TRÍ HAY DÙNG
     const checkedLat = Math.round(lat * 1000) / 1000;
     const checkedLon = Math.round(lon * 1000) / 1000;
 
-    if (checkedLat === 11.564 && checkedLon === 108.991) {
-        displayEl.innerText = "📍 Ninh Thuận, VN"; return;
-    }
-    if (checkedLat === 21.028 && checkedLon === 105.834) {
-        displayEl.innerText = "📍 Hà Nội, VN"; return;
-    }
-    if (Math.abs(lat - 33) < 0.5 && Math.abs(lon - (-118)) < 0.5) {
-        displayEl.innerText = "📍 California, US"; return;
-    }
-    if (Math.abs(lat - (-37)) < 0.5 && Math.abs(lon - 140) < 0.5) {
-        displayEl.innerText = "📍 South Australia, AU"; return;
-    }
-    if (Math.abs(lat - 42) < 0.5 && Math.abs(lon - (-19)) < 0.5) {
-        displayEl.innerText = "📍 North Atlantic, EU"; return;
-    }
-    if (Math.abs(lat - (-52)) < 0.5 && Math.abs(lon - (-75)) < 0.5) {
-        displayEl.innerText = "📍 Magallanes, CL"; return;
+    const testLocations = [
+        { lat: 11.564, lon: 108.991, name: "📍 Ninh Thuận, VN" },
+        { lat: 21.028, lon: 105.834, name: "📍 Hà Nội, VN" }
+    ];
+
+    for (let loc of testLocations) {
+        if (checkedLat === loc.lat && checkedLon === loc.lon) {
+            displayEl.innerText = loc.name;
+            return;
+        }
     }
 
-    // 3. Tầng Online: Gọi API toàn cầu tự động phân tích vùng (Hỗ trợ quốc tế)
+    // 3. TẦNG ONLINE: API ĐỊA DANH TOÀN CẦU (BIGDATA CLOUD)
     if (navigator.onLine) {
         try {
-            const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
+            // Thêm timeout để tránh treo app
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 4000);
+
+            const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=vi`, { signal: controller.signal });
+            clearTimeout(timeoutId);
+
             if (response.ok) {
                 const data = await response.json();
-                const state = data.principalSubdivision || data.city || '';
-                const country = (data.countryCode || '').toUpperCase();
-                if (state && country) {
+                
+                // Thuật toán thông minh chọn tên địa danh: City -> State -> Country
+                const city = data.city || data.locality || "";
+                const state = data.principalSubdivision || "";
+                const country = data.countryName || "";
+                
+                // Kết hợp thông minh: Nếu có thành phố thì lấy thành phố + quốc gia, nếu không thì lấy bang + quốc gia
+                if (city) {
+                    displayEl.innerText = `📍 ${city}, ${country}`;
+                } else if (state) {
                     displayEl.innerText = `📍 ${state}, ${country}`;
-                    return;
+                } else {
+                    displayEl.innerText = `📍 ${country}`;
                 }
+                return;
             }
-        } catch (e) {}
+        } catch (e) {
+            console.warn("Lỗi API địa danh, chuyển về mặc định.");
+        }
     }
 
-    // Mặc định nếu mất mạng và nằm ngoài danh sách bộ số test
-    displayEl.innerText = `📍 Khối cầu (${lat.toFixed(2)}, ${lon.toFixed(2)})`;
+    // 4. TRẠNG THÁI MẶC ĐỊNH (KHI MẤT MẠNG HOẶC NGOÀI VÙNG)
+    displayEl.innerText = `📍 Tọa độ (${lat.toFixed(2)}, ${lon.toFixed(2)})`;
 }
 
 function calculateRemoteDeclination() {
