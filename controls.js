@@ -3233,16 +3233,8 @@ function getDecimalYear(date = new Date()) {
     return year + (daysPassed / (isLeap ? 366 : 365));
 }
 
-// =========================================================================
-// 🔥 MODULE ĐỊNH VỊ TÊN VÙNG TOÀN CẦU (NÂNG CẤP MỚI)
-// =========================================================================
-/**
- * 🛰️ ENGINE ĐỊNH VỊ VÙNG TỰ ĐỘNG (FULL GLOBAL SUPPORT - FIX LỖI 400)
- */
-async function updateLocationUI(lat, lon) {
+async function updateLocationUI(lat, lon, san_ten_vung = null) {
     let displayEl = document.getElementById('location-display');
-    
-    // 1. TỰ ĐỘNG TẠO GIAO DIỆN NẾU CHƯA CÓ
     if (!displayEl) {
         const lonInput = document.getElementById('remote-lon');
         const latInput = document.getElementById('remote-lat');
@@ -3261,70 +3253,60 @@ async function updateLocationUI(lat, lon) {
     }
     if (!displayEl) return;
 
-    // 2. LÀM SẠCH TỌA ĐỘ (CHỐNG LỖI 400 BAD REQUEST)
-    // Giới hạn 5 chữ số thập phân, ép kiểu số, và kiểm tra phạm vi địa lý
-    const safeLat = parseFloat(lat);
-    const safeLon = parseFloat(lon);
-
-    if (isNaN(safeLat) || isNaN(safeLon) || Math.abs(safeLat) > 90 || Math.abs(safeLon) > 180) {
-        displayEl.innerText = `📍 Tọa độ (${lat.toFixed(2)}, ${lon.toFixed(2)})`;
+    // 🎯 ĐỘT PHÁ TỐC ĐỘ: Có sẵn tên từ ô tìm kiếm -> Tiêm thẳng hiển thị ngay lập tức (0ms)
+    if (san_ten_vung) {
+        displayEl.innerText = `📍 ${san_ten_vung}`;
         return;
     }
 
-    displayEl.innerText = "🔍 Đang đồng bộ vệ tinh...";
+    displayEl.innerText = "🔍 Đang đồng bộ vệ tinh vùng...";
 
-    // 3. TẦNG OFFLINE: TỐC ĐỘ CỰC NHANH
-    const checkedLat = Math.round(safeLat * 1000) / 1000;
-    const checkedLon = Math.round(safeLon * 1000) / 1000;
+    // 2. Tầng Offline: Phản hồi lập tức các bộ tọa độ test hay dùng
+    const checkedLat = Math.round(lat * 1000) / 1000;
+    const checkedLon = Math.round(lon * 1000) / 1000;
 
     const testLocations = [
         { lat: 11.564, lon: 108.991, name: "📍 Ninh Thuận, VN" },
         { lat: 21.028, lon: 105.834, name: "📍 Hà Nội, VN" }
     ];
-
     for (let loc of testLocations) {
         if (checkedLat === loc.lat && checkedLon === loc.lon) {
-            displayEl.innerText = loc.name;
-            return;
+            displayEl.innerText = loc.name; return;
         }
     }
 
-    // 4. TẦNG ONLINE: API ĐỊA DANH TOÀN CẦU VỚI TỌA ĐỘ LÀM SẠCH
+    // 3. Tầng Online: Chỉ chạy khi người dùng tự tay sửa số trên ô Kinh/Vĩ độ
     if (navigator.onLine) {
         try {
+            const safeLat = parseFloat(lat).toFixed(5);
+            const safeLon = parseFloat(lon).toFixed(5);
+            
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 4000);
 
-            // Gửi tọa độ đã làm sạch bằng toFixed(5)
-            const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${safeLat.toFixed(5)}&longitude=${safeLon.toFixed(5)}&localityLanguage=vi`, { signal: controller.signal });
+            const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${safeLat}&longitude=${safeLon}&localityLanguage=en`, { signal: controller.signal });
             clearTimeout(timeoutId);
 
             if (response.ok) {
                 const data = await response.json();
+                const state = data.principalSubdivision || data.city || '';
+                const country = (data.countryCode || '').toUpperCase();
                 
-                const city = data.city || data.locality || data.town || data.village || "";
-                const state = data.principalSubdivision || "";
-                const country = data.countryName || "";
-                
-                if (city) {
-                    displayEl.innerText = `📍 ${city}, ${country}`;
-                } else if (state) {
+                if (state && country) {
                     displayEl.innerText = `📍 ${state}, ${country}`;
-                } else {
-                    displayEl.innerText = `📍 ${country}`;
+                    return;
                 }
-                return;
             }
         } catch (e) {
-            console.warn("Lỗi API địa danh, hiển thị tọa độ thô.");
+            console.warn("Lỗi API địa danh.");
         }
     }
 
-    // 5. TRẠNG THÁI MẶC ĐỊNH
-    displayEl.innerText = `📍 Tọa độ (${safeLat.toFixed(2)}, ${safeLon.toFixed(2)})`;
+    // Mặc định nếu mất mạng hoàn toàn và không có dữ liệu chữ truyền xuống
+    displayEl.innerText = `📍 Khối cầu (${lat.toFixed(2)}, ${lon.toFixed(2)})`;
 }
 
-function calculateRemoteDeclination() {
+function calculateRemoteDeclination(san_ten_vung = null) {
     const latEl = document.getElementById('remote-lat');
     const lonEl = document.getElementById('remote-lon');
     const rBtn = document.getElementById('remote-calc-btn');
@@ -3372,7 +3354,10 @@ function calculateRemoteDeclination() {
     if (inputEl) inputEl.value = decl.toFixed(2);
     
     updateMagneticDeclination();
-    updateLocationUI(latV, lonV); // KHỞI CHẠY ĐỊNH VỊ VÙNG
+    
+    // 🎯 CHUYỂN TIẾP: Đưa tên địa danh xuống hàm hiển thị đồ họa UI
+    updateLocationUI(latV, lonV, san_ten_vung); 
+    
     showToast(`Đã tính tọa độ từ xa: ${decl.toFixed(2)}°`);
     
     if (rBtn) {
@@ -3679,12 +3664,6 @@ function convertToDecimalDegrees(val) {
     return decimalValue;
 }
 
-/**
- * 📡 ENGINE TÌM KIẾM TOẠ ĐỘ TOÀN CẦU QUA ĐỊA DANH (Đã fix hoàn toàn tương phản màu chữ)
- */
-/**
- * 📡 ENGINE TÌM KIẾM TOẠ ĐỘ TOÀN CẦU QUA ĐỊA DANH (Bản tối ưu hóa định vị sâu)
- */
 async function getLocationFromAddress() {
     const addressInput = document.getElementById('address-lookup');
     const latInput = document.getElementById('remote-lat');
@@ -3712,7 +3691,6 @@ async function getLocationFromAddress() {
     }
 
     try {
-        // Đã thêm cấu hình thu thập chi tiết địa danh (addressdetails=1 & nâng độ chính xác truy vấn)
         const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&addressdetails=1&extratags=1&namedetails=1&dedupe=1`;
         const response = await fetch(url, { headers: { 'Accept-Language': 'en,vi;q=0.9' } });
 
@@ -3724,7 +3702,6 @@ async function getLocationFromAddress() {
             const rawLon = parseFloat(data[0].lon);
             const displayName = data[0].display_name;
 
-            // Nâng độ chính xác lưu trữ lên 5 chữ số thập phân chuẩn trắc địa toàn cầu
             const cleanLat = parseFloat(rawLat.toFixed(5));
             const cleanLon = parseFloat(rawLon.toFixed(5));
 
@@ -3736,20 +3713,22 @@ async function getLocationFromAddress() {
                 localStorage.setItem('save_lon', cleanLon);
             }
 
-            // KÍCH HOẠT TÍNH TOÁN ĐỒNG BỘ CHÍNH XÁC TUYẾN TÍNH
+            // 🎯 TRÍCH XUẤT TÊN SẠCH NGAY TỪ ĐẦU
+            const shortName = displayName.split(',').slice(0, 2).join(',');
+
+            // 🎯 NỐI MẮT XÍCH: Truyền shortName vào các hàm xử lý tiếp theo
             if (typeof calculateRemoteDeclination === 'function') {
-                calculateRemoteDeclination();
+                calculateRemoteDeclination(shortName);
             } else if (typeof calculateGlobalDeclination === 'function') {
                 const decl = calculateGlobalDeclination(cleanLat, cleanLon);
                 magneticDeclination = decl;
                 const inputEl = document.getElementById('declination-input');
                 if (inputEl) inputEl.value = decl.toFixed(2);
                 if (typeof updateMagneticDeclination === 'function') updateMagneticDeclination();
-                if (typeof updateLocationUI === 'function') updateLocationUI(cleanLat, cleanLon);
+                if (typeof updateLocationUI === 'function') updateLocationUI(cleanLat, cleanLon, shortName);
             }
 
             if (typeof showToast === 'function') {
-                const shortName = displayName.split(',').slice(0, 2).join(',');
                 showToast(`📍 Đã tìm thấy: ${shortName}`);
             }
 
@@ -3774,7 +3753,7 @@ async function getLocationFromAddress() {
             btn.innerText = "Get & Add Lat / Lon";
             btn.disabled = false;
             btn.style.background = "rgba(223, 183, 108, 0.08)"; 
-            btn.style.color = "#dfb76c";                         
+            btn.style.color = "#dfb76c";                                         
         }, 1500);
     }
     
