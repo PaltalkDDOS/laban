@@ -3236,7 +3236,7 @@ function getDecimalYear(date = new Date()) {
 // =========================================================================
 // 🔥 MODULE ĐỊNH VỊ TÊN VÙNG TOÀN CẦU (NÂNG CẤP MỚI)
 // =========================================================================
-async function updateLocationUI(lat, lon, san_ten_vung = null) {
+async function updateLocationUI(lat, lon) {
     // 1. Tự động tạo và tiêm Element hiển thị nếu chưa có trong HTML
     let displayEl = document.getElementById('location-display');
     if (!displayEl) {
@@ -3277,12 +3277,6 @@ async function updateLocationUI(lat, lon, san_ten_vung = null) {
     }
     if (!displayEl) return;
 
-    // 🎯 ĐỘT PHÁ TỐC ĐỘ: Nếu có sẵn tên vùng từ API tìm kiếm, tiêm thẳng ngay lập tức (0ms)
-    if (san_ten_vung) {
-        displayEl.innerText = `📍 ${san_ten_vung}`;
-        return;
-    }
-
     displayEl.innerText = "🔍 Đang đồng bộ vệ tinh vùng...";
 
     // 2. Tầng Offline: Phản hồi lập tức các bộ tọa độ test hay dùng (0ms)
@@ -3308,7 +3302,7 @@ async function updateLocationUI(lat, lon, san_ten_vung = null) {
         displayEl.innerText = "📍 Magallanes, CL"; return;
     }
 
-    // 3. Tầng Online: Gọi API toàn cầu tự động phân tích vùng (Chỉ chạy khi nhập tay không qua nút tìm địa danh)
+    // 3. Tầng Online: Gọi API toàn cầu tự động phân tích vùng (Hỗ trợ quốc tế)
     if (navigator.onLine) {
         try {
             const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
@@ -3699,6 +3693,7 @@ async function getLocationFromAddress() {
 
     const query = addressInput.value.trim();
     
+    // ⚡ TRẠNG THÁI ĐANG TÌM: Đổi sang nền tối chữ xám rõ ràng
     if (btn) {
         btn.innerText = "⚡ ĐANG TÌM...";
         btn.disabled = true;
@@ -3735,27 +3730,24 @@ async function getLocationFromAddress() {
                 localStorage.setItem('save_lon', cleanLon);
             }
 
-            // Trích xuất chuỗi tên ngắn (Ví dụ: "Hà Nội, VN")
-            const shortName = displayName.split(',').slice(0, 2).join(',');
-
-            // KÍCH HOẠT TÍNH TOÁN ĐỒNG BỘ VÀ TRUYỀN THẲNG TÊN VÙNG SANG LA BÀN
+            // KÍCH HOẠT TÍNH TOÁN ĐỒNG BỘ
             if (typeof calculateRemoteDeclination === 'function') {
                 calculateRemoteDeclination();
-                // Đồng bộ tên vùng ra màn hình chính ngay lập tức
-                if (typeof updateLocationUI === 'function') updateLocationUI(cleanLat, cleanLon, shortName);
             } else if (typeof calculateGlobalDeclination === 'function') {
                 const decl = calculateGlobalDeclination(cleanLat, cleanLon);
                 magneticDeclination = decl;
                 const inputEl = document.getElementById('declination-input');
                 if (inputEl) inputEl.value = decl.toFixed(2);
                 if (typeof updateMagneticDeclination === 'function') updateMagneticDeclination();
-                if (typeof updateLocationUI === 'function') updateLocationUI(cleanLat, cleanLon, shortName);
+                if (typeof updateLocationUI === 'function') updateLocationUI(cleanLat, cleanLon);
             }
 
             if (typeof showToast === 'function') {
+                const shortName = displayName.split(',').slice(0, 2).join(',');
                 showToast(`📍 Đã tìm thấy: ${shortName}`);
             }
 
+            // 🟢 TRẠNG THÁI THÀNH CÔNG: Nền xanh lục, chữ đen tương phản cao
             if (btn) {
                 btn.innerText = "THÀNH CÔNG ✓";
                 btn.style.background = "#30d158";
@@ -3776,8 +3768,8 @@ async function getLocationFromAddress() {
         setTimeout(() => {
             btn.innerText = "Get & Add Lat / Lon";
             btn.disabled = false;
-            btn.style.background = "rgba(223, 183, 108, 0.08)"; 
-            btn.style.color = "#dfb76c";                         
+            btn.style.background = "rgba(223, 183, 108, 0.08)"; // Trả về màu nền mờ gốc HTML
+            btn.style.color = "#dfb76c";                         // Trả về chữ màu vàng nhạt gốc
         }, 1500);
     }
     
