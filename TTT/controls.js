@@ -3225,96 +3225,7 @@ function getDecimalYear(date = new Date()) {
     return year + (daysPassed / (isLeap ? 366 : 365));
 }
 
-// =========================================================================
-// 🔥 MODULE ĐỊNH VỊ TÊN VÙNG TOÀN CẦU (NÂNG CẤP MỚI)
-// =========================================================================
-async function updateLocationUI(lat, lon) {
-    // 1. Tự động tạo và tiêm Element hiển thị nếu chưa có trong HTML
-    let displayEl = document.getElementById('location-display');
-    if (!displayEl) {
-        const lonInput = document.getElementById('remote-lon');
-        const latInput = document.getElementById('remote-lat');
-        
-        if (lonInput) {
-            // 👉 BƯỚC THẦN THÁNH: Tìm khung hàng chung chứa CẢ HAI ô nhập liệu
-            let containerRow = lonInput.parentNode;
-            // Nếu mỗi ô nhập bị bọc trong một thẻ div cột riêng, nhảy lên 1 cấp để lấy hàng tổng
-            if (latInput && latInput.parentNode !== lonInput.parentNode) {
-                containerRow = lonInput.parentNode.parentNode; 
-            }
-
-            displayEl = document.createElement('div');
-            displayEl.id = 'location-display';
-            
-            // =========================================================================
-            // 🎯 CẤU HÌNH CSS ÉP LAYOUT CĂN GIỮA TOÀN KHUNG & ĐẨY SÁT LÊN TRÊN
-            // =========================================================================
-            displayEl.style.display = 'block';       // Biến thành khối độc lập toàn màn hình
-            displayEl.style.width = '100%';          // Phủ rộng 100% diện tích khung la bàn
-            displayEl.style.textAlign = 'center';    // Căn chữ nằm CHÍNH GIỮA TUYỆT ĐỐI
-            displayEl.style.fontSize = '12px';
-            displayEl.style.color = '#dfb76c';
-            
-            // 👉 ĐỘ CAO CHUẨN: Để 2px để chữ áp sát lên trên đáy của 2 ô nhập, nhìn cực cân đối
-            displayEl.style.marginTop = '2px';       
-            
-            displayEl.style.fontWeight = 'bold';
-            displayEl.style.letterSpacing = '0.5px';
-            displayEl.style.clear = 'both';          // Triệt tiêu mọi thuộc tính float gây lệch dòng
-            displayEl.style.boxSizing = 'border-box';
-
-            // 👉 THẦN CHÚ LAYOUT: Đặt dòng chữ nằm hẳn ra NGOÀI và DƯỚI cái hàng chứa 2 ô nhập
-            containerRow.insertAdjacentElement('afterend', displayEl);
-        }
-    }
-    if (!displayEl) return;
-
-    displayEl.innerText = "🔍 Đang đồng bộ vệ tinh vùng...";
-
-    // 2. Tầng Offline: Phản hồi lập tức các bộ tọa độ test hay dùng (0ms)
-    const checkedLat = Math.round(lat * 1000) / 1000;
-    const checkedLon = Math.round(lon * 1000) / 1000;
-
-    if (checkedLat === 11.564 && checkedLon === 108.991) {
-        displayEl.innerText = "📍 Ninh Thuận, VN"; return;
-    }
-    if (checkedLat === 21.028 && checkedLon === 105.834) {
-        displayEl.innerText = "📍 Hà Nội, VN"; return;
-    }
-    if (Math.abs(lat - 33) < 0.5 && Math.abs(lon - (-118)) < 0.5) {
-        displayEl.innerText = "📍 California, US"; return;
-    }
-    if (Math.abs(lat - (-37)) < 0.5 && Math.abs(lon - 140) < 0.5) {
-        displayEl.innerText = "📍 South Australia, AU"; return;
-    }
-    if (Math.abs(lat - 42) < 0.5 && Math.abs(lon - (-19)) < 0.5) {
-        displayEl.innerText = "📍 North Atlantic, EU"; return;
-    }
-    if (Math.abs(lat - (-52)) < 0.5 && Math.abs(lon - (-75)) < 0.5) {
-        displayEl.innerText = "📍 Magallanes, CL"; return;
-    }
-
-    // 3. Tầng Online: Gọi API toàn cầu tự động phân tích vùng (Hỗ trợ quốc tế)
-    if (navigator.onLine) {
-        try {
-            const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
-            if (response.ok) {
-                const data = await response.json();
-                const state = data.principalSubdivision || data.city || '';
-                const country = (data.countryCode || '').toUpperCase();
-                if (state && country) {
-                    displayEl.innerText = `📍 ${state}, ${country}`;
-                    return;
-                }
-            }
-        } catch (e) {}
-    }
-
-    // Mặc định nếu mất mạng và nằm ngoài danh sách bộ số test
-    displayEl.innerText = `📍 Khối cầu (${lat.toFixed(2)}, ${lon.toFixed(2)})`;
-}
-
-function calculateRemoteDeclination() {
+function calculateRemoteDeclination(san_ten_vung = null) {
     const latEl = document.getElementById('remote-lat');
     const lonEl = document.getElementById('remote-lon');
     const rBtn = document.getElementById('remote-calc-btn');
@@ -3362,7 +3273,10 @@ function calculateRemoteDeclination() {
     if (inputEl) inputEl.value = decl.toFixed(2);
     
     updateMagneticDeclination();
-    updateLocationUI(latV, lonV); // KHỞI CHẠY ĐỊNH VỊ VÙNG
+    
+    // 🎯 CHUYỂN TIẾP: Đưa tên địa danh xuống hàm hiển thị đồ họa UI
+    updateLocationUI(latV, lonV, san_ten_vung); 
+    
     showToast(`Đã tính tọa độ từ xa: ${decl.toFixed(2)}°`);
     
     if (rBtn) {
@@ -3673,8 +3587,181 @@ function convertToDecimalDegrees(val) {
     return decimalValue;
 }
 
+async function updateLocationUI(lat, lon, san_ten_vung = null) {
+    let displayEl = document.getElementById('location-display');
+    if (!displayEl) {
+        const lonInput = document.getElementById('remote-lon');
+        const latInput = document.getElementById('remote-lat');
+        
+        if (lonInput) {
+            let containerRow = lonInput.parentNode;
+            if (latInput && latInput.parentNode !== lonInput.parentNode) {
+                containerRow = lonInput.parentNode.parentNode; 
+            }
+
+            displayEl = document.createElement('div');
+            displayEl.id = 'location-display';
+            displayEl.style.cssText = 'display:block; width:100%; text-align:center; font-size:12px; color:#dfb76c; margin-top:2px; font-weight:bold; letter-spacing:0.5px; clear:both; box-sizing:border-box;';
+            containerRow.insertAdjacentElement('afterend', displayEl);
+        }
+    }
+    if (!displayEl) return;
+
+    // 🎯 ĐỘT PHÁ TỐC ĐỘ: Có sẵn tên từ ô tìm kiếm -> Tiêm thẳng hiển thị ngay lập tức (0ms)
+    if (san_ten_vung) {
+        displayEl.innerText = `📍 ${san_ten_vung}`;
+        return;
+    }
+
+    displayEl.innerText = "🔍 Đang đồng bộ vệ tinh vùng...";
+
+    // 2. Tầng Offline: Phản hồi lập tức các bộ tọa độ test hay dùng
+    const checkedLat = Math.round(lat * 1000) / 1000;
+    const checkedLon = Math.round(lon * 1000) / 1000;
+
+    const testLocations = [
+        { lat: 11.564, lon: 108.991, name: "📍 Ninh Thuận, VN" },
+        { lat: 21.028, lon: 105.834, name: "📍 Hà Nội, VN" }
+    ];
+    for (let loc of testLocations) {
+        if (checkedLat === loc.lat && checkedLon === loc.lon) {
+            displayEl.innerText = loc.name; return;
+        }
+    }
+
+    // 3. Tầng Online: Chỉ chạy khi người dùng tự tay sửa số trên ô Kinh/Vĩ độ
+    if (navigator.onLine) {
+        try {
+            const safeLat = parseFloat(lat).toFixed(5);
+            const safeLon = parseFloat(lon).toFixed(5);
+            
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 4000);
+
+            const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${safeLat}&longitude=${safeLon}&localityLanguage=en`, { signal: controller.signal });
+            clearTimeout(timeoutId);
+
+            if (response.ok) {
+                const data = await response.json();
+                const state = data.principalSubdivision || data.city || '';
+                const country = (data.countryCode || '').toUpperCase();
+                
+                if (state && country) {
+                    displayEl.innerText = `📍 ${state}, ${country}`;
+                    return;
+                }
+            }
+        } catch (e) {
+            console.warn("Lỗi API địa danh.");
+        }
+    }
+
+    // Mặc định nếu mất mạng hoàn toàn và không có dữ liệu chữ truyền xuống
+    displayEl.innerText = `📍 Khối cầu (${lat.toFixed(2)}, ${lon.toFixed(2)})`;
+}
+/**
+ * 📡 ENGINE TÌM KIẾM TOẠ ĐỘ TOÀN CẦU QUA ĐỊA DANH
+ */
+async function getLocationFromAddress() {
+    const addressInput = document.getElementById('address-lookup');
+    const latInput = document.getElementById('remote-lat');
+    const lonInput = document.getElementById('remote-lon');
+    const btn = document.getElementById('lookupLocation');
+    
+    if (!addressInput || !addressInput.value.trim()) {
+        if (typeof showToast === 'function') showToast("⚠️ Vui lòng nhập tên vùng hoặc địa chỉ cần tìm!", true);
+        return;
+    }
+
+    const query = addressInput.value.trim();
+    
+    if (btn) {
+        btn.innerText = "⚡ ĐANG TÌM...";
+        btn.disabled = true;
+        btn.style.background = "rgba(255, 255, 255, 0.05)";
+        btn.style.color = "#888";
+    }
+
+    if (!navigator.onLine) {
+        if (typeof showToast === 'function') showToast("❌ Mất kết nối Internet!", true);
+        resetBtnState();
+        return;
+    }
+
+    try {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&addressdetails=1&extratags=1&namedetails=1&dedupe=1`;
+        const response = await fetch(url, { headers: { 'Accept-Language': 'vi,en;q=0.9' } });
+
+        if (!response.ok) throw new Error("API Network error");
+        const data = await response.json();
+
+        if (data && data.length > 0) {
+            const rawLat = parseFloat(data[0].lat);
+            const rawLon = parseFloat(data[0].lon);
+            const displayName = data[0].display_name;
+
+            const cleanLat = parseFloat(rawLat.toFixed(5));
+            const cleanLon = parseFloat(rawLon.toFixed(5));
+
+            if (latInput) latInput.value = cleanLat;
+            if (lonInput) lonInput.value = cleanLon;
+
+            if (document.getElementById('save-toggle')?.checked) {
+                localStorage.setItem('save_lat', cleanLat);
+                localStorage.setItem('save_lon', cleanLon);
+            }
+
+            // 🎯 THUẬT TOÁN ĐỘT PHÁ: Tách chuỗi thành mảng và làm sạch khoảng trắng
+            const parts = displayName.split(',').map(p => p.trim());
+            
+            // Lấy phần tử đầu tiên (Địa danh cụ thể) + phần tử cuối cùng (Quốc gia) để luôn luôn có tên nước
+            const shortName = parts.length > 1 ? `${parts[0]}, ${parts[parts.length - 1]}` : parts[0];
+
+            // KÍCH HOẠT TÍNH TOÁN ĐỒNG BỘ
+            if (typeof calculateRemoteDeclination === 'function') {
+                calculateRemoteDeclination(shortName);  
+            } else if (typeof calculateGlobalDeclination === 'function') {
+                const decl = calculateGlobalDeclination(cleanLat, cleanLon);
+                magneticDeclination = decl;
+                const inputEl = document.getElementById('declination-input');
+                if (inputEl) inputEl.value = decl.toFixed(2);
+                if (typeof updateMagneticDeclination === 'function') updateMagneticDeclination();
+                if (typeof updateLocationUI === 'function') updateLocationUI(cleanLat, cleanLon, shortName);
+            }
+
+            if (typeof showToast === 'function') {
+                showToast(`📍 Đã tìm thấy: ${shortName}`);
+            }
+
+            if (btn) {
+                btn.innerText = "THÀNH CÔNG ✓";
+                btn.style.background = "#30d158";
+                btn.style.color = "#000";
+            }
+        } else {
+            if (typeof showToast === 'function') showToast("⚠️ Không tìm thấy tọa độ địa danh này!", true);
+            resetBtnState();
+        }
+    } catch (error) {
+        console.error("Lỗi tìm kiếm tọa độ:", error);
+        if (typeof showToast === 'function') showToast("❌ Lỗi hệ thống định vị vùng!", true);
+        resetBtnState();
+    }
+
+    function resetBtnState() {
+        if (!btn) return;
+        setTimeout(() => {
+            btn.innerText = "Get & Add Lat / Lon";
+            btn.disabled = false;
+            btn.style.background = "rgba(223, 183, 108, 0.08)"; 
+            btn.style.color = "#dfb76c";                         
+        }, 1500);
+    }
+    
+    setTimeout(resetBtnState, 1500);
+}
 // =========================================================================
-// 4. KHỞI TẠO VÀ QUẢN LÝ SỰ KIỆN GIAO DIỆN DIỄN RA TRONG DOM
+// 4. KHỞI TẠO VÀ QUẢN LÝ SỰ KIỆN GIAO DIỆN DIỄN RA TRONG DOM (BẢN SẠCH CHO DATA CỨNG)
 // =========================================================================
 document.addEventListener('DOMContentLoaded', () => {
     const configs = {
@@ -3700,6 +3787,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Nạp ngay giá trị lưu trữ cũ lên màn hình giao diện
     Object.keys(configs).forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -3710,7 +3798,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 el.value = saved;
                 if (id === 'declination-input') {
                     magneticDeclination = parseFloat(saved) || 0;
-                    updateMagneticDeclination();
+                    if (typeof updateMagneticDeclination === 'function') updateMagneticDeclination();
                 }
             }
         } else {
@@ -3718,18 +3806,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // TỰ ĐỘNG KHÔI PHỤC VÙNG TRÊN GIAO DIỆN KHI MỞ LẠI APP (F5)
+    // 🎯 CHẠY THẲNG KHÔNG CHỜ ĐỢI: Vì dùng data cứng, kích hoạt tự động tính toán lại ngay (0ms)
     const savedLat = localStorage.getItem('save_lat');
     const savedLon = localStorage.getItem('save_lon');
     if (isRetentionEnabled && savedLat && savedLon) {
-        updateLocationUI(parseFloat(savedLat), parseFloat(savedLon));
-		// 👉 Cải tiến thông minh: Tự động chạy lại hàm tính toán địa từ ngay khi F5 ứng dụng
+        if (typeof updateLocationUI === 'function') {
+            updateLocationUI(parseFloat(savedLat), parseFloat(savedLon));
+        }
         if (typeof calculateRemoteDeclination === 'function') {
             calculateRemoteDeclination();
         }
     }
 
-
+    // Lắng nghe sự kiện Focus, Click, Keypress, Input, Blur của các ô nhập liệu
     Object.keys(configs).forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -3751,8 +3840,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const cfg = configs[id];
             let raw = el.value;
 
-            el.value = parseSmartCoordinateText(raw);
-            
+            if (typeof parseSmartCoordinateText === 'function') {
+                el.value = parseSmartCoordinateText(raw);
+            }
             if (el.value.length > cfg.limit) {
                 el.value = el.value.slice(0, cfg.limit);
             }
@@ -3764,7 +3854,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (id === 'declination-input') {
                     magneticDeclination = checkNum;
-                    updateMagneticDeclination();
+                    if (typeof updateMagneticDeclination === 'function') updateMagneticDeclination();
                 }
                 if (cfg.key && document.getElementById('save-toggle')?.checked) {
                     localStorage.setItem(cfg.key, checkNum);
@@ -3776,7 +3866,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const cfg = configs[id];
             let rawStr = el.value.trim();
 
-            let finalDecimal = convertToDecimalDegrees(rawStr);
+            let finalDecimal = typeof convertToDecimalDegrees === 'function' ? convertToDecimalDegrees(rawStr) : parseFloat(rawStr);
             
             if (finalDecimal === null || isNaN(finalDecimal)) {
                 el.value = (id === 'declination-input') ? "0" : "";
@@ -3789,12 +3879,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 let roundedVal = (id === 'declination-input') ? 
                                  parseFloat(finalDecimal.toFixed(2)) : 
                                  parseFloat(finalDecimal.toFixed(5));
-                
                 el.value = roundedVal;
                 
-                if (id === 'declination-input') {
-                    magneticDeclination = roundedVal;
-                }
+                if (id === 'declination-input') magneticDeclination = roundedVal;
 
                 if (cfg.key && document.getElementById('save-toggle')?.checked) {
                     localStorage.setItem(cfg.key, roundedVal);
@@ -3802,7 +3889,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             if (id === 'declination-input') {
-                updateMagneticDeclination();
+                if (typeof updateMagneticDeclination === 'function') updateMagneticDeclination();
             } else {
                 if (typeof calculateRemoteDeclination === 'function') {
                     calculateRemoteDeclination();
@@ -3811,6 +3898,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // =========================================================================
+    // 🚀 LẮNG NGHE SỰ KIỆN CHO KHUNG TÌM ĐỊA DANH MỚI
+    // =========================================================================
+    const lookupBtn = document.getElementById('lookupLocation');
+    const addressInp = document.getElementById('address-lookup');
+
+    if (lookupBtn) {
+        lookupBtn.addEventListener('click', () => {
+            if (typeof getLocationFromAddress === 'function') getLocationFromAddress();
+        });
+    }
+
+    if (addressInp) {
+        addressInp.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (typeof getLocationFromAddress === 'function') getLocationFromAddress();
+                addressInp.blur();
+            }
+        });
+    }
+
+    // Logic kiểm soát của nút Ghi Nhớ Checkbox
     saveToggle?.addEventListener('change', (e) => {
         const declInput = document.getElementById('declination-input');
         const latInput = document.getElementById('remote-lat');
@@ -3826,11 +3936,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (declInput) declInput.value = "0";
             if (latInput) latInput.value = "";  
             if (lonInput) lonInput.value = "";  
+            if (addressInp) addressInp.value = "";
             if (displayEl) displayEl.innerText = "";
             
             magneticDeclination = 0;
-            updateMagneticDeclination();
-            if (typeof showToast === 'function') showToast("Đã xóa toàn bộ dữ liệu lưu về trạng thái trống!");
+            if (typeof updateMagneticDeclination === 'function') updateMagneticDeclination();
+            if (typeof showToast === 'function') showToast("Đã xóa dữ liệu ghi nhớ!");
         } else {
             localStorage.setItem('save_toggle_state', 'true');
             if (declInput) localStorage.setItem('save_decl', declInput.value);
@@ -3942,6 +4053,7 @@ function toggleMainPanelV10() {
  * 🛡️ KHỞI TẠO, ĐÁNH CHẶN LƯU LƯỢNG & ENGINE KÉO THẢ ĐA ĐIỂM
  */
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Tự động khởi tạo Bong bóng menu nếu chưa có trong HTML
     if (!document.getElementById('floatingMenuBtnV10')) {
         const bubbleHTML = `
             <div id="floatingMenuBtnV10">
@@ -3965,7 +4077,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const getPointerCoords = (e) => e.touches ? e.touches[0] : e;
 
-    // Sự kiện BẮT ĐẦU KÉO
+    // 🛫 Sự kiện BẮT ĐẦU KÉO BONG BÓNG
     const onDragStart = (e) => {
         const coords = getPointerCoords(e);
         isDragging = false;
@@ -3984,7 +4096,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bubble.style.setProperty('transition', 'none', 'important');
     };
 
-    // Sự kiện ĐANG KÉO
+    // ✈️ Sự kiện ĐANG KÉO BONG BÓNG
     const onDragMove = (e) => {
         if (startX === 0 && startY === 0) return;
 
@@ -4001,13 +4113,12 @@ document.addEventListener('DOMContentLoaded', () => {
         bubble.style.top = (initialTop + diffY) + 'px';
     };
 
-    // Sự kiện THẢ TAY (Quyết định triệt tiêu Click ma)
+    // 🛬 Sự kiện THẢ TAY BONG BÓNG
     const onDragEnd = (e) => {
         if (startX === 0 && startY === 0) return;
         
-        // ⚡ CHIÊU THỨC CHÍ MẠNG: Nếu là touch trên điện thoại, chặn đứng luồng giả lập chuột tiếp theo
         if (e.type === 'touchend' && e.cancelable) {
-            e.preventDefault();
+            if (isDragging) e.preventDefault(); // Chặn click ma khi thực sự kéo thả
         }
         
         bubble.style.setProperty('transition', 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)', 'important');
@@ -4015,39 +4126,75 @@ document.addEventListener('DOMContentLoaded', () => {
         startY = 0;
 
         if (!isDragging) {
-            toggleMainPanelV10();
+            if (typeof toggleMainPanelV10 === 'function') {
+                toggleMainPanelV10();
+            }
         }
     };
 
-    // ĐĂNG KÝ CHO MÁY TÍNH (MOUSE)
+    // Đăng ký sự kiện kéo thả gốc cho Bong bóng
     bubble.addEventListener('mousedown', onDragStart);
     document.addEventListener('mousemove', onDragMove, { passive: false });
     document.addEventListener('mouseup', onDragEnd);
 
-    // ĐĂNG KÝ CHO ĐIỆN THOẠI (TOUCH - Mở khóa tính năng chặn click ma)
     bubble.addEventListener('touchstart', onDragStart, { passive: true });
     document.addEventListener('touchmove', onDragMove, { passive: false });
-    bubble.addEventListener('touchend', onDragEnd, { passive: false }); // Đổi passive thành false để preventDefault hoạt động ổn định
+    bubble.addEventListener('touchend', onDragEnd, { passive: false });
 
-    // ĐÓNG BĂNG BỘ ĐẾM KHI ĐANG NHẬP LIỆU
-    const stopEvents = ['mousedown', 'touchstart', 'input', 'focus', 'mouseover', 'mouseenter'];
-    stopEvents.forEach(evtName => {
-        wrapper.addEventListener(evtName, () => {
-            if (wrapper.classList.contains('panel-open-v10')) {
-                clearTimeout(autoHideTimerV10);
-            }
-        }, { passive: true });
+    // =========================================================================
+    // ⏱️ ENGINE ĐẾM NGƯỢC THÔNG MINH ĐA ĐIỂM - CHẠM GIỮ CỐ ĐỊNH, RỜI TAY ẨN 5 GI Y
+    // =========================================================================
+    
+    let localHideTimer = null;
+
+    // Lệnh đóng băng bộ đếm tức thì khi phát hiện tương tác người dùng
+    const stopHideCountdown = () => {
+        if (localHideTimer) clearTimeout(localHideTimer);
+        if (typeof autoHideTimerV10 !== 'undefined' && autoHideTimerV10) clearTimeout(autoHideTimerV10);
+        if (window.autoHideTimerV10) clearTimeout(window.autoHideTimerV10);
+    };
+
+    // Lệnh khởi động luồng đếm ngược ẩn bảng sau 5 giây độc bản
+    const startHideCountdown = () => {
+        stopHideCountdown();
+        if (wrapper.classList.contains('panel-open-v10')) {
+            localHideTimer = setTimeout(() => {
+                // Bảo vệ: Nếu người dùng đang tập trung nhập liệu thì gia hạn thời gian, không ẩn
+                const activeTag = document.activeElement ? document.activeElement.tagName : '';
+                if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT') {
+                    startHideCountdown();
+                    return;
+                }
+                
+                // Kích hoạt ẩn trơn tru
+                if (typeof toggleMainPanelV10 === 'function') {
+                    toggleMainPanelV10();
+                } else {
+                    wrapper.classList.remove('panel-open-v10');
+                    wrapper.classList.add('initial-hidden');
+                }
+            }, 5000); // Ẩn sau đúng 5 giây không chạm
+
+            // Đồng bộ xuyên suốt hệ thống toàn cục
+            if (typeof autoHideTimerV10 !== 'undefined') autoHideTimerV10 = localHideTimer;
+            window.autoHideTimerV10 = localHideTimer;
+        }
+    };
+
+    // 🔥 HÀM BẮT CHẠM: Khi người dùng chạm ngón tay hoặc di chuột vào bảng -> ĐÚNG NGHĨA KHÔNG TỰ ẨN ĐI
+    const freezeEvents = ['mousedown', 'touchstart', 'touchmove', 'mousemove', 'input', 'focus', 'mouseover', 'mouseenter'];
+    freezeEvents.forEach(evtName => {
+        wrapper.addEventListener(evtName, stopHideCountdown, { passive: true });
     });
 
-    // KÍCH HOẠT ĐẾM LẠI KHI RỜI KHỎI BẢNG
-    const resumeEvents = ['mouseup', 'touchend', 'blur', 'mouseout', 'mouseleave'];
-    resumeEvents.forEach(evtName => {
-        wrapper.addEventListener(evtName, () => {
-            if (wrapper.classList.contains('panel-open-v10')) {
-                startAutoHideV10();
-            }
-        }, { passive: true });
+    // 🔥 HÀM RỜI TAY: Khi người dùng nhấc tay khỏi màn hình hoặc di chuột ra ngoài -> BẮT ĐẦU ĐẾM 5 GI Y ẨN SỰ
+    const unfreezeEvents = ['mouseup', 'touchend', 'blur', 'mouseout', 'mouseleave'];
+    unfreezeEvents.forEach(evtName => {
+        wrapper.addEventListener(evtName, startHideCountdown, { passive: true });
     });
+
+    // Theo dõi trạng thái lúc mở bảng lần đầu
+    startHideCountdown();
 });
 
 function togglePanel() {
@@ -6233,7 +6380,7 @@ function xayDungBaoCaoLuanGiai(name, degree) {
         const kvBg = isDaiKV ? "rgba(255,59,48,0.06)" : "rgba(255,159,10,0.06)";
         khongVongAlertHTML = `
         <div style="margin-top: 8px; padding: 10px 14px; background: ${kvBg}; border: 1px solid ${kvColor}; border-radius: 6px; color: #fff; font-size: 0.85rem; line-height: 1.5; font-family: sans-serif;">
-            <strong style="color: ${kvColor}; display: block; margin-bottom: 3px;">⚠️ PHẠM PHÂN CÁCH KHÔNG VONG LUẬN CỤC: ${khongVongLoi.loai}</strong>
+            <strong style="color: ${kvColor}; display: block; margin-bottom: 3px;">⚠️ PHẠM PHÂN VỊ KHÔNG VONG LUẬN CỤC: ${khongVongLoi.loai}</strong>
             • <b>Bản chất tuyến độ:</b> ${khongVongLoi.mucDo || "Tạp khí loạn âm dương"}<br>
             • <b>Biện giải thực địa:</b> ${khongVongLoi.message}
         </div>`;
@@ -6554,425 +6701,10 @@ function kichHoatBoDemDungKim() {
     // Chưa đủ 5 giây thì không hiện (để nó tự ẩn khi đang quay)
 }
 
- // Lắng nghe form
-document.addEventListener('DOMContentLoaded', () => {
-    const inputs = ['birthDay', 'birthMonth', 'birthYear', 'purpose'];
-    inputs.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-            el.addEventListener('input', kichHoatBoDemDungKim);
-            el.addEventListener('change', kichHoatBoDemDungKim);
-        }
-    });
-});
 
-/**
- * 🧭 ĐỒNG BỘ HIỆN ỨNG SÁNG CỦA HẬU MẠCH KHI XOAY KIM LA BÀN REAL-TIME
- * Hãy chèn đoạn này vào cuối hàm xoay la bàn hoặc hàm onCompassUpdate của bạn
- */
-function highlightActiveHauNode(currentCompassDegree) {
-    let chuẩnHóaĐộ = ((currentCompassDegree % 360) + 360) % 360;
-    
-    // Tìm mốc Hậu mạch gần nhất dựa theo bước nhảy 5 độ
-    let mốcHậuGầnNhất = Math.round(chuẩnHóaĐộ / 5) * 5;
-    if (mốcHậuGầnNhất >= 360) mốcHậuGầnNhất = 0;
 
-    // Bước 1: Khôi phục tất cả các node Hậu mạch về trạng thái nền bình thường
-    document.querySelectorAll('.hau-node-item').forEach(node => {
-        node.style.boxShadow = 'none';
-        node.style.transform = 'scale(1)';
-        node.style.background = 'rgba(255,255,255,0.05)';
-        node.style.borderColor = 'rgba(255,255,255,0.1)';
-    });
 
-    // Bước 2: Tìm đúng node Hậu mạch mà Kim đang đè lên thực thời và kích hoạt hiệu ứng rực sáng
-    let activeNodes = document.querySelectorAll(`.node-goc-${mốcHậuGầnNhất}`);
-    activeNodes.forEach(activeNode => {
-        // Tự động nhận diện màu sắc của chữ bên trong để làm viền sáng tương ứng (Đỏ chói, Xanh vượng hay Vàng)
-        let textColor = activeNode.querySelector('div:nth-child(2)').style.color;
-        
-        activeNode.style.background = 'rgba(255,255,255,0.15)';
-        activeNode.style.borderColor = textColor; // Viền sáng lên theo đúng màu Cát/Hung của Hậu mạch
-        activeNode.style.transform = 'scale(1.05)'; // Nhô nhẹ lên tạo cảm giác cơ khí động học
-        activeNode.style.boxShadow = `0 0 10px ${textColor}40`; // Tạo vầng hào quang nhẹ bao quanh cực đẹp
-    });
-}
 
-// 📐 HỆ THỐNG QUÉT ĐỘNG KHÔNG GIAN - PHIÊN BẢN ĐA PHƯƠNG THỨC 2026
-let scanState = {
-    isScanning: false,
-    method: "CAMERA",  // "CAMERA" (Quét từ xa) hoặc "MANUAL" (Nhập số/Áp thực địa)
-    startAngle: null,  // Góc hướng thẳng mép trái
-    endAngle: null,    // Góc hướng thẳng mép phải
-    currentAngle: 0
-};
-
-/**
- * 1. HÀM CẬP NHẬT GÓC ĐỘ REAL-TIME TỪ CẢM BIẾN THIẾT BỊ
- */
-function onCompassUpdate(heading) {
-    scanState.currentAngle = ((heading % 360) + 360) % 360;
-    
-    if (scanState.isScanning && scanState.method === "CAMERA") {
-        // Vẽ dải góc thời gian thực từ Mép Trái đến hướng camera hiện tại
-        if (typeof renderScanningArc === 'function') {
-            renderScanningArc(scanState.startAngle, scanState.currentAngle);
-        }
-    } else {
-        if (typeof updateDegreeDisplay === 'function') {
-            updateDegreeDisplay(scanState.currentAngle);
-        }
-    }
-}
-
-/**
- * 2. CHẾ ĐỘ 1: BỘ QUÈT CAMERA TỪ XA VÀ TỰ ĐỘNG KHỬ SAI SỐ XOAY NGƯỢC
- */
-function handleScanButtonClick() {
-    scanState.method = "CAMERA"; // Xác định phương thức quét bằng mắt thần camera
-    const btn = document.getElementById('btn-scan-action');
-    const purposeElement = document.getElementById('purpose');
-    const hiddenInputPurpose = purposeElement ? purposeElement.value : 'bed';
-
-    // ─── BƯỚC 1: CHỐT TIÊU ĐIỂM MÉP TRÁI ───
-    if (!scanState.isScanning && scanState.startAngle === null) {
-        scanState.isScanning = true;
-        scanState.startAngle = scanState.currentAngle;
-        
-        btn.innerHTML = `🛑 CHỐT MÉP PHẢI (Nhắm thẳng tâm camera)`;
-        btn.style.background = "#ff9500"; 
-        btn.style.borderColor = "#ff9500";
-        btn.style.boxShadow = "0 0 15px rgba(255,149,0,0.5)";
-        
-        showToast(`[RA ĐA TIÊU ĐIỂM]: Đã khóa Mép Trái tại ${Math.round(scanState.startAngle)}°. Hãy xoay tâm giữa điện thoại nhắm thẳng vào Mép Phải.`);
-        return;
-    }
-
-    // ─── BƯỚC 2: CHỐT TIÊU ĐIỂM MÉP PHẢI & TRÍCH XUẤT TRỌNG TÂM CHIẾM DỤNG ───
-    if (scanState.isScanning && scanState.startAngle !== null) {
-        scanState.isScanning = false;
-        scanState.endAngle = scanState.currentAngle;
-
-        // Tính khoảng cách góc hình quạt giữa 2 mép ngắm (Khử lỗi trục giao thoa 0°/360°)
-        let diff = scanState.endAngle - scanState.startAngle;
-        if (diff < 0) diff += 360; 
-
-        // 💡 THUẬT TOÁN THÔNG MINH: Tự động đảo biên nếu người dùng quét ngược từ Phải qua Trái
-        if (diff > 180) {
-            diff = 360 - diff;
-            let temp = scanState.startAngle;
-            scanState.startAngle = scanState.endAngle;
-            scanState.endAngle = temp;
-        }
-
-        let realSizeDegree = Math.round(diff); 
-        if (realSizeDegree === 0) realSizeDegree = 1; // Khử lỗi bấm đúp tại một điểm
-
-        // Tính toán trọng tâm hình học chuẩn xác của kết cấu
-        let centerAngle = scanState.startAngle + (diff / 2);
-        centerAngle = ((centerAngle % 360) + 360) % 360; 
-
-        // Trả UI nút bấm về trạng thái tĩnh
-        btn.innerHTML = "📐 Nhắm Quét Dải Độ Thực Địa";
-        btn.style.background = "#2c2c2e";
-        btn.style.borderColor = "#ffca28";
-        btn.style.boxShadow = "none";
-
-        // Đồng bộ dải độ thực tế vào bộ nhớ cấu hình vật thể
-        if (ConfigPhongThuy[hiddenInputPurpose]) {
-            ConfigPhongThuy[hiddenInputPurpose].sizeDegree = realSizeDegree;
-        }
-
-        showToast(`✔️ Quét thành công! Độ rộng vật thể: ${realSizeDegree}°. Trọng tâm hình học: ${Math.round(centerAngle)}°`);
-
-        // Đổ dữ liệu ra lõi tính điểm toán học
-        processScanResult(centerAngle, realSizeDegree, hiddenInputPurpose);
-        
-        if (typeof generateDirectionsList === 'function') {
-            generateDirectionsList();
-        }
-
-        // Giải phóng bộ nhớ đệm
-        scanState.startAngle = null;
-        scanState.endAngle = null;
-    }
-}
-
-/**
- * 3. CHẾ ĐỘ 2 & 3: LẬP TỨC ĐỔ DỮ LIỆU BẰNG TAY / ÁP SÁT THÀNH VẬT THỂ
- * Dành cho trường hợp phòng quá kẹt không thể đứng từ xa ngắm camera, hoặc làm việc trên bản vẽ
- */
-function executeManualScanConfig(customCenterAngle, customSizeDegree, purposeKey) {
-    scanState.method = "MANUAL";
-    scanState.isScanning = false;
-
-    let cleanCenter = ((parseFloat(customCenterAngle) % 360) + 360) % 360;
-    let cleanSize = Math.max(0, Math.min(180, parseFloat(customSizeDegree) || 0));
-
-    if (ConfigPhongThuy[purposeKey]) {
-        ConfigPhongThuy[purposeKey].sizeDegree = cleanSize;
-    }
-
-    showToast(`⚙️ Đã nạp thông số thủ công: Trọng tâm ${Math.round(cleanCenter)}°, Bề rộng dải mạch: ${cleanSize}°`);
-
-    // Chạy phân tích điểm đa tầng ngay lập tức
-    processScanResult(cleanCenter, cleanSize, purposeKey);
-
-    if (typeof generateDirectionsList === 'function') {
-        generateDirectionsList();
-    }
-}
-
-/**
- * 3. XỬ LÝ KẾT QUẢ QUÉT ĐỘNG VÀ ĐỒ DỮ LIỆU THÔNG MINH LÊN UI
- * PHIÊN BẢN 2026: Cá nhân hóa vật thể quét, hiển thị chi tiết Định vị Sơn Hậu và tích hợp nút Đóng (✕)
- */
-function processScanResult(centerAngle, sizeDegree, purpose) {
-    console.log("=== BẮT ĐẦU XỬ LÝ KẾT QUẢ QUÉT THỰC ĐỊA ===");
-    
-    const container = document.getElementById('scan-result-panel');
-    if (!container) return; // Đã xử lý bẫy overlay bên ngoài
-
-    // Hiển thị trạng thái xử lý tạm thời
-    container.style.display = "block";
-    container.innerHTML = `<div style="color: #ffca28; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px; font-size: 0.85rem; border: 1px dashed rgba(255,255,255,0.1);">⏳ Hệ thống đang phân tích ma trận long mạch thực địa...</div>`;
-
-    // ─── 1. TỰ ĐỘNG CHUYỂN ĐỔI NGÔN NGỮ DANH MỤC VẬT THỂ VÀ THÔNG SỐ NỀN ───
-    const dictVatThe = {
-        "bed": "Giường ngủ", "kitchen": "Bếp nấu", "door": "Cửa chính", 
-        "desk": "Bàn làm việc", "altar": "Bàn thờ", "toilet": "Nhà vệ sinh"
-    };
-    const tenVatTheChuan = dictVatThe[purpose] || "Vật thể kết cấu";
-
-    let cungPhiChuMenh = "Càn";
-    if (typeof vịTríLấyCungPhi === 'function') cungPhiChuMenh = vịTríLấyCungPhi();
-    else if (typeof viTriLayCungPhi === 'function') cungPhiChuMenh = viTriLayCungPhi();
-
-    const txtSurveyYear = document.getElementById('surveyYear');
-    const namKhaoSat = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value) : new Date().getFullYear();
-    let namAmReal = namKhaoSat;
-    if (typeof vịTríLấyNămÂmChuẩn === 'function') namAmReal = vịTríLấyNămÂmChuẩn();
-
-    // ─── 2. CHẠY PHƯƠNG TRÌNH LÕI VÀ BẪY LỖI ───
-    let ketQua;
-    try {
-        if (typeof tinhDiemTongHop !== 'function') {
-            throw new Error("Hàm lõi 'tinhDiemTongHop' chưa được khai báo.");
-        }
-        ketQua = tinhDiemTongHop(cungPhiChuMenh, centerAngle, namKhaoSat, purpose, namAmReal);
-        if (!ketQua) throw new Error("Hàm 'tinhDiemTongHop' không trả về dữ liệu cấu trúc.");
-    } catch (error) {
-        container.innerHTML = `
-            <div style="position: relative; background: rgba(255,59,48,0.05); border: 1px solid rgba(255,59,48,0.3); border-left: 4px solid #ff3b30; padding: 14px; border-radius: 10px; color: #fff; font-family: -apple-system, sans-serif;">
-                <button onclick="document.getElementById('scan-result-panel').style.display='none'" style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: #aaa; cursor: pointer; font-size: 1.1rem;">✕</button>
-                <div style="font-weight: bold; color: #ff453a; font-size: 0.9rem; margin-bottom: 6px;">❌ LỖI HỆ THỐNG</div>
-                <div style="font-size: 0.8rem; color: #ffbc66;">Không thể phân tích dữ liệu quét của <strong>${tenVatTheChuan}</strong>.</div>
-            </div>
-        `;
-        return; 
-    }
-
-    // ─── 3. TRÍCH XUẤT THÔNG TIN ĐỊA LÝ ĐA TẦNG ĐỂ GỌI TÊN CHÍNH XÁC ───
-    const normalizedDegree = ((centerAngle % 360) + 360) % 360;
-    
-    // Lấy tên Hướng đại cục từ thông tin Sơn gốc
-    let tenHuongDaiCuc = "Chưa rõ";
-    if (normalizedDegree >= 337.5 || normalizedDegree < 22.5) tenHuongDaiCuc = "Phương Bắc";
-    else if (normalizedDegree >= 22.5 && normalizedDegree < 67.5) tenHuongDaiCuc = "Phương Đông Bắc";
-    else if (normalizedDegree >= 67.5 && normalizedDegree < 112.5) tenHuongDaiCuc = "Phương Đông";
-    else if (normalizedDegree >= 112.5 && normalizedDegree < 157.5) tenHuongDaiCuc = "Phương Đông Nam";
-    else if (normalizedDegree >= 157.5 && normalizedDegree < 202.5) tenHuongDaiCuc = "Phương Nam";
-    else if (normalizedDegree >= 202.5 && normalizedDegree < 247.5) tenHuongDaiCuc = "Phương Tây Nam";
-    else if (normalizedDegree >= 247.5 && normalizedDegree < 292.5) tenHuongDaiCuc = "Phương Tây";
-    else if (normalizedDegree >= 292.5 && normalizedDegree < 337.5) tenHuongDaiCuc = "Phương Tây Bắc";
-
-    const tenSonVi = ketQua.sonName || "Chưa xác định";
-    const tenHauVi = (ketQua.hauInfo && ketQua.hauInfo.ten) ? ketQua.hauInfo.ten : "Không rõ";
-
-    // ─── 4. BIÊN DỊCH CHI TIẾT MẠCH HẬU NGẦM ───
-    let danhSachHauBaoCaoHTML = "";
-    if (ketQua.scanMetrics && Array.isArray(ketQua.scanMetrics.chiTietHau) && ketQua.scanMetrics.chiTietHau.length > 0) {
-        danhSachHauBaoCaoHTML = ketQua.scanMetrics.chiTietHau.map(function(hau) {
-            let mauHauBadge = (hau.diem >= 60) ? '#30d158' : '#ff9500';
-            return `
-                <span style="display: inline-block; padding: 3px 8px; margin: 2px; background: rgba(255,255,255,0.04); border: 1px solid ${mauHauBadge}40; border-radius: 4px; font-size: 0.75rem; color: #e5e5ea;">
-                    📍 Mốc ${hau.moc}° (${hau.ten || 'Hậu'}: <strong style="color:${mauHauBadge};">${hau.diem}đ</strong>)
-                </span>
-            `;
-        }).join('');
-    }
-
-    let mauSacGiaoDien = (ketQua.diem >= 72) ? '#30d158' : '#ff3b30';
-    let bgGiaoDien = (ketQua.diem >= 72) ? 'rgba(48,209,88,0.05)' : 'rgba(255,59,48,0.05)';
-
-    // Thống kê phân tích lấn biên long mạch
-    let thongTinPhanTichHau = "";
-    if (ketQua.scanMetrics && ketQua.scanMetrics.totalHauOccupied > 1) {
-        thongTinPhanTichHau = `
-            <div style="margin-top: 10px; padding: 10px; background: rgba(255,149,0,0.06); border-radius: 6px; border-left: 4px solid #ff9500; font-size: 0.8rem; color: #ffbc66; line-height: 1.4;">
-                ⚠️ <strong>CẢNH BÁO LẤN BIÊN:</strong> Kết cấu chiếm dụng dải quét rộng <strong>${sizeDegree}°</strong>, đè lên <strong>${ketQua.scanMetrics.totalHauOccupied} phân độ Hậu</strong> khí trường ngầm.
-                ${danhSachHauBaoCaoHTML ? `<div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,149,0,0.15);">${danhSachHauBaoCaoHTML}</div>` : ''}
-            </div>
-        `;
-    } else {
-        thongTinPhanTichHau = `
-            <div style="margin-top: 10px; padding: 10px; background: rgba(48,209,88,0.06); border-radius: 6px; border-left: 4px solid #30d158; font-size: 0.8rem; color: #82f5a0; line-height: 1.4;">
-                ✅ <strong>ĐẮC TRỌNG TÂM THUẦN KHÍ:</strong> Toàn bộ mặt kết cấu định vị hoàn hảo trong dải địa khí tinh khiết.
-            </div>
-        `;
-    }
-
-    // ─── 5. XUẤT CẤU TRÚC GIAO DIỆN MINH BẠCH, THÔNG MINH ───
-    container.innerHTML = `
-        <div style="position: relative; background: ${bgGiaoDien}; border: 1px solid ${mauSacGiaoDien}35; padding: 16px; border-radius: 12px; color: #fff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-shadow: 0 8px 24px rgba(0,0,0,0.35);">
-            
-            <button onclick="document.getElementById('scan-result-panel').style.display='none'" 
-                    style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.05); border: none; color: #8e8e93; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.85rem; transition: all 0.2s;"
-                    onmouseover="this.style.background='rgba(255,255,255,0.1)';this.style.color='#fff'" 
-                    onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='#8e8e93'">✕</button>
-
-            <div style="font-weight: bold; color: #ffca28; margin-bottom: 12px; font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px; padding-right: 25px;">
-                📊 KẾT QUẢ ĐỊNH VỊ: ${tenVatTheChuan.toUpperCase()}
-            </div>
-
-            <div style="font-size: 0.85rem; line-height: 1.6; color: #e5e5ea; background: rgba(0,0,0,0.15); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03);">
-                Bạn đang tiến hành đo đạc cấu trúc <span style="color: #ffca28; font-weight: bold;">${tenVatTheChuan}</span>:<br>
-                • Định vị địa bàn: Nằm tại <span style="color: #30d158; font-weight: bold;">${tenHuongDaiCuc}</span> (Sơn vị: <span style="color: #ffd60a;">${tenSonVi}</span> / Hậu vị: <span style="color: #ffd60a;">${tenHauVi}</span>).<br>
-                • Tọa độ trọng tâm: <span style="color: #ffca28; font-weight: bold;">${Math.round(centerAngle)}°</span>.<br>
-                • Bề rộng chiếm dụng không gian: <span style="color: #30d158; font-weight: bold;">${Math.round(sizeDegree)}°</span>.
-            </div>
-
-            <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse; margin-top: 10px;">
-                <tr>
-                    <td style="padding: 6px 0; color: #aeaeb2;">Điểm địa khí tổng hợp:</td>
-                    <td style="text-align: right; font-weight: bold; color: ${mauSacGiaoDien}; font-size: 1.05rem;">${ketQua.diem || 0} pt (${ketQua.level || 'HUNG'})</td>
-                </tr>
-            </table>
-
-            ${thongTinPhanTichHau}
-
-            <div style="border-top: 1px solid rgba(255,255,255,0.08); margin-top: 12px; padding-top: 10px; font-size: 0.82rem; color: #d1d1d6; line-height: 1.5;">
-                <strong style="color: #ffca28;">Luận giải [${cungPhiChuMenh} Mệnh]:</strong> ${ketQua.message || 'Không có bình luận cục diện.'}
-            </div>
-            
-            ${ketQua.hoaGiai ? `
-                <div style="margin-top: 8px; padding: 8px; background: rgba(255,214,10,0.06); border: 1px solid rgba(255,214,10,0.15); border-radius: 6px; font-size: 0.8rem; color: #ffd60a; line-height: 1.4;">
-                    <strong>Biện pháp điều chỉnh:</strong> ${ketQua.hoaGiai}
-                </div>
-            ` : ''}
-        </div>
-    `;
-
-    console.log("=== ĐÃ ĐỔ DỮ LIỆU LÊN UI THÀNH CÔNG ===");
-
-    if (typeof triggerGhostNeedle === 'function') {
-        triggerGhostNeedle(centerAngle);
-    }
-}
-/**
- * HÀM BỔ SUNG: Trích xuất Cung Phi hiện tại từ giao diện người dùng
- * Giúp hàm quét động nhận diện chính xác bản mệnh để tính điểm Bát Trạch
- */
-function vịTríLấyCungPhi() {
-    // 1. Tìm xem giao diện có ô chọn (select/input) nào chứa Cung Phi không
-    const phầnTửCung = document.getElementById('cungPhi') || 
-                       document.getElementById('cungPhiChuMenh') || 
-                       document.getElementById('purpose'); // Tùy thuộc vào ID bạn đặt trong HTML
-                       
-    if (phầnTửCung && phầnTửCung.value) {
-        // Nếu giá trị là chữ (Càn, Khôn, Ly...) thì trả về luôn
-        if (["Càn", "Khôn", "Khảm", "Ly", "Chấn", "Tốn", "Cấn", "Đoài"].includes(phầnTửCung.value)) {
-            return phầnTửCung.value;
-        }
-    }
-    
-    // 2. Dự phòng: Nếu trên giao diện có lưu thông tin ngày sinh để tính toán
-    const txtNam = document.getElementById('birthYear');
-    const txtThang = document.getElementById('birthMonth') || { value: 6 };
-    const txtNgay = document.getElementById('birthDay') || { value: 15 };
-    const rdGioiTinh = document.querySelector('input[name="gender"]:checked') || { value: 'male' };
-    
-    if (txtNam && txtNam.value) {
-        // Tái sử dụng chính hàm `tínhCungPhi` có sẵn của bạn bên trên
-        return tínhCungPhi(parseInt(txtNam.value), parseInt(txtThang.value), parseInt(txtNgay.value), rdGioiTinh.value);
-    }
-
-    // 3. Nếu không tìm thấy bất kỳ dấu vết nào trên UI, trả về Càn (Mặc định hệ thống)
-    return "Càn";
-}
-
-/**
- * HÀM BỔ SUNG: Lấy năm Âm lịch khảo sát từ UI
- */
-function vịTríLấyNămÂmChuẩn() {
-    const txtSurveyYear = document.getElementById('surveyYear');
-    if (txtSurveyYear && txtSurveyYear.value.length === 4) {
-        return parseInt(txtSurveyYear.value);
-    }
-    return new Date().getFullYear();
-}
-
-// Biến lưu trạng thái toàn cục để không phụ thuộc vào DOM
-const rotateState = {}; 
-
-function handleSmartRotate(btn) {
-    // 1. Dùng ID của nút làm Key để quản lý trạng thái (Tránh lỗi nếu có nhiều nút xoay)
-    const btnId = btn.id || 'default-rotate-btn';
-    if (!rotateState[btnId]) {
-        rotateState[btnId] = { count: 0 };
-    }
-
-    // 2. Parse dữ liệu một lần duy nhất
-    const sonAngles = JSON.parse(btn.getAttribute('data-son-angles'));
-    const isCatPurpose = btn.getAttribute('data-is-cat') === 'true';
-
-    // 3. Tăng count
-    rotateState[btnId].count++;
-    const clickCount = rotateState[btnId].count;
-    const currentSonIdx = clickCount % sonAngles.length; // Dùng % length để linh hoạt (không chỉ % 3)
-    const currentSon = sonAngles[currentSonIdx];
-
-    // 4. Cập nhật UI nút bấm
-    const nextSonIdx = (clickCount + 1) % sonAngles.length;
-    const nextSonName = sonAngles[nextSonIdx].name;
-    btn.innerHTML = `🔄 Đang xem: Sơn ${currentSon.name} (${currentSon.angle}°) ➔ Click xem tiếp Sơn ${nextSonName}`;
-
-    // 5. Điều phối kim (Dùng requestAnimationFrame để mượt trên di động)
-    requestAnimationFrame(() => {
-        if (typeof triggerGhostNeedle === 'function') {
-            triggerGhostNeedle(currentSon.angle);
-        }
-        
-        // Gọi lại recalculateFate() để update các chỉ số chi tiết ngay lập tức
-        if (typeof recalculateFate === 'function') {
-            // Nếu bạn có biến lưu hướng khóa, cần cập nhật nó ở đây
-            if (typeof lockedHeadingAtOpen !== 'undefined') {
-                lockedHeadingAtOpen = currentSon.angle;
-            }
-            recalculateFate();
-        }
-    });
-
-    // 6. Xử lý Blink hiệu ứng
-    triggerBlinkEffect(currentSon.score, isCatPurpose);
-}
-
-// Hàm tách biệt xử lý hiệu ứng Blink để dễ quản lý
-function triggerBlinkEffect(score, isCatPurpose) {
-    const needleElement = document.querySelector('.compass-needle') || document.getElementById('compassNeedle');
-    if (!needleElement) return;
-
-    let isGoodLocation = isCatPurpose ? (score >= 72) : (score < 50);
-
-    needleElement.classList.remove('la-ban-blink-green', 'la-ban-blink-yellow');
-    void needleElement.offsetWidth; // Force Reflow
-
-    if (isGoodLocation) {
-        needleElement.classList.add('la-ban-blink-green');
-    } else if ((isCatPurpose && score >= 50) || (!isCatPurpose && score <= 70)) {
-        needleElement.classList.add('la-ban-blink-yellow');
-    }
-}
 //gioi thieu phong thuy
 document.getElementById('openScienceBtn').addEventListener('click', function() {
     // Gọi hàm khởi tạo và hiển thị khung nội dung khoa học từ file JS riêng biệt
