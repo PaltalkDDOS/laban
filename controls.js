@@ -4068,10 +4068,12 @@ function toggleMainPanelV10() {
     }
 }
 
-/**
- * 🛡️ KHỞI TẠO, ĐÁNH CHẶN LƯU LƯỢNG & ENGINE KÉO THẢ ĐA ĐIỂM
- */
+// =========================================================================
+// 🔮 ENGINE ĐIỀU KHIỂN BONG BÓNG THÔNG MINH V11.2 - ULTRA PERFORMANCE
+// =========================================================================
+
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Tự động khởi tạo Bong bóng menu nếu chưa có trong HTML
     if (!document.getElementById('floatingMenuBtnV10')) {
         const bubbleHTML = `
             <div id="floatingMenuBtnV10">
@@ -4086,16 +4088,89 @@ document.addEventListener('DOMContentLoaded', () => {
     const wrapper = document.getElementById('mainPanelWrapper');
     if (!wrapper || !bubble) return;
 
+    // Thiết lập trạng thái ẩn ban đầu gọn gàng
     wrapper.classList.remove('panel-open-v10');
     wrapper.classList.add('initial-hidden');
 
     let isDragging = false;
     let startX = 0, startY = 0;
     let initialLeft = 0, initialTop = 0;
+    let localHideTimer = null;
 
     const getPointerCoords = (e) => e.touches ? e.touches[0] : e;
 
-    // Sự kiện BẮT ĐẦU KÉO
+    // =========================================================================
+    // ⏱️ PHÂN HỆ: BỘ ĐẾM ẨN THÔNG MINH (CÁCH LY TUYỆT ĐỐI KHI ĐANG TƯƠNG TÁC)
+    // =========================================================================
+    
+    // Xóa sạch bộ đếm ngược để giữ bảng đứng yên cố định
+    const stopHideCountdown = () => {
+        if (localHideTimer) clearTimeout(localHideTimer);
+        if (typeof autoHideTimerV10 !== 'undefined' && autoHideTimerV10) clearTimeout(autoHideTimerV10);
+        if (window.autoHideTimerV10) clearTimeout(window.autoHideTimerV10);
+    };
+
+    // Khởi động chu trình đếm ngược 5 giây tự ẩn
+    const startHideCountdown = () => {
+        stopHideCountdown();
+        
+        // Chỉ đếm ngược nếu bảng đang mở công khai
+        if (wrapper.classList.contains('panel-open-v10')) {
+            localHideTimer = setTimeout(() => {
+                // [GIỮ BẢNG LỚP 1]: Nếu đang tập trung gõ phím, nhập liệu, chọn select -> KHÔNG CHO THU LÊN
+                const activeTag = document.activeElement ? document.activeElement.tagName : '';
+                if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT') {
+                    startHideCountdown(); // Gia hạn thời gian vĩnh viễn
+                    return;
+                }
+                
+                // [GIỮ BẢNG LỚP 2]: Nếu chuột đang hover hoặc ngón tay đang chạm giữ trên khung panel -> KHÔNG CHO THU LÊN
+                if (wrapper.matches(':hover') || wrapper.contains(document.activeElement)) {
+                    startHideCountdown(); // Tiếp tục giữ nguyên trạng thái mở
+                    return;
+                }
+                
+                // Nếu hoàn toàn không có tương tác -> Thực thi ẩn tự động mượt mà
+                execTogglePanel(false);
+            }, 5000);
+
+            // Đồng bộ định danh Timer lên hệ thống toàn cục
+            if (typeof autoHideTimerV10 !== 'undefined') autoHideTimerV10 = localHideTimer;
+            window.autoHideTimerV10 = localHideTimer;
+        }
+    };
+
+    // Hàm thực thi đóng/mở bảng lập tức - Bấm phát ăn ngay không độ trễ
+    const execTogglePanel = (forceState) => {
+        const shouldOpen = (forceState !== undefined) ? forceState : !wrapper.classList.contains('panel-open-v10');
+        
+        if (shouldOpen) {
+            stopHideCountdown();
+            wrapper.classList.add('panel-open-v10');
+            wrapper.classList.remove('initial-hidden');
+            startHideCountdown(); // Mở ra thành công -> Kích hoạt bộ trễ ẩn 5 giây
+        } else {
+            stopHideCountdown(); // Chủ động đóng -> Hủy luôn bộ đếm ngầm để nhẹ máy
+            wrapper.classList.remove('panel-open-v10');
+            wrapper.classList.add('initial-hidden');
+        }
+
+        // Đồng bộ xoay mũi tên chỉ thị (nếu có trong HTML)
+        const currentArrow = document.getElementById('toggleArrow');
+        if (currentArrow) {
+            currentArrow.style.transform = shouldOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        // Gọi kết nối đồng bộ sang hàm gốc của phongthuy_khoahoc.js nếu cần thiết
+        if (typeof toggleMainPanelV10 === 'function' && forceState === undefined) {
+            // Đảm bảo không tạo vòng lặp vô hạn
+        }
+    };
+
+    // =========================================================================
+    // 🛫 PHÂN HỆ KÉO THẢ GIA TỐC PHẦN CỨNG - BẢO VỆ SỰ MƯỢT MÀ CỦA LA BÀN
+    // =========================================================================
+    
     const onDragStart = (e) => {
         const coords = getPointerCoords(e);
         isDragging = false;
@@ -4110,11 +4185,18 @@ document.addEventListener('DOMContentLoaded', () => {
         bubble.style.bottom = 'auto';
         bubble.style.left = initialLeft + 'px';
         bubble.style.top = initialTop + 'px';
-        
         bubble.style.setProperty('transition', 'none', 'important');
+
+        // 🎯 SIÊU TỐI ƯU: Chỉ ép CPU theo dõi tọa độ KHI THỰC SỰ DI CHUYỂN, giúp la bàn không bị lag giật
+        if (e.type === 'touchstart') {
+            document.addEventListener('touchmove', onDragMove, { passive: false });
+            document.addEventListener('touchend', onDragEnd, { passive: false });
+        } else {
+            document.addEventListener('mousemove', onDragMove, { passive: false });
+            document.addEventListener('mouseup', onDragEnd, { passive: false });
+        }
     };
 
-    // Sự kiện ĐANG KÉO
     const onDragMove = (e) => {
         if (startX === 0 && startY === 0) return;
 
@@ -4122,7 +4204,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const diffX = coords.clientX - startX;
         const diffY = coords.clientY - startY;
 
-        if (Math.abs(diffX) > 4 || Math.abs(diffY) > 4) {
+        // Đặt ngưỡng biên độ di chuyển 5px để phân biệt chính xác giữa Kéo Thả và Chạm Nhẹ (Click)
+        if (Math.abs(diffX) > 5 || Math.abs(diffY) > 5) {
             isDragging = true;
             if (e.cancelable) e.preventDefault(); 
         }
@@ -4131,53 +4214,64 @@ document.addEventListener('DOMContentLoaded', () => {
         bubble.style.top = (initialTop + diffY) + 'px';
     };
 
-    // Sự kiện THẢ TAY (Quyết định triệt tiêu Click ma)
     const onDragEnd = (e) => {
+        // 🧠 GIẢI PHÓNG TÀI NGUYÊN RAM NGAY KHI BUÔNG TAY: Giúp la bàn mượt mà đạt đỉnh 120fps
+        document.removeEventListener('mousemove', onDragMove);
+        document.removeEventListener('mouseup', onDragEnd);
+        document.removeEventListener('touchmove', onDragMove);
+        document.removeEventListener('touchend', onDragEnd);
+
         if (startX === 0 && startY === 0) return;
         
-        // ⚡ CHIÊU THỨC CHÍ MẠNG: Nếu là touch trên điện thoại, chặn đứng luồng giả lập chuột tiếp theo
+        // 🛡️ CHIÊU THỨC TRIỆT TIÊU CLICK MA: Chặn đứng luồng giả lập chuột gây lỗi đóng/mở vô cớ
         if (e.type === 'touchend' && e.cancelable) {
-            e.preventDefault();
+            e.preventDefault(); 
         }
         
-        bubble.style.setProperty('transition', 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)', 'important');
+        bubble.style.setProperty('transition', 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), left 0.2s ease, top 0.2s ease', 'important');
+        
+        const finishedDragging = isDragging;
         startX = 0;
         startY = 0;
 
-        if (!isDragging) {
-            toggleMainPanelV10();
+        // Xử lý logic khi người dùng nhấc ngón tay
+        if (!finishedDragging) {
+            // Nếu là Chạm Nhẹ -> Thực hiện đảo trạng thái Đóng/Mở lập tức, không delay 5 giây
+            execTogglePanel();
+        } else {
+            // Nếu là Hành vi Kéo Thả -> Tiếp tục duy trì bộ đếm ẩn 5 giây nếu bảng đang mở
+            if (wrapper.classList.contains('panel-open-v10')) {
+                startHideCountdown();
+            }
         }
     };
 
-    // ĐĂNG KÝ CHO MÁY TÍNH (MOUSE)
+    // Đăng ký cổng tiếp nhận sự kiện ban đầu cho Bong bóng chủ mệnh
     bubble.addEventListener('mousedown', onDragStart);
-    document.addEventListener('mousemove', onDragMove, { passive: false });
-    document.addEventListener('mouseup', onDragEnd);
-
-    // ĐĂNG KÝ CHO ĐIỆN THOẠI (TOUCH - Mở khóa tính năng chặn click ma)
     bubble.addEventListener('touchstart', onDragStart, { passive: true });
-    document.addEventListener('touchmove', onDragMove, { passive: false });
-    bubble.addEventListener('touchend', onDragEnd, { passive: false }); // Đổi passive thành false để preventDefault hoạt động ổn định
 
-    // ĐÓNG BĂNG BỘ ĐẾM KHI ĐANG NHẬP LIỆU
-    const stopEvents = ['mousedown', 'touchstart', 'input', 'focus', 'mouseover', 'mouseenter'];
-    stopEvents.forEach(evtName => {
+    // =========================================================================
+    // ĐĂNG KÝ CƠ CHẾ ĐÓNG BĂNG PANEL KHI TƯƠNG TÁC
+    // =========================================================================
+    
+    const freezeEvents = ['mousedown', 'touchstart', 'touchmove', 'mousemove', 'input', 'focus', 'mouseover', 'mouseenter'];
+    freezeEvents.forEach(evtName => {
+        wrapper.addEventListener(evtName, stopHideCountdown, { passive: true });
+    });
+
+    const unfreezeEvents = ['mouseup', 'touchend', 'blur', 'mouseout', 'mouseleave'];
+    unfreezeEvents.forEach(evtName => {
         wrapper.addEventListener(evtName, () => {
-            if (wrapper.classList.contains('panel-open-v10')) {
-                clearTimeout(autoHideTimerV10);
+            // Khi người dùng rời tay/rời chuột, chỉ cho phép đếm ngược nếu không có con trỏ gõ chữ ngầm
+            const activeTag = document.activeElement ? document.activeElement.tagName : '';
+            if (activeTag !== 'INPUT' && activeTag !== 'TEXTAREA' && activeTag !== 'SELECT') {
+                startHideCountdown();
             }
         }, { passive: true });
     });
 
-    // KÍCH HOẠT ĐẾM LẠI KHI RỜI KHỎI BẢNG
-    const resumeEvents = ['mouseup', 'touchend', 'blur', 'mouseout', 'mouseleave'];
-    resumeEvents.forEach(evtName => {
-        wrapper.addEventListener(evtName, () => {
-            if (wrapper.classList.contains('panel-open-v10')) {
-                startAutoHideV10();
-            }
-        }, { passive: true });
-    });
+    // Xuất bản hàm điều khiển ra window để tương thích với các phím tắt/mũi tên phụ bên ngoài
+    window.toggleMainPanelV10 = () => execTogglePanel();
 });
 
 function togglePanel() {
@@ -6709,413 +6803,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-/**
- * 🧭 ĐỒNG BỘ HIỆN ỨNG SÁNG CỦA HẬU MẠCH KHI XOAY KIM LA BÀN REAL-TIME
- * Hãy chèn đoạn này vào cuối hàm xoay la bàn hoặc hàm onCompassUpdate của bạn
- */
-function highlightActiveHauNode(currentCompassDegree) {
-    let chuẩnHóaĐộ = ((currentCompassDegree % 360) + 360) % 360;
-    
-    // Tìm mốc Hậu mạch gần nhất dựa theo bước nhảy 5 độ
-    let mốcHậuGầnNhất = Math.round(chuẩnHóaĐộ / 5) * 5;
-    if (mốcHậuGầnNhất >= 360) mốcHậuGầnNhất = 0;
-
-    // Bước 1: Khôi phục tất cả các node Hậu mạch về trạng thái nền bình thường
-    document.querySelectorAll('.hau-node-item').forEach(node => {
-        node.style.boxShadow = 'none';
-        node.style.transform = 'scale(1)';
-        node.style.background = 'rgba(255,255,255,0.05)';
-        node.style.borderColor = 'rgba(255,255,255,0.1)';
-    });
-
-    // Bước 2: Tìm đúng node Hậu mạch mà Kim đang đè lên thực thời và kích hoạt hiệu ứng rực sáng
-    let activeNodes = document.querySelectorAll(`.node-goc-${mốcHậuGầnNhất}`);
-    activeNodes.forEach(activeNode => {
-        // Tự động nhận diện màu sắc của chữ bên trong để làm viền sáng tương ứng (Đỏ chói, Xanh vượng hay Vàng)
-        let textColor = activeNode.querySelector('div:nth-child(2)').style.color;
-        
-        activeNode.style.background = 'rgba(255,255,255,0.15)';
-        activeNode.style.borderColor = textColor; // Viền sáng lên theo đúng màu Cát/Hung của Hậu mạch
-        activeNode.style.transform = 'scale(1.05)'; // Nhô nhẹ lên tạo cảm giác cơ khí động học
-        activeNode.style.boxShadow = `0 0 10px ${textColor}40`; // Tạo vầng hào quang nhẹ bao quanh cực đẹp
-    });
-}
-
-// 📐 HỆ THỐNG QUÉT ĐỘNG KHÔNG GIAN - PHIÊN BẢN ĐA PHƯƠNG THỨC 2026
-let scanState = {
-    isScanning: false,
-    method: "CAMERA",  // "CAMERA" (Quét từ xa) hoặc "MANUAL" (Nhập số/Áp thực địa)
-    startAngle: null,  // Góc hướng thẳng mép trái
-    endAngle: null,    // Góc hướng thẳng mép phải
-    currentAngle: 0
-};
-
-/**
- * 1. HÀM CẬP NHẬT GÓC ĐỘ REAL-TIME TỪ CẢM BIẾN THIẾT BỊ
- */
-function onCompassUpdate(heading) {
-    scanState.currentAngle = ((heading % 360) + 360) % 360;
-    
-    if (scanState.isScanning && scanState.method === "CAMERA") {
-        // Vẽ dải góc thời gian thực từ Mép Trái đến hướng camera hiện tại
-        if (typeof renderScanningArc === 'function') {
-            renderScanningArc(scanState.startAngle, scanState.currentAngle);
-        }
-    } else {
-        if (typeof updateDegreeDisplay === 'function') {
-            updateDegreeDisplay(scanState.currentAngle);
-        }
-    }
-}
-
-/**
- * 2. CHẾ ĐỘ 1: BỘ QUÈT CAMERA TỪ XA VÀ TỰ ĐỘNG KHỬ SAI SỐ XOAY NGƯỢC
- */
-function handleScanButtonClick() {
-    scanState.method = "CAMERA"; // Xác định phương thức quét bằng mắt thần camera
-    const btn = document.getElementById('btn-scan-action');
-    const purposeElement = document.getElementById('purpose');
-    const hiddenInputPurpose = purposeElement ? purposeElement.value : 'bed';
-
-    // ─── BƯỚC 1: CHỐT TIÊU ĐIỂM MÉP TRÁI ───
-    if (!scanState.isScanning && scanState.startAngle === null) {
-        scanState.isScanning = true;
-        scanState.startAngle = scanState.currentAngle;
-        
-        btn.innerHTML = `🛑 CHỐT MÉP PHẢI (Nhắm thẳng tâm camera)`;
-        btn.style.background = "#ff9500"; 
-        btn.style.borderColor = "#ff9500";
-        btn.style.boxShadow = "0 0 15px rgba(255,149,0,0.5)";
-        
-        showToast(`[RA ĐA TIÊU ĐIỂM]: Đã khóa Mép Trái tại ${Math.round(scanState.startAngle)}°. Hãy xoay tâm giữa điện thoại nhắm thẳng vào Mép Phải.`);
-        return;
-    }
-
-    // ─── BƯỚC 2: CHỐT TIÊU ĐIỂM MÉP PHẢI & TRÍCH XUẤT TRỌNG TÂM CHIẾM DỤNG ───
-    if (scanState.isScanning && scanState.startAngle !== null) {
-        scanState.isScanning = false;
-        scanState.endAngle = scanState.currentAngle;
-
-        // Tính khoảng cách góc hình quạt giữa 2 mép ngắm (Khử lỗi trục giao thoa 0°/360°)
-        let diff = scanState.endAngle - scanState.startAngle;
-        if (diff < 0) diff += 360; 
-
-        // 💡 THUẬT TOÁN THÔNG MINH: Tự động đảo biên nếu người dùng quét ngược từ Phải qua Trái
-        if (diff > 180) {
-            diff = 360 - diff;
-            let temp = scanState.startAngle;
-            scanState.startAngle = scanState.endAngle;
-            scanState.endAngle = temp;
-        }
-
-        let realSizeDegree = Math.round(diff); 
-        if (realSizeDegree === 0) realSizeDegree = 1; // Khử lỗi bấm đúp tại một điểm
-
-        // Tính toán trọng tâm hình học chuẩn xác của kết cấu
-        let centerAngle = scanState.startAngle + (diff / 2);
-        centerAngle = ((centerAngle % 360) + 360) % 360; 
-
-        // Trả UI nút bấm về trạng thái tĩnh
-        btn.innerHTML = "📐 Nhắm Quét Dải Độ Thực Địa";
-        btn.style.background = "#2c2c2e";
-        btn.style.borderColor = "#ffca28";
-        btn.style.boxShadow = "none";
-
-        // Đồng bộ dải độ thực tế vào bộ nhớ cấu hình vật thể
-        if (ConfigPhongThuy[hiddenInputPurpose]) {
-            ConfigPhongThuy[hiddenInputPurpose].sizeDegree = realSizeDegree;
-        }
-
-        showToast(`✔️ Quét thành công! Độ rộng vật thể: ${realSizeDegree}°. Trọng tâm hình học: ${Math.round(centerAngle)}°`);
-
-        // Đổ dữ liệu ra lõi tính điểm toán học
-        processScanResult(centerAngle, realSizeDegree, hiddenInputPurpose);
-        
-        if (typeof generateDirectionsList === 'function') {
-            generateDirectionsList();
-        }
-
-        // Giải phóng bộ nhớ đệm
-        scanState.startAngle = null;
-        scanState.endAngle = null;
-    }
-}
-
-/**
- * 3. CHẾ ĐỘ 2 & 3: LẬP TỨC ĐỔ DỮ LIỆU BẰNG TAY / ÁP SÁT THÀNH VẬT THỂ
- * Dành cho trường hợp phòng quá kẹt không thể đứng từ xa ngắm camera, hoặc làm việc trên bản vẽ
- */
-function executeManualScanConfig(customCenterAngle, customSizeDegree, purposeKey) {
-    scanState.method = "MANUAL";
-    scanState.isScanning = false;
-
-    let cleanCenter = ((parseFloat(customCenterAngle) % 360) + 360) % 360;
-    let cleanSize = Math.max(0, Math.min(180, parseFloat(customSizeDegree) || 0));
-
-    if (ConfigPhongThuy[purposeKey]) {
-        ConfigPhongThuy[purposeKey].sizeDegree = cleanSize;
-    }
-
-    showToast(`⚙️ Đã nạp thông số thủ công: Trọng tâm ${Math.round(cleanCenter)}°, Bề rộng dải mạch: ${cleanSize}°`);
-
-    // Chạy phân tích điểm đa tầng ngay lập tức
-    processScanResult(cleanCenter, cleanSize, purposeKey);
-
-    if (typeof generateDirectionsList === 'function') {
-        generateDirectionsList();
-    }
-}
-
-/**
- * 3. XỬ LÝ KẾT QUẢ QUÉT ĐỘNG VÀ ĐỒ DỮ LIỆU THÔNG MINH LÊN UI
- * PHIÊN BẢN 2026: Cá nhân hóa vật thể quét, hiển thị chi tiết Định vị Sơn Hậu và tích hợp nút Đóng (✕)
- */
-function processScanResult(centerAngle, sizeDegree, purpose) {
-    console.log("=== BẮT ĐẦU XỬ LÝ KẾT QUẢ QUÉT THỰC ĐỊA ===");
-    
-    const container = document.getElementById('scan-result-panel');
-    if (!container) return; // Đã xử lý bẫy overlay bên ngoài
-
-    // Hiển thị trạng thái xử lý tạm thời
-    container.style.display = "block";
-    container.innerHTML = `<div style="color: #ffca28; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px; font-size: 0.85rem; border: 1px dashed rgba(255,255,255,0.1);">⏳ Hệ thống đang phân tích ma trận long mạch thực địa...</div>`;
-
-    // ─── 1. TỰ ĐỘNG CHUYỂN ĐỔI NGÔN NGỮ DANH MỤC VẬT THỂ VÀ THÔNG SỐ NỀN ───
-    const dictVatThe = {
-        "bed": "Giường ngủ", "kitchen": "Bếp nấu", "door": "Cửa chính", 
-        "desk": "Bàn làm việc", "altar": "Bàn thờ", "toilet": "Nhà vệ sinh"
-    };
-    const tenVatTheChuan = dictVatThe[purpose] || "Vật thể kết cấu";
-
-    let cungPhiChuMenh = "Càn";
-    if (typeof vịTríLấyCungPhi === 'function') cungPhiChuMenh = vịTríLấyCungPhi();
-    else if (typeof viTriLayCungPhi === 'function') cungPhiChuMenh = viTriLayCungPhi();
-
-    const txtSurveyYear = document.getElementById('surveyYear');
-    const namKhaoSat = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value) : new Date().getFullYear();
-    let namAmReal = namKhaoSat;
-    if (typeof vịTríLấyNămÂmChuẩn === 'function') namAmReal = vịTríLấyNămÂmChuẩn();
-
-    // ─── 2. CHẠY PHƯƠNG TRÌNH LÕI VÀ BẪY LỖI ───
-    let ketQua;
-    try {
-        if (typeof tinhDiemTongHop !== 'function') {
-            throw new Error("Hàm lõi 'tinhDiemTongHop' chưa được khai báo.");
-        }
-        ketQua = tinhDiemTongHop(cungPhiChuMenh, centerAngle, namKhaoSat, purpose, namAmReal);
-        if (!ketQua) throw new Error("Hàm 'tinhDiemTongHop' không trả về dữ liệu cấu trúc.");
-    } catch (error) {
-        container.innerHTML = `
-            <div style="position: relative; background: rgba(255,59,48,0.05); border: 1px solid rgba(255,59,48,0.3); border-left: 4px solid #ff3b30; padding: 14px; border-radius: 10px; color: #fff; font-family: -apple-system, sans-serif;">
-                <button onclick="document.getElementById('scan-result-panel').style.display='none'" style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: #aaa; cursor: pointer; font-size: 1.1rem;">✕</button>
-                <div style="font-weight: bold; color: #ff453a; font-size: 0.9rem; margin-bottom: 6px;">❌ LỖI HỆ THỐNG</div>
-                <div style="font-size: 0.8rem; color: #ffbc66;">Không thể phân tích dữ liệu quét của <strong>${tenVatTheChuan}</strong>.</div>
-            </div>
-        `;
-        return; 
-    }
-
-    // ─── 3. TRÍCH XUẤT THÔNG TIN ĐỊA LÝ ĐA TẦNG ĐỂ GỌI TÊN CHÍNH XÁC ───
-    const normalizedDegree = ((centerAngle % 360) + 360) % 360;
-    
-    // Lấy tên Hướng đại cục từ thông tin Sơn gốc
-    let tenHuongDaiCuc = "Chưa rõ";
-    if (normalizedDegree >= 337.5 || normalizedDegree < 22.5) tenHuongDaiCuc = "Phương Bắc";
-    else if (normalizedDegree >= 22.5 && normalizedDegree < 67.5) tenHuongDaiCuc = "Phương Đông Bắc";
-    else if (normalizedDegree >= 67.5 && normalizedDegree < 112.5) tenHuongDaiCuc = "Phương Đông";
-    else if (normalizedDegree >= 112.5 && normalizedDegree < 157.5) tenHuongDaiCuc = "Phương Đông Nam";
-    else if (normalizedDegree >= 157.5 && normalizedDegree < 202.5) tenHuongDaiCuc = "Phương Nam";
-    else if (normalizedDegree >= 202.5 && normalizedDegree < 247.5) tenHuongDaiCuc = "Phương Tây Nam";
-    else if (normalizedDegree >= 247.5 && normalizedDegree < 292.5) tenHuongDaiCuc = "Phương Tây";
-    else if (normalizedDegree >= 292.5 && normalizedDegree < 337.5) tenHuongDaiCuc = "Phương Tây Bắc";
-
-    const tenSonVi = ketQua.sonName || "Chưa xác định";
-    const tenHauVi = (ketQua.hauInfo && ketQua.hauInfo.ten) ? ketQua.hauInfo.ten : "Không rõ";
-
-    // ─── 4. BIÊN DỊCH CHI TIẾT MẠCH HẬU NGẦM ───
-    let danhSachHauBaoCaoHTML = "";
-    if (ketQua.scanMetrics && Array.isArray(ketQua.scanMetrics.chiTietHau) && ketQua.scanMetrics.chiTietHau.length > 0) {
-        danhSachHauBaoCaoHTML = ketQua.scanMetrics.chiTietHau.map(function(hau) {
-            let mauHauBadge = (hau.diem >= 60) ? '#30d158' : '#ff9500';
-            return `
-                <span style="display: inline-block; padding: 3px 8px; margin: 2px; background: rgba(255,255,255,0.04); border: 1px solid ${mauHauBadge}40; border-radius: 4px; font-size: 0.75rem; color: #e5e5ea;">
-                    📍 Mốc ${hau.moc}° (${hau.ten || 'Hậu'}: <strong style="color:${mauHauBadge};">${hau.diem}đ</strong>)
-                </span>
-            `;
-        }).join('');
-    }
-
-    let mauSacGiaoDien = (ketQua.diem >= 72) ? '#30d158' : '#ff3b30';
-    let bgGiaoDien = (ketQua.diem >= 72) ? 'rgba(48,209,88,0.05)' : 'rgba(255,59,48,0.05)';
-
-    // Thống kê phân tích lấn biên long mạch
-    let thongTinPhanTichHau = "";
-    if (ketQua.scanMetrics && ketQua.scanMetrics.totalHauOccupied > 1) {
-        thongTinPhanTichHau = `
-            <div style="margin-top: 10px; padding: 10px; background: rgba(255,149,0,0.06); border-radius: 6px; border-left: 4px solid #ff9500; font-size: 0.8rem; color: #ffbc66; line-height: 1.4;">
-                ⚠️ <strong>CẢNH BÁO LẤN BIÊN:</strong> Kết cấu chiếm dụng dải quét rộng <strong>${sizeDegree}°</strong>, đè lên <strong>${ketQua.scanMetrics.totalHauOccupied} phân độ Hậu</strong> khí trường ngầm.
-                ${danhSachHauBaoCaoHTML ? `<div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,149,0,0.15);">${danhSachHauBaoCaoHTML}</div>` : ''}
-            </div>
-        `;
-    } else {
-        thongTinPhanTichHau = `
-            <div style="margin-top: 10px; padding: 10px; background: rgba(48,209,88,0.06); border-radius: 6px; border-left: 4px solid #30d158; font-size: 0.8rem; color: #82f5a0; line-height: 1.4;">
-                ✅ <strong>ĐẮC TRỌNG TÂM THUẦN KHÍ:</strong> Toàn bộ mặt kết cấu định vị hoàn hảo trong dải địa khí tinh khiết.
-            </div>
-        `;
-    }
-
-    // ─── 5. XUẤT CẤU TRÚC GIAO DIỆN MINH BẠCH, THÔNG MINH ───
-    container.innerHTML = `
-        <div style="position: relative; background: ${bgGiaoDien}; border: 1px solid ${mauSacGiaoDien}35; padding: 16px; border-radius: 12px; color: #fff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-shadow: 0 8px 24px rgba(0,0,0,0.35);">
-            
-            <button onclick="document.getElementById('scan-result-panel').style.display='none'" 
-                    style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.05); border: none; color: #8e8e93; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.85rem; transition: all 0.2s;"
-                    onmouseover="this.style.background='rgba(255,255,255,0.1)';this.style.color='#fff'" 
-                    onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='#8e8e93'">✕</button>
-
-            <div style="font-weight: bold; color: #ffca28; margin-bottom: 12px; font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px; padding-right: 25px;">
-                📊 KẾT QUẢ ĐỊNH VỊ: ${tenVatTheChuan.toUpperCase()}
-            </div>
-
-            <div style="font-size: 0.85rem; line-height: 1.6; color: #e5e5ea; background: rgba(0,0,0,0.15); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03);">
-                Bạn đang tiến hành đo đạc cấu trúc <span style="color: #ffca28; font-weight: bold;">${tenVatTheChuan}</span>:<br>
-                • Định vị địa bàn: Nằm tại <span style="color: #30d158; font-weight: bold;">${tenHuongDaiCuc}</span> (Sơn vị: <span style="color: #ffd60a;">${tenSonVi}</span> / Hậu vị: <span style="color: #ffd60a;">${tenHauVi}</span>).<br>
-                • Tọa độ trọng tâm: <span style="color: #ffca28; font-weight: bold;">${Math.round(centerAngle)}°</span>.<br>
-                • Bề rộng chiếm dụng không gian: <span style="color: #30d158; font-weight: bold;">${Math.round(sizeDegree)}°</span>.
-            </div>
-
-            <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse; margin-top: 10px;">
-                <tr>
-                    <td style="padding: 6px 0; color: #aeaeb2;">Điểm địa khí tổng hợp:</td>
-                    <td style="text-align: right; font-weight: bold; color: ${mauSacGiaoDien}; font-size: 1.05rem;">${ketQua.diem || 0} pt (${ketQua.level || 'HUNG'})</td>
-                </tr>
-            </table>
-
-            ${thongTinPhanTichHau}
-
-            <div style="border-top: 1px solid rgba(255,255,255,0.08); margin-top: 12px; padding-top: 10px; font-size: 0.82rem; color: #d1d1d6; line-height: 1.5;">
-                <strong style="color: #ffca28;">Luận giải [${cungPhiChuMenh} Mệnh]:</strong> ${ketQua.message || 'Không có bình luận cục diện.'}
-            </div>
-            
-            ${ketQua.hoaGiai ? `
-                <div style="margin-top: 8px; padding: 8px; background: rgba(255,214,10,0.06); border: 1px solid rgba(255,214,10,0.15); border-radius: 6px; font-size: 0.8rem; color: #ffd60a; line-height: 1.4;">
-                    <strong>Biện pháp điều chỉnh:</strong> ${ketQua.hoaGiai}
-                </div>
-            ` : ''}
-        </div>
-    `;
-
-    console.log("=== ĐÃ ĐỔ DỮ LIỆU LÊN UI THÀNH CÔNG ===");
-
-    if (typeof triggerGhostNeedle === 'function') {
-        triggerGhostNeedle(centerAngle);
-    }
-}
-/**
- * HÀM BỔ SUNG: Trích xuất Cung Phi hiện tại từ giao diện người dùng
- * Giúp hàm quét động nhận diện chính xác bản mệnh để tính điểm Bát Trạch
- */
-function vịTríLấyCungPhi() {
-    // 1. Tìm xem giao diện có ô chọn (select/input) nào chứa Cung Phi không
-    const phầnTửCung = document.getElementById('cungPhi') || 
-                       document.getElementById('cungPhiChuMenh') || 
-                       document.getElementById('purpose'); // Tùy thuộc vào ID bạn đặt trong HTML
-                       
-    if (phầnTửCung && phầnTửCung.value) {
-        // Nếu giá trị là chữ (Càn, Khôn, Ly...) thì trả về luôn
-        if (["Càn", "Khôn", "Khảm", "Ly", "Chấn", "Tốn", "Cấn", "Đoài"].includes(phầnTửCung.value)) {
-            return phầnTửCung.value;
-        }
-    }
-    
-    // 2. Dự phòng: Nếu trên giao diện có lưu thông tin ngày sinh để tính toán
-    const txtNam = document.getElementById('birthYear');
-    const txtThang = document.getElementById('birthMonth') || { value: 6 };
-    const txtNgay = document.getElementById('birthDay') || { value: 15 };
-    const rdGioiTinh = document.querySelector('input[name="gender"]:checked') || { value: 'male' };
-    
-    if (txtNam && txtNam.value) {
-        // Tái sử dụng chính hàm `tínhCungPhi` có sẵn của bạn bên trên
-        return tínhCungPhi(parseInt(txtNam.value), parseInt(txtThang.value), parseInt(txtNgay.value), rdGioiTinh.value);
-    }
-
-    // 3. Nếu không tìm thấy bất kỳ dấu vết nào trên UI, trả về Càn (Mặc định hệ thống)
-    return "Càn";
-}
-
-/**
- * HÀM BỔ SUNG: Lấy năm Âm lịch khảo sát từ UI
- */
-function vịTríLấyNămÂmChuẩn() {
-    const txtSurveyYear = document.getElementById('surveyYear');
-    if (txtSurveyYear && txtSurveyYear.value.length === 4) {
-        return parseInt(txtSurveyYear.value);
-    }
-    return new Date().getFullYear();
-}
-
-// Biến lưu trạng thái toàn cục để không phụ thuộc vào DOM
-const rotateState = {}; 
-
-function handleSmartRotate(btn) {
-    // 1. Dùng ID của nút làm Key để quản lý trạng thái (Tránh lỗi nếu có nhiều nút xoay)
-    const btnId = btn.id || 'default-rotate-btn';
-    if (!rotateState[btnId]) {
-        rotateState[btnId] = { count: 0 };
-    }
-
-    // 2. Parse dữ liệu một lần duy nhất
-    const sonAngles = JSON.parse(btn.getAttribute('data-son-angles'));
-    const isCatPurpose = btn.getAttribute('data-is-cat') === 'true';
-
-    // 3. Tăng count
-    rotateState[btnId].count++;
-    const clickCount = rotateState[btnId].count;
-    const currentSonIdx = clickCount % sonAngles.length; // Dùng % length để linh hoạt (không chỉ % 3)
-    const currentSon = sonAngles[currentSonIdx];
-
-    // 4. Cập nhật UI nút bấm
-    const nextSonIdx = (clickCount + 1) % sonAngles.length;
-    const nextSonName = sonAngles[nextSonIdx].name;
-    btn.innerHTML = `🔄 Đang xem: Sơn ${currentSon.name} (${currentSon.angle}°) ➔ Click xem tiếp Sơn ${nextSonName}`;
-
-    // 5. Điều phối kim (Dùng requestAnimationFrame để mượt trên di động)
-    requestAnimationFrame(() => {
-        if (typeof triggerGhostNeedle === 'function') {
-            triggerGhostNeedle(currentSon.angle);
-        }
-        
-        // Gọi lại recalculateFate() để update các chỉ số chi tiết ngay lập tức
-        if (typeof recalculateFate === 'function') {
-            // Nếu bạn có biến lưu hướng khóa, cần cập nhật nó ở đây
-            if (typeof lockedHeadingAtOpen !== 'undefined') {
-                lockedHeadingAtOpen = currentSon.angle;
-            }
-            recalculateFate();
-        }
-    });
-
-    // 6. Xử lý Blink hiệu ứng
-    triggerBlinkEffect(currentSon.score, isCatPurpose);
-}
-
-// Hàm tách biệt xử lý hiệu ứng Blink để dễ quản lý
-function triggerBlinkEffect(score, isCatPurpose) {
-    const needleElement = document.querySelector('.compass-needle') || document.getElementById('compassNeedle');
-    if (!needleElement) return;
-
-    let isGoodLocation = isCatPurpose ? (score >= 72) : (score < 50);
-
-    needleElement.classList.remove('la-ban-blink-green', 'la-ban-blink-yellow');
-    void needleElement.offsetWidth; // Force Reflow
-
-    if (isGoodLocation) {
-        needleElement.classList.add('la-ban-blink-green');
-    } else if ((isCatPurpose && score >= 50) || (!isCatPurpose && score <= 70)) {
-        needleElement.classList.add('la-ban-blink-yellow');
-    }
-}
 //gioi thieu phong thuy
 document.getElementById('openScienceBtn').addEventListener('click', function() {
     // Gọi hàm khởi tạo và hiển thị khung nội dung khoa học từ file JS riêng biệt
