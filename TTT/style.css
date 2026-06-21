@@ -32,19 +32,18 @@ body {
 /* ==================== ⚡ ENGINE CÁCH LY THỰC ĐỊA GPU - CHỐNG GIẬT LA BÀN ==================== */
 .compass-container, 
 #compass-wrapper-origin,
+
 .compass-dial,
 .center-needle,
 .ghost-needle,
 #sonRingSvg text,
 #chuHuongLonG text,
 #phucDucRingSvg text {
-  will-change: transform, opacity, fill !important;
-  transform: translate3d(0, 0, 0) !important;
-  -webkit-transform: translate3d(0, 0, 0) !important;
+  will-change: transform, opacity, fill;
+  transition: all 0.08s ease-out;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
-
 .compass-container,
 .compass-dial {
   contain: content !important; /* Lớp cách ly tối cao: Bảng trên đóng mở không thể gây khựng la bàn */
