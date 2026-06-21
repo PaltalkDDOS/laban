@@ -4104,16 +4104,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const diffX = coords.clientX - startX;
         const diffY = coords.clientY - startY;
 
-        if (Math.abs(diffX) > 4 || Math.abs(diffY) > 4) {
+        // ⚡ SỬA LỖI 1: Tăng ngưỡng lọc nhiễu lên 15px để loại bỏ hoàn toàn hiện tượng rung ngón tay khi chạm trên Mobile
+        if (!isDragging && (Math.abs(diffX) > 15 || Math.abs(diffY) > 15)) {
             isDragging = true;
-            if (e.cancelable) e.preventDefault(); 
         }
 
-        bubble.style.left = (initialLeft + diffX) + 'px';
-        bubble.style.top = (initialTop + diffY) + 'px';
+        // ⚡ SỬA LỖI 2: Chỉ cho phép dịch chuyển vị trí CSS khi thực sự đang thực hiện thao tác Drag (Kéo rê)
+        if (isDragging) {
+            if (e.cancelable) e.preventDefault(); 
+            bubble.style.left = (initialLeft + diffX) + 'px';
+            bubble.style.top = (initialTop + diffY) + 'px';
+        }
     };
 
-    // 🛬 Sự kiện THẢ TAY BONG BÓNG (Lệnh đóng mở lập tức không trễ 5s)
+    // 🛬 Sự kiện THẢ TAY BONG BÓNG (Lệnh phản hồi lập tức)
     const onDragEnd = (e) => {
         if (startX === 0 && startY === 0) return;
         
@@ -4122,15 +4126,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         bubble.style.setProperty('transition', 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)', 'important');
+        
+        // Ghi nhận hành vi chạm trước khi giải phóng bộ nhớ tọa độ
+        const isCleanTap = !isDragging;
+        
         startX = 0;
         startY = 0;
+        isDragging = false;
 
-        // ⚡ NÂNG CẤP CHIẾN LƯỢC: Bấm vào bong bóng là đóng/mở phản hồi ngay lập tức
-        if (!isDragging) {
-            stopHideCountdown(); // Hủy lệnh ẩn tự động ngay lập tức để thực thi lệnh thủ công
+        // ⚡ KÍCH HOẠT HÀNH VI ĐÓNG MỞ NGAY LẬP TỨC KHI XÁC ĐỊNH LÀ TAP SẠCH
+        if (isCleanTap) {
+            stopHideCountdown(); // Đóng băng luồng chạy ngầm ẩn bảng
             
             if (wrapper.classList.contains('panel-open-v10')) {
-                // Nếu đang mở -> Thu lên ngay lập tức, không chờ đợi
+                // Nếu đang mở -> Thu lên ngay lập tức
                 if (typeof toggleMainPanelV10 === 'function') {
                     toggleMainPanelV10();
                 } else {
@@ -4138,7 +4147,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     wrapper.classList.add('initial-hidden');
                 }
             } else {
-                // Nếu đang đóng -> Mở ra và khởi tạo lại bộ đếm idle
+                // Nếu đang đóng -> Mở bung phom ra ngay
                 if (typeof toggleMainPanelV10 === 'function') {
                     toggleMainPanelV10();
                 } else {
@@ -4150,19 +4159,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Đăng ký sự kiện kéo thả gốc cho Bong bóng
+    // Đăng ký sự kiện kéo thả gốc cho chuột máy tính
     bubble.addEventListener('mousedown', onDragStart);
     document.addEventListener('mousemove', onDragMove, { passive: false });
     document.addEventListener('mouseup', onDragEnd);
 
+    // Đăng ký sự kiện kéo thả cảm ứng cho Điện thoại
     bubble.addEventListener('touchstart', onDragStart, { passive: true });
     document.addEventListener('touchmove', onDragMove, { passive: false });
-    bubble.addEventListener('touchend', onDragEnd, { passive: false });
+    
+    // ⚡ SỬA LỖI 3: Đưa sự kiện thả tay lên cấp `document` toàn cục để không bao giờ bị mất dấu ngón tay khi nhấc
+    document.addEventListener('touchend', onDragEnd, { passive: false });
 
     // =========================================================================
-    // ⏱️ ENGINE ĐẾM NGƯỢC THÔNG MINH ĐA ĐIỂM - CHẠM GIỮ CỐ ĐỊNH, RỜI TAY ẨN 5 GI Y
+    // ⏱️ ENGINE ĐẾM NGƯỢC THÔNG MINH ĐA ĐIỂM - CHẠM GIỮ CỐ ĐỊNH, RỜI TAY ẨN 5 GIÂY
     // =========================================================================
-    
     let localHideTimer = null;
 
     const stopHideCountdown = () => {
