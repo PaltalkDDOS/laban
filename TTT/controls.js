@@ -4113,21 +4113,39 @@ document.addEventListener('DOMContentLoaded', () => {
         bubble.style.top = (initialTop + diffY) + 'px';
     };
 
-    // 🛬 Sự kiện THẢ TAY BONG BÓNG
+    // 🛬 Sự kiện THẢ TAY BONG BÓNG (Lệnh đóng mở lập tức không trễ 5s)
     const onDragEnd = (e) => {
         if (startX === 0 && startY === 0) return;
         
         if (e.type === 'touchend' && e.cancelable) {
-            if (isDragging) e.preventDefault(); // Chặn click ma khi thực sự kéo thả
+            if (isDragging) e.preventDefault(); 
         }
         
         bubble.style.setProperty('transition', 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)', 'important');
         startX = 0;
         startY = 0;
 
+        // ⚡ NÂNG CẤP CHIẾN LƯỢC: Bấm vào bong bóng là đóng/mở phản hồi ngay lập tức
         if (!isDragging) {
-            if (typeof toggleMainPanelV10 === 'function') {
-                toggleMainPanelV10();
+            stopHideCountdown(); // Hủy lệnh ẩn tự động ngay lập tức để thực thi lệnh thủ công
+            
+            if (wrapper.classList.contains('panel-open-v10')) {
+                // Nếu đang mở -> Thu lên ngay lập tức, không chờ đợi
+                if (typeof toggleMainPanelV10 === 'function') {
+                    toggleMainPanelV10();
+                } else {
+                    wrapper.classList.remove('panel-open-v10');
+                    wrapper.classList.add('initial-hidden');
+                }
+            } else {
+                // Nếu đang đóng -> Mở ra và khởi tạo lại bộ đếm idle
+                if (typeof toggleMainPanelV10 === 'function') {
+                    toggleMainPanelV10();
+                } else {
+                    wrapper.classList.add('panel-open-v10');
+                    wrapper.classList.remove('initial-hidden');
+                }
+                startHideCountdown();
             }
         }
     };
@@ -4147,53 +4165,45 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let localHideTimer = null;
 
-    // Lệnh đóng băng bộ đếm tức thì khi phát hiện tương tác người dùng
     const stopHideCountdown = () => {
         if (localHideTimer) clearTimeout(localHideTimer);
         if (typeof autoHideTimerV10 !== 'undefined' && autoHideTimerV10) clearTimeout(autoHideTimerV10);
         if (window.autoHideTimerV10) clearTimeout(window.autoHideTimerV10);
     };
 
-    // Lệnh khởi động luồng đếm ngược ẩn bảng sau 5 giây độc bản
     const startHideCountdown = () => {
         stopHideCountdown();
         if (wrapper.classList.contains('panel-open-v10')) {
             localHideTimer = setTimeout(() => {
-                // Bảo vệ: Nếu người dùng đang tập trung nhập liệu thì gia hạn thời gian, không ẩn
                 const activeTag = document.activeElement ? document.activeElement.tagName : '';
                 if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT') {
                     startHideCountdown();
                     return;
                 }
                 
-                // Kích hoạt ẩn trơn tru
                 if (typeof toggleMainPanelV10 === 'function') {
                     toggleMainPanelV10();
                 } else {
                     wrapper.classList.remove('panel-open-v10');
                     wrapper.classList.add('initial-hidden');
                 }
-            }, 5000); // Ẩn sau đúng 5 giây không chạm
+            }, 5000);
 
-            // Đồng bộ xuyên suốt hệ thống toàn cục
             if (typeof autoHideTimerV10 !== 'undefined') autoHideTimerV10 = localHideTimer;
             window.autoHideTimerV10 = localHideTimer;
         }
     };
 
-    // 🔥 HÀM BẮT CHẠM: Khi người dùng chạm ngón tay hoặc di chuột vào bảng -> ĐÚNG NGHĨA KHÔNG TỰ ẨN ĐI
     const freezeEvents = ['mousedown', 'touchstart', 'touchmove', 'mousemove', 'input', 'focus', 'mouseover', 'mouseenter'];
     freezeEvents.forEach(evtName => {
         wrapper.addEventListener(evtName, stopHideCountdown, { passive: true });
     });
 
-    // 🔥 HÀM RỜI TAY: Khi người dùng nhấc tay khỏi màn hình hoặc di chuột ra ngoài -> BẮT ĐẦU ĐẾM 5 GI Y ẨN SỰ
     const unfreezeEvents = ['mouseup', 'touchend', 'blur', 'mouseout', 'mouseleave'];
     unfreezeEvents.forEach(evtName => {
         wrapper.addEventListener(evtName, startHideCountdown, { passive: true });
     });
 
-    // Theo dõi trạng thái lúc mở bảng lần đầu
     startHideCountdown();
 });
 
