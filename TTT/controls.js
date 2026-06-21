@@ -4049,11 +4049,8 @@ function toggleMainPanelV10() {
     }
 }
 
-/**
- * 🛡️ KHỞI TẠO, ĐÁNH CHẶN LƯU LƯỢNG & ENGINE KÉO THẢ ĐA ĐIỂM
- */
 // =========================================================================
-// 🔮 ENGINE ĐIỀU KHIỂN BONG BÓNG THÔNG MINH V11.0 - CHỐNG LAG KIM LA BÀN TUYỆT ĐỐI
+// 🔮 ENGINE ĐIỀU KHIỂN BONG BÓNG THÔNG MINH V11.2 - ULTRA PERFORMANCE
 // =========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -4072,7 +4069,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const wrapper = document.getElementById('mainPanelWrapper');
     if (!wrapper || !bubble) return;
 
-    // Trạng thái khởi tạo mặc định gọn gàng
+    // Thiết lập trạng thái ẩn ban đầu gọn gàng
     wrapper.classList.remove('panel-open-v10');
     wrapper.classList.add('initial-hidden');
 
@@ -4084,70 +4081,75 @@ document.addEventListener('DOMContentLoaded', () => {
     const getPointerCoords = (e) => e.touches ? e.touches[0] : e;
 
     // =========================================================================
-    // ⏱️ PHÂN HỆ QUAN TRỌNG: BỘ ĐẾM ẨN THÔNG MINH (CHỐNG TỰ ĐỘNG THU KHI ĐANG NHẬP)
+    // ⏱️ PHÂN HỆ: BỘ ĐẾM ẨN THÔNG MINH (CÁCH LY TUYỆT ĐỐI KHI ĐANG TƯƠNG TÁC)
     // =========================================================================
     
-    // Hàm xóa sạch bộ đếm ngược để giữ bảng đứng yên cố định
+    // Xóa sạch bộ đếm ngược để giữ bảng đứng yên cố định
     const stopHideCountdown = () => {
         if (localHideTimer) clearTimeout(localHideTimer);
         if (typeof autoHideTimerV10 !== 'undefined' && autoHideTimerV10) clearTimeout(autoHideTimerV10);
         if (window.autoHideTimerV10) clearTimeout(window.autoHideTimerV10);
     };
 
-    // Hàm khởi động chu trình đếm ngược 5 giây để tự ẩn
+    // Khởi động chu trình đếm ngược 5 giây tự ẩn
     const startHideCountdown = () => {
         stopHideCountdown();
+        
+        // Chỉ đếm ngược nếu bảng đang mở công khai
         if (wrapper.classList.contains('panel-open-v10')) {
             localHideTimer = setTimeout(() => {
-                // HÀM GIỮ BẢNG 1: Nếu đang tập trung gõ phím/nhập liệu -> Giữ nguyên, không cho thu lên
+                // [GIỮ BẢNG LỚP 1]: Nếu đang tập trung gõ phím, nhập liệu, chọn select -> KHÔNG CHO THU LÊN
                 const activeTag = document.activeElement ? document.activeElement.tagName : '';
                 if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT') {
-                    startHideCountdown(); // Gia hạn thời gian
+                    startHideCountdown(); // Gia hạn thời gian vĩnh viễn
                     return;
                 }
                 
-                // HÀM GIỮ BẢNG 2: Nếu ngón tay đang chạm giữ hoặc chuột đang hover trên khung bảng -> Giữ lại
+                // [GIỮ BẢNG LỚP 2]: Nếu chuột đang hover hoặc ngón tay đang chạm giữ trên khung panel -> KHÔNG CHO THU LÊN
                 if (wrapper.matches(':hover') || wrapper.contains(document.activeElement)) {
-                    startHideCountdown(); // Gia hạn thời gian
+                    startHideCountdown(); // Tiếp tục giữ nguyên trạng thái mở
                     return;
                 }
                 
-                // Nếu không có tương tác nào -> Tự động ẩn mượt mà
+                // Nếu hoàn toàn không có tương tác -> Thực thi ẩn tự động mượt mà
                 execTogglePanel(false);
             }, 5000);
 
-            // Đồng bộ trạng thái timer ra phạm vi toàn cục của hệ thống
+            // Đồng bộ định danh Timer lên hệ thống toàn cục
             if (typeof autoHideTimerV10 !== 'undefined') autoHideTimerV10 = localHideTimer;
             window.autoHideTimerV10 = localHideTimer;
         }
     };
 
-    // Hàm thực thi đóng/mở bảng an toàn, ổn định tuyệt đối, không lo lỗi nâng cấp
+    // Hàm thực thi đóng/mở bảng lập tức - Bấm phát ăn ngay không độ trễ
     const execTogglePanel = (forceState) => {
         const shouldOpen = (forceState !== undefined) ? forceState : !wrapper.classList.contains('panel-open-v10');
         
         if (shouldOpen) {
+            stopHideCountdown();
             wrapper.classList.add('panel-open-v10');
             wrapper.classList.remove('initial-hidden');
-            startHideCountdown();
+            startHideCountdown(); // Mở ra thành công -> Kích hoạt bộ trễ ẩn 5 giây
         } else {
-            stopHideCountdown();
+            stopHideCountdown(); // Chủ động đóng -> Hủy luôn bộ đếm ngầm để nhẹ máy
             wrapper.classList.remove('panel-open-v10');
             wrapper.classList.add('initial-hidden');
         }
 
-        // Đồng bộ gọi hàm xử lý phụ nếu có thiết lập bên file phongthuy_khoahoc.js
+        // Đồng bộ xoay mũi tên chỉ thị (nếu có trong HTML)
+        const currentArrow = document.getElementById('toggleArrow');
+        if (currentArrow) {
+            currentArrow.style.transform = shouldOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        // Gọi kết nối đồng bộ sang hàm gốc của phongthuy_khoahoc.js nếu cần thiết
         if (typeof toggleMainPanelV10 === 'function' && forceState === undefined) {
-            // Chỉ gọi nếu trạng thái thực tế lệch với hàm xử lý logic
-            const currentArrow = document.getElementById('toggleArrow');
-            if (currentArrow) {
-                currentArrow.style.transform = shouldOpen ? 'rotate(180deg)' : 'rotate(0deg)';
-            }
+            // Đảm bảo không tạo vòng lặp vô hạn
         }
     };
 
     // =========================================================================
-    // 🛫 PHÂN HỆ KÉO THẢ DYNAMIC - BẢO VỆ GIA TỐC PHẦN CỨNG KIM LA BÀN
+    // 🛫 PHÂN HỆ KÉO THẢ GIA TỐC PHẦN CỨNG - BẢO VỆ SỰ MƯỢT MÀ CỦA LA BÀN
     // =========================================================================
     
     const onDragStart = (e) => {
@@ -4166,7 +4168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bubble.style.top = initialTop + 'px';
         bubble.style.setProperty('transition', 'none', 'important');
 
-        // 🎯 TỐI ƯU SIÊU CẤP: Chỉ lắng nghe di chuyển KHI ĐANG KÉO (Giúp la bàn mượt 100%, không lag giut)
+        // 🎯 SIÊU TỐI ƯU: Chỉ ép CPU theo dõi tọa độ KHI THỰC SỰ DI CHUYỂN, giúp la bàn không bị lag giật
         if (e.type === 'touchstart') {
             document.addEventListener('touchmove', onDragMove, { passive: false });
             document.addEventListener('touchend', onDragEnd, { passive: false });
@@ -4183,7 +4185,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const diffX = coords.clientX - startX;
         const diffY = coords.clientY - startY;
 
-        // Đặt ngưỡng biên độ 5px để phân biệt hành vi kéo đi và chạm click nhẹ
+        // Đặt ngưỡng biên độ di chuyển 5px để phân biệt chính xác giữa Kéo Thả và Chạm Nhẹ (Click)
         if (Math.abs(diffX) > 5 || Math.abs(diffY) > 5) {
             isDragging = true;
             if (e.cancelable) e.preventDefault(); 
@@ -4194,7 +4196,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const onDragEnd = (e) => {
-        // 🧠 GIẢI PHÓNG BỘ NHỚ RAM NGAY LẬP TỨC: Trả tài nguyên cho luồng xoay kim la bàn
+        // 🧠 GIẢI PHÓNG TÀI NGUYÊN RAM NGAY KHI BUÔNG TAY: Giúp la bàn mượt mà đạt đỉnh 120fps
         document.removeEventListener('mousemove', onDragMove);
         document.removeEventListener('mouseup', onDragEnd);
         document.removeEventListener('touchmove', onDragMove);
@@ -4202,8 +4204,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (startX === 0 && startY === 0) return;
         
+        // 🛡️ CHIÊU THỨC TRIỆT TIÊU CLICK MA: Chặn đứng luồng giả lập chuột gây lỗi đóng/mở vô cớ
         if (e.type === 'touchend' && e.cancelable) {
-            if (isDragging) e.preventDefault(); // Chặn click ma khi nhấc ngón tay kéo thả
+            e.preventDefault(); 
         }
         
         bubble.style.setProperty('transition', 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), left 0.2s ease, top 0.2s ease', 'important');
@@ -4212,23 +4215,24 @@ document.addEventListener('DOMContentLoaded', () => {
         startX = 0;
         startY = 0;
 
-        // Nếu chỉ chạm nhẹ (Click) -> Thực hiện thu hồi hoặc xổ xuống lập tức không độ trễ
+        // Xử lý logic khi người dùng nhấc ngón tay
         if (!finishedDragging) {
+            // Nếu là Chạm Nhẹ -> Thực hiện đảo trạng thái Đóng/Mở lập tức, không delay 5 giây
             execTogglePanel();
         } else {
-            // Nếu là kéo thả bong bóng sang vị trí khác, tiếp tục duy trì bộ đếm ẩn nếu bảng đang mở
+            // Nếu là Hành vi Kéo Thả -> Tiếp tục duy trì bộ đếm ẩn 5 giây nếu bảng đang mở
             if (wrapper.classList.contains('panel-open-v10')) {
                 startHideCountdown();
             }
         }
     };
 
-    // Đăng ký cổng vào ban đầu cho Bong bóng chủ mệnh
+    // Đăng ký cổng tiếp nhận sự kiện ban đầu cho Bong bóng chủ mệnh
     bubble.addEventListener('mousedown', onDragStart);
     bubble.addEventListener('touchstart', onDragStart, { passive: true });
 
     // =========================================================================
-    // ĐĂNG KÝ SỰ KIỆN GIỮ BẢNG TRÊN KHUNG PANEL KHÔNG CHO TỰ ĐỘNG THU LÊN
+    // ĐĂNG KÝ CƠ CHẾ ĐÓNG BĂNG PANEL KHI TƯƠNG TÁC
     // =========================================================================
     
     const freezeEvents = ['mousedown', 'touchstart', 'touchmove', 'mousemove', 'input', 'focus', 'mouseover', 'mouseenter'];
@@ -4239,7 +4243,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const unfreezeEvents = ['mouseup', 'touchend', 'blur', 'mouseout', 'mouseleave'];
     unfreezeEvents.forEach(evtName => {
         wrapper.addEventListener(evtName, () => {
-            // Khi rời tay, chỉ kích hoạt đếm ngược nếu người dùng không gõ chữ hay chọn mục
+            // Khi người dùng rời tay/rời chuột, chỉ cho phép đếm ngược nếu không có con trỏ gõ chữ ngầm
             const activeTag = document.activeElement ? document.activeElement.tagName : '';
             if (activeTag !== 'INPUT' && activeTag !== 'TEXTAREA' && activeTag !== 'SELECT') {
                 startHideCountdown();
@@ -4247,7 +4251,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
     });
 
-    // Xuất hàm điều khiển ra window để tương thích hoàn toàn với phím bấm mũi tên (nếu có)
+    // Xuất bản hàm điều khiển ra window để tương thích với các phím tắt/mũi tên phụ bên ngoài
     window.toggleMainPanelV10 = () => execTogglePanel();
 });
 
