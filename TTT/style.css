@@ -1900,7 +1900,9 @@ mjx-container {
     } 
 }
 
-/* 2. CẤU TRÚC KHUNG CHÍNH (VỮA KHÍT PHOM ĐẨY TỰ NHIÊN CHẠY DÒNG) */
+/* =========================================================================
+    ⚡ GIẢI PHÓNG KHÔNG GIAN V10.6 - XỬ LÝ TRIỆT ĐỂ ĐƠ PHÍM & LỖI MODAL
+   ========================================================================= */
 #mainPanelWrapper {
     position: relative !important;
     width: 90% !important;
@@ -1923,13 +1925,15 @@ mjx-container {
     pointer-events: none !important;
 }
 
+/* 🟢 KHI MỞ BẢNG: Tăng diện tích thoải mái và cho phép hiển thị các cửa sổ con */
 #mainPanelWrapper.panel-open-v10 {
-    max-height: 750px !important; 
+    max-height: 2000px !important; /* Tăng từ 750px lên 2000px để danh sách lưu và các nút không bao giờ bị nghẹt */
     opacity: 1 !important;
     padding: 15px !important;
     visibility: visible !important;
     pointer-events: auto !important;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+    overflow: visible !important; /* QUAN TRỌNG: Đổi thành visible để các Modal danh mục không bị nuốt chửng hay đơ cảm ứng */
 }
 
 #mainPanelWrapper input, 
