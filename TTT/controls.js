@@ -4052,6 +4052,10 @@ function toggleMainPanelV10() {
 /**
  * 🛡️ KHỞI TẠO, ĐÁNH CHẶN LƯU LƯỢNG & ENGINE KÉO THẢ ĐA ĐIỂM
  */
+// =========================================================================
+// 🔮 ENGINE ĐIỀU KHIỂN BONG BÓNG THÔNG MINH V11.0 - CHỐNG LAG KIM LA BÀN TUYỆT ĐỐI
+// =========================================================================
+
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Tự động khởi tạo Bong bóng menu nếu chưa có trong HTML
     if (!document.getElementById('floatingMenuBtnV10')) {
@@ -4068,16 +4072,84 @@ document.addEventListener('DOMContentLoaded', () => {
     const wrapper = document.getElementById('mainPanelWrapper');
     if (!wrapper || !bubble) return;
 
+    // Trạng thái khởi tạo mặc định gọn gàng
     wrapper.classList.remove('panel-open-v10');
     wrapper.classList.add('initial-hidden');
 
     let isDragging = false;
     let startX = 0, startY = 0;
     let initialLeft = 0, initialTop = 0;
+    let localHideTimer = null;
 
     const getPointerCoords = (e) => e.touches ? e.touches[0] : e;
 
-    // 🛫 Sự kiện BẮT ĐẦU KÉO BONG BÓNG
+    // =========================================================================
+    // ⏱️ PHÂN HỆ QUAN TRỌNG: BỘ ĐẾM ẨN THÔNG MINH (CHỐNG TỰ ĐỘNG THU KHI ĐANG NHẬP)
+    // =========================================================================
+    
+    // Hàm xóa sạch bộ đếm ngược để giữ bảng đứng yên cố định
+    const stopHideCountdown = () => {
+        if (localHideTimer) clearTimeout(localHideTimer);
+        if (typeof autoHideTimerV10 !== 'undefined' && autoHideTimerV10) clearTimeout(autoHideTimerV10);
+        if (window.autoHideTimerV10) clearTimeout(window.autoHideTimerV10);
+    };
+
+    // Hàm khởi động chu trình đếm ngược 5 giây để tự ẩn
+    const startHideCountdown = () => {
+        stopHideCountdown();
+        if (wrapper.classList.contains('panel-open-v10')) {
+            localHideTimer = setTimeout(() => {
+                // HÀM GIỮ BẢNG 1: Nếu đang tập trung gõ phím/nhập liệu -> Giữ nguyên, không cho thu lên
+                const activeTag = document.activeElement ? document.activeElement.tagName : '';
+                if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT') {
+                    startHideCountdown(); // Gia hạn thời gian
+                    return;
+                }
+                
+                // HÀM GIỮ BẢNG 2: Nếu ngón tay đang chạm giữ hoặc chuột đang hover trên khung bảng -> Giữ lại
+                if (wrapper.matches(':hover') || wrapper.contains(document.activeElement)) {
+                    startHideCountdown(); // Gia hạn thời gian
+                    return;
+                }
+                
+                // Nếu không có tương tác nào -> Tự động ẩn mượt mà
+                execTogglePanel(false);
+            }, 5000);
+
+            // Đồng bộ trạng thái timer ra phạm vi toàn cục của hệ thống
+            if (typeof autoHideTimerV10 !== 'undefined') autoHideTimerV10 = localHideTimer;
+            window.autoHideTimerV10 = localHideTimer;
+        }
+    };
+
+    // Hàm thực thi đóng/mở bảng an toàn, ổn định tuyệt đối, không lo lỗi nâng cấp
+    const execTogglePanel = (forceState) => {
+        const shouldOpen = (forceState !== undefined) ? forceState : !wrapper.classList.contains('panel-open-v10');
+        
+        if (shouldOpen) {
+            wrapper.classList.add('panel-open-v10');
+            wrapper.classList.remove('initial-hidden');
+            startHideCountdown();
+        } else {
+            stopHideCountdown();
+            wrapper.classList.remove('panel-open-v10');
+            wrapper.classList.add('initial-hidden');
+        }
+
+        // Đồng bộ gọi hàm xử lý phụ nếu có thiết lập bên file phongthuy_khoahoc.js
+        if (typeof toggleMainPanelV10 === 'function' && forceState === undefined) {
+            // Chỉ gọi nếu trạng thái thực tế lệch với hàm xử lý logic
+            const currentArrow = document.getElementById('toggleArrow');
+            if (currentArrow) {
+                currentArrow.style.transform = shouldOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+            }
+        }
+    };
+
+    // =========================================================================
+    // 🛫 PHÂN HỆ KÉO THẢ DYNAMIC - BẢO VỆ GIA TỐC PHẦN CỨNG KIM LA BÀN
+    // =========================================================================
+    
     const onDragStart = (e) => {
         const coords = getPointerCoords(e);
         isDragging = false;
@@ -4092,11 +4164,18 @@ document.addEventListener('DOMContentLoaded', () => {
         bubble.style.bottom = 'auto';
         bubble.style.left = initialLeft + 'px';
         bubble.style.top = initialTop + 'px';
-        
         bubble.style.setProperty('transition', 'none', 'important');
+
+        // 🎯 TỐI ƯU SIÊU CẤP: Chỉ lắng nghe di chuyển KHI ĐANG KÉO (Giúp la bàn mượt 100%, không lag giut)
+        if (e.type === 'touchstart') {
+            document.addEventListener('touchmove', onDragMove, { passive: false });
+            document.addEventListener('touchend', onDragEnd, { passive: false });
+        } else {
+            document.addEventListener('mousemove', onDragMove, { passive: false });
+            document.addEventListener('mouseup', onDragEnd, { passive: false });
+        }
     };
 
-    // ✈️ Sự kiện ĐANG KÉO BONG BÓNG
     const onDragMove = (e) => {
         if (startX === 0 && startY === 0) return;
 
@@ -4104,107 +4183,54 @@ document.addEventListener('DOMContentLoaded', () => {
         const diffX = coords.clientX - startX;
         const diffY = coords.clientY - startY;
 
-        // ⚡ SỬA LỖI 1: Tăng ngưỡng lọc nhiễu lên 15px để loại bỏ hoàn toàn hiện tượng rung ngón tay khi chạm trên Mobile
-        if (!isDragging && (Math.abs(diffX) > 15 || Math.abs(diffY) > 15)) {
+        // Đặt ngưỡng biên độ 5px để phân biệt hành vi kéo đi và chạm click nhẹ
+        if (Math.abs(diffX) > 5 || Math.abs(diffY) > 5) {
             isDragging = true;
+            if (e.cancelable) e.preventDefault(); 
         }
 
-        // ⚡ SỬA LỖI 2: Chỉ cho phép dịch chuyển vị trí CSS khi thực sự đang thực hiện thao tác Drag (Kéo rê)
-        if (isDragging) {
-            if (e.cancelable) e.preventDefault(); 
-            bubble.style.left = (initialLeft + diffX) + 'px';
-            bubble.style.top = (initialTop + diffY) + 'px';
-        }
+        bubble.style.left = (initialLeft + diffX) + 'px';
+        bubble.style.top = (initialTop + diffY) + 'px';
     };
 
-    // 🛬 Sự kiện THẢ TAY BONG BÓNG (Lệnh phản hồi lập tức)
     const onDragEnd = (e) => {
+        // 🧠 GIẢI PHÓNG BỘ NHỚ RAM NGAY LẬP TỨC: Trả tài nguyên cho luồng xoay kim la bàn
+        document.removeEventListener('mousemove', onDragMove);
+        document.removeEventListener('mouseup', onDragEnd);
+        document.removeEventListener('touchmove', onDragMove);
+        document.removeEventListener('touchend', onDragEnd);
+
         if (startX === 0 && startY === 0) return;
         
         if (e.type === 'touchend' && e.cancelable) {
-            if (isDragging) e.preventDefault(); 
+            if (isDragging) e.preventDefault(); // Chặn click ma khi nhấc ngón tay kéo thả
         }
         
-        bubble.style.setProperty('transition', 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)', 'important');
+        bubble.style.setProperty('transition', 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), left 0.2s ease, top 0.2s ease', 'important');
         
-        // Ghi nhận hành vi chạm trước khi giải phóng bộ nhớ tọa độ
-        const isCleanTap = !isDragging;
-        
+        const finishedDragging = isDragging;
         startX = 0;
         startY = 0;
-        isDragging = false;
 
-        // ⚡ KÍCH HOẠT HÀNH VI ĐÓNG MỞ NGAY LẬP TỨC KHI XÁC ĐỊNH LÀ TAP SẠCH
-        if (isCleanTap) {
-            stopHideCountdown(); // Đóng băng luồng chạy ngầm ẩn bảng
-            
+        // Nếu chỉ chạm nhẹ (Click) -> Thực hiện thu hồi hoặc xổ xuống lập tức không độ trễ
+        if (!finishedDragging) {
+            execTogglePanel();
+        } else {
+            // Nếu là kéo thả bong bóng sang vị trí khác, tiếp tục duy trì bộ đếm ẩn nếu bảng đang mở
             if (wrapper.classList.contains('panel-open-v10')) {
-                // Nếu đang mở -> Thu lên ngay lập tức
-                if (typeof toggleMainPanelV10 === 'function') {
-                    toggleMainPanelV10();
-                } else {
-                    wrapper.classList.remove('panel-open-v10');
-                    wrapper.classList.add('initial-hidden');
-                }
-            } else {
-                // Nếu đang đóng -> Mở bung phom ra ngay
-                if (typeof toggleMainPanelV10 === 'function') {
-                    toggleMainPanelV10();
-                } else {
-                    wrapper.classList.add('panel-open-v10');
-                    wrapper.classList.remove('initial-hidden');
-                }
                 startHideCountdown();
             }
         }
     };
 
-    // Đăng ký sự kiện kéo thả gốc cho chuột máy tính
+    // Đăng ký cổng vào ban đầu cho Bong bóng chủ mệnh
     bubble.addEventListener('mousedown', onDragStart);
-    document.addEventListener('mousemove', onDragMove, { passive: false });
-    document.addEventListener('mouseup', onDragEnd);
-
-    // Đăng ký sự kiện kéo thả cảm ứng cho Điện thoại
     bubble.addEventListener('touchstart', onDragStart, { passive: true });
-    document.addEventListener('touchmove', onDragMove, { passive: false });
+
+    // =========================================================================
+    // ĐĂNG KÝ SỰ KIỆN GIỮ BẢNG TRÊN KHUNG PANEL KHÔNG CHO TỰ ĐỘNG THU LÊN
+    // =========================================================================
     
-    // ⚡ SỬA LỖI 3: Đưa sự kiện thả tay lên cấp `document` toàn cục để không bao giờ bị mất dấu ngón tay khi nhấc
-    document.addEventListener('touchend', onDragEnd, { passive: false });
-
-    // =========================================================================
-    // ⏱️ ENGINE ĐẾM NGƯỢC THÔNG MINH ĐA ĐIỂM - CHẠM GIỮ CỐ ĐỊNH, RỜI TAY ẨN 5 GIÂY
-    // =========================================================================
-    let localHideTimer = null;
-
-    const stopHideCountdown = () => {
-        if (localHideTimer) clearTimeout(localHideTimer);
-        if (typeof autoHideTimerV10 !== 'undefined' && autoHideTimerV10) clearTimeout(autoHideTimerV10);
-        if (window.autoHideTimerV10) clearTimeout(window.autoHideTimerV10);
-    };
-
-    const startHideCountdown = () => {
-        stopHideCountdown();
-        if (wrapper.classList.contains('panel-open-v10')) {
-            localHideTimer = setTimeout(() => {
-                const activeTag = document.activeElement ? document.activeElement.tagName : '';
-                if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT') {
-                    startHideCountdown();
-                    return;
-                }
-                
-                if (typeof toggleMainPanelV10 === 'function') {
-                    toggleMainPanelV10();
-                } else {
-                    wrapper.classList.remove('panel-open-v10');
-                    wrapper.classList.add('initial-hidden');
-                }
-            }, 5000);
-
-            if (typeof autoHideTimerV10 !== 'undefined') autoHideTimerV10 = localHideTimer;
-            window.autoHideTimerV10 = localHideTimer;
-        }
-    };
-
     const freezeEvents = ['mousedown', 'touchstart', 'touchmove', 'mousemove', 'input', 'focus', 'mouseover', 'mouseenter'];
     freezeEvents.forEach(evtName => {
         wrapper.addEventListener(evtName, stopHideCountdown, { passive: true });
@@ -4212,10 +4238,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const unfreezeEvents = ['mouseup', 'touchend', 'blur', 'mouseout', 'mouseleave'];
     unfreezeEvents.forEach(evtName => {
-        wrapper.addEventListener(evtName, startHideCountdown, { passive: true });
+        wrapper.addEventListener(evtName, () => {
+            // Khi rời tay, chỉ kích hoạt đếm ngược nếu người dùng không gõ chữ hay chọn mục
+            const activeTag = document.activeElement ? document.activeElement.tagName : '';
+            if (activeTag !== 'INPUT' && activeTag !== 'TEXTAREA' && activeTag !== 'SELECT') {
+                startHideCountdown();
+            }
+        }, { passive: true });
     });
 
-    startHideCountdown();
+    // Xuất hàm điều khiển ra window để tương thích hoàn toàn với phím bấm mũi tên (nếu có)
+    window.toggleMainPanelV10 = () => execTogglePanel();
 });
 
 function togglePanel() {
