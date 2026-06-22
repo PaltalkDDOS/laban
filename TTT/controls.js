@@ -4462,42 +4462,86 @@ function closePermissionModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// ====================== KHỞI TẠO ======================
+// ====================== ENGINE KIỂM SOÁT QUYỀN TOÀN CỤC CHỐNG LẶP BAN LÀM ======================
+
 window.onload = function() {
     if (typeof render24SonRing === 'function') render24SonRing();
     if (typeof loadSavedMembers === 'function') loadSavedMembers();
     if (typeof recalculateFate === 'function') recalculateFate();
 
     const modal = document.getElementById('iosPermissionModal');
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-                  (navigator.platform === 'MacIntel' && 'ontouchend' in document) ||
-                  (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function');
+    const permBtn = document.getElementById('permission-btn');
+    
+    // 🛡️ BƯỚC 1: Kiểm tra xem trình duyệt có THỰC SỰ ĐÒI QUYỀN la bàn hay không (Chỉ bảo mật HTTPS trên iOS mới có hàm này)
+    const bản_chất_ios_đòi_quyền = typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function';
 
-    if (isIOS && modal) {
-        modal.style.display = 'flex';
-        const hasGranted = localStorage.getItem('ios_compass_granted') === 'true';
+    if (bản_chất_ios_đòi_quyền && modal) {
+        const localStatus = localStorage.getItem('ios_compass_granted');
 
-        if (hasGranted) {
-            closePermissionModal();
+        if (localStatus === 'true') {
+            // Đã cấp quyền rồi -> Khóa chết thông báo, không bao giờ mở
+            modal.style.display = 'none';
+            if (permBtn) permBtn.style.display = 'none';
+
+            // Treo kích hoạt ngầm theo luật Apple (Chạm nhẹ bất kỳ đâu là la bàn xoay vù vù)
+            const silentActivate = () => {
+                DeviceOrientationEvent.requestPermission()
+                    .then(state => { if (state === 'granted') addOrientationListener(); })
+                    .catch(console.error);
+                document.removeEventListener('click', silentActivate);
+                document.removeEventListener('touchstart', silentActivate);
+            };
+            document.addEventListener('click', silentActivate);
+            document.addEventListener('touchstart', silentActivate, { passive: true });
             addOrientationListener();
-        } else {
-            const title = modal.querySelector('h3');
-            const text = modal.querySelector('p');
-            const btn = modal.querySelector('button');
 
-            if (title) title.textContent = "KÍCH HOẠT LA BÀN";
-            if (text) text.innerHTML = `Để la bàn xoay tự động theo hướng điện thoại,<br>vui lòng cho phép truy cập cảm biến chuyển động.`;
-            if (btn) btn.onclick = handleModalClick;
+        } else if (localStatus === 'false') {
+            // Từng bấm từ chối -> Hiện bảng hướng dẫn người dùng vào Cài đặt iPhone bật lại
+            if (permBtn) permBtn.style.display = 'block';
+            showPermissionResetGuide();
+        } else {
+            // Lần đầu tiên sử dụng ứng dụng -> Mở bảng thông báo gốc
+            if (permBtn) permBtn.style.display = 'block';
+            modal.style.display = 'flex';
+            setupInitialModalText();
         }
     } else {
+        // 🚀 ĐỐI VỚI ANDROID, PC HOẶC LINK LOCAL (HTTP): Không đòi quyền rườm rà, kích hoạt thẳng, cấm hiện bảng!
+        if (modal) modal.style.display = 'none';
+        if (permBtn) permBtn.style.display = 'none';
+        
+        // Ghi nhận luôn để lần sau không quét lại nữa
+        localStorage.setItem('ios_compass_granted', 'true');
         addOrientationListener();
     }
 };
 
+// Hàm cài đặt nội dung văn bản cho bảng thông báo lần đầu
+function setupInitialModalText() {
+    const modal = document.getElementById('iosPermissionModal');
+    if (!modal) return;
+    const title = modal.querySelector('h3');
+    const text = modal.querySelector('p');
+    const btn = modal.querySelector('button');
+
+    if (title) title.textContent = "KÍCH HOẠT LA BÀN TỰ ĐỘNG";
+    if (text) text.innerHTML = `Để la bàn tự động xoay theo hướng thực địa của điện thoại,<br>vui lòng bấm ĐỒNG Ý và xác nhận cấp quyền.`;
+    if (btn) btn.onclick = handleModalClick;
+}
+
+// Xử lý khi người dùng ấn nút Đồng Ý trên bảng thông báo
 function handleModalClick() {
     const modal = document.getElementById('iosPermissionModal');
     if (modal) modal.style.display = 'none';
-    requestPermission();
+    
+    // Ép lưu cứng vào máy ngay lập tức để chặn lỗi lặp vô hạn khi tải lại trang
+    localStorage.setItem('ios_compass_granted', 'true');
+    
+    if (typeof requestPermission === 'function') {
+        requestPermission();
+    } else {
+        addOrientationListener();
+    }
 }
 
 let isFullScreen = false;
