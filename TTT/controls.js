@@ -4049,10 +4049,6 @@ function toggleMainPanelV10() {
     }
 }
 
-// =========================================================================
-// 🔮 ENGINE ĐIỀU KHIỂN BONG BÓNG THÔNG MINH V11.2 - ULTRA PERFORMANCE
-// =========================================================================
-
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Tự động khởi tạo Bong bóng menu nếu chưa có trong HTML
     if (!document.getElementById('floatingMenuBtnV10')) {
@@ -4285,14 +4281,90 @@ window.toggleDienGiaiChiTiet = function() {
     recalculateFate(); 
 };
 
-// ====================== GLOBAL ======================
-let isDetailOpen = false;
-let lockedHeadingAtOpen = null; // Biến thông minh lưu góc cố định lúc mở bảng
+// ====================== GLOBAL VARIABLE ALIGNMENT ======================
+if (typeof isDetailOpen === 'undefined') window.isDetailOpen = false;
+if (typeof lockedHeadingAtOpen === 'undefined') window.lockedHeadingAtOpen = null;
+if (typeof orientationListenerAdded === 'undefined') window.orientationListenerAdded = false;
+if (typeof permissionDenied === 'undefined') window.permissionDenied = false;
 
-// ====================== QUẢN LÝ QUYỀN LA BÀN iOS - PHIÊN BẢN CUỐI CÙNG (KHÔNG REDECLARE) ======================
-let permissionDenied = false;
+// ====================== ENGINE QUẢN LÝ QUYỀN SENSOR LA BÀN SMART IOS ======================
 
-// Sử dụng biến đã khai báo sẵn ở trên (dòng 1351)
+// Tự động khởi chạy hệ thống kiểm tra quyền ngay khi giao diện sẵn sàng
+document.addEventListener('DOMContentLoaded', () => {
+    initCompassPermission();
+});
+
+function initCompassPermission() {
+    const localStatus = localStorage.getItem('ios_compass_granted');
+    const permBtn = document.getElementById('permission-btn');
+    
+    // Kiểm tra xem trình duyệt thuộc hệ điều hành iOS (đặc trưng bắt buộc xin quyền) hay không
+    const requiresRequest = typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function';
+    
+    if (!requiresRequest) {
+        // Đối với thiết bị Android hoặc máy tính: Tự động kết nối luồng cảm biến trực tiếp
+        if (permBtn) permBtn.style.display = 'none';
+        addOrientationListener();
+        return;
+    }
+
+    if (localStatus === 'true') {
+        // ✨ CHIẾN LƯỢC THÔNG MINH: Đã từng cho phép -> iOS bắt buộc phải có 1 điểm chạm để kích hoạt lại luồng dữ liệu
+        if (permBtn) permBtn.style.display = 'none';
+        
+        const silentActivate = () => {
+            DeviceOrientationEvent.requestPermission()
+                .then(state => {
+                    if (state === 'granted') {
+                        addOrientationListener();
+                    }
+                })
+                .catch(console.error);
+            
+            // Hủy lắng nghe ngay lập tức sau cú chạm đầu tiên để giải phóng tài nguyên CPU
+            document.removeEventListener('click', silentActivate);
+            document.removeEventListener('touchstart', silentActivate);
+        };
+        
+        // Chờ đợi hành động chạm đầu tiên của người dùng trên thực địa để mồi kích hoạt cảm biến
+        document.addEventListener('click', silentActivate);
+        document.addEventListener('touchstart', silentActivate, { passive: true });
+        
+        // Chạy dự phòng kết nối luồng trực tiếp
+        addOrientationListener();
+        
+    } else if (localStatus === 'false') {
+        // Nếu người dùng từng "Từ Chối": Bật nút cảm biến và hiển thị ngay khung cẩm nang reset cài đặt Safari
+        permissionDenied = true;
+        if (permBtn) permBtn.style.display = 'block';
+        showPermissionResetGuide();
+    } else {
+        // Lần đầu tiên mở ứng dụng: Hiện nút kích hoạt và bung Modal mồi quy chuẩn
+        if (permBtn) permBtn.style.display = 'block';
+        showInitialPermissionModal();
+    }
+}
+
+// Modal mồi xin quyền lần đầu tiên - Thiết kế vàng kim sang trọng đồng bộ hệ thống
+function showInitialPermissionModal() {
+    const modal = document.getElementById('iosPermissionModal');
+    if (!modal) return;
+    
+    modal.innerHTML = `
+        <div style="background:#1c1c1e; padding:30px; border-radius:20px; text-align:center; width:85%; max-width:400px; border:1px solid #dfb76c; box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
+            <div style="font-size:3rem; margin-bottom:15px;">🧭</div>
+            <h3 style="color:#dfb76c; margin-bottom:15px; font-weight:bold; letter-spacing:0.5px;">KÍCH HOẠT LA BÀN TỰ ĐỘNG</h3>
+            <p style="color:#ccc; font-size:0.92rem; line-height:1.55; margin-bottom:25px;">
+                Để tính năng tự động xoay tâm la bàn theo thực địa hoạt động chính xác, vui lòng nhấn <strong>"ĐỒNG Ý"</strong> và chọn <strong>"Cho phép"</strong> ở thông báo hệ thống tiếp theo.
+            </p>
+            <button onclick="requestPermission()" style="width:100%; padding:14px; background: linear-gradient(180deg, #dfb76c, #b38b2e); color:#000; border:none; border-radius:10px; font-weight:bold; cursor:pointer; font-size:1rem; text-transform:uppercase; box-shadow:0 4px 12px rgba(223,183,108,0.3);">
+                ĐỒNG Ý KÍCH HOẠT
+            </button>
+        </div>
+    `;
+    modal.style.display = 'flex';
+}
+
 function requestPermission() {
     const permBtn = document.getElementById('permission-btn');
     
@@ -4328,9 +4400,10 @@ function addOrientationListener() {
     if (orientationListenerAdded) return;
 
     const handler = (e) => {
-        // Tối ưu: Nếu không nhận được giá trị hợp lệ, không chạy tiếp
         if (e.webkitCompassHeading !== undefined || e.alpha !== null) {
-            handleOrientation(e);
+            if (typeof handleOrientation === 'function') {
+                handleOrientation(e);
+            }
         }
     };
 
@@ -4339,7 +4412,6 @@ function addOrientationListener() {
     } else if ('ondeviceorientation' in window) {
         window.addEventListener('deviceorientation', handler, true);
     } else {
-        // Fallback: Nếu không hỗ trợ cảm biến, có thể ẩn nút "Tự động"
         const btn = document.getElementById('auto-detect-btn');
         if (btn) btn.style.display = 'none';
         return;
@@ -4347,30 +4419,31 @@ function addOrientationListener() {
     orientationListenerAdded = true;
 }
 
+// Khung hướng dẫn tối ưu chi tiết từng bước cho người dùng iPhone nếu lỡ bấm "Từ Chối"
 function showPermissionResetGuide() {
     const modal = document.getElementById('iosPermissionModal');
     if (!modal) return;
 
     modal.innerHTML = `
-        <div style="background:#1c1c1e; padding:25px; border-radius:20px; text-align:center; width:88%; max-width:400px; border:2px solid #ff9500;">
+        <div style="background:#1c1c1e; padding:25px; border-radius:20px; text-align:center; width:88%; max-width:400px; border:2px solid #ff9500; box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
             <div style="font-size:3.2rem; margin-bottom:15px;">⚠️</div>
-            <h3 style="color:#ff9500; margin-bottom:12px;">Không Kích Hoạt Được La Bàn</h3>
-            <p style="color:#ccc; line-height:1.6; margin-bottom:20px;">
-                Safari đã chặn quyền vì bạn từng từ chối.
+            <h3 style="color:#ff9500; margin-bottom:12px; font-weight:bold;">Không Kích Hoạt Được La Bàn</h3>
+            <p style="color:#ccc; line-height:1.6; margin-bottom:20px; font-size:0.9rem;">
+                Trình duyệt Safari đã chặn quyền truy cập cảm biến chuyển động do bạn từng bấm từ chối trước đây.
             </p>
-            <div style="background:#2c2c2e; padding:15px; border-radius:12px; text-align:left; margin-bottom:20px; font-size:0.9rem; line-height:1.55;">
-                <strong>Hướng dẫn reset quyền:</strong><br><br>
-                1. Vào <strong>Cài Đặt</strong> → <strong>Safari</strong><br>
-                2. Chọn <strong>Cài đặt cho Trang web</strong><br>
-                3. Tìm ứng dụng này<br>
-                4. Bật <strong>Motion &amp; Orientation</strong><br>
-                5. Đóng Safari hoàn toàn rồi mở lại.
+            <div style="background:#2c2c2e; padding:15px; border-radius:12px; text-align:left; margin-bottom:20px; font-size:0.88rem; line-height:1.6; color:#e5e5ea; border: 1px solid #3a3a3c;">
+                <strong style="color:#ff9500;">Hướng dẫn khôi phục quyền hệ thống:</strong><br><br>
+                1. Vào ứng dụng <strong>Cài Đặt</strong> (Settings) trên iPhone → chọn mục <strong>Safari</strong>.<br>
+                2. Cuộn xuống dưới cùng chọn mục <strong>Cài đặt cho Trang web</strong>.<br>
+                3. Bấm vào dòng <strong>Cảm biến chuyển động & định hướng</strong> (Motion & Orientation).<br>
+                4. Tìm địa chỉ trang web này và chuyển sang trạng thái <strong>Cho phép</strong> (Allow).<br>
+                5. Vuốt tắt ứng dụng Safari chạy ngầm hoàn toàn rồi mở lại trang web.
             </div>
-            <button onclick="resetPermissionFlag()" style="width:100%; padding:14px; background:#ff9500; color:#000; border:none; border-radius:10px; font-weight:bold; margin-bottom:10px;">
-                ✅ ĐÃ LÀM - THỬ LẠI
+            <button onclick="resetPermissionFlag()" style="width:100%; padding:14px; background:#ff9500; color:#000; border:none; border-radius:10px; font-weight:bold; cursor:pointer; margin-bottom:10px; text-transform:uppercase;">
+                ✅ ĐÃ LÀM - TẢI LẠI TRANG
             </button>
-            <button onclick="closePermissionModal()" style="width:100%; padding:12px; background:#444; color:#fff; border:none; border-radius:10px;">
-                Dùng xoay tay
+            <button onclick="closePermissionModal()" style="width:100%; padding:12px; background:#3a3a3c; color:#fff; border:none; border-radius:10px; cursor:pointer; font-size:0.85rem;">
+                Sử dụng chế độ xoay tay
             </button>
         </div>
     `;
@@ -6759,9 +6832,17 @@ function kichHoatBoDemDungKim() {
     // Chưa đủ 5 giây thì không hiện (để nó tự ẩn khi đang quay)
 }
 
-
-
-
+ // Lắng nghe form
+document.addEventListener('DOMContentLoaded', () => {
+    const inputs = ['birthDay', 'birthMonth', 'birthYear', 'purpose'];
+    inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', kichHoatBoDemDungKim);
+            el.addEventListener('change', kichHoatBoDemDungKim);
+        }
+    });
+});
 
 //gioi thieu phong thuy
 document.getElementById('openScienceBtn').addEventListener('click', function() {
