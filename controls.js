@@ -4304,13 +4304,15 @@ window.toggleDienGiaiChiTiet = function() {
     recalculateFate(); 
 };
 
-// ====================== GLOBAL VARIABLE ALIGNMENT ======================
+/// ====================== GLOBAL VARIABLE ALIGNMENT ======================
 if (typeof isDetailOpen === 'undefined') window.isDetailOpen = false;
 if (typeof lockedHeadingAtOpen === 'undefined') window.lockedHeadingAtOpen = null;
 if (typeof orientationListenerAdded === 'undefined') window.orientationListenerAdded = false;
 if (typeof permissionDenied === 'undefined') window.permissionDenied = false;
 
-// ====================== ENGINE QUẢN LÝ QUYỀN SENSOR LA BÀN SMART IOS ======================
+const COMPASS_STORAGE_KEY = 'ios_compass_granted';
+
+// ====================== ENGINE QUẢN LÝ QUYỀN SENSOR LA BÀN SMART IOS V10.9 ======================
 
 // 💡 KHỞI TẠO ĐỒNG BỘ: Chờ giao diện vẽ xong vòng Sơn mới kích hoạt cảm biến
 window.onload = function() {
@@ -4333,36 +4335,36 @@ function initCompassPermission() {
         // Thiết bị Android, PC hoặc môi trường HTTP: Kích hoạt thẳng, khóa chặt bảng thông báo
         if (modal) modal.style.display = 'none';
         if (permBtn) permBtn.style.display = 'none';
-        localStorage.setItem('ios_compass_granted', 'true');
+        localStorage.setItem(COMPASS_STORAGE_KEY, 'true');
         addOrientationListener();
         return;
     }
 
-    const localStatus = localStorage.getItem('ios_compass_granted');
+    const localStatus = localStorage.getItem(COMPASS_STORAGE_KEY);
 
     if (localStatus === 'true') {
         // Trường hợp 1: Đã từng cho phép -> Ẩn toàn bộ giao diện xin quyền, chạy ngầm hoàn toàn
         if (modal) modal.style.display = 'none';
         if (permBtn) permBtn.style.display = 'none';
 
-        // Treo bẫy mồi ngầm kích hoạt luồng Safari ngay cú chạm đầu tiên của người dùng
+        // ⚡ GIẢI PHÁP SỬA LỖI: Tuyệt đối không gọi addOrientationListener() tại đây khi vừa load trang!
+        // Treo bẫy mồi ngầm kích hoạt luồng Safari ngay cú chạm đầu tiên của phiên mới để bẻ khóa phần cứng
         const silentActivate = () => {
             DeviceOrientationEvent.requestPermission()
                 .then(state => { 
-                    if (state === 'granted') addOrientationListener(); 
+                    if (state === 'granted') {
+                        addOrientationListener(); // Chỉ chạy khi người dùng đã chạm tay xác thực thành công
+                    } 
                 })
                 .catch(console.error);
             
             // Hủy lắng nghe lập tức để tiết kiệm pin và tài nguyên CPU
             document.removeEventListener('click', silentActivate);
-            document.removeEventListener('touchstart', silentActivate);
+            document.removeEventListener('touchend', silentActivate);
         };
         
         document.addEventListener('click', silentActivate);
-        document.addEventListener('touchstart', silentActivate, { passive: true });
-        
-        // Luồng chạy dự phòng trực tiếp
-        addOrientationListener();
+        document.addEventListener('touchend', silentActivate); // Sử dụng touchend để nhạy bén hơn trên iPhone
 
     } else if (localStatus === 'false') {
         // Trường hợp 2: Từng bấm từ chối -> Hiện bảng hướng dẫn chi tiết cách vào Cài đặt iPhone reset
@@ -4395,7 +4397,7 @@ function handleModalClick() {
     if (modal) modal.style.display = 'none';
     
     // Ép lưu trạng thái ngay lập tức để chặn đứng lỗi lặp vô hạn khi reload
-    localStorage.setItem('ios_compass_granted', 'true');
+    localStorage.setItem(COMPASS_STORAGE_KEY, 'true');
     requestPermission();
 }
 
@@ -4407,19 +4409,19 @@ function requestPermission() {
             .then(permissionState => {
                 closePermissionModal();
                 if (permissionState === 'granted') {
-                    localStorage.setItem('ios_compass_granted', 'true');
-                    permissionDenied = false;
+                    localStorage.setItem(COMPASS_STORAGE_KEY, 'true');
+                    window.permissionDenied = false;
                     addOrientationListener();
                     if (permBtn) permBtn.style.display = 'none';
                 } else {
-                    permissionDenied = true;
-                    localStorage.setItem('ios_compass_granted', 'false');
+                    window.permissionDenied = true;
+                    localStorage.setItem(COMPASS_STORAGE_KEY, 'false');
                     showPermissionResetGuide();
                 }
             })
             .catch(err => {
                 console.error(err);
-                permissionDenied = true;
+                window.permissionDenied = true;
                 closePermissionModal();
                 showPermissionResetGuide();
             });
@@ -4431,7 +4433,7 @@ function requestPermission() {
 }
 
 function addOrientationListener() {
-    if (orientationListenerAdded) return;
+    if (window.orientationListenerAdded) return;
 
     const handler = (e) => {
         if (e.webkitCompassHeading !== undefined || e.alpha !== null) {
@@ -4450,7 +4452,7 @@ function addOrientationListener() {
         if (btn) btn.style.display = 'none';
         return;
     }
-    orientationListenerAdded = true;
+    window.orientationListenerAdded = true;
 }
 
 function showPermissionResetGuide() {
@@ -4484,8 +4486,8 @@ function showPermissionResetGuide() {
 }
 
 function resetPermissionFlag() {
-    localStorage.removeItem('ios_compass_granted');
-    permissionDenied = false;
+    localStorage.removeItem(COMPASS_STORAGE_KEY);
+    window.permissionDenied = false;
     closePermissionModal();
     setTimeout(() => location.reload(), 400);
 }
