@@ -4308,7 +4308,7 @@ window.toggleDienGiaiChiTiet = function() {
 // 🪐 ENGINE ENGINE QUẢN LÝ QUYỀN SENSOR LA BÀN SMART IOS - VERSION 10.8 CLEAN
 // =========================================================================
 
-// Khởi tạo và đồng bộ an toàn các biến trạng thái toàn cục
+// 1. Khởi tạo và đồng bộ an toàn các biến trạng thái toàn cục
 if (typeof isDetailOpen === 'undefined') window.isDetailOpen = false;
 if (typeof lockedHeadingAtOpen === 'undefined') window.lockedHeadingAtOpen = null;
 if (typeof orientationListenerAdded === 'undefined') window.orientationListenerAdded = false;
@@ -4317,29 +4317,29 @@ if (typeof permissionDenied === 'undefined') window.permissionDenied = false;
 const COMPASS_STORAGE_KEY = 'ios_compass_granted';
 
 /**
- * 🛡️ LUỒNG KHỞI TẠO DUY NHẤT TRÊN TRANG (HỢP NHẤT HOÀN HÀO CHỐNG ĐÈ BIẾN)
+ * 🛡️ LUỒNG KHỞI TẠO ĐỒNG BỘ DUY NHẤT (HỢP NHẤT TRIỆT TIÊU TRÙNG LẶP)
  */
 window.addEventListener('load', () => {
     if (typeof render24SonRing === 'function') render24SonRing();
     if (typeof loadSavedMembers === 'function') loadSavedMembers();
     if (typeof recalculateFate === 'function') recalculateFate();
 
-    // Kích hoạt bộ não quản lý quyền la bàn cấp cao
+    // Kích hoạt bộ não điều phối cảm biến
     initCompassPermission();
 });
 
 /**
- * ⚡ HÀM THỨC TỈNH: ÂM THẦM KÍCH HOẠT CẢM BIẾN SAFARI SAU 1 CÚ CHẠM
+ * ⚡ HÀM THỨC TỈNH: ÂM THẦM KHỞI ĐỘNG CẢM BIẾN SAFARI NGAY KHI CÓ TƯƠNG TÁC
  */
 function unblockIOSCompass() {
     if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
         DeviceOrientationEvent.requestPermission()
             .then(state => {
                 if (state === 'granted') {
-                    addOrientationListener(); // Chỉ cho phép xoay khi luồng Safari đã mở khóa thành công
+                    addOrientationListener(); // Chỉ mở khóa trục xoay khi Apple cho phép an toàn
                 }
             })
-            .catch(err => console.log("Engine la bàn đang chờ ngón tay người dùng chạm...", err));
+            .catch(err => console.log("Engine la bàn đang chờ tương tác người dùng...", err));
     }
 }
 
@@ -4350,7 +4350,7 @@ function initCompassPermission() {
     const modal = document.getElementById('iosPermissionModal');
     const permBtn = document.getElementById('permission-btn');
     
-    // Kiểm tra bản chất bảo mật đòi quyền của Apple
+    // Kiểm tra bản chất hệ thống bảo mật của Apple
     const requiresRequest = typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function';
     
     if (!requiresRequest) {
@@ -4365,14 +4365,15 @@ function initCompassPermission() {
     const localStatus = localStorage.getItem(COMPASS_STORAGE_KEY);
 
     if (localStatus === 'true') {
-        // TRƯỜNG HỢP 1: ĐÃ TỪNG CHO PHÉP (Khi tắt đi mở lại sẽ rơi vào đây)
+        // TRƯỜNG HỢP 1: ĐÃ TỪNG CHO PHÉP (Khi người dùng tắt app đi mở lại sẽ rơi vào đây)
         if (modal) modal.style.display = 'none';
         if (permBtn) permBtn.style.display = 'none';
 
-        // 🎯 TREO BẪY MỒI ĐA TẦNG: Người dùng chạm nhẹ bất cứ đâu (hoặc mở bong bóng) là mở khóa ngầm lập tức
+        // 🎯 TUYỆT CHIÊU KÍCH HOẠT NGẦM: Không gọi ép phần cứng chạy lúc vừa load trang!
+        // Treo bẫy mồi đợi người dùng chạm nhẹ ngón tay vào màn hình là tự động bẻ khóa thức tỉnh la bàn
         const silentActivate = () => {
             unblockIOSCompass();
-            // Tháo bẫy mồi ngay sau khi thức tỉnh thành công để giải phóng CPU
+            // Tháo gỡ bẫy mồi ngay lập tức để giải phóng tài nguyên CPU
             document.removeEventListener('click', silentActivate);
             document.removeEventListener('touchend', silentActivate);
         };
@@ -4380,11 +4381,11 @@ function initCompassPermission() {
         document.addEventListener('touchend', silentActivate);
 
     } else if (localStatus === 'false') {
-        // TRƯỜNG HỢP 2: TỪNG BẤM TỪ CHỐI -> Hiện bảng hướng dẫn chi tiết cách vào Cài đặt iPhone
+        // TRƯỜNG HỢP 2: TỪNG BẤM TỪ CHỐI -> Hiện bảng hướng dẫn chi tiết vào cài đặt Safari bật lại
         if (permBtn) permBtn.style.display = 'block';
         showPermissionResetGuide();
     } else {
-        // TRƯỜNG HỢP 3: LẦN ĐẦU TIÊN MỞ APP -> Hiện bảng mồi xin quyền vàng kim quy chuẩn
+        // TRƯỜNG HỢP 3: LẦN ĐẦU TIÊN MỞ APP -> Hiện bảng mồi xin quyền màu vàng kim quy chuẩn
         if (permBtn) permBtn.style.display = 'block';
         if (modal) modal.style.display = 'flex';
         setupInitialModalText();
@@ -4392,7 +4393,7 @@ function initCompassPermission() {
 }
 
 /**
- * 📝 CÀI ĐẶT VĂN BẢN CHO MODAL XIN QUYỀN LẦN ĐẦU
+ * 📝 CÀI ĐẶT NỘI DUNG VĂN BẢN CHO MODAL XIN QUYỀN LẦN ĐẦU
  */
 function setupInitialModalText() {
     const modal = document.getElementById('iosPermissionModal');
@@ -4413,7 +4414,6 @@ function handleModalClick() {
     const modal = document.getElementById('iosPermissionModal');
     if (modal) modal.style.display = 'none';
     
-    // Ép lưu cứng vào máy ngay lập tức để chặn lỗi lặp vô hạn
     localStorage.setItem(COMPASS_STORAGE_KEY, 'true');
     requestPermission();
 }
