@@ -4305,7 +4305,7 @@ window.toggleDienGiaiChiTiet = function() {
 };
 
 // =========================================================================
-// 🪐 ENGINE ĐIỀU PHỐI CẢM BIẾN & FULLSCREEN SMART IOS - VERSION 11.1 HOÀN CHỈNH
+// 🪐 ENGINE ĐIỀU PHỐI CẢM BIẾN & FULLSCREEN SMART IOS - VERSION 11.2 CHUẨN
 // =========================================================================
 
 // 1. Khởi tạo và đồng bộ an toàn các biến trạng thái toàn cục
@@ -4329,17 +4329,17 @@ window.addEventListener('load', () => {
 });
 
 /**
- * ⚡ HÀM TỐI CAO: ÂM THẦM GIẢI PHÓNG TRỤC CẢM BIẾN SAFARI KHI CÓ TƯƠNG TÁC CHẠM
+ * ⚡ HÀM TỐI CAO: KHỞI ĐỘNG CẢM BIẾN TRÊN LUỒNG GESTURE HỢP LỆ CỦA APPLE
  */
 function unblockIOSCompass() {
     if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
         DeviceOrientationEvent.requestPermission()
             .then(state => {
                 if (state === 'granted') {
-                    addOrientationListener(); // Kích hoạt xoay la bàn ngay khi Safari phê duyệt an toàn
+                    addOrientationListener(); // Kích hoạt trục xoay la bàn realtime
                 }
             })
-            .catch(err => console.log("Engine la bàn đang chờ cử chỉ unblock ngầm...", err));
+            .catch(err => console.log("Hệ thống đang chờ một cú chạm touchend sạch...", err));
     }
 }
 
@@ -4369,15 +4369,18 @@ function initCompassPermission() {
         if (modal) modal.style.display = 'none';
         if (permBtn) permBtn.style.display = 'none';
 
-        // 🎯 MẠNG LƯỚI BẪY MỒI TOÀN MÀN HÌNH: Chạm bất cứ vị trí nào cũng kích hoạt mở khóa cảm biến ngầm
-        const silentActivate = () => {
+        // 🎯 LƯỚI BẪY MỒI TOÀN MÀN HÌNH CHUẨN APPLE: Chỉ nghe click và touchend (Tuyệt đối không nghe touchstart)
+        const luongThucTinhTuDong = () => {
             unblockIOSCompass();
-            // Tháo gỡ bộ lắng nghe ngay khi unblock thành công để tránh tốn pin và RAM
-            document.removeEventListener('click', silentActivate);
-            document.removeEventListener('touchstart', silentActivate);
+            // Tháo gỡ bộ lắng nghe ngay khi unblock thành công để giải phóng CPU
+            document.removeEventListener('click', luongThucTinhTuDong);
+            document.removeEventListener('touchend', luongThucTinhTuDong);
         };
-        document.addEventListener('click', silentActivate);
-        document.addEventListener('touchstart', silentActivate, { passive: true });
+        document.addEventListener('click', luongThucTinhTuDong);
+        document.addEventListener('touchend', luongThucTinhTuDong);
+
+        // Chạy thử luồng nền xem hệ thống có lưu cache session cũ không
+        addOrientationListener();
 
     } else if (localStatus === 'false') {
         // TRƯỜNG HỢP 2: TỪNG BẤM TỪ CHỐI -> Hiện bảng hướng dẫn chi tiết cách vào Cài đặt iPhone
@@ -4493,7 +4496,7 @@ function showPermissionResetGuide() {
             </p>
             <div style="background:#2c2c2e; padding:15px; border-radius:12px; text-align:left; margin-bottom:20px; font-size:0.88rem; line-height:1.6; color:#e5e5ea; border: 1px solid #3a3a3c; box-sizing: border-box;">
                 <strong style="color:#ff9500;">Hướng dẫn khôi phục quyền hệ thống:</strong><br><br>
-                1. Vào ứng dụng <strong>Cài Đặt</strong> (Settings) trên iPhone → chọn mục <strong>Safari</strong>.<br>
+                1. Vào ứng dụng <strong>Cài Đài</strong> (Settings) trên iPhone → chọn mục <strong>Safari</strong>.<br>
                 2. Cuộn xuống dưới cùng chọn mục <strong>Cài đặt cho Trang web</strong>.<br>
                 3. Bấm vào dòng <strong>Cảm biến chuyển động & định hướng</strong>.<br>
                 4. Tìm địa chỉ trang web này và chuyển sang trạng thái <strong>Cho phép</strong> (Allow).<br>
@@ -4522,7 +4525,7 @@ function closePermissionModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// ====================== ENGINE FULLSCREEN ĐỘC LẬP CAO CẤP Y CHÓC GỐC ======================
+// ====================== ENGINE FULLSCREEN ĐỘC LẬP HOÀN TOÀN ======================
 let isFullScreen = false;
 let lastTapTime = 0;
 
@@ -4540,20 +4543,17 @@ let isZooming = false;
 let currentX = 0;
 let currentY = 0;
 let startX = 0;
+;
 let startY = 0;
 
 /**
- * ⚡ HÀM ĐIỀU PHỐI TƯƠNG TÁC (ĐÃ GỠ BỎ E.PREVENTDEFAULT LỖI LUỒNG GESTURE)
+ * ⚡ HÀM ĐIỀU PHỐI TƯƠNG TÁC GIAO DIỆN (ĐÃ TÁCH BIỆT HOÀN TOÀN KHÔNG TRANH QUYỀN)
  */
 function handleInteraction(e) {
-    // Luôn ưu tiên đánh thức cảm biến trước khi chạy bất kỳ logic giao diện nào
-    unblockIOSCompass();
-
     const isCompass = e.target.closest('.compass-container');
     const isFullScreenDiv = document.getElementById('fullscreenMode');
     
     if (isCompass && !isFullScreen) {
-        // Đã xóa bỏ e.preventDefault() lỗi để giải phóng quyền năng chạm gốc cho Safari
         toggleFullScreenMode();
     } 
     else if (isFullScreen && isFullScreenDiv) {
@@ -4650,9 +4650,6 @@ function toggleFullScreenMode() {
         <div id="fs-compass-wrapper" style="width: 96vw; max-width: 460px; height: 96vw; max-height: 460px; transform-origin: center center; display:flex; align-items:center; justify-content:center; transform: translate(0px, 0px) scale(1);"></div>
         <div id="fs-status-wrapper" style="width: 92%; max-width: 460px; margin-top:15px; z-index: 10000;"></div>
     `;
-    
-    fsDiv.addEventListener('click', unblockIOSCompass);
-    fsDiv.addEventListener('touchend', unblockIOSCompass);
 
     document.body.appendChild(fsDiv);
 
