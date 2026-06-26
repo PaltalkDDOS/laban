@@ -4304,79 +4304,91 @@ window.toggleDienGiaiChiTiet = function() {
     recalculateFate(); 
 };
 
-// ====================== GLOBAL VARIABLE ALIGNMENT ======================
+// =========================================================================
+// 🪐 ENGINE ENGINE QUẢN LÝ QUYỀN SENSOR LA BÀN SMART IOS - VERSION 10.7
+// =========================================================================
+
+// Khởi tạo và đồng bộ an toàn các biến trạng thái toàn cục
 if (typeof isDetailOpen === 'undefined') window.isDetailOpen = false;
 if (typeof lockedHeadingAtOpen === 'undefined') window.lockedHeadingAtOpen = null;
 if (typeof orientationListenerAdded === 'undefined') window.orientationListenerAdded = false;
 if (typeof permissionDenied === 'undefined') window.permissionDenied = false;
 
-// ====================== ENGINE QUẢN LÝ QUYỀN SENSOR LA BÀN SMART IOS ======================
+const COMPASS_STORAGE_KEY = 'ios_compass_granted';
 
-// 💡 KHỞI TẠO ĐỒNG BỘ: Chờ giao diện vẽ xong vòng Sơn mới kích hoạt cảm biến
-window.onload = function() {
+/**
+ * 🛡️ LUỒNG KHỞI TẠO DUY NHẤT TRÊN TRANG (HỢP NHẤT CHỐNG ĐÈ BIẾN)
+ */
+window.addEventListener('load', () => {
     if (typeof render24SonRing === 'function') render24SonRing();
     if (typeof loadSavedMembers === 'function') loadSavedMembers();
     if (typeof recalculateFate === 'function') recalculateFate();
 
-    // Gọi duy nhất bộ não quản lý quyền tại đây để tránh xung đột dữ liệu!
+    // Kích hoạt bộ não quản lý quyền la bàn cấp cao
     initCompassPermission();
-};
+});
 
+/**
+ * 🧠 BỘ NÃO ĐIỀU PHỐI QUYỀN TRUY CẬP CẢM BIẾN ĐA NỀN TẢNG
+ */
 function initCompassPermission() {
     const modal = document.getElementById('iosPermissionModal');
     const permBtn = document.getElementById('permission-btn');
     
-    // Kiểm tra chính xác trình duyệt có đòi hỏi cơ chế cấp quyền của Apple hay không
+    // Kiểm tra xem trình duyệt có bắt buộc đòi quyền xác nhận bảo mật của Apple hay không
     const requiresRequest = typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function';
     
     if (!requiresRequest) {
-        // Thiết bị Android, PC hoặc môi trường HTTP: Kích hoạt thẳng, khóa chặt bảng thông báo
+        // THIẾT BỊ ANDROID, PC HOẶC LOCAL HTTP: Kích hoạt thẳng, khóa ẩn hoàn toàn bảng thông báo
         if (modal) modal.style.display = 'none';
         if (permBtn) permBtn.style.display = 'none';
-        localStorage.setItem('ios_compass_granted', 'true');
+        localStorage.setItem(COMPASS_STORAGE_KEY, 'true');
         addOrientationListener();
         return;
     }
 
-    const localStatus = localStorage.getItem('ios_compass_granted');
+    const localStatus = localStorage.getItem(COMPASS_STORAGE_KEY);
 
     if (localStatus === 'true') {
-        // Trường hợp 1: Đã từng cho phép -> Ẩn toàn bộ giao diện xin quyền, chạy ngầm hoàn toàn
+        // TRƯỜNG HỢP 1: ĐÃ TỪNG CHO PHÉP TRƯỚC ĐÂY
         if (modal) modal.style.display = 'none';
         if (permBtn) permBtn.style.display = 'none';
 
-        // Treo bẫy mồi ngầm kích hoạt luồng Safari ngay cú chạm đầu tiên của người dùng
+        // ⚡ TUYỆT CHIÊU CHÍ MẠNG: Không gọi addOrientationListener() ngay lúc này!
+        // Treo bẫy mồi đợi người dùng chạm tay vào màn hình để âm thầm gọi luồng đánh thức của Safari
         const silentActivate = () => {
             DeviceOrientationEvent.requestPermission()
                 .then(state => { 
-                    if (state === 'granted') addOrientationListener(); 
+                    if (state === 'granted') {
+                        // CHỈ đăng ký lắng nghe SAU KHI luồng Safari đã được mở khóa thành công
+                        addOrientationListener(); 
+                    } 
                 })
                 .catch(console.error);
             
-            // Hủy lắng nghe lập tức để tiết kiệm pin và tài nguyên CPU
+            // Dọn sạch bẫy mồi ngay sau khi hoàn thành nhiệm vụ để tránh ngốn CPU
             document.removeEventListener('click', silentActivate);
             document.removeEventListener('touchstart', silentActivate);
         };
         
         document.addEventListener('click', silentActivate);
         document.addEventListener('touchstart', silentActivate, { passive: true });
-        
-        // Luồng chạy dự phòng trực tiếp
-        addOrientationListener();
 
     } else if (localStatus === 'false') {
-        // Trường hợp 2: Từng bấm từ chối -> Hiện bảng hướng dẫn chi tiết cách vào Cài đặt iPhone reset
+        // TRƯỜNG HỢP 2: TỪNG BẤM TỪ CHỐI -> Hiện bảng hướng dẫn chi tiết cách reset trong cài đặt iPhone
         if (permBtn) permBtn.style.display = 'block';
         showPermissionResetGuide();
     } else {
-        // Trường hợp 3: Lần đầu tiên mở app -> Hiện bảng mồi xin quyền vàng kim quy chuẩn
+        // TRƯỜNG HỢP 3: LẦN ĐẦU TIÊN MỞ APP -> Hiện bảng mồi xin quyền màu vàng kim sang trọng
         if (permBtn) permBtn.style.display = 'block';
         if (modal) modal.style.display = 'flex';
         setupInitialModalText();
     }
 }
 
-// Cài đặt nội dung văn bản cho bảng thông báo lần đầu
+/**
+ * 📝 THIẾT LẬP NỘI DUNG VĂN BẢN CHO MODAL LẦN ĐẦU GẶP MẶT
+ */
 function setupInitialModalText() {
     const modal = document.getElementById('iosPermissionModal');
     if (!modal) return;
@@ -4389,16 +4401,21 @@ function setupInitialModalText() {
     if (btn) btn.onclick = handleModalClick;
 }
 
-// Xử lý khi bấm nút "ĐỒNG Ý KHỞI VẠN" trên bảng thông báo
+/**
+ * ⚡ XỬ LÝ CÚ CLICK CHỦ ĐỘNG TRÊN MODAL XIN QUYỀN
+ */
 function handleModalClick() {
     const modal = document.getElementById('iosPermissionModal');
     if (modal) modal.style.display = 'none';
     
-    // Ép lưu trạng thái ngay lập tức để chặn đứng lỗi lặp vô hạn khi reload
-    localStorage.setItem('ios_compass_granted', 'true');
+    // Ghi nhận trạng thái để tránh vòng lặp vô hạn
+    localStorage.setItem(COMPASS_STORAGE_KEY, 'true');
     requestPermission();
 }
 
+/**
+ * 🚀 YÊU CẦU TRÌNH DUYỆT CẤP QUYỀN CHÍNH THỨC
+ */
 function requestPermission() {
     const permBtn = document.getElementById('permission-btn');
     
@@ -4407,19 +4424,19 @@ function requestPermission() {
             .then(permissionState => {
                 closePermissionModal();
                 if (permissionState === 'granted') {
-                    localStorage.setItem('ios_compass_granted', 'true');
-                    permissionDenied = false;
+                    localStorage.setItem(COMPASS_STORAGE_KEY, 'true');
+                    window.permissionDenied = false;
                     addOrientationListener();
                     if (permBtn) permBtn.style.display = 'none';
                 } else {
-                    permissionDenied = true;
-                    localStorage.setItem('ios_compass_granted', 'false');
+                    window.permissionDenied = true;
+                    localStorage.setItem(COMPASS_STORAGE_KEY, 'false');
                     showPermissionResetGuide();
                 }
             })
             .catch(err => {
                 console.error(err);
-                permissionDenied = true;
+                window.permissionDenied = true;
                 closePermissionModal();
                 showPermissionResetGuide();
             });
@@ -4430,8 +4447,12 @@ function requestPermission() {
     }
 }
 
+/**
+ * 🔄 ĐĂNG KÝ BỘ LẮNG NGHE SỰ KIỆN QUAY LA BÀN REALTIME
+ */
 function addOrientationListener() {
-    if (orientationListenerAdded) return;
+    // Nếu hệ thống đã được đăng ký lắng nghe rồi thì bỏ qua để tránh trùng lặp làm chậm máy
+    if (window.orientationListenerAdded) return;
 
     const handler = (e) => {
         if (e.webkitCompassHeading !== undefined || e.alpha !== null) {
@@ -4450,32 +4471,35 @@ function addOrientationListener() {
         if (btn) btn.style.display = 'none';
         return;
     }
-    orientationListenerAdded = true;
+    window.orientationListenerAdded = true;
 }
 
+/**
+ * 🗺️ HIỂN THỊ HƯỚNG DẪN KHÔI PHỤC QUYỀN HỆ THỐNG KHI BỊ KHÓA SÂU
+ */
 function showPermissionResetGuide() {
     const modal = document.getElementById('iosPermissionModal');
     if (!modal) return;
 
     modal.innerHTML = `
-        <div style="background:#1c1c1e; padding:25px; border-radius:20px; text-align:center; width:88%; max-width:400px; border:2px solid #ff9500; box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
+        <div style="background:#1c1c1e; padding:25px; border-radius:20px; text-align:center; width:88%; max-width:400px; border:2px solid #ff9500; box-shadow: 0 10px 30px rgba(0,0,0,0.6); box-sizing: border-box;">
             <div style="font-size:3.2rem; margin-bottom:15px;">⚠️</div>
-            <h3 style="color:#ff9500; margin-bottom:12px; font-weight:bold;">Không Kích Hoạt Được La Bàn</h3>
+            <h3 style="color:#ff9500; margin-bottom:12px; font-weight:bold; font-size:1.2rem;">Không Kích Hoạt Được La Bàn</h3>
             <p style="color:#ccc; line-height:1.6; margin-bottom:20px; font-size:0.9rem;">
                 Trình duyệt Safari đã chặn quyền truy cập cảm biến chuyển động do bạn từng bấm từ chối trước đây.
             </p>
-            <div style="background:#2c2c2e; padding:15px; border-radius:12px; text-align:left; margin-bottom:20px; font-size:0.88rem; line-height:1.6; color:#e5e5ea; border: 1px solid #3a3a3c;">
+            <div style="background:#2c2c2e; padding:15px; border-radius:12px; text-align:left; margin-bottom:20px; font-size:0.88rem; line-height:1.6; color:#e5e5ea; border: 1px solid #3a3a3c; box-sizing: border-box;">
                 <strong style="color:#ff9500;">Hướng dẫn khôi phục quyền hệ thống:</strong><br><br>
                 1. Vào ứng dụng <strong>Cài Đặt</strong> (Settings) trên iPhone → chọn mục <strong>Safari</strong>.<br>
                 2. Cuộn xuống dưới cùng chọn mục <strong>Cài đặt cho Trang web</strong>.<br>
-                3. Bấm vào dòng <strong>Cảm biến chuyển động & định hướng</strong> (Motion & Orientation).<br>
+                3. Bấm vào dòng <strong>Cảm biến chuyển động & định hướng</strong>.<br>
                 4. Tìm địa chỉ trang web này và chuyển sang trạng thái <strong>Cho phép</strong> (Allow).<br>
                 5. Vuốt tắt ứng dụng Safari chạy ngầm hoàn toàn rồi mở lại trang web.
             </div>
-            <button onclick="resetPermissionFlag()" style="width:100%; padding:14px; background:#ff9500; color:#000; border:none; border-radius:10px; font-weight:bold; cursor:pointer; margin-bottom:10px; text-transform:uppercase;">
+            <button onclick="resetPermissionFlag()" style="width:100%; padding:14px; background:#ff9500; color:#000; border:none; border-radius:10px; font-weight:bold; cursor:pointer; margin-bottom:10px; text-transform:uppercase; font-size:0.85rem; touch-action:manipulation;">
                 ✅ ĐÃ LÀM - TẢI LẠI TRANG
             </button>
-            <button onclick="closePermissionModal()" style="width:100%; padding:12px; background:#3a3a3c; color:#fff; border:none; border-radius:10px; cursor:pointer; font-size:0.85rem;">
+            <button onclick="closePermissionModal()" style="width:100%; padding:12px; background:#3a3a3c; color:#fff; border:none; border-radius:10px; cursor:pointer; font-size:0.85rem; touch-action:manipulation;">
                 Sử dụng chế độ xoay tay
             </button>
         </div>
@@ -4484,8 +4508,8 @@ function showPermissionResetGuide() {
 }
 
 function resetPermissionFlag() {
-    localStorage.removeItem('ios_compass_granted');
-    permissionDenied = false;
+    localStorage.removeItem(COMPASS_STORAGE_KEY);
+    window.permissionDenied = false;
     closePermissionModal();
     setTimeout(() => location.reload(), 400);
 }
@@ -5281,9 +5305,6 @@ function getSvgArcPath(cx, cy, rIn, rOut, startAngle, endAngle) {
 }
 
 // =========================================================================
-// 🎨 ENGINE CẬP NHẬT MÀU NỀN HUNG CÁT (ĐÃ TỐI ƯU HÓA HIỆU NĂNG CAO)
-// =========================================================================
-// =========================================================================
 // 🎨 ENGINE CẬP NHẬT MÀU NỀN HUNG CÁT (HIỆU ỨNG ĐÈN NEON SÁNG CHỐNG CHÓI)
 // =========================================================================
 function updateBatTrachBackground(cungPhi) {
@@ -5704,51 +5725,69 @@ window.showCustomAlert = showCustomAlert;
 window.closeCustomAlert = closeCustomAlert;
 
 // =========================================================================
-// 🌐 HỆ THỐNG PWA FLOATING ACTION BUTTON - HỖ TRỢ VUỐT GẠT ẨN VĨNH VIỄN
+// 🌐 HỆ THỐNG PWA FLOATING ACTION BUTTON - HYBRID HYPER-ENGINE (HỖ TRỢ CẢ ANDROID & IOS)
 // =========================================================================
 if (typeof deferredPrompt === 'undefined') {
     var deferredPrompt; 
 }
 
-// Khóa lưu trữ vĩnh viễn trên trình duyệt này
 const STORAGE_KEY_HIDE_INSTALL = 'pwa_user_dismissed_install';
 
-// 1. Giữ nguyên bản 100% hàm kiểm tra độc lập gốc của bạn
+/**
+ * 📱 1. Hàm kiểm tra thiết bị có phải là iPhone/iPad hay không
+ */
+function isIOS() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+}
+
+/**
+ * ⚙️ 2. Kiểm tra xem ứng dụng đã được chạy dưới dạng App độc lập chưa
+ */
 function isRunningAsPWA() {
     return window.matchMedia('(display-mode: standalone)').matches || 
            window.navigator.standalone === true ||
            window.matchMedia('(display-mode: fullscreen)').matches;
 }
 
-// 2. Hàm kiểm tra ẩn nút - Cải tiến: Kiểm tra thêm bộ nhớ vĩnh viễn LocalStorage
+/**
+ * 🔍 3. Hàm kiểm tra ẩn/hiện nút bấm một cách chủ động
+ */
 function kiemTraVaAnNut() {
     const btn = document.getElementById('btn-install-pwa');
     if (!btn) return false;
     
-    // Nếu người dùng đã từng gạt ẩn vĩnh viễn TRÊN TRÌNH DUYỆT NÀY hoặc đang chạy PWA rồi
+    // Nếu đã ẩn vĩnh viễn hoặc đã cài đặt ứng dụng rồi thì giấu nút đi
     if (localStorage.getItem(STORAGE_KEY_HIDE_INSTALL) === 'true' || isRunningAsPWA()) {
-        btn.classList.add('swiped-away'); // Sử dụng hiệu ứng biến mất hoàn toàn
+        btn.classList.add('swiped-away'); 
         btn.classList.remove('show');
         return true;
     }
     return false;
 }
 
-// 3. Khởi tạo hệ thống lõi - Tích hợp mạch tự động dọn cache khi sửa code
+/**
+ * 🛠️ 4. Khởi tạo hệ thống lõi khi trang tải xong
+ */
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         if (window.location.protocol === 'file:') return;
         
-        // Kích hoạt tính năng vuốt gạt ngay khi trang tải xong
         khoiTaoTinhNangVuotGat();
-        kiemTraVaAnNut();
+        const kếtQuảẨn = kiemTraVaAnNut();
+
+        // 🚀 CƠ CHẾ ĐỘC QUYỀN CHO IOS: Vì iPhone không kích hoạt event 'beforeinstallprompt'
+        // Nếu là iOS, chưa ẩn vĩnh viễn và chưa cài đặt -> Cưỡng chế hiện nút bấm lên công khai
+        if (isIOS() && !kếtQuảẨn) {
+            kichHoatNutBamChoIOS();
+        }
 
         const link = document.createElement('link');
         link.rel = 'manifest';
         link.href = './manifest.json';
         document.head.appendChild(link);
 
-        // Đăng ký Service Worker và tự động F5 làm sạch bộ nhớ
+        // Đăng ký Service Worker và tự động dọn dẹp làm sạch bộ nhớ cache cũ
         navigator.serviceWorker.register('./sw.js')
             .then((reg) => {
                 reg.onupdatefound = () => {
@@ -5767,9 +5806,36 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-// 4. Lắng nghe sự kiện mời cài đặt (Có lồng điều kiện chặn nếu đã ẩn vĩnh viễn)
+/**
+ * 🍎 5. Xử lý kịch bản tương tác dành riêng cho người dùng iPhone
+ */
+function kichHoatNutBamChoIOS() {
+    const btn = document.getElementById('btn-install-pwa');
+    if (!btn) return;
+
+    btn.classList.remove('swiped-away');
+    btn.classList.add('show');
+
+    // Khi người dùng iPhone nhấn vào nút này
+    btn.onclick = () => {
+        // Tận dụng ngay hàm Custom Alert siêu nhạy vừa viết ở bản V10.6 để hướng dẫn người dùng
+        if (typeof showCustomAlert === 'function') {
+            showCustomAlert(
+                "1. Bấm vào biểu tượng 'Chia sẻ' (Share) nằm ở thanh công cụ dưới đáy Safari.\n\n2. Cuộn xuống dưới chọn mục 'Thêm vào MH chính' (Add to Home Screen) ⊞.", 
+                "🧭 Hướng Dẫn Cài Đặt iPhone"
+            );
+        } else {
+            // Phương án dự phòng nếu hàm alert chưa nạp kịp
+            alert("Để cài đặt trên iPhone:\n1. Bấm vào nút 'Chia sẻ' (Share) dưới thanh công cụ Safari.\n2. Chọn 'Thêm vào MH chính' (Add to Home Screen).");
+        }
+    };
+}
+
+/**
+ * 🤖 6. Lắng nghe sự kiện mời cài đặt tự động dành riêng cho ANDROID
+ */
 window.addEventListener('beforeinstallprompt', (e) => {
-    // Nếu đang chạy trong PWA hoặc người dùng đã gạt ẩn vĩnh viễn trước đó -> Hủy luôn
+    // Nếu đang chạy trong PWA hoặc người dùng đã chủ động gạt ẩn vĩnh viễn trước đó -> Hủy luồng
     if (isRunningAsPWA() || localStorage.getItem(STORAGE_KEY_HIDE_INSTALL) === 'true') return;
 
     e.preventDefault();
@@ -5784,7 +5850,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
             if (!deferredPrompt) return;
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
-            console.log(`Người dùng chọn: ${outcome}`);
+            console.log(`Người dùng Android chọn: ${outcome}`);
             
             if (outcome === 'accepted') {
                 btn.classList.add('swiped-away');
@@ -5795,7 +5861,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     }
 });
 
-// 5. Ẩn nút lập tức khi cài xong
+// Ẩn nút lập tức khi cài xong (Dành cho Android)
 window.addEventListener('appinstalled', () => {
     const btn = document.getElementById('btn-install-pwa');
     if (btn) {
@@ -5804,7 +5870,7 @@ window.addEventListener('appinstalled', () => {
     }
 });
 
-// Bộ quét quét lại khi người dùng bật tắt màn hình
+// Bộ quét kiểm tra lại trạng thái khi người dùng bật/tắt màn hình nền
 document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
         setTimeout(kiemTraVaAnNut, 600);
@@ -5812,7 +5878,7 @@ document.addEventListener('visibilitychange', () => {
 });
 
 // =========================================================================
-// 🔥 HÀM TẠO HIỆU ỨNG GẠT PHẢI ĐỂ XÓA VĨNH VIỄN (SWIPE TO DISMISS) - ĐỘNG 50%
+// 🔥 HÀM TẠO HIỆU ỨNG GẠT PHẢI ĐỂ XÓA VĨNH VIỄN (Giữ nguyên cấu trúc mượt mà của bạn)
 // =========================================================================
 function khoiTaoTinhNangVuotGat() {
     const btn = document.getElementById('btn-install-pwa');
@@ -5822,68 +5888,49 @@ function khoiTaoTinhNangVuotGat() {
     let touchCurrentX = 0;
     let isSwiping = false;
 
-    // Sự kiện bắt đầu chạm tay vào nút
     btn.addEventListener('touchstart', (e) => {
         touchStartX = e.touches[0].clientX;
-        btn.style.transition = 'none'; // Tắt hoàn toàn hiệu ứng để nút dính chặt theo ngón tay
+        btn.style.transition = 'none'; 
         isSwiping = true;
     }, { passive: true });
 
-    // Sự kiện di chuyển ngón tay
     btn.addEventListener('touchmove', (e) => {
         if (!isSwiping) return;
         touchCurrentX = e.touches[0].clientX;
         let deltaX = touchCurrentX - touchStartX;
 
-        // Chỉ cho phép gạt sang bên PHẢI (deltaX > 0)
         if (deltaX > 0) {
-            // Nút dịch chuyển tuyến tính chính xác theo tọa độ ngón tay
             btn.style.transform = `translateX(${deltaX}px)`;
-            
-            // Tính toán độ mờ dựa trên chiều rộng thực tế của phần tử
             let maxDrag = btn.offsetWidth;
             btn.style.opacity = `${1 - (deltaX / maxDrag)}`;
         }
     }, { passive: true });
 
-    // Sự kiện khi nhấc ngón tay ra
     btn.addEventListener('touchend', (e) => {
         if (!isSwiping) return;
         isSwiping = false;
         
-        let deltaX = touchCurrentX - touchStartX;
-        
-        // Khôi phục lại các thuộc tính chuyển động mượt mà của CSS gốc khi buông tay
         btn.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease';
-
-        // TỐI ƯU: Lấy điểm kích hoạt bằng đúng 1/2 chiều rộng thực tế của nút bấm
+        let deltaX = touchCurrentX - touchStartX;
         let threshold = btn.offsetWidth / 2;
 
         if (deltaX > threshold) {
-            // Ngón tay kéo quá nửa nút -> Kích hoạt dọn dẹp vĩnh viễn, tự động thụt mất tiêu
             anVaXoaVinhVien(btn);
         } else {
-            // Kéo chưa tới một nửa -> Hệ thống tự động nẩy ngược về vị trí cũ quý phái
             btn.style.transform = 'translateX(0)';
             btn.style.opacity = '1';
         }
         
-        // Trả các biến trạng thái về tọa độ gốc
         touchStartX = 0;
         touchCurrentX = 0;
     });
 }
 
-// Hàm kích hoạt hòm rác vĩnh viễn
 function anVaXoaVinhVien(element) {
-    // 1. Lưu cấu hình vào LocalStorage của trình duyệt hiện tại
     localStorage.setItem(STORAGE_KEY_HIDE_INSTALL, 'true');
-    
-    // 2. Kích hoạt Class biến mất vĩnh viễn thu hẹp không gian
     element.classList.add('swiped-away');
     element.classList.remove('show');
-    
-    console.log('⚡ Đã đưa nút PWA vào hòm rác vĩnh viễn trên trình duyệt này theo yêu cầu của người dùng.');
+    console.log('⚡ Đã đưa nút PWA vào hòm rác vĩnh viễn trên trình duyệt hiện tại.');
 }
 
 // =========================================================================
