@@ -4305,7 +4305,7 @@ window.toggleDienGiaiChiTiet = function() {
 };
 
 // =========================================================================
-// 🪐 ENGINE ENGINE QUẢN LÝ QUYỀN SENSOR LA BÀN SMART IOS - VERSION 10.7
+// 🪐 ENGINE QUẢN LÝ QUYỀN SENSOR LA BÀN SMART IOS - VERSION 10.8 (AUTO-UNBLOCK)
 // =========================================================================
 
 // Khởi tạo và đồng bộ an toàn các biến trạng thái toàn cục
@@ -4317,7 +4317,7 @@ if (typeof permissionDenied === 'undefined') window.permissionDenied = false;
 const COMPASS_STORAGE_KEY = 'ios_compass_granted';
 
 /**
- * 🛡️ LUỒNG KHỞI TẠO DUY NHẤT TRÊN TRANG (HỢP NHẤT CHỐNG ĐÈ BIẾN)
+ * 🛡️ LUỒNG KHỞI TẠO ĐỒNG BỘ DUY NHẤT (HỢP NHẤT TRIỆT TIÊU XUNG ĐỘT)
  */
 window.addEventListener('load', () => {
     if (typeof render24SonRing === 'function') render24SonRing();
@@ -4329,13 +4329,27 @@ window.addEventListener('load', () => {
 });
 
 /**
+ * ⚡ HÀM TỐI CAO: ÂM THẦM ĐÁNH THỨC CẢM BIẾN SAFARI (KHÔNG CẦN POPUP XIN QUYỀN LẠI)
+ */
+function unblockIOSCompass() {
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+            .then(state => {
+                if (state === 'granted') {
+                    addOrientationListener(); // Kích hoạt xoay la bàn ngay lập tức
+                }
+            })
+            .catch(err => console.log("Engine đánh thức la bàn đang chờ tương tác...", err));
+    }
+}
+
+/**
  * 🧠 BỘ NÃO ĐIỀU PHỐI QUYỀN TRUY CẬP CẢM BIẾN ĐA NỀN TẢNG
  */
 function initCompassPermission() {
     const modal = document.getElementById('iosPermissionModal');
     const permBtn = document.getElementById('permission-btn');
     
-    // Kiểm tra xem trình duyệt có bắt buộc đòi quyền xác nhận bảo mật của Apple hay không
     const requiresRequest = typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function';
     
     if (!requiresRequest) {
@@ -4350,36 +4364,30 @@ function initCompassPermission() {
     const localStatus = localStorage.getItem(COMPASS_STORAGE_KEY);
 
     if (localStatus === 'true') {
-        // TRƯỜNG HỢP 1: ĐÃ TỪNG CHO PHÉP TRƯỚC ĐÂY
+        // TRƯỜNG HỢP 1: ĐÃ TỪNG CHO PHÉP TRƯỚC ĐÂY (Khi tắt đi mở lại sẽ rơi vào đây)
         if (modal) modal.style.display = 'none';
         if (permBtn) permBtn.style.display = 'none';
 
-        // ⚡ TUYỆT CHIÊU CHÍ MẠNG: Không gọi addOrientationListener() ngay lúc này!
-        // Treo bẫy mồi đợi người dùng chạm tay vào màn hình để âm thầm gọi luồng đánh thức của Safari
-        const silentActivate = () => {
-            DeviceOrientationEvent.requestPermission()
-                .then(state => { 
-                    if (state === 'granted') {
-                        // CHỈ đăng ký lắng nghe SAU KHI luồng Safari đã được mở khóa thành công
-                        addOrientationListener(); 
-                    } 
-                })
-                .catch(console.error);
-            
-            // Dọn sạch bẫy mồi ngay sau khi hoàn thành nhiệm vụ để tránh ngốn CPU
-            document.removeEventListener('click', silentActivate);
-            document.removeEventListener('touchstart', silentActivate);
+        // 🎯 THIẾT LẬP MẠNG LƯỚI BẪY MỒI ĐA TẦNG: Chạm bất cứ đâu là tự động unblock ngầm
+        const triggerActive = () => {
+            unblockIOSCompass();
+            // Tháo bỏ bẫy ngay khi đã thức tỉnh thành công để giải phóng tài nguyên máy
+            document.removeEventListener('click', triggerActive);
+            document.removeEventListener('touchend', triggerActive);
         };
         
-        document.addEventListener('click', silentActivate);
-        document.addEventListener('touchstart', silentActivate, { passive: true });
+        document.addEventListener('click', triggerActive);
+        document.addEventListener('touchend', triggerActive); // Đánh chặn cả hành vi chạm buông trên mobile
+
+        // Gọi dự phòng luồng phần cứng
+        addOrientationListener();
 
     } else if (localStatus === 'false') {
         // TRƯỜNG HỢP 2: TỪNG BẤM TỪ CHỐI -> Hiện bảng hướng dẫn chi tiết cách reset trong cài đặt iPhone
         if (permBtn) permBtn.style.display = 'block';
         showPermissionResetGuide();
     } else {
-        // TRƯỜNG HỢP 3: LẦN ĐẦU TIÊN MỞ APP -> Hiện bảng mồi xin quyền màu vàng kim sang trọng
+        // TRƯỜNG HỢP 3: LẦN ĐẦU TIÊN MỞ APP -> Hiện bảng mồi xin quyền màu vàng kim
         if (permBtn) permBtn.style.display = 'block';
         if (modal) modal.style.display = 'flex';
         setupInitialModalText();
@@ -4408,13 +4416,12 @@ function handleModalClick() {
     const modal = document.getElementById('iosPermissionModal');
     if (modal) modal.style.display = 'none';
     
-    // Ghi nhận trạng thái để tránh vòng lặp vô hạn
     localStorage.setItem(COMPASS_STORAGE_KEY, 'true');
     requestPermission();
 }
 
 /**
- * 🚀 YÊU CẦU TRÌNH DUYỆT CẤP QUYỀN CHÍNH THỨC
+ * 🚀 YÊU CẦU TRÌNH DUYỆT CẤP QUYỀN CHÍNH THỨC LẦN ĐẦU
  */
 function requestPermission() {
     const permBtn = document.getElementById('permission-btn');
@@ -4451,7 +4458,6 @@ function requestPermission() {
  * 🔄 ĐĂNG KÝ BỘ LẮNG NGHE SỰ KIỆN QUAY LA BÀN REALTIME
  */
 function addOrientationListener() {
-    // Nếu hệ thống đã được đăng ký lắng nghe rồi thì bỏ qua để tránh trùng lặp làm chậm máy
     if (window.orientationListenerAdded) return;
 
     const handler = (e) => {
