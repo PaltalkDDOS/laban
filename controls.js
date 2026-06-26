@@ -4305,9 +4305,10 @@ window.toggleDienGiaiChiTiet = function() {
 };
 
 // =========================================================================
-// 🪐 ENGINE QUẢN LÝ QUYỀN SENSOR LA BÀN SMART IOS - VERSION 11.0 FULLSCREEN FIX
+// 🪐 ENGINE ĐIỀU PHỐI CẢM BIẾN & FULLSCREEN SMART IOS - VERSION 11.1 HOÀN CHỈNH
 // =========================================================================
 
+// 1. Khởi tạo và đồng bộ an toàn các biến trạng thái toàn cục
 if (typeof isDetailOpen === 'undefined') window.isDetailOpen = false;
 if (typeof lockedHeadingAtOpen === 'undefined') window.lockedHeadingAtOpen = null;
 if (typeof orientationListenerAdded === 'undefined') window.orientationListenerAdded = false;
@@ -4316,28 +4317,29 @@ if (typeof permissionDenied === 'undefined') window.permissionDenied = false;
 const COMPASS_STORAGE_KEY = 'ios_compass_granted';
 
 /**
- * 🛡️ LUỒNG KHỞI TẠO ĐỒNG BỘ DUY NHẤT TRÊN TRANG
+ * 🛡️ LUỒNG KHỞI TẠO ĐỒNG BỘ DUY NHẤT (HỢP NHẤT TRIỆT TIÊU TRÙNG LẶP & ĐÈ HÀM)
  */
 window.addEventListener('load', () => {
     if (typeof render24SonRing === 'function') render24SonRing();
     if (typeof loadSavedMembers === 'function') loadSavedMembers();
     if (typeof recalculateFate === 'function') recalculateFate();
 
+    // Kích hoạt duy nhất bộ não điều phối cảm biến cao cấp tại đây
     initCompassPermission();
 });
 
 /**
- * ⚡ HÀM TỐI CAO: ĐÁNH THỨC CẢM BIẾN APPLE LẬP TỨC (KHÔNG ĐỢI BẤM LẦN 2)
+ * ⚡ HÀM TỐI CAO: ÂM THẦM GIẢI PHÓNG TRỤC CẢM BIẾN SAFARI KHI CÓ TƯƠNG TÁC CHẠM
  */
 function unblockIOSCompass() {
     if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
         DeviceOrientationEvent.requestPermission()
             .then(state => {
                 if (state === 'granted') {
-                    addOrientationListener();
+                    addOrientationListener(); // Kích hoạt xoay la bàn ngay khi Safari phê duyệt an toàn
                 }
             })
-            .catch(err => console.log("Engine unblock đang đợi ngón tay gia chủ...", err));
+            .catch(err => console.log("Engine la bàn đang chờ cử chỉ unblock ngầm...", err));
     }
 }
 
@@ -4347,9 +4349,12 @@ function unblockIOSCompass() {
 function initCompassPermission() {
     const modal = document.getElementById('iosPermissionModal');
     const permBtn = document.getElementById('permission-btn');
+    
+    // Kiểm tra bản chất hệ thống bảo mật đòi quyền của Apple
     const requiresRequest = typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function';
     
     if (!requiresRequest) {
+        // ĐỐI VỚI ANDROID, PC HOẶC LINK LOCAL (HTTP): Kích hoạt thẳng, cấm hiện bảng rườm rà!
         if (modal) modal.style.display = 'none';
         if (permBtn) permBtn.style.display = 'none';
         localStorage.setItem(COMPASS_STORAGE_KEY, 'true');
@@ -4360,28 +4365,35 @@ function initCompassPermission() {
     const localStatus = localStorage.getItem(COMPASS_STORAGE_KEY);
 
     if (localStatus === 'true') {
+        // TRƯỜNG HỢP 1: ĐÃ TỪNG CHO PHÉP TRƯỚC ĐÂY (Tắt đi bật lại sẽ rơi vào đây)
         if (modal) modal.style.display = 'none';
         if (permBtn) permBtn.style.display = 'none';
 
-        // Treo bẫy mồi ngầm diện rộng trên toàn bộ tài liệu
+        // 🎯 MẠNG LƯỚI BẪY MỒI TOÀN MÀN HÌNH: Chạm bất cứ vị trí nào cũng kích hoạt mở khóa cảm biến ngầm
         const silentActivate = () => {
             unblockIOSCompass();
+            // Tháo gỡ bộ lắng nghe ngay khi unblock thành công để tránh tốn pin và RAM
             document.removeEventListener('click', silentActivate);
-            document.removeEventListener('touchend', silentActivate);
+            document.removeEventListener('touchstart', silentActivate);
         };
         document.addEventListener('click', silentActivate);
-        document.addEventListener('touchend', silentActivate);
+        document.addEventListener('touchstart', silentActivate, { passive: true });
 
     } else if (localStatus === 'false') {
+        // TRƯỜNG HỢP 2: TỪNG BẤM TỪ CHỐI -> Hiện bảng hướng dẫn chi tiết cách vào Cài đặt iPhone
         if (permBtn) permBtn.style.display = 'block';
         showPermissionResetGuide();
     } else {
+        // TRƯỜNG HỢP 3: LẦN ĐẦU TIÊN MỞ APP -> Hiện bảng mồi xin quyền vàng kim quy chuẩn
         if (permBtn) permBtn.style.display = 'block';
         if (modal) modal.style.display = 'flex';
         setupInitialModalText();
     }
 }
 
+/**
+ * 📝 CÀI ĐẶT NỘI DUNG VĂN BẢN CHO MODAL XIN QUYỀN LẦN ĐẦU
+ */
 function setupInitialModalText() {
     const modal = document.getElementById('iosPermissionModal');
     if (!modal) return;
@@ -4394,13 +4406,20 @@ function setupInitialModalText() {
     if (btn) btn.onclick = handleModalClick;
 }
 
+/**
+ * ⚡ XỬ LÝ KHI NGƯỜI DÙNG ẤN NÚT ĐỒNG Ý TRÊN POPUP GỐC
+ */
 function handleModalClick() {
     const modal = document.getElementById('iosPermissionModal');
     if (modal) modal.style.display = 'none';
+    
     localStorage.setItem(COMPASS_STORAGE_KEY, 'true');
     requestPermission();
 }
 
+/**
+ * 🚀 YÊU CẦU TRÌNH DUYỆT SAFARI CẤP QUYỀN CHÍNH THỨC
+ */
 function requestPermission() {
     const permBtn = document.getElementById('permission-btn');
     
@@ -4432,6 +4451,9 @@ function requestPermission() {
     }
 }
 
+/**
+ * 🔄 ĐĂNG KÝ BỘ LẮNG NGHE XOAY LA BÀN REALTIME
+ */
 function addOrientationListener() {
     if (window.orientationListenerAdded) return;
 
@@ -4455,6 +4477,9 @@ function addOrientationListener() {
     window.orientationListenerAdded = true;
 }
 
+/**
+ * 🗺️ HIỂN THỊ BẢNG HƯỚNG DẪN KHI BỊ KHÓA SÂU TRÊN IPHONE
+ */
 function showPermissionResetGuide() {
     const modal = document.getElementById('iosPermissionModal');
     if (!modal) return;
@@ -4497,7 +4522,7 @@ function closePermissionModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// ====================== ENGINE FULLSCREEN ĐỘC LẬP CAO CẤP ======================
+// ====================== ENGINE FULLSCREEN ĐỘC LẬP CAO CẤP Y CHÓC GỐC ======================
 let isFullScreen = false;
 let lastTapTime = 0;
 
@@ -4518,18 +4543,17 @@ let startX = 0;
 let startY = 0;
 
 /**
- * ⚡ HÀM ĐIỀU PHỐI TƯƠNG TÁC: GIẢI PHÓNG TOÀN DIỆN LỖI KẸT GESTURE SAFARI
+ * ⚡ HÀM ĐIỀU PHỐI TƯƠNG TÁC (ĐÃ GỠ BỎ E.PREVENTDEFAULT LỖI LUỒNG GESTURE)
  */
 function handleInteraction(e) {
-    // 🚀 CHIÊU THỨC QUYẾT ĐỊNH: Gọi lệnh unblock cảm biến ngay lập tức ở đầu dòng lệnh,
-    // biến chính cú tap đúp này thành tấm bùa hộ mệnh mở khóa trục phần cứng Safari!
+    // Luôn ưu tiên đánh thức cảm biến trước khi chạy bất kỳ logic giao diện nào
     unblockIOSCompass();
 
     const isCompass = e.target.closest('.compass-container');
     const isFullScreenDiv = document.getElementById('fullscreenMode');
     
     if (isCompass && !isFullScreen) {
-        // Gỡ bỏ lệnh e.preventDefault() cũ để dòng chảy Gesture của Safari không bị gãy đoạn
+        // Đã xóa bỏ e.preventDefault() lỗi để giải phóng quyền năng chạm gốc cho Safari
         toggleFullScreenMode();
     } 
     else if (isFullScreen && isFullScreenDiv) {
@@ -4627,8 +4651,6 @@ function toggleFullScreenMode() {
         <div id="fs-status-wrapper" style="width: 92%; max-width: 460px; margin-top:15px; z-index: 10000;"></div>
     `;
     
-    // 🚀 BẪY MỒI PHỤ TRONG FULLSCREEN: Nếu lỡ ngón tay chạm trúng nền đen khi đang chạy Fullscreen,
-    // nó cũng kích hoạt unblock ngầm luôn, không cho phép layer đen khóa chết luồng dữ liệu.
     fsDiv.addEventListener('click', unblockIOSCompass);
     fsDiv.addEventListener('touchend', unblockIOSCompass);
 
