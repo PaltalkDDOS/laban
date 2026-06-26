@@ -4304,33 +4304,59 @@ window.toggleDienGiaiChiTiet = function() {
     recalculateFate(); 
 };
 
-// ====================== GLOBAL VARIABLE ALIGNMENT ======================
+// =========================================================================
+// 🚀 ENGINE QUẢN LÝ CẢM BIẾN LA BÀN VÀ KIỂM SOÁT ĐỒNG BỘ TOÀN CỤC V10.9
+// =========================================================================
+
 if (typeof isDetailOpen === 'undefined') window.isDetailOpen = false;
 if (typeof lockedHeadingAtOpen === 'undefined') window.lockedHeadingAtOpen = null;
 if (typeof orientationListenerAdded === 'undefined') window.orientationListenerAdded = false;
 if (typeof permissionDenied === 'undefined') window.permissionDenied = false;
 
-// ====================== ENGINE QUẢN LÝ QUYỀN SENSOR LA BÀN SMART IOS ======================
+let isFullScreen = false;
+let lastTapTime = 0;
 
-// 💡 KHỞI TẠO ĐỒNG BỘ: Chờ giao diện vẽ xong vòng Sơn mới kích hoạt cảm biến
+// Bộ nhớ lưu vị trí gốc của các phần tử DOM khi co giãn
+let originalCompassParent = null;
+let originalCompassNextSibling = null;
+let originalStatusParent = null;
+let originalStatusNextSibling = null;
+let originalDetailBoxStyle = "";
+let originalDetailBoxClass = "";
+
+// Biến điều khiển cấu trúc thu phóng đa điểm
+let currentScale = 1;
+let initialScale = 1;
+let startDistance = 0;
+let isZooming = false;
+let currentX = 0; let currentY = 0;
+let startX = 0; let startY = 0;
+
+/**
+ * 🪐 HÀM KHỞI TẠO DUY NHẤT TOÀN HỆ THỐNG (ĐÃ FIX TRIỆT ĐỂ LỖI TRÙNG ĐÈ HÀM ONLOAD)
+ */
 window.onload = function() {
+    // 1. Kích hoạt vẽ và nạp dữ liệu lõi phong thủy của bạn
     if (typeof render24SonRing === 'function') render24SonRing();
     if (typeof loadSavedMembers === 'function') loadSavedMembers();
     if (typeof recalculateFate === 'function') recalculateFate();
 
-    // Gọi duy nhất bộ não quản lý quyền tại đây để tránh xung đột dữ liệu!
+    // 2. Kích hoạt bộ não quản lý quyền la bàn cảm biến chống lag
     initCompassPermission();
 };
 
+/**
+ * 🛡️ BỘ NÃO ĐIỀU PHỐI QUYỀN SENSOR LA BÀN THÔNG MINH
+ */
 function initCompassPermission() {
     const modal = document.getElementById('iosPermissionModal');
     const permBtn = document.getElementById('permission-btn');
     
-    // Kiểm tra chính xác trình duyệt có đòi hỏi cơ chế cấp quyền của Apple hay không
+    // Kiểm tra xem có phải môi trường iOS đòi quyền nghiêm ngặt không
     const requiresRequest = typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function';
     
     if (!requiresRequest) {
-        // Thiết bị Android, PC hoặc môi trường HTTP: Kích hoạt thẳng, khóa chặt bảng thông báo
+        // Đối với Android, PC, hoặc chạy localhost không đòi quyền rườm rà -> Chạy thẳng luôn
         if (modal) modal.style.display = 'none';
         if (permBtn) permBtn.style.display = 'none';
         localStorage.setItem('ios_compass_granted', 'true');
@@ -4341,42 +4367,42 @@ function initCompassPermission() {
     const localStatus = localStorage.getItem('ios_compass_granted');
 
     if (localStatus === 'true') {
-        // Trường hợp 1: Đã từng cho phép -> Ẩn toàn bộ giao diện xin quyền, chạy ngầm hoàn toàn
+        // TRƯỜNG HỢP VÀO LẦN 2+: Đã từng cho phép -> Khóa chặt bảng thông báo, ẩn nút bấm, không làm phiền người dùng
         if (modal) modal.style.display = 'none';
         if (permBtn) permBtn.style.display = 'none';
 
-        // Treo bẫy mồi ngầm kích hoạt luồng Safari ngay cú chạm đầu tiên của người dùng
+        // ⚡ CHIÊU THỨC KÍCH HOẠT NGẦM KHÔNG HỎI LẠI: Chờ cú chạm tương tác đầu tiên của người dùng để thức tỉnh cảm biến
         const silentActivate = () => {
             DeviceOrientationEvent.requestPermission()
                 .then(state => { 
-                    if (state === 'granted') addOrientationListener(); 
+                    if (state === 'granted') {
+                        // Reset cờ an toàn để ép hệ thống nạp một bộ lắng nghe sống hoàn toàn mới
+                        window.orientationListenerAdded = false; 
+                        addOrientationListener(); 
+                    } 
                 })
                 .catch(console.error);
             
-            // Hủy lắng nghe lập tức để tiết kiệm pin và tài nguyên CPU
+            // Hủy bộ lắng nghe mồi ngay lập tức để giải phóng RAM
             document.removeEventListener('click', silentActivate);
             document.removeEventListener('touchstart', silentActivate);
         };
         
         document.addEventListener('click', silentActivate);
         document.addEventListener('touchstart', silentActivate, { passive: true });
-        
-        // Luồng chạy dự phòng trực tiếp
-        addOrientationListener();
 
     } else if (localStatus === 'false') {
-        // Trường hợp 2: Từng bấm từ chối -> Hiện bảng hướng dẫn chi tiết cách vào Cài đặt iPhone reset
+        // Từng bấm từ chối trước đây -> Hiện bảng hướng dẫn chi tiết cách reset quyền trong Cài đặt iPhone
         if (permBtn) permBtn.style.display = 'block';
         showPermissionResetGuide();
     } else {
-        // Trường hợp 3: Lần đầu tiên mở app -> Hiện bảng mồi xin quyền vàng kim quy chuẩn
+        // Lần đầu tiên đặt chân vào app -> Hiện bảng thông báo vàng kim xin quyền quy chuẩn
         if (permBtn) permBtn.style.display = 'block';
         if (modal) modal.style.display = 'flex';
         setupInitialModalText();
     }
 }
 
-// Cài đặt nội dung văn bản cho bảng thông báo lần đầu
 function setupInitialModalText() {
     const modal = document.getElementById('iosPermissionModal');
     if (!modal) return;
@@ -4389,12 +4415,11 @@ function setupInitialModalText() {
     if (btn) btn.onclick = handleModalClick;
 }
 
-// Xử lý khi bấm nút "ĐỒNG Ý KHỞI VẠN" trên bảng thông báo
 function handleModalClick() {
     const modal = document.getElementById('iosPermissionModal');
     if (modal) modal.style.display = 'none';
     
-    // Ép lưu trạng thái ngay lập tức để chặn đứng lỗi lặp vô hạn khi reload
+    // Ghi nhớ lập tức trạng thái để tránh vòng lặp vô hạn
     localStorage.setItem('ios_compass_granted', 'true');
     requestPermission();
 }
@@ -4408,18 +4433,19 @@ function requestPermission() {
                 closePermissionModal();
                 if (permissionState === 'granted') {
                     localStorage.setItem('ios_compass_granted', 'true');
-                    permissionDenied = false;
+                    window.permissionDenied = false;
+                    window.orientationListenerAdded = false; // Reset cờ trước khi nạp
                     addOrientationListener();
                     if (permBtn) permBtn.style.display = 'none';
                 } else {
-                    permissionDenied = true;
+                    window.permissionDenied = true;
                     localStorage.setItem('ios_compass_granted', 'false');
                     showPermissionResetGuide();
                 }
             })
             .catch(err => {
                 console.error(err);
-                permissionDenied = true;
+                window.permissionDenied = true;
                 closePermissionModal();
                 showPermissionResetGuide();
             });
@@ -4431,7 +4457,8 @@ function requestPermission() {
 }
 
 function addOrientationListener() {
-    if (orientationListenerAdded) return;
+    // Nếu bộ lắng nghe la bàn đang chạy sống thực sự thì không nạp chồng bừa bãi
+    if (window.orientationListenerAdded) return;
 
     const handler = (e) => {
         if (e.webkitCompassHeading !== undefined || e.alpha !== null) {
@@ -4450,7 +4477,7 @@ function addOrientationListener() {
         if (btn) btn.style.display = 'none';
         return;
     }
-    orientationListenerAdded = true;
+    window.orientationListenerAdded = true;
 }
 
 function showPermissionResetGuide() {
@@ -4485,7 +4512,7 @@ function showPermissionResetGuide() {
 
 function resetPermissionFlag() {
     localStorage.removeItem('ios_compass_granted');
-    permissionDenied = false;
+    window.permissionDenied = false;
     closePermissionModal();
     setTimeout(() => location.reload(), 400);
 }
@@ -4495,114 +4522,10 @@ function closePermissionModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// ====================== ENGINE KIỂM SOÁT QUYỀN TOÀN CỤC CHỐNG LẶP BAN LÀM ======================
+// =========================================================================
+// 📺 ENGINE ĐIỀU KHIỂN CHẾ ĐỘ PHÓNG TO / FULLSCREEN KHÔNG LỆCH KHỐI UI
+// =========================================================================
 
-window.onload = function() {
-    if (typeof render24SonRing === 'function') render24SonRing();
-    if (typeof loadSavedMembers === 'function') loadSavedMembers();
-    if (typeof recalculateFate === 'function') recalculateFate();
-
-    const modal = document.getElementById('iosPermissionModal');
-    const permBtn = document.getElementById('permission-btn');
-    
-    // 🛡️ BƯỚC 1: Kiểm tra xem trình duyệt có THỰC SỰ ĐÒI QUYỀN la bàn hay không (Chỉ bảo mật HTTPS trên iOS mới có hàm này)
-    const bản_chất_ios_đòi_quyền = typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function';
-
-    if (bản_chất_ios_đòi_quyền && modal) {
-        const localStatus = localStorage.getItem('ios_compass_granted');
-
-        if (localStatus === 'true') {
-            // Đã cấp quyền rồi -> Khóa chết thông báo, không bao giờ mở
-            modal.style.display = 'none';
-            if (permBtn) permBtn.style.display = 'none';
-
-            // Treo kích hoạt ngầm theo luật Apple (Chạm nhẹ bất kỳ đâu là la bàn xoay vù vù)
-            const silentActivate = () => {
-                DeviceOrientationEvent.requestPermission()
-                    .then(state => { if (state === 'granted') addOrientationListener(); })
-                    .catch(console.error);
-                document.removeEventListener('click', silentActivate);
-                document.removeEventListener('touchstart', silentActivate);
-            };
-            document.addEventListener('click', silentActivate);
-            document.addEventListener('touchstart', silentActivate, { passive: true });
-            addOrientationListener();
-
-        } else if (localStatus === 'false') {
-            // Từng bấm từ chối -> Hiện bảng hướng dẫn người dùng vào Cài đặt iPhone bật lại
-            if (permBtn) permBtn.style.display = 'block';
-            showPermissionResetGuide();
-        } else {
-            // Lần đầu tiên sử dụng ứng dụng -> Mở bảng thông báo gốc
-            if (permBtn) permBtn.style.display = 'block';
-            modal.style.display = 'flex';
-            setupInitialModalText();
-        }
-    } else {
-        // 🚀 ĐỐI VỚI ANDROID, PC HOẶC LINK LOCAL (HTTP): Không đòi quyền rườm rà, kích hoạt thẳng, cấm hiện bảng!
-        if (modal) modal.style.display = 'none';
-        if (permBtn) permBtn.style.display = 'none';
-        
-        // Ghi nhận luôn để lần sau không quét lại nữa
-        localStorage.setItem('ios_compass_granted', 'true');
-        addOrientationListener();
-    }
-};
-
-// Hàm cài đặt nội dung văn bản cho bảng thông báo lần đầu
-function setupInitialModalText() {
-    const modal = document.getElementById('iosPermissionModal');
-    if (!modal) return;
-    const title = modal.querySelector('h3');
-    const text = modal.querySelector('p');
-    const btn = modal.querySelector('button');
-
-    if (title) title.textContent = "KÍCH HOẠT LA BÀN TỰ ĐỘNG";
-    if (text) text.innerHTML = `Để la bàn tự động xoay theo hướng thực địa của điện thoại,<br>vui lòng bấm ĐỒNG Ý và xác nhận cấp quyền.`;
-    if (btn) btn.onclick = handleModalClick;
-}
-
-// Xử lý khi người dùng ấn nút Đồng Ý trên bảng thông báo
-function handleModalClick() {
-    const modal = document.getElementById('iosPermissionModal');
-    if (modal) modal.style.display = 'none';
-    
-    // Ép lưu cứng vào máy ngay lập tức để chặn lỗi lặp vô hạn khi tải lại trang
-    localStorage.setItem('ios_compass_granted', 'true');
-    
-    if (typeof requestPermission === 'function') {
-        requestPermission();
-    } else {
-        addOrientationListener();
-    }
-}
-
-let isFullScreen = false;
-let lastTapTime = 0;
-
-// ====================== BỘ NHỚ LƯU VỊ TRÍ DOM TUYỆT ĐỐI VẠN NĂNG ======================
-let originalCompassParent = null;
-let originalCompassNextSibling = null;
-let originalStatusParent = null;
-let originalStatusNextSibling = null;
-
-// Biến lưu trạng thái gốc của hộp giải thích thuật ngữ để khôi phục khi thoát
-let originalDetailBoxStyle = "";
-let originalDetailBoxClass = "";
-
-// ====================== BIẾN HỖ TRỢ ZOOM & PAN (KÉO) BIẾN TẦN SIÊU MƯỢT ======================
-let currentScale = 1;
-let initialScale = 1;
-let startDistance = 0;
-let isZooming = false;
-let currentX = 0;
-let currentY = 0;
-let startX = 0;
-let startY = 0;
-
-/**
- * HÀM XỬ LÝ SỰ KIỆN GỘP THÔNG MINH
- */
 function handleInteraction(e) {
     const isCompass = e.target.closest('.compass-container');
     const isFullScreenDiv = document.getElementById('fullscreenMode');
@@ -4612,7 +4535,6 @@ function handleInteraction(e) {
         toggleFullScreenMode();
     } 
     else if (isFullScreen && isFullScreenDiv) {
-        // Nếu la bàn đang phóng to, click đúp sẽ thu nhỏ về 1x trước chứ không thoát đột ngột
         if (currentScale !== 1 || currentX !== 0 || currentY !== 0) {
             resetZoom();
         } else {
@@ -4621,11 +4543,8 @@ function handleInteraction(e) {
     }
 }
 
-// Hàm hồi phục kích thước la bàn bằng chuyển động nội suy mượt mà
 function resetZoom() {
-    currentScale = 1;
-    currentX = 0;
-    currentY = 0;
+    currentScale = 1; currentX = 0; currentY = 0;
     const wrapper = document.getElementById('fs-compass-wrapper');
     if (wrapper) {
         wrapper.style.transition = "transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)";
@@ -4633,13 +4552,10 @@ function resetZoom() {
     }
 }
 
-// 1. Lắng nghe Double Click (Thiết bị Máy tính)
 document.addEventListener('dblclick', handleInteraction);
 
-// 2. Lắng nghe Double Tap (Thiết bị Di động) - Tối ưu tốc độ phản hồi 350ms
 document.addEventListener('touchend', (e) => {
     if (e.touches.length > 0) return; 
-    
     const currentTime = new Date().getTime();
     if (currentTime - lastTapTime < 350) {
         handleInteraction(e);
@@ -4647,7 +4563,6 @@ document.addEventListener('touchend', (e) => {
     lastTapTime = currentTime;
 });
 
-// ====================== VÀO CHẾ ĐỘ FULLSCREEN (ẨN SẠCH CHỮ RÁC) ======================
 function toggleFullScreenMode() {
     if (isFullScreen) return;
 
@@ -4658,7 +4573,6 @@ function toggleFullScreenMode() {
 
     if (!compassContainer) return;
 
-    // 🎯 CHỤP ẢNH TỌA ĐỘ DOM GỐC: Ghi nhớ hộ khẩu để chống lỗi chạy khối chữ khi thoát
     originalCompassParent = compassContainer.parentElement;
     originalCompassNextSibling = compassContainer.nextSibling;
     if (statusPanel) {
@@ -4666,35 +4580,23 @@ function toggleFullScreenMode() {
         originalStatusNextSibling = statusPanel.nextSibling;
     }
 
-    // 🎯 SỬA LỖI 1: Khóa chặt hộp giải thích thuật ngữ không cho đè la bàn
     if (giaiThich) {
         originalDetailBoxStyle = giaiThich.style.cssText;
         originalDetailBoxClass = giaiThich.className;
-        
-        // Dùng lệnh ép công lực cao nhất cấu hình ẩn hoàn toàn, gỡ bỏ các class mở rộng
         giaiThich.style.setProperty('display', 'none', 'important');
         giaiThich.style.setProperty('position', 'static', 'important');
         giaiThich.setAttribute('data-fs-hidden', 'true');
     }
 
-    // 🎯 SỬA LỖI 2: Quét và quét triệt để thông tin năm sinh, bản mệnh của người xem
     if (statusPanel) {
         const elements = statusPanel.querySelectorAll('*');
         elements.forEach(el => {
             const text = el.textContent || "";
-            
-            // Thêm các từ khóa nhận diện chuyên sâu về năm sinh và bản mệnh gia chủ
-            const isTarget = text.includes('Người Tầm Phương') || 
-                             text.includes('Đo hướng') || 
-                             text.includes('Cung Phi') || 
-                             text.includes('Năm Âm') || 
-                             text.includes('Trung Cung') || 
-                             text.includes('Xem giải thích thuật ngữ') ||
-                             text.includes('Sinh năm') || 
-                             text.includes('Mệnh') || 
-                             text.includes('Mạng') || 
-                             text.includes('Cung Mệnh') || 
-                             text.includes('Tuổi');
+            const isTarget = text.includes('Người Tầm Phương') || text.includes('Đo hướng') || 
+                             text.includes('Cung Phi') || text.includes('Năm Âm') || 
+                             text.includes('Trung Cung') || text.includes('Xem giải thích thuật ngữ') ||
+                             text.includes('Sinh năm') || text.includes('Mệnh') || 
+                             text.includes('Mạng') || text.includes('Cung Mệnh') || text.includes('Tuổi');
 
             if (isTarget) {
                 el.style.setProperty('display', 'none', 'important');
@@ -4703,13 +4605,8 @@ function toggleFullScreenMode() {
         });
     }
 
-    // Reset thông số kích thước thu phóng la bàn
-    currentScale = 1;
-    currentX = 0;
-    currentY = 0;
-    isZooming = false;
+    currentScale = 1; currentX = 0; currentY = 0; isZooming = false;
 
-    // Tạo màn nền đen phủ Fullscreen
     const fsDiv = document.createElement('div');
     fsDiv.id = 'fullscreenMode';
     fsDiv.className = 'fullscreen-mode active';
@@ -4721,17 +4618,14 @@ function toggleFullScreenMode() {
     `;
     document.body.appendChild(fsDiv);
 
-    // Kích hoạt hiệu ứng hiện hình mượt động lực học
     requestAnimationFrame(() => { fsDiv.style.opacity = '1'; });
 
-    // Bốc la bàn và bảng kết quả gọn vào màn hình đen
     document.getElementById('fs-compass-wrapper').appendChild(compassContainer);
     if (statusPanel) document.getElementById('fs-status-wrapper').appendChild(statusPanel);
 
     if (fsIcon) fsIcon.style.opacity = '0';
     isFullScreen = true;
 
-    // ====================== BỘ LẮNG NGHE SỰ KIỆN ZOOM CHỐNG KHỰNG LAG ======================
     const wrapper = document.getElementById('fs-compass-wrapper');
 
     fsDiv.addEventListener('touchstart', (e) => {
@@ -4742,7 +4636,7 @@ function toggleFullScreenMode() {
                 e.touches[0].pageY - e.touches[1].pageY
             );
             initialScale = currentScale;
-            wrapper.style.transition = "none"; // Tắt transition khi kéo để chống trễ hình
+            wrapper.style.transition = "none";
         } else if (e.touches.length === 1 && currentScale > 1) { 
             startX = e.touches[0].pageX - currentX;
             startY = e.touches[0].pageY - currentY;
@@ -4764,7 +4658,6 @@ function toggleFullScreenMode() {
             currentX = e.touches[0].pageX - startX;
             currentY = e.touches[0].pageY - startY;
 
-            // Giới hạn biên độ kéo thông minh theo độ phóng đại
             const maxPan = 160 * currentScale;
             currentX = Math.min(Math.max(currentX, -maxPan), maxPan);
             currentY = Math.min(Math.max(currentY, -maxPan), maxPan);
@@ -4780,7 +4673,6 @@ function toggleFullScreenMode() {
     if (typeof recalculateFate === 'function') recalculateFate();
 }
 
-// ====================== THOÁT CHẾ ĐỘ FULLSCREEN (TRẢ VỀ NGUYÊN BẢN) ======================
 function exitFullScreenMode() {
     const fs = document.getElementById('fullscreenMode');
     if (!fs) return;
@@ -4792,7 +4684,6 @@ function exitFullScreenMode() {
         const fsIcon = document.querySelector('.fs-icon');
         const giaiThich = document.getElementById('detail-box');
 
-        // Hiện lại toàn bộ các dòng thông tin cung mệnh, chữ đã ẩn lúc nãy trong status-panel
         if (status) {
             const hiddenElements = status.querySelectorAll('[data-fs-hidden="true"]');
             hiddenElements.forEach(el => {
@@ -4801,14 +4692,12 @@ function exitFullScreenMode() {
             });
         }
 
-        // 🎯 PHỤC HỒI HỘP GIẢI THÍCH THUẬT NGỮ: Trả lại nguyên vẹn trạng thái mở/đóng lúc đầu
         if (giaiThich && giaiThich.getAttribute('data-fs-hidden') === 'true') {
             giaiThich.className = originalDetailBoxClass;
             giaiThich.style.cssText = originalDetailBoxStyle;
             giaiThich.removeAttribute('data-fs-hidden');
         }
 
-        // 🎯 PHỤC HỒI VỊ TRÍ DOM HOÀN HẢO: Đặt lại chính xác vào vị trí cũ (Chống lệch khối chữ ngoài UI)
         if (compass && originalCompassParent) {
             compass.style.transform = ""; 
             if (originalCompassNextSibling) {
@@ -4830,15 +4719,12 @@ function exitFullScreenMode() {
         isFullScreen = false;
         if (fsIcon) fsIcon.style.opacity = '1';
         
-        currentScale = 1;
-        currentX = 0;
-        currentY = 0;
+        currentScale = 1; currentX = 0; currentY = 0;
         
-        // Đồng bộ và làm tươi lại hướng xoay của kim la bàn phần cứng ngay lập tức
         if (typeof updateCompassUI === 'function') {
             updateCompassUI(typeof lastHeading !== 'undefined' ? lastHeading : 0);
         }
-    }, 250); // Giảm thời gian chờ xuống 250ms để tăng độ nhạy bén thoát trang
+    }, 250);
 }
 // =========================================================================
 // 🚀 ENGINE PURPOSE MODAL V10.5 - GIỮ NGUYÊN CƠ CHẾ DISPLAY GỐC CHỐNG LỖI LÕI
