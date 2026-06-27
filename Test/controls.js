@@ -4293,7 +4293,6 @@ const THROTTLE_MS = 16; // ~60fps
 // Biến trạng thái địa từ
 let magneticDeclination = 0;
 let lastAccuracy = 0; 
-let isMagneticWarningActive = false;
 
 /**
  * 🪐 HÀM KHỞI TẠO DUY NHẤT TOÀN HỆ THỐNG
@@ -4529,10 +4528,13 @@ function closePermissionModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// =========================================================================
-// 🧭 BỘ XỬ LÝ LÕI ĐỊA HƯỚNG VÀ LÀM MƯỢT (CORE ENGINE)
-// =========================================================================
+// ====================== BIẾN TOÀN CỤC CHO PHẦN ĐO NHIỄU ======================
+let lastHeadingForNoise = null;   // ← Sửa thành null thay vì 0
+let noiseScore = 0;
+let lastMagneticCheck = 0;
+let isMagneticWarningActive = false;
 
+// ====================== HÀM XỬ LÝ CHÍNH ======================
 function handleOrientation(event) {
     if (window.isCompassHold) {
         if (typeof window.holdedHeading !== 'undefined') {
@@ -4540,35 +4542,30 @@ function handleOrientation(event) {
             if (typeof window.currentHeading !== 'undefined') window.currentHeading = window.holdedHeading;
             
             if (rafId) cancelAnimationFrame(rafId);
-            rafId = requestAnimationFrame(() => {
-                executeUIUpdate(window.holdedHeading, window.holdedHeading);
-            });
+            rafId = requestAnimationFrame(() => executeUIUpdate(window.holdedHeading, window.holdedHeading));
         }
-        return; 
+        return;
     }
 
     let rawHeading = null;
     const now = Date.now();
-    
-    const accuracy = event.webkitCompassAccuracy;
-    if (accuracy !== undefined && accuracy !== null && accuracy >= 0) {
-        if (Math.abs(accuracy - lastAccuracy) > 3 || 
-           (accuracy > 15 && lastAccuracy <= 15) || 
-           (accuracy > 30 && lastAccuracy <= 30) ||
-           (accuracy <= 15 && lastAccuracy > 15)) {
-            lastAccuracy = accuracy;
-            updateMagneticStatus(accuracy); 
-        }
-    }
 
+    // Lấy hướng thô
     if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
         rawHeading = event.webkitCompassHeading;
     } else if (event.alpha !== undefined && event.alpha !== null) {
         rawHeading = (360 - event.alpha) % 360;
     }
-    
+
     if (rawHeading === null) return;
 
+    // Kiểm tra nhiễu định kỳ (1 giây/lần)
+    if (now - lastMagneticCheck > 1000) {
+        checkMagneticQuality(rawHeading, event);
+        lastMagneticCheck = now;
+    }
+
+    // Logic làm mượt kim quay (giữ nguyên)
     if (document.activeElement?.id === 'compassSlider') return;
     if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
     lastUpdateTime = now;
@@ -4582,28 +4579,23 @@ function handleOrientation(event) {
     let diff = rawHeading - lastHeading;
     if (diff > 180) diff -= 360;
     if (diff < -180) diff += 360;
-    
+
     const absDiff = Math.abs(diff);
     let dynamicFactor = SMOOTH_MIN;
-    
-    if (absDiff > 12) {
-        dynamicFactor = SMOOTH_MAX;
-    } else if (absDiff > 1.5) {
-        dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
-    }
-    
+    if (absDiff > 12) dynamicFactor = SMOOTH_MAX;
+    else if (absDiff > 1.5) dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
+
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
 
-    const headingForText = lastHeading; 
-    const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
+    const headingForText = lastHeading;
+    const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360;
 
     if (typeof window.currentHeading !== 'undefined') window.currentHeading = headingForText;
 
     if (absDiff > 0.4) {
         const btnTongLuan = document.getElementById('btn-tong-luan');
         if (btnTongLuan) btnTongLuan.classList.remove('vượng-xuất');
-        if (typeof window.dừngKimTimeout !== 'undefined') clearTimeout(window.dừngKimTimeout);
         if (typeof kichHoatBoDemDungKim === 'function') kichHoatBoDemDungKim();
     }
 
@@ -4613,31 +4605,74 @@ function handleOrientation(event) {
     });
 }
 
-function executeUIUpdate(headingDial, headingText) {
-    if (typeof updateCompassUI === 'function') updateCompassUI(headingText); 
-    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); 
-    if (typeof recalculateFate === 'function') recalculateFate();
-}
-
-function updateMagneticStatus(acc) {
+// ====================== HÀM ĐO NHIỄU (ĐÃ SỬA LỖI KHỞI TẠO) ======================
+function checkMagneticQuality(currentHeading, event) {
     const dot = document.getElementById('accuracy-dot');
     const text = document.getElementById('accuracy-text');
     if (!dot || !text) return;
 
-    let bg = '#4caf50', txt = "TÍN HIỆU TỐT";
-    
-    if (acc > 15 && acc <= 30) {
-        bg = '#ff9800';
-        txt = "NHIỄU NHẸ";
-    } else if (acc > 30) {
-        bg = '#f44336';
-        txt = "NHIỄU NẶNG";
+    // 1. iOS - Dùng dữ liệu phần cứng thật
+    if (event.webkitCompassAccuracy !== undefined && event.webkitCompassAccuracy !== null) {
+        const acc = event.webkitCompassAccuracy;
+        if (acc > 30) {
+            updateMagneticUI("NHIỄU NẶNG", "#f44336");
+            showMagneticToast();
+        } else if (acc > 15) {
+            updateMagneticUI("NHIỄU NHẸ", "#ff9800");
+        } else {
+            updateMagneticUI("TÍN HIỆU TỐT", "#4caf50");
+        }
+        return;
     }
 
-    if (text.innerText !== txt) {
-        dot.style.background = bg;
-        text.innerText = txt;
+    // 2. Android - Thuật toán Jitter
+    if (lastHeadingForNoise === null) {
+        lastHeadingForNoise = currentHeading;   // Lấy mốc lần đầu tiên
+        updateMagneticUI("TÍN HIỆU ỔN", "#4caf50");
+        return;
     }
+
+    let diff = Math.abs(currentHeading - lastHeadingForNoise);
+    if (diff > 180) diff = 360 - diff;
+
+    if (diff > 25) {
+        noiseScore = Math.min(6, noiseScore + 2);
+    } else {
+        noiseScore = Math.max(0, noiseScore - 1);
+    }
+
+    if (noiseScore >= 4) {
+        updateMagneticUI("NHIỄU TỪ TRƯỜNG", "#ff9800");
+        showMagneticToast();
+    } else if (noiseScore >= 2) {
+        updateMagneticUI("NHIỄU NHẸ", "#ff9800");
+    } else {
+        updateMagneticUI("TÍN HIỆU ỔN", "#4caf50");
+    }
+
+    lastHeadingForNoise = currentHeading;
+}
+
+// Cập nhật UI
+function updateMagneticUI(statusText, color) {
+    const dot = document.getElementById('accuracy-dot');
+    const text = document.getElementById('accuracy-text');
+    if (text && text.innerText !== statusText) {
+        text.innerText = statusText;
+        if (dot) dot.style.background = color;
+    }
+}
+
+// Toast cảnh báo
+function showMagneticToast() {
+    if (isMagneticWarningActive) return;
+    isMagneticWarningActive = true;
+
+    if (typeof showToast === 'function') {
+        showToast("⚠️ Nhiễu từ trường mạnh! Hãy di chuyển khỏi khu vực có sắt thép hoặc nam châm.", true);
+    }
+
+    setTimeout(() => { isMagneticWarningActive = false; }, 10000);
 }
 
 // =========================================================================
