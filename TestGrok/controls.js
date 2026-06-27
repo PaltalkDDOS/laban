@@ -4341,7 +4341,6 @@ function initCompassPermission() {
                            typeof DeviceOrientationEvent.requestPermission === 'function';
 
     if (!requiresRequest) {
-        // Android / Desktop
         if (modal) modal.style.display = 'none';
         if (permBtn) permBtn.style.display = 'none';
         addOrientationListener();
@@ -4350,54 +4349,79 @@ function initCompassPermission() {
 
     const localStatus = localStorage.getItem('ios_compass_granted');
 
-    // Nếu đã từng cấp quyền thành công → Ẩn hết, chỉ thử kích hoạt ngầm
     if (localStatus === 'true') {
         if (modal) modal.style.display = 'none';
         if (permBtn) permBtn.style.display = 'none';
-        
-        // Thử kích hoạt ngầm (không hiện modal)
-        setTimeout(() => {
-            trySilentActivation();
-        }, 500);
-        
+        trySilentActivation();           // Thử ngầm trước
     } else if (localStatus === 'false') {
-        // Từng từ chối
         if (permBtn) permBtn.style.display = 'block';
         showPermissionResetGuide();
     } else {
-        // Lần đầu
         if (permBtn) permBtn.style.display = 'block';
         if (modal) modal.style.display = 'flex';
         setupInitialModalText();
     }
 }
-// Thử kích hoạt ngầm không hiện modal
+
+// === THỬ KÍCH HOẠT NGẦM (KHÔNG LÀM PHIỀN NGƯỜI DÙNG) ===
 async function trySilentActivation() {
     try {
         if (typeof DeviceOrientationEvent.requestPermission === 'function') {
             const state = await DeviceOrientationEvent.requestPermission();
             if (state === 'granted') {
                 addOrientationListener();
+                return;
             }
         } else {
             addOrientationListener();
+            return;
         }
     } catch (e) {
-        // Nếu thất bại → fallback sang tương tác người dùng
-        setupUserGestureActivation();
+        console.log("Silent activation failed, show fallback overlay");
     }
+    
+    // Nếu ngầm thất bại → Hiện màng tàng hình thông minh
+    showTouchFallbackOverlay();
 }
-// Fallback: Chờ người dùng chạm màn hình lần đầu
-function setupUserGestureActivation() {
+
+// === MÀNG TÀNG HÌNH THÔNG MINH (CHỈ HIỆN KHI CẦN) ===
+function showTouchFallbackOverlay() {
+    const overlay = document.createElement('div');
+    overlay.id = 'sensor-fallback-overlay';
+    overlay.style.cssText = `
+        position:fixed; top:0; left:0; width:100%; height:100%; 
+        background:rgba(0,0,0,0.88); z-index:999999; 
+        display:flex; align-items:center; justify-content:center; 
+        backdrop-filter: blur(8px);
+    `;
+    
+    overlay.innerHTML = `
+        <div style="text-align:center; max-width:340px; padding:30px; border-radius:20px; background:#1c1c1e; border:1px solid #dfb76c;">
+            <div style="font-size:3.5rem; margin-bottom:15px;">🧭</div>
+            <h3 style="color:#dfb76c; margin:0 0 15px 0;">Kích hoạt La Bàn</h3>
+            <p style="color:#ccc; line-height:1.6; margin-bottom:25px;">
+                Để la bàn xoay theo hướng thực tế, vui lòng chạm vào màn hình một lần.
+            </p>
+            <div style="padding:20px; background:rgba(223,183,108,0.1); border-radius:12px; border:1px dashed #dfb76c;">
+                👆 <strong>Chạm bất kỳ đâu trên màn hình</strong>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    // Chỉ kích hoạt khi người dùng CHỦ ĐỘNG chạm
     const activate = () => {
-        trySilentActivation();
+        trySilentActivation();  // Thử lại lần nữa
+        overlay.remove();
         document.removeEventListener('touchstart', activate, { passive: true });
         document.removeEventListener('click', activate);
     };
-    
-    document.addEventListener('touchstart', activate, { passive: true, once: true });
-    document.addEventListener('click', activate, { once: true });
+
+    overlay.addEventListener('touchstart', activate, { passive: true });
+    overlay.addEventListener('click', activate);
 }
+
 function setupInitialModalText() {
     const modal = document.getElementById('iosPermissionModal');
     if (!modal) return;
