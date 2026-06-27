@@ -2818,541 +2818,6 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm, doRongQ
 
     return runRawCalcEngine(degree);
 }
-
-function showExplanation(sonName, textInfo, solInfo) {
-    const modal = document.getElementById('infoModal');
-   
-    modal.innerHTML = `
-        <div class="modal-content" style="background:#1c1c1e; color:#fff; border-radius:15px; width:90%; max-width:500px; max-height:85vh; display:flex; flex-direction:column; margin:auto; overflow:hidden; position:relative;">
-            <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 15px; border-bottom:1px solid #444;">
-                <span style="font-weight:bold; font-size:1.1rem; color:#dfb76c;">Giải Thích: ${sonName}</span>
-                <button onclick="event.stopPropagation(); closeModal();" style="background:transparent; border:none; color:#ff3b30; font-size:2rem; font-weight:bold; cursor:pointer; line-height:1; padding:0 5px; outline:none;">&times;</button>
-            </div>
-           
-            <div id="modalBody" style="overflow-y:auto; padding:15px;">
-                <div style="background:#2a2a2a; padding:15px; border-radius:10px; margin-bottom:20px;">
-                    <p style="margin:0 0 10px 0; color:#dfb76c; font-weight:bold;">📍 THÔNG TIN SƠN VỊ:</p>
-                    <p style="margin:0 0 5px 0;"><strong>Ý nghĩa:</strong> ${textInfo}</p>
-                    <p style="margin:0; color:#30d158;"><strong>Giải pháp:</strong> ${solInfo}</p>
-                </div>
-                
-                <div style="border-top:1px solid #444; padding-top:15px;">
-                    <p style="margin:0 0 10px 0; color:#dfb76c; font-weight:bold;">📖 KIẾN THỨC PHONG THỦY:</p>
-                    <p style="margin:5px 0; line-height:1.5;"><strong>1. Cung (Hướng) vs Sơn (Chi tiết):</strong><br>
-                    Hướng là 45 độ tổng thể (Đại cục). Sơn là 15 độ chi tiết (Phân kim). Nếu Sơn đắc khí tốt hơn Cung, tại điểm đó vượng khí được nhân đôi.</p>
-                    <p style="margin:10px 0; line-height:1.5;"><strong>2. Ý nghĩa thuật ngữ:</strong><br>
-                    - <strong>Cát (Tốt):</strong> Sinh Khí, Thiên Y, Diên Niên, Phục Vị.<br>
-                    - <strong>Hung (Xấu):</strong> Tuyệt Mệnh, Ngũ Quỷ, Lục Sát, Họa Hại.<br>
-                    - <strong>Bình/Cô Quả:</strong> Trạng thái trung tính hoặc xấu nhẹ.</p>
-                    <p style="margin:5px 0; font-style:italic; color:#8e8e93; line-height:1.5;">* Ví dụ: Hướng Tây là Diên Niên, nhưng Sơn Dậu lại là Sinh Khí. Nếu đặt vật phẩm đúng Sơn Dậu, bạn vừa được hưởng hòa thuận (Diên Niên), vừa kích hoạt tài lộc (Sinh Khí).</p>
-                </div>
-
-                <!-- === PHẦN GIẢI THÍCH ĐIỂM TỔNG HỢP (THÊM NGẮN GỌN) === -->
-                <div style="margin-top:20px; padding:12px; background:#2a2a2e; border-radius:8px; border-left:4px solid #ffd700;">
-                    <p style="margin:0 0 8px 0; color:#ffd700; font-weight:bold;">📊 Điểm Tổng Hợp (pt) là gì?</p>
-                    <p style="margin:0; font-size:0.9rem; line-height:1.5; color:#ccc;">
-                        Đây là <strong>điểm kết hợp nhiều tầng</strong>: Minh Châu + Bát Trạch + 72 Hậu + Ngũ Hoàng.<br>
-                        Nếu Hậu Hung mạnh → điểm tổng hợp sẽ bị kéo xuống dù Sơn/Bát Trạch tốt.
-                    </p>
-                </div>
-            </div>
-        </div>
-    `;
-
-    modal.onclick = function(e) { if (e.target === modal) closeModal(); };
-    modal.style.display = 'flex';
-}
-
-function closeModal() {
-    document.getElementById('infoModal').style.display = 'none';
-}
-
-// =========================================================================
-// 🚀 ENGINE ĐIỀU KHIỂN SMOOTH-BUNG BÓNG V10.1 - TRIỆT TIÊU GHOST CLICK MOBILE
-// =========================================================================
-
-let autoHideTimerV10 = null;
-
-/**
- * ⏱️ BỘ ĐẾM NGƯỢC TỰ ĐỘNG THU GỌN BẢNG
- */
-function startAutoHideV10() {
-    clearTimeout(autoHideTimerV10);
-    autoHideTimerV10 = setTimeout(() => {
-        const wrapper = document.getElementById('mainPanelWrapper');
-        
-        if (wrapper && wrapper.classList.contains('panel-open-v10')) {
-            const activeTag = document.activeElement.tagName;
-            if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT') {
-                return; 
-            }
-            toggleMainPanelV10(); 
-        }
-    }, 3000);
-}
-
-/**
- * 🔄 HÀM ĐẢO TRẠNG THÁI ĐÓNG/MỞ BẰNG BONG BÓNG
- */
-function toggleMainPanelV10() {
-    const wrapper = document.getElementById('mainPanelWrapper');
-    if (!wrapper) return;
-
-    wrapper.style.removeProperty('display');
-    wrapper.style.removeProperty('height');
-    wrapper.classList.remove('initial-hidden');
-    
-    wrapper.classList.toggle('panel-open-v10');
-    const isOpen = wrapper.classList.contains('panel-open-v10');
-
-    if (isOpen) {
-        startAutoHideV10();
-    } else {
-        clearTimeout(autoHideTimerV10);
-    }
-
-    if (typeof recalculateFate === 'function') {
-        recalculateFate();
-    }
-}
-
-// =========================================================================
-// 🔮 ENGINE ĐIỀU KHIỂN BONG BÓNG THÔNG MINH V11.2 - ULTRA PERFORMANCE
-// =========================================================================
-
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Tự động khởi tạo Bong bóng menu nếu chưa có trong HTML
-    if (!document.getElementById('floatingMenuBtnV10')) {
-        const bubbleHTML = `
-            <div id="floatingMenuBtnV10">
-                👤
-                <span class="pulse-ring-v10"></span>
-            </div>
-        `;
-        document.body.insertAdjacentHTML('beforeend', bubbleHTML);
-    }
-
-    const bubble = document.getElementById('floatingMenuBtnV10');
-    const wrapper = document.getElementById('mainPanelWrapper');
-    if (!wrapper || !bubble) return;
-
-    // Thiết lập trạng thái ẩn ban đầu gọn gàng
-    wrapper.classList.remove('panel-open-v10');
-    wrapper.classList.add('initial-hidden');
-
-    let isDragging = false;
-    let startX = 0, startY = 0;
-    let initialLeft = 0, initialTop = 0;
-    let localHideTimer = null;
-
-    const getPointerCoords = (e) => e.touches ? e.touches[0] : e;
-
-    // =========================================================================
-    // ⏱️ PHÂN HỆ: BỘ ĐẾM ẨN THÔNG MINH (CÁCH LY TUYỆT ĐỐI KHI ĐANG TƯƠNG TÁC)
-    // =========================================================================
-    
-    // Xóa sạch bộ đếm ngược để giữ bảng đứng yên cố định
-    const stopHideCountdown = () => {
-        if (localHideTimer) clearTimeout(localHideTimer);
-        if (typeof autoHideTimerV10 !== 'undefined' && autoHideTimerV10) clearTimeout(autoHideTimerV10);
-        if (window.autoHideTimerV10) clearTimeout(window.autoHideTimerV10);
-    };
-
-    // Khởi động chu trình đếm ngược 5 giây tự ẩn
-    const startHideCountdown = () => {
-        stopHideCountdown();
-        
-        // Chỉ đếm ngược nếu bảng đang mở công khai
-        if (wrapper.classList.contains('panel-open-v10')) {
-            localHideTimer = setTimeout(() => {
-                // [GIỮ BẢNG LỚP 1]: Nếu đang tập trung gõ phím, nhập liệu, chọn select -> KHÔNG CHO THU LÊN
-                const activeTag = document.activeElement ? document.activeElement.tagName : '';
-                if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT') {
-                    startHideCountdown(); // Gia hạn thời gian vĩnh viễn
-                    return;
-                }
-                
-                // [GIỮ BẢNG LỚP 2]: Nếu chuột đang hover hoặc ngón tay đang chạm giữ trên khung panel -> KHÔNG CHO THU LÊN
-                if (wrapper.matches(':hover') || wrapper.contains(document.activeElement)) {
-                    startHideCountdown(); // Tiếp tục giữ nguyên trạng thái mở
-                    return;
-                }
-                
-                // Nếu hoàn toàn không có tương tác -> Thực thi ẩn tự động mượt mà
-                execTogglePanel(false);
-            }, 5000);
-
-            // Đồng bộ định danh Timer lên hệ thống toàn cục
-            if (typeof autoHideTimerV10 !== 'undefined') autoHideTimerV10 = localHideTimer;
-            window.autoHideTimerV10 = localHideTimer;
-        }
-    };
-
-    // Hàm thực thi đóng/mở bảng lập tức - Bấm phát ăn ngay không độ trễ
-    const execTogglePanel = (forceState) => {
-        const shouldOpen = (forceState !== undefined) ? forceState : !wrapper.classList.contains('panel-open-v10');
-        
-        if (shouldOpen) {
-            stopHideCountdown();
-            wrapper.classList.add('panel-open-v10');
-            wrapper.classList.remove('initial-hidden');
-            startHideCountdown(); // Mở ra thành công -> Kích hoạt bộ trễ ẩn 5 giây
-        } else {
-            stopHideCountdown(); // Chủ động đóng -> Hủy luôn bộ đếm ngầm để nhẹ máy
-            wrapper.classList.remove('panel-open-v10');
-            wrapper.classList.add('initial-hidden');
-        }
-
-        // Đồng bộ xoay mũi tên chỉ thị (nếu có trong HTML)
-        const currentArrow = document.getElementById('toggleArrow');
-        if (currentArrow) {
-            currentArrow.style.transform = shouldOpen ? 'rotate(180deg)' : 'rotate(0deg)';
-        }
-
-        // Gọi kết nối đồng bộ sang hàm gốc của phongthuy_khoahoc.js nếu cần thiết
-        if (typeof toggleMainPanelV10 === 'function' && forceState === undefined) {
-            // Đảm bảo không tạo vòng lặp vô hạn
-        }
-    };
-
-    // =========================================================================
-    // 🛫 PHÂN HỆ KÉO THẢ GIA TỐC PHẦN CỨNG - BẢO VỆ SỰ MƯỢT MÀ CỦA LA BÀN
-    // =========================================================================
-    
-    const onDragStart = (e) => {
-        const coords = getPointerCoords(e);
-        isDragging = false;
-        startX = coords.clientX;
-        startY = coords.clientY;
-
-        const rect = bubble.getBoundingClientRect();
-        initialLeft = rect.left;
-        initialTop = rect.top;
-
-        bubble.style.right = 'auto';
-        bubble.style.bottom = 'auto';
-        bubble.style.left = initialLeft + 'px';
-        bubble.style.top = initialTop + 'px';
-        bubble.style.setProperty('transition', 'none', 'important');
-
-        // 🎯 SIÊU TỐI ƯU: Chỉ ép CPU theo dõi tọa độ KHI THỰC SỰ DI CHUYỂN, giúp la bàn không bị lag giật
-        if (e.type === 'touchstart') {
-            document.addEventListener('touchmove', onDragMove, { passive: false });
-            document.addEventListener('touchend', onDragEnd, { passive: false });
-        } else {
-            document.addEventListener('mousemove', onDragMove, { passive: false });
-            document.addEventListener('mouseup', onDragEnd, { passive: false });
-        }
-    };
-
-    const onDragMove = (e) => {
-        if (startX === 0 && startY === 0) return;
-
-        const coords = getPointerCoords(e);
-        const diffX = coords.clientX - startX;
-        const diffY = coords.clientY - startY;
-
-        // Đặt ngưỡng biên độ di chuyển 5px để phân biệt chính xác giữa Kéo Thả và Chạm Nhẹ (Click)
-        if (Math.abs(diffX) > 5 || Math.abs(diffY) > 5) {
-            isDragging = true;
-            if (e.cancelable) e.preventDefault(); 
-        }
-
-        bubble.style.left = (initialLeft + diffX) + 'px';
-        bubble.style.top = (initialTop + diffY) + 'px';
-    };
-
-    const onDragEnd = (e) => {
-        // 🧠 GIẢI PHÓNG TÀI NGUYÊN RAM NGAY KHI BUÔNG TAY: Giúp la bàn mượt mà đạt đỉnh 120fps
-        document.removeEventListener('mousemove', onDragMove);
-        document.removeEventListener('mouseup', onDragEnd);
-        document.removeEventListener('touchmove', onDragMove);
-        document.removeEventListener('touchend', onDragEnd);
-
-        if (startX === 0 && startY === 0) return;
-        
-        // 🛡️ CHIÊU THỨC TRIỆT TIÊU CLICK MA: Chặn đứng luồng giả lập chuột gây lỗi đóng/mở vô cớ
-        if (e.type === 'touchend' && e.cancelable) {
-            e.preventDefault(); 
-        }
-        
-        bubble.style.setProperty('transition', 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), left 0.2s ease, top 0.2s ease', 'important');
-        
-        const finishedDragging = isDragging;
-        startX = 0;
-        startY = 0;
-
-        // Xử lý logic khi người dùng nhấc ngón tay
-        if (!finishedDragging) {
-            // Nếu là Chạm Nhẹ -> Thực hiện đảo trạng thái Đóng/Mở lập tức, không delay 5 giây
-            execTogglePanel();
-        } else {
-            // Nếu là Hành vi Kéo Thả -> Tiếp tục duy trì bộ đếm ẩn 5 giây nếu bảng đang mở
-            if (wrapper.classList.contains('panel-open-v10')) {
-                startHideCountdown();
-            }
-        }
-    };
-
-    // Đăng ký cổng tiếp nhận sự kiện ban đầu cho Bong bóng chủ mệnh
-    bubble.addEventListener('mousedown', onDragStart);
-    bubble.addEventListener('touchstart', onDragStart, { passive: true });
-
-    // =========================================================================
-    // ĐĂNG KÝ CƠ CHẾ ĐÓNG BĂNG PANEL KHI TƯƠNG TÁC
-    // =========================================================================
-    
-    const freezeEvents = ['mousedown', 'touchstart', 'touchmove', 'mousemove', 'input', 'focus', 'mouseover', 'mouseenter'];
-    freezeEvents.forEach(evtName => {
-        wrapper.addEventListener(evtName, stopHideCountdown, { passive: true });
-    });
-
-    const unfreezeEvents = ['mouseup', 'touchend', 'blur', 'mouseout', 'mouseleave'];
-    unfreezeEvents.forEach(evtName => {
-        wrapper.addEventListener(evtName, () => {
-            // Khi người dùng rời tay/rời chuột, chỉ cho phép đếm ngược nếu không có con trỏ gõ chữ ngầm
-            const activeTag = document.activeElement ? document.activeElement.tagName : '';
-            if (activeTag !== 'INPUT' && activeTag !== 'TEXTAREA' && activeTag !== 'SELECT') {
-                startHideCountdown();
-            }
-        }, { passive: true });
-    });
-
-    // Xuất bản hàm điều khiển ra window để tương thích với các phím tắt/mũi tên phụ bên ngoài
-    window.toggleMainPanelV10 = () => execTogglePanel();
-});
-
-function togglePanel() {
-    toggleMainPanelV10();
-}
-
-window.toggleMainPanelV10 = toggleMainPanelV10;
-window.togglePanel = togglePanel;
-// ====================== HÀM ĐÓNG MỞ GIẢI THÍCH CHI TIẾT ======================
-window.toggleDienGiaiChiTiet = function() {
-    const contentDiv = document.getElementById('content-dien-giai-chi-tiet');
-    const toggleBtn = document.getElementById('btn-toggle-fengshui');
-    if (!contentDiv || !toggleBtn) return;
-
-    if (contentDiv.style.display === 'none' || contentDiv.style.display === '') {
-        contentDiv.style.display = 'block';
-        isDetailOpen = true;
-        // Giữ nguyên cơ chế thông minh: Khóa chặt góc la bàn tại giây bấm MỞ
-        lockedHeadingAtOpen = currentHeading; 
-        toggleBtn.innerHTML = '🙈 Đóng giải thích thuật ngữ';
-        toggleBtn.style.background = 'rgba(223, 183, 108, 0.15)';
-    } else {
-        contentDiv.style.display = 'none';
-        isDetailOpen = false;
-        // Bấm ĐÓNG: Làm sạch bộ nhớ góc cũ ngay lập tức
-        lockedHeadingAtOpen = null; 
-        toggleBtn.innerHTML = '👁️ Xem giải thích thuật ngữ hiển thị';
-        toggleBtn.style.background = 'transparent';
-    }
-    recalculateFate(); 
-};
-
-// =========================================================================
-// 🚀 ENGINE QUẢN LÝ CẢM BIẾN VÀ ĐIỀU HÀNH LA BÀN PHONG THỦY V11.0 (TỐI ƯU HÓA)
-// =========================================================================
-
-// --- 1. KHỞI TẠO BIẾN TOÀN CỤC CHUẨN MỰC ---
-if (typeof isDetailOpen === 'undefined') window.isDetailOpen = false;
-if (typeof lockedHeadingAtOpen === 'undefined') window.lockedHeadingAtOpen = null;
-if (typeof orientationListenerAdded === 'undefined') window.orientationListenerAdded = false;
-if (typeof permissionDenied === 'undefined') window.permissionDenied = false;
-if (typeof isCompassHold === 'undefined') window.isCompassHold = false;
-
-let isFullScreen = false;
-let lastTapTime = 0;
-
-// Biến điều khiển DOM và Thu phóng
-let originalCompassParent = null; let originalCompassNextSibling = null;
-let originalStatusParent = null; let originalStatusNextSibling = null;
-let originalDetailBoxStyle = ""; let originalDetailBoxClass = "";
-let currentScale = 1; let initialScale = 1; let startDistance = 0;
-let isZooming = false;
-let currentX = 0; let currentY = 0; let startX = 0; let startY = 0;
-
-// Biến điều khiển luồng kim quay (Đã xóa các biến trùng lặp)
-let lastHeading = null;
-let rafId = null;
-let lastUpdateTime = 0;
-const SMOOTH_MIN = 0.08;
-const SMOOTH_MAX = 0.55;
-const THROTTLE_MS = 16; // ~60fps
-
-// Biến trạng thái địa từ
-let magneticDeclination = 0;
-let lastAccuracy = 0; 
-let isMagneticWarningActive = false;
-
-/**
- * 🪐 HÀM KHỞI TẠO DUY NHẤT TOÀN HỆ THỐNG
- */
-window.onload = function() {
-    if (typeof render24SonRing === 'function') render24SonRing();
-    if (typeof loadSavedMembers === 'function') loadSavedMembers();
-    if (typeof recalculateFate === 'function') recalculateFate();
-    
-    // Kích hoạt bộ não quản lý quyền la bàn cảm biến
-    initCompassPermission();
-};
-
-// =========================================================================
-// 🛡️ BỘ NÃO ĐIỀU PHỐI QUYỀN SENSOR LA BÀN (FIX TRIỆT ĐỂ LỖI IOS)
-// =========================================================================
-
-function initCompassPermission() {
-    const modal = document.getElementById('iosPermissionModal');
-    const permBtn = document.getElementById('permission-btn');
-    
-    const requiresRequest = typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function';
-    
-    if (!requiresRequest) {
-        // Android, PC
-        if (modal) modal.style.display = 'none';
-        if (permBtn) permBtn.style.display = 'none';
-        localStorage.setItem('ios_compass_granted', 'true');
-        window.orientationListenerAdded = false;
-        addOrientationListener();
-        return;
-    }
-
-    const localStatus = localStorage.getItem('ios_compass_granted');
-
-    if (localStatus === 'true') {
-        // VÀO LẠI LẦN 2+: iOS đã nhớ quyền, kích hoạt thẳng, tuyệt đối KHÔNG gọi requestPermission lại.
-        if (modal) modal.style.display = 'none';
-        if (permBtn) permBtn.style.display = 'none';
-        window.orientationListenerAdded = false;
-        addOrientationListener();
-    } else if (localStatus === 'false') {
-        // Từng từ chối
-        if (permBtn) permBtn.style.display = 'block';
-        showPermissionResetGuide();
-    } else {
-        // Lần đầu vào App
-        if (permBtn) permBtn.style.display = 'block';
-        if (modal) modal.style.display = 'flex';
-        setupInitialModalText();
-    }
-}
-
-function setupInitialModalText() {
-    const modal = document.getElementById('iosPermissionModal');
-    if (!modal) return;
-    const title = modal.querySelector('h3');
-    const text = modal.querySelector('p');
-    const btn = modal.querySelector('button');
-
-    if (title) title.textContent = "KÍCH HOẠT LA BÀN TỰ ĐỘNG";
-    if (text) text.innerHTML = `Để la bàn tự động xoay theo hướng thực địa của điện thoại,<br>vui lòng bấm ĐỒNG Ý và xác nhận cấp quyền.`;
-    if (btn) btn.onclick = handleModalClick;
-}
-
-function handleModalClick() {
-    const modal = document.getElementById('iosPermissionModal');
-    if (modal) modal.style.display = 'none';
-    localStorage.setItem('ios_compass_granted', 'true');
-    requestPermission();
-}
-
-function requestPermission() {
-    const permBtn = document.getElementById('permission-btn');
-    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-        DeviceOrientationEvent.requestPermission()
-            .then(permissionState => {
-                closePermissionModal();
-                if (permissionState === 'granted') {
-                    localStorage.setItem('ios_compass_granted', 'true');
-                    window.permissionDenied = false;
-                    window.orientationListenerAdded = false;
-                    addOrientationListener();
-                    if (permBtn) permBtn.style.display = 'none';
-                } else {
-                    window.permissionDenied = true;
-                    localStorage.setItem('ios_compass_granted', 'false');
-                    showPermissionResetGuide();
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                window.permissionDenied = true;
-                closePermissionModal();
-                showPermissionResetGuide();
-            });
-    } else {
-        closePermissionModal();
-        addOrientationListener();
-        if (permBtn) permBtn.style.display = 'none';
-    }
-}
-
-function addOrientationListener() {
-    // Tránh nạp chồng Listener gây giật lag
-    if (window.orientationListenerAdded) return;
-
-    const handler = (e) => {
-        if (e.webkitCompassHeading !== undefined || e.alpha !== null) {
-            handleOrientation(e);
-        }
-    };
-
-    if ('ondeviceorientationabsolute' in window) {
-        window.addEventListener('deviceorientationabsolute', handler, true);
-    } else if ('ondeviceorientation' in window) {
-        window.addEventListener('deviceorientation', handler, true);
-    } else {
-        const btn = document.getElementById('auto-detect-btn');
-        if (btn) btn.style.display = 'none';
-        return;
-    }
-    window.orientationListenerAdded = true;
-}
-
-function showPermissionResetGuide() {
-    const modal = document.getElementById('iosPermissionModal');
-    if (!modal) return;
-
-    modal.innerHTML = `
-        <div style="background:#1c1c1e; padding:25px; border-radius:20px; text-align:center; width:88%; max-width:400px; border:2px solid #ff9500; box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
-            <div style="font-size:3.2rem; margin-bottom:15px;">⚠️</div>
-            <h3 style="color:#ff9500; margin-bottom:12px; font-weight:bold;">Không Kích Hoạt Được La Bàn</h3>
-            <p style="color:#ccc; line-height:1.6; margin-bottom:20px; font-size:0.9rem;">
-                Trình duyệt Safari đã chặn quyền truy cập cảm biến chuyển động do bạn từng bấm từ chối trước đây.
-            </p>
-            <div style="background:#2c2c2e; padding:15px; border-radius:12px; text-align:left; margin-bottom:20px; font-size:0.88rem; line-height:1.6; color:#e5e5ea; border: 1px solid #3a3a3c;">
-                <strong style="color:#ff9500;">Hướng dẫn khôi phục quyền hệ thống:</strong><br><br>
-                1. Vào ứng dụng <strong>Cài Đặt</strong> (Settings) trên iPhone → chọn mục <strong>Safari</strong>.<br>
-                2. Cuộn xuống dưới cùng chọn mục <strong>Cài đặt cho Trang web</strong>.<br>
-                3. Bấm vào dòng <strong>Cảm biến chuyển động & định hướng</strong> (Motion & Orientation).<br>
-                4. Tìm địa chỉ trang web này và chuyển sang trạng thái <strong>Cho phép</strong> (Allow).<br>
-                5. Vuốt tắt ứng dụng Safari chạy ngầm hoàn toàn rồi mở lại trang web.
-            </div>
-            <button onclick="resetPermissionFlag()" style="width:100%; padding:14px; background:#ff9500; color:#000; border:none; border-radius:10px; font-weight:bold; cursor:pointer; margin-bottom:10px; text-transform:uppercase;">
-                ✅ ĐÃ LÀM - TẢI LẠI TRANG
-            </button>
-            <button onclick="closePermissionModal()" style="width:100%; padding:12px; background:#3a3a3c; color:#fff; border:none; border-radius:10px; cursor:pointer; font-size:0.85rem;">
-                Sử dụng chế độ xoay tay
-            </button>
-        </div>
-    `;
-    modal.style.display = 'flex';
-}
-
-function resetPermissionFlag() {
-    localStorage.removeItem('ios_compass_granted');
-    window.permissionDenied = false;
-    closePermissionModal();
-    setTimeout(() => location.reload(), 400);
-}
-
-function closePermissionModal() {
-    const modal = document.getElementById('iosPermissionModal');
-    if (modal) modal.style.display = 'none';
-}
-
 // =========================================================================
 // 🧭 BỘ XỬ LÝ LÕI ĐỊA HƯỚNG VÀ LÀM MƯỢT (CORE ENGINE)
 // =========================================================================
@@ -3361,7 +2826,7 @@ function handleOrientation(event) {
     if (window.isCompassHold) {
         if (typeof window.holdedHeading !== 'undefined') {
             lastHeading = window.holdedHeading;
-            if (typeof currentHeading !== 'undefined') window.currentHeading = window.holdedHeading;
+            if (typeof window.currentHeading !== 'undefined') window.currentHeading = window.holdedHeading;
             
             if (rafId) cancelAnimationFrame(rafId);
             rafId = requestAnimationFrame(() => {
@@ -3374,7 +2839,6 @@ function handleOrientation(event) {
     let rawHeading = null;
     const now = Date.now();
     
-    // Xử lý độ chính xác trên iOS
     const accuracy = event.webkitCompassAccuracy;
     if (accuracy !== undefined && accuracy !== null && accuracy >= 0) {
         if (Math.abs(accuracy - lastAccuracy) > 3 || 
@@ -3386,7 +2850,6 @@ function handleOrientation(event) {
         }
     }
 
-    // Ưu tiên la bàn thuần của iOS, nếu không có thì dùng alpha (Android)
     if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
         rawHeading = event.webkitCompassHeading;
     } else if (event.alpha !== undefined && event.alpha !== null) {
@@ -3395,7 +2858,6 @@ function handleOrientation(event) {
     
     if (rawHeading === null) return;
 
-    // Giảm tải render (Throttle)
     if (document.activeElement?.id === 'compassSlider') return;
     if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
     lastUpdateTime = now;
@@ -3406,7 +2868,6 @@ function handleOrientation(event) {
         return;
     }
 
-    // Thuật toán làm mượt góc xoay (Chống giật ngược 360 -> 0)
     let diff = rawHeading - lastHeading;
     if (diff > 180) diff -= 360;
     if (diff < -180) diff += 360;
@@ -3426,12 +2887,13 @@ function handleOrientation(event) {
     const headingForText = lastHeading; 
     const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
 
-    if (typeof currentHeading !== 'undefined') window.currentHeading = headingForText;
+    if (typeof window.currentHeading !== 'undefined') window.currentHeading = headingForText;
 
     if (absDiff > 0.4) {
         const btnTongLuan = document.getElementById('btn-tong-luan');
         if (btnTongLuan) btnTongLuan.classList.remove('vượng-xuất');
-        if (typeof dừngKimTimeout !== 'undefined') clearTimeout(dừngKimTimeout);
+        // Sửa lỗi an toàn biến toàn cục để tránh ReferenceError
+        if (typeof window.dừngKimTimeout !== 'undefined') clearTimeout(window.dừngKimTimeout);
         if (typeof kichHoatBoDemDungKim === 'function') kichHoatBoDemDungKim();
     }
 
@@ -3498,7 +2960,6 @@ function showToast(message, isError = false) {
     setTimeout(() => toast.remove(), 3000);
 }
 
-// Chèn style CSS cho Toast nếu chưa có
 if (typeof window !== 'undefined' && !document.getElementById('toast-styles')) {
     const styleSheet = document.createElement("style");
     styleSheet.id = 'toast-styles';
@@ -4488,11 +3949,719 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+function showExplanation(sonName, textInfo, solInfo) {
+    const modal = document.getElementById('infoModal');
+   
+    modal.innerHTML = `
+        <div class="modal-content" style="background:#1c1c1e; color:#fff; border-radius:15px; width:90%; max-width:500px; max-height:85vh; display:flex; flex-direction:column; margin:auto; overflow:hidden; position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 15px; border-bottom:1px solid #444;">
+                <span style="font-weight:bold; font-size:1.1rem; color:#dfb76c;">Giải Thích: ${sonName}</span>
+                <button onclick="event.stopPropagation(); closeModal();" style="background:transparent; border:none; color:#ff3b30; font-size:2rem; font-weight:bold; cursor:pointer; line-height:1; padding:0 5px; outline:none;">&times;</button>
+            </div>
+           
+            <div id="modalBody" style="overflow-y:auto; padding:15px;">
+                <div style="background:#2a2a2a; padding:15px; border-radius:10px; margin-bottom:20px;">
+                    <p style="margin:0 0 10px 0; color:#dfb76c; font-weight:bold;">📍 THÔNG TIN SƠN VỊ:</p>
+                    <p style="margin:0 0 5px 0;"><strong>Ý nghĩa:</strong> ${textInfo}</p>
+                    <p style="margin:0; color:#30d158;"><strong>Giải pháp:</strong> ${solInfo}</p>
+                </div>
+                
+                <div style="border-top:1px solid #444; padding-top:15px;">
+                    <p style="margin:0 0 10px 0; color:#dfb76c; font-weight:bold;">📖 KIẾN THỨC PHONG THỦY:</p>
+                    <p style="margin:5px 0; line-height:1.5;"><strong>1. Cung (Hướng) vs Sơn (Chi tiết):</strong><br>
+                    Hướng là 45 độ tổng thể (Đại cục). Sơn là 15 độ chi tiết (Phân kim). Nếu Sơn đắc khí tốt hơn Cung, tại điểm đó vượng khí được nhân đôi.</p>
+                    <p style="margin:10px 0; line-height:1.5;"><strong>2. Ý nghĩa thuật ngữ:</strong><br>
+                    - <strong>Cát (Tốt):</strong> Sinh Khí, Thiên Y, Diên Niên, Phục Vị.<br>
+                    - <strong>Hung (Xấu):</strong> Tuyệt Mệnh, Ngũ Quỷ, Lục Sát, Họa Hại.<br>
+                    - <strong>Bình/Cô Quả:</strong> Trạng thái trung tính hoặc xấu nhẹ.</p>
+                    <p style="margin:5px 0; font-style:italic; color:#8e8e93; line-height:1.5;">* Ví dụ: Hướng Tây là Diên Niên, nhưng Sơn Dậu lại là Sinh Khí. Nếu đặt vật phẩm đúng Sơn Dậu, bạn vừa được hưởng hòa thuận (Diên Niên), vừa kích hoạt tài lộc (Sinh Khí).</p>
+                </div>
+
+                <!-- === PHẦN GIẢI THÍCH ĐIỂM TỔNG HỢP (THÊM NGẮN GỌN) === -->
+                <div style="margin-top:20px; padding:12px; background:#2a2a2e; border-radius:8px; border-left:4px solid #ffd700;">
+                    <p style="margin:0 0 8px 0; color:#ffd700; font-weight:bold;">📊 Điểm Tổng Hợp (pt) là gì?</p>
+                    <p style="margin:0; font-size:0.9rem; line-height:1.5; color:#ccc;">
+                        Đây là <strong>điểm kết hợp nhiều tầng</strong>: Minh Châu + Bát Trạch + 72 Hậu + Ngũ Hoàng.<br>
+                        Nếu Hậu Hung mạnh → điểm tổng hợp sẽ bị kéo xuống dù Sơn/Bát Trạch tốt.
+                    </p>
+                </div>
+            </div>
+        </div>
+    `;
+
+    modal.onclick = function(e) { if (e.target === modal) closeModal(); };
+    modal.style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('infoModal').style.display = 'none';
+}
+
 // =========================================================================
-// 📺 ENGINE ĐIỀU KHIỂN CHẾ ĐỘ PHÓNG TO / FULLSCREEN KHÔNG LỆCH KHỐI UI
+// 🚀 ENGINE ĐIỀU KHIỂN SMOOTH-BUNG BÓNG V10.1 - TRIỆT TIÊU GHOST CLICK MOBILE
+// =========================================================================
+
+let autoHideTimerV10 = null;
+
+/**
+ * ⏱️ BỘ ĐẾM NGƯỢC TỰ ĐỘNG THU GỌN BẢNG
+ */
+function startAutoHideV10() {
+    clearTimeout(autoHideTimerV10);
+    autoHideTimerV10 = setTimeout(() => {
+        const wrapper = document.getElementById('mainPanelWrapper');
+        
+        if (wrapper && wrapper.classList.contains('panel-open-v10')) {
+            const activeTag = document.activeElement.tagName;
+            if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT') {
+                return; 
+            }
+            toggleMainPanelV10(); 
+        }
+    }, 3000);
+}
+
+/**
+ * 🔄 HÀM ĐẢO TRẠNG THÁI ĐÓNG/MỞ BẰNG BONG BÓNG
+ */
+function toggleMainPanelV10() {
+    const wrapper = document.getElementById('mainPanelWrapper');
+    if (!wrapper) return;
+
+    wrapper.style.removeProperty('display');
+    wrapper.style.removeProperty('height');
+    wrapper.classList.remove('initial-hidden');
+    
+    wrapper.classList.toggle('panel-open-v10');
+    const isOpen = wrapper.classList.contains('panel-open-v10');
+
+    if (isOpen) {
+        startAutoHideV10();
+    } else {
+        clearTimeout(autoHideTimerV10);
+    }
+
+    if (typeof recalculateFate === 'function') {
+        recalculateFate();
+    }
+}
+
+// =========================================================================
+// 🔮 ENGINE ĐIỀU KHIỂN BONG BÓNG THÔNG MINH V11.2 - ULTRA PERFORMANCE
+// =========================================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Tự động khởi tạo Bong bóng menu nếu chưa có trong HTML
+    if (!document.getElementById('floatingMenuBtnV10')) {
+        const bubbleHTML = `
+            <div id="floatingMenuBtnV10">
+                👤
+                <span class="pulse-ring-v10"></span>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', bubbleHTML);
+    }
+
+    const bubble = document.getElementById('floatingMenuBtnV10');
+    const wrapper = document.getElementById('mainPanelWrapper');
+    if (!wrapper || !bubble) return;
+
+    // Thiết lập trạng thái ẩn ban đầu gọn gàng
+    wrapper.classList.remove('panel-open-v10');
+    wrapper.classList.add('initial-hidden');
+
+    let isDragging = false;
+    let startX = 0, startY = 0;
+    let initialLeft = 0, initialTop = 0;
+    let localHideTimer = null;
+
+    const getPointerCoords = (e) => e.touches ? e.touches[0] : e;
+
+    // =========================================================================
+    // ⏱️ PHÂN HỆ: BỘ ĐẾM ẨN THÔNG MINH (CÁCH LY TUYỆT ĐỐI KHI ĐANG TƯƠNG TÁC)
+    // =========================================================================
+    
+    // Xóa sạch bộ đếm ngược để giữ bảng đứng yên cố định
+    const stopHideCountdown = () => {
+        if (localHideTimer) clearTimeout(localHideTimer);
+        if (typeof autoHideTimerV10 !== 'undefined' && autoHideTimerV10) clearTimeout(autoHideTimerV10);
+        if (window.autoHideTimerV10) clearTimeout(window.autoHideTimerV10);
+    };
+
+    // Khởi động chu trình đếm ngược 5 giây tự ẩn
+    const startHideCountdown = () => {
+        stopHideCountdown();
+        
+        // Chỉ đếm ngược nếu bảng đang mở công khai
+        if (wrapper.classList.contains('panel-open-v10')) {
+            localHideTimer = setTimeout(() => {
+                // [GIỮ BẢNG LỚP 1]: Nếu đang tập trung gõ phím, nhập liệu, chọn select -> KHÔNG CHO THU LÊN
+                const activeTag = document.activeElement ? document.activeElement.tagName : '';
+                if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT') {
+                    startHideCountdown(); // Gia hạn thời gian vĩnh viễn
+                    return;
+                }
+                
+                // [GIỮ BẢNG LỚP 2]: Nếu chuột đang hover hoặc ngón tay đang chạm giữ trên khung panel -> KHÔNG CHO THU LÊN
+                if (wrapper.matches(':hover') || wrapper.contains(document.activeElement)) {
+                    startHideCountdown(); // Tiếp tục giữ nguyên trạng thái mở
+                    return;
+                }
+                
+                // Nếu hoàn toàn không có tương tác -> Thực thi ẩn tự động mượt mà
+                execTogglePanel(false);
+            }, 5000);
+
+            // Đồng bộ định danh Timer lên hệ thống toàn cục
+            if (typeof autoHideTimerV10 !== 'undefined') autoHideTimerV10 = localHideTimer;
+            window.autoHideTimerV10 = localHideTimer;
+        }
+    };
+
+    // Hàm thực thi đóng/mở bảng lập tức - Bấm phát ăn ngay không độ trễ
+    const execTogglePanel = (forceState) => {
+        const shouldOpen = (forceState !== undefined) ? forceState : !wrapper.classList.contains('panel-open-v10');
+        
+        if (shouldOpen) {
+            stopHideCountdown();
+            wrapper.classList.add('panel-open-v10');
+            wrapper.classList.remove('initial-hidden');
+            startHideCountdown(); // Mở ra thành công -> Kích hoạt bộ trễ ẩn 5 giây
+        } else {
+            stopHideCountdown(); // Chủ động đóng -> Hủy luôn bộ đếm ngầm để nhẹ máy
+            wrapper.classList.remove('panel-open-v10');
+            wrapper.classList.add('initial-hidden');
+        }
+
+        // Đồng bộ xoay mũi tên chỉ thị (nếu có trong HTML)
+        const currentArrow = document.getElementById('toggleArrow');
+        if (currentArrow) {
+            currentArrow.style.transform = shouldOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        // Gọi kết nối đồng bộ sang hàm gốc của phongthuy_khoahoc.js nếu cần thiết
+        if (typeof toggleMainPanelV10 === 'function' && forceState === undefined) {
+            // Đảm bảo không tạo vòng lặp vô hạn
+        }
+    };
+
+    // =========================================================================
+    // 🛫 PHÂN HỆ KÉO THẢ GIA TỐC PHẦN CỨNG - BẢO VỆ SỰ MƯỢT MÀ CỦA LA BÀN
+    // =========================================================================
+    
+    const onDragStart = (e) => {
+        const coords = getPointerCoords(e);
+        isDragging = false;
+        startX = coords.clientX;
+        startY = coords.clientY;
+
+        const rect = bubble.getBoundingClientRect();
+        initialLeft = rect.left;
+        initialTop = rect.top;
+
+        bubble.style.right = 'auto';
+        bubble.style.bottom = 'auto';
+        bubble.style.left = initialLeft + 'px';
+        bubble.style.top = initialTop + 'px';
+        bubble.style.setProperty('transition', 'none', 'important');
+
+        // 🎯 SIÊU TỐI ƯU: Chỉ ép CPU theo dõi tọa độ KHI THỰC SỰ DI CHUYỂN, giúp la bàn không bị lag giật
+        if (e.type === 'touchstart') {
+            document.addEventListener('touchmove', onDragMove, { passive: false });
+            document.addEventListener('touchend', onDragEnd, { passive: false });
+        } else {
+            document.addEventListener('mousemove', onDragMove, { passive: false });
+            document.addEventListener('mouseup', onDragEnd, { passive: false });
+        }
+    };
+
+    const onDragMove = (e) => {
+        if (startX === 0 && startY === 0) return;
+
+        const coords = getPointerCoords(e);
+        const diffX = coords.clientX - startX;
+        const diffY = coords.clientY - startY;
+
+        // Đặt ngưỡng biên độ di chuyển 5px để phân biệt chính xác giữa Kéo Thả và Chạm Nhẹ (Click)
+        if (Math.abs(diffX) > 5 || Math.abs(diffY) > 5) {
+            isDragging = true;
+            if (e.cancelable) e.preventDefault(); 
+        }
+
+        bubble.style.left = (initialLeft + diffX) + 'px';
+        bubble.style.top = (initialTop + diffY) + 'px';
+    };
+
+    const onDragEnd = (e) => {
+        // 🧠 GIẢI PHÓNG TÀI NGUYÊN RAM NGAY KHI BUÔNG TAY: Giúp la bàn mượt mà đạt đỉnh 120fps
+        document.removeEventListener('mousemove', onDragMove);
+        document.removeEventListener('mouseup', onDragEnd);
+        document.removeEventListener('touchmove', onDragMove);
+        document.removeEventListener('touchend', onDragEnd);
+
+        if (startX === 0 && startY === 0) return;
+        
+        // 🛡️ CHIÊU THỨC TRIỆT TIÊU CLICK MA: Chặn đứng luồng giả lập chuột gây lỗi đóng/mở vô cớ
+        if (e.type === 'touchend' && e.cancelable) {
+            e.preventDefault(); 
+        }
+        
+        bubble.style.setProperty('transition', 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), left 0.2s ease, top 0.2s ease', 'important');
+        
+        const finishedDragging = isDragging;
+        startX = 0;
+        startY = 0;
+
+        // Xử lý logic khi người dùng nhấc ngón tay
+        if (!finishedDragging) {
+            // Nếu là Chạm Nhẹ -> Thực hiện đảo trạng thái Đóng/Mở lập tức, không delay 5 giây
+            execTogglePanel();
+        } else {
+            // Nếu là Hành vi Kéo Thả -> Tiếp tục duy trì bộ đếm ẩn 5 giây nếu bảng đang mở
+            if (wrapper.classList.contains('panel-open-v10')) {
+                startHideCountdown();
+            }
+        }
+    };
+
+    // Đăng ký cổng tiếp nhận sự kiện ban đầu cho Bong bóng chủ mệnh
+    bubble.addEventListener('mousedown', onDragStart);
+    bubble.addEventListener('touchstart', onDragStart, { passive: true });
+
+    // =========================================================================
+    // ĐĂNG KÝ CƠ CHẾ ĐÓNG BĂNG PANEL KHI TƯƠNG TÁC
+    // =========================================================================
+    
+    const freezeEvents = ['mousedown', 'touchstart', 'touchmove', 'mousemove', 'input', 'focus', 'mouseover', 'mouseenter'];
+    freezeEvents.forEach(evtName => {
+        wrapper.addEventListener(evtName, stopHideCountdown, { passive: true });
+    });
+
+    const unfreezeEvents = ['mouseup', 'touchend', 'blur', 'mouseout', 'mouseleave'];
+    unfreezeEvents.forEach(evtName => {
+        wrapper.addEventListener(evtName, () => {
+            // Khi người dùng rời tay/rời chuột, chỉ cho phép đếm ngược nếu không có con trỏ gõ chữ ngầm
+            const activeTag = document.activeElement ? document.activeElement.tagName : '';
+            if (activeTag !== 'INPUT' && activeTag !== 'TEXTAREA' && activeTag !== 'SELECT') {
+                startHideCountdown();
+            }
+        }, { passive: true });
+    });
+
+    // Xuất bản hàm điều khiển ra window để tương thích với các phím tắt/mũi tên phụ bên ngoài
+    window.toggleMainPanelV10 = () => execTogglePanel();
+});
+
+function togglePanel() {
+    toggleMainPanelV10();
+}
+
+window.toggleMainPanelV10 = toggleMainPanelV10;
+window.togglePanel = togglePanel;
+// ====================== HÀM ĐÓNG MỞ GIẢI THÍCH CHI TIẾT ======================
+window.toggleDienGiaiChiTiet = function() {
+    const contentDiv = document.getElementById('content-dien-giai-chi-tiet');
+    const toggleBtn = document.getElementById('btn-toggle-fengshui');
+    if (!contentDiv || !toggleBtn) return;
+
+    if (contentDiv.style.display === 'none' || contentDiv.style.display === '') {
+        contentDiv.style.display = 'block';
+        isDetailOpen = true;
+        // Giữ nguyên cơ chế thông minh: Khóa chặt góc la bàn tại giây bấm MỞ
+        lockedHeadingAtOpen = currentHeading; 
+        toggleBtn.innerHTML = '🙈 Đóng giải thích thuật ngữ';
+        toggleBtn.style.background = 'rgba(223, 183, 108, 0.15)';
+    } else {
+        contentDiv.style.display = 'none';
+        isDetailOpen = false;
+        // Bấm ĐÓNG: Làm sạch bộ nhớ góc cũ ngay lập tức
+        lockedHeadingAtOpen = null; 
+        toggleBtn.innerHTML = '👁️ Xem giải thích thuật ngữ hiển thị';
+        toggleBtn.style.background = 'transparent';
+    }
+    recalculateFate(); 
+};
+
+// =========================================================================
+// 🚀 ENGINE QUẢN LÝ CẢM BIẾN VÀ ĐIỀU HÀNH LA BÀN PHONG THỦY (BẢN HOÀN MỸ)
+// =========================================================================
+
+// --- 1. KHỞI TẠO BIẾN TOÀN CỤC CHUẨN MỰC ---
+if (typeof isDetailOpen === 'undefined') window.isDetailOpen = false;
+if (typeof lockedHeadingAtOpen === 'undefined') window.lockedHeadingAtOpen = null;
+if (typeof orientationListenerAdded === 'undefined') window.orientationListenerAdded = false;
+if (typeof permissionDenied === 'undefined') window.permissionDenied = false;
+if (typeof isCompassHold === 'undefined') window.isCompassHold = false;
+
+let isFullScreen = false;
+let lastTapTime = 0;
+
+// Biến điều khiển DOM và Thu phóng
+let originalCompassParent = null; let originalCompassNextSibling = null;
+let originalStatusParent = null; let originalStatusNextSibling = null;
+let originalDetailBoxStyle = ""; let originalDetailBoxClass = "";
+let currentScale = 1; let initialScale = 1; let startDistance = 0;
+let isZooming = false;
+let currentX = 0; let currentY = 0; let startX = 0; let startY = 0;
+
+// Biến điều khiển luồng kim quay
+let lastHeading = null;
+let rafId = null;
+let lastUpdateTime = 0;
+const SMOOTH_MIN = 0.08;
+const SMOOTH_MAX = 0.55;
+const THROTTLE_MS = 16; // ~60fps
+
+// Biến trạng thái địa từ
+let magneticDeclination = 0;
+let lastAccuracy = 0; 
+let isMagneticWarningActive = false;
+
+/**
+ * 🪐 HÀM KHỞI TẠO DUY NHẤT TOÀN HỆ THỐNG
+ */
+window.onload = function() {
+    if (typeof render24SonRing === 'function') render24SonRing();
+    if (typeof loadSavedMembers === 'function') loadSavedMembers();
+    if (typeof recalculateFate === 'function') recalculateFate();
+    
+    initCompassPermission();
+};
+
+// =========================================================================
+// 🛡️ BỘ NÃO ĐIỀU PHỐI QUYỀN SENSOR LA BÀN (KẾT HỢP ASYNC/AWAIT & Z-INDEX)
+// =========================================================================
+
+function initCompassPermission() {
+    const modal = document.getElementById('iosPermissionModal');
+    const permBtn = document.getElementById('permission-btn');
+    
+    // Tăng Z-index tuyệt đối để Modal không bao giờ bị la bàn đè lên (Sửa lỗi Chrome)
+    if (modal) {
+        modal.style.setProperty('z-index', '999999', 'important');
+        modal.style.setProperty('position', 'fixed', 'important');
+    }
+    
+    const requiresRequest = typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function';
+    
+    if (!requiresRequest) {
+        // Android, PC -> Không cần xin quyền
+        if (modal) modal.style.display = 'none';
+        if (permBtn) permBtn.style.display = 'none';
+        localStorage.setItem('ios_compass_granted', 'true');
+        window.orientationListenerAdded = false;
+        addOrientationListener();
+        return;
+    }
+
+    const localStatus = localStorage.getItem('ios_compass_granted');
+
+    if (localStatus === 'true') {
+        if (modal) modal.style.display = 'none';
+        if (permBtn) permBtn.style.display = 'none';
+        
+        // 🧠 LAI TẠO: Thử kích hoạt ngầm bằng thuật toán Try/Catch
+        setTimeout(() => {
+            trySilentActivation();
+        }, 100);
+
+    } else if (localStatus === 'false') {
+        if (permBtn) permBtn.style.display = 'block';
+        showPermissionResetGuide();
+    } else {
+        if (permBtn) permBtn.style.display = 'block';
+        if (modal) modal.style.display = 'flex';
+        setupInitialModalText();
+    }
+}
+
+// Thuật toán mồi ngầm - Bắt lỗi nếu bị Chrome iOS chặn
+async function trySilentActivation() {
+    try {
+        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+            const state = await DeviceOrientationEvent.requestPermission();
+            if (state === 'granted') {
+                window.orientationListenerAdded = false;
+                addOrientationListener();
+            } else {
+                throw new Error('Permission denied silently');
+            }
+        } else {
+            addOrientationListener();
+        }
+    } catch (e) {
+        // 🪄 Nếu kích hoạt ngầm thất bại -> Thả màng tàng hình 1 chạm thay vì gắn sự kiện mù
+        createSmartWakeUpOverlay();
+    }
+}
+
+// Màng tàng hình 1 chạm (Người dùng chạm bất kỳ đâu là kim quay)
+function createSmartWakeUpOverlay() {
+    if (document.getElementById('smart-wake-overlay')) return;
+
+    const overlay = document.createElement('button');
+    overlay.id = 'smart-wake-overlay';
+    overlay.innerHTML = '<span style="background:rgba(0,0,0,0.8); padding:10px 20px; border-radius:20px; border:1px solid #ff9500; font-weight:bold; font-size:16px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">👆 Chạm màn hình để bật la bàn</span>';
+    overlay.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+        background: rgba(0,0,0,0.1); border: none; z-index: 9999999;
+        display: flex; align-items: center; justify-content: center;
+        color: #ff9500; cursor: pointer; backdrop-filter: blur(2px);
+    `;
+    
+    document.body.appendChild(overlay);
+
+    overlay.onclick = async function() {
+        try {
+            const state = await DeviceOrientationEvent.requestPermission();
+            if (state === 'granted') {
+                window.orientationListenerAdded = false;
+                addOrientationListener();
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            overlay.remove(); // Chạm xong là gỡ màng lập tức
+        }
+    };
+}
+
+function setupInitialModalText() {
+    const modal = document.getElementById('iosPermissionModal');
+    if (!modal) return;
+    
+    const title = modal.querySelector('h3');
+    const text = modal.querySelector('p');
+    const btn = modal.querySelector('button');
+
+    if (title) title.textContent = "KÍCH HOẠT LA BÀN TỰ ĐỘNG";
+    if (text) text.innerHTML = `Để la bàn tự động xoay theo hướng thực địa của điện thoại,<br>vui lòng bấm ĐỒNG Ý và xác nhận cấp quyền.`;
+    if (btn) btn.onclick = handleModalClick;
+}
+
+function handleModalClick() {
+    const modal = document.getElementById('iosPermissionModal');
+    if (modal) modal.style.display = 'none';
+    localStorage.setItem('ios_compass_granted', 'true');
+    requestPermission();
+}
+
+function requestPermission() {
+    const permBtn = document.getElementById('permission-btn');
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+            .then(permissionState => {
+                closePermissionModal();
+                if (permissionState === 'granted') {
+                    localStorage.setItem('ios_compass_granted', 'true');
+                    window.permissionDenied = false;
+                    window.orientationListenerAdded = false;
+                    addOrientationListener();
+                    if (permBtn) permBtn.style.display = 'none';
+                } else {
+                    window.permissionDenied = true;
+                    localStorage.setItem('ios_compass_granted', 'false');
+                    showPermissionResetGuide();
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                window.permissionDenied = true;
+                closePermissionModal();
+                showPermissionResetGuide();
+            });
+    } else {
+        closePermissionModal();
+        addOrientationListener();
+        if (permBtn) permBtn.style.display = 'none';
+    }
+}
+
+function addOrientationListener() {
+    if (window.orientationListenerAdded) return;
+
+    const handler = (e) => {
+        if (e.webkitCompassHeading !== undefined || e.alpha !== null) {
+            handleOrientation(e);
+        }
+    };
+
+    if ('ondeviceorientationabsolute' in window) {
+        window.addEventListener('deviceorientationabsolute', handler, true);
+    } else if ('ondeviceorientation' in window) {
+        window.addEventListener('deviceorientation', handler, true);
+    } else {
+        const btn = document.getElementById('auto-detect-btn');
+        if (btn) btn.style.display = 'none';
+        return;
+    }
+    window.orientationListenerAdded = true;
+}
+
+function showPermissionResetGuide() {
+    const modal = document.getElementById('iosPermissionModal');
+    if (!modal) return;
+
+    modal.style.cssText = `
+        display: flex; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+        background: rgba(0,0,0,0.85); align-items: center; justify-content: center;
+        z-index: 999999 !important; backdrop-filter: blur(5px);
+    `;
+
+    modal.innerHTML = `
+        <div style="background:#1c1c1e; padding:25px; border-radius:20px; text-align:center; width:88%; max-width:400px; border:2px solid #ff9500; box-shadow: 0 10px 40px rgba(0,0,0,0.8);">
+            <div style="font-size:3.2rem; margin-bottom:15px;">⚠️</div>
+            <h3 style="color:#ff9500; margin-bottom:12px; font-weight:bold;">Không Kích Hoạt Được La Bàn</h3>
+            <p style="color:#ccc; line-height:1.6; margin-bottom:20px; font-size:0.9rem;">
+                Trình duyệt đã chặn quyền truy cập cảm biến do bạn từng bấm từ chối trước đây.
+            </p>
+            <div style="background:#2c2c2e; padding:15px; border-radius:12px; text-align:left; margin-bottom:20px; font-size:0.88rem; line-height:1.6; color:#e5e5ea; border: 1px solid #3a3a3c;">
+                <strong style="color:#ff9500;">Hướng dẫn khôi phục:</strong><br><br>
+                1. Vào <strong>Cài Đặt</strong> iPhone → chọn trình duyệt (Safari/Chrome).<br>
+                2. Tìm mục <strong>Cảm biến chuyển động</strong> (Motion & Orientation).<br>
+                3. Chuyển sang trạng thái <strong>Cho phép</strong> (Allow).<br>
+                4. Đóng hẳn ứng dụng trình duyệt rồi mở lại.
+            </div>
+            <button onclick="resetPermissionFlag()" style="width:100%; padding:14px; background:#ff9500; color:#000; border:none; border-radius:10px; font-weight:bold; cursor:pointer; margin-bottom:10px; text-transform:uppercase;">
+                ✅ ĐÃ LÀM - TẢI LẠI TRANG
+            </button>
+            <button onclick="closePermissionModal()" style="width:100%; padding:12px; background:#3a3a3c; color:#fff; border:none; border-radius:10px; cursor:pointer; font-size:0.85rem;">
+                Sử dụng chế độ xoay tay
+            </button>
+        </div>
+    `;
+}
+
+function resetPermissionFlag() {
+    localStorage.removeItem('ios_compass_granted');
+    window.permissionDenied = false;
+    closePermissionModal();
+    setTimeout(() => location.reload(), 400);
+}
+
+function closePermissionModal() {
+    const modal = document.getElementById('iosPermissionModal');
+    if (modal) modal.style.display = 'none';
+}
+
+// =========================================================================
+// 🧭 BỘ XỬ LÝ LÕI ĐỊA HƯỚNG VÀ LÀM MƯỢT (CORE ENGINE)
+// =========================================================================
+
+function handleOrientation(event) {
+    if (window.isCompassHold) {
+        if (typeof window.holdedHeading !== 'undefined') {
+            lastHeading = window.holdedHeading;
+            if (typeof window.currentHeading !== 'undefined') window.currentHeading = window.holdedHeading;
+            
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+                executeUIUpdate(window.holdedHeading, window.holdedHeading);
+            });
+        }
+        return; 
+    }
+
+    let rawHeading = null;
+    const now = Date.now();
+    
+    const accuracy = event.webkitCompassAccuracy;
+    if (accuracy !== undefined && accuracy !== null && accuracy >= 0) {
+        if (Math.abs(accuracy - lastAccuracy) > 3 || 
+           (accuracy > 15 && lastAccuracy <= 15) || 
+           (accuracy > 30 && lastAccuracy <= 30) ||
+           (accuracy <= 15 && lastAccuracy > 15)) {
+            lastAccuracy = accuracy;
+            updateMagneticStatus(accuracy); 
+        }
+    }
+
+    if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
+        rawHeading = event.webkitCompassHeading;
+    } else if (event.alpha !== undefined && event.alpha !== null) {
+        rawHeading = (360 - event.alpha) % 360;
+    }
+    
+    if (rawHeading === null) return;
+
+    if (document.activeElement?.id === 'compassSlider') return;
+    if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
+    lastUpdateTime = now;
+
+    if (lastHeading === null) {
+        lastHeading = rawHeading;
+        executeUIUpdate(lastHeading, lastHeading);
+        return;
+    }
+
+    let diff = rawHeading - lastHeading;
+    if (diff > 180) diff -= 360;
+    if (diff < -180) diff += 360;
+    
+    const absDiff = Math.abs(diff);
+    let dynamicFactor = SMOOTH_MIN;
+    
+    if (absDiff > 12) {
+        dynamicFactor = SMOOTH_MAX;
+    } else if (absDiff > 1.5) {
+        dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
+    }
+    
+    const newHeading = lastHeading + diff * dynamicFactor;
+    lastHeading = (newHeading % 360 + 360) % 360;
+
+    const headingForText = lastHeading; 
+    const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
+
+    if (typeof window.currentHeading !== 'undefined') window.currentHeading = headingForText;
+
+    if (absDiff > 0.4) {
+        const btnTongLuan = document.getElementById('btn-tong-luan');
+        if (btnTongLuan) btnTongLuan.classList.remove('vượng-xuất');
+        if (typeof window.dừngKimTimeout !== 'undefined') clearTimeout(window.dừngKimTimeout);
+        if (typeof kichHoatBoDemDungKim === 'function') kichHoatBoDemDungKim();
+    }
+
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+        executeUIUpdate(headingForDial, headingForText);
+    });
+}
+
+function executeUIUpdate(headingDial, headingText) {
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingText); 
+    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); 
+    if (typeof recalculateFate === 'function') recalculateFate();
+}
+
+function updateMagneticStatus(acc) {
+    const dot = document.getElementById('accuracy-dot');
+    const text = document.getElementById('accuracy-text');
+    if (!dot || !text) return;
+
+    let bg = '#4caf50', txt = "TÍN HIỆU TỐT";
+    
+    if (acc > 15 && acc <= 30) {
+        bg = '#ff9800';
+        txt = "NHIỄU NHẸ";
+    } else if (acc > 30) {
+        bg = '#f44336';
+        txt = "NHIỄU NẶNG";
+    }
+
+    if (text.innerText !== txt) {
+        dot.style.background = bg;
+        text.innerText = txt;
+    }
+}
+
+// =========================================================================
+// 📺 ENGINE ĐIỀU KHIỂN CHẾ ĐỘ PHÓNG TO / FULLSCREEN
 // =========================================================================
 
 function handleInteraction(e) {
+    if (e.target.id === 'smart-wake-overlay') return; 
+
     const isCompass = e.target.closest('.compass-container');
     const isFullScreenDiv = document.getElementById('fullscreenMode');
     
@@ -4518,16 +4687,16 @@ function resetZoom() {
     }
 }
 
-// Lắng nghe click cho PC
 document.addEventListener('dblclick', handleInteraction);
 
-// Lắng nghe Touch (Tap) cho Mobile với chống nhiễu (Anti-Ghost-Click)
 document.addEventListener('touchend', (e) => {
     if (e.touches.length > 0) return; 
     const currentTime = new Date().getTime();
     if (currentTime - lastTapTime < 350) {
-        e.preventDefault(); // Chặn sự kiện dblclick ảo sinh ra sau touchend để không gọi hàm 2 lần
-        handleInteraction(e);
+        if (e.target.id !== 'smart-wake-overlay') { 
+            e.preventDefault(); 
+            handleInteraction(e);
+        }
     }
     lastTapTime = currentTime;
 });
@@ -4581,7 +4750,6 @@ function toggleFullScreenMode() {
     fsDiv.className = 'fullscreen-mode active';
     fsDiv.style.cssText = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.97); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0; transition:opacity 0.2s ease; touch-action: none; overflow:hidden;";
     
-    // Đã thêm will-change: transform để Ép CPU/GPU xử lý mượt mà khi người dùng thu phóng
     fsDiv.innerHTML = `
         <div id="fs-compass-wrapper" style="width: 96vw; max-width: 460px; height: 96vw; max-height: 460px; transform-origin: center center; display:flex; align-items:center; justify-content:center; transform: translate(0px, 0px) scale(1); will-change: transform;"></div>
         <div id="fs-status-wrapper" style="width: 92%; max-width: 460px; margin-top:15px; z-index: 10000;"></div>
