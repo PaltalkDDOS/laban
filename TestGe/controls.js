@@ -5560,146 +5560,171 @@ window.showCustomAlert = showCustomAlert;
 window.closeCustomAlert = closeCustomAlert;
 
 // =========================================================================
-// 🌐 HỆ THỐNG PWA FLOATING ACTION BUTTON - HYBRID ENGINE THÔNG MINH
+// 🌐 HỆ THỐNG PWA CROSS-PLATFORM (iOS + Android) - PHIÊN BẢN V12
 // =========================================================================
 if (typeof deferredPrompt === 'undefined') {
-    var deferredPrompt; 
+    var deferredPrompt;
 }
 
-// Khóa lưu trữ vĩnh viễn trên trình duyệt này
 const STORAGE_KEY_HIDE_INSTALL = 'pwa_user_dismissed_install';
 
-// 1. Giữ nguyên bản 100% hàm kiểm tra độc lập gốc của bạn
+// Kiểm tra đang chạy dưới dạng PWA
 function isRunningAsPWA() {
-    return window.matchMedia('(display-mode: standalone)').matches || 
+    return window.matchMedia('(display-mode: standalone)').matches ||
            window.navigator.standalone === true ||
            window.matchMedia('(display-mode: fullscreen)').matches;
 }
 
-// Hàm bổ sung: Nhận diện nhanh xem thiết bị có phải là iPhone/iPad không
-function kiemTraThietBiIPhone() {
+// Kiểm tra thiết bị iOS
+function isIOS() {
     return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
-           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+           (navigator.platform === 'MacIntel' && 'ontouchend' in document);
 }
 
-// 2. Hàm kiểm tra ẩn nút - Cải tiến: Kiểm tra thêm bộ nhớ vĩnh viễn LocalStorage
+// Ẩn nút nếu đã dismiss hoặc đang chạy PWA
 function kiemTraVaAnNut() {
     const btn = document.getElementById('btn-install-pwa');
-    if (!btn) return false;
-    
-    // Nếu người dùng đã từng gạt ẩn vĩnh viễn TRÊN TRÌNH DUYỆT NÀY hoặc đang chạy PWA rồi
+    if (!btn) return;
+
     if (localStorage.getItem(STORAGE_KEY_HIDE_INSTALL) === 'true' || isRunningAsPWA()) {
-        btn.classList.add('swiped-away'); // Sử dụng hiệu ứng biến mất hoàn toàn
+        btn.classList.add('swiped-away');
         btn.classList.remove('show');
-        return true;
     }
-    return false;
 }
 
-// 3. Khởi tạo hệ thống lõi - Tích hợp mạch tự động dọn cache khi sửa code
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        if (window.location.protocol === 'file:') return;
-        
-        // Kích hoạt tính năng vuốt gạt ngay khi trang tải xong
-        khoiTaoTinhNangVuotGat();
-        const daAnNut = kiemTraVaAnNut();
+// Khởi tạo
+window.addEventListener('load', () => {
+    const btn = document.getElementById('btn-install-pwa');
+    if (!btn) return;
 
-        // 🌟 KHẮC PHỤC CHÍ MẠNG CHO IPHONE: Ép hiển thị nút bấm công khai trên iOS
-        // Vì iPhone chặn sự kiện 'beforeinstallprompt' nên chúng ta cưỡng chế mở nút tại đây
-        if (kiemTraThietBiIPhone() && !daAnNut) {
-            kichHoatNutCaiDatTrenIPhone();
-        }
+    kiemTraVaAnNut();
+    khoiTaoTinhNangVuotGat();
 
+    // Thêm manifest
+    if (!document.querySelector('link[rel="manifest"]')) {
         const link = document.createElement('link');
         link.rel = 'manifest';
         link.href = './manifest.json';
         document.head.appendChild(link);
+    }
 
-        // Đăng ký Service Worker và tự động F5 làm sạch bộ nhớ
-        navigator.serviceWorker.register('./sw.js')
-            .then((reg) => {
-                reg.onupdatefound = () => {
-                    const installingWorker = reg.installing;
-                    if (installingWorker) {
-                        installingWorker.onstatechange = () => {
-                            if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                console.log('Hệ thống đã tự động nạp khí mới, làm sạch cache cũ thành công!');
-                                window.location.reload();
-                            }
-                        };
-                    }
-                };
-            })
-            .catch(err => console.error('Lỗi kích hoạt PWA:', err));
-    });
-}
+    // Đăng ký Service Worker
+    if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
+        navigator.serviceWorker.register('./sw.js').catch(err => console.error(err));
+    }
 
-/**
- * 🍏 HÀM ĐIỀU KHIỂN RIÊNG CHO IPHONE: Hiện nút đẹp mắt và ghim lối tắt ra màn hình chính
- */
-function kichHoatNutCaiDatTrenIPhone() {
-    const btn = document.getElementById('btn-install-pwa');
-    if (!btn) return;
-
-    // Ép nút lộ diện lộng lẫy trên màn hình iPhone
-    btn.classList.remove('swiped-away');
-    btn.classList.add('show');
-
-    btn.onclick = () => {
-        // Tận dụng hàm Custom Alert siêu nhạy (V10.6) của bạn để hướng dẫn người dùng kéo lối tắt ra màn hình
-        if (typeof showCustomAlert === 'function') {
-            showCustomAlert(
-                "Để ghim phím tắt ứng dụng La Bàn ra màn hình chính iPhone:\n\n1. Nhấn nút 'Chia sẻ' (Share - Biểu tượng ô vuông có mũi tên lên) ở thanh công cụ trình duyệt Safari.\n2. Cuộn xuống chọn mục 'Thêm vào MH chính' (Add to Home Screen) ⊞.", 
-                "🍏 Ghim Lối Tắt Vào iPhone"
-            );
-        } else {
-            alert("Để ghim ứng dụng ra màn hình chính iPhone:\n1. Bấm nút 'Chia sẻ' trên Safari.\n2. Chọn 'Thêm vào MH chính'.");
-        }
-    };
-}
-
-// 4. Lắng nghe sự kiện mời cài đặt (Dành riêng cho Android / Máy tính)
-window.addEventListener('beforeinstallprompt', (e) => {
-    // Nếu đang chạy trong PWA hoặc người dùng đã gạt ẩn vĩnh viễn trước đó -> Hủy luôn
-    if (isRunningAsPWA() || localStorage.getItem(STORAGE_KEY_HIDE_INSTALL) === 'true') return;
-
-    e.preventDefault();
-    deferredPrompt = e;
-
-    const btn = document.getElementById('btn-install-pwa');
-    if (btn) {
-        btn.classList.remove('swiped-away');
-        btn.classList.add('show');
-
-        btn.onclick = async () => {
-            if (!deferredPrompt) return;
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            console.log(`Người dùng chọn: ${outcome}`);
+    // === XỬ LÝ RIÊNG CHO ANDROID ===
+    if (!isIOS()) {
+        window.addEventListener('beforeinstallprompt', (e) => {
+            if (isRunningAsPWA() || localStorage.getItem(STORAGE_KEY_HIDE_INSTALL) === 'true') return;
             
-            if (outcome === 'accepted') {
-                btn.classList.add('swiped-away');
-                btn.classList.remove('show');
-            }
-            deferredPrompt = null;
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            btn.classList.remove('swiped-away');
+            btn.classList.add('show');
+            
+            btn.onclick = async () => {
+                if (!deferredPrompt) return;
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    btn.classList.add('swiped-away');
+                }
+                deferredPrompt = null;
+            };
+        });
+    } 
+    // === XỬ LÝ RIÊNG CHO iOS ===
+    else {
+        // Luôn hiện nút trên iOS với hướng dẫn
+        btn.classList.add('show');
+        btn.innerHTML = `
+            <span class="pwa-fab-icon">📲</span>
+            <span class="pwa-fab-text">Cài App iOS</span>
+        `;
+        
+        btn.onclick = () => {
+            showIOSInstallGuide();
         };
     }
 });
 
-// 5. Ẩn nút lập tức khi cài xong (Dành cho Android)
-window.addEventListener('appinstalled', () => {
-    const btn = document.getElementById('btn-install-pwa');
-    if (btn) {
-        btn.classList.add('swiped-away');
-        btn.classList.remove('show');
-    }
-});
+// Hiển thị hướng dẫn cài PWA trên iOS
+function showIOSInstallGuide() {
+    const guideHTML = `
+        <div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:999999;display:flex;align-items:center;justify-content:center;padding:15px;box-sizing:border-box;">
+        <div style="background:#1c1c1e;max-width:380px;border-radius:20px;padding:25px;text-align:center;border:1px solid #dfb76c;">
+            <div style="font-size:3.8rem;margin-bottom:10px;">📱</div>
+            <h3 style="color:#dfb76c;margin:0 0 20px 0;">Cách cài La Bàn Phong Thủy</h3>
+            
+            <div style="text-align:left;color:#ddd;line-height:1.7;font-size:0.95rem;">
+                1. Nhấn nút <strong style="color:#fff;">Chia sẻ</strong> <span style="font-size:1.6rem;">⎙</span> ở thanh dưới<br>
+                2. Kéo xuống tìm và nhấn <strong>"Thêm vào Màn hình chính"</strong><br>
+                3. Nhấn <strong style="color:#dfb76c;">Thêm</strong> ở góc trên bên phải
+            </div>    
 
-// Bộ quét quét lại khi người dùng bật tắt màn hình
+				<button onclick="this.closest('.ios-guide').remove()" 
+                    style="margin-top:25px;width:100%;padding:14px;background:#dfb76c;color:#000;border:none;border-radius:50px;font-weight:bold;font-size:1.05rem;">
+                ĐÃ HIỂU ✓
+            </button>
+        </div>
+    </div>`;
+
+    const div = document.createElement('div');
+    div.className = 'ios-guide';
+    div.innerHTML = guideHTML;
+    document.body.appendChild(div);
+}
+
+// Giữ nguyên hàm vuốt gạt
+function khoiTaoTinhNangVuotGat() {
+    const btn = document.getElementById('btn-install-pwa');
+    if (!btn) return;
+    
+    let touchStartX = 0;
+    let touchCurrentX = 0;
+    let isSwiping = false;
+
+    btn.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        btn.style.transition = 'none';
+        isSwiping = true;
+    }, { passive: true });
+
+    btn.addEventListener('touchmove', (e) => {
+        if (!isSwiping) return;
+        touchCurrentX = e.touches[0].clientX;
+        let deltaX = touchCurrentX - touchStartX;
+        if (deltaX > 0) {
+            btn.style.transform = `translateX(${deltaX}px)`;
+            btn.style.opacity = `${1 - (deltaX / btn.offsetWidth)}`;
+        }
+    }, { passive: true });
+
+    btn.addEventListener('touchend', (e) => {
+        if (!isSwiping) return;
+        isSwiping = false;
+
+        let deltaX = touchCurrentX - touchStartX;
+        btn.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease';
+
+        if (deltaX > btn.offsetWidth / 2) {
+            localStorage.setItem(STORAGE_KEY_HIDE_INSTALL, 'true');
+            btn.classList.add('swiped-away');
+            btn.classList.remove('show');
+        } else {
+            btn.style.transform = 'translateX(0)';
+            btn.style.opacity = '1';
+        }
+    });
+}
+
+// Tự động kiểm tra lại khi quay lại tab
 document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
-        setTimeout(kiemTraVaAnNut, 600);
+        setTimeout(kiemTraVaAnNut, 800);
     }
 });
 
@@ -5714,49 +5739,68 @@ function khoiTaoTinhNangVuotGat() {
     let touchCurrentX = 0;
     let isSwiping = false;
 
+    // Sự kiện bắt đầu chạm tay vào nút
     btn.addEventListener('touchstart', (e) => {
         touchStartX = e.touches[0].clientX;
-        btn.style.transition = 'none'; 
+        btn.style.transition = 'none'; // Tắt hoàn toàn hiệu ứng để nút dính chặt theo ngón tay
         isSwiping = true;
     }, { passive: true });
 
+    // Sự kiện di chuyển ngón tay
     btn.addEventListener('touchmove', (e) => {
         if (!isSwiping) return;
         touchCurrentX = e.touches[0].clientX;
         let deltaX = touchCurrentX - touchStartX;
 
+        // Chỉ cho phép gạt sang bên PHẢI (deltaX > 0)
         if (deltaX > 0) {
+            // Nút dịch chuyển tuyến tính chính xác theo tọa độ ngón tay
             btn.style.transform = `translateX(${deltaX}px)`;
+            
+            // Tính toán độ mờ dựa trên chiều rộng thực tế của phần tử
             let maxDrag = btn.offsetWidth;
             btn.style.opacity = `${1 - (deltaX / maxDrag)}`;
         }
     }, { passive: true });
 
+    // Sự kiện khi nhấc ngón tay ra
     btn.addEventListener('touchend', (e) => {
         if (!isSwiping) return;
         isSwiping = false;
         
         let deltaX = touchCurrentX - touchStartX;
+        
+        // Khôi phục lại các thuộc tính chuyển động mượt mà của CSS gốc khi buông tay
         btn.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease';
+
+        // TỐI ƯU: Lấy điểm kích hoạt bằng đúng 1/2 chiều rộng thực tế của nút bấm
         let threshold = btn.offsetWidth / 2;
 
         if (deltaX > threshold) {
+            // Ngón tay kéo quá nửa nút -> Kích hoạt dọn dẹp vĩnh viễn, tự động thụt mất tiêu
             anVaXoaVinhVien(btn);
         } else {
+            // Kéo chưa tới một nửa -> Hệ thống tự động nẩy ngược về vị trí cũ quý phái
             btn.style.transform = 'translateX(0)';
             btn.style.opacity = '1';
         }
         
+        // Trả các biến trạng thái về tọa độ gốc
         touchStartX = 0;
         touchCurrentX = 0;
     });
 }
 
+// Hàm kích hoạt hòm rác vĩnh viễn
 function anVaXoaVinhVien(element) {
+    // 1. Lưu cấu hình vào LocalStorage của trình duyệt hiện tại
     localStorage.setItem(STORAGE_KEY_HIDE_INSTALL, 'true');
+    
+    // 2. Kích hoạt Class biến mất vĩnh viễn thu hẹp không gian
     element.classList.add('swiped-away');
     element.classList.remove('show');
-    console.log('⚡ Đã đưa nút PWA vào hòm rác vĩnh viễn trên trình duyệt này.');
+    
+    console.log('⚡ Đã đưa nút PWA vào hòm rác vĩnh viễn trên trình duyệt này theo yêu cầu của người dùng.');
 }
 
 // =========================================================================
