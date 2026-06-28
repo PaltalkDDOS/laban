@@ -481,16 +481,18 @@ function tinhHanCuuTinhTheoNam(inputDoSoHoacSon, namHienTai) {
     if (thongTinSaoHienTai.hung && !warnings.some(w => w.includes("Phi Tinh"))) {
         warnings.push(`[Lưu Niên Phi Tinh]: Phương vị gặp phải sát khí của ${thongTinSaoHienTai.ten}.`);
     }
-
+    // =========================================================================
+    // 🚀 ĐÃ CẬP NHẬT: ĐỒNG BỘ NỘI DUNG VĂN BẢN ĐẠI VẬN 9 & TIỂU VẬN LƯU NIÊN KHẢO SÁT
+    // =========================================================================
     if (warnings.length === 0) {
         return {
-            thongTinSao: `✅ Niên độ ${nam}: Sơn vị ${sonName} (Hướng lớn ${codeHuongDaiCuc}) Đạt Trạng Thái Bình Hòa Cát Lành. Phương vị đón nhận sinh khí của ngôi sao cát: ${thongTinSaoHienTai.ten}.`,
+            thongTinSao: `✅ <b>[ĐẠI VẬN 9 - HẠ NGUYÊN]</b><br>• Lưu Niên Vận Khí Năm ${nam}: Sơn vị ${sonName} (Hướng lớn ${codeHuongDaiCuc}) Đạt Trạng Thái Bình Hòa Cát Lành. Phương vị đón nhận sinh khí: ${thongTinSaoHienTai.ten}.`,
             meoGiaiHan: `💡 Bố trí trạch pháp Vận 9: ${thongTinSaoHienTai.giaiPhap}`
         };
     }
 
     return {
-        thongTinSao: `⚠️ CẢNH BÁO NIÊN HẠN NĂM ${nam}: Khu vực tọa độ Sơn ${sonName} phạm phải cấu trúc khí trường xấu:<br>• ${warnings.join("<br>• ")}`,
+        thongTinSao: `⚠️ <b>[ĐẠI VẬN 9 - HẠ NGUYÊN]</b><br>• CẢNH BÁO TIỂU VẬN NĂM ${nam}: Khu vực tọa độ Sơn ${sonName} phạm phải cấu trúc khí trường xấu:<br>• ${warnings.join("<br>• ")}`,
         meoGiaiHan: `💡 Mật pháp điều tiết đồng bộ: Tránh tuyệt đối việc đập phá, động thổ tại góc độ phân châm này. Áp dụng giải pháp: ${thongTinSaoHienTai.giaiPhap}`
     };
 }
@@ -1877,11 +1879,15 @@ function updateCompassUI(heading) {
     let giaiHanCuuTinh = "";
     const boxStyle = "margin-top:10px; padding:10px; border-radius:6px; font-size:0.85rem; line-height:1.4; font-family: sans-serif;";
 
+    // TÌM ĐOẠN NÀY TRONG HÀM updateCompassUI() CỦA BẠN:
     if (ketQua.thongTinSao.includes("⚠️")) {
-        canhBaoCuuTinh = `<div style="${boxStyle} background:rgba(255,59,48,0.08); border:1px solid #ff3b30; color:#ff3b30;"><b style="display:block; margin-bottom:4px; font-size:0.9rem;">⚠️ CẢNH BÁO NIÊN HẠN CỬU TINH ${namKhaoSatThucTe}:</b>${ketQua.thongTinSao.replace(/⚠️/g, '•')}</div>`;
-        if (ketQua.meoGiaiHan) {
-            giaiHanCuuTinh = `<div style="margin-top:5px; padding:8px 12px; background:rgba(255,159,10,0.08); border-left:3px solid #ff9f0a; color:#ff9f0a; font-size:0.82rem; border-radius:0 6px 6px 0; font-family: sans-serif;"><b>💡 Mật pháp giải hạn thời khí:</b> ${ketQua.meoGiaiHan.replace('👉 Hóa giải: ', '')}</div>`;
-        }
+    canhBaoCuuTinh = `<div style="${boxStyle} background:rgba(255,59,48,0.08); border:1px solid #ff3b30; color:#ff3b30;"><b style="display:block; margin-bottom:4px; font-size:0.9rem;">⚠️ CẢNH BÁO NIÊN HẠN CỬU TINH ${namKhaoSatThucTe}:</b>${ketQua.thongTinSao.replace(/⚠️/g, '•')}</div>`;
+    
+    if (ketQua.meoGiaiHan) {
+        // 🔴 ĐÃ SỬA: Xóa bỏ cụm "Mật pháp giải hạn thời khí" bị lặp, dùng trực tiếp chuỗi của hàm trả về
+        giaiHanCuuTinh = `<div style="margin-top:5px; padding:8px 12px; background:rgba(255,159,10,0.08); border-left:3px solid #ff9f0a; color:#ff9f0a; font-size:0.82rem; border-radius:0 6px 6px 0; font-family: sans-serif;">${ketQua.meoGiaiHan}</div>`;
+    }
+
     } else {
         canhBaoCuuTinh = `<div style="${boxStyle} background:rgba(48,209,88,0.08); border:1px solid #30d158; color:#30d158; text-align:center; font-weight:bold;">✅ VẬN KHÍ CỬU TINH ĐẮC LỢI: ${ketQua.thongTinSao}</div>`;
     }

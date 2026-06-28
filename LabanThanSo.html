@@ -91,7 +91,15 @@
             </div>
         </div>
     </div>
-
+   <!-- Hàng 3: Năm Khảo Sát Thời Không (Tách biệt hoàn toàn, chống nhầm lẫn năm sinh) -->
+    <div class="form-row" style="margin-top: 10px;">
+        <div class="form-group" style="width: 100%;">
+            <label style="color: #30d158; font-weight: bold;">Năm xem La bàn / Niên hạn:</label>
+            <input type="text" id="surveyYear" placeholder="Để trống tự động lấy năm hiện hành" maxlength="4" inputmode="numeric"
+                   oninput="if(typeof recalculateFate === 'function') recalculateFate()" 
+                   style="text-align: center; background: #222; color: #30d158; border: 1px solid #30d158; padding: 10px; border-radius: 8px; width: 100%; box-sizing: border-box; font-size: 1rem; font-weight: bold; letter-spacing: 1px;">
+        </div>
+    </div>
     <!-- Mục đích tầm phương vị -->
     <div class="form-group" style="margin-bottom: 12px;">
         <label style="display: block; font-size: 0.85rem; color: var(--gold); margin-bottom: 5px; font-weight: bold;">
