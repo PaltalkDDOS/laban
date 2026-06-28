@@ -5961,21 +5961,22 @@ const AppControl = {
     }
 };
 
-// Lắng nghe thông điệp độc lập gửi từ sw.js về giao diện công khai
+// Lắng nghe thông điệp độc lập gửi từ sw.js
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.addEventListener('message', (event) => {
         if (!event.data) return;
         
-        // Khi sw.js phát tín hiệu đã cập nhật xong dữ liệu cache mới
         if (event.data.type === 'VERSION_UPDATED') {
+            // 1. Hiện thông báo Toast nhỏ xinh
             AppControl.showNotification("✨ Ứng dụng đã được cập nhật bản mới!");
             
-            // Nếu bạn muốn bật cái popup div HTML lên thay vì Toast chữ, hãy mở comment dòng dưới:
-             const popup = document.getElementById('update-popup');
-            if (popup) popup.style.display = 'flex';
+            // 2. Hiện cái bảng Popup HTML bạn vừa dán vào header
+            const popup = document.getElementById('update-popup');
+            if (popup) {
+                popup.style.display = 'flex'; // Chuyển từ none sang flex để nó hiện ra
+            }
         }
         
-        // Khi sw.js phát tín hiệu muốn gọi quảng cáo
         if (event.data.type === 'SHOW_ADS') {
             AppControl.showAds();
         }
