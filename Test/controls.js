@@ -4206,7 +4206,7 @@ window.onload = function() {
     if (typeof render24SonRing === 'function') render24SonRing();
     if (typeof loadSavedMembers === 'function') loadSavedMembers();
     if (typeof recalculateFate === 'function') recalculateFate();
-    
+    initMotionListener(); // Kích hoạt gia tốc kế
     initCompassPermission();
 };
 
@@ -4433,13 +4433,6 @@ function closePermissionModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// ====================== PHẦN NÂNG CẤP NHỄU TỪ TRƯỜNG (THÊM VÀO) ======================
-let lastHeadingForNoise = null;
-let lastMotionTime = Date.now();
-let noiseScore = 0;
-let lastMagneticCheck = 0;
-let isMagneticWarningActive = false;
-
 function initMotionListener() {
     if (typeof DeviceMotionEvent === 'undefined') return;
     window.addEventListener('devicemotion', (event) => {
@@ -4452,78 +4445,8 @@ function initMotionListener() {
     }, { passive: true });
 }
 
-function checkMagneticQuality(currentHeading, event) {
-    const dot = document.getElementById('accuracy-dot');
-    const text = document.getElementById('accuracy-text');
-    if (!dot || !text) return;
-
-    if (event.webkitCompassAccuracy !== undefined && event.webkitCompassAccuracy !== null) {
-        const acc = event.webkitCompassAccuracy;
-        if (acc > 30) {
-            updateMagneticUI("NHIỄU NẶNG", "#f44336");
-            showMagneticToast();
-        } else if (acc > 15) {
-            updateMagneticUI("NHIỄU NHẸ", "#ff9800");
-        } else {
-            updateMagneticUI("TÍN HIỆU TỐT", "#4caf50");
-        }
-        return;
-    }
-
-    if (lastHeadingForNoise === null) {
-        lastHeadingForNoise = currentHeading;
-        updateMagneticUI("TÍN HIỆU ỔN", "#4caf50");
-        return;
-    }
-
-    let diff = Math.abs(currentHeading - lastHeadingForNoise);
-    if (diff > 180) diff = 360 - diff;
-
-    const isMoving = (Date.now() - lastMotionTime < 1200);
-
-    if (diff > 30 && !isMoving) {
-        noiseScore = Math.min(10, noiseScore + 4);
-    } else if (isMoving) {
-        noiseScore = Math.max(0, noiseScore - 3);
-    } else if (diff < 10) {
-        noiseScore = Math.max(0, noiseScore - 1);
-    }
-
-    if (noiseScore >= 6) {
-        updateMagneticUI("NHIỄU TỪ TRƯỜNG", "#ff9800");
-        showMagneticToast();
-    } else if (noiseScore >= 3) {
-        updateMagneticUI("NHIỄU NHẸ", "#ff9800");
-    } else {
-        updateMagneticUI("TÍN HIỆU ỔN", "#4caf50");
-    }
-
-    lastHeadingForNoise = currentHeading;
-}
-
-function updateMagneticUI(statusText, color) {
-    const dot = document.getElementById('accuracy-dot');
-    const text = document.getElementById('accuracy-text');
-    if (text && text.innerText !== statusText) {
-        text.innerText = statusText;
-        if (dot) dot.style.background = color;
-    }
-}
-
-function showMagneticToast() {
-    if (isMagneticWarningActive) return;
-    isMagneticWarningActive = true;
-    if (typeof showToast === 'function') {
-        showToast("⚠️ Nhiễu từ trường mạnh! Di chuyển sang khu vực khác hoặc vẽ số 8 để hiệu chỉnh.", true);
-    }
-    setTimeout(() => { isMagneticWarningActive = false; }, 10000);
-}
-// =========================================================================
-// 🧭 ENGINE LA BÀN & ĐO NHIỄU (BẢN AN TOÀN - KIM CHẮC CHẮN QUAY)
-// =========================================================================
-
+// --- 3. HÀM XỬ LÝ CHÍNH (ĐÃ TIÊM THUẬT TOÁN NHIỄU) ---
 function handleOrientation(event) {
-    // 1. Kiểm tra giữ kim (của bạn)
     if (window.isCompassHold) {
         if (typeof window.holdedHeading !== 'undefined') {
             lastHeading = window.holdedHeading;
@@ -4537,19 +4460,15 @@ function handleOrientation(event) {
     let rawHeading = null;
     const now = Date.now();
     
-    // Xử lý Accuracy iOS (Của bạn)
+    // --- PHẦN 1: IOS ACCURACY (GỐC) ---
     const accuracy = event.webkitCompassAccuracy;
     if (accuracy !== undefined && accuracy !== null && accuracy >= 0) {
-        if (Math.abs(accuracy - lastAccuracy) > 3 || 
-           (accuracy > 15 && lastAccuracy <= 15) || 
-           (accuracy > 30 && lastAccuracy <= 30) ||
-           (accuracy <= 15 && lastAccuracy > 15)) {
+        if (Math.abs(accuracy - lastAccuracy) > 3 || (accuracy > 15 && lastAccuracy <= 15) || (accuracy > 30 && lastAccuracy <= 30) || (accuracy <= 15 && lastAccuracy > 15)) {
             lastAccuracy = accuracy;
             updateMagneticStatus(accuracy); 
         }
     }
 
-    // Lấy hướng thô
     if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
         rawHeading = event.webkitCompassHeading;
     } else if (event.alpha !== undefined && event.alpha !== null) {
@@ -4558,17 +4477,20 @@ function handleOrientation(event) {
     
     if (rawHeading === null) return;
 
-    // 2. ĐO NHIỄU AN TOÀN (Bọc Try...Catch để không làm chết kim)
+    // --- PHẦN 2: THUẬT TOÁN NHIỄU (BỌC TRY-CATCH AN TOÀN) ---
     try {
         if (now - lastMagneticCheck > 1000) {
-            checkMagneticQuality(rawHeading, event);
+            // Chỉ chạy trên Android (khi không có webkitCompassAccuracy)
+            if (accuracy === undefined || accuracy === null) {
+                checkMagneticQuality(rawHeading);
+            }
             lastMagneticCheck = now;
         }
     } catch (e) {
-        console.warn("Lỗi nhỏ phần đo nhiễu, bỏ qua:", e);
+        console.log("Noise check skip:", e);
     }
 
-    // 3. LOGIC QUAY KIM (GIỮ NGUYÊN GỐC)
+    // --- PHẦN 3: LOGIC QUAY KIM (GỐC CỦA BẠN) ---
     if (document.activeElement?.id === 'compassSlider') return;
     if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
     lastUpdateTime = now;
@@ -4586,11 +4508,8 @@ function handleOrientation(event) {
     const absDiff = Math.abs(diff);
     let dynamicFactor = SMOOTH_MIN;
     
-    if (absDiff > 12) {
-        dynamicFactor = SMOOTH_MAX;
-    } else if (absDiff > 1.5) {
-        dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
-    }
+    if (absDiff > 12) dynamicFactor = SMOOTH_MAX;
+    else if (absDiff > 1.5) dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
     
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
@@ -4612,6 +4531,54 @@ function handleOrientation(event) {
         executeUIUpdate(headingForDial, headingForText);
     });
 }
+
+// --- 4. HÀM ĐO NHIỄU (ĐÃ TỐI ƯU GỌI HÀM CŨ) ---
+function checkMagneticQuality(currentHeading) {
+    if (lastHeadingForNoise === null) {
+        lastHeadingForNoise = currentHeading;
+        return;
+    }
+
+    let diff = Math.abs(currentHeading - lastHeadingForNoise);
+    if (diff > 180) diff = 360 - diff;
+    const isMoving = (Date.now() - lastMotionTime < 1200);
+
+    if (diff > 30 && !isMoving) {
+        noiseScore = Math.min(10, noiseScore + 4);
+    } else if (isMoving) {
+        noiseScore = Math.max(0, noiseScore - 3);
+    } else if (diff < 10) {
+        noiseScore = Math.max(0, noiseScore - 1);
+    }
+
+    // Phán quyết: Gọi hàm updateMagneticStatus có sẵn của bạn
+    if (noiseScore >= 6) {
+        updateMagneticStatus(31); // 31 > 30 -> Hiện NHIỄU NẶNG
+    } else if (noiseScore >= 3) {
+        updateMagneticStatus(20); // 20 > 15 -> Hiện NHIỄU NHẸ
+    } else {
+        updateMagneticStatus(0);  // TÍN HIỆU TỐT
+    }
+    lastHeadingForNoise = currentHeading;
+}
+
+// --- 5. GIỮ NGUYÊN HÀM GỐC ---
+function executeUIUpdate(headingDial, headingText) {
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingText); 
+    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); 
+    if (typeof recalculateFate === 'function') recalculateFate();
+}
+
+function updateMagneticStatus(acc) {
+    const dot = document.getElementById('accuracy-dot');
+    const text = document.getElementById('accuracy-text');
+    if (!dot || !text) return;
+    let bg = '#4caf50', txt = "TÍN HIỆU TỐT";
+    if (acc > 15 && acc <= 30) { bg = '#ff9800'; txt = "NHIỄU NHẸ"; } 
+    else if (acc > 30) { bg = '#f44336'; txt = "NHIỄU NẶNG"; }
+    if (text.innerText !== txt) { dot.style.background = bg; text.innerText = txt; }
+}
+
 // =========================================================================
 // 📺 ENGINE ĐIỀU KHIỂN CHẾ ĐỘ PHÓNG TO / FULLSCREEN
 // =========================================================================
