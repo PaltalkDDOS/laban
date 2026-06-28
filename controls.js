@@ -2818,152 +2818,6 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm, doRongQ
 
     return runRawCalcEngine(degree);
 }
-// ====================== BIẾN TOÀN CỤC CHO PHẦN ĐO NHIỄU ======================
-let lastHeadingForNoise = null;   // ← Sửa thành null thay vì 0
-let noiseScore = 0;
-let lastMagneticCheck = 0;
-let isMagneticWarningActive = false;
-
-// ====================== HÀM XỬ LÝ CHÍNH ======================
-function handleOrientation(event) {
-    if (window.isCompassHold) {
-        if (typeof window.holdedHeading !== 'undefined') {
-            lastHeading = window.holdedHeading;
-            if (typeof window.currentHeading !== 'undefined') window.currentHeading = window.holdedHeading;
-            
-            if (rafId) cancelAnimationFrame(rafId);
-            rafId = requestAnimationFrame(() => executeUIUpdate(window.holdedHeading, window.holdedHeading));
-        }
-        return;
-    }
-
-    let rawHeading = null;
-    const now = Date.now();
-
-    // Lấy hướng thô
-    if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
-        rawHeading = event.webkitCompassHeading;
-    } else if (event.alpha !== undefined && event.alpha !== null) {
-        rawHeading = (360 - event.alpha) % 360;
-    }
-
-    if (rawHeading === null) return;
-
-    // Kiểm tra nhiễu định kỳ (1 giây/lần)
-    if (now - lastMagneticCheck > 1000) {
-        checkMagneticQuality(rawHeading, event);
-        lastMagneticCheck = now;
-    }
-
-    // Logic làm mượt kim quay (giữ nguyên)
-    if (document.activeElement?.id === 'compassSlider') return;
-    if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
-    lastUpdateTime = now;
-
-    if (lastHeading === null) {
-        lastHeading = rawHeading;
-        executeUIUpdate(lastHeading, lastHeading);
-        return;
-    }
-
-    let diff = rawHeading - lastHeading;
-    if (diff > 180) diff -= 360;
-    if (diff < -180) diff += 360;
-
-    const absDiff = Math.abs(diff);
-    let dynamicFactor = SMOOTH_MIN;
-    if (absDiff > 12) dynamicFactor = SMOOTH_MAX;
-    else if (absDiff > 1.5) dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
-
-    const newHeading = lastHeading + diff * dynamicFactor;
-    lastHeading = (newHeading % 360 + 360) % 360;
-
-    const headingForText = lastHeading;
-    const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360;
-
-    if (typeof window.currentHeading !== 'undefined') window.currentHeading = headingForText;
-
-    if (absDiff > 0.4) {
-        const btnTongLuan = document.getElementById('btn-tong-luan');
-        if (btnTongLuan) btnTongLuan.classList.remove('vượng-xuất');
-        if (typeof kichHoatBoDemDungKim === 'function') kichHoatBoDemDungKim();
-    }
-
-    if (rafId) cancelAnimationFrame(rafId);
-    rafId = requestAnimationFrame(() => {
-        executeUIUpdate(headingForDial, headingForText);
-    });
-}
-
-// ====================== HÀM ĐO NHIỄU (ĐÃ SỬA LỖI KHỞI TẠO) ======================
-function checkMagneticQuality(currentHeading, event) {
-    const dot = document.getElementById('accuracy-dot');
-    const text = document.getElementById('accuracy-text');
-    if (!dot || !text) return;
-
-    // 1. iOS - Dùng dữ liệu phần cứng thật
-    if (event.webkitCompassAccuracy !== undefined && event.webkitCompassAccuracy !== null) {
-        const acc = event.webkitCompassAccuracy;
-        if (acc > 30) {
-            updateMagneticUI("NHIỄU NẶNG", "#f44336");
-            showMagneticToast();
-        } else if (acc > 15) {
-            updateMagneticUI("NHIỄU NHẸ", "#ff9800");
-        } else {
-            updateMagneticUI("TÍN HIỆU TỐT", "#4caf50");
-        }
-        return;
-    }
-
-    // 2. Android - Thuật toán Jitter
-    if (lastHeadingForNoise === null) {
-        lastHeadingForNoise = currentHeading;   // Lấy mốc lần đầu tiên
-        updateMagneticUI("TÍN HIỆU ỔN", "#4caf50");
-        return;
-    }
-
-    let diff = Math.abs(currentHeading - lastHeadingForNoise);
-    if (diff > 180) diff = 360 - diff;
-
-    if (diff > 25) {
-        noiseScore = Math.min(6, noiseScore + 2);
-    } else {
-        noiseScore = Math.max(0, noiseScore - 1);
-    }
-
-    if (noiseScore >= 4) {
-        updateMagneticUI("NHIỄU TỪ TRƯỜNG", "#ff9800");
-        showMagneticToast();
-    } else if (noiseScore >= 2) {
-        updateMagneticUI("NHIỄU NHẸ", "#ff9800");
-    } else {
-        updateMagneticUI("TÍN HIỆU ỔN", "#4caf50");
-    }
-
-    lastHeadingForNoise = currentHeading;
-}
-
-// Cập nhật UI
-function updateMagneticUI(statusText, color) {
-    const dot = document.getElementById('accuracy-dot');
-    const text = document.getElementById('accuracy-text');
-    if (text && text.innerText !== statusText) {
-        text.innerText = statusText;
-        if (dot) dot.style.background = color;
-    }
-}
-
-// Toast cảnh báo
-function showMagneticToast() {
-    if (isMagneticWarningActive) return;
-    isMagneticWarningActive = true;
-
-    if (typeof showToast === 'function') {
-        showToast("⚠️ Nhiễu từ trường mạnh! Hãy di chuyển khỏi khu vực có sắt thép hoặc nam châm.", true);
-    }
-
-    setTimeout(() => { isMagneticWarningActive = false; }, 10000);
-}
 
 function showToast(message, isError = false) {
     const container = document.getElementById('toast-container');
@@ -4321,11 +4175,9 @@ if (typeof lockedHeadingAtOpen === 'undefined') window.lockedHeadingAtOpen = nul
 if (typeof orientationListenerAdded === 'undefined') window.orientationListenerAdded = false;
 if (typeof permissionDenied === 'undefined') window.permissionDenied = false;
 if (typeof isCompassHold === 'undefined') window.isCompassHold = false;
-
-let isFullScreen = false;
-let lastTapTime = 0;
-
-// Biến điều khiển DOM và Thu phóng
+// --- 1. BIẾN TOÀN CỤC (DUY NHẤT 1 LẦN) ---
+// Biến điều khiển hệ thống
+let isFullScreen = false; let lastTapTime = 0;
 let originalCompassParent = null; let originalCompassNextSibling = null;
 let originalStatusParent = null; let originalStatusNextSibling = null;
 let originalDetailBoxStyle = ""; let originalDetailBoxClass = "";
@@ -4333,17 +4185,22 @@ let currentScale = 1; let initialScale = 1; let startDistance = 0;
 let isZooming = false;
 let currentX = 0; let currentY = 0; let startX = 0; let startY = 0;
 
-// Biến điều khiển luồng kim quay
+// Biến điều khiển kim quay
 let lastHeading = null;
 let rafId = null;
 let lastUpdateTime = 0;
 const SMOOTH_MIN = 0.08;
 const SMOOTH_MAX = 0.55;
-const THROTTLE_MS = 16; // ~60fps
-
-// Biến trạng thái địa từ
+const THROTTLE_MS = 16;
 let magneticDeclination = 0;
-let lastAccuracy = 0; 
+let lastAccuracy = 0;
+
+// Biến thuật toán nhiễu (Chỉ cần khai báo 1 lần ở đây)
+let lastHeadingForNoise = null;
+let lastMotionTime = Date.now();
+let noiseScore = 0;
+let lastMagneticCheck = 0;
+let isMagneticWarningActive = false;
 
 /**
  * 🪐 HÀM KHỞI TẠO DUY NHẤT TOÀN HỆ THỐNG
@@ -4352,7 +4209,7 @@ window.onload = function() {
     if (typeof render24SonRing === 'function') render24SonRing();
     if (typeof loadSavedMembers === 'function') loadSavedMembers();
     if (typeof recalculateFate === 'function') recalculateFate();
-    
+    initMotionListener(); // Kích hoạt gia tốc kế
     initCompassPermission();
 };
 
@@ -4512,27 +4369,6 @@ function requestPermission() {
     }
 }
 
-function addOrientationListener() {
-    if (window.orientationListenerAdded) return;
-
-    const handler = (e) => {
-        if (e.webkitCompassHeading !== undefined || e.alpha !== null) {
-            handleOrientation(e);
-        }
-    };
-
-    if ('ondeviceorientationabsolute' in window) {
-        window.addEventListener('deviceorientationabsolute', handler, true);
-    } else if ('ondeviceorientation' in window) {
-        window.addEventListener('deviceorientation', handler, true);
-    } else {
-        const btn = document.getElementById('auto-detect-btn');
-        if (btn) btn.style.display = 'none';
-        return;
-    }
-    window.orientationListenerAdded = true;
-}
-
 function showPermissionResetGuide() {
     const modal = document.getElementById('iosPermissionModal');
     if (!modal) return;
@@ -4579,20 +4415,27 @@ function closePermissionModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// =========================================================================
-// 🧭 BỘ XỬ LÝ LÕI ĐỊA HƯỚNG VÀ LÀM MƯỢT (CORE ENGINE)
-// =========================================================================
+// --- 3. HÀM GIA TỐC KẾ (ĐO CHUYỂN ĐỘNG) ---
+function initMotionListener() {
+    if (typeof DeviceMotionEvent === 'undefined') return;
+    window.addEventListener('devicemotion', (event) => {
+        if (!event.accelerationIncludingGravity) return;
+        const { x = 0, y = 0, z = 0 } = event.accelerationIncludingGravity;
+        const totalAccel = Math.sqrt(x * x + y * y + z * z);
+        if (totalAccel > 0.5 || Math.abs(x) > 0.35 || Math.abs(y) > 0.35 || Math.abs(z) > 0.35) {
+            lastMotionTime = Date.now();
+        }
+    }, { passive: true });
+}
 
+// --- 4. HÀM XỬ LÝ LA BÀN CHÍNH ---
 function handleOrientation(event) {
     if (window.isCompassHold) {
         if (typeof window.holdedHeading !== 'undefined') {
             lastHeading = window.holdedHeading;
             if (typeof window.currentHeading !== 'undefined') window.currentHeading = window.holdedHeading;
-            
             if (rafId) cancelAnimationFrame(rafId);
-            rafId = requestAnimationFrame(() => {
-                executeUIUpdate(window.holdedHeading, window.holdedHeading);
-            });
+            rafId = requestAnimationFrame(() => executeUIUpdate(window.holdedHeading, window.holdedHeading));
         }
         return; 
     }
@@ -4600,6 +4443,7 @@ function handleOrientation(event) {
     let rawHeading = null;
     const now = Date.now();
     
+    // Accuracy (iOS)
     const accuracy = event.webkitCompassAccuracy;
     if (accuracy !== undefined && accuracy !== null && accuracy >= 0) {
         if (Math.abs(accuracy - lastAccuracy) > 3 || 
@@ -4619,6 +4463,15 @@ function handleOrientation(event) {
     
     if (rawHeading === null) return;
 
+    // Thuật toán nhiễu (chỉ chạy khi không có accuracy hardware - Android)
+    if (now - lastMagneticCheck > 1000) {
+        if (accuracy === undefined || accuracy === null) {
+            checkMagneticQuality(rawHeading, event);
+        }
+        lastMagneticCheck = now;
+    }
+
+    // Logic quay kim
     if (document.activeElement?.id === 'compassSlider') return;
     if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
     lastUpdateTime = now;
@@ -4635,12 +4488,8 @@ function handleOrientation(event) {
     
     const absDiff = Math.abs(diff);
     let dynamicFactor = SMOOTH_MIN;
-    
-    if (absDiff > 12) {
-        dynamicFactor = SMOOTH_MAX;
-    } else if (absDiff > 1.5) {
-        dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
-    }
+    if (absDiff > 12) dynamicFactor = SMOOTH_MAX;
+    else if (absDiff > 1.5) dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
     
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
@@ -4658,9 +4507,52 @@ function handleOrientation(event) {
     }
 
     if (rafId) cancelAnimationFrame(rafId);
-    rafId = requestAnimationFrame(() => {
-        executeUIUpdate(headingForDial, headingForText);
-    });
+    rafId = requestAnimationFrame(() => executeUIUpdate(headingForDial, headingForText));
+}
+
+// --- 5. HÀM ĐO NHIỄU ---
+function checkMagneticQuality(currentHeading, event) {
+    const dot = document.getElementById('accuracy-dot');
+    const text = document.getElementById('accuracy-text');
+    if (!dot || !text) return;
+
+    if (lastHeadingForNoise === null) {
+        lastHeadingForNoise = currentHeading;
+        updateMagneticUI("TÍN HIỆU ỔN", "#4caf50");
+        return;
+    }
+
+    let diff = Math.abs(currentHeading - lastHeadingForNoise);
+    if (diff > 180) diff = 360 - diff;
+    const isMoving = (Date.now() - lastMotionTime < 1200);
+
+    if (diff > 30 && !isMoving) {
+        noiseScore = Math.min(10, noiseScore + 4);
+    } else if (isMoving) {
+        noiseScore = Math.max(0, noiseScore - 3);
+    } else if (diff < 10) {
+        noiseScore = Math.max(0, noiseScore - 1);
+    }
+
+    if (noiseScore >= 6) {
+        updateMagneticUI("NHIỄU TỪ TRƯỜNG", "#ff9800");
+        showMagneticToast();
+    } else if (noiseScore >= 3) {
+        updateMagneticUI("NHIỄU NHẸ", "#ff9800");
+    } else {
+        updateMagneticUI("TÍN HIỆU ỔN", "#4caf50");
+    }
+    lastHeadingForNoise = currentHeading;
+}
+
+// --- 6. HÀM HỖ TRỢ ---
+function showMagneticToast() {
+    if (isMagneticWarningActive) return;
+    isMagneticWarningActive = true;
+    if (typeof showToast === 'function') {
+        showToast("⚠️ Nhiễu từ trường mạnh! Di chuyển sang khu vực khác hoặc vẽ số 8.", true);
+    }
+    setTimeout(() => { isMagneticWarningActive = false; }, 10000);
 }
 
 function executeUIUpdate(headingDial, headingText) {
@@ -4669,27 +4561,40 @@ function executeUIUpdate(headingDial, headingText) {
     if (typeof recalculateFate === 'function') recalculateFate();
 }
 
+function updateMagneticUI(statusText, color) {
+    const dot = document.getElementById('accuracy-dot');
+    const text = document.getElementById('accuracy-text');
+    if (text && text.innerText !== statusText) {
+        text.innerText = statusText;
+        if (dot) dot.style.background = color;
+    }
+}
+
 function updateMagneticStatus(acc) {
     const dot = document.getElementById('accuracy-dot');
     const text = document.getElementById('accuracy-text');
     if (!dot || !text) return;
-
     let bg = '#4caf50', txt = "TÍN HIỆU TỐT";
-    
-    if (acc > 15 && acc <= 30) {
-        bg = '#ff9800';
-        txt = "NHIỄU NHẸ";
-    } else if (acc > 30) {
-        bg = '#f44336';
-        txt = "NHIỄU NẶNG";
-    }
-
-    if (text.innerText !== txt) {
-        dot.style.background = bg;
-        text.innerText = txt;
-    }
+    if (acc > 15 && acc <= 30) { bg = '#ff9800'; txt = "NHIỄU NHẸ"; } 
+    else if (acc > 30) { bg = '#f44336'; txt = "NHIỄU NẶNG"; }
+    if (text.innerText !== txt) { dot.style.background = bg; text.innerText = txt; }
 }
 
+// --- 7. HÀM KÍCH HOẠT SENSOR ---
+function addOrientationListener() {
+    if (window.orientationListenerAdded) return;
+    const handler = (e) => {
+        if (e.webkitCompassHeading !== undefined || e.alpha !== null) {
+            handleOrientation(e);
+        }
+    };
+    if ('ondeviceorientationabsolute' in window) {
+        window.addEventListener('deviceorientationabsolute', handler, true);
+    } else if ('ondeviceorientation' in window) {
+        window.addEventListener('deviceorientation', handler, true);
+    }
+    window.orientationListenerAdded = true;
+}
 // =========================================================================
 // 📺 ENGINE ĐIỀU KHIỂN CHẾ ĐỘ PHÓNG TO / FULLSCREEN
 // =========================================================================
