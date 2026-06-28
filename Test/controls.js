@@ -4208,7 +4208,6 @@ window.onload = function() {
     if (typeof recalculateFate === 'function') recalculateFate();
     
     initCompassPermission();
-	initMotionListener();   // ← Thêm dòng này
 };
 
 // =========================================================================
@@ -4519,7 +4518,100 @@ function showMagneticToast() {
     }
     setTimeout(() => { isMagneticWarningActive = false; }, 10000);
 }
+// =========================================================================
+// 🧭 ENGINE LA BÀN & ĐO NHIỄU (BẢN AN TOÀN - KIM CHẮC CHẮN QUAY)
+// =========================================================================
 
+function handleOrientation(event) {
+    // 1. Kiểm tra giữ kim (của bạn)
+    if (window.isCompassHold) {
+        if (typeof window.holdedHeading !== 'undefined') {
+            lastHeading = window.holdedHeading;
+            if (typeof window.currentHeading !== 'undefined') window.currentHeading = window.holdedHeading;
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => executeUIUpdate(window.holdedHeading, window.holdedHeading));
+        }
+        return; 
+    }
+
+    let rawHeading = null;
+    const now = Date.now();
+    
+    // Xử lý Accuracy iOS (Của bạn)
+    const accuracy = event.webkitCompassAccuracy;
+    if (accuracy !== undefined && accuracy !== null && accuracy >= 0) {
+        if (Math.abs(accuracy - lastAccuracy) > 3 || 
+           (accuracy > 15 && lastAccuracy <= 15) || 
+           (accuracy > 30 && lastAccuracy <= 30) ||
+           (accuracy <= 15 && lastAccuracy > 15)) {
+            lastAccuracy = accuracy;
+            updateMagneticStatus(accuracy); 
+        }
+    }
+
+    // Lấy hướng thô
+    if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
+        rawHeading = event.webkitCompassHeading;
+    } else if (event.alpha !== undefined && event.alpha !== null) {
+        rawHeading = (360 - event.alpha) % 360;
+    }
+    
+    if (rawHeading === null) return;
+
+    // 2. ĐO NHIỄU AN TOÀN (Bọc Try...Catch để không làm chết kim)
+    try {
+        if (now - lastMagneticCheck > 1000) {
+            checkMagneticQuality(rawHeading, event);
+            lastMagneticCheck = now;
+        }
+    } catch (e) {
+        console.warn("Lỗi nhỏ phần đo nhiễu, bỏ qua:", e);
+    }
+
+    // 3. LOGIC QUAY KIM (GIỮ NGUYÊN GỐC)
+    if (document.activeElement?.id === 'compassSlider') return;
+    if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
+    lastUpdateTime = now;
+
+    if (lastHeading === null) {
+        lastHeading = rawHeading;
+        executeUIUpdate(lastHeading, lastHeading);
+        return;
+    }
+
+    let diff = rawHeading - lastHeading;
+    if (diff > 180) diff -= 360;
+    if (diff < -180) diff += 360;
+    
+    const absDiff = Math.abs(diff);
+    let dynamicFactor = SMOOTH_MIN;
+    
+    if (absDiff > 12) {
+        dynamicFactor = SMOOTH_MAX;
+    } else if (absDiff > 1.5) {
+        dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
+    }
+    
+    const newHeading = lastHeading + diff * dynamicFactor;
+    lastHeading = (newHeading % 360 + 360) % 360;
+
+    const headingForText = lastHeading; 
+    const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
+
+    if (typeof window.currentHeading !== 'undefined') window.currentHeading = headingForText;
+
+    if (absDiff > 0.4) {
+        const btnTongLuan = document.getElementById('btn-tong-luan');
+        if (btnTongLuan) btnTongLuan.classList.remove('vượng-xuất');
+        if (typeof window.dừngKimTimeout !== 'undefined') clearTimeout(window.dừngKimTimeout);
+        if (typeof kichHoatBoDemDungKim === 'function') kichHoatBoDemDungKim();
+    }
+
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+        executeUIUpdate(headingForDial, headingForText);
+    });
+}
 // =========================================================================
 // 📺 ENGINE ĐIỀU KHIỂN CHẾ ĐỘ PHÓNG TO / FULLSCREEN
 // =========================================================================
