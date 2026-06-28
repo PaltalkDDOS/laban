@@ -4433,6 +4433,14 @@ function closePermissionModal() {
     if (modal) modal.style.display = 'none';
 }
 
+// Biến cho thuật toán nhiễu mới
+let lastHeadingForNoise = null;
+let lastMotionTime = Date.now();
+let noiseScore = 0;
+let lastMagneticCheck = 0;
+let isMagneticWarningActive = false;
+
+// --- 2. HÀM KHỞI TẠO (CẦN GỌI initMotionListener() trong window.onload) ---
 function initMotionListener() {
     if (typeof DeviceMotionEvent === 'undefined') return;
     window.addEventListener('devicemotion', (event) => {
@@ -4445,7 +4453,23 @@ function initMotionListener() {
     }, { passive: true });
 }
 
-// --- 3. HÀM XỬ LÝ CHÍNH (ĐÃ TIÊM THUẬT TOÁN NHIỄU) ---
+function addOrientationListener() {
+    if (window.orientationListenerAdded) return;
+    const handler = (e) => {
+        if (e.webkitCompassHeading !== undefined || e.alpha !== null) {
+            handleOrientation(e);
+        }
+    };
+    // Android Absolute (Ưu tiên phần cứng)
+    if ('ondeviceorientationabsolute' in window) {
+        window.addEventListener('deviceorientationabsolute', handler, true);
+    } else if ('ondeviceorientation' in window) {
+        window.addEventListener('deviceorientation', handler, true);
+    }
+    window.orientationListenerAdded = true;
+}
+
+// --- 3. HÀM XỬ LÝ CHÍNH (GỐC + TIÊM THUẬT TOÁN NHIỄU AN TOÀN) ---
 function handleOrientation(event) {
     if (window.isCompassHold) {
         if (typeof window.holdedHeading !== 'undefined') {
@@ -4460,7 +4484,7 @@ function handleOrientation(event) {
     let rawHeading = null;
     const now = Date.now();
     
-    // --- PHẦN 1: IOS ACCURACY (GỐC) ---
+    // Xử lý Accuracy iOS (GỐC)
     const accuracy = event.webkitCompassAccuracy;
     if (accuracy !== undefined && accuracy !== null && accuracy >= 0) {
         if (Math.abs(accuracy - lastAccuracy) > 3 || (accuracy > 15 && lastAccuracy <= 15) || (accuracy > 30 && lastAccuracy <= 30) || (accuracy <= 15 && lastAccuracy > 15)) {
@@ -4477,20 +4501,17 @@ function handleOrientation(event) {
     
     if (rawHeading === null) return;
 
-    // --- PHẦN 2: THUẬT TOÁN NHIỄU (BỌC TRY-CATCH AN TOÀN) ---
+    // --- TIÊM THUẬT TOÁN NHIỄU (BỌC TRY-CATCH) ---
     try {
         if (now - lastMagneticCheck > 1000) {
-            // Chỉ chạy trên Android (khi không có webkitCompassAccuracy)
             if (accuracy === undefined || accuracy === null) {
                 checkMagneticQuality(rawHeading);
             }
             lastMagneticCheck = now;
         }
-    } catch (e) {
-        console.log("Noise check skip:", e);
-    }
+    } catch (e) { console.log("Noise check error, ignored:", e); }
 
-    // --- PHẦN 3: LOGIC QUAY KIM (GỐC CỦA BẠN) ---
+    // --- LOGIC QUAY KIM GỐC (BẠN ĐÃ XÁC NHẬN CHẠY ĐƯỢC) ---
     if (document.activeElement?.id === 'compassSlider') return;
     if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
     lastUpdateTime = now;
@@ -4507,7 +4528,6 @@ function handleOrientation(event) {
     
     const absDiff = Math.abs(diff);
     let dynamicFactor = SMOOTH_MIN;
-    
     if (absDiff > 12) dynamicFactor = SMOOTH_MAX;
     else if (absDiff > 1.5) dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
     
@@ -4532,37 +4552,7 @@ function handleOrientation(event) {
     });
 }
 
-// --- 4. HÀM ĐO NHIỄU (ĐÃ TỐI ƯU GỌI HÀM CŨ) ---
-function checkMagneticQuality(currentHeading) {
-    if (lastHeadingForNoise === null) {
-        lastHeadingForNoise = currentHeading;
-        return;
-    }
-
-    let diff = Math.abs(currentHeading - lastHeadingForNoise);
-    if (diff > 180) diff = 360 - diff;
-    const isMoving = (Date.now() - lastMotionTime < 1200);
-
-    if (diff > 30 && !isMoving) {
-        noiseScore = Math.min(10, noiseScore + 4);
-    } else if (isMoving) {
-        noiseScore = Math.max(0, noiseScore - 3);
-    } else if (diff < 10) {
-        noiseScore = Math.max(0, noiseScore - 1);
-    }
-
-    // Phán quyết: Gọi hàm updateMagneticStatus có sẵn của bạn
-    if (noiseScore >= 6) {
-        updateMagneticStatus(31); // 31 > 30 -> Hiện NHIỄU NẶNG
-    } else if (noiseScore >= 3) {
-        updateMagneticStatus(20); // 20 > 15 -> Hiện NHIỄU NHẸ
-    } else {
-        updateMagneticStatus(0);  // TÍN HIỆU TỐT
-    }
-    lastHeadingForNoise = currentHeading;
-}
-
-// --- 5. GIỮ NGUYÊN HÀM GỐC ---
+// --- 4. CÁC HÀM HỖ TRỢ (GỐC) ---
 function executeUIUpdate(headingDial, headingText) {
     if (typeof updateCompassUI === 'function') updateCompassUI(headingText); 
     if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); 
@@ -4577,6 +4567,44 @@ function updateMagneticStatus(acc) {
     if (acc > 15 && acc <= 30) { bg = '#ff9800'; txt = "NHIỄU NHẸ"; } 
     else if (acc > 30) { bg = '#f44336'; txt = "NHIỄU NẶNG"; }
     if (text.innerText !== txt) { dot.style.background = bg; text.innerText = txt; }
+}
+
+// --- 5. HÀM THUẬT TOÁN NHIỄU (MỚI) ---
+function checkMagneticQuality(currentHeading) {
+    if (lastHeadingForNoise === null) {
+        lastHeadingForNoise = currentHeading;
+        return;
+    }
+    let diff = Math.abs(currentHeading - lastHeadingForNoise);
+    if (diff > 180) diff = 360 - diff;
+    const isMoving = (Date.now() - lastMotionTime < 1200);
+
+    if (diff > 30 && !isMoving) {
+        noiseScore = Math.min(10, noiseScore + 4);
+    } else if (isMoving) {
+        noiseScore = Math.max(0, noiseScore - 3);
+    } else if (diff < 10) {
+        noiseScore = Math.max(0, noiseScore - 1);
+    }
+
+    if (noiseScore >= 6) {
+        updateMagneticStatus(31); // Kích hoạt NHIỄU NẶNG
+        showMagneticToast();
+    } else if (noiseScore >= 3) {
+        updateMagneticStatus(20); // Kích hoạt NHIỄU NHẸ
+    } else {
+        updateMagneticStatus(0);  // Kích hoạt TÍN HIỆU TỐT
+    }
+    lastHeadingForNoise = currentHeading;
+}
+
+function showMagneticToast() {
+    if (isMagneticWarningActive) return;
+    isMagneticWarningActive = true;
+    if (typeof showToast === 'function') {
+        showToast("⚠️ Nhiễu từ trường mạnh! Di chuyển sang khu vực khác.", true);
+    }
+    setTimeout(() => { isMagneticWarningActive = false; }, 10000);
 }
 
 // =========================================================================
