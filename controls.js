@@ -482,17 +482,33 @@ function tinhHanCuuTinhTheoNam(inputDoSoHoacSon, namHienTai) {
         warnings.push(`[Lưu Niên Phi Tinh]: Phương vị gặp phải sát khí của ${thongTinSaoHienTai.ten}.`);
     }
     // =========================================================================
-    // 🚀 ĐÃ CẬP NHẬT: ĐỒNG BỘ NỘI DUNG VĂN BẢN ĐẠI VẬN 9 & TIỂU VẬN LƯU NIÊN KHẢO SÁT
+    // ⚙️ BỘ ĐIỀU HỢP NGÔN NGỮ: CHUYỂN ĐỔI KÝ HIỆU HƯỚNG SANG TIẾNG VIỆT
+    // =========================================================================
+    const mapHuongViet = { 
+        "N": "Bắc", "S": "Nam", "E": "Đông", "W": "Tây", 
+        "NE": "Đông Bắc", "NW": "Tây Bắc", "SE": "Đông Nam", "SW": "Tây Nam" 
+    };
+    const tenHuongDaiCucViet = mapHuongViet[codeHuongDaiCuc] || codeHuongDaiCuc;
+
+    // =========================================================================
+    // 🚀 ĐÃ SỬA TRIỆT ĐỂ: GIẤU TRỨNG CẢNH BÁO CHỐNG LỖI DƯ DẤU CHẤM • TRÊN UI
     // =========================================================================
     if (warnings.length === 0) {
         return {
-            thongTinSao: `✅ <b>[ĐẠI VẬN 9 - HẠ NGUYÊN]</b><br>• Lưu Niên Vận Khí Năm ${nam}: Sơn vị ${sonName} (Hướng lớn ${codeHuongDaiCuc}) Đạt Trạng Thái Bình Hòa Cát Lành. Phương vị đón nhận sinh khí: ${thongTinSaoHienTai.ten}.`,
+            thongTinSao: `<span style="display:block; margin: 4px 0 6px 0; font-size: 0.95rem;"><b>[ĐẠI VẬN 9 - HẠ NGUYÊN]</b></span>` + 
+                         `<span style="display:block; text-align: left; font-weight: normal; line-height: 1.5; padding: 4px 10px; background: rgba(255,255,255,0.03); border-radius: 4px;">` +
+                         `• Lưu Niên Vận Khí Năm ${nam}: Sơn vị ${sonName} (Hướng lớn ${tenHuongDaiCucViet}) Đạt Trạng Thái Bình Hòa Cát Lành.<br>` +
+                         `• Phương vị đón nhận sinh khí: ${thongTinSaoHienTai.ten}.</span>`,
             meoGiaiHan: `💡 Bố trí trạch pháp Vận 9: ${thongTinSaoHienTai.giaiPhap}`
         };
     }
 
     return {
-        thongTinSao: `⚠️ <b>[ĐẠI VẬN 9 - HẠ NGUYÊN]</b><br>• CẢNH BÁO TIỂU VẬN NĂM ${nam}: Khu vực tọa độ Sơn ${sonName} phạm phải cấu trúc khí trường xấu:<br>• ${warnings.join("<br>• ")}`,
+        // TUYỆT CHIÊU: Đặt ẩn trong thẻ comment để ép UI nhận hộp ĐỎ nhưng biến dấu chấm thành vô hình
+        thongTinSao: `<!--⚠️--><span style="display:block; margin: 4px 0 6px 0; font-size: 0.95rem;"><b>[ĐẠI VẬN 9 - HẠ NGUYÊN]</b></span>` + 
+                     `<span style="display:block; text-align: left; font-weight: normal; line-height: 1.5; padding: 4px 10px; background: rgba(0,0,0,0.15); border-radius: 4px;">` +
+                     `• CẢNH BÁO TIỂU VẬN NĂM ${nam}: Khu vực tọa độ Sơn ${sonName} phạm phải cấu trúc khí trường xấu:<br>` +
+                     `• ${warnings.join("<br>• ")}</span>`,
         meoGiaiHan: `💡 Mật pháp điều tiết đồng bộ: Tránh tuyệt đối việc đập phá, động thổ tại góc độ phân châm này. Áp dụng giải pháp: ${thongTinSaoHienTai.giaiPhap}`
     };
 }
@@ -2286,10 +2302,15 @@ const DATA_THANSAT = {
     },
     THAP_NHI_CHI_ARR: ["Ty", "Suu", "Dan", "Mao", "Thin", "Tỵ", "Ngo", "Mui", "Than", "Dau", "Tuat", "Hoi"],
     THAP_NHI_CHI_VIET: ["Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"],
+    
+    // 🔴 ĐÃ SỬA: Bổ sung đầy đủ toàn vẹn 24 Sơn vị (Gồm Can, Chi và Tứ Duy) để chống bẫy undefined
     BO_CHUYEN_DOI_NGON_NGU: {
         "Tý": "Ty", "Sửu": "Suu", "Dần": "Dan", "Mão": "Mao", "Thìn": "Thin", "Tỵ": "Tỵ",
-        "Ngọ": "Ngo", "Mùi": "Mui", "Thân": "Than", "Dậu": "Dau", "Tuất": "Tuat", "Hợi": "Hoi"
+        "Ngọ": "Ngo", "Mùi": "Mui", "Thân": "Than", "Dậu": "Dau", "Tuất": "Tuat", "Hợi": "Hoi",
+        "Nhâm": "Nham", "Quý": "Quy", "Giáp": "Giap", "Ất": "At", "Bính": "Binh", "Đinh": "Dinh",
+        "Canh": "Canh", "Tân": "Tan", "Cấn": "Can", "Tốn": "Ton", "Khôn": "Khon", "Càn": "Can"
     },
+    
     tamSatPhanCham: {
         "Dan Ngo Tuat": { huongChuQuet: "N", canhcai: ["Hoi", "Ty", "Suu"], text: "Vùng Sát Khí chạy dọc Phương Bắc (Tây Bắc - Chính Bắc - Đông Bắc)" },
         "Than Ty Thin": { huongChuQuet: "S", canhcai: ["Tỵ", "Ngo", "Mui"], text: "Vùng Sát Khí chạy dọc Phương Nam (Đông Nam - Chính Nam - Tây Nam)" },
@@ -2324,18 +2345,29 @@ const DATA_THANSAT = {
     }
 };
 
-// Bộ nhận diện phân rã bản chất cấu trúc lõi của Tam Sát (Độc quyền đắc pháp)
-function getChiTietTamSat(cuc, diaChiLienQuoi) {
+// =========================================================================
+// 🛠️ PHÂN HỆ CÁC HÀM XỬ LÝ TOÁN PHÁP ĐỒNG BỘ TRẮC ĐỊA
+// =========================================================================
+
+/**
+ * [ID: SAT-DETAIL-01] Hàm getChiTietTamSat
+ * 🔴 ĐÃ SỬA: Đồng bộ hóa toàn bộ các Key con bên trong sang dạng chuỗi chuẩn hóa hệ thống
+ * (Trùng khớp răng rắc với mảng quét khí tamSatPhanCham của lõi thuật toán)
+ */
+function getChiTietTamSat(cucKhongDau, diaChiLienQuoiKhongDau) {
     const cấuHìnhPhânRã = {
-        "ThânTýThìn": { "Tỵ": "Kiếp Sát (Hao tài, thương tổn)", "Ngọ": "Tai Sát (Tai nạn, bệnh tật)", "Mùi": "Tuế Sát (Trì trệ, quan phi)" },
-        "DầnNgọTuất": { "Hợi": "Kiếp Sát (Hao tài, thương tổn)", "Tý": "Tai Sát (Tai nạn, bệnh tật)", "Sửu": "Tuế Sát (Trì trệ, quan phi)" },
-        "HợiMãoMùi":  { "Thân": "Kiếp Sát (Hao tài, thương tổn)", "Dậu": "Tai Sát (Tai nạn, bệnh tật)", "Tuất": "Tuế Sát (Trì trệ, quan phi)" },
-        "TỵDậuSửu":   { "Dần": "Kiếp Sát (Hao tài, thương tổn)", "Mão": "Tai Sát (Tai nạn, bệnh tật)", "Thìn": "Tuế Sát (Trì trệ, quan phi)" }
+        "ThanTyThin": { "Tỵ": "Kiếp Sát (Hao tài, thương tổn)", "Ngo": "Tai Sát (Tai nạn, bệnh tật)", "Mui": "Tuế Sát (Trì trệ, quan phi)" },
+        "DanNgoTuat": { "Hoi": "Kiếp Sát (Hao tài, thương tổn)", "Ty": "Tai Sát (Tai nạn, bệnh tật)", "Suu": "Tuế Sát (Trì trệ, quan phi)" },
+        "HoiMaoMui":  { "Than": "Kiếp Sát (Hao tài, thương tổn)", "Dau": "Tai Sát (Tai nạn, bệnh tật)", "Tuat": "Tuế Sát (Trì trệ, quan phi)" },
+        "TỵDauSuu":   { "Dan": "Kiếp Sát (Hao tài, thương tổn)", "Mao": "Tai Sát (Tai nạn, bệnh tật)", "Thin": "Tuế Sát (Trì trệ, quan phi)" }
     };
-    return cấuHìnhPhânRã[cuc]?.[diaChiLienQuoi] || "Tam Sát Lưu Niên";
+    return cấuHìnhPhânRã[cucKhongDau]?.[diaChiLienQuoiKhongDau] || "Tam Sát Lưu Niên";
 }
 
-// Hàm nội bộ tự động biên dịch số độ thành tên Sơn vị hẹp chính xác tuyệt đối (Chống lỗi Undefined)
+/**
+ * [ID: COMPASS-MATH-01] Hàm dịchĐộ SốThànhTênSơn
+ * Chuyển đổi chuẩn xác từ số độ thực địa sang tên 24 Sơn vị hẹp hòi 15đ độ phân giải cao.
+ */
 function dịchĐộSốThànhTênSơn(degree) {
     const normalized = ((degree % 360) + 360) % 360;
     const chuỗiSơnLầnLượt = [
@@ -2346,7 +2378,10 @@ function dịchĐộSốThànhTênSơn(degree) {
     return chuỗiSơnLầnLượt[index] || "Tý";
 }
 
-// Giữ lại hàm logic đối xứng
+/**
+ * [ID: COMPASS-MATH-02] Hàm getHuongDoiXung
+ * Thuật toán đối xung tìm vị trí Tuế Phá chính tông của năm khảo sát.
+ */
 function getHuongDoiXung(huong) {
     const map = { "Bắc": "Nam", "Nam": "Bắc", "Đông": "Tây", "Tây": "Đông", "Đông Bắc": "Tây Nam", "Tây Nam": "Đông Bắc", "Đông Nam": "Tây Bắc", "Tây Bắc": "Đông Nam" };
     return map[huong] || huong;
