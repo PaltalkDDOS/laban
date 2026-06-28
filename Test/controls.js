@@ -4208,6 +4208,7 @@ window.onload = function() {
     if (typeof recalculateFate === 'function') recalculateFate();
     
     initCompassPermission();
+	initMotionListener();   // ← Thêm dòng này
 };
 
 // =========================================================================
@@ -4375,10 +4376,13 @@ function addOrientationListener() {
         }
     };
 
+    // Ưu tiên absolute nếu có
     if ('ondeviceorientationabsolute' in window) {
         window.addEventListener('deviceorientationabsolute', handler, true);
+        console.log("✅ Đã kích hoạt deviceorientationabsolute");
     } else if ('ondeviceorientation' in window) {
         window.addEventListener('deviceorientation', handler, true);
+        console.log("📱 Đã kích hoạt deviceorientation thông thường");
     } else {
         const btn = document.getElementById('auto-detect-btn');
         if (btn) btn.style.display = 'none';
@@ -4433,40 +4437,45 @@ function closePermissionModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// ====================== BIẾN TOÀN CỤC CHO PHẦN ĐO NHIỄU ======================
+// ====================== BIẾN TOÀN CỤC ======================
 let lastHeadingForNoise = null;
 let lastMotionTime = Date.now();
 let noiseScore = 0;
 let lastMagneticCheck = 0;
 let isMagneticWarningActive = false;
 
-// ====================== KHỞI TẠO LẮNG NGHE ======================
+// ====================== KHỞI TẠO LẮNG NGHE (QUAN TRỌNG) ======================
 function addOrientationListener() {
     if (window.orientationListenerAdded) return;
 
+    // Ưu tiên deviceorientationabsolute (Android lấy trực tiếp từ Magnetometer)
     if ('ondeviceorientationabsolute' in window) {
         window.addEventListener('deviceorientationabsolute', handleOrientation, { passive: true });
-        console.log("✅ Đã kích hoạt deviceorientationabsolute");
+        console.log("✅ Đã kích hoạt deviceorientationabsolute (Android chuẩn)");
     } else {
         window.addEventListener('deviceorientation', handleOrientation, { passive: true });
         console.log("📱 Đã kích hoạt deviceorientation thông thường");
     }
+
     window.orientationListenerAdded = true;
 }
 
+// ====================== KHỞI TẠO GIA TỐC KẾ ======================
 function initMotionListener() {
     if (typeof DeviceMotionEvent === 'undefined') return;
+
     window.addEventListener('devicemotion', (event) => {
         if (!event.accelerationIncludingGravity) return;
         const { x = 0, y = 0, z = 0 } = event.accelerationIncludingGravity;
         const totalAccel = Math.sqrt(x*x + y*y + z*z);
+
         if (totalAccel > 0.5 || Math.abs(x) > 0.35 || Math.abs(y) > 0.35 || Math.abs(z) > 0.35) {
             lastMotionTime = Date.now();
         }
     }, { passive: true });
 }
 
-// ====================== HÀM XỬ LÝ LA BÀN CHÍNH (ĐÃ HỢP NHẤT) ======================
+// ====================== HÀM XỬ LÝ LA BÀN CHÍNH ======================
 function handleOrientation(event) {
     if (window.isCompassHold) {
         if (typeof window.holdedHeading !== 'undefined') {
@@ -4482,6 +4491,7 @@ function handleOrientation(event) {
     let rawHeading = null;
     const now = Date.now();
 
+    // Lấy hướng thô
     if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
         rawHeading = event.webkitCompassHeading;
     } else if (event.alpha !== undefined && event.alpha !== null) {
@@ -4496,7 +4506,7 @@ function handleOrientation(event) {
         lastMagneticCheck = now;
     }
 
-    // === LOGIC LÀM MƯỢT (GIỮ NGUYÊN HOÀN TOÀN HÀM GỐC CỦA ANH) ===
+    // === LOGIC LÀM MƯỢT KIM QUAY (GIỮ NGUYÊN GỐC) ===
     if (document.activeElement?.id === 'compassSlider') return;
     if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
     lastUpdateTime = now;
@@ -4542,6 +4552,7 @@ function checkMagneticQuality(currentHeading, event) {
     const text = document.getElementById('accuracy-text');
     if (!dot || !text) return;
 
+    // iOS - Phần cứng
     if (event.webkitCompassAccuracy !== undefined && event.webkitCompassAccuracy !== null) {
         const acc = event.webkitCompassAccuracy;
         if (acc > 30) {
@@ -4600,6 +4611,7 @@ function updateMagneticUI(statusText, color) {
 function showMagneticToast() {
     if (isMagneticWarningActive) return;
     isMagneticWarningActive = true;
+
     if (typeof showToast === 'function') {
         showToast("⚠️ Nhiễu từ trường mạnh! Di chuyển sang khu vực khác hoặc vẽ số 8 để hiệu chỉnh.", true);
     }
