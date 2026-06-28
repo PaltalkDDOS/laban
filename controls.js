@@ -1621,32 +1621,47 @@ const DATA_HOA_GIAI = {
     }
 };
 
-// ====================== MẬT PHÁP HÓA GIẢI THEO NGỮ CẢNH CẤU TRÚC ======================
+// =========================================================================
+// 🔮 MẬT PHÁP HÓA GIẢI THEO NGỮ CẢNH CẤU TRÚC (BẢN FIX LỖI CÚ PHÁP)
+// =========================================================================
 function sinhMatPhapHoaGiai(mucDich, cungSat, hanhChu, phuongHuong, code) {
-    let hanhPhuongVi = (typeof phươngVịThiếtLập !== 'undefined' && phươngVịThiếtLập[code]) 
-                       ? phươngVịThiếtLập[code].ngũHành : "Thổ";
+    // 🟢 ĐÃ SỬA CHÍ CHÍNH XÁC: Viết liền mạch không khoảng trống biến phươngVịThiếtLập
+    let hanhPhuongViGoc = (typeof phươngVịThiếtLập !== 'undefined' && phươngVịThiếtLập[code]) 
+                          ? phươngVịThiếtLập[code].ngũHành : "Tho";
     
-    // Đồng bộ hóa chuẩn đầu vào tiếng Việt có dấu sang không dấu viết tắt nếu cần để bọc lót ma trận tra cứu
-    let keyHanhChu = hanhChu;
-    if (hanhChu === "Thủy") keyHanhChu = "Thuy";
-    if (hanhChu === "Hỏa") keyHanhChu = "Hoa";
-    if (hanhChu === "Mộc") keyHanhChu = "Moc";
-    if (hanhChu === "Thổ") keyHanhChu = "Tho";
-    if (hanhChu === "Kim") keyHanhChu = "Kim";
+    // Đột phá Việt hóa: Biến chữ không dấu ngầm (Thuy, Moc...) thành chữ hiển thị trên giao diện mượt mà
+    const tuDienHanhViet = { "Thuy": "Thủy", "Moc": "Mộc", "Hoa": "Hỏa", "Tho": "Thổ", "Kim": "Kim" };
+    let hanhPhuongVi = tuDienHanhViet[hanhPhuongViGoc] || "Thổ";
+    
+    // Đồng bộ tuyệt đối: Ép phao khóa hành sang dạng có dấu để khớp 100% với DATA_HOA_GIAI
+    const maTranKhoaHanh = {
+        "Moc": "Mộc", "Mộc": "Mộc",
+        "Hoa": "Hỏa", "Hỏa": "Hỏa",
+        "Tho": "Thổ", "Thổ": "Thổ",
+        "Kim": "Kim",
+        "Thuy": "Thủy", "Thủy": "Thủy"
+    };
+    let keyHanhChu = maTranKhoaHanh[hanhChu] || hanhChu;
 
+    // Tiến hành bốc trích giải pháp chi tiết từ kho tàng
     let data = DATA_HOA_GIAI[cungSat] ? DATA_HOA_GIAI[cungSat][keyHanhChu] : null;
     
-    // Thuật toán nội suy động phòng thủ: Tự động tính toán giải pháp dựa trên Ngũ hành nếu không khớp data tĩnh
+    // Mạng lưới phòng thủ nếu không khớp dữ liệu tĩnh thì tự động nội suy
     if (!data) {
         data = {
-            phap: `Điều hòa, cân bằng dòng khí trường xung khắc trực diện giữa hành chủ (${hanhChu}) với phương vị bản thể ${phuongHuong} mang năng lượng của uế tinh ${cungSat}.`,
+            phap: `Điều hòa, cân bằng dòng khí trường xung khắc trực diện giữa hành chủ (${keyHanhChu}) với phương vị bản thể ${phuongHuong} (${hanhPhuongVi}) mang năng lượng của uế tinh ${cungSat}.`,
             vat: "Chuông Gió Đồng Thất Tinh hoặc Quả Cầu Thạch Anh màu trung tính để trung hòa địa long mạch"
         };
     }
 
-    let phuongPhapBaoQuoc = data.phap.replace(/\${phuongHuong}/g, phuongHuong).replace(/\${hanhPhuongVi}/g, hanhPhuongVi);
+    // Hoán đổi sạch sẽ chuỗi văn bản mẫu của dữ liệu
+    let phuongPhapBaoQuoc = data.phap;
+    phuongPhapBaoQuoc = phuongPhapBaoQuoc.split('${phuongHuong}').join(phuongHuong).split('\${phuongHuong}').join(phuongHuong);
+    phuongPhapBaoQuoc = phuongPhapBaoQuoc.split('${hanhPhuongVi}').join(hanhPhuongVi).split('\${hanhPhuongVi}').join(hanhPhuongVi);
+    
     let vatPhamToiThuong = data.vat;
     
+    // Thiết lập ngữ cảnh thông minh dựa trên mục đích sử dụng
     const currentConfig = ConfigPhongThuy[mucDich] || { title: "Vị trí hạng mục", isCat: true };
     let thuyetMinhViTri = "";
     
@@ -1659,12 +1674,12 @@ function sinhMatPhapHoaGiai(mucDich, cungSat, hanhChu, phuongHuong, code) {
     }
 
     return `
-    <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(223, 183, 108, 0.2); border-radius: 12px; padding: 15px; margin-top: 15px;">
+    <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(223, 183, 108, 0.2); border-radius: 12px; padding: 15px; margin-top: 15px; font-family: sans-serif;">
         <h4 style="color: #dfb76c; margin: 0 0 10px 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">◆ Mật Pháp Hóa Giải Pháp Bảo</h4>
-        <div style="margin-bottom: 15px; font-size: 0.88rem; color: #ddd; line-height: 1.6;">
+        <div style="margin-bottom: 15px; font-size: 0.88rem; color: #ddd; line-height: 1.6; text-align: left;">
             <strong style="color: #ff9f0a;">[Phân Tích Cấu Trúc]:</strong> ${thuyetMinhViTri}
         </div>
-        <div style="padding: 12px; background: rgba(255, 59, 48, 0.08); border-left: 4px solid #ff3b30; border-radius: 6px; font-size: 0.88rem;">
+        <div style="padding: 12px; background: rgba(255, 59, 48, 0.08); border-left: 4px solid #ff3b30; border-radius: 6px; font-size: 0.88rem; text-align: left;">
             <strong style="color: #ff3b30;">[Vật Phẩm Tối Thượng Pháp Bảo]:</strong> <span style="color:#fff; font-weight:700;">${vatPhamToiThuong}</span>
         </div>
     </div>`;
