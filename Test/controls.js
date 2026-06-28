@@ -4440,22 +4440,6 @@ let noiseScore = 0;
 let lastMagneticCheck = 0;
 let isMagneticWarningActive = false;
 
-// ====================== KHỞI TẠO LẮNG NGHE (QUAN TRỌNG) ======================
-function addOrientationListener() {
-    if (window.orientationListenerAdded) return;
-
-    // Ưu tiên deviceorientationabsolute (Android lấy trực tiếp từ Magnetometer)
-    if ('ondeviceorientationabsolute' in window) {
-        window.addEventListener('deviceorientationabsolute', handleOrientation, { passive: true });
-        console.log("✅ Đã kích hoạt deviceorientationabsolute (Android chuẩn)");
-    } else {
-        window.addEventListener('deviceorientation', handleOrientation, { passive: true });
-        console.log("📱 Đã kích hoạt deviceorientation thông thường");
-    }
-
-    window.orientationListenerAdded = true;
-}
-
 // ====================== KHỞI TẠO GIA TỐC KẾ ======================
 function initMotionListener() {
     if (typeof DeviceMotionEvent === 'undefined') return;
@@ -4471,7 +4455,7 @@ function initMotionListener() {
     }, { passive: true });
 }
 
-// ====================== HÀM XỬ LÝ LA BÀN CHÍNH ======================
+// ====================== HÀM XỬ LÝ LA BÀN CHÍNH (ĐÃ HỢP NHẤT) ======================
 function handleOrientation(event) {
     if (window.isCompassHold) {
         if (typeof window.holdedHeading !== 'undefined') {
@@ -4496,7 +4480,7 @@ function handleOrientation(event) {
 
     if (rawHeading === null) return;
 
-    // Đo nhiễu định kỳ
+    // === ĐO NHIỄU ĐỊNH KỲ (1 GIÂY/LẦN) ===
     if (now - lastMagneticCheck > 1000) {
         checkMagneticQuality(rawHeading, event);
         lastMagneticCheck = now;
@@ -4562,7 +4546,7 @@ function checkMagneticQuality(currentHeading, event) {
         return;
     }
 
-    // Android
+    // Android - Logic thông minh
     if (lastHeadingForNoise === null) {
         lastHeadingForNoise = currentHeading;
         updateMagneticUI("TÍN HIỆU ỔN", "#4caf50");
