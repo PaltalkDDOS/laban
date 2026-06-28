@@ -4187,17 +4187,23 @@ let currentScale = 1; let initialScale = 1; let startDistance = 0;
 let isZooming = false;
 let currentX = 0; let currentY = 0; let startX = 0; let startY = 0;
 
-// Biến điều khiển luồng kim quay
-let lastHeading = null;
-let rafId = null;
-let lastUpdateTime = 0;
-const SMOOTH_MIN = 0.08;
-const SMOOTH_MAX = 0.55;
-const THROTTLE_MS = 16; // ~60fps
 
-// Biến trạng thái địa từ
-let magneticDeclination = 0;
-let lastAccuracy = 0; 
+
+// ====================== BIẾN TOÀN CỤC CẦN THIẾT ======================
+let lastHeading = null;           // Biến quan trọng nhất để kim quay!
+let rafId = null;                 // Dùng để hủy animation cũ
+let lastUpdateTime = 0;           // Dùng để kiểm soát tốc độ quay
+let magneticDeclination = 0;      // Độ lệch từ
+const THROTTLE_MS = 40;           // Tốc độ khung hình (40ms = 25fps rất mượt)
+const SMOOTH_MIN = 0.08;          // Độ mượt thấp
+const SMOOTH_MAX = 0.55;          // Độ mượt cao
+
+// Các biến đo nhiễu (giữ nguyên của bạn)
+let lastHeadingForNoise = null;
+let lastMotionTime = Date.now();
+let noiseScore = 0;
+let lastMagneticCheck = 0;
+let isMagneticWarningActive = false;
 
 /**
  * 🪐 HÀM KHỞI TẠO DUY NHẤT TOÀN HỆ THỐNG
@@ -4433,12 +4439,6 @@ function closePermissionModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// ====================== BIẾN TOÀN CỤC ======================
-let lastHeadingForNoise = null;
-let lastMotionTime = Date.now();
-let noiseScore = 0;
-let lastMagneticCheck = 0;
-let isMagneticWarningActive = false;
 
 // ====================== KHỞI TẠO LẮNG NGHE (QUAN TRỌNG) ======================
 function addOrientationListener() {
@@ -4487,7 +4487,7 @@ function handleOrientation(event) {
     let rawHeading = null;
     const now = Date.now();
 
-    // Lấy hướng thô (giữ nguyên logic gốc)
+    // Lấy hướng thô
     if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
         rawHeading = event.webkitCompassHeading;
     } else if (event.alpha !== undefined && event.alpha !== null) {
@@ -4496,13 +4496,13 @@ function handleOrientation(event) {
 
     if (rawHeading === null) return;
 
-    // Đo nhiễu định kỳ (1 giây/lần)
+    // Đo nhiễu định kỳ
     if (now - lastMagneticCheck > 1000) {
         checkMagneticQuality(rawHeading, event);
         lastMagneticCheck = now;
     }
 
-    // === LOGIC LÀM MƯỢT KIM QUAY (GIỮ NGUYÊN HOÀN TOÀN) ===
+    // === LOGIC LÀM MƯỢT KIM QUAY (GIỮ NGUYÊN GỐC) ===
     if (document.activeElement?.id === 'compassSlider') return;
     if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
     lastUpdateTime = now;
@@ -4519,12 +4519,8 @@ function handleOrientation(event) {
 
     const absDiff = Math.abs(diff);
     let dynamicFactor = SMOOTH_MIN;
-    
-    if (absDiff > 12) {
-        dynamicFactor = SMOOTH_MAX;
-    } else if (absDiff > 1.5) {
-        dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
-    }
+    if (absDiff > 12) dynamicFactor = SMOOTH_MAX;
+    else if (absDiff > 1.5) dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
 
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
