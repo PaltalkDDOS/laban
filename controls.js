@@ -5765,7 +5765,6 @@ window.addEventListener('load', () => {
     khoiTaoTinhNangVuotGat();
 
     // CHỈ NẠP PWA VÀ MANIFEST KHI CHẠY TRÊN SERVER (LOCALHOST HOẶC HTTPS)
-    // Chặn hoàn toàn việc báo lỗi CORS nếu mở bằng file:///
     if (window.location.protocol !== 'file:') {
         // Thêm manifest
         if (!document.querySelector('link[rel="manifest"]')) {
@@ -5778,6 +5777,14 @@ window.addEventListener('load', () => {
         // Đăng ký Service Worker
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./sw.js').catch(err => console.error(err));
+        }
+
+        // === NÂNG CẤP: KÍCH HOẠT LƯU TRỮ VĨNH VIỄN (PERSISTENT STORAGE) ===
+        // Yêu cầu trình duyệt không được tự ý xóa cache của PWA này
+        if (navigator.storage && navigator.storage.persist) {
+            navigator.storage.persist().then(persistent => {
+                console.log("⚡ PWA Persistent Storage:", persistent ? "BẬT (Bất tử)" : "TẮT");
+            });
         }
     }
 
