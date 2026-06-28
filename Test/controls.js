@@ -4369,27 +4369,6 @@ function requestPermission() {
     }
 }
 
-function addOrientationListener() {
-    if (window.orientationListenerAdded) return;
-
-    const handler = (e) => {
-        if (e.webkitCompassHeading !== undefined || e.alpha !== null) {
-            handleOrientation(e);
-        }
-    };
-
-    if ('ondeviceorientationabsolute' in window) {
-        window.addEventListener('deviceorientationabsolute', handler, true);
-    } else if ('ondeviceorientation' in window) {
-        window.addEventListener('deviceorientation', handler, true);
-    } else {
-        const btn = document.getElementById('auto-detect-btn');
-        if (btn) btn.style.display = 'none';
-        return;
-    }
-    window.orientationListenerAdded = true;
-}
-
 function showPermissionResetGuide() {
     const modal = document.getElementById('iosPermissionModal');
     if (!modal) return;
