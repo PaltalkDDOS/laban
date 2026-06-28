@@ -5933,58 +5933,51 @@ document.addEventListener('visibilitychange', () => {
 // 🚀 6. THÀNH PHẦN MỞ RỘNG - NHẬN TÍN HIỆU CẬP NHẬT & ADS
 // =========================================================================
 const AppControl = {
-    // Hàm hiển thị Toast thông báo nhanh
+    // Hàm hiển thị Banner Cập nhật (Nhỏ gọn, sang trọng)
+    showUpdateBanner: () => {
+        if (document.getElementById('update-banner')) return;
+
+        const banner = document.createElement('div');
+        banner.id = 'update-banner';
+        // Chỉ là một thanh ngang nhỏ ở đáy màn hình
+        banner.style.cssText = `
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 350px;
+            background: #1c1c1e; border: 1px solid #dfb76c; border-radius: 12px;
+            padding: 12px 15px; z-index: 999999;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            animation: slideIn 0.4s ease-out;
+        `;
+
+        banner.innerHTML = `
+            <div style="flex:1; margin-right:10px;">
+                <h4 style="margin:0; color:#dfb76c; font-size:0.85rem; font-family:sans-serif;">Đã cập nhật bản mới!</h4>
+            </div>
+            <button onclick="window.location.reload()" style="background:#dfb76c; color:#000; border:none; padding:6px 12px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:0.75rem;">
+                TẢI LẠI
+            </button>
+            <style>
+                @keyframes slideIn { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+            </style>
+        `;
+        document.body.appendChild(banner);
+    },
+
     showNotification: (message) => {
         let toast = document.getElementById('pwa-toast');
         if (!toast) {
             toast = document.createElement('div');
             toast.id = 'pwa-toast';
-            toast.style.cssText = "position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:#333; color:#fff; padding:12px 25px; border-radius:30px; z-index:999999; font-size:14px; box-shadow:0 4px 15px rgba(0,0,0,0.3);";
+            toast.style.cssText = "position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#333; color:#fff; padding:8px 15px; border-radius:20px; z-index:99999; font-size:0.8rem; box-shadow:0 4px 10px rgba(0,0,0,0.3);";
             document.body.appendChild(toast);
         }
         toast.innerText = message;
         toast.style.display = 'block';
-        toast.animate([{ opacity: 0, transform: 'translate(-50%, 20px)' }, { opacity: 1, transform: 'translate(-50%, 0)' }], { duration: 500, fill: 'forwards' });
-        setTimeout(() => {
-            toast.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500 }).onfinish = () => toast.style.display = 'none';
-        }, 3000);
+        setTimeout(() => toast.style.display = 'none', 3000);
     },
 
-    // Hàm hiển thị Banner Cập nhật nhỏ gọn, tinh tế
-    showUpdateModal: () => {
-        if (document.getElementById('update-popup')) return;
-
-        const modal = document.createElement('div');
-        modal.id = 'update-popup';
-        // Style: Nhỏ gọn, nằm sát đáy, bo góc sang trọng
-        modal.style.cssText = `
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
-            width: 90%; max-width: 400px; 
-            background: rgba(28, 28, 30, 0.95); 
-            border: 1px solid #dfb76c; 
-            border-radius: 12px; 
-            padding: 15px 20px; 
-            z-index: 999999; 
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
-        `;
-        
-        modal.innerHTML = `
-            <div style="flex: 1; margin-right: 15px;">
-                <h4 style="margin: 0; color: #dfb76c; font-size: 0.9rem; font-family: sans-serif;">Đã có phiên bản mới!</h4>
-                <p style="margin: 3px 0 0 0; color: #ccc; font-size: 0.8rem;">Cập nhật để la bàn chính xác nhất.</p>
-            </div>
-            <button onclick="window.location.reload()" style="background: #dfb76c; border: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.8rem; color: #000;">
-                TẢI LẠI
-            </button>
-        `;
-        document.body.appendChild(modal);
-    },
-    
-    showAds: () => {
-        console.log("🚀 Hệ thống Ads sẵn sàng");
-    }
+    showAds: () => console.log("🚀 Ads đã sẵn sàng")
 };
 
 // Lắng nghe tín hiệu từ sw.js
@@ -5993,9 +5986,8 @@ if ('serviceWorker' in navigator) {
         if (!event.data) return;
         
         if (event.data.type === 'VERSION_UPDATED') {
-            // Hiển thị cả thông báo nhỏ (Toast) và Bảng cập nhật (Modal)
-            AppControl.showNotification("✨ La Bàn vừa cập nhật!");
-            AppControl.showUpdateModal();
+            // Hiển thị thanh banner nhỏ gọn thay vì popup khổng lồ
+            AppControl.showUpdateBanner();
         }
         
         if (event.data.type === 'SHOW_ADS') {
