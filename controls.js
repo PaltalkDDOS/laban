@@ -5927,79 +5927,55 @@ document.addEventListener('visibilitychange', () => {
 });
 
 // =========================================================================
-// 🚀 6. THÀNH PHẦN MỞ RỘNG - NHẬN TÍN HIỆU CẬP NHẬT & ADS
+// 🚀 6. THÀNH PHẦN MỞ RỘNG - NHẬN TÍN HIỆU CẬP NHẬT & ADS (KHÔNG ĐỤNG CODE GỐC)
 // =========================================================================
 const AppControl = {
-    // Hàm hiển thị Thông báo Cập nhật thanh lịch (Trên đầu, bo tròn, tự tan biến)
-    showUpdateBanner: () => {
-        if (document.getElementById('update-banner')) return;
-
-        const banner = document.createElement('div');
-        banner.id = 'update-banner';
-        
-        // CSS: Nằm trên cùng, bo tròn 4 góc (50px), nền tối mờ sang trọng
-        banner.style.cssText = `
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            background: rgba(28, 28, 30, 0.95);
-            border: 1px solid rgba(223, 183, 108, 0.4);
-            border-radius: 50px;
-            padding: 10px 25px;
-            z-index: 999999;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-            backdrop-filter: blur(10px);
-            animation: slideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            pointer-events: none;
-        `;
-
-        banner.innerHTML = `
-            <span style="color:#dfb76c; font-size:0.85rem; font-family:sans-serif; font-weight:600; white-space:nowrap;">
-                ✨ Ứng dụng đã cập nhật phiên bản mới
-            </span>
-            <style>
-                @keyframes slideDown { 
-                    from { opacity: 0; transform: translate(-50%, -50px); } 
-                    to { opacity: 1; transform: translate(-50%, 0); } 
-                }
-            </style>
-        `;
-        
-        document.body.appendChild(banner);
-
-        // Tự biến mất mềm mại sau 3.5 giây
-        setTimeout(() => {
-            banner.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 600, fill: 'forwards' })
-                  .onfinish = () => banner.remove();
-        }, 3500);
-    },
-
-    // Hàm hiển thị Toast Notification (Giữ nguyên cũ)
+    // Hàm hiển thị Toast Notification thông minh
     showNotification: (message) => {
         let toast = document.getElementById('pwa-toast');
         if (!toast) {
             toast = document.createElement('div');
             toast.id = 'pwa-toast';
-           
-            toast.style.cssText = "position:fixed; top:20px; left:50%; transform:translateX(-50%); background:rgba(223, 183, 108, 0.9); color:#000; padding:10px 20px; border-radius:50px; z-index:999999; font-size:0.9rem; font-weight:bold; box-shadow:0 4px 15px rgba(0,0,0,0.3);";
             document.body.appendChild(toast);
         }
         toast.innerText = message;
         toast.style.display = 'block';
-        setTimeout(() => toast.style.display = 'none', 3000);
-    },
+        
+        // Hiệu ứng mượt mà quý phái
+        toast.animate([
+            { opacity: 0, transform: 'translate(-50%, -20px)' },
+            { opacity: 1, transform: 'translate(-50%, 0)' }
+        ], { duration: 500, fill: 'forwards' });
 
-    showAds: () => console.log("🚀 Ads đã sẵn sàng")
+        // Tự động biến mất sau 3 giây
+        setTimeout(() => {
+            toast.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500 })
+                .onfinish = () => toast.style.display = 'none';
+        }, 3000);
+    },
+    
+    // Hàm chờ sẵn để bạn chèn quảng cáo sau này
+    showAds: () => {
+        console.log("🚀 Hệ thống Ads đã sẵn sàng kích hoạt");
+        // Bạn có thể chèn đoạn code gọi Banner Ads hoặc Popup quảng cáo ở đây
+    }
 };
 
-// Lắng nghe tín hiệu từ sw.js
+// Lắng nghe thông điệp độc lập gửi từ sw.js về giao diện công khai
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.addEventListener('message', (event) => {
         if (!event.data) return;
         
+        // Khi sw.js phát tín hiệu đã cập nhật xong dữ liệu cache mới
         if (event.data.type === 'VERSION_UPDATED') {
-            // Hiển thị thanh banner nhỏ gọn thay vì popup khổng lồ
-            AppControl.showUpdateBanner();
+            AppControl.showNotification("✨ Ứng dụng đã được cập nhật bản mới!");
+            
+            // Nếu bạn muốn bật cái popup div HTML lên thay vì Toast chữ, hãy mở comment dòng dưới:
+             const popup = document.getElementById('update-popup');
+            if (popup) popup.style.display = 'flex';
         }
         
+        // Khi sw.js phát tín hiệu muốn gọi quảng cáo
         if (event.data.type === 'SHOW_ADS') {
             AppControl.showAds();
         }
