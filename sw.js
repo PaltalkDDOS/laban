@@ -1,4 +1,4 @@
-const CACHE_NAME = 'laban-pt-v10'; // Đã đổi version để update
+const CACHE_NAME = 'laban-pt-v11'; // Đã đổi version để update
 
 const ASSETS_TO_CACHE = [
   'LabanThanSo.html',
