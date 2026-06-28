@@ -1,4 +1,4 @@
-const CACHE_NAME = 'laban-pt-v5';
+const CACHE_NAME = 'laban-pt-v7'; // Đã đổi version để update
 
 const ASSETS_TO_CACHE = [
   'LabanThanSo.html',
@@ -13,15 +13,15 @@ const ASSETS_TO_CACHE = [
   'controls.js'
 ];
 
-// Sự kiện Cài đặt (Install) - Đã tối ưu nạp an toàn từng file
+// 1. Sự kiện Cài đặt (Install) - GIỮ NGUYÊN SỰ CẨN THẬN CỦA BẠN
+// Cách này an toàn vì nếu 1 file lỗi, nó không làm hỏng cả App
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      // Chuyển sang map để nạp từng file, file nào lỗi 404 sẽ bị bỏ qua, không làm sập cả PWA
       return Promise.all(
         ASSETS_TO_CACHE.map((url) => {
           return cache.add(url).catch((err) => {
-            console.warn(`PWA Không thể tải file này vào bộ nhớ đệm (Có thể sai tên hoặc thiếu file): ${url}`, err);
+            console.warn(`PWA Không thể tải file: ${url}`, err);
           });
         })
       );
@@ -30,17 +30,15 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Sự kiện Kích hoạt (Activate)
+// 2. Sự kiện Kích hoạt (Activate) - GIỮ NGUYÊN TÍNH NĂNG GIAO TIẾP VỚI TAB
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) return caches.delete(cache);
-        })
+        cacheNames.filter(name => name !== CACHE_NAME).map(name => caches.delete(name))
       );
     }).then(() => {
-        // Gửi lệnh cho toàn bộ tab đang mở
+        // Gửi lệnh cho toàn bộ tab đang mở để biết đã update
         self.clients.matchAll().then(clients => {
             clients.forEach(client => {
                 client.postMessage({ type: 'VERSION_UPDATED' });
@@ -51,17 +49,31 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Chiến lược nạp mạng (Fetch)
+// 3. Chiến lược Fetch (Tối ưu hóa chạy Offline)
+// Kết hợp giữa tốc độ của Cache và sự ổn định khi không có mạng
 self.addEventListener('fetch', (event) => {
-    // Chỉ xử lý các request tải file thông thường (http/https)
-    if (!event.request.url.startsWith('http')) return;
+    // Chỉ xử lý các request GET (không xử lý POST/PUT...)
+    if (event.request.method !== 'GET') return;
 
     event.respondWith(
         caches.match(event.request).then((cachedResponse) => {
+            // Nếu có cache, trả về ngay (Siêu tốc)
             if (cachedResponse) {
                 return cachedResponse;
             }
-            return fetch(event.request);
+            
+            // Nếu không có cache, đi tải trên mạng
+            return fetch(event.request).then((networkResponse) => {
+                // Tự động lưu bản mới tải về vào cache để lần sau dùng offline
+                const responseClone = networkResponse.clone();
+                caches.open(CACHE_NAME).then((cache) => {
+                    cache.put(event.request, responseClone);
+                });
+                return networkResponse;
+            }).catch(() => {
+                // Nếu offline mà không có cache, trả về index.html (Tránh lỗi trắng trang)
+                return caches.match('index.html');
+            });
         })
     );
 });
