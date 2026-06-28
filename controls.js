@@ -5927,43 +5927,52 @@ document.addEventListener('visibilitychange', () => {
 });
 
 // =========================================================================
-// 🚀 HỆ THỐNG THÔNG BÁO CẬP NHẬT CHUYÊN NGHIỆP
-// =========================================================================
-// =========================================================================
 // 🚀 6. THÀNH PHẦN MỞ RỘNG - NHẬN TÍN HIỆU CẬP NHẬT & ADS
 // =========================================================================
 const AppControl = {
-    // Hàm hiển thị Banner Cập nhật (Nhỏ gọn, sang trọng)
+    // Hàm hiển thị Thông báo Cập nhật thanh lịch (Trên đầu, bo tròn, tự tan biến)
     showUpdateBanner: () => {
         if (document.getElementById('update-banner')) return;
 
         const banner = document.createElement('div');
         banner.id = 'update-banner';
-        // Chỉ là một thanh ngang nhỏ ở đáy màn hình
+        
+        // CSS: Nằm trên cùng, bo tròn 4 góc (50px), nền tối mờ sang trọng
         banner.style.cssText = `
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 350px;
-            background: #1c1c1e; border: 1px solid #dfb76c; border-radius: 12px;
-            padding: 12px 15px; z-index: 999999;
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            animation: slideIn 0.4s ease-out;
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(28, 28, 30, 0.95);
+            border: 1px solid rgba(223, 183, 108, 0.4);
+            border-radius: 50px;
+            padding: 10px 25px;
+            z-index: 999999;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            backdrop-filter: blur(10px);
+            animation: slideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
         `;
 
         banner.innerHTML = `
-            <div style="flex:1; margin-right:10px;">
-                <h4 style="margin:0; color:#dfb76c; font-size:0.85rem; font-family:sans-serif;">Đã cập nhật bản mới!</h4>
-            </div>
-            <button onclick="window.location.reload()" style="background:#dfb76c; color:#000; border:none; padding:6px 12px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:0.75rem;">
-                TẢI LẠI
-            </button>
+            <span style="color:#dfb76c; font-size:0.85rem; font-family:sans-serif; font-weight:600; white-space:nowrap;">
+                ✨ Ứng dụng đã cập nhật phiên bản mới
+            </span>
             <style>
-                @keyframes slideIn { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+                @keyframes slideDown { 
+                    from { opacity: 0; transform: translate(-50%, -50px); } 
+                    to { opacity: 1; transform: translate(-50%, 0); } 
+                }
             </style>
         `;
+        
         document.body.appendChild(banner);
+
+        // Tự biến mất mềm mại sau 3.5 giây
+        setTimeout(() => {
+            banner.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 600, fill: 'forwards' })
+                  .onfinish = () => banner.remove();
+        }, 3500);
     },
 
+    // Hàm hiển thị Toast Notification (Giữ nguyên cũ)
     showNotification: (message) => {
         let toast = document.getElementById('pwa-toast');
         if (!toast) {
