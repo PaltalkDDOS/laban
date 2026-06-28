@@ -4198,6 +4198,7 @@ const THROTTLE_MS = 16; // ~60fps
 // Biến trạng thái địa từ
 let magneticDeclination = 0;
 let lastAccuracy = 0; 
+let isMagneticWarningActive = false;
 
 /**
  * 🪐 HÀM KHỞI TẠO DUY NHẤT TOÀN HỆ THỐNG
@@ -4433,29 +4434,10 @@ function closePermissionModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// ====================== BIẾN TOÀN CỤC ======================
-let lastHeadingForNoise = null;
-let lastMotionTime = Date.now();
-let noiseScore = 0;
-let lastMagneticCheck = 0;
-let isMagneticWarningActive = false;
+// =========================================================================
+// 🧭 BỘ XỬ LÝ LÕI ĐỊA HƯỚNG VÀ LÀM MƯỢT (CORE ENGINE)
+// =========================================================================
 
-// ====================== KHỞI TẠO GIA TỐC KẾ ======================
-function initMotionListener() {
-    if (typeof DeviceMotionEvent === 'undefined') return;
-
-    window.addEventListener('devicemotion', (event) => {
-        if (!event.accelerationIncludingGravity) return;
-        const { x = 0, y = 0, z = 0 } = event.accelerationIncludingGravity;
-        const totalAccel = Math.sqrt(x*x + y*y + z*z);
-
-        if (totalAccel > 0.5 || Math.abs(x) > 0.35 || Math.abs(y) > 0.35 || Math.abs(z) > 0.35) {
-            lastMotionTime = Date.now();
-        }
-    }, { passive: true });
-}
-
-// ====================== HÀM XỬ LÝ LA BÀN CHÍNH (ĐÃ HỢP NHẤT) ======================
 function handleOrientation(event) {
     if (window.isCompassHold) {
         if (typeof window.holdedHeading !== 'undefined') {
@@ -4463,30 +4445,35 @@ function handleOrientation(event) {
             if (typeof window.currentHeading !== 'undefined') window.currentHeading = window.holdedHeading;
             
             if (rafId) cancelAnimationFrame(rafId);
-            rafId = requestAnimationFrame(() => executeUIUpdate(window.holdedHeading, window.holdedHeading));
+            rafId = requestAnimationFrame(() => {
+                executeUIUpdate(window.holdedHeading, window.holdedHeading);
+            });
         }
-        return;
+        return; 
     }
 
     let rawHeading = null;
     const now = Date.now();
+    
+    const accuracy = event.webkitCompassAccuracy;
+    if (accuracy !== undefined && accuracy !== null && accuracy >= 0) {
+        if (Math.abs(accuracy - lastAccuracy) > 3 || 
+           (accuracy > 15 && lastAccuracy <= 15) || 
+           (accuracy > 30 && lastAccuracy <= 30) ||
+           (accuracy <= 15 && lastAccuracy > 15)) {
+            lastAccuracy = accuracy;
+            updateMagneticStatus(accuracy); 
+        }
+    }
 
-    // Lấy hướng thô
     if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
         rawHeading = event.webkitCompassHeading;
     } else if (event.alpha !== undefined && event.alpha !== null) {
         rawHeading = (360 - event.alpha) % 360;
     }
-
+    
     if (rawHeading === null) return;
 
-    // === ĐO NHIỄU ĐỊNH KỲ (1 GIÂY/LẦN) ===
-    if (now - lastMagneticCheck > 1000) {
-        checkMagneticQuality(rawHeading, event);
-        lastMagneticCheck = now;
-    }
-
-    // === LOGIC LÀM MƯỢT KIM QUAY (GIỮ NGUYÊN GỐC) ===
     if (document.activeElement?.id === 'compassSlider') return;
     if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
     lastUpdateTime = now;
@@ -4500,23 +4487,28 @@ function handleOrientation(event) {
     let diff = rawHeading - lastHeading;
     if (diff > 180) diff -= 360;
     if (diff < -180) diff += 360;
-
+    
     const absDiff = Math.abs(diff);
     let dynamicFactor = SMOOTH_MIN;
-    if (absDiff > 12) dynamicFactor = SMOOTH_MAX;
-    else if (absDiff > 1.5) dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
-
+    
+    if (absDiff > 12) {
+        dynamicFactor = SMOOTH_MAX;
+    } else if (absDiff > 1.5) {
+        dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
+    }
+    
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
 
-    const headingForText = lastHeading;
-    const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360;
+    const headingForText = lastHeading; 
+    const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
 
     if (typeof window.currentHeading !== 'undefined') window.currentHeading = headingForText;
 
     if (absDiff > 0.4) {
         const btnTongLuan = document.getElementById('btn-tong-luan');
         if (btnTongLuan) btnTongLuan.classList.remove('vượng-xuất');
+        if (typeof window.dừngKimTimeout !== 'undefined') clearTimeout(window.dừngKimTimeout);
         if (typeof kichHoatBoDemDungKim === 'function') kichHoatBoDemDungKim();
     }
 
@@ -4526,76 +4518,31 @@ function handleOrientation(event) {
     });
 }
 
-// ====================== HÀM ĐO NHIỄU ======================
-function checkMagneticQuality(currentHeading, event) {
+function executeUIUpdate(headingDial, headingText) {
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingText); 
+    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); 
+    if (typeof recalculateFate === 'function') recalculateFate();
+}
+
+function updateMagneticStatus(acc) {
     const dot = document.getElementById('accuracy-dot');
     const text = document.getElementById('accuracy-text');
     if (!dot || !text) return;
 
-    // iOS - Phần cứng
-    if (event.webkitCompassAccuracy !== undefined && event.webkitCompassAccuracy !== null) {
-        const acc = event.webkitCompassAccuracy;
-        if (acc > 30) {
-            updateMagneticUI("NHIỄU NẶNG", "#f44336");
-            showMagneticToast();
-        } else if (acc > 15) {
-            updateMagneticUI("NHIỄU NHẸ", "#ff9800");
-        } else {
-            updateMagneticUI("TÍN HIỆU TỐT", "#4caf50");
-        }
-        return;
+    let bg = '#4caf50', txt = "TÍN HIỆU TỐT";
+    
+    if (acc > 15 && acc <= 30) {
+        bg = '#ff9800';
+        txt = "NHIỄU NHẸ";
+    } else if (acc > 30) {
+        bg = '#f44336';
+        txt = "NHIỄU NẶNG";
     }
 
-    // Android - Logic thông minh
-    if (lastHeadingForNoise === null) {
-        lastHeadingForNoise = currentHeading;
-        updateMagneticUI("TÍN HIỆU ỔN", "#4caf50");
-        return;
+    if (text.innerText !== txt) {
+        dot.style.background = bg;
+        text.innerText = txt;
     }
-
-    let diff = Math.abs(currentHeading - lastHeadingForNoise);
-    if (diff > 180) diff = 360 - diff;
-
-    const isMoving = (Date.now() - lastMotionTime < 1200);
-
-    if (diff > 30 && !isMoving) {
-        noiseScore = Math.min(10, noiseScore + 4);
-    } else if (isMoving) {
-        noiseScore = Math.max(0, noiseScore - 3);
-    } else if (diff < 10) {
-        noiseScore = Math.max(0, noiseScore - 1);
-    }
-
-    if (noiseScore >= 6) {
-        updateMagneticUI("NHIỄU TỪ TRƯỜNG", "#ff9800");
-        showMagneticToast();
-    } else if (noiseScore >= 3) {
-        updateMagneticUI("NHIỄU NHẸ", "#ff9800");
-    } else {
-        updateMagneticUI("TÍN HIỆU ỔN", "#4caf50");
-    }
-
-    lastHeadingForNoise = currentHeading;
-}
-
-// ====================== HỖ TRỢ ======================
-function updateMagneticUI(statusText, color) {
-    const dot = document.getElementById('accuracy-dot');
-    const text = document.getElementById('accuracy-text');
-    if (text && text.innerText !== statusText) {
-        text.innerText = statusText;
-        if (dot) dot.style.background = color;
-    }
-}
-
-function showMagneticToast() {
-    if (isMagneticWarningActive) return;
-    isMagneticWarningActive = true;
-
-    if (typeof showToast === 'function') {
-        showToast("⚠️ Nhiễu từ trường mạnh! Di chuyển sang khu vực khác hoặc vẽ số 8 để hiệu chỉnh.", true);
-    }
-    setTimeout(() => { isMagneticWarningActive = false; }, 10000);
 }
 
 // =========================================================================
