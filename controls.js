@@ -5978,7 +5978,8 @@ const AppControl = {
         if (!toast) {
             toast = document.createElement('div');
             toast.id = 'pwa-toast';
-            toast.style.cssText = "position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#333; color:#fff; padding:8px 15px; border-radius:20px; z-index:99999; font-size:0.8rem; box-shadow:0 4px 10px rgba(0,0,0,0.3);";
+           
+            toast.style.cssText = "position:fixed; top:20px; left:50%; transform:translateX(-50%); background:rgba(223, 183, 108, 0.9); color:#000; padding:10px 20px; border-radius:50px; z-index:999999; font-size:0.9rem; font-weight:bold; box-shadow:0 4px 15px rgba(0,0,0,0.3);";
             document.body.appendChild(toast);
         }
         toast.innerText = message;
