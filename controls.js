@@ -5929,57 +5929,64 @@ document.addEventListener('visibilitychange', () => {
 // =========================================================================
 // 🚀 HỆ THỐNG THÔNG BÁO CẬP NHẬT CHUYÊN NGHIỆP
 // =========================================================================
+// =========================================================================
+// 🚀 6. THÀNH PHẦN MỞ RỘNG - NHẬN TÍN HIỆU CẬP NHẬT & ADS
+// =========================================================================
 const AppControl = {
-    // Hàm hiển thị Popup Cập nhật (Tự tạo, không cần sửa HTML)
-    showUpdateUI: () => {
-        // Kiểm tra nếu đã có rồi thì không tạo thêm
-        if (document.getElementById('update-popup')) return;
-
-        // Tạo thẻ div cha (Overlay)
-        const div = document.createElement('div');
-        div.id = 'update-popup';
-        // Style trực tiếp (Đảm bảo luôn hiện trên cùng)
-        div.style.cssText = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 999999; display: flex; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box;";
-
-        // Nội dung bên trong
-        div.innerHTML = `
-            <div style="background: #1a1a1a; padding: 25px; border-radius: 15px; text-align: center; color: #fff; width: 100%; max-width: 300px; border: 1px solid #dfb76c; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-                <div style="font-size: 40px; margin-bottom: 10px;">🚀</div>
-                <h3 style="margin: 0 0 10px 0; color: #dfb76c;">Đã cập nhật bản mới!</h3>
-                <p style="font-size: 0.9rem; color: #ccc;">Hệ thống vừa được nâng cấp để chạy mượt mà hơn.</p>
-                <button onclick="window.location.reload()" style="background: #dfb76c; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; width: 100%;">TẢI LẠI NGAY</button>
-            </div>
-        `;
-
-        document.body.appendChild(div);
-        console.log("✅ Popup cập nhật đã được tạo động!");
-    },
-
-    // Hàm hiển thị Toast Notification (Hàm cũ của bạn)
+    // Hàm hiển thị Toast thông báo nhanh
     showNotification: (message) => {
         let toast = document.getElementById('pwa-toast');
         if (!toast) {
             toast = document.createElement('div');
             toast.id = 'pwa-toast';
-            // CSS cho toast đơn giản
-            toast.style.cssText = "position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #333; color: #fff; padding: 10px 20px; border-radius: 20px; z-index: 99999;";
+            toast.style.cssText = "position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:#333; color:#fff; padding:12px 25px; border-radius:30px; z-index:999999; font-size:14px; box-shadow:0 4px 15px rgba(0,0,0,0.3);";
             document.body.appendChild(toast);
         }
         toast.innerText = message;
         toast.style.display = 'block';
-        setTimeout(() => toast.style.display = 'none', 3000);
+        toast.animate([{ opacity: 0, transform: 'translate(-50%, 20px)' }, { opacity: 1, transform: 'translate(-50%, 0)' }], { duration: 500, fill: 'forwards' });
+        setTimeout(() => {
+            toast.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500 }).onfinish = () => toast.style.display = 'none';
+        }, 3000);
+    },
+
+    // Hàm tạo bảng Cập nhật "Đã mắt" (Tự tạo, không cần sửa HTML)
+    showUpdateModal: () => {
+        if (document.getElementById('update-popup')) return;
+
+        const modal = document.createElement('div');
+        modal.id = 'update-popup';
+        modal.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999999; display:flex; justify-content:center; align-items:center; padding:20px; box-sizing:border-box;";
+        
+        modal.innerHTML = `
+            <div style="background:#1c1c1e; padding:30px; border-radius:20px; text-align:center; color:#fff; width:100%; max-width:320px; border:2px solid #dfb76c; box-shadow:0 0 25px rgba(223,183,108,0.3);">
+                <div style="font-size:50px; margin-bottom:15px;">✨</div>
+                <h3 style="margin:0 0 10px 0; color:#dfb76c; font-family:sans-serif;">Đã có bản cập nhật!</h3>
+                <p style="font-size:0.95rem; color:#ccc; margin-bottom:25px; line-height:1.5;">Hệ thống vừa được nâng cấp để la bàn chạy mượt mà và chính xác hơn.</p>
+                <button onclick="window.location.reload()" style="background:#dfb76c; color:#000; border:none; padding:14px 20px; border-radius:12px; font-weight:bold; cursor:pointer; width:100%; font-size:1rem;">CẬP NHẬT NGAY</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+    
+    showAds: () => {
+        console.log("🚀 Hệ thống Ads sẵn sàng");
     }
 };
 
-// Lắng nghe thông điệp từ sw.js
+// Lắng nghe tín hiệu từ sw.js
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.addEventListener('message', (event) => {
         if (!event.data) return;
         
-        // Khi sw.js báo có bản mới -> Hiện Popup xịn (Tự tạo)
         if (event.data.type === 'VERSION_UPDATED') {
-            console.log("🛠️ PWA: Nhận tín hiệu cập nhật...");
-            AppControl.showUpdateUI(); 
+            // Hiển thị cả thông báo nhỏ (Toast) và Bảng cập nhật (Modal)
+            AppControl.showNotification("✨ La Bàn vừa cập nhật!");
+            AppControl.showUpdateModal();
+        }
+        
+        if (event.data.type === 'SHOW_ADS') {
+            AppControl.showAds();
         }
     });
 }
