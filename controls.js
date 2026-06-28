@@ -5930,18 +5930,19 @@ document.addEventListener('visibilitychange', () => {
 // 🚀 HỆ THỐNG THÔNG BÁO CẬP NHẬT CHUYÊN NGHIỆP
 // =========================================================================
 const AppControl = {
-    // UI Cập nhật phiên bản mới (Đẹp và chuyên nghiệp)
     showUpdateUI: () => {
+        // Kiểm tra xem đã có chưa
         if (document.getElementById('update-popup')) return;
 
+        // Ép z-index lên mức tối đa của trình duyệt
         const html = `
-        <div id="update-popup" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);width:90%;max-width:400px;background:#1c1c1e;border:1px solid #dfb76c;border-radius:15px;padding:20px;text-align:center;z-index:999999;box-shadow:0 10px 30px rgba(0,0,0,0.5);animation: slideUp 0.5s ease;">
-            <div style="font-size:2.5rem;margin-bottom:10px;">✨</div>
-            <h4 style="color:#dfb76c;margin:0 0 10px 0;">Đã có phiên bản mới!</h4>
-            <p style="color:#ddd;font-size:0.9rem;margin-bottom:20px;">Để đảm bảo tính năng hoạt động tốt nhất, hãy cập nhật la bàn ngay.</p>
-            <div style="display:flex;gap:10px;">
-                <button onclick="window.location.reload()" style="flex:1;padding:12px;background:#dfb76c;color:#000;border:none;border-radius:10px;font-weight:bold;cursor:pointer;">CẬP NHẬT NGAY</button>
-                <button onclick="document.getElementById('update-popup').remove()" style="flex:1;padding:12px;background:#333;color:#fff;border:none;border-radius:10px;cursor:pointer;">Để sau</button>
+        <div id="update-popup" style="position:fixed !important; bottom:20px !important; left:50% !important; transform:translateX(-50%) !important; width:90% !important; max-width:400px !important; background:#1c1c1e !important; border:2px solid #dfb76c !important; border-radius:15px !important; padding:20px !important; text-align:center !important; z-index:2147483647 !important; box-shadow:0 10px 30px rgba(0,0,0,0.8) !important; animation: slideUp 0.5s ease; font-family: sans-serif !important;">
+            <div style="font-size:2.5rem; margin-bottom:10px;">✨</div>
+            <h4 style="color:#dfb76c; margin:0 0 10px 0; font-size:1.2rem;">Đã có phiên bản mới!</h4>
+            <p style="color:#ddd; font-size:0.9rem; margin-bottom:20px;">Cập nhật ngay để La Bàn hoạt động ổn định nhất.</p>
+            <div style="display:flex; gap:10px;">
+                <button onclick="window.location.reload()" style="flex:1; padding:12px; background:#dfb76c; color:#000; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">CẬP NHẬT NGAY</button>
+                <button onclick="document.getElementById('update-popup').remove()" style="flex:1; padding:12px; background:#333; color:#fff; border:none; border-radius:10px; cursor:pointer;">Để sau</button>
             </div>
         </div>
         <style>
@@ -5951,11 +5952,11 @@ const AppControl = {
         const div = document.createElement('div');
         div.innerHTML = html;
         document.body.appendChild(div);
+        console.log("✅ Popup cập nhật đã được tiêm vào DOM với z-index tối đa!");
     },
 
-    // Hàm quảng cáo (Dành cho sau này)
     showAds: () => {
-        console.log("🚀 Hệ thống Ads đã sẵn sàng kích hoạt");
+        console.log("🚀 Hệ thống Ads sẵn sàng");
     }
 };
 
