@@ -5950,21 +5950,34 @@ const AppControl = {
         }, 3000);
     },
 
-    // Hàm tạo bảng Cập nhật "Đã mắt" (Tự tạo, không cần sửa HTML)
+    // Hàm hiển thị Banner Cập nhật nhỏ gọn, tinh tế
     showUpdateModal: () => {
         if (document.getElementById('update-popup')) return;
 
         const modal = document.createElement('div');
         modal.id = 'update-popup';
-        modal.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999999; display:flex; justify-content:center; align-items:center; padding:20px; box-sizing:border-box;";
+        // Style: Nhỏ gọn, nằm sát đáy, bo góc sang trọng
+        modal.style.cssText = `
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
+            width: 90%; max-width: 400px; 
+            background: rgba(28, 28, 30, 0.95); 
+            border: 1px solid #dfb76c; 
+            border-radius: 12px; 
+            padding: 15px 20px; 
+            z-index: 999999; 
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+        `;
         
         modal.innerHTML = `
-            <div style="background:#1c1c1e; padding:30px; border-radius:20px; text-align:center; color:#fff; width:100%; max-width:320px; border:2px solid #dfb76c; box-shadow:0 0 25px rgba(223,183,108,0.3);">
-                <div style="font-size:50px; margin-bottom:15px;">✨</div>
-                <h3 style="margin:0 0 10px 0; color:#dfb76c; font-family:sans-serif;">Đã có bản cập nhật!</h3>
-                <p style="font-size:0.95rem; color:#ccc; margin-bottom:25px; line-height:1.5;">Hệ thống vừa được nâng cấp để la bàn chạy mượt mà và chính xác hơn.</p>
-                <button onclick="window.location.reload()" style="background:#dfb76c; color:#000; border:none; padding:14px 20px; border-radius:12px; font-weight:bold; cursor:pointer; width:100%; font-size:1rem;">CẬP NHẬT NGAY</button>
+            <div style="flex: 1; margin-right: 15px;">
+                <h4 style="margin: 0; color: #dfb76c; font-size: 0.9rem; font-family: sans-serif;">Đã có phiên bản mới!</h4>
+                <p style="margin: 3px 0 0 0; color: #ccc; font-size: 0.8rem;">Cập nhật để la bàn chính xác nhất.</p>
             </div>
+            <button onclick="window.location.reload()" style="background: #dfb76c; border: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.8rem; color: #000;">
+                TẢI LẠI
+            </button>
         `;
         document.body.appendChild(modal);
     },
