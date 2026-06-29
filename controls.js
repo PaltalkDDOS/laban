@@ -1556,8 +1556,10 @@ function sinhLuanGiaiThienThoi(code, overrideYear) {
     if (overrideYear) {
         currentYear = parseInt(overrideYear, 10);
     } else {
+        // 🟢 ĐÃ SỬA: Đồng bộ cơ chế nhận diện năm lịch pháp ngắn hạn
         const txtSurveyYear = document.getElementById('surveyYear');
-        currentYear = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : layNamKhaoSatThienVan();
+        const valYear = txtSurveyYear ? txtSurveyYear.value.trim() : "";
+        currentYear = (valYear !== "" && !isNaN(valYear)) ? parseInt(valYear, 10) : layNamKhaoSatThienVan();
     }
     
     // ⚙️ THUẬT TOÁN ĐÃ HIỆU CHUẨN: Xử lý mượt mà toàn bộ số âm lịch pháp (Anti-Negative Year Bug)
