@@ -391,11 +391,13 @@ function getNguHoangInfo(year) {
 
 /**
  * [ID: SAT-NGUHOANG-02] Hàm getNguHoangAlert
- * ĐÃ SỬA: Đồng bộ hóa hoàn toàn trục tính toán với lõi thiên văn để cảnh báo đập phá thời gian thực chuẩn xác.
+ * ĐÃ SỬA: Đồng bộ hóa hoàn toàn trục tính toán năm động, giữ nguyên 100% văn bản gốc
  */
-function getNguHoangAlert(currentHuong) {
+function getNguHoangAlert(currentHuong, year) { // 🟢 Thêm tham số year vào đây
     if (!currentHuong) return "";
-    const namTinhVan = layNamKhaoSatThienVan(); 
+    
+    // 🟢 SỬA DÒNG NÀY: Ăn theo năm nhập vào, giống hệt hàm getNguHoangInfo của ông
+    const namTinhVan = (year && !isNaN(year)) ? parseInt(year, 10) : layNamKhaoSatThienVan(); 
     
     let saoNienDai = (11 - (namTinhVan % 9)) % 9;
     if (saoNienDai === 0) saoNienDai = 9;
@@ -417,6 +419,8 @@ function getNguHoangAlert(currentHuong) {
     if (inputCode === "TrungCung") {
         return `⚠️ [LƯU NIÊN CHIẾU CỤC]: Niên độ thiên văn ${namTinhVan} Ngũ Hoàng nhập Trung Cung. Giữ tâm nhà tĩnh lặng, tránh cải tạo lớn tại không gian cốt lõi này.`;
     }
+    
+    // ✊ GIỮ NGUYÊN VẸN 100% CHUỖI CHỮ XỊN CỦA ÔNG KHÔNG SAI MỘT DẤU CHẤM
     return `⚠️ [THIÊN THỜI PHẠM SÁT]: Phương vị ${currentHuong.toUpperCase()} trong năm ${namTinhVan} phạm NGŨ HOÀNG LIÊM TRINH ĐẠI SÁT. Tuyệt đối bất khả động thổ đập phá kết cấu nền móng để tránh kích động hung khí nguy hiểm.`;
 }
 
@@ -727,7 +731,7 @@ function recalculateFate() {
         giaiThichSao = `Năng lượng niên hạn chủ quản năm tại vị trí trung cung đạt trạng thái an định, thuần khiết cát tường, không xuất hiện cấu trúc xung đột biến động lớn.`;
     }
 
-    const nguhoangAlert = getNguHoangAlert(currentSonHuong);
+    const nguhoangAlert = getNguHoangAlert(currentSonHuong, namKhaoSatThucTe);
 
     let targetContainer = document.getElementById('dien-giai-bo-sung');
     if (!targetContainer) {
