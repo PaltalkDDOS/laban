@@ -6397,7 +6397,7 @@ function tinhNgayGioCatTuongBaoCao(birthYear, sonName, namKhaoSat, thangKhaoSat,
 
     let soNgayTrongThang = new Date(namKhaoSat, thangKhaoSat, 0).getDate();
     const tenChiNamKhaoSat = satTinhMaTran.thaiTueArr[namKhaoSat % 12];
-    const phuongViTamSatNam = satTinhMaTran.tamSat[namKhaoSat % 12 >= 9 || namKhaoSat % 12 <= 2 ? "Than Ty Thin" : namKhaoSat % 12 <= 5 ? "Tỵ Dau Suu" : namKhaoSat % 12 <= 8 ? "Hoi Mao Mui" : "Dan Ngo Tuat"];
+    const phuongViTamSatNam = satTinhMaTran.tamSat[["Than Ty Thin", "Tỵ Dau Suu", "Dan Ngo Tuat", "Hoi Mao Mui"][(namKhaoSat % 12) % 4]];
 
     // Gọi hàm tính toán Lưu Niên đồng bộ
     let thongTinSaoLuuNien = typeof tuDongTinhCuuTinhLuuNien === 'function' ? tuDongTinhCuuTinhLuuNien(sonName, namKhaoSat) : { maSao: 1, isHung: false };
@@ -6551,7 +6551,8 @@ function xayDungBaoCaoLuanGiai(name, degree) {
     const config = globalConfig[mucDich] || { title: "Hạng mục", isCat: true };
     
     const txtSurveyYear = document.getElementById('surveyYear');
-    const namKhaoSat = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
+    // 🟢 ĐÃ SỬA: Chuyển qua check khác rỗng để nhận diện mọi loại năm (1, 2, 3, 4 số)
+    const namKhaoSat = (txtSurveyYear && txtSurveyYear.value.trim() !== '') ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
     const thangKhaoSat = new Date().getMonth() + 1;
 
     const dayStr = document.getElementById('birthDay')?.value || "1";
@@ -6748,12 +6749,18 @@ function xayDungBaoCaoLuanGiai(name, degree) {
         }
     }
 
-    // 8. ĐỒNG BỘ NIÊN HẠN CỬU TINH VÀ THẦN SÁT LƯU NIÊN
-    let tenSaoChuQuan = "Khí trường bình ổn";
+// =========================================================================
+    // 8. ĐỒNG BỘ NIÊN HẠN CỬU TINH VÀ THẦN SÁT LƯU NIÊN (BẢN FIX CHUẨN KHÔNG LỖI BIẾN)
+    // =========================================================================
+    let tenSaoChuQuan = "Khí trường bình ổn"; // 🟢 PHẢI GIỮ DÒNG NÀY ĐỂ KHAI BÁO BIẾN
+
+    // ⚙️ TOÁN THỨC AN TOÀN CHỐNG SỐ ÂM CHO LỊCH PHÁP
+    let bệĐỡChuKỳBaoCao = Math.floor((namKhaoSat - 1864) / 20);
+    const vanSo = ((bệĐỡChuKỳBaoCao % 9) + 9) % 9 + 1;
+
     if (satTinhs.length > 0) {
         tenSaoChuQuan = satTinhs.map(s => s.ten).join(" / ");
     } else {
-        const vanSo = Math.floor((namKhaoSat - 1864) / 20) % 9 + 1;
         if (PhongThuyCore?.data?.Van?.[vanSo]?.[currentCode]) {
             tenSaoChuQuan = PhongThuyCore.data.Van[vanSo][currentCode].sao + " chiếm đóng phương vị";
         }
