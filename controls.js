@@ -657,6 +657,11 @@ function validateFullDate(day, month, year) {
 // 2. HÀM CHÍNH recalculateFate() - TRÍCH XUẤT TIẾT KHÍ LẬP XUÂN & PHÂN TÁCH 2 TRỤC NĂM
 // =========================================================================
 function recalculateFate() {
+    // 🟢 NÂNG CẤP AN TOÀN: Khai báo tường minh các biến DOM đầu vào để chống sập mạch kịch bản
+    const fateTxt = document.getElementById('fate-txt');
+    const directionsContainer = document.getElementById('directions-container');
+    const listPanelTitle = document.getElementById('list-panel-title');
+
     const name = document.getElementById('userName').value.trim() || "Chủ mệnh";
     const gender = document.getElementById('gender').value;
     const dayStr = document.getElementById('birthDay').value;
@@ -668,17 +673,18 @@ function recalculateFate() {
     const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
 
     if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
-        fateTxt.innerText = `${name}: Đo hướng tự do (Chế độ quét trắc địa hạ tầng - Chưa nhập năm sinh)`;
-        directionsContainer.innerHTML = `<div style="font-size:0.8rem;color:#8a8a8f;text-align:center;padding:15px;font-family:sans-serif;">
-            Vui lòng điền thông tin Ngày - Tháng - Năm sinh chủ mệnh để kích hoạt ma trận đối sánh cát hung bản mệnh đa tầng.
-        </div>`;
-        listPanelTitle.innerText = "Mạng lưới phương vị la bàn";
+        if (fateTxt) fateTxt.innerText = `${name}: Đo hướng tự do (Chế độ quét trắc địa hạ tầng - Chưa nhập năm sinh)`;
+        if (directionsContainer) {
+            directionsContainer.innerHTML = `<div style="font-size:0.8rem;color:#8a8a8f;text-align:center;padding:15px;font-family:sans-serif;">
+                Vui lòng điền thông tin Ngày - Tháng - Năm sinh chủ mệnh để kích hoạt ma trận đối sánh cát hung bản mệnh đa tầng.
+            </div>`;
+        }
+        if (listPanelTitle) listPanelTitle.innerText = "Mạng lưới phương vị la bàn";
+        
         const oldPanel = document.getElementById('dien-giai-bo-sung');
         if (oldPanel) oldPanel.remove();
         
-        // Trả nền la bàn về trạng thái cổ điển sạch khi chưa có dữ liệu năm sinh
         updateBatTrachBackground(null);
-        
         updateCompassUI(currentHeading);
         return;
     }
@@ -688,11 +694,10 @@ function recalculateFate() {
     let y = parseInt(yearStr, 10);
 
     if (!validateFullDate(d, m, y)) {
-        fateTxt.innerText = `${name}: Dữ liệu lịch pháp trùng lặp hoặc sai cấu trúc tháng (Kiểm tra lại)`;
+        if (fateTxt) fateTxt.innerText = `${name}: Dữ liệu lịch pháp trùng lặp hoặc sai cấu trúc tháng (Kiểm tra lại)`;
         return;
     }
 
-    // Tính toán Quẻ mệnh thực tế và kích hoạt ma trận đổ màu nền tự động
     chủMệnh = tínhCungPhi(y, m, d, gender);
     updateBatTrachBackground(chủMệnh);
 
@@ -701,7 +706,7 @@ function recalculateFate() {
     const nhomMenh = bátTrạchMap[chủMệnh]?.group || "Tây Tứ Mệnh";
 
     const nguHoangInfo = getNguHoangInfo(namKhaoSatThucTe); 
-    fateTxt.innerText = `${name}: Cung ${chủMệnh} (${nhomMenh}) - Bản Mệnh Ngũ Hành: ${hanHinhCungPhi} | Năm sinh Âm: ${namAmMệnhChủ} | Thần sát Lưu Niên: ${nguHoangInfo}`;
+    if (fateTxt) fateTxt.innerText = `${name}: Cung ${chủMệnh} (${nhomMenh}) - Bản Mệnh Ngũ Hành: ${hanHinhCungPhi} | Năm sinh Âm: ${namAmMệnhChủ} | Thần sát Lưu Niên: ${nguHoangInfo}`;
 
     let headingToCalculate = isDetailOpen && lockedHeadingAtOpen !== null ? lockedHeadingAtOpen : currentHeading;
     const realHeading = ((headingToCalculate % 360) + 360) % 360; 
@@ -722,7 +727,7 @@ function recalculateFate() {
     } else if (saoChuQuan === '2') {
         giaiThichSao = `Niên hạn năm khảo sát ${namKhaoSatThucTe} gặp sao <b>Nhị Hắc Bệnh Phù</b> quản đại cục tại trung cung, dễ gây suy hao sức đề kháng cơ thể. Nên bố trí an bài phương thức thanh lọc tạp khí âm hàn.`;
     } else if (['3', '4'].includes(saoChuQuan)) {
-        giaiThichSao = `Niên độ thiên văn gặp mộc khí của sao chủ tinh khắc nhẹ vào Thổ khí trung cung. Trạng thái biến thiên ở mức <b>Bình hòa trung tính</b>, không không gian cốt lõi cần thông thoáng sạch sẽ để vận khí tự động điều hòa hưng vượng.`;
+        giaiThichSao = `Niên độ thiên văn gặp mộc khí của sao chủ tinh khắc nhẹ vào Thổ khí trung cung. Trạng thái biến thiên ở mức <b>Bình hòa trung tính</b>, khu vực không gian cốt lõi cần thông thoáng sạch sẽ để vận khí tự động điều hòa hưng vượng.`;
     } else {
         giaiThichSao = `Năng lượng niên hạn chủ quản năm tại vị trí trung cung đạt trạng thái an định, thuần khiết cát tường, không xuất hiện cấu trúc xung đột biến động lớn.`;
     }
@@ -730,7 +735,7 @@ function recalculateFate() {
     const nguhoangAlert = getNguHoangAlert(currentSonHuong);
 
     let targetContainer = document.getElementById('dien-giai-bo-sung');
-    if (!targetContainer) {
+    if (!targetContainer && fateTxt) {
         targetContainer = document.createElement('div');
         targetContainer.id = 'dien-giai-bo-sung';
         targetContainer.style.width = '100%';
@@ -744,9 +749,17 @@ function recalculateFate() {
     const currentConfig = ConfigPhongThuy[mucDich] || { title: "Vị trí / Hướng đang chọn", isCat: true };
     const tenMucDichBinhDan = currentConfig.title;
 
+    // 🔴 ĐÃ FIX LỖI MÀU SẮC 72 HẬU: Thiết lập bộ lọc phân tầng 3 dải màu Đỏ - Vàng - Xanh chính xác tuyệt đối
+    let colorHauRealtime = '#30d158'; // Mặc định xanh (Cát Mạch)
+    if (tongHop.hauInfo.emoji === '🔴' || tongHop.hauInfo.chatLuong?.includes('Tử Quyệt')) {
+        colorHauRealtime = '#ff3b30'; // Đỏ (Tử Quyệt / Đại Không Vong)
+    } else if (tongHop.hauInfo.emoji === '🟡' || tongHop.hauInfo.chatLuong?.includes('Sai Thạc')) {
+        colorHauRealtime = '#ffd700'; // Vàng (Sai Thạc / Tiểu Không Vong)
+    }
+
     const vanInfo = `
         <p style="margin:8px 0; color:#ffd700; font-family: sans-serif;">
-            🌟 <b>Mạch Long Khí 72 Hậu:</b> ${tongHop.hauInfo.ten} — <span style="font-weight:bold; color:${tongHop.hauInfo.emoji === '🔴' ? '#ff3b30' : '#30d158'}">${tongHop.hauInfo.chatLuong}</span><br>
+            🌟 <b>Mạch Long Khí 72 Hậu:</b> ${tongHop.hauInfo.ten} — <span style="font-weight:bold; color:${colorHauRealtime}">${tongHop.hauInfo.chatLuong}</span><br>
             <small style="color:#aaa;">(Phân vị vi phân khí trường ngầm đạt ${tongHop.hauInfo.diem}pt. Thể hiện gốc rễ bền vững lâu dài của mạch đất nền sinh cơ).</small>
         </p>
     `;
@@ -760,19 +773,14 @@ function recalculateFate() {
         </p>`;
     }
 
-    // =========================================================================
-    // 🌍 TOÁN THỨC TỊNH TIẾN LỆCH TÚ & XỬ LÝ ĐIỀU KIỆN HIỂN THỊ THÔNG MINH
-    // =========================================================================
     let declinationValue = typeof magneticDeclination !== 'undefined' ? Number(magneticDeclination) : 0;
     let remoteClientHeading = ((realHeading + declinationValue) % 360 + 360) % 360;
     let remoteSonInfo = layThongTin24Son(remoteClientHeading, chủMệnh, namAmMệnhChủ);
 
-    // 🌟 ĐẠI NÂNG CẤP: Thuật toán biện chứng dịch chuyển đĩa la bàn thực thời cực kỳ trực quan
     let thongTinTracDia = declinationValue !== 0 
         ? `(Độ lệch từ địa phương hiệu chỉnh: ${declinationValue > 0 ? '+' : ''}${declinationValue}° — Đĩa la bàn số tự động điều hướng tịnh tiến nhằm triệt tiêu hoàn toàn nhiễu trường từ tính của thiết bị điện tử, định vị tọa độ lõi).`
         : `(Độ lệch từ tự nhiên: 0° — Đĩa la bàn cơ học vận hành ở trạng thái cân bằng từ trường ổn định, xác lập trục tọa độ gốc địa phương sạch hoàn hảo).`;
 
-    // Thuật toán thông minh: Chỉ dựng HTML khi độ lệch từ có giá trị khác 0
     let htmlKhachPhuongXa = "";
     if (declinationValue !== 0) {
         htmlKhachPhuongXa = `
@@ -785,45 +793,45 @@ function recalculateFate() {
         `;
     }
 
-    targetContainer.innerHTML = `
-        <div style="text-align: center; margin: 10px 0;">
-            <button id="btn-toggle-fengshui" onclick="toggleDienGiaiChiTiet()"
-                    style="background: ${btnBkg}; border: 1px solid var(--gold); color: var(--gold);
-                           padding: 8px 16px; font-size: 0.85rem; border-radius: 4px; cursor: pointer; font-weight: bold; transition: all 0.3s;">
-                ${btnText}
-            </button>
-        </div>
-        <div id="content-dien-giai-chi-tiet" style="display: ${displayStyle}; margin: 10px 0; padding: 14px;
-             background: rgba(223, 183, 108, 0.06); border: 1.5px solid var(--gold); border-radius: 8px;
-             font-size: 0.86rem; line-height: 1.65; text-align: left; color: #fff; font-family: sans-serif;">
-            
-            <p style="margin:0 0 10px 0; color:var(--gold); font-weight:bold; border-bottom:1px solid var(--gold); padding-bottom:6px; letter-spacing:0.5px;">
-                📖 BIỆN CHỨNG KHÍ CỤC CẤU TRÚC HẠNG MỤC KỸ THUẬT
-            </p>
-            
-            <!-- 🎯 ĐỒNG BỘ HOÀN HẢO: Dòng thông báo độc lập, sắc nét, tự động biến thiên theo mốc lệch từ -->
-            <p style="margin:8px 0;">📍 <b>Tọa độ trắc địa thực tế:</b> ${realHeading.toFixed(1)}° ${thongTinTracDia}</p>
-            
-            <p style="margin:8px 0;">📍 <b>Phương vị la bàn số:</b> Ngũ hành từ trường phương vị thuộc <b>${hanhPhuongVi}</b> (Góc quay cảm biến: <b>${Math.round(headingToCalculate)}°</b>).</p>
-            
-            ${htmlKhachPhuongXa}
+    if (targetContainer) {
+        targetContainer.innerHTML = `
+            <div style="text-align: center; margin: 10px 0;">
+                <button id="btn-toggle-fengshui" onclick="toggleDienGiaiChiTiet()"
+                        style="background: ${btnBkg}; border: 1px solid var(--gold); color: var(--gold);
+                               padding: 8px 16px; font-size: 0.85rem; border-radius: 4px; cursor: pointer; font-weight: bold; transition: all 0.3s;">
+                    ${btnText}
+                </button>
+            </div>
+            <div id="content-dien-giai-chi-tiet" style="display: ${displayStyle}; margin: 10px 0; padding: 14px;
+                 background: rgba(223, 183, 108, 0.06); border: 1.5px solid var(--gold); border-radius: 8px;
+                 font-size: 0.86rem; line-height: 1.65; text-align: left; color: #fff; font-family: sans-serif;">
+                
+                <p style="margin:0 0 10px 0; color:var(--gold); font-weight:bold; border-bottom:1px solid var(--gold); padding-bottom:6px; letter-spacing:0.5px;">
+                    📖 BIỆN CHỨNG KHÍ CỤC CẤU TRÚC HẠNG MỤC KỸ THUẬT
+                </p>
+                
+                <p style="margin:8px 0;">📍 <b>Tọa độ trắc địa thực tế:</b> ${realHeading.toFixed(1)}° ${thongTinTracDia}</p>
+                <p style="margin:8px 0;">📍 <b>Phương vị la bàn số:</b> Ngũ hành từ trường phương vị thuộc <b>${hanhPhuongVi}</b> (Góc quay cảm biến: <b>${Math.round(headingToCalculate)}°</b>).</p>
+                
+                ${htmlKhachPhuongXa}
 
-            <p style="margin:8px 0;">🎯 <b>Quẻ mệnh Nhân chủ (Hành ${hanHinhCungPhi}):</b> Cung phi cốt lõi <b>${chủMệnh}</b> (${nhomMenh}).</p>
-            
-            ${vanInfo}
-            ${giaiThichKhongVongHTML}
-            
-            <p style="margin:12px 0; padding:10px; background:rgba(255,215,0,0.03); border-radius:6px; border-left:4px solid ${activeColor}; border-top:1px solid rgba(255,255,255,0.03); border-right:1px solid rgba(255,255,255,0.03); border-bottom:1px solid rgba(255,255,255,0.03);">
-                <strong>📊 Tổng Điểm Phong Thủy Số [${tenMucDichBinhDan}]: <span style="color:${activeColor}; font-size:1.1rem; font-weight:900;">${tongHop.diem} pt</span></strong><br>
-                Đánh giá trạch pháp: <span style="font-weight:bold; color:${activeColor}; text-transform: uppercase;">${tongHop.level}</span><br>
-                <small style="color:#8a8a8f;">(Điểm số tích hợp tự động bóc tách từ đồ hình ma trận đa tầng bệ đỡ Đất và chu kỳ chuyển động của Thời Vận)</small>
-            </p>
-            
-            <p style="margin:8px 0; text-align:justify;">🌟 <b>Luận đoán Minh Châu Sơn vị:</b> ${tongHop.message}</p>
-            <p style="margin:8px 0; text-align:justify;">⚠️ <b>Biến động thiên thời tâm nhà:</b> ${giaiThichSao}</p>
-            ${nguhoangAlert ? `<p style="margin:8px 0; color:#ff4444; font-weight:bold; background:rgba(255,59,48,0.08); padding:8px; border-radius:6px; border:1px solid #ff3b30;">${nguhoangAlert}</p>` : ''}
-        </div>
-    `;
+                <p style="margin:8px 0;">🎯 <b>Quẻ mệnh Nhân chủ (Hành ${hanHinhCungPhi}):</b> Cung phi cốt lõi <b>${chủMệnh}</b> (${nhomMenh}).</p>
+                
+                ${vanInfo}
+                ${giaiThichKhongVongHTML}
+                
+                <p style="margin:12px 0; padding:10px; background:rgba(255,215,0,0.03); border-radius:6px; border-left:4px solid ${activeColor}; border-top:1px solid rgba(255,255,255,0.03); border-right:1px solid rgba(255,255,255,0.03); border-bottom:1px solid rgba(255,255,255,0.03);">
+                    <strong>📊 Tổng Điểm Phong Thủy Số [${tenMucDichBinhDan}]: <span style="color:${activeColor}; font-size:1.1rem; font-weight:900;">${tongHop.diem} pt</span></strong><br>
+                    Đánh giá trạch pháp: <span style="font-weight:bold; color:${activeColor}; text-transform: uppercase;">${tongHop.level}</span><br>
+                    <small style="color:#8a8a8f;">(Điểm số tích hợp tự động bóc tách từ đồ hình ma trận đa tầng bệ đỡ Đất và chu kỳ chuyển động của Thời Vận)</small>
+                </p>
+                
+                <p style="margin:8px 0; text-align:justify;">🌟 <b>Luận đoán Minh Châu Sơn vị:</b> ${tongHop.message}</p>
+                <p style="margin:8px 0; text-align:justify;">⚠️ <b>Biến động thiên thời tâm nhà:</b> ${giaiThichSao}</p>
+                ${nguhoangAlert ? `<p style="margin:8px 0; color:#ff4444; font-weight:bold; background:rgba(255,59,48,0.08); padding:8px; border-radius:6px; border:1px solid #ff3b30;">${nguhoangAlert}</p>` : ''}
+            </div>
+        `;
+    }
 
     generateDirectionsList();
     updateCompassUI(currentHeading);
