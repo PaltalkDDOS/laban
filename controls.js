@@ -1559,7 +1559,11 @@ function sinhLuanGiaiThienThoi(code, overrideYear) {
         const txtSurveyYear = document.getElementById('surveyYear');
         currentYear = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : layNamKhaoSatThienVan();
     }
-    let vanSo = Math.floor((currentYear - 1864) / 20) % 9 + 1;
+    
+    // ⚙️ THUẬT TOÁN ĐÃ HIỆU CHUẨN: Xử lý mượt mà toàn bộ số âm lịch pháp (Anti-Negative Year Bug)
+    let bệĐỡChuKỳ = Math.floor((currentYear - 1864) / 20);
+    let vanSo = ((bệĐỡChuKỳ % 9) + 9) % 9 + 1; 
+
     const item = VAN_DATA[vanSo]?.[code];
     if (!item) return `<p style="color: #666; padding: 10px;">Chưa có dữ liệu thiên thời cho phương vị này.</p>`;
 
@@ -1576,16 +1580,16 @@ function sinhLuanGiaiThienThoi(code, overrideYear) {
     const colorStar = { best: "#30d158", good: "#aaff00", neutral: "#e0e0e0", bad: "#ff9f0a", worst: "#ff3b30" }[item.loai] || "#fff";
 
     return `
-        <div style="background: rgba(255,255,255,0.01); padding: 15px; border-radius: 12px; border: 1px solid rgba(223,183,108,0.2); margin-top: 15px;">
-            <div style="color: var(--gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 5px; font-weight:bold;">
+        <div style="background: rgba(255,255,255,0.01); padding: 15px; border-radius: 12px; border: 1px solid rgba(223,183,108,0.2); margin-top: 15px; font-family: sans-serif;">
+            <div style="color: var(--gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 5px; font-weight:bold; text-align: left;">
                 ◆ HUYỀN KHÔNG VẬN ${vanSo} — NIÊN ĐỘ LỊCH PHÁP ${currentYear}
             </div>
-            <div style="margin: 5px 0 10px 0; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 10px;">
+            <div style="margin: 5px 0 10px 0; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 10px; text-align: left;">
                 <span style="color: ${colorStar}; font-size: 1.2rem; font-weight: 800;">${item.sao}</span>
                 <span style="color: #aaa; font-size: 0.85rem; margin-left: 8px;">• Ngũ Hành: ${item.hanh}</span>
             </div>
-            <div style="color: #ddd; font-size: 0.88rem; line-height: 1.6; margin-bottom: 12px;">${item.y_nghia}</div>
-            <div style="color: ${colorStar}; font-size: 0.85rem; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 6px; border-left: 3px solid ${colorStar}; font-weight:500;">
+            <div style="color: #ddd; font-size: 0.88rem; line-height: 1.6; margin-bottom: 12px; text-align: left;">${item.y_nghia}</div>
+            <div style="color: ${colorStar}; font-size: 0.85rem; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 6px; border-left: 3px solid ${colorStar}; font-weight:500; text-align: left;">
                 ${getAdvice(item.loai)}
             </div>
         </div>`;
