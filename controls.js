@@ -6987,25 +6987,36 @@ document.getElementById('openScienceBtn').addEventListener('click', function() {
         console.error("Chưa nạp file phongthuy_khoahoc.js");
     }
 });
-let yearTimeout = null;   // Dùng để debounce
+let yearTimeout = null;
 
 function handleYearInput(input) {
-    // Chỉ cho phép số
-    input.value = input.value.replace(/[^0-9]/g, '');
+    // Chỉ cho phép nhập các ký tự số thô
+    let rawVal = input.value.replace(/[^0-9]/g, '');
+    input.value = rawVal; // Giữ nguyên số gốc trên màn hình (Ví dụ: 999)
 
-    // Tự động ẩn bàn phím khi nhập đủ 4 số
-    if (input.value.length === 4) {
+    // Nếu gõ đủ 4 số thì tự thu bàn phím (tiện cho năm thời hiện đại)
+    if (rawVal.length === 4) {
         setTimeout(() => {
             input.blur();
         }, 80);
     }
 
-    // Debounce recalculateFate() - không chạy liên tục khi đang gõ
+    // Cơ chế Debounce thông minh: Gõ đến đâu, sau 300ms ngừng gõ là tự động xử lý
     if (typeof recalculateFate === 'function') {
-        clearTimeout(yearTimeout);   // Hủy lần trước nếu có
-        
+        clearTimeout(yearTimeout);
         yearTimeout = setTimeout(() => {
-            recalculateFate();
-        }, 300);   // Chờ 300ms sau khi ngừng gõ mới tính
+            
+            // 🎯 MẸO TRÁO BÀI: Ảo thuật giữ giao diện sạch nhưng lừa được 6 hàm lõi
+            if (rawVal !== '' && rawVal.length < 4) {
+                input.value = rawVal.padStart(4, '0'); // Biến tạm thành "0999" để vượt qua chốt .length === 4
+                
+                recalculateFate();                     // Kích hoạt toàn mạch tính toán (Hàm lõi sẽ đọc thấy "0999")
+                
+                input.value = rawVal;                  // Trả lại ngay lập tức thành "999" trên UI của người dùng
+            } else {
+                recalculateFate();
+            }
+            
+        }, 300); // Chờ 300ms sau khi ngừng gõ mới tính
     }
 }
