@@ -6983,3 +6983,19 @@ document.getElementById('openScienceBtn').addEventListener('click', function() {
         console.error("Chưa nạp file phongthuy_khoahoc.js");
     }
 });
+function handleYearInput(input) {
+    // Chỉ cho phép số
+    input.value = input.value.replace(/[^0-9]/g, '');
+
+    // Tự động ẩn bàn phím khi đã nhập đủ 4 chữ số
+    if (input.value.length === 4) {
+        setTimeout(() => {
+            input.blur(); // Ẩn bàn phím trên mobile
+        }, 100);
+    }
+
+    // Gọi hàm tính toán nếu có
+    if (typeof recalculateFate === 'function') {
+        recalculateFate();
+    }
+}
