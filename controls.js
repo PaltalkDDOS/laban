@@ -665,7 +665,8 @@ function recalculateFate() {
     const mucDich = document.getElementById('purpose').value; 
 
     const txtSurveyYear = document.getElementById('surveyYear'); 
-    const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
+    const valYear = txtSurveyYear ? txtSurveyYear.value.trim() : "";
+    const namKhaoSatThucTe = (valYear !== "" && !isNaN(valYear)) ? parseInt(valYear, 10) : new Date().getFullYear();
 
     if (!dayStr || !monthStr || !yearStr || yearStr.length < 4) {
         fateTxt.innerText = `${name}: Đo hướng tự do (Chế độ quét trắc địa hạ tầng - Chưa nhập năm sinh)`;
@@ -920,7 +921,8 @@ function layThongTin24Son(doSo, cungPhi, namAm) {
     }) || SON_24_CONFIG[0];
 
     const txtSurveyYear = document.getElementById('surveyYear');
-    const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
+    const valYear = txtSurveyYear ? txtSurveyYear.value.trim() : "";
+    const namKhaoSatThucTe = (valYear !== "" && !isNaN(valYear)) ? parseInt(valYear, 10) : new Date().getFullYear();
     const mụcĐích = document.getElementById('purpose')?.value || 'house';
 
     const safeCungPhi = cungPhi ? cungPhi.trim().charAt(0).toUpperCase() + cungPhi.trim().slice(1).toLowerCase() : "Khảm";
@@ -1023,7 +1025,8 @@ function generateDirectionsList() {
     const yearStr = document.getElementById('birthYear')?.value || document.getElementById('yearStr')?.value || "";
 
     const txtSurveyYear = document.getElementById('surveyYear');
-    const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
+    const valYear = txtSurveyYear ? txtSurveyYear.value.trim() : "";
+    const namKhaoSatThucTe = (valYear !== "" && !isNaN(valYear)) ? parseInt(valYear, 10) : new Date().getFullYear();
 
     let namAmMệnhChủ = new Date().getFullYear();
     if (dayStr && monthStr && yearStr && yearStr.length === 4) {
@@ -1394,7 +1397,8 @@ function triggerGhostNeedle(angle) {
     const yearStr = document.getElementById('birthYear')?.value || "";
 
     const txtSurveyYear = document.getElementById('surveyYear');
-    const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
+    const valYear = txtSurveyYear ? txtSurveyYear.value.trim() : "";
+    const namKhaoSatThucTe = (valYear !== "" && !isNaN(valYear)) ? parseInt(valYear, 10) : new Date().getFullYear();
 
     let namAmMệnhChủ = new Date().getFullYear();
     if (dayStr && monthStr && yearStr && yearStr.length === 4) {
@@ -1761,8 +1765,8 @@ function updateCompassUI(heading) {
     // =========================================================================
     // 1. Năm Khảo Sát (Niên Trạch) chạy động theo trục thời gian thực tế
     const txtSurveyYear = document.getElementById('surveyYear'); 
-    const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
-
+    const valYear = txtSurveyYear ? txtSurveyYear.value.trim() : "";
+    const namKhaoSatThucTe = (valYear !== "" && !isNaN(valYear)) ? parseInt(valYear, 10) : new Date().getFullYear();
     // 2. TỰ ĐỘNG CHUẨN HÓA: Tính toán năm âm lịch của mệnh chủ dựa theo Tiết khí Lập Xuân
     let namAmMệnhChủ = new Date().getFullYear();
     if (dayStr && monthStr && yearStr && yearStr.length === 4) {
@@ -2432,8 +2436,8 @@ function renderMultiLayerDetail(result, van, degree) {
     const monthStr = document.getElementById('birthMonth')?.value || "";
     const yearStr = document.getElementById('birthYear')?.value || "";
     const txtSurveyYear = document.getElementById('surveyYear');
-    const namKhaoSatThucTe = (txtSurveyYear && txtSurveyYear.value.length === 4) ? parseInt(txtSurveyYear.value, 10) : new Date().getFullYear();
-
+    const valYear = txtSurveyYear ? txtSurveyYear.value.trim() : "";
+    const namKhaoSatThucTe = (valYear !== "" && !isNaN(valYear)) ? parseInt(valYear, 10) : new Date().getFullYear();
     let namAmMệnhChủ = new Date().getFullYear();
     if (dayStr && monthStr && yearStr && yearStr.length === 4) {
         namAmMệnhChủ = (parseInt(monthStr, 10) < 2 || (parseInt(monthStr, 10) === 2 && parseInt(dayStr, 10) < 4)) ? parseInt(yearStr, 10) - 1 : parseInt(yearStr, 10);
