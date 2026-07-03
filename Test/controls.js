@@ -4267,8 +4267,8 @@ let lastMotionTime = Date.now();
 let noiseScore = 0;
 let lastMagneticCheck = 0;
 let isMagneticWarningActive = false;
-let orientationListenerAdded = false;
-let permissionDenied = false;
+
+
 let lastSensorRetry = 0;
 /**
  * 🪐 HÀM KHỞI TẠO DUY NHẤT TOÀN HỆ THỐNG
@@ -4298,23 +4298,22 @@ function initCompassPermission() {
                        (navigator.platform === 'MacIntel' && 'ontouchend' in document);
 
     if (!isIOSDevice) {
-        // ANDROID - Không cần xin quyền, nhưng một số máy cần user gesture
+        // === ANDROID ===
         if (modal) modal.style.display = 'none';
         if (permBtn) permBtn.style.display = 'none';
 
-        // Thử kích hoạt ngay
         setTimeout(() => {
             tryActivateAndroidSensor();
-        }, 300);
+        }, 400);
         return;
     }
 
-    // === iOS LOGIC (giữ nguyên nhưng tối ưu) ===
+    // === iOS (giữ nguyên) ===
     const localStatus = localStorage.getItem('ios_compass_granted');
 
     if (localStatus === 'true') {
         if (modal) modal.style.display = 'none';
-        trySilentActivation();
+        trySilentActivation();   // Giữ nguyên hàm gốc của bạn
     } else if (localStatus === 'false') {
         if (permBtn) permBtn.style.display = 'block';
         showPermissionResetGuide();
@@ -4328,13 +4327,10 @@ function initCompassPermission() {
 // === ANDROID - THỬ KÍCH HOẠT (Retry + User Gesture) ===
 function tryActivateAndroidSensor() {
     if (orientationListenerAdded) return;
-
-    // Thử trực tiếp
     addOrientationListener();
 
-    // Nếu sau 1.5s kim vẫn không quay → tạo nút "Chạm để kích hoạt"
     setTimeout(() => {
-        if (!orientationListenerAdded || lastHeading === null) {
+        if (!orientationListenerAdded || typeof lastHeading === 'undefined' || lastHeading === null) {
             createAndroidWakeOverlay();
         }
     }, 1500);
@@ -4366,12 +4362,12 @@ function createAndroidWakeOverlay() {
     const overlay = document.createElement('div');
     overlay.id = 'android-wake-overlay';
     overlay.style.cssText = `
-        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-        background: rgba(0,0,0,0.6); z-index: 999999; display: flex;
-        align-items: center; justify-content: center; color: #ffeb3b;
-        font-size: 1.1rem; text-align: center; cursor: pointer;
+        position:fixed; top:0; left:0; width:100vw; height:100vh;
+        background:rgba(0,0,0,0.65); z-index:999999; display:flex;
+        align-items:center; justify-content:center; color:#ffeb3b;
+        font-size:1.15rem; text-align:center; cursor:pointer;
     `;
-    overlay.innerHTML = `<div style="background:rgba(0,0,0,0.8); padding:18px 30px; border-radius:20px; border:2px solid #ffeb3b;">
+    overlay.innerHTML = `<div style="background:rgba(0,0,0,0.85);padding:20px 35px;border-radius:22px;border:2px solid #ffeb3b;">
         👆 <strong>Chạm màn hình để kích hoạt la bàn</strong>
     </div>`;
 
@@ -4693,7 +4689,6 @@ function addOrientationListener() {
         }
     };
 
-    // Ưu tiên absolute trước (chính xác hơn)
     if ('ondeviceorientationabsolute' in window) {
         window.addEventListener('deviceorientationabsolute', handler, { passive: true });
     } else if ('ondeviceorientation' in window) {
@@ -4704,7 +4699,7 @@ function addOrientationListener() {
     }
 
     orientationListenerAdded = true;
-    console.log("✅ La bàn sensor đã kích hoạt thành công");
+    console.log("✅ La bàn sensor đã kích hoạt");
 }
 // =========================================================================
 // 📺 ENGINE ĐIỀU KHIỂN CHẾ ĐỘ PHÓNG TO / FULLSCREEN
