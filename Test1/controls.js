@@ -2818,6 +2818,122 @@ function tinhDiemTongHop(cungPhi, degree, namKhảoSát, mucDich, namAm, doRongQ
 
     return runRawCalcEngine(degree);
 }
+// =========================================================================
+// 🧭 BỘ XỬ LÝ LÕI ĐỊA HƯỚNG VÀ LÀM MƯỢT (CORE ENGINE)
+// =========================================================================
+
+function handleOrientation(event) {
+    if (window.isCompassHold) {
+        if (typeof window.holdedHeading !== 'undefined') {
+            lastHeading = window.holdedHeading;
+            if (typeof window.currentHeading !== 'undefined') window.currentHeading = window.holdedHeading;
+            
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+                executeUIUpdate(window.holdedHeading, window.holdedHeading);
+            });
+        }
+        return; 
+    }
+
+    let rawHeading = null;
+    const now = Date.now();
+    
+    const accuracy = event.webkitCompassAccuracy;
+    if (accuracy !== undefined && accuracy !== null && accuracy >= 0) {
+        if (Math.abs(accuracy - lastAccuracy) > 3 || 
+           (accuracy > 15 && lastAccuracy <= 15) || 
+           (accuracy > 30 && lastAccuracy <= 30) ||
+           (accuracy <= 15 && lastAccuracy > 15)) {
+            lastAccuracy = accuracy;
+            updateMagneticStatus(accuracy); 
+        }
+    }
+
+    if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
+        rawHeading = event.webkitCompassHeading;
+    } else if (event.alpha !== undefined && event.alpha !== null) {
+        rawHeading = (360 - event.alpha) % 360;
+    }
+    
+    if (rawHeading === null) return;
+
+    if (document.activeElement?.id === 'compassSlider') return;
+    if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
+    lastUpdateTime = now;
+
+    if (lastHeading === null) {
+        lastHeading = rawHeading;
+        executeUIUpdate(lastHeading, lastHeading);
+        return;
+    }
+
+    let diff = rawHeading - lastHeading;
+    if (diff > 180) diff -= 360;
+    if (diff < -180) diff += 360;
+    
+    const absDiff = Math.abs(diff);
+    let dynamicFactor = SMOOTH_MIN;
+    
+    if (absDiff > 12) {
+        dynamicFactor = SMOOTH_MAX;
+    } else if (absDiff > 1.5) {
+        dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
+    }
+    
+    const newHeading = lastHeading + diff * dynamicFactor;
+    lastHeading = (newHeading % 360 + 360) % 360;
+
+    const headingForText = lastHeading; 
+    const headingForDial = (lastHeading + (magneticDeclination || 0) + 360) % 360; 
+
+    if (typeof window.currentHeading !== 'undefined') window.currentHeading = headingForText;
+
+    if (absDiff > 0.4) {
+        const btnTongLuan = document.getElementById('btn-tong-luan');
+        if (btnTongLuan) btnTongLuan.classList.remove('vượng-xuất');
+        if (typeof window.dừngKimTimeout !== 'undefined') clearTimeout(window.dừngKimTimeout);
+        if (typeof kichHoatBoDemDungKim === 'function') kichHoatBoDemDungKim();
+    }
+
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+        executeUIUpdate(headingForDial, headingForText);
+    });
+}
+
+function executeUIUpdate(headingDial, headingText) {
+    if (typeof updateCompassUI === 'function') updateCompassUI(headingText); 
+    if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); 
+    if (typeof recalculateFate === 'function') recalculateFate();
+}
+
+function updateMagneticStatus(acc) {
+    const dot = document.getElementById('accuracy-dot');
+    const text = document.getElementById('accuracy-text');
+    if (!dot || !text) return;
+
+    let bg = '#4caf50', txt = "TÍN HIỆU TỐT";
+    
+    if (acc > 15 && acc <= 30) {
+        bg = '#ff9800';
+        txt = "NHIỄU NHẸ";
+    } else if (acc > 30) {
+        bg = '#f44336';
+        txt = "NHIỄU NẶNG";
+        
+        if (typeof showToast === 'function' && !isMagneticWarningActive) {
+            showToast("⚠️ Nhiễu từ trường! Hãy tránh xa sắt thép", true);
+            isMagneticWarningActive = true;
+            setTimeout(() => { isMagneticWarningActive = false; }, 10000);
+        }
+    }
+
+    if (text.innerText !== txt) {
+        dot.style.background = bg;
+        text.innerText = txt;
+    }
+}
 
 function showToast(message, isError = false) {
     const container = document.getElementById('toast-container');
@@ -4175,9 +4291,11 @@ if (typeof lockedHeadingAtOpen === 'undefined') window.lockedHeadingAtOpen = nul
 if (typeof orientationListenerAdded === 'undefined') window.orientationListenerAdded = false;
 if (typeof permissionDenied === 'undefined') window.permissionDenied = false;
 if (typeof isCompassHold === 'undefined') window.isCompassHold = false;
-// --- 1. BIẾN TOÀN CỤC (DUY NHẤT 1 LẦN) ---
-// Biến điều khiển hệ thống
-let isFullScreen = false; let lastTapTime = 0;
+
+let isFullScreen = false;
+let lastTapTime = 0;
+
+// Biến điều khiển DOM và Thu phóng
 let originalCompassParent = null; let originalCompassNextSibling = null;
 let originalStatusParent = null; let originalStatusNextSibling = null;
 let originalDetailBoxStyle = ""; let originalDetailBoxClass = "";
@@ -4185,21 +4303,17 @@ let currentScale = 1; let initialScale = 1; let startDistance = 0;
 let isZooming = false;
 let currentX = 0; let currentY = 0; let startX = 0; let startY = 0;
 
-// Biến điều khiển kim quay
+// Biến điều khiển luồng kim quay
 let lastHeading = null;
 let rafId = null;
 let lastUpdateTime = 0;
 const SMOOTH_MIN = 0.08;
 const SMOOTH_MAX = 0.55;
-const THROTTLE_MS = 16;
-let magneticDeclination = 0;
-let lastAccuracy = 0;
+const THROTTLE_MS = 16; // ~60fps
 
-// Biến thuật toán nhiễu (Chỉ cần khai báo 1 lần ở đây)
-let lastHeadingForNoise = null;
-let lastMotionTime = Date.now();
-let noiseScore = 0;
-let lastMagneticCheck = 0;
+// Biến trạng thái địa từ
+let magneticDeclination = 0;
+let lastAccuracy = 0; 
 let isMagneticWarningActive = false;
 
 /**
@@ -4209,7 +4323,7 @@ window.onload = function() {
     if (typeof render24SonRing === 'function') render24SonRing();
     if (typeof loadSavedMembers === 'function') loadSavedMembers();
     if (typeof recalculateFate === 'function') recalculateFate();
-    initMotionListener(); // Kích hoạt gia tốc kế
+    
     initCompassPermission();
 };
 
@@ -4302,18 +4416,11 @@ function createSmartWakeUpOverlay() {
             if (state === 'granted') {
                 window.orientationListenerAdded = false;
                 addOrientationListener();
-                overlay.remove(); // Chỉ gỡ màng khi đã thành công
-            } else {
-                // Nếu User bấm Từ Chối ở popup của iOS
-                overlay.remove();
-                window.permissionDenied = true;
-                localStorage.setItem('ios_compass_granted', 'false');
-                showPermissionResetGuide(); // Hiện bảng hướng dẫn reset quyền
             }
         } catch (err) {
             console.error(err);
-            overlay.remove();
-            showPermissionResetGuide();
+        } finally {
+            overlay.remove(); // Chạm xong là gỡ màng lập tức
         }
     };
 }
@@ -4436,27 +4543,20 @@ function closePermissionModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// --- 3. HÀM GIA TỐC KẾ (ĐO CHUYỂN ĐỘNG) ---
-function initMotionListener() {
-    if (typeof DeviceMotionEvent === 'undefined') return;
-    window.addEventListener('devicemotion', (event) => {
-        if (!event.accelerationIncludingGravity) return;
-        const { x = 0, y = 0, z = 0 } = event.accelerationIncludingGravity;
-        const totalAccel = Math.sqrt(x*x + y*y + z*z);
-        if (totalAccel > 0.5 || Math.abs(x) > 0.35 || Math.abs(y) > 0.35 || Math.abs(z) > 0.35) {
-            lastMotionTime = Date.now();
-        }
-    }, { passive: true });
-}
+// =========================================================================
+// 🧭 BỘ XỬ LÝ LÕI ĐỊA HƯỚNG VÀ LÀM MƯỢT (CORE ENGINE)
+// =========================================================================
 
-// --- 4. HÀM XỬ LÝ CHÍNH (ĐÃ TIÊM NHIỄU) ---
 function handleOrientation(event) {
     if (window.isCompassHold) {
         if (typeof window.holdedHeading !== 'undefined') {
             lastHeading = window.holdedHeading;
             if (typeof window.currentHeading !== 'undefined') window.currentHeading = window.holdedHeading;
+            
             if (rafId) cancelAnimationFrame(rafId);
-            rafId = requestAnimationFrame(() => executeUIUpdate(window.holdedHeading, window.holdedHeading));
+            rafId = requestAnimationFrame(() => {
+                executeUIUpdate(window.holdedHeading, window.holdedHeading);
+            });
         }
         return; 
     }
@@ -4464,10 +4564,12 @@ function handleOrientation(event) {
     let rawHeading = null;
     const now = Date.now();
     
-    // Accuracy (iOS)
     const accuracy = event.webkitCompassAccuracy;
     if (accuracy !== undefined && accuracy !== null && accuracy >= 0) {
-        if (Math.abs(accuracy - lastAccuracy) > 3 || (accuracy > 15 && lastAccuracy <= 15) || (accuracy > 30 && lastAccuracy <= 30) || (accuracy <= 15 && lastAccuracy > 15)) {
+        if (Math.abs(accuracy - lastAccuracy) > 3 || 
+           (accuracy > 15 && lastAccuracy <= 15) || 
+           (accuracy > 30 && lastAccuracy <= 30) ||
+           (accuracy <= 15 && lastAccuracy > 15)) {
             lastAccuracy = accuracy;
             updateMagneticStatus(accuracy); 
         }
@@ -4481,17 +4583,6 @@ function handleOrientation(event) {
     
     if (rawHeading === null) return;
 
-    // --- TIÊM THUẬT TOÁN NHIỄU AN TOÀN ---
-    try {
-        if (now - lastMagneticCheck > 1000) {
-            if (accuracy === undefined || accuracy === null) {
-                checkMagneticQuality(rawHeading);
-            }
-            lastMagneticCheck = now;
-        }
-    } catch (e) { console.log("Noise check skip:", e); }
-
-    // --- LOGIC QUAY KIM GỐC ---
     if (document.activeElement?.id === 'compassSlider') return;
     if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
     lastUpdateTime = now;
@@ -4508,8 +4599,12 @@ function handleOrientation(event) {
     
     const absDiff = Math.abs(diff);
     let dynamicFactor = SMOOTH_MIN;
-    if (absDiff > 12) dynamicFactor = SMOOTH_MAX;
-    else if (absDiff > 1.5) dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
+    
+    if (absDiff > 12) {
+        dynamicFactor = SMOOTH_MAX;
+    } else if (absDiff > 1.5) {
+        dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
+    }
     
     const newHeading = lastHeading + diff * dynamicFactor;
     lastHeading = (newHeading % 360 + 360) % 360;
@@ -4532,45 +4627,6 @@ function handleOrientation(event) {
     });
 }
 
-// --- 5. CÁC HÀM XỬ LÝ NHIỄU & UI ---
-function checkMagneticQuality(currentHeading) {
-    if (lastHeadingForNoise === null) {
-        lastHeadingForNoise = currentHeading;
-        return;
-    }
-
-    let diff = Math.abs(currentHeading - lastHeadingForNoise);
-    if (diff > 180) diff = 360 - diff;
-    const isMoving = (Date.now() - lastMotionTime < 1200);
-
-    if (diff > 30 && !isMoving) {
-        noiseScore = Math.min(10, noiseScore + 4);
-    } else if (isMoving) {
-        noiseScore = Math.max(0, noiseScore - 3);
-    } else if (diff < 10) {
-        noiseScore = Math.max(0, noiseScore - 1);
-    }
-
-    if (noiseScore >= 6) {
-        updateMagneticStatus(31); 
-        showMagneticToast();
-    } else if (noiseScore >= 3) {
-        updateMagneticStatus(20); 
-    } else {
-        updateMagneticStatus(0);  
-    }
-    lastHeadingForNoise = currentHeading;
-}
-
-function showMagneticToast() {
-    if (isMagneticWarningActive) return;
-    isMagneticWarningActive = true;
-    if (typeof showToast === 'function') {
-        showToast("⚠️ Nhiễu từ trường mạnh! Di chuyển sang khu vực khác.", true);
-    }
-    setTimeout(() => { isMagneticWarningActive = false; }, 10000);
-}
-
 function executeUIUpdate(headingDial, headingText) {
     if (typeof updateCompassUI === 'function') updateCompassUI(headingText); 
     if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); 
@@ -4581,26 +4637,21 @@ function updateMagneticStatus(acc) {
     const dot = document.getElementById('accuracy-dot');
     const text = document.getElementById('accuracy-text');
     if (!dot || !text) return;
-    let bg = '#4caf50', txt = "TÍN HIỆU TỐT";
-    if (acc > 15 && acc <= 30) { bg = '#ff9800'; txt = "NHIỄU NHẸ"; } 
-    else if (acc > 30) { bg = '#f44336'; txt = "NHIỄU NẶNG"; }
-    if (text.innerText !== txt) { dot.style.background = bg; text.innerText = txt; }
-}
 
-// --- 6. HÀM KÍCH HOẠT SENSOR (ĐÃ THÊM DEVICEORIENTATIONABSOLUTE) ---
-function addOrientationListener() {
-    if (window.orientationListenerAdded) return;
-    const handler = (e) => {
-        if (e.webkitCompassHeading !== undefined || e.alpha !== null) {
-            handleOrientation(e);
-        }
-    };
-    if ('ondeviceorientationabsolute' in window) {
-        window.addEventListener('deviceorientationabsolute', handler, true);
-    } else if ('ondeviceorientation' in window) {
-        window.addEventListener('deviceorientation', handler, true);
+    let bg = '#4caf50', txt = "TÍN HIỆU TỐT";
+    
+    if (acc > 15 && acc <= 30) {
+        bg = '#ff9800';
+        txt = "NHIỄU NHẸ";
+    } else if (acc > 30) {
+        bg = '#f44336';
+        txt = "NHIỄU NẶNG";
     }
-    window.orientationListenerAdded = true;
+
+    if (text.innerText !== txt) {
+        dot.style.background = bg;
+        text.innerText = txt;
+    }
 }
 
 // =========================================================================
@@ -5676,7 +5727,7 @@ window.showCustomAlert = showCustomAlert;
 window.closeCustomAlert = closeCustomAlert;
 
 // =========================================================================
-// 🌐 HỆ THỐNG PWA CROSS-PLATFORM (iOS + Android) - PHIÊN BẢN V12 CHUẨN MỰC
+// 🌐 HỆ THỐNG PWA CROSS-PLATFORM (iOS + Android) - PHIÊN BẢN V12
 // =========================================================================
 if (typeof deferredPrompt === 'undefined') {
     var deferredPrompt;
@@ -5716,21 +5767,17 @@ window.addEventListener('load', () => {
     kiemTraVaAnNut();
     khoiTaoTinhNangVuotGat();
 
-    // CHỈ NẠP PWA VÀ MANIFEST KHI CHẠY TRÊN SERVER (LOCALHOST HOẶC HTTPS)
-    // Chặn hoàn toàn việc báo lỗi CORS nếu mở bằng file:///
-    if (window.location.protocol !== 'file:') {
-        // Thêm manifest
-        if (!document.querySelector('link[rel="manifest"]')) {
-            const link = document.createElement('link');
-            link.rel = 'manifest';
-            link.href = './manifest.json';
-            document.head.appendChild(link);
-        }
+    // Thêm manifest
+    if (!document.querySelector('link[rel="manifest"]')) {
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = './manifest.json';
+        document.head.appendChild(link);
+    }
 
-        // Đăng ký Service Worker
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js').catch(err => console.error(err));
-        }
+    // Đăng ký Service Worker
+    if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
+        navigator.serviceWorker.register('./sw.js').catch(err => console.error(err));
     }
 
     // === XỬ LÝ RIÊNG CHO ANDROID ===
@@ -5758,18 +5805,16 @@ window.addEventListener('load', () => {
     } 
     // === XỬ LÝ RIÊNG CHO iOS ===
     else {
-        // Luôn hiện nút trên iOS với hướng dẫn (nếu chưa gạt bỏ)
-        if (localStorage.getItem(STORAGE_KEY_HIDE_INSTALL) !== 'true' && !isRunningAsPWA()) {
-            btn.classList.add('show');
-            btn.innerHTML = `
-                <span class="pwa-fab-icon">📲</span>
-                <span class="pwa-fab-text">Cài App iOS</span>
-            `;
-            
-            btn.onclick = () => {
-                showIOSInstallGuide();
-            };
-        }
+        // Luôn hiện nút trên iOS với hướng dẫn
+        btn.classList.add('show');
+        btn.innerHTML = `
+            <span class="pwa-fab-icon">📲</span>
+            <span class="pwa-fab-text">Cài App iOS</span>
+        `;
+        
+        btn.onclick = () => {
+            showIOSInstallGuide();
+        };
     }
 });
 
@@ -5787,7 +5832,7 @@ function showIOSInstallGuide() {
                 3. Nhấn <strong style="color:#dfb76c;">Thêm</strong> ở góc trên bên phải
             </div>    
 
-            <button onclick="this.closest('.ios-guide').remove()" 
+				<button onclick="this.closest('.ios-guide').remove()" 
                     style="margin-top:25px;width:100%;padding:14px;background:#dfb76c;color:#000;border:none;border-radius:50px;font-weight:bold;font-size:1.05rem;">
                 ĐÃ HIỂU ✓
             </button>
@@ -5800,8 +5845,58 @@ function showIOSInstallGuide() {
     document.body.appendChild(div);
 }
 
+// Giữ nguyên hàm vuốt gạt
+function khoiTaoTinhNangVuotGat() {
+    const btn = document.getElementById('btn-install-pwa');
+    if (!btn) return;
+    
+    let touchStartX = 0;
+    let touchCurrentX = 0;
+    let isSwiping = false;
+
+    btn.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        btn.style.transition = 'none';
+        isSwiping = true;
+    }, { passive: true });
+
+    btn.addEventListener('touchmove', (e) => {
+        if (!isSwiping) return;
+        touchCurrentX = e.touches[0].clientX;
+        let deltaX = touchCurrentX - touchStartX;
+        if (deltaX > 0) {
+            btn.style.transform = `translateX(${deltaX}px)`;
+            btn.style.opacity = `${1 - (deltaX / btn.offsetWidth)}`;
+        }
+    }, { passive: true });
+
+    btn.addEventListener('touchend', (e) => {
+        if (!isSwiping) return;
+        isSwiping = false;
+
+        let deltaX = touchCurrentX - touchStartX;
+        btn.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease';
+
+        if (deltaX > btn.offsetWidth / 2) {
+            localStorage.setItem(STORAGE_KEY_HIDE_INSTALL, 'true');
+            btn.classList.add('swiped-away');
+            btn.classList.remove('show');
+        } else {
+            btn.style.transform = 'translateX(0)';
+            btn.style.opacity = '1';
+        }
+    });
+}
+
+// Tự động kiểm tra lại khi quay lại tab
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+        setTimeout(kiemTraVaAnNut, 800);
+    }
+});
+
 // =========================================================================
-// 🔥 HÀM TẠO HIỆU ỨNG GẠT PHẢI ĐỂ XÓA VĨNH VIỄN (SWIPE TO DISMISS)
+// 🔥 HÀM TẠO HIỆU ỨNG GẠT PHẢI ĐỂ XÓA VĨNH VIỄN (SWIPE TO DISMISS) - ĐỘNG 50%
 // =========================================================================
 function khoiTaoTinhNangVuotGat() {
     const btn = document.getElementById('btn-install-pwa');
@@ -5826,7 +5921,10 @@ function khoiTaoTinhNangVuotGat() {
 
         // Chỉ cho phép gạt sang bên PHẢI (deltaX > 0)
         if (deltaX > 0) {
+            // Nút dịch chuyển tuyến tính chính xác theo tọa độ ngón tay
             btn.style.transform = `translateX(${deltaX}px)`;
+            
+            // Tính toán độ mờ dựa trên chiều rộng thực tế của phần tử
             let maxDrag = btn.offsetWidth;
             btn.style.opacity = `${1 - (deltaX / maxDrag)}`;
         }
@@ -5839,18 +5937,22 @@ function khoiTaoTinhNangVuotGat() {
         
         let deltaX = touchCurrentX - touchStartX;
         
-        // Khôi phục lại các thuộc tính chuyển động mượt mà
+        // Khôi phục lại các thuộc tính chuyển động mượt mà của CSS gốc khi buông tay
         btn.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease';
 
+        // TỐI ƯU: Lấy điểm kích hoạt bằng đúng 1/2 chiều rộng thực tế của nút bấm
         let threshold = btn.offsetWidth / 2;
 
         if (deltaX > threshold) {
+            // Ngón tay kéo quá nửa nút -> Kích hoạt dọn dẹp vĩnh viễn, tự động thụt mất tiêu
             anVaXoaVinhVien(btn);
         } else {
+            // Kéo chưa tới một nửa -> Hệ thống tự động nẩy ngược về vị trí cũ quý phái
             btn.style.transform = 'translateX(0)';
             btn.style.opacity = '1';
         }
         
+        // Trả các biến trạng thái về tọa độ gốc
         touchStartX = 0;
         touchCurrentX = 0;
     });
@@ -5858,18 +5960,15 @@ function khoiTaoTinhNangVuotGat() {
 
 // Hàm kích hoạt hòm rác vĩnh viễn
 function anVaXoaVinhVien(element) {
+    // 1. Lưu cấu hình vào LocalStorage của trình duyệt hiện tại
     localStorage.setItem(STORAGE_KEY_HIDE_INSTALL, 'true');
+    
+    // 2. Kích hoạt Class biến mất vĩnh viễn thu hẹp không gian
     element.classList.add('swiped-away');
     element.classList.remove('show');
-    console.log('⚡ Đã đưa nút PWA vào hòm rác vĩnh viễn trên trình duyệt này.');
+    
+    console.log('⚡ Đã đưa nút PWA vào hòm rác vĩnh viễn trên trình duyệt này theo yêu cầu của người dùng.');
 }
-
-// Tự động kiểm tra lại khi quay lại tab
-document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') {
-        setTimeout(kiemTraVaAnNut, 800);
-    }
-});
 
 // =========================================================================
 // 🚀 6. THÀNH PHẦN MỞ RỘNG - NHẬN TÍN HIỆU CẬP NHẬT & ADS (KHÔNG ĐỤNG CODE GỐC)
