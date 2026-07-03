@@ -4287,37 +4287,37 @@ function initCompassPermission() {
     const modal = document.getElementById('iosPermissionModal');
     const permBtn = document.getElementById('permission-btn');
     
-    // Đảm bảo Modal không đè lên UI
     if (modal) { 
         modal.style.zIndex = '999999'; 
         modal.style.position = 'fixed'; 
     }
 
-    // Xác định thiết bị
     const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && 'ontouchend' in document);
 
     if (!isIOSDevice) {
-        // --- LOGIC ANDROID ---
+        // --- LOGIC ANDROID (Nâng cấp thời gian) ---
         if (modal) modal.style.display = 'none';
         if (permBtn) permBtn.style.display = 'none';
         
-        // 1. Kích hoạt ngầm ngay lập tức
-        addOrientationListener();
-        
-        // 2. Chờ 2s: Nếu lastHeading vẫn null, nghĩa là sensor bị chặn (A71/Android cao cấp) -> Hiện nút
+        // Đợi 400ms để trình duyệt ổn định trước khi gọi
         setTimeout(() => {
-            if (lastHeading === null) {
-                createSmartWakeUpOverlay("👆 Chạm màn hình để khởi động la bàn");
-            }
-        }, 2000);
+            addOrientationListener();
+            
+            // Sau khi đã gọi add, chờ thêm 1500ms nữa để xem kim có nhúc nhích không
+            setTimeout(() => {
+                if (lastHeading === null) {
+                    createSmartWakeUpOverlay("👆 Chạm màn hình để khởi động la bàn");
+                }
+            }, 1500);
+        }, 400);
         return;
     }
 
-    // --- LOGIC IOS (Sử dụng luồng cũ của bạn) ---
+    // --- LOGIC IOS (Giữ nguyên luồng của bạn) ---
     const localStatus = localStorage.getItem('ios_compass_granted');
     if (localStatus === 'true') {
         if (modal) modal.style.display = 'none';
-        trySilentActivation(); // Hàm này bạn vẫn giữ nguyên
+        trySilentActivation();
     } else if (localStatus === 'false') {
         if (permBtn) permBtn.style.display = 'block';
         showPermissionResetGuide();
@@ -4348,26 +4348,41 @@ async function trySilentActivation() {
     }
 }
 
-// Màng tàng hình "Đánh thức" (Dùng chung cho cả Android/iOS nếu bị chặn)
 function createSmartWakeUpOverlay(text) {
     if (document.getElementById('smart-wake-overlay')) return;
 
     const overlay = document.createElement('button');
     overlay.id = 'smart-wake-overlay';
     overlay.innerHTML = `<span style="background:rgba(0,0,0,0.8); padding:15px 25px; border-radius:20px; border:1px solid #ff9500; font-weight:bold; font-size:16px;">${text}</span>`;
-    overlay.style.cssText = `position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.2); z-index:9999999; border:none; display:flex; align-items:center; justify-content:center; color:#ff9500; cursor:pointer;`;
+    overlay.style.cssText = `position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.2); z-index:9999999; border:none; display:flex; align-items:center; justify-content:center; color:#ff9500; cursor:pointer; backdrop-filter: blur(2px);`;
     
     document.body.appendChild(overlay);
 
-    overlay.onclick = function() {
-        addOrientationListener(); // Kích hoạt lại
-        overlay.remove();
-        
-        // Riêng với iOS, cần gọi lại quyền nếu chưa có
-        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-            DeviceOrientationEvent.requestPermission().then(state => {
-                if(state === 'granted') addOrientationListener();
-            });
+    overlay.onclick = async function() {
+        // Kiểm tra xem trình duyệt có hỗ trợ xin quyền (iOS) không
+        if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+            try {
+                const state = await DeviceOrientationEvent.requestPermission();
+                if (state === 'granted') {
+                    window.orientationListenerAdded = false;
+                    addOrientationListener();
+                    overlay.remove();
+                } else {
+                    // Người dùng bấm Từ chối
+                    overlay.remove();
+                    window.permissionDenied = true;
+                    localStorage.setItem('ios_compass_granted', 'false');
+                    showPermissionResetGuide(); 
+                }
+            } catch (err) {
+                console.error("Lỗi xin quyền:", err);
+                overlay.remove();
+                showPermissionResetGuide();
+            }
+        } else {
+            // Trường hợp Android hoặc trình duyệt không cần xin quyền
+            addOrientationListener();
+            overlay.remove();
         }
     };
 }
