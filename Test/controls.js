@@ -4241,7 +4241,7 @@ if (typeof lockedHeadingAtOpen === 'undefined') window.lockedHeadingAtOpen = nul
 if (typeof orientationListenerAdded === 'undefined') window.orientationListenerAdded = false;
 if (typeof permissionDenied === 'undefined') window.permissionDenied = false;
 if (typeof isCompassHold === 'undefined') window.isCompassHold = false;
-// --- 1. BIẾN TOÀN CỤC (DUY NHẤT 1 LẦN) ---
+
 // Biến điều khiển hệ thống
 let isFullScreen = false; let lastTapTime = 0;
 let originalCompassParent = null; let originalCompassNextSibling = null;
@@ -4257,19 +4257,16 @@ let rafId = null;
 let lastUpdateTime = 0;
 const SMOOTH_MIN = 0.08;
 const SMOOTH_MAX = 0.55;
-const THROTTLE_MS = 16;
 let magneticDeclination = 0;
 let lastAccuracy = 0;
 
-// Biến thuật toán nhiễu (Chỉ cần khai báo 1 lần ở đây)
+// Biến thuật toán nhiễu
 let lastHeadingForNoise = null;
 let lastMotionTime = Date.now();
 let noiseScore = 0;
 let lastMagneticCheck = 0;
 let isMagneticWarningActive = false;
 
-
-let lastSensorRetry = 0;
 /**
  * 🪐 HÀM KHỞI TẠO DUY NHẤT TOÀN HỆ THỐNG
  */
@@ -4288,32 +4285,44 @@ window.onload = function() {
 function initCompassPermission() {
     const modal = document.getElementById('iosPermissionModal');
     const permBtn = document.getElementById('permission-btn');
-
-    if (modal) {
-        modal.style.zIndex = '999999';
-        modal.style.position = 'fixed';
+    
+    if (modal) { 
+        modal.style.zIndex = '999999'; 
+        modal.style.position = 'fixed'; 
     }
 
-    const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
-                       (navigator.platform === 'MacIntel' && 'ontouchend' in document);
+    const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && 'ontouchend' in document);
 
     if (!isIOSDevice) {
-        // === ANDROID ===
+        // --- LOGIC ANDROID THÔNG MINH ---
         if (modal) modal.style.display = 'none';
         if (permBtn) permBtn.style.display = 'none';
+        
+        // Nếu trước đó Android đã từng kích hoạt thành công, chạy thẳng luôn
+        if (localStorage.getItem('android_compass_activated') === 'true') {
+            addOrientationListener();
+            return;
+        }
 
+        // Đợi 400ms để trình duyệt ổn định trước khi gọi lần đầu
         setTimeout(() => {
-            tryActivateAndroidSensor();
+            addOrientationListener();
+            
+            // Chờ thêm 1500ms để kiểm tra xem cảm biến có tự động chạy ngầm không
+            setTimeout(() => {
+                if (lastHeading === null) {
+                    createSmartWakeUpOverlay("👆 Chạm màn hình để khởi động la bàn");
+                }
+            }, 1500);
         }, 400);
         return;
     }
 
-    // === iOS (giữ nguyên) ===
+    // --- LOGIC IOS ---
     const localStatus = localStorage.getItem('ios_compass_granted');
-
     if (localStatus === 'true') {
         if (modal) modal.style.display = 'none';
-        trySilentActivation();   // Giữ nguyên hàm gốc của bạn
+        trySilentActivation();
     } else if (localStatus === 'false') {
         if (permBtn) permBtn.style.display = 'block';
         showPermissionResetGuide();
@@ -4322,18 +4331,6 @@ function initCompassPermission() {
         if (modal) modal.style.display = 'flex';
         setupInitialModalText();
     }
-}
-
-// === ANDROID - THỬ KÍCH HOẠT (Retry + User Gesture) ===
-function tryActivateAndroidSensor() {
-    if (orientationListenerAdded) return;
-    addOrientationListener();
-
-    setTimeout(() => {
-        if (!orientationListenerAdded || typeof lastHeading === 'undefined' || lastHeading === null) {
-            createAndroidWakeOverlay();
-        }
-    }, 1500);
 }
 
 // Thuật toán mồi ngầm - Bắt lỗi nếu bị Chrome iOS chặn
@@ -4351,68 +4348,48 @@ async function trySilentActivation() {
             addOrientationListener();
         }
     } catch (e) {
-        // 🪄 Nếu kích hoạt ngầm thất bại -> Thả màng tàng hình 1 chạm thay vì gắn sự kiện mù
-        createSmartWakeUpOverlay();
+        // Nếu kích hoạt ngầm thất bại -> Thả màng tàng hình 1 chạm thay vì gắn sự kiện mù
+        createSmartWakeUpOverlay("👆 Chạm màn hình để khởi động la bàn");
     }
 }
 
-function createAndroidWakeOverlay() {
-    if (document.getElementById('android-wake-overlay')) return;
-
-    const overlay = document.createElement('div');
-    overlay.id = 'android-wake-overlay';
-    overlay.style.cssText = `
-        position:fixed; top:0; left:0; width:100vw; height:100vh;
-        background:rgba(0,0,0,0.65); z-index:999999; display:flex;
-        align-items:center; justify-content:center; color:#ffeb3b;
-        font-size:1.15rem; text-align:center; cursor:pointer;
-    `;
-    overlay.innerHTML = `<div style="background:rgba(0,0,0,0.85);padding:20px 35px;border-radius:22px;border:2px solid #ffeb3b;">
-        👆 <strong>Chạm màn hình để kích hoạt la bàn</strong>
-    </div>`;
-
-    overlay.onclick = () => {
-        addOrientationListener();
-        overlay.remove();
-    };
-
-    document.body.appendChild(overlay);
-}
-
-// Màng tàng hình 1 chạm (Người dùng chạm bất kỳ đâu là kim quay)
-function createSmartWakeUpOverlay() {
+function createSmartWakeUpOverlay(text) {
     if (document.getElementById('smart-wake-overlay')) return;
 
     const overlay = document.createElement('button');
     overlay.id = 'smart-wake-overlay';
-    overlay.innerHTML = '<span style="background:rgba(0,0,0,0.8); padding:10px 20px; border-radius:20px; border:1px solid #ff9500; font-weight:bold; font-size:16px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">👆 Chạm màn hình để bật la bàn</span>';
-    overlay.style.cssText = `
-        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-        background: rgba(0,0,0,0.1); border: none; z-index: 9999999;
-        display: flex; align-items: center; justify-content: center;
-        color: #ff9500; cursor: pointer; backdrop-filter: blur(2px);
-    `;
+    // Đơn giản hóa giao diện: loại bỏ đổ bóng và blur nặng nề để giải phóng GPU Android
+    overlay.innerHTML = `<span style="background:rgba(0,0,0,0.9); padding:14px 22px; border-radius:12px; border:1px solid #ff9500; font-weight:bold; font-size:16px; color:#ff9500;">${text}</span>`;
+    overlay.style.cssText = `position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.25); z-index:9999999; border:none; display:flex; align-items:center; justify-content:center; cursor:pointer;`;
     
     document.body.appendChild(overlay);
 
     overlay.onclick = async function() {
-        try {
-            const state = await DeviceOrientationEvent.requestPermission();
-            if (state === 'granted') {
-                window.orientationListenerAdded = false;
-                addOrientationListener();
-                overlay.remove(); // Chỉ gỡ màng khi đã thành công
-            } else {
-                // Nếu User bấm Từ Chối ở popup của iOS
+        // Ghi nhớ thiết bị Android đã được người dùng mồi tương tác
+        localStorage.setItem('android_compass_activated', 'true');
+
+        if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+            try {
+                const state = await DeviceOrientationEvent.requestPermission();
+                if (state === 'granted') {
+                    window.orientationListenerAdded = false;
+                    addOrientationListener();
+                    overlay.remove();
+                } else {
+                    overlay.remove();
+                    window.permissionDenied = true;
+                    localStorage.setItem('ios_compass_granted', 'false');
+                    showPermissionResetGuide(); 
+                }
+            } catch (err) {
+                console.error("Lỗi xin quyền:", err);
                 overlay.remove();
-                window.permissionDenied = true;
-                localStorage.setItem('ios_compass_granted', 'false');
-                showPermissionResetGuide(); // Hiện bảng hướng dẫn reset quyền
+                showPermissionResetGuide();
             }
-        } catch (err) {
-            console.error(err);
+        } else {
+            // Android thông thường nhảy vào đây
+            addOrientationListener();
             overlay.remove();
-            showPermissionResetGuide();
         }
     };
 }
@@ -4562,17 +4539,24 @@ function handleOrientation(event) {
     
     if (rawHeading === null) return;
 
-    // Thuật toán nhiễu (chỉ chạy khi không có accuracy hardware - Android)
-    if (now - lastMagneticCheck > 1000) {
+    // Tự động ẩn thông báo mồi nếu la bàn đã nhận được dữ liệu thực tế và lưu trạng thái thành công
+    if (lastHeading !== null && localStorage.getItem('android_compass_activated') !== 'true') {
+        localStorage.setItem('android_compass_activated', 'true');
+        const overlay = document.getElementById('smart-wake-overlay');
+        if (overlay) overlay.remove();
+    }
+
+    // Giảm tần suất check nhiễu lên 1500ms để giảm tải bớt các lệnh DOM nặng cho Android A71
+    if (now - lastMagneticCheck > 1500) {
         if (accuracy === undefined || accuracy === null) {
             checkMagneticQuality(rawHeading, event);
         }
         lastMagneticCheck = now;
     }
 
-    // Logic quay kim
     if (document.activeElement?.id === 'compassSlider') return;
-    if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
+    
+    // Đã loại bỏ hoàn toàn chặn khóa cứng THROTTLE_MS để chạy mượt theo tần số quét phần cứng
     lastUpdateTime = now;
 
     if (lastHeading === null) {
@@ -4586,6 +4570,10 @@ function handleOrientation(event) {
     if (diff < -180) diff += 360;
     
     const absDiff = Math.abs(diff);
+    
+    // Bộ lọc chống nhiễu Jitter: Nếu điện thoại nhúc nhích cực nhỏ (< 0.15 độ), bỏ qua để chống rung kim
+    if (absDiff < 0.15) return;
+
     let dynamicFactor = SMOOTH_MIN;
     if (absDiff > 12) dynamicFactor = SMOOTH_MAX;
     else if (absDiff > 1.5) dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
@@ -4654,6 +4642,7 @@ function showMagneticToast() {
     setTimeout(() => { isMagneticWarningActive = false; }, 10000);
 }
 
+// Thực thi vẽ và cập nhật giao diện
 function executeUIUpdate(headingDial, headingText) {
     if (typeof updateCompassUI === 'function') updateCompassUI(headingText); 
     if (typeof updateDegreeDisplay === 'function') updateDegreeDisplay(headingText); 
@@ -4679,27 +4668,24 @@ function updateMagneticStatus(acc) {
     if (text.innerText !== txt) { dot.style.background = bg; text.innerText = txt; }
 }
 
-// --- 7. HÀM KÍCH HOẠT SENSOR ---
+// --- 7. Hàm kích hoạt Listener chung cho cả 2 hệ điều hành
 function addOrientationListener() {
-    if (orientationListenerAdded) return;
-
+    if (window.orientationListenerAdded) return;
+    
     const handler = (e) => {
         if (e.webkitCompassHeading !== undefined || e.alpha !== null) {
             handleOrientation(e);
         }
     };
 
+    // Ưu tiên absolute (Android), sau đó đến orientation (iOS/Android cũ)
     if ('ondeviceorientationabsolute' in window) {
         window.addEventListener('deviceorientationabsolute', handler, { passive: true });
     } else if ('ondeviceorientation' in window) {
         window.addEventListener('deviceorientation', handler, { passive: true });
-    } else {
-        console.warn("Thiết bị không hỗ trợ sensor la bàn");
-        return;
     }
-
-    orientationListenerAdded = true;
-    console.log("✅ La bàn sensor đã kích hoạt");
+    
+    window.orientationListenerAdded = true;
 }
 // =========================================================================
 // 📺 ENGINE ĐIỀU KHIỂN CHẾ ĐỘ PHÓNG TO / FULLSCREEN
