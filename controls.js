@@ -4257,7 +4257,6 @@ let rafId = null;
 let lastUpdateTime = 0;
 const SMOOTH_MIN = 0.08;
 const SMOOTH_MAX = 0.55;
-const THROTTLE_MS = 16;
 let magneticDeclination = 0;
 let lastAccuracy = 0;
 
@@ -4349,19 +4348,24 @@ async function trySilentActivation() {
             addOrientationListener();
         }
     } catch (e) {
-        // 🪄 Nếu kích hoạt ngầm thất bại -> Thả màng tàng hình 1 chạm thay vì gắn sự kiện mù
-        createSmartWakeUpOverlay();
+        // 🪄 SỬA LỖI TẠI ĐÂY: Truyền chữ thông báo cụ thể cho iPhone thay vì để trống
+        createSmartWakeUpOverlay("👆 Chạm màn hình để khởi động la bàn");
     }
 }
 
 function createSmartWakeUpOverlay(text) {
+    // 🛡️ BẢO VỆ PHÒNG HỜ: Nếu text bị trống (undefined), tự động lấy câu thông báo chuẩn
+    if (!text) text = "👆 Chạm màn hình để khởi động la bàn";
+
     if (document.getElementById('smart-wake-overlay')) return;
 
     const overlay = document.createElement('button');
     overlay.id = 'smart-wake-overlay';
-    // Đơn giản hóa giao diện: loại bỏ đổ bóng và blur nặng nề để giải phóng GPU Android
-    overlay.innerHTML = `<span style="background:rgba(0,0,0,0.9); padding:14px 22px; border-radius:12px; border:1px solid #ff9500; font-weight:bold; font-size:16px; color:#ff9500;">${text}</span>`;
-    overlay.style.cssText = `position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.25); z-index:9999999; border:none; display:flex; align-items:center; justify-content:center; cursor:pointer;`;
+
+// Giao diện ép nhỏ tối đa, ôm sát dòng chữ và đồng bộ hoàn hảo với tone Vàng Kim #dfb76c
+    overlay.innerHTML = `<span style="background: #161616; padding: 8px 14px; border-radius: 6px; border: 1px solid #dfb76c; font-weight: 600; font-size: 13.5px; color: #dfb76c; letter-spacing: 0.3px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">${text}</span>`;
+
+    overlay.style.cssText = `position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(7, 7, 7, 0.4); z-index: 9999999; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer;`;
     
     document.body.appendChild(overlay);
 
