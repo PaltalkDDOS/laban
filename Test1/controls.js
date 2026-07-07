@@ -4295,15 +4295,21 @@ function initCompassPermission() {
     const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && 'ontouchend' in document);
 
     if (!isIOSDevice) {
-        // --- LOGIC ANDROID (Nâng cấp thời gian) ---
+        // --- LOGIC ANDROID THÔNG MINH ---
         if (modal) modal.style.display = 'none';
         if (permBtn) permBtn.style.display = 'none';
         
-        // Đợi 400ms để trình duyệt ổn định trước khi gọi
+        // Nếu trước đó Android đã từng kích hoạt thành công, chạy thẳng luôn không chờ đợi hay hiện thông báo nữa
+        if (localStorage.getItem('android_compass_activated') === 'true') {
+            addOrientationListener();
+            return;
+        }
+
+        // Đợi 400ms để trình duyệt ổn định trước khi gọi lần đầu
         setTimeout(() => {
             addOrientationListener();
             
-            // Sau khi đã gọi add, chờ thêm 1500ms nữa để xem kim có nhúc nhích không
+            // Chờ thêm 1500ms để kiểm tra xem cảm biến có tự động chạy ngầm không (nhiều máy Android tự chạy được)
             setTimeout(() => {
                 if (lastHeading === null) {
                     createSmartWakeUpOverlay("👆 Chạm màn hình để khởi động la bàn");
@@ -4313,7 +4319,7 @@ function initCompassPermission() {
         return;
     }
 
-    // --- LOGIC IOS (Giữ nguyên luồng của bạn) ---
+    // --- LOGIC IOS (GIỮ NGUYÊN LUỒNG CỦA BẠN) ---
     const localStatus = localStorage.getItem('ios_compass_granted');
     if (localStatus === 'true') {
         if (modal) modal.style.display = 'none';
@@ -4343,23 +4349,29 @@ async function trySilentActivation() {
             addOrientationListener();
         }
     } catch (e) {
-        // 🪄 Nếu kích hoạt ngầm thất bại -> Thả màng tàng hình 1 chạm thay vì gắn sự kiện mù
-        createSmartWakeUpOverlay();
+        // 🪄 SỬA LỖI TẠI ĐÂY: Truyền chữ thông báo cụ thể cho iPhone thay vì để trống
+        createSmartWakeUpOverlay("👆 Chạm vào màn hình để cho phép la bàn hoạt động");
     }
 }
 
 function createSmartWakeUpOverlay(text) {
+    // 🛡️ BẢO VỆ PHÒNG HỜ: Nếu text bị trống (undefined), tự động lấy câu thông báo chuẩn
+    if (!text) text = "👆 Chạm màn hình để khởi động la bàn";
+
     if (document.getElementById('smart-wake-overlay')) return;
 
     const overlay = document.createElement('button');
     overlay.id = 'smart-wake-overlay';
-    overlay.innerHTML = `<span style="background:rgba(0,0,0,0.8); padding:15px 25px; border-radius:20px; border:1px solid #ff9500; font-weight:bold; font-size:16px;">${text}</span>`;
-    overlay.style.cssText = `position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.2); z-index:9999999; border:none; display:flex; align-items:center; justify-content:center; color:#ff9500; cursor:pointer; backdrop-filter: blur(2px);`;
+    // Đơn giản hóa giao diện: loại bỏ đổ bóng và blur nặng nề để giải phóng GPU Android
+    overlay.innerHTML = `<span style="background:rgba(0,0,0,0.9); padding:14px 22px; border-radius:12px; border:1px solid #ff9500; font-weight:bold; font-size:16px; color:#ff9500;">${text}</span>`;
+    overlay.style.cssText = `position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.25); z-index:9999999; border:none; display:flex; align-items:center; justify-content:center; cursor:pointer;`;
     
     document.body.appendChild(overlay);
 
     overlay.onclick = async function() {
-        // Kiểm tra xem trình duyệt có hỗ trợ xin quyền (iOS) không
+        // Ghi nhớ thiết bị Android đã được người dùng mồi tương tác
+        localStorage.setItem('android_compass_activated', 'true');
+
         if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
             try {
                 const state = await DeviceOrientationEvent.requestPermission();
@@ -4368,7 +4380,6 @@ function createSmartWakeUpOverlay(text) {
                     addOrientationListener();
                     overlay.remove();
                 } else {
-                    // Người dùng bấm Từ chối
                     overlay.remove();
                     window.permissionDenied = true;
                     localStorage.setItem('ios_compass_granted', 'false');
@@ -4380,7 +4391,7 @@ function createSmartWakeUpOverlay(text) {
                 showPermissionResetGuide();
             }
         } else {
-            // Trường hợp Android hoặc trình duyệt không cần xin quyền
+            // Android thông thường nhảy vào đây
             addOrientationListener();
             overlay.remove();
         }
@@ -4532,17 +4543,24 @@ function handleOrientation(event) {
     
     if (rawHeading === null) return;
 
-    // Thuật toán nhiễu (chỉ chạy khi không có accuracy hardware - Android)
-    if (now - lastMagneticCheck > 1000) {
+    // Tự động ẩn thông báo mồi nếu la bàn đã nhận được dữ liệu thực tế và lưu trạng thái thành công
+    if (lastHeading !== null && localStorage.getItem('android_compass_activated') !== 'true') {
+        localStorage.setItem('android_compass_activated', 'true');
+        const overlay = document.getElementById('smart-wake-overlay');
+        if (overlay) overlay.remove();
+    }
+
+    // Giảm tần suất check nhiễu lên 1500ms để giảm tải bớt các lệnh DOM nặng cho Android A71
+    if (now - lastMagneticCheck > 1500) {
         if (accuracy === undefined || accuracy === null) {
             checkMagneticQuality(rawHeading, event);
         }
         lastMagneticCheck = now;
     }
 
-    // Logic quay kim
     if (document.activeElement?.id === 'compassSlider') return;
-    if (now - lastUpdateTime < THROTTLE_MS && lastHeading !== null) return;
+    
+    // 🔥 ĐÃ XÓA CHẶN TIME CỨNG (THROTTLE_MS) ĐỂ KIM QUAY MƯỢT TUYỆT ĐỐI THEO TẦN SỐ QUÈT MÀN HÌNH NATIVE
     lastUpdateTime = now;
 
     if (lastHeading === null) {
@@ -4556,6 +4574,10 @@ function handleOrientation(event) {
     if (diff < -180) diff += 360;
     
     const absDiff = Math.abs(diff);
+    
+    // Bộ lọc chống nhiễu Jitter: Nếu điện thoại nhúc nhích cực nhỏ (< 0.15 độ), không xử lý để tránh rung lắc kim
+    if (absDiff < 0.15) return;
+
     let dynamicFactor = SMOOTH_MIN;
     if (absDiff > 12) dynamicFactor = SMOOTH_MAX;
     else if (absDiff > 1.5) dynamicFactor = SMOOTH_MIN + (absDiff / 12) * (SMOOTH_MAX - SMOOTH_MIN);
