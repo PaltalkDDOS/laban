@@ -1,5 +1,5 @@
 # 🛡️ JUNGLE DIAMOND 14.9.5  
-**YouTube Ad Blocker - Phiên Bản Hồng Minh**
+**YouTube Ad Blocker - Phiên Bản 14.9.5**
 
 > **Trình chặn quảng cáo YouTube cao cấp sử dụng công nghệ tiêm tàng hình trực tiếp vào MAIN world kết hợp đa tầng chống phát hiện và khôi phục stream thông minh.**
 
@@ -67,7 +67,7 @@ Trái tim của Jungle Diamond là hệ thống lọc thông minh đa lớp:
 
 ### 📬 LIÊN HỆ & ỦNG HỘ DỰ ÁN
 
-- **Tác giả:** Thái Thông (Hồng Minh)
+- **Tác giả:** Thái Thông (VN)
 - **Email hỗ trợ:** [ThaiThongsj@gmail.com](mailto:ThaiThongsj@gmail.com)
 - **Kênh đóng góp duy trì dự án:**  
   `9898661918` • **Vietcombank** (NGUYỄN NGỌC THÁI THÔNG)
