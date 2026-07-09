@@ -1,75 +1,78 @@
-# 🧭 ĐẠI THUẬT LA KINH PHONG THỦY TỐI THƯỢNG
+# 🛡️ JUNGLE DIAMOND 14.9.5  
+**YouTube Ad Blocker - Phiên Bản Hồng Minh**
 
-> **Hệ thống Nhất Thể Đa Tầng lọc khí trường qua 3 màng lọc toán pháp từ Vĩ mô đến Vi cục (Bát Trạch 45° ➔ 24 Sơn 15° ➔ 72 Hậu 5°).**
-
-Ứng dụng PWA (Progressive Web App) hỗ trợ đo đạc, tính toán và thẩm thấu từng văn bản rung động vi mô của long mạch, tự động phân tích và tối ưu hóa phương vị toàn diện chuẩn sát theo dòng chảy năng lượng của **Huyền Không Đại Vận 9 (2024 - 2043)**.
-
----
-
-## 🔮 TÍNH NĂNG CỐT LÕI
-
-* **Lập số Bát Trạch theo Lập Xuân:** Tự động quy đổi ngày Dương lịch sang Năm Âm lịch (Can Chi) chuẩn thiên văn số học để xác định chính xác cung phi chủ mệnh.
-* **Đảo chuyển Âm Dương (Tọa Hung Trấn Sát):** Thuật toán thông minh tự động nhận diện công năng hạ tầng. Đối với khu vực uế tạp (*WC, Bể phốt, Nhà kho*), hệ thống sẽ đảo ngược điểm số để tính toán cách cục "Dùng hung trấn hung — Lấy độc trị độc".
-* **Bù trừ sai số từ trường:** Tự động tính toán và bù trừ độ lệch từ thiên giữa Bắc từ trường và Bắc địa lý thực tế.
-* **Trải nghiệm PWA cao cấp:** Khả năng cài đặt trực tiếp về điện thoại như ứng dụng native, hoạt động ngoại tuyến mượt mà và tự động cập nhật ngầm định.
+> **Trình chặn quảng cáo YouTube cao cấp sử dụng công nghệ tiêm tàng hình trực tiếp vào MAIN world kết hợp đa tầng chống phát hiện và khôi phục stream thông minh.**
 
 ---
 
-## 🧠 THUẬT TOÁN ĐIỂM TỔNG HỢP (PT)
+## ✨ TÍNH NĂNG CỐT LÕI
 
-Trái tim của hệ thống vận hành dựa trên phương trình tích hợp đa tầng, lọc sạch khí trường qua 3 lớp nghiêm ngặt nhằm tìm ra tọa độ đặt cát vị hoặc trấn hung tối ưu nhất:
-
-$$PT = [ ( BT_{Gốc} + \Delta H_{72} ) \times K_{Van} - \Sigma\Psi_{Sat} ] \times \Gamma_{Khai}$$
-
-### Chi tiết cấu trúc thuật toán:
-* **$BT_{Gốc}$ (Điểm nền Đại & Trung cục):** Trích xuất dynamic từ bản đồ 192 cặp tương tác giữa Mệnh Cung Phi và 24 Sơn vị ($15^\circ$) trong ma trận Bát Trạch Minh Châu.
-* **$\Delta H_{72}$ (Biên độ Mạch khí 72 Hậu):** Tầng vi cục quản lý biên độ khí trường chính xác đến từng bước nhảy $5^\circ$ (Ví dụ: Loại bỏ trục Không Vong, phân tách suy khí và vượng khí).
-* **$K_{Van}$ (Trọng số Vận Tinh Huyền Không):** Đòn bẩy thời vận dịch chuyển dynamic bám sát Niên độ khảo sát, kích hoạt xung lực vượng khí tối đa cho đương vận **Vận 9**.
-* **$\Sigma\Psi_{Sat}$ (Thần sát Lưu niên):** Khấu trừ năng lượng chướng khí từ Ngũ Hoàng Đại Sát (trừ 28đ) và Thái Tuế đáo hướng (trừ 18đ) hàng năm đối với các kết cấu nạp khí.
-* **$\Gamma_{Khai}$ (Hệ số Thông Khí Khai Môn):** Tự động nhân hiệu ứng đòn bẩy phát triển $1.15$ khi các cấu trúc hạ tầng mở hướng (*Cửa chính, Cổng*) đặt đắc cách vào Sơn vị vượng khí.
+- **Chặn triệt để quảng cáo:** Loại bỏ hoàn toàn pre-roll, mid-roll, overlay, banner, sponsored content và mọi dạng quảng cáo.
+- **Tiêu diệt Enforcement:** Tự động loại bỏ dialog "Continue watching", "Ad block detected", enforcement message.
+- **Tự động tua & Skip:** Cơ chế tua nhanh thông minh và bỏ qua quảng cáo tức thì.
+- **Khôi phục Stream Khẩn Cấp:** Khi bị YouTube chặn, hệ thống tự động khôi phục luồng video.
+- **Hardware Interaction Protection:** Giám sát click, phím space, phím k để phân biệt tương tác thật của người dùng.
+- **Tối ưu Hiệu Suất:** Không làm chậm trình duyệt, tiết kiệm tài nguyên.
+- **Cập Nhật Linh Hoạt:** Tự động thích ứng với mọi thay đổi giao diện của YouTube.
 
 ---
 
-## 🎯 GIẢI MÃ 4 VÒNG LA BÀN
+## 🧠 THUẬT TOÁN ĐA TẦNG
 
-| Tầng Lớp | Độ Rộng | Tên Gọi | Mô Tả Ý Nghĩa |
-| :--- | :--- | :--- | :--- |
-| **Vòng 1** | $45^\circ$ | **8 Hướng (Bát Trạch)** | Phân định đại thể các cung lớn (Khảm, Ly, Chấn, Đoài...) |
-| **Vòng 2** | $15^\circ$ | **24 Sơn vị** | Định vị chi tiết phương vị đất (Tý, Quý, Sửu, Cấn...) |
-| **Vòng 3** | — | **24 Thần Sát** | Cảnh báo cát hung mang tính sự kiện (Phúc Đức, Tấn Tài, Ôn Hoàng...) |
-| **Vòng 4** | $5^\circ$ | **72 Hậu (Xuyên Sơn)** | Tầng vi mô cốt tủy lọc tia năng lượng sạch dưới lòng đất |
+Trái tim của Jungle Diamond là hệ thống lọc thông minh đa lớp:
 
-> ⚠️ **LƯU Ý ĐẶC BIỆT TỪ CHUYÊN GIA:**
-> Bát Trạch giúp bạn chọn đúng cái **Phòng ngủ** (Vùng không gian đại thể), còn 24 Sơn và 72 Hậu mới là thứ giúp định vị chính xác **tọa độ đặt Gối nằm hoặc vị trí đặt tâm Kim La Bàn** nhằm tránh hiện tượng *"Tuyệt mệnh trong Sinh khí"*.
+**Core Engine = (Stealth Injection + JSON Proxy) × Recovery System × Anti-Detection**
 
----
+### Chi tiết các lớp công nghệ:
 
-## 📝 3 BƯỚC KHỞI SỰ NHANH CHÓNG
-
-1. **Khởi tạo:** Nhập họ tên, ngày sinh dương lịch và chọn chính xác mục đích thiết lập phương vị (*Giường ngủ, Bàn thờ hoặc Nhà vệ sinh*).
-2. **Chọn Hướng Điểm Cao:** Cuộn xem danh sách gợi ý đã được thuật toán sắp xếp, chọn hướng có Điểm số ($pt$) cao nhất ở trên cùng.
-3. **Chốt Tọa Độ:** Cầm thiết bị ra thực địa xoay người để kim la bàn khớp với độ số chỉ định. Dòng trạng thái hiển thị dấu chấm xanh 🟢 (**Đại Cát**) là hoàn thành mạch pháp.
+* **Main World Injection:** Tiêm script trực tiếp vào ngữ cảnh trang web (không qua content script thông thường).
+* **JSON Proxy Manipulation:** Can thiệp sâu vào `playerResponse`, `ytplayer.config` và dữ liệu phản hồi từ server.
+* **Hardware Tracker:** Phát hiện tương tác vật lý thật từ người dùng (click, keyboard).
+* **Network Interceptor:** Chặn hoàn toàn các request tracking và reporting của YouTube.
+* **Nonstop Recovery Engine:** Cơ chế giám sát và tự động phát lại video liên tục.
+* **Stealth CSS + DOM Observer:** Ẩn triệt để mọi phần tử quảng cáo bằng MutationObserver và RequestAnimationFrame.
 
 ---
 
-## 🔮 ĐẠI LUẬN SỐ MỆNH TOÀN DIỆN
+## 🎯 CÁC CƠ CHẾ BẢO VỆ QUAN TRỌNG
 
-Để lập Trận Đồ Xoay Chuyển Vận Mệnh kết hợp 16 Đại Thuật (*Tử Bình, Kỳ Môn Độn Giáp, Lục Hào, Thần Số Học & Nhân Tướng*), quý gia chủ cần chuẩn bị hồ sơ đầu vào:
-
-* **Thông tin bản mệnh:** Họ tên + Giờ, Ngày, Tháng, Năm sinh chính xác.
-* **Thông tin gia đạo:** Ngày tháng năm sinh của các thành viên trực hệ.
-* **Hình ảnh thực tế:** Ảnh chụp lòng bàn tay nét (không gồng), ảnh chân dung trực diện ánh sáng tự nhiên không qua chỉnh sửa.
-* **Sự vụ trăn trở:** Nêu rõ vướng mắc lớn nhất hiện tại về sự nghiệp, tranh chấp hoặc gia đạo cần tìm điểm tháo gỡ.
+| Lớp | Tên Cơ Chế                    | Mô Tả |
+|-----|-------------------------------|------|
+| 1   | **Stealth Injection**         | Tiêm script tàng hình trực tiếp vào MAIN world |
+| 2   | **JSON Proxy**                | Thao túng dữ liệu playerResponse thời gian thực |
+| 3   | **Hardware Tracker**          | Giám sát tương tác thật để tránh can thiệp |
+| 4   | **Nonstop Recovery**          | Tự động khôi phục stream khi bị gián đoạn |
+| 5   | **Anti-Detection**            | Chống cơ chế phát hiện adblock của YouTube |
 
 ---
 
-## ⚙️ PHÁT TRIỂN HỆ THỐNG PWA
-* **Kiến trúc:** Thuần `HTML5` / `CSS3` / `JavaScript` không phụ thuộc thư viện ngoài.
-* **Service Worker:** Sử dụng chiến lược `Cache-First` tối ưu hiệu năng tải dữ liệu, tích hợp hệ thống tin nhắn trạng thái đồng bộ thời gian thực theo cấu trúc Google Chrome (`CHECKING_FOR_UPDATE`, `UPDATE_AVAILABLE`, `VERSION_UPDATED`).
+## 📥 HƯỚNG DẪN CÀI ĐẶT NHANH
+
+1. **Tải extension** về máy (folder hoặc file zip)
+2. Mở trình duyệt **Chrome / Edge / Brave**
+3. Truy cập: `chrome://extensions/` hoặc `edge://extensions/`
+4. Bật **Developer Mode**
+5. Nhấn **"Load unpacked"** → Chọn thư mục chứa extension
+6. Hoàn tất! Extension sẽ hoạt động ngay lập tức.
+
+---
+
+## ⚙️ PHÁT TRIỂN HỆ THỐNG
+
+- **Kiến trúc:** JavaScript thuần, tiêm trực tiếp vào trang YouTube
+- **Công nghệ chính:** Proxy, MutationObserver, RequestAnimationFrame, Network Interception
+- **Mục tiêu:** Mang lại trải nghiệm xem YouTube **sạch - mượt - không gián đoạn**
 
 ---
 
 ### 📬 LIÊN HỆ & ỦNG HỘ DỰ ÁN
-* **Bản quyền hệ thống:** Thái Thông
-* **Hòm thư tiếp nhận hồ sơ:** [ThaiThongsj@gmail.com](mailto:ThaiThongsj@gmail.com)
-* **Kênh đóng góp duy trì dự án:** `9898661918` • **Vietcombank** (NGUYEN NGOC THAI THONG)
+
+- **Tác giả:** Thái Thông (Hồng Minh)
+- **Email hỗ trợ:** [ThaiThongsj@gmail.com](mailto:ThaiThongsj@gmail.com)
+- **Kênh đóng góp duy trì dự án:**  
+  `9898661918` • **Vietcombank** (NGUYỄN NGỌC THÁI THÔNG)
+
+---
+
+**Cảm ơn bạn đã sử dụng Jungle Diamond!**  
+Chúc bạn xem YouTube thoải mái, không còn bị làm phiền bởi quảng cáo nữa.
