@@ -5,9 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Đại Thuật La Kinh Phong Thủy Tối Thượng - Thái Thông</title>
   <link rel="stylesheet" href="style.css">
+  <!-- 1. ĐÂY LÀ DÒNG QUYẾT ĐỊNH: Nhuộm màu vàng cát cho cả Chrome (Android) và Safari (iOS) -->
+  <meta name="theme-color" content="#dfb76c">
+  <!-- Cấu hình hỗ trợ Web App -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-capable" content="yes">  
+  <!-- 2. SỬA THÀNH DEFAULT: Để nội dung app nằm dưới thanh pin/giờ, hiển thị đúng màu theme-color -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">  
   <meta name="apple-mobile-web-app-title" content="La Bàn PT">
   <link rel="apple-touch-icon" href="icon-192.png">
 </head>
@@ -223,11 +227,11 @@
         </div>
 
         <ul style="padding-left: 20px; line-height: 1.8; color: #e0e0e0;">
-            <li><strong>BT<sub>Gốc</sub> (Điểm nền Đại cục & Trung cục):</strong> Trích xuất dynamic trực tiếp từ bản đồ 192 cặp tương tác giữa Mệnh Cung Phi và 24 Sơn vị (15°) trong Ma trận Bát Trạch Minh Châu.</li>
+            <li><strong>BT<sub>Gốc</sub> (Điểm nền Đại cục & Trung cục):</strong> Trích xuất linh hoạt trực tiếp từ bản đồ 192 cặp tương tác giữa Mệnh Cung Phi và 24 Sơn vị (15°) trong Ma trận Bát Trạch Minh Châu.</li>
             <li><strong>ΔH<sub>72</sub> (Biên độ Mạch khí 72 Hậu):</strong> Tầng vi cục quản lý biên độ khí trường chính xác đến từng bước nhảy 5° (Ví dụ: Sự khác biệt từ mốc 95 điểm của Tý Hậu 1 sang mốc 45 điểm suy khí của Quý Hậu 1).</li>
-            <li><strong>K<sub>Van</sub> (Trọng số Vận Tinh Huyền Không):</strong> Đòn bẩy thời vận dịch chuyển dynamic bám sát Niên độ khảo sát, kích hoạt xung lực vượng khí tối đa cho đương vận Vận 9 (2024 - 2043).</li>
+            <li><strong>K<sub>Van</sub> (Trọng số Vận Tinh Huyền Không):</strong> Đòn bẩy thời vận dịch chuyển động bám sát Niên độ khảo sát, kích hoạt xung lực vượng khí tối đa cho đương vận Vận 9 (2024 - 2043).</li>
             <li><strong>ΣΨ<sub>Sat</sub> (Thần sát Lưu niên):</strong> Khấu trừ năng lượng chướng khí từ Ngũ Hoàng Đại Sát (trừ 28đ) và Thái Tuế đáo hướng (trừ 18đ) hàng năm (Hệ thống chỉ áp dụng hình phạt đối với Cát Cục nạp khí).</li>
-            <li><strong>Γ<sub>Khai</sub> (Hệ số Thông Khí Khai Môn):</strong> "Vũ khí bí mật" - Tự động nhân hiệu ứng đòn bẩy phát triển 1.15 (tăng 15% năng lực nạp cát) when các cấu trúc hạ tầng mở hướng (Cửa chính, Cổng) đặt đắc cách vào Sơn vị vượng khí.</li>
+            <li><strong>Γ<sub>Khai</sub> (Hệ số Thông Khí Khai Môn):</strong> "Vũ khí bí mật" - Tự động nhân hiệu ứng đòn bẩy phát triển 1.15 (tăng 15% năng lực nạp cát) khi các cấu trúc hạ tầng mở hướng (Cửa chính, Cổng) đặt đắc cách vào Sơn vị vượng khí.</li>
         </ul>
 
         <!-- ĐOẠN BỌC CHUYÊN SÂU ĐƯỢC THÊM VÀO ĐY ĐỂ TẠO ĐỘ TINH TẾ VÀ GỌN GÀNG -->
@@ -254,7 +258,7 @@
 
         <div style="margin-top: 15px; padding: 15px; background: rgba(0, 242, 201, 0.05); border-radius: 8px;">
             <small style="color: #00f2c9;">💡 Logic cốt lõi - Đảo chuyển Âm Dương (Tọa Hung Trấn Sát):</small><br>
-            Hệ thống tự động nhận diện bản chất công năng hạ tầng. Đối với các khu vực uế tạp (Bếp, WC, Bể phốt, Nhà kho, Thùng rác), when đặt đè đúng vào cung Hung Bát Trạch, điểm số sẽ tự động **Nghịch Đảo** để tôn vinh sự Đắc cách (Dùng hung trấn hung - Lấy độc trị độc). Biên độ biến thiên của 72 Hậu cũng được đảo dấu tương ứng để tối ưu hóa việc tiêu trừ tà khí.
+            Hệ thống tự động nhận diện bản chất công năng hạ tầng. Đối với các khu vực uế tạp (Bếp, WC, Bể phốt, Nhà kho, Thùng rác), khi đặt đè đúng vào cung Hung Bát Trạch, điểm số sẽ tự động **Nghịch Đảo** để tôn vinh sự Đắc cách (Dùng hung trấn hung - Lấy độc trị độc). Biên độ biến thiên của 72 Hậu cũng được đảo dấu tương ứng để tối ưu hóa việc tiêu trừ tà khí.
         </div>
     </div>
 
@@ -267,7 +271,7 @@
         </li>
         <li>
             <strong>Màng lọc 2 - Bộ não Điều Tiết Trấn Sát & Thiên Khí (Thời gian & Mục đích):</strong>
-            Giải phóng trục thời gian cho la bàn số, tự động tính toán Vận Tinh dịch chuyển dynamic theo từng năm khảo sát thay vì lấy năm tĩnh máy tính. Đồng thời kích hoạt cơ chế đảo chiều mục đích sử dụng: 
+            Giải phóng trục thời gian cho la bàn số, tự động tính toán Vận Tinh dịch chuyển linh hoạt theo từng năm khảo sát thay vì lấy năm tĩnh máy tính. Đồng thời kích hoạt cơ chế đảo chiều mục đích sử dụng: 
             <br>🔸 Hạng mục nạp cát (Cửa, Cổng, Bàn thờ, Giường ngủ) cần đặt cung Cát hướng Cát để đón sinh khí vượng và kích hoạt hệ số thông khí Khai.
             <br>🔸 Hạng mục xả uế (WC, Bể phốt, Thùng rác) cần đặt đè lên cung Hung để đạt cách cục <strong>Tọa Hung Trấn Sát</strong>, nâng tầm điểm số lên mức Đắc cách và bảo vệ mạch điểm không bị phạt trừ bởi Sát tinh lưu niên (lấy độc trị độc).
         </li>
