@@ -19,19 +19,24 @@ const FengShuiScienceModal = {
                 backdrop-filter: blur(5px);
                 -webkit-backdrop-filter: blur(5px);
                 z-index: 99999;
-                display: flex; justify-content: center; 
-                align-items: flex-start; /* 🌟 ĐÃ SỬA: Đẩy lên trên đầu thay vì căn giữa hụt xuống dưới */
-                padding-top: 45px;       /* 🌟 ĐÃ THÊM: Khoảng cách an toàn hoàn hảo ngay dưới Tai thỏ / Dynamic Island */
+                display: flex; 
+                justify-content: center; 
+                align-items: center; /* Mặc định căn giữa đẹp mắt trên mobile */
+                padding: 15px;
+                box-sizing: border-box;
                 opacity: 0; pointer-events: none;
                 transition: opacity 0.3s ease;
             }
             .fs-science-overlay.active {
                 opacity: 1; pointer-events: auto;
             }
-            /* Khung hiển thị lột xác với viền chỉ vàng và bóng mờ giống Donate Modal */
+            
+            /* Khung hiển thị tự động nhận diện kích thước thiết bị */
             .fs-science-container {
                 position: relative;
-                width: 90%; max-width: 520px; max-height: 80vh; /* Tối ưu lại max-height để không tràn đáy */
+                width: 100%; 
+                max-width: 530px; /* Nới rộng nhẹ cấu trúc khung */
+                max-height: 82vh; 
                 background: #121212;
                 border: 1px solid rgba(223, 183, 108, 0.3);
                 border-radius: 14px;
@@ -41,14 +46,31 @@ const FengShuiScienceModal = {
                 line-height: 1.7;
                 overflow-y: auto;
                 box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-                transform: translateY(-20px); /* 🌟 ĐÃ SỬA: Đổi thành dấu trừ để hiệu ứng rớt nhẹ từ trên xuống */
+                transform: translateY(20px);
                 transition: transform 0.3s ease;
                 scrollbar-width: thin;
                 scrollbar-color: #dfb76c #121212;
+                box-sizing: border-box;
+            }
+            .fs-science-container * {
+                box-sizing: border-box;
             }
             .fs-science-overlay.active .fs-science-container {
                 transform: translateY(0);
             }
+            
+            /* RESPONSIVE THÔNG MINH CHO MÁY TÍNH (DESKTOP) */
+            @media (min-width: 768px) {
+                .fs-science-overlay {
+                    align-items: flex-start; /* Giải phóng căn giữa, cho phép đẩy lên trên */
+                    padding-top: 6vh;        /* Thụt xuống một chút từ đỉnh màn hình cực chuẩn */
+                    padding-bottom: 6vh;
+                }
+                .fs-science-container {
+                    max-height: 88vh;        /* Khung dài xuống dưới thoải mái, dáng thanh thoát */
+                }
+            }
+            
             /* Nút đóng phong cách tối giản sang trọng */
             .fs-science-close-x {
                 position: absolute;
@@ -103,7 +125,7 @@ const FengShuiScienceModal = {
                 display: block; width: 100%; 
                 background: linear-gradient(135deg, #dfb76c, #b38938); color: #000;
                 border: none; padding: 10px 24px; font-weight: bold; border-radius: 20px;
-                cursor: pointer; font-size: 0.8rem; letter-spacing: 1px; width: 100%;
+                cursor: pointer; font-size: 0.8rem; letter-spacing: 1px;
                 margin-top: 25px; transition: all 0.2s;
             }
             .fs-science-btn-footer:hover { 
@@ -137,7 +159,7 @@ const FengShuiScienceModal = {
                 <h1>🧬 PHONG THỦY:<br>KHOA HỌC KIẾN TRÚC & ĐỊA CHẤT CỔ ĐẠI</h1>
             </div>
             
-            <p>Khi nhắc đến "Phong Thủy", phần lớn đều liên tưởng đến các quy luật huyền biến mang sắc màu tâm linh. Nhưng nếu bóc tách toàn bộ lớp sương mù của thời gian, chúng ta sẽ kinh ngạc nhận ra: <strong>Phong thủy chính là bộ môn khoa học sơ khai nhất của nhân loại về môi trường sống</strong>, sự giao thoa hoàn mỹ giữa Vật lý kiến trúc, Địa chất học và Sinh thái học dựa trên hai trục cốt lõi: <strong>Phong (Khí tượng học)</strong> và <strong>Thủy (Thủy văn học)</strong>.</p>
+            <p>Khi nhắc đến "Phong Thủy", phần lớn đều liên tưởng đến các quy luật huyền bí mang sắc màu tâm linh. Nhưng nếu bóc tách toàn bộ lớp sương mù của thời gian, chúng ta sẽ kinh ngạc nhận ra: <strong>Phong thủy chính là bộ môn khoa học sơ khai nhất của nhân loại về môi trường sống</strong>, sự giao thoa hoàn mỹ giữa Vật lý kiến trúc, Địa chất học và Sinh thái học dựa trên hai trục cốt lõi: <strong>Phong (Khí tượng học)</strong> và <strong>Thủy (Thủy văn học)</strong>.</p>
 
             <h2>1. BẢN CHẤT ĐẤT ĐAI: CÁT HUNG KHÔNG NẰM Ở NGÔI NHÀ</h2>
             <p>Nhiều người thường đặt câu hỏi mang tính mê tín: <em>"Tại sao cùng một ngôi nhà hướng Tây, người Tây Tứ Mệnh vào ở thì phất lên (Cát), còn người Đông Tứ Mệnh vào ở lại lụi bại (Hung)? Phải chăng ngôi nhà biết chọn chủ để ban ơn hay hành hạ?"</em></p>
