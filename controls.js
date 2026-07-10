@@ -4230,7 +4230,7 @@ window.toggleDienGiaiChiTiet = function() {
     }
     recalculateFate(); 
 };
-
+let isCompassHold = false;
 // =========================================================================
 // 🚀 ENGINE QUẢN LÝ CẢM BIẾN VÀ ĐIỀU HÀNH LA BÀN PHONG THỦY (BẢN HOÀN MỸ)
 // =========================================================================
