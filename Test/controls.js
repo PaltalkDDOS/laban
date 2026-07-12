@@ -4230,7 +4230,7 @@ window.toggleDienGiaiChiTiet = function() {
     }
     recalculateFate(); 
 };
-
+let isCompassHold = false;
 // =========================================================================
 // 🚀 ENGINE QUẢN LÝ CẢM BIẾN VÀ ĐIỀU HÀNH LA BÀN PHONG THỦY (BẢN HOÀN MỸ)
 // =========================================================================
@@ -4257,7 +4257,6 @@ let rafId = null;
 let lastUpdateTime = 0;
 const SMOOTH_MIN = 0.08;
 const SMOOTH_MAX = 0.55;
-const THROTTLE_MS = 16;
 let magneticDeclination = 0;
 let lastAccuracy = 0;
 
@@ -4349,20 +4348,26 @@ async function trySilentActivation() {
             addOrientationListener();
         }
     } catch (e) {
-        // 🪄 Nếu kích hoạt ngầm thất bại -> Thả màng tàng hình 1 chạm thay vì gắn sự kiện mù
-        createSmartWakeUpOverlay();
+        // 🪄 SỬA LỖI TẠI ĐÂY: Truyền chữ thông báo cụ thể cho iPhone thay vì để trống
+        createSmartWakeUpOverlay("👆 Chạm màn hình để khởi động la bàn");
     }
 }
 
-// Màng tàng hình 1 chạm (Người dùng chạm bất kỳ đâu là kim quay)
 function createSmartWakeUpOverlay(text) {
+    // 🛡️ BẢO VỆ PHÒNG HỜ: Nếu text bị trống (undefined), tự động lấy câu thông báo chuẩn
+    if (!text) text = "👆 Chạm màn hình để khởi động la bàn";
+
     if (document.getElementById('smart-wake-overlay')) return;
 
     const overlay = document.createElement('button');
     overlay.id = 'smart-wake-overlay';
-    // Đơn giản hóa giao diện: loại bỏ đổ bóng và blur nặng nề để giải phóng GPU Android
-    overlay.innerHTML = `<span style="background:rgba(0,0,0,0.9); padding:14px 22px; border-radius:12px; border:1px solid #ff9500; font-weight:bold; font-size:16px; color:#ff9500;">${text}</span>`;
-    overlay.style.cssText = `position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.25); z-index:9999999; border:none; display:flex; align-items:center; justify-content:center; cursor:pointer;`;
+    overlay.innerHTML = '<span style="background:rgba(0,0,0,0.8); padding:10px 20px; border-radius:20px; border:1px solid #ff9500; font-weight:bold; font-size:16px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">👆 Chạm màn hình để bật la bàn</span>';
+    overlay.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+        background: rgba(0,0,0,0.1); border: none; z-index: 9999999;
+        display: flex; align-items: center; justify-content: center;
+        color: #ff9500; cursor: pointer; backdrop-filter: blur(2px);
+    `;
     
     document.body.appendChild(overlay);
 
@@ -4669,19 +4674,24 @@ function updateMagneticStatus(acc) {
     if (text.innerText !== txt) { dot.style.background = bg; text.innerText = txt; }
 }
 
-// --- 7. HÀM KÍCH HOẠT SENSOR ---
+// --- 7. Hàm kích hoạt Listener chung cho cả 2 hệ điều hành
 function addOrientationListener() {
     if (window.orientationListenerAdded) return;
+    
     const handler = (e) => {
+        // Kiểm tra dữ liệu hợp lệ trước khi đẩy vào hàm xử lý chính
         if (e.webkitCompassHeading !== undefined || e.alpha !== null) {
             handleOrientation(e);
         }
     };
+
+    // Ưu tiên absolute (Android), sau đó đến orientation (iOS/Android cũ)
     if ('ondeviceorientationabsolute' in window) {
-        window.addEventListener('deviceorientationabsolute', handler, true);
+        window.addEventListener('deviceorientationabsolute', handler, { passive: true });
     } else if ('ondeviceorientation' in window) {
-        window.addEventListener('deviceorientation', handler, true);
+        window.addEventListener('deviceorientation', handler, { passive: true });
     }
+    
     window.orientationListenerAdded = true;
 }
 // =========================================================================
