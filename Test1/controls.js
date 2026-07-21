@@ -4378,10 +4378,8 @@ function createSmartWakeUpOverlay(text) {
     const overlay = document.createElement('button');
     overlay.id = 'smart-wake-overlay';
 
-    // Giao diện ép nhỏ tối đa, ôm sát dòng chữ và đồng bộ hoàn hảo với tone Vàng Kim #dfb76c
-    overlay.innerHTML = `<span style="background: #161616; padding: 8px 14px; border-radius: 6px; border: 1px solid #dfb76c; font-weight: 600; font-size: 13.5px; color: #dfb76c; letter-spacing: 0.3px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">${text}</span>`;
-
-    overlay.style.cssText = `position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(7, 7, 7, 0.4); z-index: 9999999; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer;`;
+    overlay.innerHTML = `<span style="background:rgba(0,0,0,0.5); padding:15px 25px; border-radius:20px; border:1px solid #dfb76c; font-weight:bold; font-size:16px;">${text}</span>`;
+    overlay.style.cssText = `position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(7,7,7,0.4); z-index:9999999; border:none; display:flex; align-items:center; justify-content:center; color:#dfb76c; cursor:pointer; backdrop-filter: blur(2px);`;
      
     document.body.appendChild(overlay);
 
