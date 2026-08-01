@@ -1,7 +1,7 @@
 {
   "name": "Đại Thuật La Kinh Phong Thủy Tối Thượng",
   "short_name": "La Bàn PT",
-  "start_url": "./LabanThanSo.html?mode=pwa_installed",
+  "start_url": "./index.html?mode=pwa_installed",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#111111",
