@@ -3617,20 +3617,66 @@ async function getLocationFromAddress() {
         return;
     }
 
+    // --- HÀM TÌM KIẾM ĐA NGUỒN (PHOTON API -> NOMINATIM API) ---
+    async function fetchCoordinates(searchQuery) {
+        const encodedQuery = encodeURIComponent(searchQuery);
+
+        // Nguồn 1: Photon API (Tốc độ cao, tolerant lỗi chính tả/viết tắt tốt)
+        try {
+            const res1 = await fetch(`https://photon.komoot.io/api/?q=${encodedQuery}&limit=1&lang=en`);
+            if (res1.ok) {
+                const data1 = await res1.json();
+                if (data1?.features?.length > 0) {
+                    const feat = data1.features[0];
+                    const [lon, lat] = feat.geometry.coordinates;
+                    const props = feat.properties;
+                    const name = props.name || props.city || props.street || searchQuery;
+                    const country = props.country || '';
+                    const shortName = country ? `${name}, ${country}` : name;
+
+                    return { lat, lon, displayName: shortName };
+                }
+            }
+        } catch (e) {
+            console.warn("Photon API gặp sự cố, đang chuyển sang Nominatim...", e);
+        }
+
+        // Nguồn 2: Nominatim OSM (Bổ sung User-Agent bắt buộc để không bị block)
+        try {
+            const res2 = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodedQuery}&limit=1&addressdetails=1`, {
+                headers: { 
+                    'Accept-Language': 'vi,en;q=0.9',
+                    // BẮT BỘC: Phải truyền User-Agent để OSM không khóa Request
+                    'User-Agent': 'MyLocationApp/1.0 (contact@mywebsite.com)' 
+                }
+            });
+
+            if (res2.ok) {
+                const data2 = await res2.json();
+                if (data2 && data2.length > 0) {
+                    const parts = data2[0].display_name.split(',').map(p => p.trim());
+                    const shortName = parts.length > 1 ? `${parts[0]}, ${parts[parts.length - 1]}` : parts[0];
+                    return {
+                        lat: parseFloat(data2[0].lat),
+                        lon: parseFloat(data2[0].lon),
+                        displayName: shortName
+                    };
+                }
+            }
+        } catch (e) {
+            console.error("Nominatim API lỗi:", e);
+        }
+
+        return null;
+    }
+
     try {
-        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&addressdetails=1&extratags=1&namedetails=1&dedupe=1`;
-        const response = await fetch(url, { headers: { 'Accept-Language': 'vi,en;q=0.9' } });
+        const result = await fetchCoordinates(query);
 
-        if (!response.ok) throw new Error("API Network error");
-        const data = await response.json();
-
-        if (data && data.length > 0) {
-            const rawLat = parseFloat(data[0].lat);
-            const rawLon = parseFloat(data[0].lon);
-            const displayName = data[0].display_name;
-
-            const cleanLat = parseFloat(rawLat.toFixed(5));
-            const cleanLon = parseFloat(rawLon.toFixed(5));
+        if (result) {
+            const cleanLat = parseFloat(result.lat.toFixed(5));
+            const cleanLon = parseFloat(result.lon.toFixed(5));
+            const shortName = result.displayName;
 
             if (latInput) latInput.value = cleanLat;
             if (lonInput) lonInput.value = cleanLon;
@@ -3639,12 +3685,6 @@ async function getLocationFromAddress() {
                 localStorage.setItem('save_lat', cleanLat);
                 localStorage.setItem('save_lon', cleanLon);
             }
-
-            // 🎯 THUẬT TOÁN ĐỘT PHÁ: Tách chuỗi thành mảng và làm sạch khoảng trắng
-            const parts = displayName.split(',').map(p => p.trim());
-            
-            // Lấy phần tử đầu tiên (Địa danh cụ thể) + phần tử cuối cùng (Quốc gia) để luôn luôn có tên nước
-            const shortName = parts.length > 1 ? `${parts[0]}, ${parts[parts.length - 1]}` : parts[0];
 
             // KÍCH HOẠT TÍNH TOÁN ĐỒNG BỘ
             if (typeof calculateRemoteDeclination === 'function') {
