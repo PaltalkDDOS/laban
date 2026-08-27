@@ -4281,6 +4281,9 @@ if (typeof lockedHeadingAtOpen === 'undefined') window.lockedHeadingAtOpen = nul
 if (typeof orientationListenerAdded === 'undefined') window.orientationListenerAdded = false;
 if (typeof permissionDenied === 'undefined') window.permissionDenied = false;
 if (typeof isCompassHold === 'undefined') window.isCompassHold = false;
+// Giữ tham chiếu handler cảm biến để có thể gỡ bỏ an toàn trước khi gắn lại,
+// tránh tình trạng nhân đôi listener (rò rỉ RAM + tính toán lặp) khi cờ bị reset để mồi lại quyền iOS
+let orientationHandlerRef = null;
 // --- 1. BIẾN TOÀN CỤC (DUY NHẤT 1 LẦN) ---
 // Biến điều khiển hệ thống
 let isFullScreen = false; let lastTapTime = 0;
@@ -4297,6 +4300,13 @@ let rafId = null;
 let lastUpdateTime = 0;
 const SMOOTH_MIN = 0.08;
 const SMOOTH_MAX = 0.55;
+
+// 🚀 CHỐNG GIẬT LAG: Giới hạn tần suất vẽ lại UI nặng (recalculateFate, updateCompassUI...)
+// Bộ lọc làm mượt góc kim (lastHeading) vẫn chạy ở MỌI sự kiện cảm biến (không đổi),
+// chỉ riêng phần build lại HTML/DOM nặng được ghìm tối đa ~16 lần/giây thay vì chạy theo
+// tần số quét cảm biến gốc (có thể tới 60-120 lần/giây), giúp tránh nghẽn luồng chính gây giật.
+let lastHeavyUIRefresh = 0;
+const HEAVY_UI_MIN_INTERVAL_MS = 60;
 let magneticDeclination = 0;
 let lastAccuracy = 0;
 
@@ -4636,8 +4646,13 @@ function handleOrientation(event) {
         if (typeof kichHoatBoDemDungKim === 'function') kichHoatBoDemDungKim();
     }
 
-    if (rafId) cancelAnimationFrame(rafId);
-    rafId = requestAnimationFrame(() => executeUIUpdate(headingForDial, headingForText));
+    // 🔥 CHỈ vẽ lại UI nặng (recalculateFate/DOM) theo nhịp giới hạn để tránh giật lag,
+    // trong khi lastHeading (bộ lọc làm mượt) ở trên vẫn được cập nhật ở mọi sự kiện.
+    if (now - lastHeavyUIRefresh >= HEAVY_UI_MIN_INTERVAL_MS) {
+        lastHeavyUIRefresh = now;
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => executeUIUpdate(headingForDial, headingForText));
+    }
 }
 
 // --- 5. HÀM ĐO NHIỄU ---
@@ -4712,14 +4727,23 @@ function updateMagneticStatus(acc) {
 
 // --- 7. Hàm kích hoạt Listener chung cho cả 2 hệ điều hành
 function addOrientationListener() {
-    if (window.orientationListenerAdded) return;
-    
+    if (window.orientationListenerAdded && orientationHandlerRef) return;
+
+    // 🛡️ CHỐNG RÒ RỈ RAM: Nếu đã tồn tại 1 listener cũ (trường hợp cờ bị reset để mồi lại
+    // quyền iOS sau khi cấp phép), gỡ nó ra trước khi gắn cái mới — tránh 2, 3... listener
+    // cùng chạy song song khiến mỗi lần xoay điện thoại bị tính toán lặp lại nhiều lần (giật + tốn RAM)
+    if (orientationHandlerRef) {
+        window.removeEventListener('deviceorientationabsolute', orientationHandlerRef);
+        window.removeEventListener('deviceorientation', orientationHandlerRef);
+    }
+
     const handler = (e) => {
         // Kiểm tra dữ liệu hợp lệ trước khi đẩy vào hàm xử lý chính
         if (e.webkitCompassHeading !== undefined || e.alpha !== null) {
             handleOrientation(e);
         }
     };
+    orientationHandlerRef = handler;
 
     // Ưu tiên absolute (Android), sau đó đến orientation (iOS/Android cũ)
     if ('ondeviceorientationabsolute' in window) {
@@ -4727,7 +4751,7 @@ function addOrientationListener() {
     } else if ('ondeviceorientation' in window) {
         window.addEventListener('deviceorientation', handler, { passive: true });
     }
-    
+
     window.orientationListenerAdded = true;
 }
 // =========================================================================
@@ -5011,6 +5035,8 @@ function showPurposeModal() {
                 if (hiddenInput) hiddenInput.value = value;
 
                 currentPurposeValue = value;
+
+                if (typeof luuProfileTuDong === 'function') luuProfileTuDong();
 
                 hidePurposeModal();
 
@@ -5587,7 +5613,9 @@ function selectMember(id) {
         document.getElementById('birthDay').value = m.birthDay;
         document.getElementById('birthMonth').value = m.birthMonth;
         document.getElementById('birthYear').value = m.birthYear;
-        
+
+        if (typeof luuProfileTuDong === 'function') luuProfileTuDong();
+
         // Kích hoạt tái tính toán toàn bộ hệ thống ngay khi đổi người
         if (typeof recalculateFate === 'function') {
             recalculateFate();
@@ -5715,7 +5743,9 @@ function selectGender(gender) {
     femaleBtn.classList.remove('active');
     document.getElementById('gender-' + gender).classList.add('active');
     hiddenGenderInput.value = gender;
-    
+
+    if (typeof luuProfileTuDong === 'function') luuProfileTuDong();
+
     // ⚡ BƯỚC 2: Đẩy phép tính phong thủy nặng ra luồng chạy ngầm sau 30ms 
     // Giúp trình duyệt kịp thời đổi màu nút bấm trước khi CPU bị vắt kiệt để tính toán
     setTimeout(() => {
@@ -7058,6 +7088,85 @@ document.addEventListener('DOMContentLoaded', () => {
             el.addEventListener('change', kichHoatBoDemDungKim);
         }
     });
+});
+
+// =========================================================================
+// 💾 TỰ ĐỘNG LƯU & KHÔI PHỤC THÔNG TIN CHỦ MỆNH (Họ tên, Giới tính, Ngày sinh, Mục đích)
+// Trước đây các trường này KHÔNG được lưu, nên mỗi lần mở lại App phải nhập lại từ đầu.
+// =========================================================================
+const PROFILE_AUTOSAVE_KEY = 'fengshui_profile_autosave';
+
+function luuProfileTuDong() {
+    const nameEl = document.getElementById('userName');
+    const genderEl = document.getElementById('gender');
+    const dayEl = document.getElementById('birthDay');
+    const monthEl = document.getElementById('birthMonth');
+    const yearEl = document.getElementById('birthYear');
+    const purposeEl = document.getElementById('purpose');
+    const purposeTextEl = document.getElementById('purpose-selected-text');
+
+    const profile = {
+        name: (nameEl && nameEl.value.trim() !== '' && nameEl.value.trim() !== 'Người Tầm Phương') ? nameEl.value : '',
+        gender: genderEl ? genderEl.value : 'male',
+        day: dayEl ? dayEl.value : '',
+        month: monthEl ? monthEl.value : '',
+        year: yearEl ? yearEl.value : '',
+        purpose: purposeEl ? purposeEl.value : '',
+        purposeText: purposeTextEl ? purposeTextEl.textContent : ''
+    };
+    try {
+        localStorage.setItem(PROFILE_AUTOSAVE_KEY, JSON.stringify(profile));
+    } catch (e) { /* Bỏ qua nếu bộ nhớ trình duyệt đầy */ }
+}
+
+let profileAutosaveTimer = null;
+function luuProfileTuDongDebounce() {
+    clearTimeout(profileAutosaveTimer);
+    profileAutosaveTimer = setTimeout(luuProfileTuDong, 400);
+}
+
+function khoiPhucProfileDaLuu() {
+    let profile = null;
+    try {
+        profile = JSON.parse(localStorage.getItem(PROFILE_AUTOSAVE_KEY) || 'null');
+    } catch (e) { return; }
+    if (!profile) return;
+
+    const nameEl = document.getElementById('userName');
+    if (nameEl && profile.name) {
+        nameEl.value = profile.name;
+        nameEl.style.color = '#fff';
+    }
+    if (profile.gender && typeof selectGender === 'function') {
+        selectGender(profile.gender);
+    }
+    const dayEl = document.getElementById('birthDay');
+    const monthEl = document.getElementById('birthMonth');
+    const yearEl = document.getElementById('birthYear');
+    if (dayEl && profile.day) dayEl.value = profile.day;
+    if (monthEl && profile.month) monthEl.value = profile.month;
+    if (yearEl && profile.year) yearEl.value = profile.year;
+
+    const purposeEl = document.getElementById('purpose');
+    const purposeTextEl = document.getElementById('purpose-selected-text');
+    if (purposeEl && profile.purpose) {
+        purposeEl.value = profile.purpose;
+        currentPurposeValue = profile.purpose;
+        if (purposeTextEl && profile.purposeText) purposeTextEl.textContent = profile.purposeText;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    khoiPhucProfileDaLuu();
+
+    const nameElAS = document.getElementById('userName');
+    if (nameElAS) nameElAS.addEventListener('input', luuProfileTuDongDebounce);
+
+    ['birthDay', 'birthMonth', 'birthYear'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', luuProfileTuDongDebounce);
+    });
+    // Giới tính & Mục đích đã được lưu ngay khi bấm chọn (xem hàm selectGender và showPurposeModal)
 });
 
 //gioi thieu phong thuy
